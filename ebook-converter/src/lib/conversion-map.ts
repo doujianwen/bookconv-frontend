@@ -1,4 +1,4 @@
-﻿export interface ConversionCommand {
+export interface ConversionCommand {
   tool: "calibre" | "calibre+imagemagick" | "libreoffice+calibre" | "djvulibre"
   command: (input: string, output: string) => string
   description: string
@@ -28,7 +28,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "azw3-epub":  { tool: "calibre", command: calibre, description: "AZW3 to EPUB (Universal E-book)" },
   "epub-rtf":   { tool: "calibre", command: calibre, description: "EPUB to RTF (Rich Text)" },
   "epub-jpg":   { tool: "calibre+imagemagick", command: calibreToPdfThenImages("jpg"), description: "EPUB to JPG Images" },
-  "epub-html":  { tool: "calibre", command: calibre, description: "EPUB to HTML (Web Page)" },
+  "epub-html":  { tool: "calibre", command: calibre, description: "EPUB to HTMLZ (Zipped Web Pages, use .htmlz extension)" },
   "epub-doc":   { tool: "calibre", command: calibre, description: "EPUB to DOC (Microsoft Word)" },
   "fb2-epub":   { tool: "calibre", command: calibre, description: "FB2 to EPUB" },
   "lit-epub":   { tool: "calibre", command: calibre, description: "LIT to EPUB (Rescue Old MS Reader Files)" },
