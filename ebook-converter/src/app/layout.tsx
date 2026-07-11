@@ -1,24 +1,55 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
+import { LoginButton } from "@/components/auth/LoginButton"
 import "./globals.css"
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://your-domain.com"),
   title: {
-    default: "Ebook Converter — Free Online E-book Format Conversion",
-    template: "%s | Ebook Converter",
+    default: "Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
+    template: "%s | Free Ebook Converter",
   },
-  description:
-    "Free online ebook converter supporting EPUB, MOBI, AZW3, PDF, and more. No registration required. Convert ebooks instantly.",
+  description: "Free online ebook converter supporting 17+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits. Convert ebooks instantly with our Calibre-powered engine.",
+  keywords: ["ebook converter", "epub to mobi", "pdf to epub", "azw3 converter", "free ebook conversion", "online file converter"],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://your-domain.com",
+    siteName: "EbookConverter",
+    title: "Free Online Ebook Format Converter",
+    description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ebook Converter" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Online Ebook Format Converter",
+    description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#2563eb" />
+      </head>
       <body className="min-h-screen bg-gray-50 font-sans text-gray-900 antialiased">
         <header className="border-b bg-white">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
@@ -30,6 +61,7 @@ export default function RootLayout({
               <Link href="/" className="hover:text-blue-600">Home</Link>
               <Link href="/pricing" className="hover:text-blue-600">Pricing</Link>
               <Link href="/blog" className="hover:text-blue-600">Blog</Link>
+              <LoginButton />
             </nav>
           </div>
         </header>

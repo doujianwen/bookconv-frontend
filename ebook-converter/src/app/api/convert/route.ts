@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server"
+﻿import { NextRequest, NextResponse } from "next/server"
 import { execFile } from "node:child_process"
 import { promisify } from "node:util"
 import { randomUUID } from "node:crypto"
-import { mkdirSync, writeFileSync, rmSync, existsSync } from "node:fs"
+import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { getConversionKey, getConversion, SUPPORTED_FORMATS } from "@/lib/conversion-map"
 
@@ -12,7 +12,7 @@ const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 
 // Calibre path - check common locations on Windows
 const CALIBRE_PATH = process.env.CALIBRE_PATH || (
   process.platform === "win32"
-    ? ["C:\\Program Files\\Calibre2\\ebook-convert.exe", "E:\\Program Files\\Calibre2\\ebook-convert.exe"].find(p => require("node:fs").existsSync(p)) || "ebook-convert"
+    ? ["C:\\Program Files\\Calibre2\\ebook-convert.exe", "E:\\Program Files\\Calibre2\\ebook-convert.exe"].find(p => existsSync(p)) || "ebook-convert"
     : "ebook-convert"
 )
 
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Read and return output
-    const outputData = require("node:fs").readFileSync(outputPath)
+    const outputData = readFileSync(outputPath)
     cleanupDir(jobDir)
 
     return new NextResponse(new Uint8Array(outputData), {
