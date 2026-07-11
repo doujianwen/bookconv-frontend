@@ -5,7 +5,6 @@ import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { FileDropZone } from "@/components/tools/FileDropZone"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
-import { DownloadButton } from "@/components/tools/DownloadButton"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
 
@@ -22,28 +21,64 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
+  const [progress, setProgress] = useState(0)
 
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
-  const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toUpperCase()
+  const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toLowerCase() === "htmlz" ? "HTMLZ" : (FORMAT_DISPLAY_NAMES[target] || target.toUpperCase())
 
   const handleFileSelect = useCallback(
     async (file: File) => {
       setStatus("uploading")
+      setProgress(10)
+      setErrorMessage("")
+      setDownloadUrl("")
+      setFileName("")
 
-      // TODO: Replace with real API call to POST /api/convert
-      // Simulated conversion flow for development
-      setTimeout(() => {
+      try {
+        // Step 1: Upload & Convert via API
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("source_format", source)
+        formData.append("target_format", target)
+
+        setProgress(30)
         setStatus("converting")
-        setTimeout(() => {
-          const ext = target.toLowerCase()
-          const outputName = file.name.replace(/\.[^.]+$/, `.${ext}`)
-          setFileName(outputName)
-          setDownloadUrl("#")
-          setStatus("done")
-        }, 2000)
-      }, 500)
+
+        const response = await fetch("/api/convert", {
+          method: "POST",
+          body: formData,
+        })
+
+        setProgress(80)
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({ error: "Server error" }))
+          throw new Error(errData.error || `HTTP ${response.status}`)
+        }
+
+        // Get job ID for tracking
+        const jobId = response.headers.get("X-Job-ID") || ""
+
+        // Download the converted file
+        const blob = await response.blob()
+        const url = URL.createObjectURL(blob)
+
+        const ext = target.toLowerCase() === "htmlz" ? "htmlz" : target
+        const outputName = file.name.replace(/\.[^.]+$/, `.converted.${ext}`)
+
+        setFileName(outputName)
+        setDownloadUrl(url)
+        setProgress(100)
+        setStatus("done")
+
+        // Clean up blob URL after 5 minutes
+        setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
+      } catch (err: any) {
+        setErrorMessage(err.message || "Conversion failed")
+        setStatus("error")
+      }
     },
-    [target]
+    [source, target]
   )
 
   const faqs = generateDefaultFAQs(source, target)
@@ -58,9 +93,6 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
         <p className="mt-3 text-lg text-gray-500">
           Free online tool — no registration, no watermarks
         </p>
-        <p className="mt-1 text-xs text-gray-400">
-          Powered by {tool === "calibre" ? "Calibre" : tool}
-        </p>
       </div>
 
       {/* Tool Area */}
@@ -71,10 +103,24 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
         />
         <ConversionProgress
           status={status}
-          progress={status === "converting" ? 50 : 0}
+          progress={status === "converting" ? progress : 0}
           errorMessage={errorMessage}
         />
-        {status === "done" && <DownloadButton downloadUrl={downloadUrl} fileName={fileName} />}
+        {status === "done" && downloadUrl && (
+          <div className="rounded-xl border bg-green-50 p-6 text-center">
+            <p className="mb-3 text-sm font-medium text-green-800">Your file is ready!</p>
+            <a
+              href={downloadUrl}
+              download={fileName}
+              className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue-600 px-6 text-base font-medium text-white transition-colors hover:bg-blue-700"
+            >
+              Download {fileName}
+            </a>
+            <p className="mt-2 text-xs text-gray-500">
+              File will be deleted automatically after this session.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* How to convert */}

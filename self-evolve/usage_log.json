@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "skill_name": "self-evolve",
+    "version": "1.0.0",
+    "created": "2026-07-11T01:50:14.126Z",
+    "last_evolved": null,
+    "total_uses": 5,
+    "success_rate": 60
+  },
+  "logs": [
+    {
+      "timestamp": "2026-07-11T01:43:08.602Z",
+      "trigger": "ebook convert epub to pdf",
+      "workspace_files": [
+        "test.epub"
+      ],
+      "steps_taken": [
+        "read epub",
+        "parse content",
+        "render pages",
+        "output pdf"
+      ],
+      "success": true,
+      "quality_score": 5,
+      "lessons": [
+        [
+          "EPUB parsing worked smoothly"
+        ]
+      ],
+      "improvement_suggestion": ""
+    },
+    {
+      "timestamp": "2026-07-09T19:03:02.462Z",
+      "trigger": "ebook convert epub to pdf",
+      "workspace_files": [
+        "test2.epub"
+      ],
+      "steps_taken": [
+        "read epub",
+        "parse content",
+        "render pages",
+        "output pdf"
+      ],
+      "success": true,
+      "quality_score": 4,
+      "lessons": [
+        [
+          "Some images lost quality"
+        ]
+      ],
+      "improvement_suggestion": "Improve image handling in conversion pipeline"
+    },
+    {
+      "timestamp": "2026-07-09T06:23:21.850Z",
+      "trigger": "ebook convert word to epub",
+      "workspace_files": [
+        "doc.docx"
+      ],
+      "steps_taken": [
+        "read docx",
+        "extract text",
+        "generate epub"
+      ],
+      "success": false,
+      "quality_score": 2,
+      "lessons": [
+        [
+          "DOCX formatting lost during conversion"
+        ]
+      ],
+      "improvement_suggestion": "Add DOCX style mapping layer"
+    },
+    {
+      "timestamp": "2026-07-10T17:00:57.726Z",
+      "trigger": "batch convert folder of books",
+      "workspace_files": [
+        "book1.epub",
+        "book2.epub",
+        "book3.pdf"
+      ],
+      "steps_taken": [
+        "scan dir",
+        "detect format",
+        "convert each"
+      ],
+      "success": true,
+      "quality_score": 4,
+      "lessons": [
+        [
+          "Batch processing works well"
+        ]
+      ],
+      "improvement_suggestion": "Add progress bar and resume capability"
+    },
+    {
+      "timestamp": "2026-07-08T22:55:36.697Z",
+      "trigger": "ebook convert pdf to epub",
+      "workspace_files": [
+        "novel.pdf"
+      ],
+      "steps_taken": [
+        "read pdf",
+        "ocr text",
+        "reflow layout",
+        "generate epub"
+      ],
+      "success": false,
+      "quality_score": 2,
+      "lessons": [
+        [
+          "PDF reflow failed on complex layouts"
+        ]
+      ],
+      "improvement_suggestion": "Add PDF layout analysis before conversion"
+    }
+  ]
+}
