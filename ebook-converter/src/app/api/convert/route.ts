@@ -9,12 +9,8 @@ import { getConversionKey, getConversion, SUPPORTED_FORMATS } from "@/lib/conver
 const UPLOAD_DIR = process.env.UPLOAD_DIR || "/tmp/ebook-uploads"
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024
 
-// Calibre path - check common locations on Windows
-const CALIBRE_PATH = process.env.CALIBRE_PATH || (
-  process.platform === "win32"
-    ? ["C:\\Program Files\\Calibre2\\ebook-convert.exe", "E:\\Program Files\\Calibre2\\ebook-convert.exe"].find(p => existsSync(p)) || "ebook-convert"
-    : "ebook-convert"
-)
+// Calibre path - use env var or default (check at runtime to avoid build-time FS access)
+const CALIBRE_PATH = process.env.CALIBRE_PATH || "ebook-convert"
 
 export async function POST(request: NextRequest) {
   try {

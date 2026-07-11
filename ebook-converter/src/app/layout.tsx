@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     siteName: "EbookConverter",
     title: "Free Online Ebook Format Converter",
     description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ebook Converter" }],
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Ebook Converter" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Free Online Ebook Format Converter",
     description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.",
-    images: ["/og-image.png"],
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,
@@ -48,6 +48,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "EbookConverter",
+              url: "https://your-domain.com",
+              description: "Free online ebook format converter supporting 17+ formats",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://your-domain.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "EbookConverter",
+              url: "https://your-domain.com",
+              logo: "https://your-domain.com/icon.svg",
+              sameAs: [],
+            }),
+          }}
+        />
         <meta name="theme-color" content="#2563eb" />
       </head>
       <body className="min-h-screen bg-gray-50 font-sans text-gray-900 antialiased">
