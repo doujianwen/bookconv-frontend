@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next"
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
-import { LoginButton } from "@/components/auth/LoginButton"
+import LoginButton from "@/components/auth/LoginButton"
 import "./globals.css"
 
 export const metadata: Metadata = {

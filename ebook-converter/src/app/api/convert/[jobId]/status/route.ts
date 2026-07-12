@@ -1,33 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { conversionQueue } from '@/lib/queue';
+import { getConversionQueue } from '@/lib/queue';
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   const { jobId } = await params;
-  
+
   try {
-    const job = await conversionQueue.getJob(jobId);
-    
+    const job = await getConversionQueue().getJob(jobId);
+
     if (!job) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
-    
-    const status = job.state || 'unknown';
-    const progress = job.progress() || 0;
-    
-    let result = undefined;
-    if (job.returnvalue) {
-      result = job.returnvalue;
-    }
-    
+
+    // Determine status from job attributes and progress
+    const isCompleted = !!job.returnvalue;
+    const isFailed = !!job.failedReason;
+    const progress = (job.progress as any) || 0;
+
+    let status: 'pending' | 'processing' | 'completed' | 'failed' = 'pending';
+    if (isCompleted) status = 'completed';
+    else if (isFailed) status = 'failed';
+    else if (progress > 0) status = 'processing';
+
     return NextResponse.json({
       jobId,
-      status: status === 'waiting' ? 'pending' : status === 'active' ? 'processing' : status === 'completed' ? 'completed' : status === 'failed' ? 'failed' : status,
+      status,
       progress: typeof progress === 'number' ? progress : 0,
       error: job.failedReason,
-      result,
+      result: isCompleted ? job.returnvalue : undefined,
     });
   } catch (err: any) {
     console.error('GET /api/convert/[jobId]/status error:', err.message);

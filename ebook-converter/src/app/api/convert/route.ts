@@ -1,7 +1,7 @@
-﻿// src/app/api/convert/route.ts (异步队列版本)
+﻿// src/app/api/convert/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'node:crypto';
-import { conversionQueue, ConversionJobData } from '@/lib/queue';
+import { getConversionQueue, ConversionJobData } from '@/lib/queue';
 import { SUPPORTED_FORMATS } from '@/lib/conversion-map';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || '10', 10) * 1024 * 1024;
@@ -18,15 +18,15 @@ export async function POST(request: NextRequest) {
     }
 
     if (!SUPPORTED_FORMATS.includes(sourceFormat)) {
-      return NextResponse.json({ error: \Unsupported source format: \\ }, { status: 400 });
+      return NextResponse.json({ error: `Unsupported source format: ${sourceFormat}` }, { status: 400 });
     }
     if (!SUPPORTED_FORMATS.includes(targetFormat)) {
-      return NextResponse.json({ error: \Unsupported target format: \\ }, { status: 400 });
+      return NextResponse.json({ error: `Unsupported target format: ${targetFormat}` }, { status: 400 });
     }
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: \File too large. Max \MB\ },
+        { error: `File too large. Max ${process.env.MAX_FILE_SIZE_MB || '10'}MB` },
         { status: 413 }
       );
     }
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       jobId,
     };
 
-    const job = await conversionQueue.add('conversion', jobData, {
+    const job = await getConversionQueue().add('conversion', jobData, {
       removeOnComplete: true,
       removeOnFail: true,
     });

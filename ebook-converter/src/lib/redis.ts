@@ -5,11 +5,10 @@ const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
 
 let redisClient: IORedis | null = null;
 
-export function getRedisClient(): IORedis {
+export function getRedisClient(): any {
   if (!redisClient) {
     redisClient = new IORedis(redisUrl, {
       maxRetriesPerRequest: 3,
-      retryDelayOnFailover: 100,
       lazyConnect: true,
     });
     redisClient.on('error', (err) => console.error('Redis error:', err));
