@@ -1,6 +1,23 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - UPLOAD_DIR=/tmp/ebook-uploads
+      - MAX_FILE_SIZE_MB=10
+      - CALIBRE_PATH=ebook-convert
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    volumes:
+      - uploads:/tmp/ebook-uploads
+    depends_on:
+      redis:
+        condition: service_healthy
+
   redis:
     image: redis:7-alpine
     ports:
@@ -8,6 +25,12 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 volumes:
+  uploads:
   redis_data:
