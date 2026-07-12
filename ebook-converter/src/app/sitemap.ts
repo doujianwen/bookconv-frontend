@@ -1,18 +1,22 @@
-﻿import { KEYWORDS } from "@/lib/constants"
-import { getSlug } from "@/lib/utils"
+import { MetadataRoute } from 'next'
+import { CONVERSION_MAP } from '@/lib/conversion-map'
 
-const baseUrl = "https://your-domain.com"
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
-export default function sitemap() {
-  const pages = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 1.0 },
-    { url: `${baseUrl}/pricing`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    ...KEYWORDS.map((k) => ({
-      url: `${baseUrl}/convert/${getSlug(k.source, k.target)}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
-    })),
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
+    { url: baseUrl + '/pricing', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: baseUrl + '/privacy', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
+    { url: baseUrl + '/terms', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
   ]
-  return pages
+
+  const toolPages: MetadataRoute.Sitemap = Object.keys(CONVERSION_MAP).map((key) => ({
+    url: baseUrl + '/convert/' + key,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...toolPages]
 }
