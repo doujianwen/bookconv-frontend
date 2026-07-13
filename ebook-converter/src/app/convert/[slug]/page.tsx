@@ -3,6 +3,7 @@ import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getDisplayName } from "@/lib/utils"
 import { ToolPageClient } from "./ToolPageClient"
+import { CONTENT_MAP } from "@/data/content"
 
 interface ToolPageProps {
   params: Promise<{ slug: string }>
@@ -10,7 +11,7 @@ interface ToolPageProps {
 
 export async function generateStaticParams() {
   return KEYWORDS.map((k) => ({
-    slug: `${k.source.toLowerCase()}-to-${k.target.toLowerCase()}`,
+    slug: k.source + "-to-" + k.target,
   }))
 }
 
@@ -19,13 +20,23 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const displayName = getDisplayName(slug)
   const [source, target] = slug.split("-to-")
   const conversion = getConversion(source, target)
+  const contentData = CONTENT_MAP[slug]
+
+  const title = contentData?.title || `${source} to ${target} Converter — Free Online`
+  const subtitle = contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`
 
   return {
-    title: `${displayName} Converter — Free Online Tool`,
-    description: `Free online ${displayName} converter. No registration, no watermarks. Convert ${source.toUpperCase()} files to ${target.toUpperCase()} instantly. Supports batch conversion with Pro.`,
+    title,
+    description: subtitle,
     openGraph: {
-      title: `${displayName} Converter — Free Online`,
-      description: `Convert ${source.toUpperCase()} to ${target.toUpperCase()} online for free. Fast, secure, no registration required.`,
+      title,
+      description: subtitle,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: subtitle,
     },
   }
 }
@@ -39,6 +50,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
       k.target.toLowerCase() === target.toLowerCase()
   )
   const conversion = getConversion(source, target)
+  const contentData = CONTENT_MAP[slug]
 
   if (!keyword || !conversion) {
     return (
@@ -56,7 +68,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
       source={source}
       target={target}
       keyword={keyword}
-      tool={conversion.tool} description={conversion.description}
+      tool={conversion.tool}
+      description={conversion.description}
+      contentData={contentData}
     />
   )
 }

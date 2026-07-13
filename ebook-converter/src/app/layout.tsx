@@ -5,25 +5,25 @@ import LoginButton from "@/components/auth/LoginButton"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://your-domain.com"),
+  metadataBase: new URL("https://bookconv.com"),
   title: {
-    default: "Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
-    template: "%s | Free Ebook Converter",
+    default: "BookConv — Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
+    template: "%s | BookConv",
   },
-  description: "Free online ebook converter supporting 17+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits. Convert ebooks instantly with our Calibre-powered engine.",
-  keywords: ["ebook converter", "epub to mobi", "pdf to epub", "azw3 converter", "free ebook conversion", "online file converter"],
+  description: "Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits. Powered by Calibre.",
+  keywords: ["ebook converter", "epub to mobi", "pdf to epub", "azw3 converter", "free ebook conversion", "online file converter", "lit to epub"],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-domain.com",
-    siteName: "EbookConverter",
-    title: "Free Online Ebook Format Converter",
+    url: "https://bookconv.com",
+    siteName: "BookConv",
+    title: "BookConv — Free Online Ebook Format Converter",
     description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Ebook Converter" }],
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "BookConv" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Online Ebook Format Converter",
+    title: "BookConv — Free Online Ebook Format Converter",
     description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.",
     images: ["/og-image.svg"],
   },
@@ -54,12 +54,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "EbookConverter",
-              url: "https://your-domain.com",
-              description: "Free online ebook format converter supporting 17+ formats",
+              name: "BookConv",
+              url: "https://bookconv.com",
+              description: "Free online ebook format converter supporting 28+ formats",
               potentialAction: {
                 "@type": "SearchAction",
-                target: "https://your-domain.com/search?q={search_term_string}",
+                target: "https://bookconv.com/search?q={search_term_string}",
                 "query-input": "required name=search_term_string",
               },
             }),
@@ -70,9 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "EbookConverter",
-              url: "https://your-domain.com",
-              logo: "https://your-domain.com/icon.svg",
+              name: "BookConv",
+              url: "https://bookconv.com",
+              logo: "https://bookconv.com/icon.svg",
               sameAs: [],
             }),
           }}
@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-center gap-2 font-bold text-blue-600">
               <BookOpen className="h-6 w-6" />
-              <span>EbookConverter</span>
+              <span>BookConv</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm text-gray-600">
               <Link href="/" className="hover:text-blue-600">Home</Link>
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <footer className="mt-16 border-t bg-white py-8 text-center text-sm text-gray-500">
           <div className="mx-auto max-w-5xl space-y-2 px-4">
-            <p>Free online ebook converter. All files are automatically deleted within 1 hour.</p>
+            <p>BookConv — Free online ebook converter. All files are automatically deleted within 1 hour.</p>
             <div className="flex justify-center gap-4">
               <Link href="/privacy" className="hover:text-gray-700">Privacy</Link>
               <Link href="/terms" className="hover:text-gray-700">Terms</Link>

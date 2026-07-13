@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
@@ -8,15 +7,22 @@ import { ConversionProgress, type ConversionStatus } from "@/components/tools/Co
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
 
+interface ContentData {
+  hero?: { title?: string; subtitle?: string }
+  sections?: Array<{ heading: string; body: string }>
+  faq?: Array<{ q: string; a: string }>
+}
+
 interface ToolPageClientProps {
   source: string
   target: string
   keyword: KeywordData
   tool: string
   description: string
+  contentData?: ContentData | null
 }
 
-export function ToolPageClient({ source, target, keyword, tool, description }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, keyword, tool, description, contentData }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
@@ -35,7 +41,6 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
       setFileName("")
 
       try {
-        // Step 1: Upload & Convert via API
         const formData = new FormData()
         formData.append("file", file)
         formData.append("source_format", source)
@@ -53,25 +58,22 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
 
         if (!response.ok) {
           const errData = await response.json().catch(() => ({ error: "Server error" }))
-          throw new Error(errData.error || `HTTP ${response.status}`)
+          throw new Error(errData.error || "HTTP error")
         }
 
-        // Get job ID for tracking
         const jobId = response.headers.get("X-Job-ID") || ""
 
-        // Download the converted file
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
 
         const ext = target.toLowerCase() === "htmlz" ? "htmlz" : target
-        const outputName = file.name.replace(/\.[^.]+$/, `.converted.${ext}`)
+        const outputName = file.name.replace(/\.[^.]+$/, '.converted.')
 
         setFileName(outputName)
         setDownloadUrl(url)
         setProgress(100)
         setStatus("done")
 
-        // Clean up blob URL after 5 minutes
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err: any) {
         setErrorMessage(err.message || "Conversion failed")
@@ -81,17 +83,19 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
     [source, target]
   )
 
-  const faqs = generateDefaultFAQs(source, target)
+  const faqs = contentData?.faq
+    ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
+    : generateDefaultFAQs(source, target)
 
   return (
     <main className="mx-auto max-w-3xl space-y-10 px-4 py-8">
       {/* Hero / H1 */}
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          {sourceDisplay} to {targetDisplay} Converter
+          {contentData?.hero?.title || sourceDisplay + " to " + targetDisplay + " Converter"}
         </h1>
         <p className="mt-3 text-lg text-gray-500">
-          Free online tool — no registration, no watermarks
+          {contentData?.hero?.subtitle || "Free online tool — no registration, no watermarks, no watermarks"}
         </p>
       </div>
 
@@ -123,105 +127,120 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
         )}
       </div>
 
-      {/* How to convert */}
-      <section>
-        <h2 className="mb-4 text-2xl font-bold text-gray-900">
-          How to Convert {sourceDisplay} to {targetDisplay} Online
-        </h2>
-        <ol className="space-y-3 rounded-xl border bg-white p-6">
-          <li className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
-              1
-            </span>
-            <span className="text-gray-700">
-              <strong>Upload</strong> your {sourceDisplay} file — drag and drop or click to browse.
-            </span>
-          </li>
-          <li className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
-              2
-            </span>
-            <span className="text-gray-700">
-              <strong>Convert</strong> — {description}
-            </span>
-          </li>
-          <li className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
-              3
-            </span>
-            <span className="text-gray-700">
-              <strong>Download</strong> your {targetDisplay} file — ready to read on your device.
-            </span>
-          </li>
-        </ol>
-      </section>
+      {/* Custom content sections */}
+      {contentData?.sections ? (
+        contentData.sections.map((section, index) => (
+          <section key={index}>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{section.heading}</h2>
+            <div
+              className="prose prose-gray max-w-none"
+              dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(section.body) }}
+            />
+          </section>
+        ))
+      ) : (
+        <>
+          {/* How to convert */}
+          <section>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">
+              How to Convert {sourceDisplay} to {targetDisplay} Online
+            </h2>
+            <ol className="space-y-3 rounded-xl border bg-white p-6">
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
+                  1
+                </span>
+                <span className="text-gray-700">
+                  <strong>Upload</strong> your {sourceDisplay} file — drag and drop or click to browse or click to browse.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
+                  2
+                </span>
+                <span className="text-gray-700">
+                  <strong>Convert — {description}
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
+                  3
+                </span>
+                <span className="text-gray-700">
+                  <strong>Download</strong> your {targetDisplay} file — ready to read on your device on your device.
+                </span>
+              </li>
+            </ol>
+          </section>
 
-      {/* Why convert */}
-      <section>
-        <h2 className="mb-4 text-2xl font-bold text-gray-900">
-          Why Convert {sourceDisplay} to {targetDisplay}?
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-xl border bg-white p-5">
-            <h3 className="font-semibold text-gray-900">Device Compatibility</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              {targetDisplay} is widely supported on many e-readers and devices. Convert to read your books anywhere.
-            </p>
-          </div>
-          <div className="rounded-xl border bg-white p-5">
-            <h3 className="font-semibold text-gray-900">Preserve Your Library</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Future-proof your ebook collection by converting to open, widely-supported formats.
-            </p>
-          </div>
-          <div className="rounded-xl border bg-white p-5">
-            <h3 className="font-semibold text-gray-900">Instant & Free</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              No software to install. No account needed. Convert in seconds, not minutes.
-            </p>
-          </div>
-        </div>
-      </section>
+          {/* Why convert */}
+          <section>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">
+              Why Convert {sourceDisplay} to {targetDisplay}?
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-xl border bg-white p-5">
+                <h3 className="font-semibold text-gray-900">Device Compatibility</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  {targetDisplay} is widely supported on many e-readers and devices. Convert to read your books anywhere.
+                </p>
+              </div>
+              <div className="rounded-xl border bg-white p-5">
+                <h3 className="font-semibold text-gray-900">Preserve Your Library</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Future-proof your ebook collection by converting to open, widely-supported formats.
+                </p>
+              </div>
+              <div className="rounded-xl border bg-white p-5">
+                <h3 className="font-semibold text-gray-900">Instant & Free</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  No software to install. No account needed. Convert in seconds, not minutes.
+                </p>
+              </div>
+            </div>
+          </section>
 
-      {/* Format comparison table */}
-      <section>
-        <h2 className="mb-4 text-2xl font-bold text-gray-900">
-          {sourceDisplay} vs {targetDisplay}: Format Comparison
-        </h2>
-        <div className="overflow-x-auto rounded-xl border bg-white">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-gray-50">
-                <th className="px-4 py-3 text-left font-medium text-gray-700">Feature</th>
-                <th className="px-4 py-3 text-left font-medium text-gray-700">{sourceDisplay}</th>
-                <th className="px-4 py-3 text-left font-medium text-gray-700">{targetDisplay}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              <tr>
-                <td className="px-4 py-2 font-medium text-gray-600">DRM Support</td>
-                <td className="px-4 py-2 text-gray-700">Yes</td>
-                <td className="px-4 py-2 text-gray-700">Varies</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 font-medium text-gray-600">Image Support</td>
-                <td className="px-4 py-2 text-gray-700">Yes</td>
-                <td className="px-4 py-2 text-gray-700">Yes</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 font-medium text-gray-600">Reflowable Text</td>
-                <td className="px-4 py-2 text-gray-700">Yes</td>
-                <td className="px-4 py-2 text-gray-700">Varies</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 font-medium text-gray-600">Open Standard</td>
-                <td className="px-4 py-2 text-gray-700">Yes</td>
-                <td className="px-4 py-2 text-gray-700">Varies</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+          {/* Format comparison table */}
+          <section>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">
+              {sourceDisplay} vs {targetDisplay}: Format Comparison
+            </h2>
+            <div className="overflow-x-auto rounded-xl border bg-white">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="px-4 py-3 text-left font-medium text-gray-700">Feature</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-700">{sourceDisplay}</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-700">{targetDisplay}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  <tr>
+                    <td className="px-4 py-2 font-medium text-gray-600">DRM Support</td>
+                    <td className="px-4 py-2 text-gray-700">Yes</td>
+                    <td className="px-4 py-2 text-gray-700">Varies</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-medium text-gray-600">Image Support</td>
+                    <td className="px-4 py-2 text-gray-700">Yes</td>
+                    <td className="px-4 py-2 text-gray-700">Yes</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-medium text-gray-600">Reflowable Text</td>
+                    <td className="px-4 py-2 text-gray-700">Yes</td>
+                    <td className="px-4 py-2 text-gray-700">Varies</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-medium text-gray-600">Open Standard</td>
+                    <td className="px-4 py-2 text-gray-700">Yes</td>
+                    <td className="px-4 py-2 text-gray-700">Varies</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* FAQ with Schema */}
       <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
@@ -230,4 +249,55 @@ export function ToolPageClient({ source, target, keyword, tool, description }: T
       <RelatedConversions currentSource={source} currentTarget={target} />
     </main>
   )
+}
+
+function renderMarkdownToHtml(markdown: string): string {
+  // Simple markdown-to-HTML converter for the content format used in our content files
+  let html = markdown
+
+  // Handle pipe tables (markdown table syntax)
+  const tableRegex = /\|\s*([^\n|][^\n]*)\s*\|(.+)\n(\|\s*[-:\s|]+\s*\|.+)\n((?:\|.+\n?)+)/g
+  html = html.replace(tableRegex, (match, headerRow, _, separatorRow, bodyRows) => {
+    const headers = headerRow.split('|').map(h => h.trim()).filter(Boolean)
+    const rows = bodyRows.trim().split('\n').map(row =>
+      row.split('|').map(c => c.trim()).filter(Boolean)
+    )
+
+    let tableHtml = '<table class="w-full text-sm border-collapse"><thead><tr class="border-b bg-gray-50">'
+    headers.forEach(h => { tableHtml += '<th class="px-4 py-3 text-left font-medium text-gray-700"></th>' })
+    tableHtml += '</tr></thead><tbody>'
+    rows.forEach(row => {
+      tableHtml += '<tr class="border-b">'
+      row.forEach(cell => { tableHtml += '<td class="px-4 py-2 text-gray-700"></td>' })
+      tableHtml += '</tr>'
+    })
+    tableHtml += '</tbody></table>'
+    return tableHtml
+  })
+
+  // Handle bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong></strong>')
+
+  // Handle italic
+  html = html.replace(/\*(.+?)\*/g, '<em></em>')
+
+  // Handle unordered lists
+  html = html.replace(/^- \*\*(.+?)\*\*:?\s+(.+)$/gm, '<li><strong></strong>: </li>')
+  html = html.replace(/^- \*\*(.+?)\*\*\s+(.+)$/gm, '<li><strong></strong> </li>')
+  html = html.replace(/^- (.+)$/gm, '<li></li>')
+
+  // Wrap consecutive <li> elements in <ul>
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
+    if (match.includes('<li>')) return '<ul class="list-disc pl-6 space-y-2"></ul>'
+    return match
+  })
+
+  // Handle paragraph breaks
+  html = html.replace(/\n\n/g, '</p><p>')
+  html = '<p>' + html + '</p>'
+
+  // Clean up empty paragraphs
+  html = html.replace(/<p>\s*<\/p>/g, '')
+
+  return html
 }

@@ -1,61 +1,33 @@
-import Link from "next/link"
+﻿import Link from "next/link"
 import { Check, X } from "lucide-react"
+import { getPlans, formatPrice } from "@/lib/payments/service"
 
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "/month",
-    description: "Perfect for casual users",
-    features: [
-      { text: "5 conversions per hour", included: true },
-      { text: "Up to 10MB file size", included: true },
-      { text: "All standard formats", included: true },
-      { text: "No watermark", included: true },
-      { text: "Batch conversion", included: false },
-      { text: "Priority queue", included: false },
-      { text: "API access", included: false },
-    ],
-    cta: "Get Started",
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "$5",
-    period: "/month",
-    description: "For power users who need more",
-    features: [
-      { text: "Unlimited conversions", included: true },
-      { text: "Up to 50MB file size", included: true },
-      { text: "All formats + special tools", included: true },
-      { text: "No watermark", included: true },
-      { text: "Batch conversion", included: true },
-      { text: "Priority queue", included: true },
-      { text: "API access", included: false },
-    ],
-    cta: "Start Pro Trial",
-    highlighted: true,
-  },
-  {
-    name: "API",
-    price: "$20",
-    period: "/month",
-    description: "For developers and businesses",
-    features: [
-      { text: "Unlimited conversions", included: true },
-      { text: "Up to 100MB file size", included: true },
-      { text: "All formats + special tools", included: true },
-      { text: "No watermark", included: true },
-      { text: "Batch conversion", included: true },
-      { text: "Priority queue", included: true },
-      { text: "Full API access", included: true },
-    ],
-    cta: "Contact Sales",
-    highlighted: false,
-  },
-]
+const plans = getPlans()
 
 export default function PricingPage() {
+  const handleUpgrade = async (planId: string) => {
+    try {
+      const response = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId, email: '' }),
+      })
+
+      const result = await response.json()
+
+      if (result.checkoutUrl) {
+        window.location.href = result.checkoutUrl
+      } else if (result.success) {
+        alert(result.message)
+      } else {
+        alert(result.error || 'Something went wrong')
+      }
+    } catch (error) {
+      console.error('Checkout error:', error)
+      alert('Failed to start checkout')
+    }
+  }
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-16">
       <div className="text-center mb-12">
@@ -66,47 +38,53 @@ export default function PricingPage() {
       <div className="grid gap-8 md:grid-cols-3">
         {plans.map((plan) => (
           <div
-            key={plan.name}
-            className={`rounded-2xl border p-8 ${
-              plan.highlighted
-                ? "border-blue-500 shadow-xl scale-105 bg-white"
-                : "border-gray-200 bg-white"
-            }`}
+            key={plan.id}
+            className={"rounded-2xl border p-8"}
           >
             <div className="mb-4">
               <h3 className="text-xl font-semibold text-gray-900">{plan.name}</h3>
-              <p className="mt-1 text-sm text-gray-500">{plan.description}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {plan.id === 'free'
+                  ? 'Perfect for casual users'
+                  : plan.interval === 'month'
+                  ? 'For power users who need more'
+                  : 'For developers and businesses'}
+              </p>
             </div>
 
             <div className="mb-6">
-              <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-              <span className="text-gray-500">{plan.period}</span>
+              <span className="text-4xl font-bold text-gray-900">{formatPrice(plan.priceCents)}</span>
+              <span className="text-gray-500">
+                {plan.interval === 'one_time' ? '' : '/month'}
+              </span>
             </div>
 
             <ul className="space-y-3 mb-8">
               {plan.features.map((feature) => (
-                <li key={feature.text} className="flex items-start gap-3">
-                  {feature.included ? (
-                    <Check className="h-5 w-5 text-green-500 shrink-0" />
-                  ) : (
-                    <X className="h-5 w-5 text-gray-300 shrink-0" />
-                  )}
-                  <span className={`text-sm ${feature.included ? "text-gray-700" : "text-gray-400"}`}>
-                    {feature.text}
-                  </span>
+                <li key={feature} className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-green-500 shrink-0" />
+                  <span className="text-sm text-gray-700">{feature}</span>
                 </li>
               ))}
             </ul>
 
-            <button
-              className={`w-full rounded-lg px-4 py-3 text-sm font-semibold transition-colors ${
-                plan.highlighted
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-              }`}
-            >
-              {plan.cta}
-            </button>
+            {plan.id === 'free' ? (
+              <button className="w-full rounded-lg px-4 py-3 text-sm font-semibold bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors">
+                Get Started
+              </button>
+            ) : (
+              <button
+                onClick={() => handleUpgrade(plan.id)}
+                disabled={!plan.lemonSqueezyVariantId}
+                className={"w-full rounded-lg px-4 py-3 text-sm font-semibold transition-colors"}
+              >
+                {!plan.lemonSqueezyVariantId
+                  ? 'Coming Soon'
+                  : plan.id === 'api'
+                  ? 'Contact Sales'
+                  : 'Start Pro Trial'}
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -116,7 +94,7 @@ export default function PricingPage() {
         <div className="space-y-6">
           {[
             { q: "Can I cancel anytime?", a: "Yes, you can cancel your subscription at any time." },
-            { q: "What payment methods do you accept?", a: "We accept all major credit cards, PayPal, and Stripe." },
+            { q: "What payment methods do you accept?", a: "We accept all major credit cards via Lemon Squeezy." },
             { q: "Is there a free trial?", a: "Yes! All paid plans come with a 14-day free trial." },
             { q: "What happens to my files?", a: "All uploaded files are encrypted and automatically deleted within 1 hour." },
           ].map(({ q, a }) => (
@@ -130,3 +108,6 @@ export default function PricingPage() {
     </main>
   )
 }
+
+
+
