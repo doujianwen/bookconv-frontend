@@ -21,19 +21,18 @@ Converting to EPUB gives you:
 - **Metadata** (title, author, language)
 - **Cross-Device Adaptation**
 - **Night Mode & Font Adjustment**
-    }
+    },
     {
       heading: 'Intelligent Chapter Detection'
 `
       body: `Our converter automatically detects chapter separators in TXT files (common ones include Chapter X, Chapter X, ---, etc.) and generates independent EPUB chapter files for each. This maintains file modularity while ensuring navigation completeness.
 
 You can also manually specify chapter separators if your file uses unusual formatting.
-    }
+    },
     {
       heading: 'Encoding Issue Handling'
 `
-      body: ` \`TXT files may use GBK UTF-8 ISO-8859-1 or other encodings. Our converter automatically detects encoding and converts correctly avoiding Chinese garbled text issues. For files with incorrect encoding an encoding selection interface is provided.\`
-    }`,
+      body: 'TXT files may use GBK UTF-8 ISO-8859-1 or other encodings. Our converter automatically detects encoding and converts correctly avoiding Chinese garbled text issues. For files with incorrect encoding an encoding selection interface is provided.',    },
     {
       heading: 'Conversion Quality Guarantee',
       body: `Our converter performs intelligent processing:
@@ -43,10 +42,10 @@ You can also manually specify chapter separators if your file uses unusual forma
 - **Encoding Auto-Detection**: Handles GBK, UTF-8, ISO-8859-1 automatically
 - **Metadata Generation**: Extracts title, author from file header comments or prompts user input
 - **Font Optimization**: Applies default ebook typography settings for optimal reading experience
-    }
+    },
     {
       heading: 'What Gets Enhanced',
-      body: |---------|-------------|--------------|
+      body: `|---------|-------------|--------------|
 | Navigation | None | Clickable TOC |
 | Metadata | None | Title, Author, ISBN |
 | Typography | Plain | Headings, paragraphs, spacing |
@@ -57,10 +56,10 @@ You can also manually specify chapter separators if your file uses unusual forma
     }
   ]
       faq: [
-    { q: 'What if TXT file has no table of contents?' a: 'Converter automatically detects chapter markers (such as Chapter X Chapter X --- separator lines) to generate TOC. You can also manually specify chapter separators.' }
-    { q: 'Will converted file be much larger?' a: 'EPUB is essentially a ZIP package containing metadata and navigation info. Compared to TXT it usually increases only 5-10% in size — completely acceptable.' }
-    { q: 'How many words of TXT file are supported?' a: 'Theoretically unlimited. We have tested 5-million-word TXT files that convert normally.' }
-    { q: 'Does conversion preserve line breaks?' a: 'Yes. Meaningful line breaks (paragraph separators chapter breaks) are preserved. Unnecessary empty lines are cleaned up.' }
+    { q: 'What if TXT file has no table of contents?' a: 'Converter automatically detects chapter markers (such as Chapter X Chapter X --- separator lines) to generate TOC. You can also manually specify chapter separators.`},
+    { q: 'Will converted file be much larger?' a: 'EPUB is essentially a ZIP package containing metadata and navigation info. Compared to TXT it usually increases only 5-10% in size — completely acceptable.`},
+    { q: 'How many words of TXT file are supported?' a: 'Theoretically unlimited. We have tested 5-million-word TXT files that convert normally.`},
+    { q: 'Does conversion preserve line breaks?' a: 'Yes. Meaningful line breaks (paragraph separators chapter breaks) are preserved. Unnecessary empty lines are cleaned up.`},
     { q: 'Can I add custom metadata?' a: 'Yes. During conversion you can specify title author language ISBN and other metadata fields.' ],
 };
 }

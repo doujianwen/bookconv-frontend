@@ -1,34 +1,1 @@
-export const slug = 'fb2-to-epub';
-export const title = 'FB2 to EPUB Converter';
-export const level = 'B' as const;
-export const wordCount = 1200;
-
-export const content = {
-  hero: {
-    title: 'FB2 to EPUB - Convert Russian Format to Universal Standard',
-    subtitle: 'Transform FB2 (FictionBook) format into widely-compatible EPUB ebooks.'
-  }
-,
-
-  sections: [
-    {
-      heading: 'What is FB2 Format?',
-      body: **XML-Based Structure** — Uses XML to describe book content with semantic tags. **Novel-Focused** — Designed specifically for fiction and essays with special structures for chapters, notes, and poetry. **Regional Popularity** — Widely used in RuNet (Russian-language internet) but less common globally. **Limited Global Support** — Most non-Russian e-readers and apps do not natively support FB2. **Open Format** — Freely documented specification allows wide tool support.
-    }
-    {
-      heading: 'Conversion Quality',
-      body: `Our converter uses Calibre engine for reliable FB2 to EPUB transformation:
-
-- **Structure Preservation**: Chapters notes poems and annotations maintained
-- **Cover Image**: Book cover extracted and packaged into EPUB
-- **Author Information**: Author name and language metadata transferred correctly
-- **Language Tags**: FB2 lang attributes mapped to EPUB language metadata
-- **Text Encoding**: UTF-8 encoding ensures proper character display"
-    }
-
-  ],
-  faq: [
-    { q: 'What are the characteristics of FB2 format?' a: 'FB2 is an XML-based structured format designed for novels and essays. It supports chapters notes poetry and other literary structures but lacks support for complex typography.' }
-    { q: 'Will language tags be preserved?' a: 'Yes. FB2 lang attributes are correctly mapped to EPUB language metadata during conversion.' ],
-};
-};
+믯斿灸牯⁴潣獮⁴汳杵㴠✠扦ⴲ潴攭異❢਻硥潰瑲挠湯瑳琠瑩敬㴠✠䉆′潴䔠啐⁂潃癮牥整❲਻硥潰瑲挠湯瑳氠癥汥㴠✠❂愠⁳潣獮㭴攊灸牯⁴潣獮⁴潷摲潃湵⁴‽㈱〰਻攊灸牯⁴潣獮⁴潣瑮湥⁴‽੻†敨潲›੻††楴汴㩥✠䉆′潴䔠啐⁂‭潃癮牥⁴畒獳慩⁮潆浲瑡琠⁯湕癩牥慳⁬瑓湡慤摲Ⱗ †猠扵楴汴㩥✠牔湡晳牯⁭䉆′䘨捩楴湯潂歯 潦浲瑡椠瑮⁯楷敤祬挭浯慰楴汢⁥偅䉕攠潢歯⹳ਧ†ⱽਊ†敳瑣潩獮›ਜ਼††੻†††敨摡湩㩧✠桗瑡椠⁳䉆′潆浲瑡✿ਬ†††潢祤›⨧堪䱍䈭獡摥匠牴捵畴敲⨪钀唠敳⁳䵘⁌潴搠獥牣扩⁥潢歯挠湯整瑮眠瑩⁨敳慭瑮捩琠条⹳⨠个癯汥䘭捯獵摥⨪钀䐠獥杩敮⁤灳捥晩捩污祬映牯映捩楴湯愠摮攠獳祡⁳楷桴猠数楣污猠牴捵畴敲⁳潦⁲档灡整獲‬潮整ⱳ愠摮瀠敯牴⹹⨠刪来潩慮⁬潐異慬楲祴⨪钀圠摩汥⁹獵摥椠⁮畒敎⁴刨獵楳湡氭湡畧条⁥湩整湲瑥 畢⁴敬獳挠浯潭⁮汧扯污祬‮⨪楌業整⁤汇扯污匠灵潰瑲⨪钀䴠獯⁴潮⵮畒獳慩⁮ⵥ敲摡牥⁳湡⁤灡獰搠⁯潮⁴慮楴敶祬猠灵潰瑲䘠㉂‮⨪灏湥䘠牯慭⩴‪胢ₔ牆敥祬搠捯浵湥整⁤灳捥晩捩瑡潩⁮污潬獷眠摩⁥潴汯猠灵潰瑲✮ †素ਬ††੻†††敨摡湩㩧✠潃癮牥楳湯儠慵楬祴Ⱗ ††戠摯㩹传牵挠湯敶瑲牥甠敳⁳慃楬牢⁥湥楧敮映牯爠汥慩汢⁥䉆′潴䔠啐⁂牴湡晳牯慭楴湯਺ⴊ⨠匪牴捵畴敲倠敲敳癲瑡潩⩮㨪䌠慨瑰牥⁳潮整⁳潰浥⁳湡⁤湡潮慴楴湯⁳慭湩慴湩摥ⴊ⨠䌪癯牥䤠慭敧⨪›潂歯挠癯牥攠瑸慲瑣摥愠摮瀠捡慫敧⁤湩潴䔠啐ੂ‭⨪畁桴牯䤠普牯慭楴湯⨪›畁桴牯渠浡⁥湡⁤慬杮慵敧洠瑥摡瑡⁡牴湡晳牥敲⁤潣牲捥汴੹‭⨪慌杮慵敧吠条⩳㨪䘠㉂氠湡⁧瑡牴扩瑵獥洠灡数⁤潴䔠啐⁂慬杮慵敧洠瑥摡瑡੡‭⨪敔瑸䔠据摯湩⩧㨪唠䙔㠭攠据摯湩⁧湥畳敲⁳牰灯牥挠慨慲瑣牥搠獩汰祡 †素 崠ਬ†慦㩱嬠 †笠焠›圧慨⁴牡⁥桴⁥档牡捡整楲瑳捩⁳景䘠㉂映牯慭㽴Ⱗ愠›䘧㉂椠⁳湡堠䱍戭獡摥猠牴捵畴敲⁤潦浲瑡搠獥杩敮⁤潦⁲潮敶獬愠摮攠獳祡⹳䤠⁴畳灰牯獴挠慨瑰牥⁳潮整⁳潰瑥祲愠摮漠桴牥氠瑩牥牡⁹瑳畲瑣牵獥戠瑵氠捡獫猠灵潰瑲映牯挠浯汰硥琠灹杯慲桰⹹‧ⱽ †笠焠›圧汩⁬慬杮慵敧琠条⁳敢瀠敲敳癲摥✿‬㩡✠教⹳䘠㉂氠湡⁧瑡牴扩瑵獥愠敲挠牯敲瑣祬洠灡数⁤潴䔠啐⁂慬杮慵敧洠瑥摡瑡⁡畤楲杮挠湯敶獲潩⹮‧੽†੝㭽਍

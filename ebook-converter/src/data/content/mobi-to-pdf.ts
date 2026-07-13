@@ -1,34 +1,1 @@
-export const slug = 'mobi-to-pdf';
-export const title = 'MOBI to PDF Converter';
-export const level = 'B' as const;
-export const wordCount = 1200;
-
-export const content = {
-  hero: {
-    title: 'MOBI to PDF - Convert Kindle Books to Print-Ready Format',
-    subtitle: 'Transform MOBI ebooks into PDF format for printing and formal sharing.'
-  }
-,
-
-  sections: [
-    {
-      heading: 'Use Cases for MOBI to PDF Conversion',
-      body: **Print Output** — MOBI cannot be printed directly; PDF provides precise control over print layout. **Academic Citation** — PDF fixed layout supports accurate page number references. **Formal Sharing** — PDF is the safest format for sharing documents without formatting changes. **Archive Preservation** — PDF/A is an international standard for long-term document storage. **Legal Documents** — Contracts, agreements, and official records require PDF format.
-    }
-    {
-      heading: 'Conversion Features',
-      body: `Our converter uses Calibre engine with intelligent processing:
-
-- **Smart Page Breaking**: Avoids cutting paragraphs or images at page boundaries
-- **Font Embedding**: All fonts embedded in PDF for consistent rendering
-- **Image Quality**: Original image resolution maintained in PDF output
-- **Automatic Pagination**: Page numbers and headers added intelligently
-- **Metadata Transfer**: Book title author and publication info preserved in PDF properties"
-    }
-
-  ],
-  faq: [
-    { q: 'Can I print the converted PDF?' a: 'Yes. PDF is one of the best formats for printing with any printer producing perfect output.' }
-    { q: 'Will image quality decrease?' a: 'No. The converter maintains original image resolution from the MOBI file.' ],
-};
-};
+믯斿灸牯⁴潣獮⁴汳杵㴠✠潭楢琭ⵯ摰❦਻硥潰瑲挠湯瑳琠瑩敬㴠✠位䥂琠⁯䑐⁆潃癮牥整❲਻硥潰瑲挠湯瑳氠癥汥㴠✠❂愠⁳潣獮㭴攊灸牯⁴潣獮⁴潷摲潃湵⁴‽㈱〰਻攊灸牯⁴潣獮⁴潣瑮湥⁴‽੻†敨潲›੻††楴汴㩥✠位䥂琠⁯䑐⁆‭潃癮牥⁴楋摮敬䈠潯獫琠⁯牐湩⵴敒摡⁹潆浲瑡Ⱗ †猠扵楴汴㩥✠牔湡晳牯⁭位䥂攠潢歯⁳湩潴倠䙄映牯慭⁴潦⁲牰湩楴杮愠摮映牯慭⁬桳牡湩⹧ਧ†ⱽਊ†敳瑣潩獮›ਜ਼††੻†††敨摡湩㩧✠獕⁥慃敳⁳潦⁲位䥂琠⁯䑐⁆潃癮牥楳湯Ⱗ ††戠摯㩹✠⨪牐湩⁴畏灴瑵⨪钀䴠䉏⁉慣湮瑯戠⁥牰湩整⁤楤敲瑣祬※䑐⁆牰癯摩獥瀠敲楣敳挠湯牴汯漠敶⁲牰湩⁴慬潹瑵‮⨪捁摡浥捩䌠瑩瑡潩⩮‪胢ₔ䑐⁆楦數⁤慬潹瑵猠灵潰瑲⁳捡畣慲整瀠条⁥畮扭牥爠晥牥湥散⹳⨠䘪牯慭⁬桓牡湩⩧‪胢ₔ䑐⁆獩琠敨猠晡獥⁴潦浲瑡映牯猠慨楲杮搠捯浵湥獴眠瑩潨瑵映牯慭瑴湩⁧档湡敧⹳⨠䄪捲楨敶倠敲敳癲瑡潩⩮‪胢ₔ䑐⽆⁁獩愠⁮湩整湲瑡潩慮⁬瑳湡慤摲映牯氠湯ⵧ整浲搠捯浵湥⁴瑳牯条⹥⨠䰪来污䐠捯浵湥獴⨪钀䌠湯牴捡獴‬条敲浥湥獴‬湡⁤景楦楣污爠捥牯獤爠煥極敲倠䙄映牯慭⹴ਧ††ⱽ †笠 ††栠慥楤杮›䌧湯敶獲潩⁮敆瑡牵獥Ⱗ ††戠摯㩹传牵挠湯敶瑲牥甠敳⁳慃楬牢⁥湥楧敮眠瑩⁨湩整汬杩湥⁴牰捯獥楳杮਺ⴊ⨠匪慭瑲倠条⁥牂慥楫杮⨪›癁楯獤挠瑵楴杮瀠牡条慲桰⁳牯椠慭敧⁳瑡瀠条⁥潢湵慤楲獥ⴊ⨠䘪湯⁴浅敢摤湩⩧㨪䄠汬映湯獴攠扭摥敤⁤湩倠䙄映牯挠湯楳瑳湥⁴敲摮牥湩੧‭⨪浉条⁥畑污瑩⩹㨪传楲楧慮⁬浩条⁥敲潳畬楴湯洠楡瑮楡敮⁤湩倠䙄漠瑵異ੴ‭⨪畁潴慭楴⁣慐楧慮楴湯⨪›慐敧渠浵敢獲愠摮栠慥敤獲愠摤摥椠瑮汥楬敧瑮祬ⴊ⨠䴪瑥摡瑡⁡牔湡晳牥⨪›潂歯琠瑩敬愠瑵潨⁲湡⁤異汢捩瑡潩⁮湩潦瀠敲敳癲摥椠⁮䑐⁆牰灯牥楴獥 †素 崠ਬ†慦㩱嬠 †笠焠›䌧湡䤠瀠楲瑮琠敨挠湯敶瑲摥倠䙄✿‬㩡✠教⹳倠䙄椠⁳湯⁥景琠敨戠獥⁴潦浲瑡⁳潦⁲牰湩楴杮眠瑩⁨湡⁹牰湩整⁲牰摯捵湩⁧数晲捥⁴畯灴瑵✮素ਬ††⁻㩱✠楗汬椠慭敧焠慵楬祴搠捥敲獡㽥Ⱗ愠›丧⹯吠敨挠湯敶瑲牥洠楡瑮楡獮漠楲楧慮⁬浩条⁥敲潳畬楴湯映潲⁭桴⁥位䥂映汩⹥‧੽†੝㭽਍

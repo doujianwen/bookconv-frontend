@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
-import { getDisplayName } from "@/lib/utils"
+import { getDisplayName, getSlug } from "@/lib/utils"
 import { ToolPageClient } from "./ToolPageClient"
 import { CONTENT_MAP } from "@/data/content"
+import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/seo/schema"
 
 interface ToolPageProps {
   params: Promise<{ slug: string }>
@@ -24,19 +25,44 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   const title = contentData?.title || `${source} to ${target} Converter — Free Online`
   const subtitle = contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`
+  const description = subtitle
 
   return {
     title,
-    description: subtitle,
+    description,
+    keywords: [
+      source.toLowerCase(), target.toLowerCase(),
+      `${source} to ${target}`,
+      `${source} to ${target} converter`,
+      `convert ${source} to ${target}`,
+      `free ${source} to ${target} online`,
+      `online ${source} to ${target} converter`,
+      "ebook converter", "calibre", "free",
+    ],
+    alternates: {
+      canonical: `https://bookconv.com/convert/${slug}`,
+    },
     openGraph: {
       title,
-      description: subtitle,
-      type: "article",
+      description,
+      type: "website",
+      url: `https://bookconv.com/convert/${slug}`,
+      siteName: "BookConv",
+      images: [
+        {
+          url: `https://bookconv.com/og-image.svg`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description: subtitle,
+      description,
+      images: [`https://bookconv.com/og-image.svg`],
     },
   }
 }

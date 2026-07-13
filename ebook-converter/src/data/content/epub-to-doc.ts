@@ -13,8 +13,8 @@ export const content = {
   sections: [
     {
       heading: 'Why Convert EPUB to DOC?',
-      body: **Corporate Legacy Systems** — Many enterprise document management systems still require DOC files for internal sharing. **Academic Submission** — Some universities and journals still accept DOC-format manuscripts. **Email Compatibility** — Smaller file sizes make DOC files faster to transmit via email. **Older Software Support** — Legacy word processors and note-taking apps may only support DOC.
-    }
+      body: `**Corporate Legacy Systems** — Many enterprise document management systems still require DOC files for internal sharing. **Academic Submission** — Some universities and journals still accept DOC-format manuscripts. **Email Compatibility** — Smaller file sizes make DOC files faster to transmit via email. **Older Software Support** — Legacy word processors and note-taking apps may only support DOC.
+    },
     {
       heading: 'Conversion Considerations',
       body: `DOC is an older binary format with limitations compared to DOCX:
@@ -29,8 +29,8 @@ For most use cases DOCX (via our EPUB to DOCX converter) is recommended. However
 
   ],
   faq: [
-    { q: 'What is the difference between DOC and DOCX?' a: 'DOC is a binary format used in Word 97-2003 while DOCX is an OpenXML format based on ZIP compression introduced in Word 2007. DOCX supports more features and generally produces smaller files but DOC remains necessary for legacy system compatibility.' }
-    { q: 'Can I edit the converted DOC file?' a: 'Yes. The converted DOC file can be opened and edited in Microsoft Word LibreOffice Writer WPS Office and other compatible word processors.' }
+    { q: 'What is the difference between DOC and DOCX?' a: 'DOC is a binary format used in Word 97-2003 while DOCX is an OpenXML format based on ZIP compression introduced in Word 2007. DOCX supports more features and generally produces smaller files but DOC remains necessary for legacy system compatibility.`},
+    { q: 'Can I edit the converted DOC file?' a: 'Yes. The converted DOC file can be opened and edited in Microsoft Word LibreOffice Writer WPS Office and other compatible word processors.`},
     { q: 'Will images be preserved during conversion?' a: 'Basic images are preserved but complex layouts and formatting may be simplified due to DOC format limitations.' ],
 };
 }};

@@ -23,7 +23,7 @@ In 2011, Microsoft officially stopped supporting the LIT format and discontinued
 - **Small File Size**: Efficient compression but limited features
 
 EPUB has become the universal standard for ebooks, supported by Apple Books, Google Play Books, Kobo, Amazon Kindle (via conversion), and virtually all modern reading platforms. Converting LIT to EPUB is not just a format change — it is a migration to the future of digital reading.
-    }
+    },
     {
       heading: 'Why You Need to Convert LIT to EPUB'
 `
@@ -38,7 +38,7 @@ EPUB has become the universal standard for ebooks, supported by Apple Books, Goo
 **4. Annotations & Notes** — EPUB supports full annotations, highlights, bookmarks, and notes. These features are either missing or extremely limited in LIT.
 
 Whether you inherited LIT format books from family, collected rare professional texts, or saved personal documents — converting them now ensures they will not become unreadable in the future.
-    }
+    },
     {
       heading: 'What Your Converted EPUB Will Include'
 `
@@ -51,7 +51,7 @@ Whether you inherited LIT format books from family, collected rare professional 
 - **Smaller File Size** — EPUB uses ZIP compression, typically resulting in smaller files than LIT
 
 Our converter uses Calibre engine, which has been validated through tens of thousands of successful conversions to ensure formatting accuracy.
-    }
+    },
     {
       heading: 'Conversion Quality Guarantee'
 `
@@ -64,10 +64,10 @@ Our converter uses Calibre engine, which has been validated through tens of thou
 - **Metadata Preservation**: Title, author, and description information is extracted and added to TXT file header as comments
 
 For LIT files that included DRM protection purchased from Microsoft Store, note that DRM removal requires original purchase credentials. Contact our support if you need assistance with licensed files.
-    }
+    },
     {
       heading: 'LIT vs EPUB Comparison',
-      body: |---------|-----|------|
+      body: `|---------|-----|------|
 | Layout Type | Fixed (Fixed Layout) | Reflowable (Dynamic) |
 | Font Adjustment | ❌ No | ✅ Yes |
 | Night Mode | ❌ Difficult | ✅ Native Support |
@@ -79,12 +79,12 @@ For LIT files that included DRM protection purchased from Microsoft Store, note 
     }
   ]
       faq: [
-    { q: 'Will LIT file conversion lose content?' a: 'No. The LIT to EPUB conversion fully preserves text paragraphs images chapter structure and basic formatting. While LIT did support some bold styling the converted EPUB will maintain all text content with even better readability.' }
-    { q: 'Can the converted EPUB be read on Kindle?' a: 'Yes. Although Kindle natively supports AZW3/MOBI formats modern Kindle apps support receiving EPUB files via email which are then automatically converted to Kindle format. You can also use Calibre to convert EPUB to AZW3 in one click.' }
-    { q: 'My LIT file has DRM what should I do?' a: 'If your LIT file still has DRM protection it must be removed before conversion. This usually requires original purchase credentials or license information. Contact our support for assistance with licensed files.' }
-    { q: 'How many LIT files can I convert at once?' a: 'Without Pro plan you can convert up to 10MB per file. With Pro plan you can convert up to 50 files simultaneously with files up to 100MB each.' }
+    { q: 'Will LIT file conversion lose content?' a: 'No. The LIT to EPUB conversion fully preserves text paragraphs images chapter structure and basic formatting. While LIT did support some bold styling the converted EPUB will maintain all text content with even better readability.`},
+    { q: 'Can the converted EPUB be read on Kindle?' a: 'Yes. Although Kindle natively supports AZW3/MOBI formats modern Kindle apps support receiving EPUB files via email which are then automatically converted to Kindle format. You can also use Calibre to convert EPUB to AZW3 in one click.`},
+    { q: 'My LIT file has DRM what should I do?' a: 'If your LIT file still has DRM protection it must be removed before conversion. This usually requires original purchase credentials or license information. Contact our support for assistance with licensed files.`},
+    { q: 'How many LIT files can I convert at once?' a: 'Without Pro plan you can convert up to 10MB per file. With Pro plan you can convert up to 50 files simultaneously with files up to 100MB each.`},
     { q: 'Does the conversion preserve bookmarks?' a: 'Yes. If your LIT file contained bookmarks or chapter markers these will be converted to EPUB navigation entries (NCX/NAV) allowing you to jump to specific chapters in your reader.' ],
 };
-};
+
 `
 '

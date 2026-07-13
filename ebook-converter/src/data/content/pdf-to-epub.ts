@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'Why PDF Is Not Suitable for E-Reading',
+      heading: 'Why PDF Is Not Suitable for E-Reading',
       body: `PDF (Portable Document Format) was designed to be print-friendly — ensuring documents look exactly the same on any device. This is perfect for contracts, invoices, academic papers, and other formal scenarios. But for daily reading, it is a disaster.
 
 The core problem with PDF is that it uses fixed-layout formatting. Whether you read it on a 6-inch phone screen or a 13-inch tablet, PDF displays at its original size. This means:
@@ -25,7 +25,7 @@ The core problem with PDF is that it uses fixed-layout formatting. Whether you r
 In contrast, EPUB uses reflowable layout, which automatically adjusts pages based on your device and settings — this is why converting from PDF to EPUB is the most effective step to improve reading experience.
     },
     {
-      heading: 'Common Challenges in PDF to EPUB Conversion',
+      heading: 'Common Challenges in PDF to EPUB Conversion',
       body: `PDF to EPUB conversion is not a simple format change, because the two formats have completely different design philosophies. Here are common challenges and how we solve them:
 
 **1. Scanned PDFs (Image-based)**
@@ -41,8 +41,8 @@ Magazine-type PDFs often use multi-column layouts. Direct EPUB conversion causes
 PDF may use special fonts that need to be replaced with generic fonts in EPUB. We intelligently match closest system fonts to minimize visual loss.
     },
     {
-      heading: 'PDF vs EPUB Comparison',
-      body: |---------|-----|------|
+      heading: 'PDF vs EPUB Comparison',
+      `body: '|---------|-----|------|
 | Layout Type | Fixed (Fixed Layout) | Reflowable (Dynamic) |
 | Font Adjustable | ❌ No | ✅ Yes |
 | Night Mode | ❌ Difficult | ✅ Native Support |
@@ -51,9 +51,9 @@ PDF may use special fonts that need to be replaced with generic fonts in EPUB. W
 | Cross-Device Sync | ❌ No | ✅ Supported |
 | File Size | Large (full layout) | Small (ZIP compressed) |
 | Best For | Printing, Submission | Reading, Learning |
-    }
+    },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'Conversion Quality Guarantee',
       body: `We know that PDF to EPUB conversion is not about simply changing file extension. Our converter performs intelligent processing:
 
 - **Smart Table Detection**: Identifies tables and converts them to responsive HTML tables in EPUB
@@ -63,10 +63,9 @@ PDF may use special fonts that need to be replaced with generic fonts in EPUB. W
 - **Navigation Generation**: Creates clickable table of contents from PDF bookmarks and headings
 
 Our converter uses Calibre engine combined with custom preprocessing pipeline to handle the most complex PDF files.
-
     },
     {
-      heading: 'When Should You Convert PDF to EPUB?',
+      heading: 'When Should You Convert PDF to EPUB?',
       body: `Convert PDF to EPUB when:
 
 - **You want to read on mobile**: Phone/tablet reading experience is dramatically improved
@@ -83,11 +82,9 @@ Keep PDF if:
 
   ],
   faq: [
-    { q: 'Can scanned PDFs be converted to EPUB?' a: 'Yes but they require OCR processing. Regular PDFs (text-type) can be converted directly; scanned PDFs (image-type) need OCR text recognition first which takes longer. For scanned PDFs over 50 pages upgrade to Pro for faster processing.' }
-    { q: 'Will formatting be messed up after conversion?' a: 'For plain text PDFs (non-scanned) our converter preserves paragraph structure and basic formatting well. For complex layouts (like textbooks magazines) there may be some format adjustments but content integrity is unaffected. You can preview the conversion result before downloading.' }
-    { q: 'Will table of contents be lost in PDF to EPUB conversion?' a: 'No. If the original PDF contains bookmarks or outline the converted EPUB generates corresponding navigation document (NCX/NAV). You can click the table of contents in your reader to jump to specific chapters.' }
-    { q: 'Can the converted EPUB be used on mobile phones?' a: 'Absolutely! This is one of EPUB biggest advantages over PDF. The converted file can be opened on any EPUB reader on your phone (such as Apple Books Google Play Books Moon+ Reader etc.) and automatically reflows text based on screen size.' }
+    { q: 'Can scanned PDFs be converted to EPUB?' a: 'Yes but they require OCR processing. Regular PDFs (text-type) can be converted directly; scanned PDFs (image-type) need OCR text recognition first which takes longer. For scanned PDFs over 50 pages upgrade to Pro for faster processing.' },
+    { q: 'Will formatting be messed up after conversion?' a: 'For plain text PDFs (non-scanned) our converter preserves paragraph structure and basic formatting well. For complex layouts (like textbooks magazines) there may be some format adjustments but content integrity is unaffected. You can preview the conversion result before downloading.' },
+    { q: 'Will table of contents be lost in PDF to EPUB conversion?' a: 'No. If the original PDF contains bookmarks or outline the converted EPUB generates corresponding navigation document (NCX/NAV). You can click the table of contents in your reader to jump to specific chapters.' },
+    { q: 'Can the converted EPUB be used on mobile phones?' a: 'Absolutely! This is one of EPUB biggest advantages over PDF. The converted file can be opened on any EPUB reader on your phone (such as Apple Books Google Play Books Moon+ Reader etc.) and automatically reflows text based on screen size.' },
     { q: 'How long does PDF to EPUB conversion take?' a: 'For text-based PDF under 100 pages conversion typically takes 10-30 seconds. Scanned PDFs requiring OCR may take several minutes depending on page count and image quality.' ],
-};
-}}
 };

@@ -1,3 +1,17 @@
-﻿User-agent: *
+# BookConv — SEO-friendly robots.txt
+User-agent: *
 Allow: /
-Sitemap: https://your-domain.com/sitemap.xml
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+
+# Allow all search engines to crawl content pages
+Allow: /convert/
+Allow: /blog/
+Allow: /pricing/
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://bookconv.com/sitemap.xml

@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'Why Convert AZW3 to PDF?',
+      heading: 'Why Convert AZW3 to PDF?',
       body: `AZW3 is Amazon proprietary format designed specifically for Kindle devices. While excellent for reading on Kindles it has significant limitations for other purposes:
 
 **Printing**: AZW3 cannot be directly printed. Converting to PDF gives you precise control over print layout margins and page breaks.
@@ -21,11 +21,9 @@ export const content = {
 
 **Formal Sharing**: When sharing documents professionally PDF ensures the recipient sees exactly what you intended regardless of their device or software.
 
-**Long-term Archival**: PDF/A is an international standard for long-term document preservation far more stable than proprietary formats.
-`
-    },
+**Long-term Archival**: PDF/A is an international standard for long-term document preservation far more stable than proprietary formats.\n},
     {
-      heading: 'Conversion Quality Assurance',
+      heading: 'Conversion Quality Assurance',
       body: `The Calibre engine intelligently handles AZW3 unique formatting characteristics:
 
 - **Font Embedding**: All fonts are embedded in the PDF to ensure consistent display across all devices and printers
@@ -33,12 +31,10 @@ export const content = {
 - **Smart Pagination**: Automatic page breaking avoids cutting paragraphs images or tables mid-element
 - **Header/Footer Generation**: Page numbers book titles and chapter names are automatically added
 - **Table of Contents**: Bookmarks and chapter structure from AZW3 are converted to interactive PDF bookmarks
-- **Margin Optimization**: Margins are adjusted based on target paper size (A4 Letter etc.)
-`
-    },
+- **Margin Optimization**: Margins are adjusted based on target paper size (A4 Letter etc.)\n},
     {
-      heading: 'AZW3 vs PDF Feature Comparison',
-      body: |---------|------|-----|
+      heading: 'AZW3 vs PDF Feature Comparison',
+      `body: '|---------|------|-----|
 | Primary Use | E-reading | Printing & Sharing |
 | Layout | Reflowable | Fixed |
 | Font Size | User-adjustable | Fixed |
@@ -48,10 +44,11 @@ export const content = {
 | Cross-Device Display | Variable | Consistent |
 | File Size | Small | Medium-Large |
 | Editing | Difficult | Easy with PDF editors |
-    }
+    },
     {
-      heading: 'When to Keep AZW3 vs When to Convert',
-      body: - You are reading on a Kindle device
+      heading: 'When to Keep AZW3 vs When to Convert',
+      `
+-  You are reading on a Kindle device
 - You want adjustable font sizes and night mode
 - You prefer reflowable text for comfortable mobile reading
 
@@ -60,13 +57,11 @@ export const content = {
 - You require precise page numbers for citation
 - You are sharing with recipients who may not have Kindle
 - You need to archive for long-term preservation
-- You want to add watermarks or security features
-    }
+- You want to add watermarks or security features`
   ]
       faq: [
-    { q: 'Can the converted PDF be printed?' a: 'Absolutely. PDF is one of the most print-friendly formats available. Any printer will produce excellent results with proper DPI settings.' }
-    { q: 'Will image quality decrease in the PDF?' a: 'No. Our converter maintains original image resolution. Images in the PDF will be identical in quality to those in the source AZW3 file.' }
-    { q: 'Does the PDF include clickable chapter links?' a: 'Yes. Chapter bookmarks from the AZW3 file are converted to interactive PDF bookmarks allowing quick navigation within the document.' }
+    { q: 'Can the converted PDF be printed?' a: 'Absolutely. PDF is one of the most print-friendly formats available. Any printer will produce excellent results with proper DPI settings.' },
+    { q: 'Will image quality decrease in the PDF?' a: 'No. Our converter maintains original image resolution. Images in the PDF will be identical in quality to those in the source AZW3 file.' },
+    { q: 'Does the PDF include clickable chapter links?' a: 'Yes. Chapter bookmarks from the AZW3 file are converted to interactive PDF bookmarks allowing quick navigation within the document.' },
     { q: 'What is the typical file size increase?' a: 'PDF files are typically 20-40% larger than AZW3 due to embedded fonts and higher image resolution. This is normal and ensures print quality.' ],
 };
-}};

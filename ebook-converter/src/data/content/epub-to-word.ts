@@ -13,8 +13,8 @@ export const content = {
   sections: [
     {
       heading: 'Why Convert EPUB to Word?',
-      body: **Content Editing** — Extract book text for editing, proofreading, or rewriting. **Academic Writing** — Many researchers extract quotes and passages from ebooks for papers. **Publishing Prep** — Self-publishers often convert ebooks to Word for manuscript submission. **Translation Work** — Translators prefer working with Word documents for terminology management. **Team Collaboration** — Word supports track changes and comments for collaborative editing.
-    }
+      body: `**Content Editing** — Extract book text for editing, proofreading, or rewriting. **Academic Writing** — Many researchers extract quotes and passages from ebooks for papers. **Publishing Prep** — Self-publishers often convert ebooks to Word for manuscript submission. **Translation Work** — Translators prefer working with Word documents for terminology management. **Team Collaboration** — Word supports track changes and comments for collaborative editing.
+    },
     {
       heading: 'Conversion Quality',
       body: `Our converter produces clean well-structured Word documents:
@@ -28,7 +28,6 @@ export const content = {
 
   ],
   faq: [
-    { q: 'Does this convert to DOC or DOCX?' a: 'We convert to DOCX the modern Word format based on OpenXML. DOCX offers better compression more features and improved reliability compared to legacy DOC.' }
+    { q: 'Does this convert to DOC or DOCX?' a: 'We convert to DOCX the modern Word format based on OpenXML. DOCX offers better compression more features and improved reliability compared to legacy DOC.`},
     { q: 'Will formatting be preserved?' a: 'Basic formatting including headings bold italic lists and images is preserved. Complex layouts and custom fonts may be simplified due to format differences.' ],
-};
 };
