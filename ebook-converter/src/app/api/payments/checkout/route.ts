@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Free plan — no payment needed
+    // Free plan -- no payment needed
     if (plan.priceCents === 0) {
       return NextResponse.json({
         success: true,

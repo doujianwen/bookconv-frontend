@@ -9,12 +9,12 @@ import path from 'node:path';
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
 
-// Lazy-loaded queue instance — created on first access so static export
+// Lazy-loaded queue instance -- created on first access so static export
 // doesn't try to connect to Redis or start a worker at import time.
 let _queue: ReturnType<typeof makeQueue> | null = null;
 
 function makeQueue() {
-  return new Queue('conversion-queue', { connection: getRedisClient() as any });
+  return new Queue('ebook-conversions', { connection: getRedisClient() as any });
 }
 
 export function getConversionQueue() {
@@ -91,9 +91,9 @@ function getMimeType(ext: string): string {
 }
 
 export async function startWorker(): Promise<Worker> {
-  const worker = new Worker('conversion-queue', processConversion, {
+  const worker = new Worker('ebook-conversions', processConversion, {
     connection: getRedisClient(),
-    concurrency: 2,
+    concurrency: parseInt(process.env.WORKER_CONCURRENCY || '4', 10),
   });
 
   worker.on('completed', (job) => console.log('Job ' + job.id + ' completed'));

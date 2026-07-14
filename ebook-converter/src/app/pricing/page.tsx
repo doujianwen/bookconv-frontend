@@ -1,25 +1,24 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { getPlans, formatPrice } from "@/lib/payments/service"
 
 export const metadata: Metadata = {
-  title: "Pricing — Free & Pro Plans | BookConv",
-  description: "Start converting ebooks for free. Upgrade to Pro for batch conversion, larger files, and priority processing. No hidden fees. Plans from $0–$5/month.",
+  title: "Pricing -- Free & Pro Plans | BookConv",
+  description: "Start converting ebooks for free. Upgrade to Pro for batch conversion, larger files, and priority processing. No hidden fees. Plans from $0-$5/month.",
   alternates: { canonical: "https://bookconv.com/pricing" },
   openGraph: {
-    title: "Pricing — Free & Pro Plans | BookConv",
+    title: "Pricing -- Free & Pro Plans | BookConv",
     description: "Start converting ebooks for free. Upgrade to Pro for batch conversion, larger files, and priority processing.",
     url: "https://bookconv.com/pricing",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing — Free & Pro Plans | BookConv",
+    title: "Pricing -- Free & Pro Plans | BookConv",
     description: "Start converting ebooks for free. Upgrade to Pro for batch conversion.",
   },
-},
-}
+};
 
 export default function PricingPage() {
   const plans = getPlans()
@@ -138,7 +137,7 @@ export default function PricingPage() {
                 },
                 {
                   "@type": "FAQPage",
-              mainEntity: [
+                  "mainEntity": [
                 {
                   "@type": "Question",
                   name: "Can I cancel anytime?",

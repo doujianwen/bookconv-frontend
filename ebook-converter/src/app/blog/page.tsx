@@ -3,7 +3,7 @@ import Link from "next/link"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Ebook Conversion Blog — Guides, Tips & Format Comparisons | BookConv",
+  title: "Ebook Conversion Blog -- Guides, Tips & Format Comparisons | BookConv",
   description: "Expert guides on ebook conversion: format comparisons, how-to tutorials, and tips for getting the best results. Learn about EPUB, MOBI, AZW3, PDF and more.",
   alternates: { canonical: "https://bookconv.com/blog" },
   openGraph: {

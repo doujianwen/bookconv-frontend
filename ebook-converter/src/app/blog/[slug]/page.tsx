@@ -102,7 +102,6 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             description: post.content?.intro || "",
             datePublished: post.date,
             dateModified: post.date,
-            author: { "@type": "Person", name: post.author || "BookConv Team" },
             author: {
               "@type": "Person",
               name: post.author || "BookConv Team",
@@ -116,7 +115,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
             inLanguage: "en-US",
-            wordCount: (post.content?.intro || "").split("\s").length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split("\s").length, 0) || 0),,
+            wordCount: (post.content?.intro || "").split("\s").length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split("\s").length, 0) || 0),
             keywords: post.tags.join(", "),
           }),
         }}

@@ -1,4 +1,4 @@
-// Lemon Squeezy payment service — plan definitions + helpers
+// Lemon Squeezy payment service -- plan definitions + helpers
 const LS_WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
 
 export interface PlanConfig {

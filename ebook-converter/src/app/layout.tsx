@@ -7,7 +7,7 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://bookconv.com'),
   title: {
-    default: 'BookConv — Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
+    default: 'BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
     template: '%s | BookConv',
   },
   description: 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits. Powered by Calibre.',
@@ -26,20 +26,20 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://bookconv.com',
     siteName: 'BookConv',
-    title: 'BookConv — Free Online Ebook Format Converter',
+    title: 'BookConv -- Free Online Ebook Format Converter',
     description: 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.',
     images: [
       {
         url: 'https://bookconv.com/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'BookConv — Free Online Ebook Format Converter',
+        alt: 'BookConv -- Free Online Ebook Format Converter',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BookConv — Free Online Ebook Format Converter',
+    title: 'BookConv -- Free Online Ebook Format Converter',
     description: 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.',
     images: ['https://bookconv.com/og-image.svg'],
     creator: '@bookconv',
@@ -75,7 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='icon' href='/favicon.ico' sizes='48x48' />
         <link rel='icon' href='/icon.svg' type='image/svg+xml' sizes='any' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
-        <link rel='manifest' href='/manifest.json' />
+        <link rel='manifest' href='/manifest.json' />\n        <link rel='canonical' href='https://bookconv.com' />\n        <link rel='alternate' hrefLang='en-US' href='https://bookconv.com' />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />
         <meta name='msapplication-TileColor' content='#2563eb' />
@@ -157,7 +157,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
           <div className='mx-auto max-w-5xl space-y-2 px-4'>
-            <p>BookConv — Free online ebook converter. All files are automatically deleted within 1 hour.</p>
+            <p>BookConv -- Free online ebook converter. All files are automatically deleted within 1 hour.</p>
             <nav aria-label='Footer navigation' className='flex justify-center gap-4'>
               <Link href='/privacy' className='hover:text-gray-700'>Privacy Policy</Link>
               <Link href='/terms' className='hover:text-gray-700'>Terms of Service</Link>

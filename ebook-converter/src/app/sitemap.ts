@@ -1,12 +1,26 @@
 ﻿import { MetadataRoute } from 'next'
 import { CONVERSION_MAP } from '@/lib/conversion-map'
+import fs from 'fs'
+import path from 'path'
 
-// Blog post metadata — keep in sync with src/data/blog/
-const BLOG_POSTS = [
-  { slug: 'how-to-convert-epub-to-mobi', date: '2026-07-11' },
-  { slug: 'ebook-formats-explained', date: '2026-07-10' },
-  { slug: 'why-convert-lit-to-epub', date: '2026-07-09' },
-] as const
+const blogDir = path.join(process.cwd(), 'src', 'data', 'blog')
+const BLOG_POSTS = fs.readdirSync(blogDir)
+  .filter((f) => f.endsWith('.ts') && !f.endsWith('.d.ts'))
+  .map((f) => {
+    const mod = require(path.join(blogDir, f))
+    return { slug: mod.slug || f.replace(/\.ts$/, ''), date: mod.date || '2026-01-01' }
+  })
+
+const contentDir = path.join(process.cwd(), 'src', 'data', 'content')
+
+function getLevel(slug: string): 'A' | 'B' {
+  try {
+    const mod = require(path.join(contentDir, slug + '.ts'))
+    return mod.level === 'A' ? 'A' : 'B'
+  } catch {
+    return 'B'
+  }
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com'
@@ -23,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: baseUrl + '/convert/' + key,
     lastModified: new Date(),
     changeFrequency: 'monthly',
-    priority: 0.7,
+    priority: getLevel(key) === 'A' ? 0.8 : 0.7,
   }))
 
   const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({

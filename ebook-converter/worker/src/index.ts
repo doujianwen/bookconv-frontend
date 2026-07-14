@@ -15,6 +15,9 @@ const CONVERSION_DIR = process.env.CONVERSION_DIR || "/tmp/conversions"
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024
 const CONVERSION_TIMEOUT = parseInt(process.env.CONVERSION_TIMEOUT_SEC || "120", 10) * 1000
 
+const CONCURRENCY = parseInt(process.env.WORKER_CONCURRENCY || "4", 10);
+const RATE_LIMIT = parseInt(process.env.WORKER_RATE_LIMIT || "15", 10);
+
 interface ConversionJob {
   jobId: string
   inputPath: string
@@ -76,7 +79,7 @@ const worker = new Worker<ConversionJob>(
   },
   {
     connection: { url: REDIS_URL },
-    concurrency: 2,
+    concurrency: CONCURRENCY,
     limiter: {
       max: 5,
       duration: 60_000, // 5 jobs per minute per worker

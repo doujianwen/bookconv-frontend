@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const conversion = getConversion(source, target)
   const contentData = CONTENT_MAP[slug]
 
-  const title = contentData?.title || `${source} to ${target} Converter — Free Online`
+  const title = contentData?.title || `${source} to ${target} Converter -- Free Online`
   const subtitle = contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`
   const description = subtitle
 

@@ -1,3 +1,4 @@
+﻿import Link from 'next/link'
 "use client"
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
@@ -52,6 +53,11 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     { name: "Download result", text: "Once complete, download your converted " + targetDisplay + " file instantly." },
   ]
 
+  const relatedBlogPosts = [
+    { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", slug: "ebook-formats-explained", href: "/blog/ebook-formats-explained", excerpt: "Compare the three most popular ebook formats.", tags: ["epub", "azw3", "pdf"] },
+    { title: "How to Convert EPUB to MOBI for Free", slug: "how-to-convert-epub-to-mobi", href: "/blog/how-to-convert-epub-to-mobi", excerpt: "A complete guide to converting EPUB files to MOBI format.", tags: ["epub", "mobi"] },
+    { title: "Why You Should Convert LIT to EPUB", slug: "why-convert-lit-to-epub", href: "/blog/why-convert-lit-to-epub", excerpt: "Microsoft has discontinued LIT format support.", tags: ["lit", "epub"] },
+  ].filter((post) => post.tags.some((t) => source.includes(t) || target.includes(t))).slice(0, 3);
   const handleFileSelect = useCallback(
     async (file: File) => {
       setStatus("uploading")
@@ -127,6 +133,18 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 description: contentData?.hero?.subtitle || "Convert " + sourceDisplay + " to " + targetDisplay + " online for free.",
                 isPartOf: { "@id": baseUrl + "#website" },
                 inLanguage: "en",
+              },
+              {
+                "@type": "Article",
+                headline: "How to Convert " + sourceDisplay + " to " + targetDisplay + " Online — Free Guide",
+                description: contentData?.hero?.subtitle || "Free online " + sourceDisplay + " to " + targetDisplay + " converter guide with step-by-step instructions.",
+                author: { "@type": "Organization", name: "BookConv", url: baseUrl },
+                publisher: { "@type": "Organization", name: "BookConv", logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" } },
+                datePublished: "2026-01-01T00:00:00+00:00",
+                dateModified: "2026-07-14T00:00:00+00:00",
+                mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+                image: baseUrl + "/og-image.svg",
+                wordCount: keyword?.searchVolume ? Math.max(1200, keyword.searchVolume * 2) : 1500,
               },
               {
                 "@type": "FAQPage",
@@ -279,6 +297,19 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         {/* FAQ with Schema */}
         <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
 
+        {/* Related blog posts */}
+        <section className="rounded-xl border bg-gray-50 p-6">
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Guides &amp; Tutorials</h2>
+          <p className="mb-4 text-sm text-gray-600">Deepen your understanding with expert conversion guides:</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {relatedBlogPosts.map((post) => (
+              <Link key={post.slug} href={post.href} className="group block rounded-lg border bg-white px-4 py-3 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600">{post.title}</h3>
+                <p className="mt-1 text-xs text-gray-500">{post.excerpt}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
         {/* Related conversions */}
         <RelatedConversions currentSource={source} currentTarget={target} />
       </main>

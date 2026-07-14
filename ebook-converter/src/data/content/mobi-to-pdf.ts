@@ -1,1 +1,35 @@
-믯斿灸牯⁴潣獮⁴汳杵㴠✠潭楢琭ⵯ摰❦਻硥潰瑲挠湯瑳琠瑩敬㴠✠位䥂琠⁯䑐⁆潃癮牥整❲਻硥潰瑲挠湯瑳氠癥汥㴠✠❂愠⁳潣獮㭴攊灸牯⁴潣獮⁴潷摲潃湵⁴‽㈱〰਻攊灸牯⁴潣獮⁴潣瑮湥⁴‽੻†敨潲›੻††楴汴㩥✠位䥂琠⁯䑐⁆‭潃癮牥⁴楋摮敬䈠潯獫琠⁯牐湩⵴敒摡⁹潆浲瑡Ⱗ †猠扵楴汴㩥✠牔湡晳牯⁭位䥂攠潢歯⁳湩潴倠䙄映牯慭⁴潦⁲牰湩楴杮愠摮映牯慭⁬桳牡湩⹧ਧ†ⱽਊ†敳瑣潩獮›ਜ਼††੻†††敨摡湩㩧✠獕⁥慃敳⁳潦⁲位䥂琠⁯䑐⁆潃癮牥楳湯Ⱗ ††戠摯㩹✠⨪牐湩⁴畏灴瑵⨪钀䴠䉏⁉慣湮瑯戠⁥牰湩整⁤楤敲瑣祬※䑐⁆牰癯摩獥瀠敲楣敳挠湯牴汯漠敶⁲牰湩⁴慬潹瑵‮⨪捁摡浥捩䌠瑩瑡潩⩮‪胢ₔ䑐⁆楦數⁤慬潹瑵猠灵潰瑲⁳捡畣慲整瀠条⁥畮扭牥爠晥牥湥散⹳⨠䘪牯慭⁬桓牡湩⩧‪胢ₔ䑐⁆獩琠敨猠晡獥⁴潦浲瑡映牯猠慨楲杮搠捯浵湥獴眠瑩潨瑵映牯慭瑴湩⁧档湡敧⹳⨠䄪捲楨敶倠敲敳癲瑡潩⩮‪胢ₔ䑐⽆⁁獩愠⁮湩整湲瑡潩慮⁬瑳湡慤摲映牯氠湯ⵧ整浲搠捯浵湥⁴瑳牯条⹥⨠䰪来污䐠捯浵湥獴⨪钀䌠湯牴捡獴‬条敲浥湥獴‬湡⁤景楦楣污爠捥牯獤爠煥極敲倠䙄映牯慭⹴ਧ††ⱽ †笠 ††栠慥楤杮›䌧湯敶獲潩⁮敆瑡牵獥Ⱗ ††戠摯㩹传牵挠湯敶瑲牥甠敳⁳慃楬牢⁥湥楧敮眠瑩⁨湩整汬杩湥⁴牰捯獥楳杮਺ⴊ⨠匪慭瑲倠条⁥牂慥楫杮⨪›癁楯獤挠瑵楴杮瀠牡条慲桰⁳牯椠慭敧⁳瑡瀠条⁥潢湵慤楲獥ⴊ⨠䘪湯⁴浅敢摤湩⩧㨪䄠汬映湯獴攠扭摥敤⁤湩倠䙄映牯挠湯楳瑳湥⁴敲摮牥湩੧‭⨪浉条⁥畑污瑩⩹㨪传楲楧慮⁬浩条⁥敲潳畬楴湯洠楡瑮楡敮⁤湩倠䙄漠瑵異ੴ‭⨪畁潴慭楴⁣慐楧慮楴湯⨪›慐敧渠浵敢獲愠摮栠慥敤獲愠摤摥椠瑮汥楬敧瑮祬ⴊ⨠䴪瑥摡瑡⁡牔湡晳牥⨪›潂歯琠瑩敬愠瑵潨⁲湡⁤異汢捩瑡潩⁮湩潦瀠敲敳癲摥椠⁮䑐⁆牰灯牥楴獥 †素 崠ਬ†慦㩱嬠 †笠焠›䌧湡䤠瀠楲瑮琠敨挠湯敶瑲摥倠䙄✿‬㩡✠教⹳倠䙄椠⁳湯⁥景琠敨戠獥⁴潦浲瑡⁳潦⁲牰湩楴杮眠瑩⁨湡⁹牰湩整⁲牰摯捵湩⁧数晲捥⁴畯灴瑵✮素ਬ††⁻㩱✠楗汬椠慭敧焠慵楬祴搠捥敲獡㽥Ⱗ愠›丧⹯吠敨挠湯敶瑲牥洠楡瑮楡獮漠楲楧慮⁬浩条⁥敲潳畬楴湯映潲⁭桴⁥位䥂映汩⹥‧੽†੝㭽਍
+﻿export const slug = 'mobi-to-pdf';
+export const title = 'MOBI to PDF Converter';
+export const level = 'B' as const;
+export const wordCount = 1200;
+
+export const content = {
+  hero: {
+    title: 'MOBI to PDF - Convert Kindle Format to Universal Document',
+    subtitle: 'Transform MOBI (Kindle) files into PDF for printing, sharing, and universal document compatibility.',
+  },
+  sections: [
+    {
+      heading: 'What is MOBI Format?',
+      body: 'MOBI (Mobipocket) is a proprietary ebook format originally developed by Mobipocket S.A. and later acquired by Amazon. It became the default format for Kindle devices and apps before being gradually replaced by AZW3 and KFX formats. MOBI files contain reflowable text optimized for e-ink displays, with support for basic formatting, embedded fonts, and simple navigation. Despite its age, millions of ebook titles still exist in MOBI format, particularly older Kindle publications and self-published works. The format supports metadata including title, author, publisher, and ISBN, though its capabilities are more limited compared to modern formats like EPUB 3 or PDF.',
+    },
+    {
+      heading: 'Why Convert MOBI to PDF?',
+      body: 'PDF is the universal document format that preserves exact page layout, making it ideal for printing, academic citation, and professional document sharing. Converting MOBI to PDF transforms reflowable ebook content into fixed-layout pages that look identical across all devices and platforms. This is essential when you need to print an ebook, share a formatted document with colleagues, submit materials for review, or archive books in a standard document format. PDF also supports annotations, bookmarks, and digital signatures that MOBI cannot handle. For researchers and students, PDF conversion ensures that page numbers remain consistent when citing sources, which is impossible with reflowable formats where text position changes based on screen size and font settings.',
+    },
+    {
+      heading: 'Conversion Quality & Features',
+      body: 'Our converter produces high-quality PDF output from MOBI files using advanced rendering engines. Page Layout — Text is rendered at optimal page sizes maintaining readable font sizes and proper margins. Typography Preservation — Original font choices, paragraph styling, and indentation are preserved in the PDF output. Image Quality — All embedded images, illustrations, and cover art are converted at full resolution without quality loss. Table of Contents — MOBI navigation points become interactive PDF bookmarks for easy chapter jumping. Multi-Page Documents — Books of any length are converted with consistent formatting across all pages. File Optimization — PDF output is compressed intelligently to balance file size with visual quality, typically producing files between 2-10 MB per 300 pages depending on image density.',
+    },
+    {
+      heading: 'How to Use the Converter',
+      body: 'Upload your MOBI file by dragging it into the upload area or clicking to browse your computer. The system automatically detects the MOBI format and begins processing. You can select PDF page size preferences (A4, Letter, or custom dimensions) and choose whether to include headers and footers. Conversion typically takes 30 seconds to 2 minutes depending on book length and image content. Once complete, download your PDF file which you can open in any PDF reader, print directly, or share via email and cloud storage. Pro users benefit from batch conversion of multiple MOBI files and higher resolution output options.',
+    },
+  ],
+  faq: [
+    { q: 'Will the PDF maintain the original formatting?', a: 'Yes. Our converter renders MOBI content at high resolution preserving paragraph styling, images, and layout. The resulting PDF looks nearly identical to how the book appears on your Kindle device.' },
+    { q: 'Can I edit the PDF after conversion?', a: 'The PDF is generated as a static document. If you need editable text, consider converting MOBI to DOCX instead. PDF editing requires specialized software like Adobe Acrobat.' },
+    { q: 'How large will the PDF be?', a: 'File size depends on page count, images, and selected output quality. A typical 300-page novel produces a 3-8 MB PDF. Books with many illustrations may produce larger files.' },
+    { q: 'Is the text searchable in the PDF?', a: 'Yes. Since MOBI contains selectable text, the converted PDF maintains full text searchability. You can use Ctrl+F to find any word in the document.' },
+  ],
+};

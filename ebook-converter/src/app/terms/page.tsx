@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | BookConv — Free Ebook Converter",
+  title: "Terms of Service | BookConv -- Free Ebook Converter",
   description: "BookConv Terms of Service: free online ebook converter with usage limits. Acceptable use, liability limitations, and subscription terms.",
   alternates: { canonical: "https://bookconv.com/terms" },
   openGraph: {

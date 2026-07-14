@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -47,7 +47,7 @@ export default function LoginButton() {
           className="flex items-center gap-1 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut className="h-3 w-3" />
-          <span className="hidden sm:inline">登出</span>
+          <span className="hidden sm:inline">Sign Out</span>
         </button>
       </div>
     );
@@ -59,7 +59,7 @@ export default function LoginButton() {
       className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
     >
       <LogIn className="h-4 w-4" />
-      <span>登录</span>
+      <span>Sign In</span>
     </button>
   );
 }

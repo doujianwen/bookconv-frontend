@@ -13,15 +13,12 @@ export const content = {
   sections: [
     {
       heading: 'Why Convert HTML to EPUB?'
-,
       body: 'HTML is the universal web format but EPUB is the universal ebook format. Converting HTML to EPUB enables: Reflowable Text — Content adapts to any screen size. Better Typography — EPUB supports advanced font styling and layout. Offline Reading — No internet connection needed. Cross-Platform — Works on all e-readers, tablets, and phones. Professional Appearance — Clean, readable formatting for long-form content.',    },
     {
       heading: 'What Gets Converted?'
-,
       body: 'Our converter intelligently processes HTML documents: Headings become navigation chapters. Paragraphs maintain their structure and styling. Images are embedded and optimized. Links become clickable EPUB hyperlinks. Lists preserve their formatting. Tables are converted to responsive layouts. Metadata is extracted from HTML headers.',    },
     {
       heading: 'Conversion Quality'
-,
       body: 'Our converter intelligently transforms HTML to EPUB: Structure Detection — Automatically identifies headings, paragraphs, lists, and tables. Image Packaging — Extracts and optimizes embedded images for EPUB resources. Metadata Generation — Title, author, and description extracted from HTML headers. Navigation Creation — Generates proper EPUB table of contents from HTML heading hierarchy. CSS Optimization — Converts inline styles to clean EPUB-compatible CSS.',    }
   ],
       faq: [

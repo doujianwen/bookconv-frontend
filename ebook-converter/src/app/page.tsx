@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import Link from "next/link"
 import { useState, useMemo } from "react"
@@ -11,43 +11,9 @@ import { KEYWORDS } from "@/lib/constants"
 import { getSlug } from "@/lib/utils"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "BookConv — Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
-    description: "Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits.",
-    keywords: [
-      "ebook converter", "epub to mobi", "pdf to epub", "azw3 converter",
-      "free ebook conversion", "online file converter", "lit to epub",
-      "fb2 to epub", "docx to epub", "calibre online", "kindle format converter",
-      "ebook format conversion", "epub to pdf", "mobi to epub", "txt to epub"
-    ],
-    alternates: {
-      canonical: "https://bookconv.com",
-    },
-    openGraph: {
-      title: "BookConv — Free Online Ebook Format Converter",
-      description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
-      url: "https://bookconv.com",
-      type: "website",
-      siteName: "BookConv",
-      images: [
-        {
-          url: "https://bookconv.com/og-image.svg",
-          width: 1200,
-          height: 630,
-          alt: "BookConv — Free Online Ebook Format Converter",
-        },
-      ],
-      locale: "en_US",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "BookConv — Free Online Ebook Format Converter",
-      description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.",
-      images: ["https://bookconv.com/og-image.svg"],
-    },
-  }
-}const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+import { generateMetadata } from "./metadata"
+
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   eBook: BookOpen,
   Document: FileText,
   Image: Image,
@@ -370,7 +336,7 @@ export default function HomePage() {
                   { "@type": "Question", name: "Is BookConv free to use?", acceptedAnswer: { "@type": "Answer", text: "Yes! BookConv is completely free to use with no registration required. Free users get 5 conversions per hour with up to 10 MB file size." } },
                   { "@type": "Question", name: "What formats does BookConv support?", acceptedAnswer: { "@type": "Answer", text: "BookConv supports 17+ ebook formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents." } },
                   { "@type": "Question", name: "Is my data safe when I upload files?", acceptedAnswer: { "@type": "Answer", text: "Absolutely. All files are transferred over encrypted HTTPS connections and automatically deleted within 1 hour after conversion. We never read, store, or share your content." } },
-                  { "@type": "Question", name: "Do I need to install any software?", acceptedAnswer: { "@type": "Answer", text: "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file — no software installation needed." } },
+                  { "@type": "Question", name: "Do I need to install any software?", acceptedAnswer: { "@type": "Answer", text: "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file -- no software installation needed." } },
                   { "@type": "Question", name: "Can I convert Kindle books to EPUB?", acceptedAnswer: { "@type": "Answer", text: "Yes! BookConv supports converting AZW3 and MOBI (Kindle formats) to EPUB and other formats. Simply upload your Kindle file and choose your desired output format." } },
                 ],
               }),

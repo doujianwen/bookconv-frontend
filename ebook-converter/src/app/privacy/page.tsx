@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | BookConv — Your Data Stays Private",
+  title: "Privacy Policy | BookConv -- Your Data Stays Private",
   description: "BookConv privacy policy: All uploaded files are encrypted in transit and auto-deleted within 1 hour. We collect zero personal data. No cookies, no tracking.",
   alternates: { canonical: "https://bookconv.com/privacy" },
   openGraph: {
