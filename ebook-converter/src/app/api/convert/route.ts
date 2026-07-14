@@ -1,4 +1,4 @@
-﻿// src/app/api/convert/route.ts
+// src/app/api/convert/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getConversionQueue, ConversionJobData } from "@/lib/queue";
@@ -10,6 +10,15 @@ import {
 } from "@/lib/rate-limit";
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024;
+
+const ERROR_CODES = {
+  'ENFOON': 'FILE_NOT_FOUND',
+  'ENTABLX': 'FILE_IO_ERROR',
+  'TIMEOUT': 'CONVERSION_TIMEOUT',
+  'EMBUD': 'FILE_TO_LARGE',
+  'ENOSET': 'DOMAIN_ERROR',
+  'EPERMC': 'PERMISSION_ERROR',
+} as const;
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     if (!SUPPORTED_FORMATS.includes(sourceFormat)) {
       return NextResponse.json(
-        { error: `Unsupported source format: ${sourceFormat}` },
+        { error: `Unsupported source format: ${sourceFormat}`  },
         { status: 400, headers: rateHeaders }
       );
     }
@@ -74,6 +83,8 @@ export async function POST(request: NextRequest) {
     const job = await getConversionQueue().add("conversion", jobData, {
       removeOnComplete: true,
       removeOnFail: true,
+      retries: MAX_RETRIES - 1,
+      delay: 0,
     });
 
     return NextResponse.json(

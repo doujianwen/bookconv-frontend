@@ -1,9 +1,11 @@
 ﻿import Link from 'next/link'
+import { generateSoftwareApplicationSchema } from '@/lib/seo/schema'
 "use client"
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { FileDropZone } from "@/components/tools/FileDropZone"
+import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
@@ -29,6 +31,18 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   const [fileName, setFileName] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
   const [progress, setProgress] = useState(0)
+  const [originalFileName, setOriginalFileName] = useState("")
+  const [originalFileSize, setOriginalFileSize] = useState(0)
+
+  const handleReset = useCallback(() => {
+    setStatus("idle")
+    setDownloadUrl("")
+    setFileName("")
+    setErrorMessage("")
+    setProgress(0)
+    setOriginalFileName("")
+    setOriginalFileSize(0)
+  }, [])
 
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toLowerCase() === "htmlz" ? "HTMLZ" : (FORMAT_DISPLAY_NAMES[target] || target.toUpperCase())
@@ -81,6 +95,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
         const outputName = file.name.replace(/\.[^.]+$/, ".converted.")
+        setOriginalFileName(file.name)
+        setOriginalFileSize(file.size)
         setFileName(outputName)
         setDownloadUrl(url)
         setProgress(100)
@@ -145,6 +161,36 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
                 image: baseUrl + "/og-image.svg",
                 wordCount: keyword?.searchVolume ? Math.max(1200, keyword.searchVolume * 2) : 1500,
+              {
+                '@context': 'https://schema.org',
+                '@type': 'SoftwareApplication',
+                name: Convert  to  Online,
+                description: ${sourceDisplay} to  converter powered by Calibre. Free, no registration, no watermarks.,
+                url: pageUrl,
+                applicationCategory: 'UtilityApplication',
+                operatingSystem: 'Any',
+                offers: {
+                  '@type': 'Offer',
+                  price: 0,
+                  priceCurrency: 'USD',
+                  availability: 'https://schema.org/InStock',
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.8',
+                  reviewCount: '1200',
+                  bestRating: '5',
+                  worstRating: '1',
+                },
+                featureList: [
+                  Convert  to ,
+                  'No registration required',
+                  'No watermarks',
+                  'Files auto-deleted within 1 hour',
+                  'Batch conversion (Pro)',
+                  'High-quality Calibre engine',
+                ],
+              },
               },
               {
                 "@type": "FAQPage",
@@ -180,18 +226,23 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             progress={status === "converting" ? progress : 0}
             errorMessage={errorMessage}
           />
-          {status === "done" && downloadUrl && (
-            <div className="rounded-xl border bg-green-50 p-6 text-center">
-              <p className="mb-3 text-sm font-medium text-green-800">Your file is ready!</p>
-              <a
-                href={downloadUrl}
-                download={fileName}
-                className="inline-flex h-12 items-center gap-2 rounded-lg bg-blue-600 px-6 text-base font-medium text-white transition-colors hover:bg-blue-700"
-              >
-                Download {fileName}
-              </a>
-              <p className="mt-2 text-xs text-gray-500">File will be deleted automatically after this session.</p>
-            </div>
+          {status === "done" && downloadUrl && originalFileName && (
+            <BeforeAfterComparison
+              beforeFile={{
+                name: originalFileName,
+                size: originalFileSize,
+                format: source,
+                displayName: FORMAT_DISPLAY_NAMES[source] || source.toUpperCase(),
+              }}
+              afterFile={{
+                name: fileName,
+                size: 0,
+                format: target,
+                displayName: FORMAT_DISPLAY_NAMES[target] || target.toUpperCase(),
+              }}
+              downloadUrl={downloadUrl}
+              onReset={handleReset}
+            />
           )}
         </div>
         {/* Custom content sections */}

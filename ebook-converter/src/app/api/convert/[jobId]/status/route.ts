@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getConversionQueue } from '@/lib/queue';
+import { getJobStatus } from '@/lib/queue';
 
 export async function GET(
   _request: NextRequest,
@@ -8,28 +8,30 @@ export async function GET(
   const { jobId } = await params;
 
   try {
-    const job = await getConversionQueue().getJob(jobId);
+    const status = await getJobStatus(jobId);
 
-    if (!job) {
+    if (!status) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
 
-    // Determine status from job attributes and progress
-    const isCompleted = !!job.returnvalue;
-    const isFailed = !!job.failedReason;
-    const progress = (job.progress as any) || 0;
+    // Calculate ETA remaining (seconds)
+    let etaSeconds: number | undefined;
+    if (status.eta) {
+      etaSeconds = Math.round(status.eta / 1000);
+    }
 
-    let status: 'pending' | 'processing' | 'completed' | 'failed' = 'pending';
-    if (isCompleted) status = 'completed';
-    else if (isFailed) status = 'failed';
-    else if (progress > 0) status = 'processing';
-
+    // Return detailed progress info
     return NextResponse.json({
       jobId,
-      status,
-      progress: typeof progress === 'number' ? progress : 0,
-      error: job.failedReason,
-      result: isCompleted ? job.returnvalue : undefined,
+      status: status.status,
+      progress: status.progress,
+      attempt: status.attempt,
+      maxRetries: status.maxRetries,
+      eta: etaSeconds, // seconds remaining
+      error: status.error,
+      result: status.result || undefined,
+      createdAt: new Date(status.createdAt).toISOString(),
+      updatedAt: new Date(status.updatedAt).toISOString(),
     });
   } catch (err: any) {
     console.error('GET /api/convert/[jobId]/status error:', err.message);

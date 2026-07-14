@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getDisplayName, getSlug } from "@/lib/utils"
@@ -48,6 +48,10 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
     ],
     alternates: {
       canonical: `https://bookconv.com/convert/${slug}`,
+      languages: {
+        'en': `/convert/${slug}`,
+        'es': `/es/convert/${slug}`,
+      },
     },
     openGraph: {
       title,

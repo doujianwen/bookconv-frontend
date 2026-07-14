@@ -1,0 +1,35 @@
+﻿## Phase 2 异步转换队列 — 执行指令
+
+### 当前状态
+此 Issue 已分配给你，请立即开始执行。
+
+### 执行步骤
+
+#### Step 1: 代码分析（30 分钟）
+- 读取 src/lib/queue.ts 了解当前队列实现
+- 读取 src/app/api/convert/route.ts 了解转换入口
+- 读取 src/app/api/convert/[jobId]/status/route.ts 了解状态接口
+- 读取 src/app/api/convert/[jobId]/result/route.ts 了解结果接口
+- 输出：现有代码的问题清单和改进点
+
+#### Step 2: 设计改进方案（30 分钟）
+基于分析结果，提出以下改进：
+1. **优先级队列** — Pro 用户任务优先处理
+2. **进度追踪** — status API 返回进度百分比和 ETA
+3. **失败重试** — 自动重试机制（最多 3 次）
+4. **临时文件清理** — result API 生成 24h 过期下载链接
+
+#### Step 3: 实施开发（2 小时）
+按以下顺序修改文件：
+1. src/lib/queue.ts — 添加优先级支持和重试逻辑
+2. src/app/api/convert/[jobId]/status/route.ts — 升级进度追踪
+3. src/app/api/convert/[jobId]/result/route.ts — 实现临时下载链接
+4. src/app/api/convert/route.ts — 集成重试机制
+
+#### Step 4: 测试验证（30 分钟）
+- 编写单元测试覆盖新队列逻辑
+- 测试 API 端点返回正确的状态码
+- 验证失败重试机制正常工作
+
+### 交付要求
+每完成一个 Step，请在本 Issue 下回复进度。全部完成后汇总改动文件列表。
