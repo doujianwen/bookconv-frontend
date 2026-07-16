@@ -1,4 +1,4 @@
-﻿import type { NextConfig } from "next"
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   // ===========================================================================
@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
           // Merge small vendor chunks into one
           vendors: {
             test: /[\\/]node_modules[\\/]/,
-            name(module) {
+            name(module: any) {
               const packageName = module.context.match(
                 /[\\/]node_modules[\\/](.*?)([\\/]|$)/
               )?.[1];
@@ -59,8 +59,6 @@ const nextConfig: NextConfig = {
     // Optimize image quality vs size tradeoff
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Increase max image width/height for responsive images
-    widths: [320, 480, 640, 768, 1024, 1280, 1920],
     // Lower quality for faster TTFB, let CDN handle further optimization
     qualities: [60, 75, 85, 95],
     // Enable dangerouslyAllowSVG — we serve our own SVGs

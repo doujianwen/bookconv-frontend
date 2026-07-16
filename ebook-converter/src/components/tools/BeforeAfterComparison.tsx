@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { Download, FileText, ArrowRight, CheckCircle2 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface FileMeta {
   name: string
@@ -64,9 +65,24 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
             <span>{formatBytes(afterFile.size)}</span>
           </div>
           {sizeDiff !== 0 && (
-            <p className="mt-1 text-xs">
-              Size change: {sizeDiffLabel} ({sizeDiffPercent > 0 ? "+" : ""}{sizeDiffPercent}%)
-            </p>
+            <div className="mt-2 space-y-1">
+              <p className="text-xs">
+                Size change: {sizeDiffLabel} ({sizeDiffPercent > 0 ? "+" : ""}{sizeDiffPercent}%)
+              </p>
+              {/* Size change visualization bar */}
+              <div className="h-1.5 w-full rounded-full bg-gray-200">
+                <div
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-500",
+                    sizeDiff >= 0 ? "bg-orange-400" : "bg-green-400"
+                  )}
+                  style={{ width: Math.min(Math.abs(sizeDiffPercent), 100) + "%" }}
+                />
+              </div>
+              <p className="text-[10px] text-gray-400">
+                {sizeDiff >= 0 ? "↑ File grew" : "↓ File shrunk"} by {formatBytes(Math.abs(sizeDiff))}
+              </p>
+            </div>
           )}
         </div>
       </div>

@@ -1,12 +1,12 @@
-
-# build
+# Build
 .next/
 out/
+dist/
 
-# dependencies
+# Dependencies
 node_modules/
 
-# env
+# Env
 .env
 .env.local
 .env*.local
@@ -18,3 +18,40 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Debug / Fix scripts (development artifacts)
+*.py
+*.js
+!next.config.*
+!tailwind.config.*
+!postcss.config.*
+fix*.js
+fix*.py
+_fix*.py
+debug*.py
+scan*.txt
+tsc_*.txt
+check.txt
+temp*.txt
+check.py
+qa_*
+reply.md
+comment_*.txt
+*_raw.json
+pdf-to-epub-orig.ts
+gen_files.py
+
+# Backup files
+*.bak
+*.original
+*.tmp
+
+# Test fixtures
+_final_test*.ts
+_test*.ts
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

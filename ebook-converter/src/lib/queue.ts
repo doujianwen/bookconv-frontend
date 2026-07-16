@@ -7,10 +7,10 @@ import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node
 import path from 'node:path';
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
-const MAX_RETRIES = parseInt(process.env.MAX_CONVERSION_RETRIES || '3', 10);
-let _queue = null;
-let _worker = null;
-let _queueEvents = null;
+export const MAX_RETRIES = parseInt(process.env.MAX_CONVERSION_RETRIES || '3', 10);
+let _queue: any = null;
+let _worker: any = null;
+let _queueEvents: any = null;
 function makeQueue() {
   return new Queue('ebook-conversions', { connection: getRedisClient() });
 }
@@ -24,12 +24,14 @@ export type ConversionJobData = {
   targetFormat: string;
   jobId: string;
   userId?: string;
+  priority?: number; // 1 (high/Pro) - 3 (low/free)
 };
 export type ConversionJobResult = {
   base64Data: string;
   extension: string;
   mimeType: string;
   downloadUrl?: string;
+  fileSize?: number;
 };
 export type JobStatusResponse = {
   jobId: string;
@@ -44,10 +46,10 @@ export type JobStatusResponse = {
   updatedAt: number;
 };
 const execFileAsync = promisify(execFile);
-async function cleanupDir(dir) {
+async function cleanupDir(dir: string) {
   try { rmSync(dir, { recursive: true, force: true }); } catch {}
 }
-function getMimeType(ext) {
+function getMimeType(ext: string): string {
   const map = {
     epub: 'application/epub+zip', azw3: 'application/x-mobipocket-ebook',
     pdf: 'application/pdf', txt: 'text/plain', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -56,9 +58,9 @@ function getMimeType(ext) {
     cbr: 'application/vnd.comicbook-rar', cbz: 'application/vnd.comicbook+zip',
     djvu: 'image/vnd.djvu', doc: 'application/msword', lit: 'application/x-ms-reader',
   };
-  return map[ext] || 'application/octet-stream';
+  return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
-async function executeConversion(fileBuffer, sourceFormat, targetFormat, jobId) {
+async function executeConversion(fileBuffer: string, sourceFormat: string, targetFormat: string, jobId: string) {
   const jobDir = path.join(UPLOAD_DIR, jobId);
   mkdirSync(jobDir, { recursive: true });
   const inputPath = path.join(jobDir, jobId + '.' + sourceFormat);
@@ -71,37 +73,37 @@ async function executeConversion(fileBuffer, sourceFormat, targetFormat, jobId) 
     if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
     const outputData = readFileSync(outputPath);
     await cleanupDir(jobDir);
-    return { base64Data: outputData.toString('base64'), extension: ext, mimeType: getMimeType(ext) };
-  } catch (err) {
+    return { base64Data: outputData.toString('base64'), extension: ext, mimeType: getMimeType(ext), fileSize: outputData.length };
+  } catch (err: any) {
     await cleanupDir(jobDir);
     throw err;
   }
 }
-export async function processConversion(job) {
+export async function processConversion(job: any) {
   const { fileBuffer, sourceFormat, targetFormat, jobId, userId } = job.data;
-  const maxRetries = MAX_RETRIES;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries });
+  const maxRetryCount = MAX_RETRIES;
+  for (let attempt = 1; attempt <= maxRetryCount; attempt++) {
+    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount });
     try {
       const result = await executeConversion(fileBuffer, sourceFormat, targetFormat, jobId);
       job.updateProgress(100);
       return result;
     } catch (err) {
-      const errMsg = err.message || 'Unknown conversion error';
-      console.error('Conversion attempt ' + attempt + '/' + maxRetries + ' failed for job ' + jobId + ': ' + errMsg);
-      if (attempt < maxRetries) {
+      const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
+      console.error('Conversion attempt ' + attempt + '/' + maxRetryCount + ' failed for job ' + jobId + ': ' + errMsg);
+      if (attempt < maxRetryCount) {
         const delayMs = Math.pow(2, attempt) * 1000;
-        job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries, error: errMsg, retryInMs: delayMs });
+        job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: errMsg, retryInMs: delayMs });
         throw err;
       } else {
-        job.updateProgress({ percentage: 0, attempt, maxRetries, error: errMsg });
+        job.updateProgress({ percentage: 0, attempt, maxRetries: maxRetryCount, error: errMsg });
         throw err;
       }
     }
   }
   throw new Error('Conversion failed after all retries');
 }
-export async function getJobStatus(jobId) {
+export async function getJobStatus(jobId: string) {
   const queue = getConversionQueue();
   const job = await queue.getJob(jobId);
   if (!job) return null;
@@ -111,13 +113,15 @@ export async function getJobStatus(jobId) {
   else if (progress && typeof progress === 'object' && 'percentage' in progress) progressValue = progress.percentage || 0;
   let eta;
   if (job.state === 'active' && progressValue > 0 && progressValue < 100) {
-    const elapsed = Date.now() - (job.processedAt || job.timestamp);
-    const rate = progressValue / elapsed;
+      const elapsed = Date.now() - job.timestamp;
+      if (elapsed > 0) {
+        const rate = progressValue / elapsed;
     if (rate > 0) eta = Math.ceil((100 - progressValue) / rate);
+      }
   }
   return {
     jobId, status: job.state || 'waiting', progress: progressValue,
-    attempt: job.attemptsMade + 1, maxRetries, eta,
+    attempt: job.attemptsMade + 1, maxRetries: MAX_RETRIES, eta,
     error: job.failedReason || undefined,
     result: job.state === 'completed' ? job.returnvalue : undefined,
     createdAt: job.timestamp, updatedAt: job.updatedAt || job.timestamp,
@@ -130,22 +134,48 @@ export async function startWorker() {
     connection: getRedisClient(), concurrency,
     limiter: { max: concurrency, duration: 1000 },
   });
-  _worker.on('completed', (job) => {
+  _worker.on('completed', (job: any) => {
     console.log('Job ' + job.id + ' completed');
-    getConversionQueue().trim(100, true);
-    getConversionQueue().trim(50, false);
+      // Keep jobs for 7 days instead of removing immediately
+      getConversionQueue().trim(1000, false);
   });
-  _worker.on('failed', (job, err) => {
-    console.error('Job ' + (job?.id || '?') + ' failed after ' + (job?.attemptsMade || 0) + ' attempts: ' + err.message);
+  _worker.on('failed', async (job: any, err: any) => {
+    const jobIdStr = job?.id || "?";
+    console.error('Job ' + jobIdStr + ' failed after ' + (job?.attemptsMade || 0) + ' attempts: ' + err.message);
+
+    // Send alert notification for failed jobs
+    await notifyFailedJob(jobIdStr, job?.data, err.message);
   });
-  _worker.on('error', (err) => { console.error('Worker error:', err.message); });
+  _worker.on('error', (err: any) => { console.error('Worker error:', err.message); });
   return _worker;
 }
+
+// Failed job alert notification
+async function notifyFailedJob(jobId: string, jobData: any, error: string) {
+  try {
+    const { sourceFormat, targetFormat, userId } = jobData || {};
+    const message = '[Alert] Conversion job ' + jobId + ' failed.\n' +
+      'Source: ' + sourceFormat + ' -> Target: ' + targetFormat + '\n' +
+      'Error: ' + error + '\n' +
+      'User: ' + (userId || 'anonymous') + '\n' +
+      'Timestamp: ' + new Date().toISOString();
+
+    // Log to file or send to monitoring service
+    console.error(message);
+
+    // TODO: Integrate with real notification service (Slack, email, etc.)
+    // Example: await sendSlackAlert(message);
+    // Example: await sendEmailNotification(userId, message);
+  } catch (alertErr: any) {
+    console.error('Failed to send alert notification:', alertErr.message);
+  }
+}
+
 export function startQueueEvents() {
   if (_queueEvents) return _queueEvents;
   _queueEvents = new QueueEvents('ebook-conversions', { connection: getRedisClient() });
-  _queueEvents.on('completed', (data) => console.log('QueueEvent: job ' + data.jobId + ' completed'));
-  _queueEvents.on('failed', (data) => console.log('QueueEvent: job ' + data.jobId + ' failed: ' + data.reason));
+  _queueEvents.on('completed', (data: any) => console.log('QueueEvent: job ' + data.jobId + ' completed'));
+  _queueEvents.on('failed', (data: any) => console.log('QueueEvent: job ' + data.jobId + ' failed: ' + (data.failedReason || 'unknown')));
   return _queueEvents;
 }
 export async function closeWorker() { if (_worker) { await _worker.close(); _worker = null; } }

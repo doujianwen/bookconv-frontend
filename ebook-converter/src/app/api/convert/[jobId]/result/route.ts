@@ -1,12 +1,14 @@
+// src/app/api/convert/[jobId]/result/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getJobStatus, type ConversionJobResult } from '@/lib/queue';
-import { uploadToR2, isR2Configured } from '@/lib/storage/r2t';
+import { getJobStatus } from '@/lib/queue';
+import { uploadToR2, isR2Configured } from '@/lib/storage/r2';
 
-const DOWNLOAD_TUL_HOURS = 24;
+const DOWNLOAD_TTL_HOURS = 24;
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ jobId: string }> }) {
+  { params }: { params: Promise<{ jobId: string }> },
+) {
   const { jobId } = await params;
 
   try {
@@ -16,54 +18,48 @@ export async function GET(
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
 
-    // Check if job has completed
     if (status.status !== 'completed') {
-      return NextResponse.json({
-        error: 'Conversion not yet completed',
-        status: status.status,
-      }, { status: 202 });
+      return NextResponse.json(
+        { error: 'Conversion not yet completed', status: status.status },
+        { status: 202 },
+      );
     }
 
-    const result = status.result as ConversionJobResult | undefined;
+    const result = status.result as { base64Data?: string; extension?: string; mimeType?: string } | undefined;
     if (!result || !result.base64Data) {
       return NextResponse.json({ error: 'No result available' }, { status: 500 });
     }
 
-    // Use R2 if configured - generate temporary download link
+    const buffer = Buffer.from(result.base64Data, 'base64');
+    const ext = result.extension || 'bin';
+
     if (isR2Configured()) {
       try {
-        const buffer = Buffer.from(result.base64Data, 'base64');
-        const key = `temp/{jobId}.{result.extension}`;
+        const key = 'temp/' + jobId + '.' + ext;
         await uploadToR2(key, buffer);
-
-        // Generate expiration timestamp (24 hours)
-        const expires = Date.now().getTime() + 24 * 3600 * 1000;
+        const expires = Date.now() + DOWNLOAD_TTL_HOURS * 3600 * 1000;
 
         return NextResponse.json({
-          downloadUrl: `/api/download/temp?k=${escape(key)}&expires=${expires}`,
-          base64Data: result.base64Data,
-          extension: result.extension,
-          mimeType: result.mimeType,
-          expires: expires,
+          downloadUrl: '/api/download/temp?k=' + encodeURIComponent(key) + '&expires=' + expires,
+          extension: ext,
+          mimeType: result.mimeType || 'application/octet-stream',
+          expires,
         });
-      } catch (err) {
-        console.error('R2 appload failed, falling back to direct download:', err.message);
+      } catch (uploadErr: unknown) {
+        const msg = uploadErr instanceof Error ? uploadErr.message : 'Unknown error';
+        console.error('R2 upload failed, falling back to direct download:', msg);
       }
     }
 
-    // Fallback: direct base64 download
-    const buffer = Buffer.from(result.base64Data, 'base64');
-
-    return new NextResponse(buffer, {
-      headers: {
-        'Content-Type': result.mimeType || 'application/octet-stream',
-        'Content-Disposition': 'attachment; filename="converted.' + result.extension + '"',
-        'Content-Length': buffer.length.toString(),
-        'X-Download-Expires': `${date.now().getTime() + 24 * 3600 * 1000}`,
-      },
+    return NextResponse.json({
+      downloadUrl: 'data:' + (result.mimeType || 'application/octet-stream') + ';base64,' + result.base64Data,
+      extension: ext,
+      mimeType: result.mimeType || 'application/octet-stream',
+      expires: Date.now() + DOWNLOAD_TTL_HOURS * 3600 * 1000,
     });
-  } catch (err: any) {
-    console.error('GET /api/convert/[jobId]/result error:', err.message);
-    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Internal server error';
+    console.error('GET /api/convert/[jobId]/result error:', message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 
-interface EbookMetadata {
+export interface EbookMetadata {
   title?: string
   author?: string
   publisher?: string
