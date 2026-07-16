@@ -129,10 +129,13 @@ export async function getJobStatus(jobId: string) {
 }
 export async function startWorker() {
   if (_worker) return _worker;
-  const concurrency = parseInt(process.env.WORKER_CONCURRENCY || '4', 10);
+  // Rate limit: max 5 jobs per minute (Calibre is CPU-intensive)
+  const RATE_LIMIT_MAX = 5;
+  const RATE_LIMIT_DURATION = 60_000; // 1 minute
   _worker = new Worker('ebook-conversions', processConversion, {
-    connection: getRedisClient(), concurrency,
-    limiter: { max: concurrency, duration: 1000 },
+    connection: getRedisClient(),
+    concurrency: RATE_LIMIT_MAX,
+    limiter: { max: RATE_LIMIT_MAX, duration: RATE_LIMIT_DURATION },
   });
   _worker.on('completed', (job: any) => {
     console.log('Job ' + job.id + ' completed');
