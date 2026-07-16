@@ -1,4 +1,4 @@
-﻿export const slug = 'fb2-to-epub';
+export const slug = 'fb2-to-epub';
 export const title = 'FB2 to EPUB Converter';
 export const level = 'B' as const;
 export const wordCount = 1200;

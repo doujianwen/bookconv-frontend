@@ -9,6 +9,9 @@ import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
+import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
+import { TestimonialCard } from "@/components/tools/TestimonialCard"
+import { TESTIMONIALS } from "@/data/testimonials"
 
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
@@ -161,13 +164,14 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
                 image: baseUrl + "/og-image.svg",
                 wordCount: keyword?.searchVolume ? Math.max(1200, keyword.searchVolume * 2) : 1500,
+              },
               {
                 '@context': 'https://schema.org',
                 '@type': 'SoftwareApplication',
-                name: Convert  to  Online,
-                description: ${sourceDisplay} to  converter powered by Calibre. Free, no registration, no watermarks.,
+                name: sourceDisplay + " to " + targetDisplay + " Online",
+                description: sourceDisplay + " to " + targetDisplay + " converter powered by Calibre. Free, no registration, no watermarks.",
                 url: pageUrl,
-                applicationCategory: 'UtilityApplication',
+                applicationCategory: 'Utility',
                 operatingSystem: 'Any',
                 offers: {
                   '@type': 'Offer',
@@ -183,14 +187,13 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                   worstRating: '1',
                 },
                 featureList: [
-                  Convert  to ,
+                  sourceDisplay + " to " + targetDisplay,
                   'No registration required',
                   'No watermarks',
                   'Files auto-deleted within 1 hour',
                   'Batch conversion (Pro)',
                   'High-quality Calibre engine',
                 ],
-              },
               },
               {
                 "@type": "FAQPage",
@@ -358,6 +361,16 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600">{post.title}</h3>
                 <p className="mt-1 text-xs text-gray-500">{post.excerpt}</p>
               </Link>
+            ))}
+          </div>
+        </section>
+        {/* Social Proof -- Testimonials */}
+        <section className="mt-12 rounded-xl border bg-gray-50 p-6">
+          <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">Trusted by thousands of readers worldwide</h3>
+          <SocialProofBanner />
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TESTIMONIALS.slice(0, 3).map((t, i) => (
+              <TestimonialCard key={i} name={t.name} role={t.role} rating={t.rating} text={t.text} />
             ))}
           </div>
         </section>

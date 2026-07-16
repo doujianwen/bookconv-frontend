@@ -1,4 +1,4 @@
-﻿// src/lib/redis.ts
+// src/lib/redis.ts
 import IORedis from 'ioredis';
 
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';

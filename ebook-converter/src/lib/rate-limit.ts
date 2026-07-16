@@ -1,4 +1,4 @@
-﻿// src/lib/rate-limit.ts
+// src/lib/rate-limit.ts
 import { getRedisClient } from "./redis";
 
 /**

@@ -1,4 +1,4 @@
-﻿export const slug = 'epub-to-text';
+export const slug = 'epub-to-text';
 export const title = 'EPUB to Text Converter';
 export const level = 'S' as const;
 export const wordCount = 2800;
@@ -27,11 +27,11 @@ Professional translators often prefer TXT files because they can easily manage c
 Older Kindles and basic e-ink devices read TXT files perfectly. For simple novels without images, TXT provides the lightest possible file size.
 
 **5. Content Mining & Summarization**
-Feed your books directly to AI summarization tools, quote extractors, or content analysis platforms that require clean text input.
+Feed your books directly to AI summarization tools, quote extractors, or content analysis platforms that require clean text input.`
     },
     {
       heading: 'Our Intelligent Text Extraction Process',
-      body: 'We don't just strip HTML tags—we perform intelligent extraction to preserve readability:
+      body: `We don't just strip HTML tags—we perform intelligent extraction to preserve readability:
 
 **Smart Tag Removal:**
 - Removes XHTML markup while preserving paragraph structure
@@ -53,11 +53,11 @@ Feed your books directly to AI summarization tools, quote extractors, or content
 **Quality Assurance:**
 - Redundant line breaks removed
 - Special characters properly encoded
-- Encoding defaults to UTF-8 for maximum compatibility
+- Encoding defaults to UTF-8 for maximum compatibility`
     },
     {
       heading: 'What Gets Lost in EPUB to TXT Conversion?',
-      body: 'Understanding limitations helps you choose the right format:
+      body: `Understanding limitations helps you choose the right format:
 
 **Not Preserved:**
 - ✗ Images and illustrations become inaccessible
@@ -85,11 +85,11 @@ Feed your books directly to AI summarization tools, quote extractors, or content
 - Essays and non-fiction
 - Business and self-help books
 - Academic papers (text-only versions)
-- Any content for AI processing or translation
+- Any content for AI processing or translation`
     },
     {
       heading: 'Use Cases Beyond Simple Reading',
-      body: 'TXT conversion opens powerful possibilities:
+      body: `TXT conversion opens powerful possibilities:
 
 **AI-Powered Summarization**
 Feed clean text to AI tools for automatic chapter summaries, key point extraction, or executive briefs. The absence of markup ensures accurate AI processing.
@@ -107,8 +107,8 @@ Generate WCAG-compliant plain text versions for users who need maximum compatibi
 TXT files remain readable decades from now, unlike proprietary formats. They're ideal for digital preservation and institutional archives.
 
 **Educational Applications**
-Teachers can extract text for worksheets, quizzes, or reading comprehension exercises without dealing with ebook formatting complexities.
-    }`
+Teachers can extract text for worksheets, quizzes, or reading comprehension exercises without dealing with ebook formatting complexities.`
+    }
   ],
 
   faq: [

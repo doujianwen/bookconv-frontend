@@ -1,4 +1,4 @@
-﻿export const slug = 'mobi-to-pdf';
+export const slug = 'mobi-to-pdf';
 export const title = 'MOBI to PDF Converter';
 export const level = 'B' as const;
 export const wordCount = 1200;

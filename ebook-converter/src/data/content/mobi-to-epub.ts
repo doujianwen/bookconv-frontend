@@ -1,4 +1,4 @@
-﻿export const slug = 'mobi-to-epub';
+export const slug = 'mobi-to-epub';
 export const title = 'MOBI to EPUB Converter';
 export const level = 'S' as const;
 export const wordCount = 2600;
@@ -27,11 +27,11 @@ EPUB 3 is the international digital publishing standard maintained by IDPF. MOBI
 EPUB supports embedded fonts, mathematical notation, fixed layouts for comics/textbooks, video/audio, and interactive elements—features completely unavailable in MOBI.
 
 **5. Smarter File Management**
-EPUB files are essentially ZIP archives containing HTML, CSS, images, and metadata. This makes them easier to edit, customize, and repair compared to MOBI's opaque binary structure.
+EPUB files are essentially ZIP archives containing HTML, CSS, images, and metadata. This makes them easier to edit, customize, and repair compared to MOBI's opaque binary structure.`
     },
     {
       heading: 'Conversion Quality Guarantee',
-      body: 'Our converter uses Calibre's proven engine, validated through millions of successful conversions:
+      body: `Our converter uses Calibre's proven engine, validated through millions of successful conversions:
 
 **What We Preserve:**
 - ✓ All text content with paragraph structure intact
@@ -54,11 +54,11 @@ EPUB files are essentially ZIP archives containing HTML, CSS, images, and metada
 3. Extract and optimize embedded images
 4. Generate clean HTML with semantic markup
 5. Package as EPUB with proper metadata
-6. Validate EPUB structure for compatibility
+6. Validate EPUB structure for compatibility`
     },
     {
       heading: 'Who Should Convert MOBI to EPUB?',
-      body: '**Kindle Users Switching Platforms**
+      body: `**Kindle Users Switching Platforms**
 If you're moving from Kindle to Kobo, Apple Books, or any non-Amazon reader, EPUB is the universal format you need. Convert your existing MOBI library to EPUB before making the switch.
 
 **Multi-Device Readers**
@@ -74,11 +74,11 @@ Publishing in EPUB ensures your books reach the widest possible audience across 
 Need to analyze text content programmatically? EPUB's clean HTML structure is far easier to parse and process than MOBI's proprietary format.
 
 **Accessibility Advocates**
-EPUB's support for semantic markup, proper reading order, and assistive technology integration makes it the superior choice for inclusive reading experiences.
+EPUB's support for semantic markup, proper reading order, and assistive technology integration makes it the superior choice for inclusive reading experiences.`
     },
     {
       heading: 'MOBI vs EPUB Feature Comparison',
-      body: '| Feature | MOBI | EPUB 3 |
+      body: `| Feature | MOBI | EPUB 3 |
 |---------|------|--------|
 | Creator | Mobipocket/Amazon | IDPF (Open Standard) |
 | Technology | Proprietary binary | ZIP + HTML/CSS/XML |
@@ -95,8 +95,8 @@ EPUB's support for semantic markup, proper reading order, and assistive technolo
 | Editing Capability | Difficult | Easy (unzip and edit) |
 
 **Bottom Line:**
-EPUB is objectively superior in almost every metric. Converting MOBI to EPUB future-proofs your library and unlocks reading freedom.
-    }`
+EPUB is objectively superior in almost every metric. Converting MOBI to EPUB future-proofs your library and unlocks reading freedom.`
+    }
   ],
 
   faq: [

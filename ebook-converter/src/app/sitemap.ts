@@ -1,4 +1,4 @@
-﻿import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next'
 import { CONVERSION_MAP } from '@/lib/conversion-map'
 import fs from 'fs'
 import path from 'path'

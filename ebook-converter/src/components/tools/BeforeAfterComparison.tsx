@@ -27,7 +27,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
 
   const sizeDiff = afterFile.size - beforeFile.size
   const sizeDiffPercent = beforeFile.size > 0 ? Math.round(((sizeDiff / beforeFile.size) * 100)) : 0
-  const sizeDiffLabel = sizeDiff >= 0 ? + : -
+  const sizeDiffLabel = sizeDiff >= 0 ? "+" : "-"
 
   return (
     <div className="space-y-4">
@@ -64,7 +64,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
             <span>{formatBytes(afterFile.size)}</span>
           </div>
           {sizeDiff !== 0 && (
-            <p className={mt-1 text-xs }>
+            <p className="mt-1 text-xs">
               Size change: {sizeDiffLabel} ({sizeDiffPercent > 0 ? "+" : ""}{sizeDiffPercent}%)
             </p>
           )}

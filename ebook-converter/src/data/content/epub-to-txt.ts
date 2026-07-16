@@ -26,6 +26,7 @@ After removing all layout decorations, TXT lets you focus purely on words. For n
 
 **4. Cross-Application Sharing**
 TXT is the world's most universal text format. Any editor, note application, code tool can open it.
+`,
     },
     {
       heading: 'Conversion Quality Assurance',
@@ -36,6 +37,7 @@ TXT is the world's most universal text format. Any editor, note application, cod
 - **Chapter Structure Preservation**: Separates chapters with blank lines for easy subsequent processing
 - **Redundant Whitespace Cleanup**: Removes unnecessary line breaks and spaces while preserving meaningful paragraph spacing
 - **Metadata Extraction**: Book title, author, description information is extracted and added to TXT file header as comments
+`,
     },
     {
       heading: 'What Gets Lost in Conversion?',
@@ -47,6 +49,7 @@ TXT is the world's most universal text format. Any editor, note application, cod
 - **Table of Contents**: TXT does not support hyperlink TOC, but we add chapter list as text comments at file head
 
 For books where visual presentation matters (cookbooks, art books, children's books), consider keeping EPUB or converting to PDF instead.
+`,
     },
     {
       heading: 'Use Cases Beyond Reading',
@@ -59,12 +62,14 @@ For books where visual presentation matters (cookbooks, art books, children's bo
 - **Archival**: TXT files remain readable decades from now, unlike proprietary formats
 
 Whether you are a researcher, writer, student, or just someone who loves reading — TXT conversion gives you maximum flexibility.
+`,
     }
   ],
   faq: [
-    { q: 'Will TXT lose images and charts?' a: 'Yes. TXT is a pure text format that contains no images charts or rich text elements. If your book has important images keep the EPUB format. For pure text books (novels essays business books) TXT is the ideal choice.' },
-    { q: 'Can converted TXT retain table of contents?' a: 'TXT does not support hyperlink TOC but we add chapter list as text comments at file head. You can also use text editors that support directory browsing (such as VS Code Sublime Text) to open the file and quickly locate by searching chapter titles.' },
-    { q: 'What encoding does TXT file use?' a: 'Default uses UTF-8 encoding perfectly supporting Chinese Japanese Korean and other multilingual content. If you need other encodings (such as GBK) specify during conversion.' },
-    { q: 'Can I use TXT for AI text analysis?' a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text format that can be directly fed to any NLP tool AI summarizer or text analysis platform.' },
-    { q: 'How do I convert EPUB to TXT in batch?' a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50MB each. This is perfect for researchers who need to process entire book collections.' ],
+    { q: 'Will TXT lose images and charts?', a: 'Yes. TXT is a pure text format that contains no images charts or rich text elements. If your book has important images keep the EPUB format. For pure text books (novels essays business books) TXT is the ideal choice.' },
+    { q: 'Can converted TXT retain table of contents?', a: 'TXT does not support hyperlink TOC but we add chapter list as text comments at file head. You can also use text editors that support directory browsing (such as VS Code Sublime Text) to open the file and quickly locate by searching chapter titles.' },
+    { q: 'What encoding does TXT file use?', a: 'Default uses UTF-8 encoding perfectly supporting Chinese Japanese Korean and other multilingual content. If you need other encodings (such as GBK) specify during conversion.' },
+    { q: 'Can I use TXT for AI text analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text format that can be directly fed to any NLP tool AI summarizer or text analysis platform.' },
+    { q: 'How do I convert EPUB to TXT in batch?', a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50MB each. This is perfect for researchers who need to process entire book collections.' }
+  ]
 };

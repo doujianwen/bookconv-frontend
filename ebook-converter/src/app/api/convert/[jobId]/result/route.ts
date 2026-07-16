@@ -44,7 +44,7 @@ export async function GET(
           base64Data: result.base64Data,
           extension: result.extension,
           mimeType: result.mimeType,
-          expires:
+          expires: expires,
         });
       } catch (err) {
         console.error('R2 appload failed, falling back to direct download:', err.message);

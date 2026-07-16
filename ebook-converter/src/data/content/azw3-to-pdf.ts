@@ -7,8 +7,7 @@ export const content = {
   hero: {
     title: 'AZW3 to PDF - Convert Kindle Format to Printable Document',
     subtitle: 'Convert AZW3 ebooks to PDF suitable for printing citation and archiving.'
-  }
-,
+  },
 
   sections: [
     {
@@ -21,7 +20,8 @@ export const content = {
 
 **Formal Sharing**: When sharing documents professionally PDF ensures the recipient sees exactly what you intended regardless of their device or software.
 
-**Long-term Archival**: PDF/A is an international standard for long-term document preservation far more stable than proprietary formats.\n},
+**Long-term Archival**: PDF/A is an international standard for long-term document preservation far more stable than proprietary formats.`
+    },
     {
       heading: 'Conversion Quality Assurance',
       body: `The Calibre engine intelligently handles AZW3 unique formatting characteristics:
@@ -31,10 +31,11 @@ export const content = {
 - **Smart Pagination**: Automatic page breaking avoids cutting paragraphs images or tables mid-element
 - **Header/Footer Generation**: Page numbers book titles and chapter names are automatically added
 - **Table of Contents**: Bookmarks and chapter structure from AZW3 are converted to interactive PDF bookmarks
-- **Margin Optimization**: Margins are adjusted based on target paper size (A4 Letter etc.)\n},
+- **Margin Optimization**: Margins are adjusted based on target paper size (A4 Letter etc.)`
+    },
     {
       heading: 'AZW3 vs PDF Feature Comparison',
-      `body: '|---------|------|-----|
+      body: `|---------|------|-----|
 | Primary Use | E-reading | Printing & Sharing |
 | Layout | Reflowable | Fixed |
 | Font Size | User-adjustable | Fixed |
@@ -43,12 +44,12 @@ export const content = {
 | Academic Citation | ❌ No | ✅ Yes |
 | Cross-Device Display | Variable | Consistent |
 | File Size | Small | Medium-Large |
-| Editing | Difficult | Easy with PDF editors |
+| Editing | Difficult | Easy with PDF editors |`
     },
     {
       heading: 'When to Keep AZW3 vs When to Convert',
-      `
--  You are reading on a Kindle device
+      body: `**Keep AZW3 when:**
+- You are reading on a Kindle device
 - You want adjustable font sizes and night mode
 - You prefer reflowable text for comfortable mobile reading
 
@@ -58,10 +59,13 @@ export const content = {
 - You are sharing with recipients who may not have Kindle
 - You need to archive for long-term preservation
 - You want to add watermarks or security features`
+    }
+  ],
+
+  faq: [
+    { q: 'Can the converted PDF be printed?', a: 'Absolutely. PDF is one of the most print-friendly formats available. Any printer will produce excellent results with proper DPI settings.' },
+    { q: 'Will image quality decrease in the PDF?', a: 'No. Our converter maintains original image resolution. Images in the PDF will be identical in quality to those in the source AZW3 file.' },
+    { q: 'Does the PDF include clickable chapter links?', a: 'Yes. Chapter bookmarks from the AZW3 file are converted to interactive PDF bookmarks allowing quick navigation within the document.' },
+    { q: 'What is the typical file size increase?', a: 'PDF files are typically 20-40% larger than AZW3 due to embedded fonts and higher image resolution. This is normal and ensures print quality.' }
   ]
-      faq: [
-    { q: 'Can the converted PDF be printed?' a: 'Absolutely. PDF is one of the most print-friendly formats available. Any printer will produce excellent results with proper DPI settings.' },
-    { q: 'Will image quality decrease in the PDF?' a: 'No. Our converter maintains original image resolution. Images in the PDF will be identical in quality to those in the source AZW3 file.' },
-    { q: 'Does the PDF include clickable chapter links?' a: 'Yes. Chapter bookmarks from the AZW3 file are converted to interactive PDF bookmarks allowing quick navigation within the document.' },
-    { q: 'What is the typical file size increase?' a: 'PDF files are typically 20-40% larger than AZW3 due to embedded fonts and higher image resolution. This is normal and ensures print quality.' ],
 };

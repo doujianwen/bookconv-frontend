@@ -1,4 +1,4 @@
-﻿export const slug = 'epub-to-mobi';
+export const slug = 'epub-to-mobi';
 export const title = 'EPUB to MOBI Converter';
 export const level = 'S' as const;
 export const wordCount = 2500;
@@ -20,7 +20,7 @@ export const content = {
 - **Small file size**: Efficient compression for text-heavy content
 - **Limited features**: No support for complex layouts, embedded fonts, or advanced typography
 
-Despite its age, MOBI remains relevant for users with legacy Kindle devices or those who prefer the simplicity of this proven format.
+Despite its age, MOBI remains relevant for users with legacy Kindle devices or those who prefer the simplicity of this proven format.`
     },
     {
       heading: 'Why Convert EPUB to MOBI?',
@@ -36,11 +36,11 @@ Amazon's "Send to Kindle" email service accepts MOBI files for older devices. Th
 For straightforward novels and text-based books without complex formatting, MOBI provides reliable performance with minimal file bloat.
 
 **4. Backup and Archival**
-Maintaining MOBI copies of your EPUB library ensures you have compatible formats for any device, past or present.
+Maintaining MOBI copies of your EPUB library ensures you have compatible formats for any device, past or present.`
     },
     {
       heading: 'Conversion Quality & Considerations',
-      body: 'Our converter uses Calibre's battle-tested engine to ensure high-quality EPUB to MOBI conversion:
+      body: `Our converter uses Calibre's battle-tested engine to ensure high-quality EPUB to MOBI conversion:
 
 **What's Preserved:**
 - ✓ All text content and paragraph structure
@@ -58,7 +58,7 @@ Maintaining MOBI copies of your EPUB library ensures you have compatible formats
 **Best Practices:**
 - For best results, use EPUB files with clean, semantic markup
 - Check that your source EPUB has a proper table of contents
-- Test converted files on your specific Kindle model when possible
+- Test converted files on your specific Kindle model when possible`
     },
     {
       heading: 'MOBI vs EPUB vs AZW3: Which Should You Use?',
@@ -75,12 +75,12 @@ Maintaining MOBI copies of your EPUB library ensures you have compatible formats
 **Recommendation:**
 - Use **EPUB** for universal compatibility across all platforms
 - Use **MOBI** only if you have an older Kindle device
-- Use **AZW3** for the best experience on modern Kindle devices
-    }`
+- Use **AZW3** for the best experience on modern Kindle devices`
+    }
   ],
 
   faq: [
-    { q: 'Will my EPUB convert perfectly to MOBI?', a: 'Most EPUB files convert successfully. Text content, basic formatting, and chapter structure are preserved. However, complex layouts and custom fonts may be simplified due to MOBI format limitations.`},
+    { q: 'Will my EPUB convert perfectly to MOBI?', a: 'Most EPUB files convert successfully. Text content, basic formatting, and chapter structure are preserved. However, complex layouts and custom fonts may be simplified due to MOBI format limitations.' },
     { q: 'Can I read MOBI files on my Kindle?', a: 'Yes! MOBI is natively supported by all Kindle devices, especially older models. If you have a modern Kindle (2022+), consider using AZW3 or EPUB for better features.' },
     { q: 'Is there a file size limit?', a: 'Free users can convert files up to 10 MB. Pro users enjoy support for files up to 50 MB, perfect for large illustrated books and comprehensive collections.' },
     { q: 'How long does conversion take?', a: 'Most EPUB to MOBI conversions complete in 10-30 seconds for typical books. Larger files with many images may take 1-2 minutes.' },

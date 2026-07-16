@@ -1,4 +1,4 @@
-﻿export const slug = 'epub-to-html';
+export const slug = 'epub-to-html';
 export const title = 'EPUB to HTML Converter';
 export const level = 'B' as const;
 export const wordCount = 1200;
@@ -16,15 +16,16 @@ export const content = {
     },
     {
       heading: 'Conversion Output',
-      body: Our converter generates well-structured HTML output:
+      body: `Our converter generates well-structured HTML output:
 
 - **Chapter-by-Chapter Files**: Each chapter becomes a separate HTML file for easy navigation
 - **Navigation Index**: An index.html homepage links to all chapters
-- **Preserved Elements**: Headings paragraphs images and hyperlinks maintained
+- **Preserved Elements**: Headings, paragraphs, images and hyperlinks maintained
 - **Clean Code**: Semantic HTML5 markup for accessibility and SEO friendliness
-- **Responsive Design**: HTML output adapts to different screen sizes automatically
+- **Responsive Design**: HTML output adapts to different screen sizes automatically`
     }
   ],
+
   faq: [
     { q: 'Can the generated HTML open directly in browsers?', a: 'Yes. The converter generates an index.html file that serves as a navigation hub. Clicking chapters opens individual HTML pages that work in any modern browser.' },
     { q: 'Are images preserved during conversion?', a: 'Yes. All embedded images are saved to a dedicated images/ folder with HTML files referencing them via relative paths.' }

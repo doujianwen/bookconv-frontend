@@ -1,4 +1,4 @@
-﻿import {getRequestConfig} from 'next-intl/server';
+import {getRequestConfig} from 'next-intl/server';
 import {cookies} from 'next/headers';
 
 const locales = ['en', 'es'] as const;

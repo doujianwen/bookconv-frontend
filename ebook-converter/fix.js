@@ -1,1 +1,45 @@
-var fs = require("fs"); var d = "./src/data/content"; var files = ["azw3-to-pdf.ts","epub-to-rtf.ts","epub-to-txt.ts","mobi-to-txt.ts","pdf-to-epub.ts","rtf-to-epub.ts"]; files.forEach(function(f) { var c = fs.readFileSync(d+"/"+f, "utf8"); var orig = c; // Fix 1: subtitle closing with newline-comma c = c.replace(/(subtitle:[^,\x27]*)\r?\n(\s+)\}\r?\n,/g, "$1,\n$2},"); // Fix 2: \" at end of body content -> single quote c = c.replace(/\\"\s*$/gm, "\x27"); // Fix 3: }}; followed by }; -> }; c = c.replace(/;\r?\n\};/g, ";"); // Fix 4: Missing comma between faq items c = c.replace(/\x27\}\r?\n(\s+)\{ q:/g, "\x27},\n$1{ q:"); // Fix 5: Remove trailing backtick on its own line before } c = c.replace(/\r?\n`\r?\n(\s+)\}/g, "\n`$1}"); fs.writeFileSync(d+"/"+f, c, "utf8"); console.log((c !== orig ? "Fixed" : "OK") + ": "+f); }); console.log("Done!");
+const fs = require('fs');
+const path = 'src/data/content/azw3-to-pdf.ts';
+const content = fs.readFileSync(path, 'utf8');
+fs.writeFileSync(path + '.bak', content);
+
+const bt = '`';
+const lines = content.split('\n');
+let out = [];
+let i = 0;
+while (i < lines.length) {
+  const line = lines[i];
+  if (line.includes('body:') && line.includes(bt)) {
+    // Start of multi-line template body
+    let bodyLines = [line];
+    i++;
+    while (i < lines.length) {
+      const next = lines[i];
+      if (next.trim() === ',') {
+        bodyLines.push(next);
+        i++;
+        break;
+      }
+      if (next.trim() === '\\n},') {
+        bodyLines.push(next);
+        i++;
+        break;
+      }
+      if (next.trim() === ']') {
+        bodyLines.push(next);
+        i++;
+        break;
+      }
+      bodyLines.push(next);
+      i++;
+    }
+    console.log('Found body block starting at L' + (out.length + 1));
+    // Process: join bodyLines, extract content, convert to single-quoted string
+    // ... complex logic
+    out = out.concat(bodyLines);
+  } else {
+    out.push(line);
+    i++;
+  }
+}
+console.log('Processed');
