@@ -1,7 +1,7 @@
 ﻿describe('TOC Preservation: Structural integrity', () => {
   it('should have consistent command structure across all conversions', () => {
     const { CONVERSION_MAP } = require('@/lib/conversion-map');
-    for (const [key, cmd] of Object.entries(CONVERSION_MAP)) {
+    for (const [key, cmd] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(cmd.command).toBeDefined();
       expect(typeof cmd.command).toBe('function');
       const result = cmd.command('/path/to/input.epub', '/path/to/output.pdf');

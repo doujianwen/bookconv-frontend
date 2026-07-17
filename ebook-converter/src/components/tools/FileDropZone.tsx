@@ -1,5 +1,6 @@
 ﻿"use client"
 
+import React from "react"
 import { useCallback, useState, useRef } from "react"
 import {
   Upload,
@@ -113,29 +114,30 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
     onFileSelect(file)
   }, [extractMetadata, onFileSelect])
 
-  const handleDrag = useCallback((e: DragEvent) => {
+  const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
   }, [])
 
-  const handleDragIn = useCallback((e: DragEvent) => {
+  const handleDragIn = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
     if (!disabled) setIsDragging(true)
   }, [disabled])
 
-  const handleDragOut = useCallback((e: DragEvent) => {
+  const handleDragOut = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
   }, [])
 
   const handleDrop = useCallback(
-    (e: DragEvent) => {
+    (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault()
       e.stopPropagation()
       setIsDragging(false)
       if (disabled) return
+      if (!e.dataTransfer) return
       const file = e.dataTransfer.files?.[0]
       if (file) handleFile(file)
     },

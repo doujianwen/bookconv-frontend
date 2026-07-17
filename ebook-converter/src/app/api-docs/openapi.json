@@ -1,0 +1,728 @@
+﻿{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BookConv API",
+    "description": "Ebook format conversion API powered by Calibre. Supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF, and more.\n\n**Base URL:** `https://bookconv.com/api`",
+    "version": "1.0.0",
+    "contact": {
+      "name": "BookConv Support",
+      "url": "https://bookconv.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://bookconv.com/api",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Development"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token for authenticated users (optional). Free users are rate-limited to 20 requests/minute per IP. Pro users get priority processing."
+      }
+    },
+    "schemas": {
+      "ConversionJob": {
+        "type": "object",
+        "properties": {
+          "jobId": { "type": "string", "format": "uuid", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" },
+          "status": { "type": "string", "enum": ["queued", "processing", "completed", "failed"], "example": "queued" },
+          "message": { "type": "string", "example": "Conversion started" }
+        }
+      },
+      "JobStatus": {
+        "type": "object",
+        "properties": {
+          "jobId": { "type": "string", "format": "uuid" },
+          "status": { "type": "string", "enum": ["waiting", "active", "completed", "failed", "paused"] },
+          "progress": { "type": "integer", "minimum": 0, "maximum": 100, "example": 65 },
+          "attempt": { "type": "integer", "example": 1 },
+          "maxRetries": { "type": "integer", "example": 3 },
+          "eta": { "type": "integer", "description": "Estimated seconds until completion", "example": 45 },
+          "error": { "type": "string", "nullable": true },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "JobResult": {
+        "type": "object",
+        "properties": {
+          "downloadUrl": { "type": "string", "format": "url", "description": "Temporary signed URL valid for 24 hours" },
+          "key": { "type": "string", "description": "Storage key" },
+          "extension": { "type": "string", "example": "epub" },
+          "mimeType": { "type": "string", "example": "application/epub+zip" },
+          "expiresAt": { "type": "string", "format": "date-time" },
+          "backend": { "type": "string", "enum": ["r2", "local"], "example": "r2" }
+        }
+      },
+      "BatchFileItem": {
+        "type": "object",
+        "properties": {
+          "index": { "type": "integer" },
+          "name": { "type": "string" },
+          "size": { "type": "integer" },
+          "sourceFormat": { "type": "string" },
+          "targetFormat": { "type": "string" },
+          "jobId": { "type": "string", "format": "uuid" },
+          "status": { "type": "string", "enum": ["queued", "processing", "completed", "failed"] },
+          "error": { "type": "string", "nullable": true },
+          "result": { "$ref": "#/components/schemas/BatchFileResult", "nullable": true }
+        }
+      },
+      "BatchFileResult": {
+        "type": "object",
+        "properties": {
+          "extension": { "type": "string" },
+          "mimeType": { "type": "string" },
+          "fileSize": { "type": "integer" }
+        }
+      },
+      "BatchSummary": {
+        "type": "object",
+        "properties": {
+          "batchId": { "type": "string", "format": "uuid" },
+          "total": { "type": "integer" },
+          "queued": { "type": "integer" },
+          "processing": { "type": "integer" },
+          "completed": { "type": "integer" },
+          "failed": { "type": "integer" },
+          "files": { "type": "array", "items": { "$ref": "#/components/schemas/BatchFileItem" } },
+          "zipUrl": { "type": "string", "nullable": true },
+          "message": { "type": "string" }
+        }
+      },
+      "BatchStatusResponse": {
+        "type": "object",
+        "properties": {
+          "batchId": { "type": "string" },
+          "targetFormat": { "type": "string" },
+          "total": { "type": "integer" },
+          "completed": { "type": "integer" },
+          "failed": { "type": "integer" },
+          "processing": { "type": "integer" },
+          "queued": { "type": "integer" },
+          "overallProgress": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "files": { "type": "array", "items": { "$ref": "#/components/schemas/BatchFileItem" } },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "HealthCheck": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["ok", "degraded"] },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "checks": {
+            "type": "object",
+            "properties": {
+              "redis": { "type": "object", "properties": { "ok": { "type": "boolean" }, "latency": { "type": "integer" }, "error": { "type": "string" } } },
+              "calibre": { "type": "object", "properties": { "ok": { "type": "boolean" }, "version": { "type": "string" }, "error": { "type": "string" } } }
+            }
+          }
+        }
+      },
+      "DownloadResponse": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string", "format": "binary" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "code": { "type": "string", "nullable": true }
+        }
+      }
+    },
+    "parameters": {
+      "JobIdPath": {
+        "name": "jobId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "The unique job ID returned from the convert endpoint"
+      },
+      "BatchIdPath": {
+        "name": "batchId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "format": "uuid" },
+        "description": "The batch ID returned from the batch convert endpoint"
+      }
+    },
+    "responses": {
+      "RateLimited": {
+        "description": "Rate limit exceeded (429)",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "Too many requests. Please try again later." }
+          }
+        },
+        "headers": {
+          "X-RateLimit-Limit": { "schema": { "type": "integer" }, "description": "Max requests per window" },
+          "X-RateLimit-Remaining": { "schema": { "type": "integer" }, "description": "Remaining requests" },
+          "X-RateLimit-Reset": { "schema": { "type": "integer" }, "description": "Unix timestamp when the window resets" },
+          "Retry-After": { "schema": { "type": "integer" }, "description": "Seconds to wait before retrying" }
+        }
+      },
+      "Unauthorized": {
+        "description": "Authentication required",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "Authentication required" }
+          }
+        }
+      }
+    }
+  },
+  "security": [{ "ApiKeyAuth": [] }],
+  "paths": {
+    "/convert": {
+      "post": {
+        "tags": ["Conversion"],
+        "summary": "Submit a single file for conversion",
+        "description": "Upload an ebook file with source and target formats. Returns a jobId for polling status.",
+        "operationId": "convertSingle",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file", "source_format", "target_format"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The ebook file to convert (max 10 MB)"
+                  },
+                  "source_format": {
+                    "type": "string",
+                    "description": "Source format without dot prefix, e.g. 'epub', 'pdf', 'mobi'",
+                    "example": "epub"
+                  },
+                  "target_format": {
+                    "type": "string",
+                    "description": "Target format without dot prefix, e.g. 'epub', 'pdf', 'azw3'",
+                    "example": "azw3"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Conversion queued successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConversionJob" },
+                "example": {
+                  "jobId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "status": "queued",
+                  "message": "Conversion started"
+                }
+              }
+            },
+            "headers": {
+              "X-RateLimit-Limit": { "schema": { "type": "integer" } },
+              "X-RateLimit-Remaining": { "schema": { "type": "integer" } },
+              "X-RateLimit-Reset": { "schema": { "type": "integer" } }
+            }
+          },
+          "400": {
+            "description": "Bad request — missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "examples": {
+                  "missingFields": { "value": { "error": "Missing required fields: file, source_format, target_format" } },
+                  "unsupportedFormat": { "value": { "error": "Unsupported source format: xyz" } }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File too large (default max 10 MB)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "File too large. Max 10MB" }
+              }
+            }
+          },
+          "429": { "$ref": "#/components/responses/RateLimited" },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Conversion failed", "code": "CONVERSION_FAILED" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert/{jobId}/status": {
+      "get": {
+        "tags": ["Conversion"],
+        "summary": "Get conversion job status",
+        "description": "Poll this endpoint to track the progress of a conversion job. Returns queued, processing, completed, or failed status.",
+        "operationId": "getJobStatus",
+        "parameters": [{ "$ref": "#/components/parameters/JobIdPath" }],
+        "responses": {
+          "200": {
+            "description": "Job status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/JobStatus" },
+                "examples": {
+                  "queued": {
+                    "value": {
+                      "jobId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "status": "waiting",
+                      "progress": 0,
+                      "attempt": 1,
+                      "maxRetries": 3,
+                      "eta": null,
+                      "error": null,
+                      "createdAt": "2026-07-17T10:00:00.000Z",
+                      "updatedAt": "2026-07-17T10:00:00.000Z"
+                    }
+                  },
+                  "processing": {
+                    "value": {
+                      "jobId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "status": "active",
+                      "progress": 65,
+                      "attempt": 1,
+                      "maxRetries": 3,
+                      "eta": 30,
+                      "error": null,
+                      "createdAt": "2026-07-17T10:00:00.000Z",
+                      "updatedAt": "2026-07-17T10:00:05.000Z"
+                    }
+                  },
+                  "completed": {
+                    "value": {
+                      "jobId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "status": "completed",
+                      "progress": 100,
+                      "attempt": 1,
+                      "maxRetries": 3,
+                      "error": null,
+                      "createdAt": "2026-07-17T10:00:00.000Z",
+                      "updatedAt": "2026-07-17T10:00:30.000Z"
+                    }
+                  },
+                  "failed": {
+                    "value": {
+                      "jobId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "status": "failed",
+                      "progress": 0,
+                      "attempt": 3,
+                      "maxRetries": 3,
+                      "error": "Conversion failed: output not generated",
+                      "createdAt": "2026-07-17T10:00:00.000Z",
+                      "updatedAt": "2026-07-17T10:01:30.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Job not found" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Internal server error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert/{jobId}/result": {
+      "get": {
+        "tags": ["Conversion"],
+        "summary": "Get conversion result with download URL",
+        "description": "Retrieve the converted file as a signed download URL. The URL is valid for 24 hours.",
+        "operationId": "getJobResult",
+        "parameters": [{ "$ref": "#/components/parameters/JobIdPath" }],
+        "responses": {
+          "200": {
+            "description": "Conversion result available",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/JobResult" },
+                "example": {
+                  "downloadUrl": "https://your-bucket.r2.cloudflarestorage.com/temp/a1b2c3d4-epub?X-Amz-...",
+                  "key": "temp/a1b2c3d4-epub",
+                  "extension": "epub",
+                  "mimeType": "application/epub+zip",
+                  "expiresAt": "2026-07-18T10:00:00.000Z",
+                  "backend": "r2"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Conversion still in progress",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Conversion not yet completed", "status": "processing" }
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Job not found" }
+              }
+            }
+          },
+          "500": {
+            "description": "No result available or internal error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "No result available" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert/batch": {
+      "post": {
+        "tags": ["Batch Conversion"],
+        "summary": "Submit multiple files for batch conversion",
+        "description": "Upload up to 50 files for parallel conversion. Each file is processed independently. Returns a batchId and per-file status.",
+        "operationId": "batchConvert",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["files"],
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "description": "Multiple ebook files to convert (max 50 files, each up to 50 MB)"
+                  },
+                  "target_format": {
+                    "type": "string",
+                    "description": "Target format (defaults to epub)",
+                    "example": "epub"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch submitted — some or all files converted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BatchSummary" },
+                "example": {
+                  "batchId": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+                  "total": 3,
+                  "queued": 0,
+                  "processing": 0,
+                  "completed": 2,
+                  "failed": 1,
+                  "files": [
+                    { "index": 0, "name": "book1.epub", "size": 524288, "sourceFormat": "epub", "status": "completed", "error": null, "result": { "extension": "azw3", "mimeType": "application/x-mobipocket-ebook", "fileSize": 480000 } },
+                    { "index": 1, "name": "book2.pdf", "size": 1048576, "sourceFormat": "pdf", "status": "completed", "error": null, "result": { "extension": "azw3", "mimeType": "application/x-mobipocket-ebook", "fileSize": 960000 } },
+                    { "index": 2, "name": "bad.xyz", "size": 1024, "sourceFormat": "xyz", "status": "failed", "error": "Unsupported format: .xyz", "result": null }
+                  ],
+                  "zipUrl": "/api/convert/batch/b1c2d3e4-f5a6-7890-bcde-f12345678901/download",
+                  "message": "2/3 files converted successfully"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-status — batch submitted, results being processed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BatchSummary" },
+                "example": {
+                  "batchId": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+                  "total": 5,
+                  "queued": 5,
+                  "processing": 0,
+                  "completed": 0,
+                  "failed": 0,
+                  "files": [],
+                  "zipUrl": null,
+                  "message": "Batch submitted for processing"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "No files provided" }
+              }
+            }
+          },
+          "413": {
+            "description": "Too many files or file too large",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Maximum 50 files per batch (Pro limit)" }
+              }
+            }
+          },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      },
+      "get": {
+        "tags": ["Batch Conversion"],
+        "summary": "Get batch conversion status",
+        "description": "Query the current status of a batch conversion by batchId.",
+        "operationId": "getBatchStatus",
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" },
+            "description": "The batch ID from the POST response"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Batch status retrieved",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BatchStatusResponse" },
+                "example": {
+                  "batchId": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+                  "targetFormat": "epub",
+                  "total": 5,
+                  "completed": 3,
+                  "failed": 1,
+                  "processing": 1,
+                  "queued": 0,
+                  "overallProgress": 80,
+                  "files": [],
+                  "createdAt": "2026-07-17T10:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing batchId parameter",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Missing batchId query parameter" }
+              }
+            }
+          },
+          "404": {
+            "description": "Batch not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Batch not found" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert/batch/{batchId}/download": {
+      "get": {
+        "tags": ["Batch Conversion"],
+        "summary": "Download batch results as ZIP",
+        "description": "Download all successfully converted files from a batch as a single ZIP archive.",
+        "operationId": "downloadBatchZip",
+        "parameters": [{ "$ref": "#/components/parameters/BatchIdPath" }],
+        "responses": {
+          "200": {
+            "description": "ZIP archive of converted files",
+            "content": {
+              "application/zip": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            },
+            "headers": {
+              "Content-Disposition": { "schema": { "type": "string" }, "example": "attachment; filename=\"converted-a1b2c3d4.zip\"" },
+              "X-Batch-Id": { "schema": { "type": "string" } },
+              "X-Completed-Files": { "schema": { "type": "integer" } }
+            }
+          },
+          "404": {
+            "description": "Batch not found or no completed files",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "examples": {
+                  "notFound": { "value": { "error": "Batch not found" } },
+                  "noCompleted": { "value": { "error": "No completed files to download" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "description": "Check the health of Redis and Calibre services. No authentication or rate limiting required.",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "All systems operational",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthCheck" },
+                "example": {
+                  "status": "ok",
+                  "timestamp": "2026-07-17T10:00:00.000Z",
+                  "checks": {
+                    "redis": { "ok": true, "latency": 2 },
+                    "calibre": { "ok": true, "version": "ebook-convert 7.16.0" }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service degraded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthCheck" },
+                "example": {
+                  "status": "degraded",
+                  "timestamp": "2026-07-17T10:00:00.000Z",
+                  "checks": {
+                    "redis": { "ok": false, "error": "Connection refused" },
+                    "calibre": { "ok": true, "version": "ebook-convert 7.16.0" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/download": {
+      "get": {
+        "tags": ["Downloads"],
+        "summary": "Download a converted file",
+        "description": "Download a previously converted file using a storage key and expiration timestamp. Rate limited to 50 downloads per hour per IP.",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "k",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Storage key returned from the result endpoint"
+          },
+          {
+            "name": "expires",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "Unix timestamp (ms) when the link expires"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File downloaded successfully",
+            "content": {
+              "application/octet-stream": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Missing required parameters: k, expires" }
+              }
+            }
+          },
+          "410": {
+            "description": "Download link expired",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Download link has expired" }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many downloads (50/hour per IP)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Too many downloads. Please try again later." }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "File not found" }
+              }
+            }
+          },
+          "503": {
+            "description": "Download service unavailable",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": { "error": "Download service unavailable" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

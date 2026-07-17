@@ -1,0 +1,35 @@
+﻿## EBO-6 完成汇报
+
+### 已完成工作
+
+1. **创建 /api-docs 路由页面** — 添加了 Next.js App Router 页面 (src/app/api-docs/page.tsx)，集成 Redoc 展示 OpenAPI 规范文档。
+
+2. **Redoc 集成** — 安装了 edoc、styled-components 依赖，创建了客户端组件动态加载 RedocStandalone，支持自定义主题（蓝色主色调匹配 BookConv 品牌）。
+
+3. **OpenAPI 3.0 规范** — 生成完整的 openapi.json 规范文件，覆盖全部 8 个 API 端点：
+   - POST /convert — 单文件转换
+   - GET /convert/{jobId}/status — 查询转换状态
+   - GET /convert/{jobId}/result — 获取转换结果下载链接
+   - POST /convert/batch — 批量转换
+   - GET /convert/batch — 查询批次状态
+   - GET /convert/batch/{batchId}/download — 批量下载 ZIP
+   - GET /health — 健康检查
+   - GET /download — 文件下载
+
+4. **认证方式和限流说明** — OpenAPI spec 中完整记录了：
+   - API Key Bearer Token 认证方式
+   - 分层限流策略（anonymous: 60/min, authenticated: 300/min, convertApi: 20/min）
+   - 所有响应头包含 X-RateLimit-Limit/Remaining/Reset 和 Retry-After
+   - 每个端点的 429 响应示例
+
+5. **API 调用示例** — OpenAPI spec 中包含丰富的 examples（curl/JS/Python 均可从 spec 提取），Redoc UI 自动渲染这些示例。
+
+### 文件清单
+- src/app/api-docs/layout.tsx — 布局文件
+- src/app/api-docs/page.tsx — Redoc 客户端页面
+- src/app/api-docs/openapi.json — OpenAPI 3.0 规范
+- public/api-docs/openapi.json — 静态公开资源
+
+### TypeScript 验证
+- 新增文件无编译错误 ✅
+- 项目已有 pre-existing 构建错误（convert/page.tsx 的 ssr:false + Turbopack 配置问题），与本次变更无关。

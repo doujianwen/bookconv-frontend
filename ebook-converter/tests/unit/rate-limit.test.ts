@@ -19,7 +19,7 @@
 
   it('should use consistent 60s window for most strategies', () => {
     const { RATE_LIMIT_STRATEGIES } = require('@/lib/rate-limit');
-    for (const [name, strategy] of Object.entries(RATE_LIMIT_STRATEGIES)) {
+    for (const [name, strategy] of Object.entries(RATE_LIMIT_STRATEGIES) as [string, any][]) {
       if (name !== 'health') {
         expect(strategy.windowMs).toBe(60_000);
       }

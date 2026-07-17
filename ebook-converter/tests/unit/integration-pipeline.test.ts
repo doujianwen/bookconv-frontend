@@ -1,8 +1,8 @@
-﻿const path = require('node:path');
-const os = require('node:os');
-const fs = require('node:fs');
+﻿import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
 
-let _execCalls = [];
+let _execCalls: { cmd: string; args: string[] }[] = [];
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((cmd, args, opts, cb) => {
@@ -18,12 +18,12 @@ jest.mock('node:child_process', () => ({
 describe('Integration: Full pipeline verification', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });
@@ -42,7 +42,7 @@ describe('Integration: Full pipeline verification', () => {
 
     const result = await processConversion(mockJob);
     const decoded = Buffer.from(result.base64Data, 'base64');
-    expect(decoded).toHaveLengthGreaterThan(0);
+    expect(decoded).toBeGreaterThan(0);
     expect(decoded.toString()).toContain('integration test output content');
   });
 
@@ -81,7 +81,7 @@ describe('Integration: Full pipeline verification', () => {
           fileBuffer: Buffer.from('img-test').toString('base64'),
           sourceFormat: 'epub',
           targetFormat: fmt,
-          jobId: int-img-,
+          jobId: 'int-img-',
         },
         updateProgress: jest.fn(),
       };

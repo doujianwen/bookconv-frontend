@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
       lit: 'application/x-ms-reader',
     };
 
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(new Uint8Array(fileBuffer.buffer, fileBuffer.byteOffset, fileBuffer.byteLength).buffer as ArrayBuffer, {
       headers: {
         'Content-Type': mimeTypes[ext] || 'application/octet-stream',
         'Content-Disposition': `attachment; filename="${key.split('/').pop()}"`,

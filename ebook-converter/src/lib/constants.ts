@@ -1,5 +1,6 @@
 export interface KeywordData {
   note?: string
+  searchVolume?: number // monthly search volume
   source: string
   target: string
   kd: number

@@ -8,8 +8,9 @@ describe('API: Request validation logic', () => {
   it('should reject requests missing file field', () => {
     // In the real route, missing file returns 400
     const errors: string[] = [];
-    if (!'file' in {}) errors.push('Missing required fields: file');
-    expect(errors.length).toBeGreaterThanOrEqual(0);
+    const obj: Record<string, unknown> = {};
+    if (!('file' in obj)) errors.push('Missing required fields: file');
+    expect(errors.length).toBe(1);
   });
 
   it('should reject unsupported source formats', () => {

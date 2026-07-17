@@ -1,14 +1,15 @@
-﻿const path = require('node:path');
-const os = require('node:os');
-const fs = require('node:fs');
+﻿import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
 
-let _execCalls = [];
+let _execCalls: { cmd: string; args: string[] }[] = [];
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((cmd, args, opts, cb) => {
     _execCalls.push({ cmd, args });
-    const outputPath = args[1];
-    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    const outputPath = args[1] ?? '';
+    const dir = path.dirname(outputPath);
+    if (dir) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(outputPath, Buffer.from('dummy converted content'));
     if (cb) cb(null, '', '');
   }),
@@ -17,12 +18,12 @@ jest.mock('node:child_process', () => ({
 describe('Boundary: File size limits', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });
@@ -82,12 +83,12 @@ describe('Boundary: File size limits', () => {
 describe('Boundary: Special character filenames', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });
@@ -144,12 +145,12 @@ describe('Boundary: Special character filenames', () => {
 describe('Boundary: Empty and zero-byte files', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });
@@ -190,12 +191,12 @@ describe('Boundary: Empty and zero-byte files', () => {
 describe('Boundary: Corrupted input handling', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });

@@ -1,5 +1,4 @@
 ﻿// Jest setup: configure environment variables used by the app
-process.env.NODE_ENV = "test";
 process.env.REDIS_URL = "redis://localhost:6379";
 process.env.UPLOAD_DIR = "/tmp/ebook-uploads-test";
 process.env.MAX_FILE_SIZE_MB = "10";

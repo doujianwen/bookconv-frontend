@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
-import { getPlans, formatPrice } from "@/lib/payments/service"
+import { PLANS, formatPrice } from "@/lib/payments/service"
 import { getLocale, getMessage } from '@/i18n/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,7 +29,7 @@ export default async function PricingPage() {
   const locale = await getLocale();
   const messages = await getMessage(locale);
   const t = (key: string) => (messages as any)[key] || key;
-  const plans = getPlans()
+  const plans = PLANS
 
   const handleUpgrade = async (planId: string) => {
     try {

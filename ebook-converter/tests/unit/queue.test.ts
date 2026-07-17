@@ -1,8 +1,8 @@
-﻿const path = require('node:path');
-const os = require('node:os');
-const fs = require('node:fs');
+﻿import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
 
-let _execCalls = [];
+let _execCalls: { cmd: string; args: string[] }[] = [];
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((cmd, args, opts, cb) => {
@@ -17,12 +17,12 @@ jest.mock('node:child_process', () => ({
 describe('processConversion', () => {
   beforeEach(() => {
     _execCalls = [];
-    process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+    if (os.tmpdir()) process.env.UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
   });
 
   afterEach(async () => {
     const uploadDir = process.env.UPLOAD_DIR;
-    if (fs.existsSync(uploadDir)) {
+    if (uploadDir && fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
   });
@@ -53,8 +53,8 @@ describe('processConversion', () => {
     expect(_execCalls.length).toBeGreaterThanOrEqual(1);
     const call = _execCalls[0];
     expect(call.cmd).toBe('ebook-convert-fake');
-    expect(call.args.some((a) => a.endsWith('.epub'))).toBe(true);
-    expect(call.args.some((a) => a.endsWith('.pdf'))).toBe(true);
+    expect(call.args.some((a: string) => a.endsWith('.epub'))).toBe(true);
+    expect(call.args.some((a: string) => a.endsWith('.pdf'))).toBe(true);
   });
 
   it('should handle htmlz extension mapping', async () => {
@@ -96,7 +96,7 @@ describe('processConversion', () => {
           fileBuffer: Buffer.from('fake').toString('base64'),
           sourceFormat: src,
           targetFormat: tgt,
-          jobId: 	est-job-,
+          jobId: 'test-job-',
         },
         updateProgress: jest.fn(),
       };

@@ -22,10 +22,12 @@ export function isR2Configured(): boolean {
   return !!(R2_ENDPOINT && R2_ACCESS_KEY && R2_SECRET_KEY);
 }
 
-export async function uploadToR2(key: string, buffer: Buffer): Promise<void> {
+export async function uploadToR2(key: string, buffer: Buffer, ttlHours?: number): Promise<{ url: string; expiresAt: number }> {
   const client = getClient();
   const { PutObjectCommand } = await import('@aws-sdk/client-s3');
-  await client.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, Body: buffer }));
+  await client.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, Body: buffer, Metadata: ttlHours ? { uploadedAt: String(Date.now()), ttlHours: String(ttlHours) } : undefined }));
+  const expiresAt = ttlHours ? Date.now() + ttlHours * 3600 * 1000 : Date.now() + 24 * 3600 * 1000;
+  return { url: `${R2_ENDPOINT || ''}/${R2_BUCKET}/${key}`, expiresAt };
 }
 
 export async function downloadFromR2(key: string): Promise<Buffer> {
@@ -43,4 +45,15 @@ export async function deleteFromR2(key: string): Promise<void> {
   const client = getClient();
   const { DeleteObjectCommand } = await import('@aws-sdk/client-s3');
   await client.send(new DeleteObjectCommand({ Bucket: R2_BUCKET, Key: key }));
+}
+
+export async function checkR2Health(): Promise<{ healthy: boolean; error?: string }> {
+  try {
+    if (!isR2Configured()) return { healthy: false, error: "R2 not configured" };
+    const client = getClient();
+    await client.send(new (await import("@aws-sdk/client-s3")).HeadBucketCommand({ Bucket: R2_BUCKET }));
+    return { healthy: true };
+  } catch (err: any) {
+    return { healthy: false, error: err.message || "Unknown R2 error" };
+  }
 }

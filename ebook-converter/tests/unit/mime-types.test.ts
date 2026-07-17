@@ -1,5 +1,5 @@
 ﻿describe('Storage: MIME type mapping', () => {
-  const getMimeType = (ext) => {
+  const getMimeType = (ext: string) => {
     const map = {
       epub: 'application/epub+zip', azw3: 'application/x-mobipocket-ebook',
       pdf: 'application/pdf', txt: 'text/plain', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -8,7 +8,7 @@
       cbr: 'application/vnd.comicbook-rar', cbz: 'application/vnd.comicbook+zip',
       djvu: 'image/vnd.djvu', doc: 'application/msword', lit: 'application/x-ms-reader',
     };
-    return map[ext] || 'application/octet-stream';
+    return (map as Record<string, string>)[ext] || 'application/octet-stream';
   };
 
   it('should return correct MIME types for all common formats', () => {

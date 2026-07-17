@@ -1,4 +1,4 @@
-﻿import { formatBytes, getSlug, getDisplayName, cn } from "../utils";
+﻿import { formatBytes, getSlug, getDisplayName, cn } from "./utils";
 
 describe("formatBytes", () => {
   it("returns 0 B for zero bytes", () => {

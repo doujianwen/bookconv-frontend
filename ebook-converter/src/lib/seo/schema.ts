@@ -60,7 +60,7 @@ interface ArticleSchemaOpts {
 
 export function generateArticleSchema(opts: ArticleSchemaOpts): string {
   const { headline, description, url, image, authorName = 'BookConv Team', datePublished, dateModified } = opts;
-  const graph: unknown[] = [{
+  const graph: Record<string, any>[] = [{
     '@type': 'Article',
     headline,
     description,
@@ -94,7 +94,7 @@ const LOCALE_MAP = {
 };
 
 export function getLocale(locale: string) {
-  return LOCALE_MAP[locale] ?? LOCALE_MAP.en;
+  return (LOCALE_MAP as any)[locale] ?? LOCALE_MAP.en;
 }
 
 export function generateHrefLangTags(baseUrl: string, slugs: string[]): string[] {

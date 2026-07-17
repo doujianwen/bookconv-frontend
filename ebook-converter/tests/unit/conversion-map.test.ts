@@ -21,7 +21,7 @@ describe('CONVERSION_MAP', () => {
 
   it('should have tool type for every conversion', () => {
     const { CONVERSION_MAP } = require('@/lib/conversion-map');
-    for (const [key, cmd] of Object.entries(CONVERSION_MAP)) {
+    for (const [key, cmd] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(cmd.tool).toBeDefined();
       expect(['calibre', 'calibre+imagemagick', 'libreoffice+calibre', 'djvulibre']).toContain(cmd.tool);
       expect(cmd.command).toBeDefined();

@@ -301,7 +301,7 @@ export async function POST(request: NextRequest) {
 /**
  * GET /api/convert/batch/:batchId/download — download ZIP
  */
-export async function GET_download(request: NextRequest, { params }: { params: Promise<{ batchId: string }> }) {
+async function handleDownload(request: NextRequest, { params }: { params: Promise<{ batchId: string }> }) {
   try {
     const { batchId } = await params;
     const batch = batchStore.get(batchId);

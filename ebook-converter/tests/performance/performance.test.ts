@@ -1,6 +1,6 @@
-﻿const path = require('node:path');
-const os = require('node:os');
-const fs = require('node:fs');
+﻿import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
 
 let _execCalls = [];
 
@@ -21,7 +21,7 @@ describe('Performance: Concurrent conversion throughput', () => {
   });
 
   afterEach(async () => {
-    const uploadDir = process.env.UPLOAD_DIR;
+    const uploadDir = process.env.UPLOAD_DIR || '/tmp/ebook-test-uploads';
     if (fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
@@ -31,10 +31,10 @@ describe('Performance: Concurrent conversion throughput', () => {
     const { processConversion } = require('@/lib/queue');
     const jobs = Array.from({ length: 5 }, (_, i) => ({
       data: {
-        fileBuffer: Buffer.from(concurrent-job-).toString('base64'),
+        fileBuffer: Buffer.from('concurrent-job-').toString('base64'),
         sourceFormat: 'epub',
         targetFormat: 'pdf',
-        jobId: perf-concurrent-,
+        jobId: 'perf-concurrent-',
       },
       updateProgress: jest.fn(),
     }));
@@ -55,10 +55,10 @@ describe('Performance: Concurrent conversion throughput', () => {
     const { processConversion } = require('@/lib/queue');
     const jobs = Array.from({ length: 20 }, (_, i) => ({
       data: {
-        fileBuffer: Buffer.from(ulk-job-).toString('base64'),
+        fileBuffer: Buffer.from('ulk-job-').toString('base64'),
         sourceFormat: 'epub',
         targetFormat: 'txt',
-        jobId: perf-bulk-,
+        jobId: 'perf-bulk-',
       },
       updateProgress: jest.fn(),
     }));
@@ -76,10 +76,10 @@ describe('Performance: Concurrent conversion throughput', () => {
     const pairs = [['epub', 'pdf'], ['epub', 'txt'], ['epub', 'azw3'], ['mobi', 'epub'], ['pdf', 'epub']];
     const jobs = pairs.map(([src, tgt], i) => ({
       data: {
-        fileBuffer: Buffer.from(mixed--).toString('base64'),
+        fileBuffer: Buffer.from('mixed--').toString('base64'),
         sourceFormat: src,
         targetFormat: tgt,
-        jobId: perf-mixed-,
+        jobId: 'perf-mixed-',
       },
       updateProgress: jest.fn(),
     }));
@@ -121,7 +121,7 @@ describe('Performance: Conversion speed benchmark', () => {
   });
 
   afterEach(async () => {
-    const uploadDir = process.env.UPLOAD_DIR;
+    const uploadDir = process.env.UPLOAD_DIR || '/tmp/ebook-test-uploads';
     if (fs.existsSync(uploadDir)) {
       fs.rmSync(uploadDir, { recursive: true, force: true });
     }
@@ -153,10 +153,10 @@ describe('Performance: Conversion speed benchmark', () => {
     for (let i = 0; i < 10; i++) {
       const mockJob = {
         data: {
-          fileBuffer: Buffer.from(seq-).toString('base64'),
+          fileBuffer: Buffer.from('seq-').toString('base64'),
           sourceFormat: 'epub',
           targetFormat: 'txt',
-          jobId: perf-seq-,
+          jobId: 'perf-seq-',
         },
         updateProgress: jest.fn(),
       };

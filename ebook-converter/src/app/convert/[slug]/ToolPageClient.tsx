@@ -386,14 +386,14 @@ function renderMarkdownToHtml(markdown: string): string {
   // Handle pipe tables
   const tableRegex = /\|\s*([^\n|][^\n]*)\|(.+)\n(\|\s*[-:\s|]+\s*\|.+)\n((?:\|.+\n?)+)/g
   html = html.replace(tableRegex, (match, headerRow, _, separatorRow, bodyRows) => {
-    const headers = headerRow.split("|").map(h => h.trim()).filter(Boolean)
-    const rows = bodyRows.trim().split("\n").map(row => row.split("|").map(c => c.trim()).filter(Boolean))
+    const headers = headerRow.split("|").map((h: string) => h.trim()).filter(Boolean)
+    const rows = bodyRows.trim().split("\n").map((row: string) => row.split("|").map((c: string) => c.trim()).filter(Boolean))
     let tableHtml = "<table class=\"w-full text-sm border-collapse\"><thead><tr class=\"border-b bg-gray-50\">"
-    headers.forEach(h => { tableHtml += "<th class=\"px-4 py-3 text-left font-medium text-gray-700\"></th>" })
+    headers.forEach((h: string) => { tableHtml += "<th class=\"px-4 py-3 text-left font-medium text-gray-700\"></th>" })
     tableHtml += "</tr></thead><tbody>"
-    rows.forEach(row => {
+    rows.forEach((row: string[]) => {
       tableHtml += "<tr class=\"border-b\">"
-      row.forEach(cell => { tableHtml += "<td class=\"px-4 py-2 text-gray-700\"></td>" })
+      row.forEach((cell: string) => { tableHtml += "<td class=\"px-4 py-2 text-gray-700\"></td>" })
       tableHtml += "</tr>"
     })
     tableHtml += "</tbody></table>"

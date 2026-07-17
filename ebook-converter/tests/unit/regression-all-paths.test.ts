@@ -10,7 +10,7 @@ describe('CONVERSION_MAP Regression', () => {
 
   it('should have tool type for every conversion', () => {
     const { CONVERSION_MAP } = require('@/lib/conversion-map');
-    for (const [key, cmd] of Object.entries(CONVERSION_MAP)) {
+    for (const [key, cmd] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(cmd.tool).toBeDefined();
       expect(['calibre', 'calibre+imagemagick', 'libreoffice+calibre', 'djvulibre']).toContain(cmd.tool);
       expect(typeof cmd.command).toBe('function');
@@ -29,7 +29,7 @@ describe('API validation logic', () => {
   });
 
   it('should normalize format strings', () => {
-    const normalize = (fmt) => fmt.toLowerCase().replace('.', '');
+    const normalize = (fmt: string) => fmt.toLowerCase().replace('.', '').replace(/\./g, '');
     expect(normalize('.EPUB')).toBe('epub');
     expect(normalize('Pdf')).toBe('pdf');
     expect(normalize('DOCX')).toBe('docx');

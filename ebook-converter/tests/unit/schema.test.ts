@@ -12,7 +12,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'pdf');
     const parsed = JSON.parse(json);
-    const breadcrumb = parsed['@graph'].find((g) => g['@type'] === 'BreadcrumbList');
+    const breadcrumb = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'BreadcrumbList');
     expect(breadcrumb).toBeDefined();
     expect(breadcrumb.itemListElement.length).toBe(3);
   });
@@ -21,7 +21,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'azw3');
     const parsed = JSON.parse(json);
-    const howTo = parsed['@graph'].find((g) => g['@type'] === 'HowTo');
+    const howTo = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'HowTo');
     expect(howTo).toBeDefined();
     expect(howTo.name).toContain('EPUB');
     expect(howTo.name).toContain('AZW3');
@@ -32,7 +32,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('mobi', 'epub');
     const parsed = JSON.parse(json);
-    const app = parsed['@graph'].find((g) => g['@type'] === 'SoftwareApplication');
+    const app = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'SoftwareApplication');
     expect(app).toBeDefined();
     expect(app.offers.price).toBe(0);
     expect(app.offers.priceCurrency).toBe('USD');
@@ -42,7 +42,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('pdf', 'epub');
     const parsed = JSON.parse(json);
-    const article = parsed['@graph'].find((g) => g['@type'] === 'Article');
+    const article = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'Article');
     expect(article).toBeDefined();
     expect(article.author.name).toBe('BookConv');
   });
@@ -55,7 +55,7 @@
     ];
     const json = generateSchema('epub', 'pdf', faqs);
     const parsed = JSON.parse(json);
-    const faqPage = parsed['@graph'].find((g) => g['@type'] === 'FAQPage');
+    const faqPage = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'FAQPage');
     expect(faqPage).toBeDefined();
     expect(faqPage.mainEntity.length).toBe(2);
   });
@@ -64,7 +64,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'pdf', []);
     const parsed = JSON.parse(json);
-    const faqPage = parsed['@graph'].find((g) => g['@type'] === 'FAQPage');
+    const faqPage = parsed['@graph'].find((g: Record<string, any>) => g['@type'] === 'FAQPage');
     expect(faqPage).toBeUndefined();
   });
 
@@ -72,7 +72,7 @@
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'pdf');
     const parsed = JSON.parse(json);
-    const reviews = parsed['@graph'].filter((g) => g['@type'] === 'Review');
+    const reviews = parsed['@graph'].filter((g: Record<string, any>) => g['@type'] === 'Review');
     expect(reviews.length).toBe(2);
     expect(reviews[0].author.name).toBe('Alex M.');
   });
