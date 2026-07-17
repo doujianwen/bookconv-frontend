@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/codex-multica-sync.sh *)",
+      "Bash(multica issue *)",
+      "Bash(multica agent *)",
+      "Bash(multica autopilot *)",
+      "Bash(multica daemon *)",
+      "Write(//e/一人公司/电子书格式转换站/scripts/.codex-sync-summary.md)"
+    ]
+  }
+}

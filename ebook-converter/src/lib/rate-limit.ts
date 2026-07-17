@@ -1,10 +1,12 @@
 // src/lib/rate-limit.ts
-import { getRedisClient } from "./redis";
+import IORedis from 'ioredis';
+import { getRedisClient } from './redis';
 
 /**
  * 分层限流策略配置
  *
  * 使用 Redis 滑动窗口计数器实现，支持多实例部署、按 IP/用户/端点区分限流。
+ * Redis 不可用时自动降级为内存限流（per-instance，但总比没有好）。
  */
 
 export interface RateLimitResult {
@@ -19,8 +21,6 @@ export interface RateLimitOptions {
   windowMs?: number;
   /** 窗口内最大请求数，默认 100 */
   maxRequests?: number;
-  /** 是否跳过限流（调试用） */
-  skipIfRedisDown?: boolean;
 }
 
 /** 预定义的分层限流策略 */
@@ -39,11 +39,48 @@ export const RATE_LIMIT_STRATEGIES = {
 
 const REDIS_KEY_PREFIX = "ratelimit:";
 
+// ── In-memory fallback store ──────────────────────────────────
+interface MemRecord {
+  count: number;
+  windowStart: number;
+}
+const memStore = new Map<string, MemRecord>();
+
+function memCheck(identifier: string, windowMs: number, maxRequests: number): RateLimitResult {
+  const now = Date.now();
+  const key = identifier;
+  let record = memStore.get(key);
+
+  if (!record || now - record.windowStart > windowMs) {
+    record = { count: 1, windowStart: now };
+    memStore.set(key, record);
+    return {
+      allowed: true,
+      remaining: maxRequests - 1,
+      resetAt: now + windowMs,
+    };
+  }
+
+  record.count += 1;
+  const remaining = Math.max(0, maxRequests - record.count);
+  const allowed = record.count <= maxRequests;
+  const retryAfter = allowed ? undefined : Math.ceil((record.windowStart + windowMs - now) / 1000);
+
+  return {
+    allowed,
+    remaining,
+    resetAt: record.windowStart + windowMs,
+    ...(retryAfter !== undefined && { retryAfter }),
+  };
+}
+
 /**
  * 基于 Redis 的滑动窗口计数器限流
  *
  * 算法：在每个时间窗口开始时重置计数器，窗口内累加请求。
  * 使用 Redis INCR + EXPIRE 保证原子性和自动过期。
+ *
+ * Redis 不可用时自动降级为内存限流（per-instance）。
  */
 export async function checkRateLimit(
   identifier: string,
@@ -52,7 +89,6 @@ export async function checkRateLimit(
   const {
     windowMs = 60_000,
     maxRequests = 100,
-    skipIfRedisDown = true,
   } = options;
 
   const key = `${REDIS_KEY_PREFIX}${identifier}`;
@@ -90,21 +126,9 @@ export async function checkRateLimit(
       ...(retryAfter !== undefined && { retryAfter }),
     };
   } catch (err: any) {
-    console.error("Rate limit Redis error:", err.message);
-
-    if (skipIfRedisDown) {
-      // Redis 不可用时放行，避免阻塞正常请求
-      console.warn(
-        "[rate-limit] Redis unavailable, allowing request"
-      );
-      return {
-        allowed: true,
-        remaining: maxRequests,
-        resetAt,
-      };
-    }
-
-    throw err;
+    console.error("[rate-limit] Redis error, falling back to in-memory limiter:", err.message);
+    // Fallback to in-memory rate limiting instead of allowing all requests
+    return memCheck(identifier, windowMs, maxRequests);
   }
 }
 

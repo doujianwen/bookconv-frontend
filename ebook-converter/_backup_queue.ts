@@ -5,24 +5,19 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
 export const MAX_RETRIES = parseInt(process.env.MAX_CONVERSION_RETRIES || '3', 10);
-
 let _queue: any = null;
 let _worker: any = null;
 let _queueEvents: any = null;
-
 function makeQueue() {
   return new Queue('ebook-conversions', { connection: getRedisClient() });
 }
-
 export function getConversionQueue() {
   if (!_queue) _queue = makeQueue();
   return _queue;
 }
-
 export type ConversionJobData = {
   fileBuffer: string;
   sourceFormat: string;
@@ -31,7 +26,6 @@ export type ConversionJobData = {
   userId?: string;
   priority?: number; // 1 (high/Pro) - 3 (low/free)
 };
-
 export type ConversionJobResult = {
   base64Data: string;
   extension: string;
@@ -39,7 +33,6 @@ export type ConversionJobResult = {
   downloadUrl?: string;
   fileSize?: number;
 };
-
 export type JobStatusResponse = {
   jobId: string;
   status: string;
@@ -52,13 +45,10 @@ export type JobStatusResponse = {
   createdAt: number;
   updatedAt: number;
 };
-
 const execFileAsync = promisify(execFile);
-
 async function cleanupDir(dir: string) {
   try { rmSync(dir, { recursive: true, force: true }); } catch {}
 }
-
 function getMimeType(ext: string): string {
   const map = {
     epub: 'application/epub+zip', azw3: 'application/x-mobipocket-ebook',
@@ -70,7 +60,6 @@ function getMimeType(ext: string): string {
   };
   return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
-
 async function executeConversion(fileBuffer: string, sourceFormat: string, targetFormat: string, jobId: string) {
   const jobDir = path.join(UPLOAD_DIR, jobId);
   mkdirSync(jobDir, { recursive: true });
@@ -90,32 +79,30 @@ async function executeConversion(fileBuffer: string, sourceFormat: string, targe
     throw err;
   }
 }
-
-/**
- * Process a single conversion attempt.
- * BullMQ handles retries via the `retries` option + `backoff` strategy.
- * This function should only execute ONE conversion attempt; failures are
- * thrown so BullMQ can retry with exponential backoff.
- */
 export async function processConversion(job: any) {
-  const { fileBuffer, sourceFormat, targetFormat, jobId } = job.data;
-  const attempt = job.attemptsMade + 1;
+  const { fileBuffer, sourceFormat, targetFormat, jobId, userId } = job.data;
   const maxRetryCount = MAX_RETRIES;
-
-  job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount });
-
-  try {
-    const result = await executeConversion(fileBuffer, sourceFormat, targetFormat, jobId);
-    job.updateProgress(100);
-    return result;
-  } catch (err: any) {
-    const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
-    console.error('Conversion attempt ' + attempt + '/' + maxRetryCount + ' failed for job ' + jobId + ': ' + errMsg);
-    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: errMsg });
-    throw err; // BullMQ will retry with backoff
+  for (let attempt = 1; attempt <= maxRetryCount; attempt++) {
+    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount });
+    try {
+      const result = await executeConversion(fileBuffer, sourceFormat, targetFormat, jobId);
+      job.updateProgress(100);
+      return result;
+    } catch (err) {
+      const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
+      console.error('Conversion attempt ' + attempt + '/' + maxRetryCount + ' failed for job ' + jobId + ': ' + errMsg);
+      if (attempt < maxRetryCount) {
+        const delayMs = Math.pow(2, attempt) * 1000;
+        job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: errMsg, retryInMs: delayMs });
+        throw err;
+      } else {
+        job.updateProgress({ percentage: 0, attempt, maxRetries: maxRetryCount, error: errMsg });
+        throw err;
+      }
+    }
   }
+  throw new Error('Conversion failed after all retries');
 }
-
 export async function getJobStatus(jobId: string) {
   const queue = getConversionQueue();
   const job = await queue.getJob(jobId);
@@ -124,16 +111,14 @@ export async function getJobStatus(jobId: string) {
   let progressValue = 0;
   if (typeof progress === 'number') progressValue = progress;
   else if (progress && typeof progress === 'object' && 'percentage' in progress) progressValue = progress.percentage || 0;
-
-  let eta: number | undefined;
+  let eta;
   if (job.state === 'active' && progressValue > 0 && progressValue < 100) {
-    const elapsed = Date.now() - job.timestamp;
-    if (elapsed > 100) { // Guard against near-zero elapsed times
-      const rate = progressValue / elapsed;
-      if (rate > 0) eta = Math.ceil((100 - progressValue) / rate);
-    }
+      const elapsed = Date.now() - job.timestamp;
+      if (elapsed > 0) {
+        const rate = progressValue / elapsed;
+    if (rate > 0) eta = Math.ceil((100 - progressValue) / rate);
+      }
   }
-
   return {
     jobId, status: job.state || 'waiting', progress: progressValue,
     attempt: job.attemptsMade + 1, maxRetries: MAX_RETRIES, eta,
@@ -142,7 +127,6 @@ export async function getJobStatus(jobId: string) {
     createdAt: job.timestamp, updatedAt: job.updatedAt || job.timestamp,
   };
 }
-
 export async function startWorker() {
   if (_worker) return _worker;
   // Rate limit: max 5 jobs per minute (Calibre is CPU-intensive)
@@ -152,16 +136,11 @@ export async function startWorker() {
     connection: getRedisClient(),
     concurrency: RATE_LIMIT_MAX,
     limiter: { max: RATE_LIMIT_MAX, duration: RATE_LIMIT_DURATION },
-    settings: {
-      // Custom backoff strategy: exponential with 2s base delay
-      // Replaces the dead delay code from the old for-loop retry logic
-      backoffStrategy: (attemptsMade: number) => Math.pow(2, attemptsMade) * 2000,
-    },
   });
   _worker.on('completed', (job: any) => {
     console.log('Job ' + job.id + ' completed');
-    // Keep jobs for 7 days instead of removing immediately
-    getConversionQueue().trim(1000, false);
+      // Keep jobs for 7 days instead of removing immediately
+      getConversionQueue().trim(1000, false);
   });
   _worker.on('failed', async (job: any, err: any) => {
     const jobIdStr = job?.id || "?";
@@ -202,6 +181,5 @@ export function startQueueEvents() {
   _queueEvents.on('failed', (data: any) => console.log('QueueEvent: job ' + data.jobId + ' failed: ' + (data.failedReason || 'unknown')));
   return _queueEvents;
 }
-
 export async function closeWorker() { if (_worker) { await _worker.close(); _worker = null; } }
 export async function closeQueueEvents() { if (_queueEvents) { await _queueEvents.close(); _queueEvents = null; } }

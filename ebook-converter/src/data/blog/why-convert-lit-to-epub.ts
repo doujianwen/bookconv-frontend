@@ -1,4 +1,4 @@
-﻿export const slug = 'why-convert-lit-to-epub';
+export const slug = 'why-convert-lit-to-epub';
 export const title = '为什么你需要把 LIT 文件转成 EPUB：抢救你的数字藏书';
 export const date = '2026-07-12';
 export const author = 'Admin';
@@ -9,15 +9,15 @@ export const content = {
   sections: [
     {
       heading: 'LIT 格式的现状',
-      body: 'LIT（Microsoft Reader Format）是微软在 2003 年推出的专有电子书格式，主要用于数字图书分发。它采用了 DRM 保护机制，只能在微软阅读器或 Windows Mobile 设备上打开。\\n\\n随着微软在 2011 年停止支持 Microsoft Reader，LIT 文件已经成为一种被遗弃的格式---即使你还有大量珍贵的 LIT 电子书收藏，也再也找不到合法的阅读器来打开它们了。\\n\\n**LIT 的核心特点：**\\n- 内置 DRM 加密保护\\n- 仅支持 Windows 桌面和 Windows Mobile 平台\\n- 不支持重排文本（reflowable text）\\n- 文件体积相对较小',
+      body: 'LIT（Microsoft Reader Format）是微软在 2003 年推出的专有电子书格式，主要用于数字图书分发。它采用了 DRM 保护机制，只能在微软阅读器或 Windows Mobile 设备上打开。\\n\\n随着微软在 2011 年停止支持 Microsoft Reader，LIT 文件已经成为一种被遗弃的格式---即使你还有大量珍贵的 LIT 电子书收藏，也再也找不到合法的阅读器来打开它们了。\\n\\n**LIT 的核心特点：**\\n- 内置 DRM 加密保护\\n- 仅支持 Windows 桌面和 Windows Mobile 平台\\n- 不支持重排文本（reflowable text）\\n- 文件体积相对较小'
     },
     {
       heading: '转换 LIT 到 EPUB 的理由',
-      body: '**1. 设备兼容性** -- EPUB 可在 iOS、Android、Kindle（需转换）、电脑、电子墨水阅读器上直接打开，而 LIT 只能依赖已停服的 Windows 软件。\\n\\n**2. 文本重排** -- EPUB 支持响应式字体大小和页面重排，在小屏幕手机上也拥有出色的阅读体验；LIT 则固定版面，无法适应不同设备。\\n\\n**3. 未来-proof** -- EPUB 3 是国际数字出版论坛（IDPF）的开放标准，有长期的社区维护；LIT 则是封闭的、已被放弃的格式。\\n\\n**4. 搜索与标注** -- EPUB 支持全文搜索、高亮标注、笔记和书签同步，这些功能在 LIT 中要么缺失要么体验极差。',
+      body: '**1. 设备兼容性** -- EPUB 可在 iOS、Android、Kindle（需转换）、电脑、电子墨水阅读器上直接打开，而 LIT 只能依赖已停服的 Windows 软件。\\n\\n**2. 文本重排** -- EPUB 支持响应式字体大小和页面重排，在小屏幕手机上也拥有出色的阅读体验；LIT 则固定版面，无法适应不同设备。\\n\\n**3. 未来-proof** -- EPUB 3 是国际数字出版论坛（IDPF）的开放标准，有长期的社区维护；LIT 则是封闭的、已被放弃的格式。\\n\\n**4. 搜索与标注** -- EPUB 支持全文搜索、高亮标注、笔记和书签同步，这些功能在 LIT 中要么缺失要么体验极差。'
     },
     {
       heading: '转换后的好处',
-      body: '转换后的 EPUB 文件将具备以下优势：\\n\\n- **跨平台阅读** - 在任何支持 EPUB 的设备上打开，无需额外软件\\n- **可调节字体** - 根据光线和视力需求自由调整字号\\n- **目录导航** - 保留 LIT 中的章节结构，生成 EPUB 导航文档（NCX/NAV）\\n- **元数据完整** - 书名、作者、ISBN 等信息自动提取并写入 EPUB 元数据\\n- **文件更小** - EPUB 基于 ZIP 压缩，通常比 LIT 文件更紧凑',
+      body: '转换后的 EPUB 文件将具备以下优势：\\n\\n- **跨平台阅读** - 在任何支持 EPUB 的设备上打开，无需额外软件\\n- **可调节字体** - 根据光线和视力需求自由调整字号\\n- **目录导航** - 保留 LIT 中的章节结构，生成 EPUB 导航文档（NCX/NAV）\\n- **元数据完整** - 书名、作者、ISBN 等信息自动提取并写入 EPUB 元数据\\n- **文件更小** - EPUB 基于 ZIP 压缩，通常比 LIT 文件更紧凑\\n\\n👉 [Convert LIT to EPUB](/convert/lit-to-epub) · [Convert EPUB to MOBI](/convert/epub-to-mobi)'
     },
   ],
 };
