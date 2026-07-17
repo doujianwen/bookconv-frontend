@@ -193,6 +193,43 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                   acceptedAnswer: { "@type": "Answer", text: f.answer },
                 })),
               },
+              {
+                "@type": "QAPage",
+                mainEntity: [
+                  {
+                    "@type": "Question",
+                    name: "How to convert " + sourceDisplay + " to " + targetDisplay + " online?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "Use our free online converter: drag and drop your " + sourceDisplay + " file, select " + targetDisplay + " as the output format, and click Convert. The conversion is powered by Calibre and completes in seconds. No registration required.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "Is " + sourceDisplay + " to " + targetDisplay + " conversion free?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "Yes. Our " + sourceDisplay + " to " + targetDisplay + " converter is completely free to use. No registration, no watermarks, no file size limits for individual conversions.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "What is " + sourceDisplay + " format used for?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: FORMAT_DISPLAY_NAMES[source] || source.toUpperCase() + " is a popular ebook format used for digital reading on various devices and platforms.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "What is " + targetDisplay + " format used for?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: FORMAT_DISPLAY_NAMES[target] || target.toUpperCase() + " is a widely supported format for ebooks and digital documents, compatible with most e-readers and devices.",
+                    },
+                  },
+                ],
+              },
             ],
           }),
         }}
@@ -204,6 +241,19 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
           </h1>
           <p className="mt-3 text-lg text-gray-500">
             {contentData?.hero?.subtitle || "Free online tool \u2014 no registration, no watermarks, no limits."}
+          </p>
+        </div>
+        {/* AI Summary / Quick Answer — GEO optimized */}
+        <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
+          <h2 className="mb-3 text-lg font-semibold text-blue-900">
+            Quick Answer
+          </h2>
+          <p className="text-sm text-blue-800 leading-relaxed">
+            To convert <strong>{sourceDisplay}</strong> to <strong>{targetDisplay}</strong>:
+            upload your file using the form below, select <strong>{targetDisplay}</strong> as the output format, and click Convert.
+            Our Calibre-powered engine processes the conversion in seconds with no registration required.
+            The converter preserves text content, chapter structure, images, and metadata.
+            For batch conversions of up to 50 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
           </p>
         </div>
         <div className="space-y-4">
