@@ -8,9 +8,10 @@ import { CONTENT_MAP } from "@/data/content"
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/seo/schema"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
+
 const ToolPageClientDynamic = dynamic(
   () => import("./ToolPageClient").then((mod) => ({ default: mod.ToolPageClient })),
-  { ssr: false, loading: () => <div className="flex min-h-[50vh] items-center justify-center"><p className="text-gray-500">Loading converter…</p></div> },
+  { loading: () => <div className="flex min-h-[50vh] items-center justify-center"><p className="text-gray-500">Loading converter…</p></div> },
 )
 
 interface ToolPageProps {
@@ -19,7 +20,7 @@ interface ToolPageProps {
 
 export async function generateStaticParams() {
   return KEYWORDS.map((k) => ({
-    slug: k.source + "-to-" + k.target,
+    slug: k.source + "-to-" + k.target
   }))
 }
 

@@ -1,224 +1,158 @@
-﻿# mc-sync.ps1 - Multica Issues 与本地模板自动同步
-# 用法: .\mc-sync.ps1 [--dry-run] [--force-update]
-
-param(
-    [switch]$DryRun,
-    [switch]$ForceUpdate
-)
-
+﻿# mc-sync.ps1 鈥?鑷姩鍚屾鏈湴 Issue 妯℃澘鍒?Multica 浜戠
+param([switch]$DryRun, [switch]$Verbose)
+Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# ==================== 配置 ====================
-$MulticaExe = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
-$TemplateDir = "E:\一人公司\电子书格式转换站\.multica-templates\issues"
-$ProjectId = "3d2e1bfe-1f2e-4d80-9cc4-eac195463ac0"
-$AssigneeName = "电子书格式转换"
+$ScriptDir   = Split-Path $MyInvocation.MyCommand.Path -Parent
+$TemplateDir = Join-Path $ScriptDir ".multica-templates/issues"
+$ProjectId   = "3d2e1bfe-1f2e-4d80-9cc4-eac195463ac0"
+$AgentId     = "5600cd9e-87ec-43fc-a444-f7ce8f77d794"
+$MulticaExe  = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
 
-# 状态颜色
-$Colors = @{
-    created   = "Green"
-    updated   = "Yellow"
-    unchanged = "DarkGray"
-    error     = "Red"
-    info      = "Cyan"
-    heading   = "Magenta"
+function Run-Multica {
+    param([string[]]$Args)
+    $fullArgs = @("issue") + $Args
+    $outF = Join-Path $env:TEMP "mc-out-$((Get-Random).ToString('X8')).txt"
+    $errF = Join-Path $env:TEMP "mc-err-$((Get-Random).ToString('X8')).txt"
+    # Use Start-Process with explicit encoding to avoid Chinese CWD issues
+    $proc = Start-Process -FilePath $MulticaExe -ArgumentList $fullArgs -RedirectStandardOutput $outF -RedirectStandardError $errF -Wait -NoNewWindow -PassThru
+    $exitCode = $proc.ExitCode
+    if ($exitCode -ne 0) {
+        $stderr = ""
+        if (Test-Path $errF) { $stderr = Get-Content $errF -Raw }
+        Remove-Item $errF -Force -ErrorAction SilentlyContinue
+        throw ("multica failed (exit " + $exitCode + "): " + $stderr)
+    }
+    $stdout = ""
+    if (Test-Path $outF) { $stdout = [System.IO.File]::ReadAllText($outF, [System.Text.Encoding]::UTF8) }
+    Remove-Item $outF -Force -ErrorAction SilentlyContinue
+    $jsonStart = $stdout.IndexOf("{")
+    if ($jsonStart -gt 0) { $stdout = $stdout.Substring($jsonStart) }
+    return $stdout.TrimEnd("`r`n")
 }
 
-function Write-MCInfo   { param($msg) Write-Host "[INFO] $msg" -ForegroundColor $Colors.info }
-function Write-MCSuccess { param($msg) Write-Host "[OK]   $msg" -ForegroundColor $Colors.created }
-function Write-MCUpdate  { param($msg) Write-Host "[UPD]  $msg" -ForegroundColor $Colors.updated }
-function Write-MCSkip    { param($msg) Write-Host "[SKIP] $msg" -ForegroundColor $Colors.unchanged }
-function Write-MCError   { param($msg) Write-Host "[ERR]  $msg" -ForegroundColor $Colors.error }
-function Write-MCHdr     { param($msg) Write-Host "`n=== $msg ===" -ForegroundColor $Colors.heading }
-
-# ==================== 步骤 1: 获取云端 Issues ====================
-Write-MCHdr "Step 1: 获取云端 Issues"
-try {
-    $rawIssues = & $MulticaExe issue list --output json 2>&1
-    $cloudIssues = $rawIssues | ConvertFrom-Json
-    Write-MCInfo ("云端共 {0} 个 Issues" -f $cloudIssues.issues.Count)
-} catch {
-    Write-MCError "无法获取云端 Issues: $_"; exit 1
+function Extract-PhaseInfo {
+    param([string]$FilePath)
+    $content = Get-Content $FilePath -Raw -Encoding UTF8
+    $fileName = Split-Path $FilePath -Leaf
+    $phaseMatch = [regex]::Match($fileName, 'phase(\d+)')
+    $phaseNum = [int]$phaseMatch.Groups[1].Value
+    $titleMatch = [regex]::Match($content, '^## Phase \d+: (.+)$', [System.Text.RegularExpressions.RegexOptions]::Multiline)
+    $title = if ($titleMatch.Success) { $titleMatch.Groups[1].Value.Trim() } else { "Phase " + $phaseNum }
+    $priorityMatch = [regex]::Match($content, '^### 浼樺厛绾s*\r?\n\s*(P\d+)[^\r\n]*', [System.Text.RegularExpressions.RegexOptions]::Multiline)
+    $priorityRaw = if ($priorityMatch.Success) { $priorityMatch.Groups[1].Value } else { "P1" }
+    $priorityMap = @{ "P0" = "high"; "P1" = "medium"; "P2" = "low"; "P3" = "trivial" }
+    $priority = if ($priorityMap.ContainsKey($priorityRaw)) { $priorityMap[$priorityRaw] } else { "medium" }
+    $lines = $content -split "`r?`n"
+    $descStart = 1; $descEnd = $lines.Length
+    while ($descEnd -gt $descStart -and $lines[$descEnd - 1].Trim() -eq "---") { $descEnd-- }
+    $description = ($lines[$descStart..($descEnd - 1)] -join "`n").Trim()
+    return @{ PhaseNum=$phaseNum; Title=$title; Description=$description; Priority=$priority; TemplateFile=$FilePath; RawContent=$content.Trim() }
 }
 
-# ==================== 步骤 2: 解析本地模板 ====================
-Write-MCHdr "Step 2: 解析本地模板"
-$templateMap = @{}
-
-$templates = Get-ChildItem $TemplateDir -Filter "phase*.md"
-foreach ($t in $templates) {
-    $content = Get-Content $t.FullName -Raw
-    
-    # 提取 Phase 号
-    $phaseNum = 0
-    if ($content -match "## Phase (\d+): (.+)") {
-        $phaseNum = [int]$Matches[1]
-        $title = $Matches[2].Trim()
-    } else {
-        Write-MCError "无法从 $($t.Name) 提取 Phase 号"; continue
+function Find-CloudIssueByPhase {
+    param([int]$PhaseNum, [object[]]$Issues)
+    foreach ($issue in $Issues) {
+        $pat = "\[Phase " + $PhaseNum + "\]"
+        if ($issue.title -match $pat -or $issue.title -match "Phase $PhaseNum") {
+            return @{ Id=$issue.id; Issue=$issue }
+        }
     }
-    
-    # 提取优先级
-    $priorityKey = "high"
-    $priorityLabel = "高优先级"
-    if ($content -match "优先级\s*(P\d)\s*—\s*(.+)") {
-        $pLevel = $Matches[1]; $priorityLabel = $Matches[2].Trim()
-        if ($pLevel -eq "0") { $priorityKey = "high" }
-        elseif ($pLevel -eq "1") { $priorityKey = "medium" }
-    }
-    
-    # 构建描述（去掉第一行标题）
-    $lines = $content -split "`n"
-    $descLines = $lines | Select-Object -Skip 1
-    $description = $descLines -join "`n"
-    
-    $templateMap[$phaseNum] = @{
-        File=$t.Name; Phase=$phaseNum; Title=$title; Description=$description
-        Priority=$priorityKey; PriorityLabel=$priorityLabel
-    }
-    Write-MCInfo ("模板 #{0}: {1} [{2}]" -f $phaseNum, $title, $priorityLabel)
-}
-Write-MCInfo ("共解析 {0} 个模板" -f $templateMap.Count)
-
-# ==================== 步骤 3: 建立 Phase -> Issue 映射 ====================
-Write-MCHdr "Step 3: 建立映射关系"
-$phaseToIssue = @{}
-foreach ($issue in $cloudIssues.issues) {
-    if ($issue.title -match "\[Phase (\d+)\]") {
-        $phaseNum = [int]$Matches[1]
-        $phaseToIssue[$phaseNum] = $issue
-    }
+    return $null
 }
 
-# ==================== 步骤 4: 对比并执行 ====================
-Write-MCHdr "Step 4: 对比与同步"
+function Compare-Descriptions {
+    param([string]$Local, [string]$Cloud)
+    $local = $Local.TrimStart([char]0xFEFF).Trim()
+    $cloud = $Cloud.TrimStart([char]0xFEFF).Trim()
+    return $local -eq $cloud
+}
 
-if ($DryRun) { Write-MCInfo "=== DRY RUN 模式（不会实际修改）===" }
+Write-Host ""
+Write-Host "=== Multica Issue Sync ===" -ForegroundColor Cyan
+Write-Host "Template: $TemplateDir" -ForegroundColor Gray
+Write-Host "Project:  $ProjectId" -ForegroundColor Gray
+if ($DryRun) { Write-Host "[DRY RUN] No changes will be made" -ForegroundColor Yellow }
 
-$newCount = 0; $updateCount = 0; $sameCount = 0
-$report = @()
+$templateFiles = Get-ChildItem (Join-Path $TemplateDir "phase*.md") | Sort-Object { [int][regex]::Match($_.Name, '\d+').Value }
+Write-Host "Found $($templateFiles.Count) template files" -ForegroundColor Green
+if ($templateFiles.Count -eq 0) { Write-Host "No templates found" -ForegroundColor Red; exit 1 }
 
-$templateMap.GetEnumerator() | Sort-Object { [int]$_.Key } | ForEach-Object {
-    $phase = $_.Value; $phaseNum = $phase.Phase
-    $existing = $phaseToIssue[$phaseNum]
-    $entry = @{ Phase=$phaseNum; Action=""; Detail="" }
-    
-    if (-not $existing) {
-        # 情况 A: 模板有，云端无 -> 创建
-        $entry.Action = "CREATE"; $entry.Detail = "云端不存在，将创建 Issue"
-        
-        if ($DryRun) {
-            Write-MCSkip ("Phase {0}: 需要创建 - [{1}]" -f $phaseNum, $phase.Title)
-        } else {
+$parsed = @()
+foreach ($t in $templateFiles) {
+    $info = Extract-PhaseInfo $t.FullName
+    $parsed += $info
+    if ($Verbose) { Write-Host "  P$('{0:D2}' -f $info.PhaseNum) $($info.Title) -> $($info.Priority)" -ForegroundColor Gray }
+}
+
+Write-Host ""
+Write-Host "Fetching cloud issues..." -ForegroundColor Gray
+$jsonText = Run-Multica "list", "--project", $ProjectId, "--output", "json"
+$jsonObj = $jsonText | ConvertFrom-Json
+$issues = $jsonObj.issues
+Write-Host "Cloud has $($issues.Count) issues" -ForegroundColor Green
+
+$created=0; $updated=0; $skipped=0; $errors=0
+foreach ($p in $parsed) {
+    $phaseStr = "P$('{0:D2}' -f $p.PhaseNum)"
+    $cloud = Find-CloudIssueByPhase $p.PhaseNum $issues
+    $matchedTitle = if ($cloud) { $cloud.Issue.title } else { "(none)" }
+    if ($null -eq $cloud) {
+        Write-Host ""
+        Write-Host "[$phaseStr] CREATE: $($p.Title)" -ForegroundColor Yellow
+        if ($DryRun) { Write-Host "  [DRY RUN] skip" -ForegroundColor DarkYellow }
+        else {
             try {
-                $tempFile = Join-Path $PWD "_sync_desc_${phaseNum}.txt"
-                $phase.Description | Out-File -Encoding utf8 -NoNewline $tempFile
-                
-                $result = & $MulticaExe issue create `
-                    --title ("[Phase {0}] {1}" -f $phaseNum, $phase.Title) `
-                    --description-file $tempFile `
-                    --assignee $AssigneeName `
-                    --priority $phase.Priority `
-                    --project $ProjectId `
-                    --output json 2>&1
-                
-                Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
-                Write-MCSuccess ("Phase {0}: 已创建 - [{1}]" -f $phaseNum, $phase.Title)
-                $newCount++
-            } catch {
-                Write-MCError ("Phase {0}: 创建失败 - {1}" -f $phaseNum, $_)
-                $entry.Detail = "ERROR: $_"
-            }
+                $tmpFile = Join-Path $env:TEMP ("mc-desc-$($p.PhaseNum).md")
+                [System.IO.File]::WriteAllText($tmpFile, $p.RawContent, [System.Text.UTF8Encoding]::new($false))
+                $createArgs = @("create", "--title", "[Phase $($p.PhaseNum)] $($p.Title)", "--description-file", $tmpFile, "--allow-external-file", "--priority", $p.Priority, "--project", $ProjectId, "--assignee-id", $AgentId, "--output", "json")
+                $result = Run-Multica @createArgs
+                $newIssue = $result | ConvertFrom-Json
+                Write-Host "  Created: $($newIssue.id) - $($newIssue.title)" -ForegroundColor Green
+                $created++
+            } catch { Write-Host "  FAILED: $_" -ForegroundColor Red; $errors++ }
+            finally { if (Test-Path $tmpFile) { Remove-Item $tmpFile -Force } }
         }
     } else {
-        # 情况 B: 模板和云端都有 -> 对比内容
-        $titleMatch = $existing.title -match "\[Phase \d+\]?\s*(.+)"
-        $existingTitle = if ($titleMatch) { $Matches[1].Trim() } else { $existing.title }
-        
-        $needsUpdate = $false; $updateReasons = @()
-        
-        # 比较标题
-        if ($existingTitle -ne $phase.Title) {
-            $needsUpdate = $true
-            $updateReasons += ("标题变更: '{0}' -> '{1}'" -f $existingTitle, $phase.Title)
-        }
-        
-        # 比较描述
-        $cleanExistingDesc = ($existing.description -replace "`xEF`xBB`BF", "").Trim()
-        $cleanTemplateDesc = $phase.Description.Trim()
-        if ($cleanExistingDesc -ne $cleanTemplateDesc) {
-            $needsUpdate = $true; $updateReasons += "描述变更"
-        }
-        
-        # 比较优先级
-        $existingPriority = if ($existing.priority -eq "high") { "high" } elseif ($existing.priority -eq "medium") { "medium" } else { "low" }
-        if ($existingPriority -ne $phase.Priority) {
-            $needsUpdate = $true
-            $updateReasons += ("优先级变更: {0} -> {1}" -f $existing.priority, $phase.Priority)
-        }
-        
-        if ($needsUpdate) {
-            $entry.Action = "UPDATE"; $entry.Detail = ($updateReasons -join "; ")
-            
-            if ($DryRun) {
-                Write-MCUpdate ("Phase {0}: 需要更新 - {1}" -f $phaseNum, ($updateReasons -join ', '))
-            } else {
-                try {
-                    $tempFile = Join-Path $PWD "_sync_desc_${phaseNum}.txt"
-                    $phase.Description | Out-File -Encoding utf8 -NoNewline $tempFile
-                    
-                    $updateArgs = @(
-                        "issue", "update", $existing.id,
-                        "--title", ("[Phase {0}] {1}" -f $phaseNum, $phase.Title),
-                        "--description-file", $tempFile,
-                        "--priority", $phase.Priority,
-                        "--output", "json"
-                    )
-                    $result = & $MulticaExe $updateArgs 2>&1
-                    
-                    Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
-                    Write-MCSuccess ("Phase {0}: 已更新 - {1}" -f $phaseNum, ($updateReasons -join ', '))
-                    $updateCount++
-                } catch {
-                    Write-MCError ("Phase {0}: 更新失败 - {1}" -f $phaseNum, $_)
-                    $entry.Detail = "ERROR: $_"
-                }
-            }
+        $isSame = Compare-Descriptions $p.Description $cloud.Issue.description
+        if ($isSame) {
+            Write-Host ""
+            Write-Host "[$phaseStr] SKIP: $($p.Title) (identical)" -ForegroundColor DarkGray
+            $skipped++
         } else {
-            $entry.Action = "UNCHANGED"; $entry.Detail = "与模板一致"
-            Write-MCSkip ("Phase {0}: 无需变更" -f $phaseNum)
-            $sameCount++
+            Write-Host ""
+            Write-Host "[$phaseStr] UPDATE: $($p.Title)" -ForegroundColor Magenta
+            Write-Host "  Cloud: $matchedTitle" -ForegroundColor Gray
+            if ($DryRun) { Write-Host "  [DRY RUN] skip" -ForegroundColor DarkYellow }
+            else {
+                try {
+                    $tmpFile = Join-Path $env:TEMP ("mc-desc-$($p.PhaseNum).md")
+                    [System.IO.File]::WriteAllText($tmpFile, $p.RawContent, [System.Text.UTF8Encoding]::new($false))
+                    $updateArgs = @("update", $cloud.Id, "--title", "[Phase $($p.PhaseNum)] $($p.Title)", "--description-file", $tmpFile, "--allow-external-file", "--priority", $p.Priority, "--output", "json")
+                    $result = Run-Multica @updateArgs
+                    $upIssue = $result | ConvertFrom-Json
+                    Write-Host "  Updated: $($upIssue.id)" -ForegroundColor Green
+                    $updated++
+                } catch { Write-Host "  FAILED: $_" -ForegroundColor Red; $errors++ }
+                finally { if (Test-Path $tmpFile) { Remove-Item $tmpFile -Force } }
+            }
         }
     }
-    $report += $entry
 }
 
-# ==================== 步骤 5: 生成报告 ====================
-Write-MCHdr "同步报告"
+Write-Host ""
+Write-Host "=== Results ===" -ForegroundColor Cyan
+Write-Host "  Created:  $created" -ForegroundColor Green
+Write-Host "  Updated:  $updated" -ForegroundColor Magenta
+Write-Host "  Skipped:  $skipped" -ForegroundColor DarkGray
+if ($errors -gt 0) { Write-Host "  Errors:   $errors" -ForegroundColor Red }
+if ($DryRun) { Write-Host "[DRY RUN] No changes made" -ForegroundColor Yellow }
+Write-Host ""
+Write-Host "Done." -ForegroundColor Green
 
-$total = $templateMap.Count
-Write-Host ("  模板总数: {0}" -f $total) -ForegroundColor White
-Write-Host ("  CREATE: {0}" -f $newCount) -ForegroundColor Green
-Write-Host ("  UPDATE: {0}" -f $updateCount) -ForegroundColor Yellow
-Write-Host ("  UNCHANGED: {0}" -f $sameCount) -ForegroundColor DarkGray
 
-if ($DryRun) {
-    Write-Host ""
-    Write-Host "这是 Dry Run 模式。添加 --no-dry-run 参数执行实际同步。" -ForegroundColor Cyan
-}
 
-Write-Host "`n=== 详细列表 ===" -ForegroundColor Magenta
-foreach ($r in $report) {
-    $color = switch ($r.Action) {
-        "CREATE" { $Colors.created }
-        "UPDATE" { $Colors.updated }
-        default { $Colors.unchanged }
-    }
-    Write-Host ("  Phase {0}: {1} - {2}" -f $r.Phase, $r.Action, $r.Detail) -ForegroundColor $color
-}
 
-Write-MCHdr "完成"
-Write-Host "同步完成。" -ForegroundColor Green
-if (-not $DryRun) {
-    Write-Host "提示: 运行 '.\mc.ps1 status' 查看最新状态" -ForegroundColor DarkGray
-}
+
+
+

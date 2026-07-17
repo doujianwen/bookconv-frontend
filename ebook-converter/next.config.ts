@@ -162,18 +162,15 @@ const nextConfig: NextConfig = {
   // ===========================================================================
   // Experimental: Incremental App Router features (Next.js 15+)
   // ===========================================================================
-  experimental: {
-    cacheComponents: true, // Incremental Prerendering for fast TTFB
-    // Optimize server component rendering
-    optimizePackageImports: ['lucide-react', '@tailwindcss/typography', 'bullmq', 'ioredis', '@supabase/ssr'],
-    // Enable React compiler for auto-memoization
-    // reactCompiler: true, // Uncomment when ready for React 19 compiler
-  },
+  experimental: {},
 
   // ===========================================================================
   // Compression
   // ===========================================================================
   compress: true,
+
+  // Turbopack Configuration (Next.js 16+)
+  turbopack: {},
 
   // ===========================================================================
   // Trailing slash for consistent SEO

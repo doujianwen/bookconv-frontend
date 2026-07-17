@@ -1,6 +1,6 @@
-﻿import Link from 'next/link'
+'use client'
+import Link from 'next/link'
 import { generateSoftwareApplicationSchema } from '@/lib/seo/schema'
-"use client"
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
@@ -12,13 +12,12 @@ import { RelatedConversions } from "@/components/tools/RelatedConversions"
 import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
 import { TestimonialCard } from "@/components/tools/TestimonialCard"
 import { TESTIMONIALS } from "@/data/testimonials"
-
+import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
   faq?: Array<{ q: string; a: string }>
 }
-
 interface ToolPageClientProps {
   source: string
   target: string
@@ -27,7 +26,6 @@ interface ToolPageClientProps {
   description: string
   contentData?: ContentData | null
 }
-
 export function ToolPageClient({ source, target, keyword, tool, description, contentData }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
@@ -36,7 +34,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   const [progress, setProgress] = useState(0)
   const [originalFileName, setOriginalFileName] = useState("")
   const [originalFileSize, setOriginalFileSize] = useState(0)
-
   const handleReset = useCallback(() => {
     setStatus("idle")
     setDownloadUrl("")
@@ -46,30 +43,24 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     setOriginalFileName("")
     setOriginalFileSize(0)
   }, [])
-
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toLowerCase() === "htmlz" ? "HTMLZ" : (FORMAT_DISPLAY_NAMES[target] || target.toUpperCase())
-
   const slug = source + "-to-" + target
   const baseUrl = "https://bookconv.com"
   const pageUrl = baseUrl + "/convert/" + slug
-
   const faqs = contentData?.faq
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
     : generateDefaultFAQs(source, target)
-
   const breadcrumbs = [
     { name: "Home", url: baseUrl },
     { name: "Converters", url: baseUrl + "#" },
     { name: sourceDisplay + " to " + targetDisplay, url: pageUrl },
   ]
-
   const howToSteps = [
     { name: "Upload your file", text: "Drag and drop your " + sourceDisplay + " file or click to browse." },
     { name: "Conversion starts automatically", text: "Our Calibre-powered engine converts your file in seconds." },
     { name: "Download result", text: "Once complete, download your converted " + targetDisplay + " file instantly." },
   ]
-
   const relatedBlogPosts = [
     { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", slug: "ebook-formats-explained", href: "/blog/ebook-formats-explained", excerpt: "Compare the three most popular ebook formats.", tags: ["epub", "azw3", "pdf"] },
     { title: "How to Convert EPUB to MOBI for Free", slug: "how-to-convert-epub-to-mobi", href: "/blog/how-to-convert-epub-to-mobi", excerpt: "A complete guide to converting EPUB files to MOBI format.", tags: ["epub", "mobi"] },
@@ -112,7 +103,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     },
     [source, target]
   )
-
   return (
     <>
       <script
@@ -207,7 +197,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
           }),
         }}
       />
-
       <main className="mx-auto max-w-3xl space-y-10 px-4 py-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -217,7 +206,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             {contentData?.hero?.subtitle || "Free online tool \u2014 no registration, no watermarks, no limits."}
           </p>
         </div>
-
         <div className="space-y-4">
           <FileDropZone
             onFileSelect={handleFileSelect}
@@ -248,6 +236,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             />
           )}
         </div>
+        {/* Batch conversion Pro guide */}
+        <BatchConversionGuide sourceFormat={source} targetFormat={target} />
         {/* Custom content sections */}
         {contentData?.sections ?
           contentData.sections.map((section, index) => (
@@ -278,7 +268,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 </li>
               </ol>
             </section>
-
             {/* Why convert section */}
             <section>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">
@@ -305,7 +294,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 </div>
               </div>
             </section>
-
             {/* Format comparison table */}
             <section>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">
@@ -347,10 +335,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             </section>
           </>
         )}
-
         {/* FAQ with Schema */}
         <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
-
         {/* Related blog posts */}
         <section className="rounded-xl border bg-gray-50 p-6">
           <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Guides &amp; Tutorials</h2>
@@ -380,7 +366,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     </>
   )
 }
-
 function renderMarkdownToHtml(markdown: string): string {
   let html = markdown
   // Handle pipe tables

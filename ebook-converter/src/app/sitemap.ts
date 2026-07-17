@@ -1,25 +1,15 @@
 import { MetadataRoute } from 'next'
 import { CONVERSION_MAP } from '@/lib/conversion-map'
-import fs from 'fs'
-import path from 'path'
+import { getAllPosts } from '@/data/blog'
+import { getContent } from '@/data/content'
 import { getLocale } from '@/i18n/utils'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com'
 
-const blogDir = path.join(process.cwd(), 'src', 'data', 'blog')
-const BLOG_POSTS = fs.readdirSync(blogDir)
-  .filter((f) => f.endsWith('.ts') && !f.endsWith('.d.ts'))
-  .map((f) => {
-    const mod = require(path.join(blogDir, f))
-    return { slug: mod.slug || f.replace(/\.ts$/, ''), date: mod.date || '2026-01-01' }
-  })
-
-const contentDir = path.join(process.cwd(), 'src', 'data', 'content')
-
 function getLevel(slug: string): 'A' | 'B' {
   try {
-    const mod = require(path.join(contentDir, slug + '.ts'))
-    return mod.level === 'A' ? 'A' : 'B'
+    const mod = getContent(slug)
+    return mod?.level === 'A' ? 'A' : 'B'
   } catch {
     return 'B'
   }
@@ -27,7 +17,7 @@ function getLevel(slug: string): 'A' | 'B' {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locale = await getLocale()
-  const prefix = locale === 'es' ? `/${locale}` : ''
+  const prefix = locale === 'es' ? '/' + locale : ''
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl + prefix, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
@@ -44,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: getLevel(key) === 'A' ? 0.8 : 0.7,
   }))
 
-  const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+  const blogPages: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: baseUrl + prefix + '/blog/' + post.slug,
     lastModified: new Date(post.date),
     changeFrequency: 'yearly',

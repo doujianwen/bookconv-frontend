@@ -4,9 +4,10 @@ import { getFormatData, SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { FORMAT_DISPLAY_NAMES } from '@/lib/conversion-map'
 import dynamic from 'next/dynamic'
 
+
 const FormatPageClientDynamic = dynamic(
   () => import('./FormatPageClient').then((mod) => ({ default: mod.FormatPageClient })),
-  { ssr: false, loading: () => (
+  { loading: () => (
     <div className="flex min-h-[50vh] items-center justify-center">
       <p className="text-gray-500">Loading format info...</p>
     </div>
