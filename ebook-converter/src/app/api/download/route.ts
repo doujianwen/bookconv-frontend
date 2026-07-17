@@ -3,9 +3,19 @@ import { isR2Configured, downloadFromR2 } from '@/lib/storage/r2';
 
 const MAX_DOWNLOADS_PER_IP = 50;
 const DOWNLOAD_WINDOW_MS = 60 * 60 * 1000; // 1 hour window
+const CLEANUP_INTERVAL_MS = 10 * 60 * 1000; // cleanup expired entries every 10 minutes
 
 // Simple in-memory rate limiter (production should use Redis)
 const ipDownloads = new Map<string, { count: number; windowStart: number }>();
+
+let lastCleanupTime = Date.now();
+
+/** Extract the real client IP from x-forwarded-for header */
+function extractClientIp(headerValue: string | null): string {
+  if (!headerValue) return 'unknown';
+  // x-forwarded-for: "client, proxy1, proxy2" — first IP is the real client
+  return headerValue.split(',')[0].trim();
+}
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -22,6 +32,19 @@ function checkRateLimit(ip: string): boolean {
 
   record.count += 1;
   return true;
+}
+
+/** Periodically clean up expired IP rate limit records */
+function maybeCleanup(): void {
+  const now = Date.now();
+  if (now - lastCleanupTime < CLEANUP_INTERVAL_MS) return;
+  lastCleanupTime = now;
+
+  for (const [ip, record] of ipDownloads.entries()) {
+    if (now - record.windowStart > DOWNLOAD_WINDOW_MS) {
+      ipDownloads.delete(ip);
+    }
+  }
 }
 
 export async function GET(request: NextRequest) {
@@ -46,9 +69,12 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Rate limit by IP
-  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-  if (!checkRateLimit(ip)) {
+  // Rate limit by IP (extract real client IP, not full chain)
+  const rawIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || null;
+  const clientIp = extractClientIp(rawIp);
+  maybeCleanup();
+
+  if (!checkRateLimit(clientIp)) {
     return NextResponse.json(
       { error: 'Too many downloads. Please try again later.' },
       { status: 429 },
@@ -101,9 +127,8 @@ export async function GET(request: NextRequest) {
         'Expires': '0',
       },
     });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Download failed';
-    console.error('Download error:', message);
+  } catch (_err: unknown) {
+    console.error('Download error');
     return NextResponse.json(
       { error: 'Download failed' },
       { status: 500 },

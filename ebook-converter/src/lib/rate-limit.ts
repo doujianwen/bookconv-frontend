@@ -101,13 +101,20 @@ export async function checkRateLimit(
       await redis.connect();
     }
 
-    // 原子递增计数器
-    const currentCount = await redis.incr(key);
-
-    // 如果是第一条请求（currentCount === 1），设置过期时间
-    if (currentCount === 1) {
-      await redis.expire(key, Math.ceil(windowMs / 1000));
-    }
+    // Use Lua script to atomically INCR + set expiry on first request.
+    // This prevents the race condition where incr succeeds but expire
+    // is never called (e.g., if the server crashes between the two commands).
+    const luaScript = `
+      local count = redis.call('INCR', KEYS[1])
+      if tonumber(count) == 1 then
+        redis.call('EXPIRE', KEYS[1], ARGV[1])
+      end
+      return count
+    `;
+    const currentCount = await redis.eval(luaScript, {
+      keys: [key],
+      arguments: [String(Math.ceil(windowMs / 1000))],
+    });
 
     const remaining = Math.max(0, maxRequests - currentCount);
     const allowed = currentCount <= maxRequests;
@@ -149,6 +156,12 @@ export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number
   return headers;
 }
 
+/** Extract the real client IP from x-forwarded-for header (first IP only) */
+function extractFirstIp(headerValue: string | null): string {
+  if (!headerValue) return '';
+  return headerValue.split(',')[0].trim();
+}
+
 /**
  * 从 NextRequest 中提取标识符（IP 或用户 ID）
  */
@@ -159,7 +172,7 @@ export function getRateLimitIdentifier(
   if (userId) {
     return `user:${userId}`;
   }
-  const ip = request.ip || request.headers.get("x-forwarded-for") || "unknown";
+  const ip = request.ip || extractFirstIp(request.headers.get("x-forwarded-for")) || "unknown";
   return `ip:${ip}`;
 }
 

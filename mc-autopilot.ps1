@@ -1,10 +1,15 @@
-﻿# mc-autopilot.ps1 - Multica Autopilot 管理脚本
-# 用法: .\mc-autopilot.ps1 <command> [args]
+# mc-autopilot.ps1 - Multica Autopilot Management Script
+# Usage: .\mc-autopilot.ps1 <command> [args]
+#
+# Environment variables:
+#   MULTICA_EXE_PATH  - Override the default multica.exe path
+#
+# Commands: list, trigger, create, suggest
 
 param(
     [Parameter(Position=0, Mandatory=$true)]
     [string]$Command,
-    
+
     [string]$Agent = "电子书格式转换",
     [string]$Title,
     [string]$Description,
@@ -15,7 +20,23 @@ param(
     [int]$TriggerMinute = 0
 )
 
-$MulticaExe = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
+# Resolve multica.exe path: CLI > env var > fallback
+if ($env:MULTICA_EXE_PATH) {
+    $MulticaExe = $env:MULTICA_EXE_PATH
+} else {
+    $MulticaExe = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
+}
+
+# Validate multica.exe exists
+if (-not (Test-Path $MulticaExe)) {
+    Write-Host "" -ForegroundColor Red
+    Write-Host "ERROR: multica.exe not found at: $MulticaExe" -ForegroundColor Red
+    Write-Host "" -ForegroundColor Yellow
+    Write-Host "Set env var:  `$env:MULTICA_EXE_PATH = 'C:\path\to\multica.exe'" -ForegroundColor Yellow
+    Write-Host "Or install Multica Desktop" -ForegroundColor Yellow
+    Write-Host "" -ForegroundColor Red
+    exit 1
+}
 
 switch ($Command.ToLower()) {
     "list" {

@@ -1,44 +1,28 @@
-﻿// src/app/api/convert/batch/[batchId]/download/route.ts
+// src/app/api/convert/batch/[batchId]/download/route.ts
 import { NextResponse } from "next/server";
 import JSZip from "jszip";
-
-interface BatchFileItem {
-  index: number;
-  name: string;
-  size: number;
-  sourceFormat: string;
-  targetFormat: string;
-  jobId: string;
-  status: "queued" | "processing" | "completed" | "failed";
-  error?: string;
-  result?: { base64Data: string; extension: string; mimeType: string; fileSize?: number };
-}
-
-interface BatchJobData {
-  batchId: string;
-  files: BatchFileItem[];
-  targetFormat: string;
-  userId?: string;
-  createdAt: number;
-  zipBlob?: Blob;
-  zipFileName?: string;
-}
-
-const batchStore = new Map<string, BatchJobData>();
+import { getBatch } from "@/lib/batch-store";
+import { canAccessBatch } from "@/lib/auth";
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ batchId: string }> }
 ) {
   try {
     const { batchId } = await params;
-    const batch = batchStore.get(batchId);
+    const batch = await getBatch(batchId);
 
     if (!batch) {
       return NextResponse.json({ error: "Batch not found" }, { status: 404 });
     }
 
-    const completedFiles = batch.files.filter((f) => f.status === "completed" && f.result);
+    // Ownership check
+    const hasAccess = await canAccessBatch(batch.userId);
+    if (!hasAccess) {
+      return NextResponse.json({ error: "Access denied" }, { status: 403 });
+    }
+
+    const completedFiles = batch.files.filter((f: any) => f.status === "completed" && f.result);
     if (completedFiles.length === 0) {
       return NextResponse.json({ error: "No completed files to download" }, { status: 404 });
     }
@@ -58,11 +42,12 @@ export async function GET(
       });
     }
 
+    // Regenerate ZIP on-the-fly from stored results
     const zip = new JSZip();
     for (const item of completedFiles) {
       if (item.result?.base64Data) {
-        const outName = item.name.replace(/\.[^.]+$/, "") + "." + item.result.extension;
-        zip.file(outName, item.result.base64Data, { base64: true });
+        const safeName = item.name.replace(/^.*[/\\]/, "").replace(/\.[^.]+$/, "") + "." + item.result.extension;
+        zip.file(safeName, item.result.base64Data, { base64: true });
       }
     }
 
@@ -80,6 +65,6 @@ export async function GET(
     });
   } catch (err: any) {
     console.error("GET /api/convert/batch/:id/download error:", err.message);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: "Download failed" }, { status: 500 });
   }
 }

@@ -1,5 +1,10 @@
-﻿# mc-sync.ps1 鈥?鑷姩鍚屾鏈湴 Issue 妯℃澘鍒?Multica 浜戠
-param([switch]$DryRun, [switch]$Verbose)
+# mc-sync.ps1 - Automatically sync local Issue templates to Multica Cloud
+# Usage: .\mc-sync.ps1 [-DryRun] [-Verbose] [--MulticaPath <path>]
+param(
+    [switch]$DryRun,
+    [switch]$Verbose,
+    [string]$MulticaPath
+)
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
@@ -7,13 +12,36 @@ $ScriptDir   = Split-Path $MyInvocation.MyCommand.Path -Parent
 $TemplateDir = Join-Path $ScriptDir ".multica-templates/issues"
 $ProjectId   = "3d2e1bfe-1f2e-4d80-9cc4-eac195463ac0"
 $AgentId     = "5600cd9e-87ec-43fc-a444-f7ce8f77d794"
-$MulticaExe  = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
+
+# Resolve multica.exe path: CLI arg > env var > fallback
+if ($MulticaPath) {
+    $MulticaExe = $MulticaPath
+} elseif ($env:MULTICA_EXE_PATH) {
+    $MulticaExe = $env:MULTICA_EXE_PATH
+} else {
+    $MulticaExe = "C:\Users\29537\AppData\Local\Programs\@multicadesktop\resources\app.asar.unpacked\resources\bin\multica.exe"
+}
+
+# Validate multica.exe exists
+if (-not (Test-Path $MulticaExe)) {
+    Write-Host "" -ForegroundColor Red
+    Write-Host "ERROR: multica.exe not found at: $MulticaExe" -ForegroundColor Red
+    Write-Host "" -ForegroundColor Yellow
+    Write-Host "Fix options:" -ForegroundColor Yellow
+    Write-Host "  1. Set env var:  `$env:MULTICA_EXE_PATH = 'C:\path\to\multica.exe'" -ForegroundColor Yellow
+    Write-Host "  2. Pass arg:    .\mc-sync.ps1 --MulticaPath 'C:\path\to\multica.exe'" -ForegroundColor Yellow
+    Write-Host "  3. Install Multica Desktop" -ForegroundColor Yellow
+    Write-Host "" -ForegroundColor Red
+    exit 1
+}
 
 function Run-Multica {
     param([string[]]$Args)
     $fullArgs = @("issue") + $Args
-    $outF = Join-Path $env:TEMP "mc-out-$((Get-Random).ToString('X8')).txt"
-    $errF = Join-Path $env:TEMP "mc-err-$((Get-Random).ToString('X8')).txt"
+    # Use GUID-based temp file names to avoid collision (vs Get-Random)
+    $suffix = [guid]::NewGuid().ToString().Substring(0, 8)
+    $outF = Join-Path $env:TEMP "mc-out-$suffix.txt"
+    $errF = Join-Path $env:TEMP "mc-err-$suffix.txt"
     # Use Start-Process with explicit encoding to avoid Chinese CWD issues
     $proc = Start-Process -FilePath $MulticaExe -ArgumentList $fullArgs -RedirectStandardOutput $outF -RedirectStandardError $errF -Wait -NoNewWindow -PassThru
     $exitCode = $proc.ExitCode
@@ -39,7 +67,7 @@ function Extract-PhaseInfo {
     $phaseNum = [int]$phaseMatch.Groups[1].Value
     $titleMatch = [regex]::Match($content, '^## Phase \d+: (.+)$', [System.Text.RegularExpressions.RegexOptions]::Multiline)
     $title = if ($titleMatch.Success) { $titleMatch.Groups[1].Value.Trim() } else { "Phase " + $phaseNum }
-    $priorityMatch = [regex]::Match($content, '^### 浼樺厛绾s*\r?\n\s*(P\d+)[^\r\n]*', [System.Text.RegularExpressions.RegexOptions]::Multiline)
+    $priorityMatch = [regex]::Match($content, '^### 优先级\s*\r?\n\s*(P\d+)[^\r\n]*', [System.Text.RegularExpressions.RegexOptions]::Multiline)
     $priorityRaw = if ($priorityMatch.Success) { $priorityMatch.Groups[1].Value } else { "P1" }
     $priorityMap = @{ "P0" = "high"; "P1" = "medium"; "P2" = "low"; "P3" = "trivial" }
     $priority = if ($priorityMap.ContainsKey($priorityRaw)) { $priorityMap[$priorityRaw] } else { "medium" }
@@ -70,6 +98,7 @@ function Compare-Descriptions {
 
 Write-Host ""
 Write-Host "=== Multica Issue Sync ===" -ForegroundColor Cyan
+Write-Host "Multica: $MulticaExe" -ForegroundColor Gray
 Write-Host "Template: $TemplateDir" -ForegroundColor Gray
 Write-Host "Project:  $ProjectId" -ForegroundColor Gray
 if ($DryRun) { Write-Host "[DRY RUN] No changes will be made" -ForegroundColor Yellow }
@@ -149,10 +178,3 @@ if ($errors -gt 0) { Write-Host "  Errors:   $errors" -ForegroundColor Red }
 if ($DryRun) { Write-Host "[DRY RUN] No changes made" -ForegroundColor Yellow }
 Write-Host ""
 Write-Host "Done." -ForegroundColor Green
-
-
-
-
-
-
-

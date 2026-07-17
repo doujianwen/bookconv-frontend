@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { getConversionQueue, ConversionJobData, MAX_RETRIES } from "@/lib/queue";
-import { SUPPORTED_FORMATS } from "@/lib/conversion-map";
+import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import {
   checkRateLimitWithStrategy,
   getRateLimitHeaders,
@@ -16,21 +16,26 @@ const ERROR_CODE_MAP: Record<string, string> = {
   'ENOENT': 'FILE_NOT_FOUND',
   'EACCES': 'PERMISSION_DENIED',
   'ETIMEDOUT': 'CONVERSION_TIMEOUT',
-  'EMFILE': 'FILE_TOO_LARGE',
-  'EFAULT': 'INVALID_INPUT_FILE',
+  'EMFILE': 'TOO_MANY_OPEN_FILES',
   'EBUSY': 'CONVERSION_BUSY',
   // Generic errors
-  'UNKNOWN_FORMAT': 'UNSUPPORTED_FORMAT',
-  'PROCESSING_ERROR': 'CONVERSION_FAILED',
+  'UNSUPPORTED_FORMAT': 'UNSUPPORTED_FORMAT',
+  'output not generated': 'CONVERSION_FAILED',
 };
 
 function mapErrorCode(message: string): string {
   for (const [key, code] of Object.entries(ERROR_CODE_MAP)) {
-    if (message.includes(key) || message.toLowerCase().includes(key.toLowerCase())) {
+    if (message.includes(key)) {
       return code;
     }
   }
   return 'CONVERSION_FAILED';
+}
+
+/** Sanitize error messages before sending to client to avoid leaking internals */
+function sanitizeErrorMessage(message: string): string {
+  // Strip stack traces, internal paths, and technical details
+  return message.replace(/at\s+.+/g, '').replace(/Error: /g, '').trim();
 }
 
 export async function POST(request: NextRequest) {
@@ -52,8 +57,8 @@ export async function POST(request: NextRequest) {
     // --- Request Validation ---
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
-    const sourceFormat = (formData.get("source_format") as string)?.toLowerCase().replace(".", "");
-    const targetFormat = (formData.get("target_format") as string)?.toLowerCase().replace(".", "");
+    const sourceFormat = normalizeFormat(formData.get("source_format") as string);
+    const targetFormat = normalizeFormat(formData.get("target_format") as string);
 
     if (!file || !sourceFormat || !targetFormat) {
       return NextResponse.json(
@@ -82,12 +87,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate file extension matches declared source format
+    const fileExt = file.name.split('.').pop()?.toLowerCase().replace('.', '') || '';
+    if (fileExt && fileExt !== sourceFormat) {
+      // Allow mismatch if the user explicitly provided source_format,
+      // but warn in logs — Calibre will reject mismatched content anyway
+      console.warn(`File extension '${fileExt}' doesn't match declared source_format '${sourceFormat}' for file: ${file.name}`);
+    }
+
     // --- Queue Job ---
     const jobId = randomUUID();
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Determine user priority (Pro users get priority 1, free users get 3)
-    const priority = rateResult.remaining > 10 ? 1 : 3; // Simple heuristic: more remaining = likely Pro
+    // Priority: all jobs use default priority (1) for now.
+    // User-tier-based priority requires auth middleware which is not yet implemented.
+    const priority = 1;
 
     const jobData: ConversionJobData = {
       fileBuffer: buffer.toString("base64"),
@@ -102,7 +116,7 @@ export async function POST(request: NextRequest) {
       removeOnCount: { complete: 1000, failed: 500 },
       retries: MAX_RETRIES - 1,
       delay: 0,
-      priority: priority,
+      priority,
     });
 
     return NextResponse.json(
@@ -112,9 +126,8 @@ export async function POST(request: NextRequest) {
   } catch (err: any) {
     console.error("POST /api/convert error:", err.message);
     const errorCode = mapErrorCode(err.message);
-    console.error("POST /api/convert error:", err.message, "code:", errorCode);
     return NextResponse.json(
-      { error: err.message || "Internal server error", code: errorCode },
+      { error: sanitizeErrorMessage(err.message) || "Internal server error", code: errorCode },
       { status: 500 }
     );
   }

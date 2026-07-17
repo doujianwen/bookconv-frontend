@@ -55,8 +55,18 @@ export type JobStatusResponse = {
 
 const execFileAsync = promisify(execFile);
 
+/** Safely remove a directory, logging errors instead of swallowing them silently */
 async function cleanupDir(dir: string) {
-  try { rmSync(dir, { recursive: true, force: true }); } catch {}
+  try {
+    rmSync(dir, { recursive: true, force: true });
+  } catch (err: any) {
+    console.error(`Failed to cleanup temp directory ${dir}:`, err.message);
+  }
+}
+
+/** Validate that a format string contains only safe characters */
+function isValidFormat(format: string): boolean {
+  return /^[a-z0-9]+$/.test(format);
 }
 
 function getMimeType(ext: string): string {
@@ -72,11 +82,25 @@ function getMimeType(ext: string): string {
 }
 
 async function executeConversion(fileBuffer: string, sourceFormat: string, targetFormat: string, jobId: string) {
+  // Validate format strings to prevent path traversal
+  if (!isValidFormat(sourceFormat)) {
+    throw new Error(`Invalid source format: ${sourceFormat}`);
+  }
+  if (!isValidFormat(targetFormat)) {
+    throw new Error(`Invalid target format: ${targetFormat}`);
+  }
+
   const jobDir = path.join(UPLOAD_DIR, jobId);
   mkdirSync(jobDir, { recursive: true });
   const inputPath = path.join(jobDir, jobId + '.' + sourceFormat);
   const buffer = Buffer.from(fileBuffer, 'base64');
-  writeFileSync(inputPath, buffer);
+
+  // Validate decoded buffer size matches expectations
+  const expectedMinSize = 1024; // At least 1KB to be a valid file
+  if (buffer.length < expectedMinSize) {
+    throw new Error(`Invalid input file: too small (${buffer.length} bytes)`);
+  }
+
   let ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
   let outputPath = path.join(jobDir, 'output.' + ext);
   try {
