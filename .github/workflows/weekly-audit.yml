@@ -1,0 +1,60 @@
+# 每周纠错审查
+
+on:
+  schedule:
+    # 每周日凌晨 3:00 (UTC+8)
+    - cron: '0 19 * * 0'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  weekly-audit:
+    name: 每周纠错审查
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ebook-converter
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ebook-converter/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript 编译检查
+        run: npx tsc --noEmit
+
+      - name: ESLint 严格检查
+        run: npx eslint --max-warnings=0 src/
+
+      - name: 轻量纠错审查
+        run: bash ../../scripts/audit.sh
+
+      - name: 生成审查报告
+        if: always()
+        run: |
+          PASS=$(grep -c "✅" scripts/audit.out 2>/dev/null || echo 0)
+          FAIL=$(grep -c "❌" scripts/audit.out 2>/dev/null || echo 0)
+          cat > report.md << 'EOF'
+          ## 📊 每周纠错审查报告
+
+          **审查日期:** $(date '+%Y-%m-%d %H:%M')
+          **分支:** main
+
+          ### 检查结果
+
+          EOF
+          echo "- ✅ 通过: $PASS" >> report.md
+          echo "- ❌ 失败: $FAIL" >> report.md
+
+      - name: 通知结果
+        if: always()
+        run: |
+          echo "审查完成。如需 Agent 级深度审查，请在 PR 中评论 /audit"
