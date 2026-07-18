@@ -35,26 +35,57 @@ jobs:
         run: npx eslint --max-warnings=0 src/
 
       - name: 轻量纠错审查
-        run: bash ../../scripts/audit.sh
+        run: bash ../../scripts/audit.sh 2>&1 | tee audit.log
 
-      - name: 生成审查报告
+      - name: 构建飞书卡片
+        if: always()
+        id: card
+        run: |
+          PASS=$(grep -c "✅" audit.log 2>/dev/null || echo 0)
+          FAIL=$(grep -c "❌" audit.log 2>/dev/null || echo 0)
+          WARN=$(grep -c "⚠️" audit.log 2>/dev/null || echo 0)
+          STATUS=$(if [ "$FAIL" -eq 0 ]; then echo "pass"; else echo "fail"; fi)
+          COLOR=$(if [ "$FAIL" -eq 0 ]; then echo "green"; else echo "red"; fi)
+
+          TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
+          RUN_URL="https://github.com/doujianwen/ebook-converter/actions/runs/${{ github.run_id }}"
+
+          cat > feishu_payload.json << PAYLOAD
+          {
+            "msg_type": "interactive",
+            "card": {
+              "header": {
+                "title": {"tag": "plain_text", "content": "📊 每周纠错审查报告"},
+                "template": "${COLOR}"
+              },
+              "elements": [
+                {
+                  "tag": "div",
+                  "text": {
+                    "tag": "lark_md",
+                    "content": "**日期:** ${TIMESTAMP}\n**分支:** main\n**状态:** $(if [ "$STATUS" = "pass" ]; then echo "✅ 通过"; else echo "❌ 失败"; fi)\n\n**通过:** ${PASS} | **失败:** ${FAIL} | **警告:** ${WARN}"
+                  }
+                },
+                {
+                  "tag": "hr"
+                },
+                {
+                  "tag": "div",
+                  "text": {
+                    "tag": "lark_md",
+                    "content": "> 如需 Agent 级深度审查，请在 PR 评论区评论 `/audit`\n> 查看完整日志: [GitHub Actions](https://github.com/doujianwen/ebook-converter/actions/runs/${{ github.run_id }})"
+                  }
+                }
+              ]
+            }
+          }
+          PAYLOAD
+
+          echo "payload=$(cat feishu_payload.json)" >> $GITHUB_OUTPUT
+
+      - name: 推送飞书通知
         if: always()
         run: |
-          PASS=$(grep -c "✅" scripts/audit.out 2>/dev/null || echo 0)
-          FAIL=$(grep -c "❌" scripts/audit.out 2>/dev/null || echo 0)
-          cat > report.md << 'EOF'
-          ## 📊 每周纠错审查报告
-
-          **审查日期:** $(date '+%Y-%m-%d %H:%M')
-          **分支:** main
-
-          ### 检查结果
-
-          EOF
-          echo "- ✅ 通过: $PASS" >> report.md
-          echo "- ❌ 失败: $FAIL" >> report.md
-
-      - name: 通知结果
-        if: always()
-        run: |
-          echo "审查完成。如需 Agent 级深度审查，请在 PR 中评论 /audit"
+          curl -s -X POST "https://open.feishu.cn/open-apis/bot/v2/hook/422e94ef-2d07-4805-b15c-6ca90850e8d9" \
+            -H "Content-Type: application/json" \
+            -d "@feishu_payload.json" || echo "飞书推送失败"
