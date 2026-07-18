@@ -2,8 +2,8 @@
 
 on:
   schedule:
-    # 每周日凌晨 3:00 (UTC+8)
-    - cron: '0 19 * * 0'
+    # 每周日晚上 9:30 (UTC+8)
+    - cron: '30 13 * * 0'  # UTC 13:30 = Beijing 21:30
   workflow_dispatch:  # 支持手动触发
 
 jobs:
