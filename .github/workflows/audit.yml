@@ -1,0 +1,43 @@
+name: 纠错审查
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ebook-converter/src/**'
+      - '*.ps1'
+      - 'scripts/audit.sh'
+  push:
+    branches: [main]
+    paths:
+      - 'ebook-converter/src/**'
+      - '*.ps1'
+
+jobs:
+  audit:
+    name: 轻量纠错审查
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ebook-converter
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ebook-converter/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript 编译检查
+        run: npx tsc --noEmit
+
+      - name: 轻量纠错审查
+        run: bash ../../scripts/audit.sh
+        env:
+          CI: true
