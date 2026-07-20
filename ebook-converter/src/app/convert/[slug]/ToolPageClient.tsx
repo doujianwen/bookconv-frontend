@@ -13,6 +13,7 @@ import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
 import { TestimonialCard } from "@/components/tools/TestimonialCard"
 import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
+import { VideoTutorial } from "@/components/tools/VideoTutorial"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
@@ -26,6 +27,43 @@ interface ToolPageClientProps {
   description: string
   contentData?: ContentData | null
 }
+
+
+
+const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string; title: string; description?: string; steps?: Array<{ title: string; description: string }> }> = {
+  'lit-to-epub': {
+    videoUrl: '/videos/lit-to-epub.mp4',
+    title: 'How to Convert LIT to EPUB',
+    description: 'Step-by-step guide to converting Microsoft LIT ebooks to universal EPUB format.',
+    steps: [
+      { title: 'Upload LIT file', description: 'Drag and drop your LIT file or click to browse.' },
+      { title: 'Select EPUB output', description: 'Choose EPUB as the target format.' },
+      { title: 'Wait for conversion', description: 'Conversion typically takes just a few seconds.' },
+      { title: 'Download result', description: 'Click the button to download your converted EPUB file.' },
+    ],
+  },
+  'pdf-to-epub': {
+    videoUrl: '/videos/pdf-to-epub.mp4',
+    title: 'PDF to EPUB: Preserve Layout & TOC',
+    description: 'Learn how to convert PDFs into reflowable EPUB format for the best reading experience.',
+    steps: [
+      { title: 'Upload PDF', description: 'Supports scanned and text-based PDFs.' },
+      { title: 'Select EPUB format', description: 'System auto-optimizes layout.' },
+      { title: 'Preview and download', description: 'Download immediately after conversion.' },
+    ],
+  },
+  'epub-to-txt': {
+    videoUrl: '/videos/epub-to-txt.mp4',
+    title: 'Extract Pure Text from EPUB',
+    description: 'Convert EPUB ebooks to clean plain text, removing all formatting.',
+    steps: [
+      { title: 'Upload EPUB', description: 'Supports any size EPUB file.' },
+      { title: 'Select TXT format', description: 'Extract pure text content.' },
+      { title: 'Download text file', description: 'Get a clean .txt file.' },
+    ],
+  },
+}
+
 export function ToolPageClient({ source, target, keyword, tool, description, contentData }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
@@ -46,7 +84,11 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toLowerCase() === "htmlz" ? "HTMLZ" : (FORMAT_DISPLAY_NAMES[target] || target.toUpperCase())
   const slug = source + "-to-" + target
-  const baseUrl = "https://bookconv.com"
+  const getBaseUrl = () => {
+    if (typeof window !== "undefined") return window.location.origin;
+    return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  };
+  const baseUrl = getBaseUrl()
   const pageUrl = baseUrl + "/convert/" + slug
   const faqs = contentData?.faq
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
@@ -56,6 +98,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     { name: "Converters", url: baseUrl + "#" },
     { name: sourceDisplay + " to " + targetDisplay, url: pageUrl },
   ]
+  // Look up video tutorial for this conversion
+  const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const howToSteps = [
     { name: "Upload your file", text: "Drag and drop your " + sourceDisplay + " file or click to browse." },
     { name: "Conversion starts automatically", text: "Our Calibre-powered engine converts your file in seconds." },
@@ -400,6 +444,19 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             ))}
           </div>
         </section>
+        {/* Video Tutorial for S-tier conversions */}
+        <section className="mb-12 rounded-xl border bg-gray-50 p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Video Tutorial</h2>
+          {videoTutorial && (
+            <VideoTutorial
+              videoUrl={videoTutorial.videoUrl}
+              title={videoTutorial.title}
+              description={videoTutorial.description}
+              steps={videoTutorial.steps}
+            />
+          )}
+        </section>
+
         {/* Social Proof -- Testimonials */}
         <section className="mt-12 rounded-xl border bg-gray-50 p-6">
           <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">Trusted by thousands of readers worldwide</h3>

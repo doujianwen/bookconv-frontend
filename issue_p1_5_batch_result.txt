@@ -1,0 +1,35 @@
+﻿## P1-5: 批量转换结果未持久化 — 用户查不到已完成文件
+
+### 问题
+src/app/api/convert/batch/route.ts 中 queueSingleConversion 函数：
+
+1. 提交 BullMQ job 后轮询等待完成
+2. 但完成后只更新 liveItem.status = "completed"
+3. **转换结果的 base64Data 没有被保存回 batch store**
+
+BatchFileItem 接口定义了 esult?: { base64Data, extension, mimeType, fileSize }，但 processBatchAsync 中从未填充这个字段。
+
+同时 atch/[batchId]/download/route.ts 需要汇总所有完成的文件生成 ZIP，但没有结果数据就无法生成。
+
+### 影响
+- 批量转换完成后查询状态，看不到任何文件结果
+- ZIP 下载为空或失败
+- 用户以为转换成功但拿不到文件
+
+### 修复方案
+在 processBatchAsync 中，当 queueSingleConversion 返回 success=true 时：
+
+1. 从 BullMQ job 获取 eturnvalue（包含 base64Data）
+2. 更新 liveItem.result 和 liveItem.status = "completed"
+3. 调用 updateBatch(batchId, ...) 持久化到 Redis
+4. 确保 atch/[batchId]/download/route.ts 能读取到结果并打包
+
+### 参考文件
+- ebook-converter/src/app/api/convert/batch/route.ts (L60-80: queueSingleConversion)
+- ebook-converter/src/lib/batch-store.ts (BatchFileItem interface)
+- ebook-converter/src/app/api/convert/batch/[batchId]/download/route.ts
+
+### 验证方法
+- 提交一个 3 文件的批量转换任务
+- 轮询状态 API 确认每个文件 status=completed 且有 result 数据
+- 下载 ZIP 确认包含转换后的文件

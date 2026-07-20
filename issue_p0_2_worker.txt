@@ -1,0 +1,56 @@
+﻿## P0-2: Worker 与主应用架构不一致 — 并发转换可能失效
+
+### 问题
+项目存在两套 worker 实现且部署配置不一致：
+
+1. **内嵌 Worker** (src/lib/queue.ts)
+   - startWorker() 在主进程内启动 BullMQ Worker
+   - 监听 ebook-conversions 队列
+   - 使用 execFileAsync(CALIBRE_PATH, [...]) 执行转换
+
+2. **独立 Worker** (worker/src/index.ts)
+   - 独立的 Node.js 进程，监听端口 3001
+   - 有独立的 Dockerfile（安装 Calibre + ImageMagick + Ghostscript 等）
+   - 使用不同的转换器路由逻辑
+
+3. **Docker Compose** (docker-compose.yml)
+   - 只启动了 pp 和 edis 服务
+   - **没有 worker 服务**
+   - app 容器中没有安装 Calibre（只有 Node.js）
+
+4. **主 Dockerfile** (Dockerfile)
+   - 基于 
+ode:20-alpine，**没有安装 Calibre**
+   - 但 src/lib/queue.ts 的 worker 需要调用 ebook-convert
+
+### 影响
+- Docker 部署时，转换任务入队后没有 worker 处理 → 任务堆积
+- 或主进程尝试调用不存在的 ebook-convert → 所有转换失败
+- CI 构建的 Docker 镜像在健康检查通过但实际无法转换
+
+### 修复方案
+统一为一种架构，推荐方案：
+
+**方案 A（推荐）：内嵌 Worker + 主镜像安装 Calibre**
+- 修改 Dockerfile，在安装 Node 之后添加 pt install -y calibre
+- docker-compose.yml 中 app 服务自行启动 worker（
+pm run dev 或自定义 entrypoint）
+- 删除 worker/ 目录或标记为废弃
+
+**方案 B：独立 Worker 模式**
+- docker-compose.yml 添加 worker 服务
+- app 只负责 API，worker 负责消费队列
+- 两个服务共享 Redis
+
+### 参考文件
+- ebook-converter/Dockerfile
+- ebook-converter/docker-compose.yml
+- ebook-converter/src/lib/queue.ts (L120: startWorker)
+- ebook-converter/worker/Dockerfile
+- ebook-converter/worker/src/index.ts
+- ebook-converter/DEPLOYMENT.md (VPS 部署指南提到 Calibre 安装)
+
+### 验证方法
+- Docker Compose 启动后 docker ps 确认所有服务运行
+- 提交一个测试转换任务，确认能完成
+- 检查 docker logs app 无 Calibre 相关错误

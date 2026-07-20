@@ -1,101 +1,68 @@
 ﻿// src/lib/storage/local.ts
-import { existsSync, mkdirSync, readFileSync, rmSync, readdirSync, writeFileSync } from 'node:fs';
+// Local file storage helpers for ebook conversion results.
+// Used as fallback when Cloudflare R2 is not configured.
+
+import { existsSync, readFileSync, writeFileSync, rmSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 
-const LOCAL_STORAGE_DIR = process.env.LOCAL_STORAGE_DIR || '/tmp/ebook-temp-storage';
-const DEFAULT_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
+const MAX_LOCAL_FILE_SIZE = 100 * 1024 * 1024; // 100MB limit for local storage
 
-interface FileMeta {
-  createdAt: number;
-  ttlMs: number;
+/**
+ * Save a converted file to local storage.
+ * Returns the relative path (key) for later retrieval.
+ */
+export function saveToLocal(key: string, buffer: Buffer): string {
+  const dir = path.join(UPLOAD_DIR, 'local-results');
+  mkdirSync(dir, { recursive: true });
+  const filePath = path.join(dir, key);
+  writeFileSync(filePath, buffer);
+  return key;
 }
 
-function metaPath(key: string): string {
-  return key + '.meta.json';
-}
+/**
+ * Read a file from local storage.
+ * Returns null if file doesn't exist or exceeds size limit.
+ */
+export function readFromLocal(key: string): Buffer | null {
+  const filePath = path.join(UPLOAD_DIR, 'local-results', key);
+  if (!existsSync(filePath)) return null;
 
-function ensureDir(): void {
-  if (!existsSync(LOCAL_STORAGE_DIR)) {
-    mkdirSync(LOCAL_STORAGE_DIR, { recursive: true });
-  }
-}
-
-/** Check if a stored file has expired */
-function isExpired(key: string): boolean {
-  const metaFile = path.join(LOCAL_STORAGE_DIR, metaPath(key));
-  if (!existsSync(metaFile)) return true;
-  try {
-    const meta: FileMeta = JSON.parse(readFileSync(metaFile, 'utf8'));
-    return Date.now() - meta.createdAt > meta.ttlMs;
-  } catch {
-    return true;
-  }
-}
-
-/** Delete a stored file and its metadata */
-export function deleteLocalFile(key: string): void {
-  try {
-    rmSync(path.join(LOCAL_STORAGE_DIR, key), { force: true });
-    rmSync(path.join(LOCAL_STORAGE_DIR, metaPath(key)), { force: true });
-  } catch {
-    // ignore cleanup errors
-  }
-}
-
-/** Store a file locally with TTL metadata */
-export function storeLocalFile(key: string, buffer: Buffer, ttlHours: number = 24): { key: string; expiresAt: number } {
-  ensureDir();
-  const fullPath = path.join(LOCAL_STORAGE_DIR, key);
-  writeFileSync(fullPath, buffer);
-
-  const meta: FileMeta = {
-    createdAt: Date.now(),
-    ttlMs: ttlHours * 3600 * 1000,
-  };
-  writeFileSync(path.join(LOCAL_STORAGE_DIR, metaPath(key)), JSON.stringify(meta));
-
-  return { key, expiresAt: meta.createdAt + meta.ttlMs };
-}
-
-/** Retrieve a file locally (returns null if expired or missing) */
-export function getLocalFile(key: string): Buffer | null {
-  if (isExpired(key)) {
-    deleteLocalFile(key);
+  const stats = require('node:fs').statSync(filePath);
+  if (stats.size > MAX_LOCAL_FILE_SIZE) {
+    console.warn(`Local file ${key} exceeds max size (${stats.size} bytes)`);
     return null;
   }
-  const fullPath = path.join(LOCAL_STORAGE_DIR, key);
-  if (!existsSync(fullPath)) return null;
-  return readFileSync(fullPath);
+
+  return readFileSync(filePath);
 }
 
-/** Scan and remove all expired files in the local storage directory */
-export function cleanupExpiredLocalFiles(): number {
-  ensureDir();
-  let cleanedCount = 0;
+/**
+ * Delete a file from local storage.
+ */
+export function deleteLocal(key: string): void {
+  const filePath = path.join(UPLOAD_DIR, 'local-results', key);
   try {
-    const entries = readdirSync(LOCAL_STORAGE_DIR);
-    for (const entry of entries) {
-      if (entry.endsWith('.meta.json')) continue;
-      if (isExpired(entry)) {
-        deleteLocalFile(entry);
-        cleanedCount++;
-      }
-    }
+    rmSync(filePath, { force: true });
   } catch {
-    // ignore scan errors
+    // Ignore cleanup errors
   }
-  return cleanedCount;
 }
 
-/** Check if local storage is available */
-export function isLocalStorageAvailable(): boolean {
-  try {
-    ensureDir();
-    const testKey = '_health_' + Date.now();
-    writeFileSync(path.join(LOCAL_STORAGE_DIR, testKey), Buffer.from('ok'));
-    deleteLocalFile(testKey);
-    return true;
-  } catch {
-    return false;
-  }
+/**
+ * Check if a file exists in local storage.
+ */
+export function existsLocal(key: string): boolean {
+  const filePath = path.join(UPLOAD_DIR, 'local-results', key);
+  return existsSync(filePath);
+}
+
+/**
+ * Get file info from local storage.
+ */
+export function getLocalFileInfo(key: string): { size: number; path: string } | null {
+  const filePath = path.join(UPLOAD_DIR, 'local-results', key);
+  if (!existsSync(filePath)) return null;
+  const stats = require('node:fs').statSync(filePath);
+  return { size: stats.size, path: filePath };
 }

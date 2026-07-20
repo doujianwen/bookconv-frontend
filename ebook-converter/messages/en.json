@@ -1,4 +1,4 @@
-﻿{
+{
     "common":  {
                    "siteName":  "BookConv",
                    "freeOnlineEbookConverter":  "Free Online Ebook Format Converter",
@@ -27,7 +27,8 @@
                  "faqTitle":  "Frequently Asked Questions",
                  "supportedFormatsTitle":  "Supported Ebook Formats",
                  "supportedFormatsDesc":  "BookConv supports conversion between 17+ ebook formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and more. Whether you need to convert Kindle books, rescue old LIT files, or transform documents to EPUB, we have you covered.",
-                 "formatsSectionDesc":  "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required."
+                 "formatsSectionDesc":  "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
+                 "poweredByCalibre":  "Powered by Calibre Engine"
              },
     "faq":  {
                 "q1":  "Is BookConv free to use?",
@@ -37,7 +38,7 @@
                 "q3":  "Is my data safe when I upload files?",
                 "a3":  "Absolutely. All files are transferred over encrypted HTTPS connections and automatically deleted within 1 hour after conversion. We never read, store, or share your content.",
                 "q4":  "Do I need to install any software?",
-                "a4":  "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file — no software installation needed.",
+                "a4":  "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file 鈥?no software installation needed.",
                 "q5":  "Can I convert Kindle books to EPUB?",
                 "a5":  "Yes! BookConv supports converting AZW3 and MOBI (Kindle formats) to EPUB and other formats. Simply upload your Kindle file and choose your desired output format."
             },
@@ -87,8 +88,9 @@
             },
     "localeSwitcher":  {
                            "english":  "English",
-                           "spanish":  "Español",
-                           "currentLocale":  "Current locale: {locale}"
+                           "spanish":  "Espa帽ol",
+                           "currentLocale":  "Current locale: {locale}",
+                           "language":  "Language"
                        },
     "seo":  {
                 "defaultTitle":  "BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",

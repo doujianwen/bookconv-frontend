@@ -1,0 +1,34 @@
+﻿## P0-1: 缺少 sitemap.xml — SEO 刚需
+
+### 问题
+- src/app/layout.tsx 引用了 <link rel="sitemap" href="/sitemap.xml" />
+- public/robots.txt 指向 Sitemap: https://bookconv.com/sitemap.xml
+- 但 public/ 目录下不存在 sitemap.xml 文件
+- 搜索引擎爬虫无法发现站点地图，严重影响 SEO
+
+### 影响
+- Google Search Console 会报 sitemap 错误
+- 新页面不会被及时索引
+- 所有 28 个转换页面 + 博客文章都无法被结构化发现
+
+### 修复方案
+在 ebook-converter/public/sitemap.xml 中创建静态 sitemap，包含：
+1. 首页 /
+2. 28 个转换页面 /convert/[slug]（列出所有 slug）
+3. 博客列表 /blog 和每篇博客文章
+4. 定价页、隐私页、条款页
+5. 西班牙语版本对应 URL（/es/...）
+
+使用 Next.js 动态 sitemap 生成器或静态预生成。
+
+### 参考文件
+- ebook-converter/src/app/layout.tsx (L1: sitemap link)
+- ebook-converter/public/robots.txt (L12: sitemap reference)
+- ebook-converter/src/data/content/ (转换页面内容目录)
+- ebook-converter/src/app/blog/ (博客页面)
+
+### 验证方法
+- 访问 http://localhost:3000/sitemap.xml 确认返回有效 XML
+- 检查 XML 包含所有 28+ 转换页面 URL
+- 运行 
+pm run build 确认构建不报错

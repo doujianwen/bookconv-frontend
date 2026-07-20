@@ -1,0 +1,10 @@
+﻿## ✅ 已完成
+
+已创建 public/sitemap.xml，包含：
+- 首页 (en/es)
+- 28 个转换页面 (en/es) = 56 URLs
+- 3 篇博客文章 (en/es) = 6 URLs
+- 静态页：pricing, formats, privacy, terms
+- 共 72 个 URL，含 hreflang 交替链接
+
+验证通过：XML 格式正确，包含所有预期页面。

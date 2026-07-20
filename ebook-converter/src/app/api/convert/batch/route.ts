@@ -5,7 +5,10 @@ import JSZip from "jszip";
 import { getConversionQueue, MAX_RETRIES } from "@/lib/queue";
 import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { checkRateLimitWithStrategy, getRateLimitHeaders, RATE_LIMIT_STRATEGIES } from "@/lib/rate-limit";
-import { saveBatch, getBatch, deleteBatch, cleanupExpiredBatches, BatchFileItem, BatchJobData } from "@/lib/batch-store";
+import { saveBatch, getBatch, deleteBatch, updateBatch, cleanupExpiredBatches, BatchFileItem, BatchJobData } from "@/lib/batch-store";
+import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
+import { loggers as log } from "@/lib/logger";
+import { getRedisClient } from "@/lib/redis";
 
 // ── Pro limits ────────────────────────────────────────────────
 const BATCH_MAX_FILES = parseInt(process.env.BATCH_MAX_FILES || "50", 10);
@@ -13,21 +16,20 @@ const BATCH_MAX_FILE_SIZE = parseInt(process.env.BATCH_MAX_FILE_SIZE_MB || "50",
 const BATCH_CONCURRENCY = parseInt(process.env.BATCH_CONCURRENCY || "3", 10);
 const JOB_RETENTION_DAYS = 7;
 const BATCH_CLEANUP_DELAY_MS = 30 * 60 * 1000; // 30 min after completion
+const IDEMPOTENCY_WINDOW_MS = 5 * 60 * 1000; // 5 min idempotency window
 
 // ── Helpers ───────────────────────────────────────────────────
-function mapErrorCode(message: string): string {
-  const codes: Record<string, string> = {
-    ENOENT: "FILE_NOT_FOUND",
-    EACCES: "PERMISSION_DENIED",
-    ETIMEDOUT: "CONVERSION_TIMEOUT",
-    EMFILE: "TOO_MANY_OPEN_FILES",
-    EBUSY: "CONVERSION_BUSY",
-  };
-  for (const [key, code] of Object.entries(codes)) {
-    if (message.includes(key)) return code;
-  }
-  return "CONVERSION_FAILED";
+
+/** Compute a simple hash of file metadata for idempotency dedup */
+async function computeBatchFingerprint(files: File[], targetFormat: string): Promise<string> {
+  const parts = files.map((f) => `${f.name}:${f.size}:${f.lastModified}`).join('|');
+  // Use a simple hash — adequate for dedup within the idempotency window
+  const encoder = new TextEncoder();
+  const hashBuf = await crypto.subtle.digest('SHA-256', encoder.encode(parts + ':' + targetFormat));
+  const hashArr = Array.from(new Uint8Array(hashBuf));
+  return hashArr.map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
 }
+
 
 /** Sanitize filename for ZIP entry to prevent path traversal */
 function sanitizeFileName(originalName: string, targetExt: string): string {
@@ -48,7 +50,7 @@ async function queueSingleConversion(
   batchId: string,
   itemIndex: number,
   priority: number
-): Promise<{ success: boolean; bullJobId: string }> {
+): Promise<{ success: boolean; bullJobId: string; result?: any }> {
   const queue = getConversionQueue();
   const job = await queue.add("conversion", {
     fileBuffer: fileBuffer.toString("base64"),
@@ -73,18 +75,18 @@ async function queueSingleConversion(
     const jobData = await queue.getJob(bullJobId);
     if (!jobData) {
       // Job may have been pruned by removeOnCount — update via status
-      return { success: false, bullJobId };
+      return { success: false, bullJobId, result: null };
     }
     if (jobData.state === "completed") {
-      return { success: true, bullJobId };
+      return { success: true, bullJobId, result: jobData.returnvalue };
     }
     if (jobData.state === "failed") {
-      return { success: false, bullJobId };
+      return { success: false, bullJobId, result: null };
     }
     await new Promise((r) => setTimeout(r, pollInterval));
   }
 
-  return { success: false, bullJobId };
+  return { success: false, bullJobId, result: null };
 }
 
 /**
@@ -128,23 +130,18 @@ async function processBatchAsync(
 
         liveItem.bullJobId = result.bullJobId;
         if (result.success) {
-          // Fetch the actual result from the job
-          const queue = getConversionQueue();
-          const job = await queue.getJob(liveItem.bullJobId);
-          if (job?.state === "completed" && job.returnvalue) {
-            liveItem.status = "completed";
-            liveItem.result = job.returnvalue;
-          } else {
-            liveItem.status = "failed";
-            liveItem.error = "Conversion completed but result not found";
-          }
+          liveItem.status = "completed";
+          liveItem.result = result.result;
         } else {
           liveItem.status = "failed";
           liveItem.error = "Conversion failed or timed out";
         }
 
-        // Persist updated batch back to Redis
-        await saveBatch(batchId, batch);
+        // Persist batch update to Redis (single write, no duplicate)
+        await updateBatch(batchId, (b) => {
+          b.files[index] = liveItem;
+          b.completedAt = Date.now();
+        });
       })
     )
   );
@@ -172,7 +169,7 @@ async function processBatchAsync(
       (batch as any).zipBlob = zipBlob;
       (batch as any).zipFileName = zipFileName;
     } catch (zipErr: any) {
-      console.error("Failed to generate batch ZIP:", zipErr.message);
+      log.batch.error("Failed to generate batch ZIP", { error: zipErr.message });
     }
   }
 
@@ -262,6 +259,33 @@ export async function POST(request: NextRequest) {
 
     // Parse files and validate each one
     const batchId = randomUUID();
+
+    // Idempotency check: if the same files + target were submitted recently,
+    // return the existing batch instead of creating a duplicate.
+    const fingerprint = await computeBatchFingerprint(files, targetFormat);
+    const idempotencyKey = `idemp:batch:${fingerprint}`;
+    const redis = getRedisClient();
+    if (!redis.connected) {
+      await redis.connect();
+    }
+    const existingBatchId = await redis.get(idempotencyKey);
+    if (existingBatchId) {
+      log.batch.info('Idempotent batch match', { fingerprint, existingBatchId });
+      const existingBatch = await getBatch(existingBatchId as string);
+      if (existingBatch) {
+        return NextResponse.json({
+          batchId: existingBatch.batchId,
+          total: existingBatch.files.length,
+          queued: existingBatch.files.filter((f) => f.status === 'queued').length,
+          failed: existingBatch.files.filter((f) => f.status === 'failed').length,
+          files: existingBatch.files.map(({ index, name, size, sourceFormat, status, error }) => ({
+            index, name, size, sourceFormat, status, error,
+          })),
+          message: 'Duplicate batch submission — returning existing batch',
+          isDuplicate: true,
+        }, { status: 200, headers: rateHeaders });
+      }
+    }
     const items: BatchFileItem[] = [];
     const fileBuffers: {
       file: File;
@@ -306,6 +330,9 @@ export async function POST(request: NextRequest) {
     };
     await saveBatch(batchId, batchData);
 
+    // Store idempotency key (TTL = idempotency window)
+    await redis.set(idempotencyKey, batchId, 'EX', Math.ceil(IDEMPOTENCY_WINDOW_MS / 1000));
+
     // Fire-and-forget: process asynchronously, return immediately
     if (fileBuffers.length > 0) {
       // Detach the async work so it doesn't block the response
@@ -333,9 +360,9 @@ export async function POST(request: NextRequest) {
       { status: 202, headers: rateHeaders }
     );
   } catch (err: any) {
-    console.error("POST /api/convert/batch error:", err.message);
+    log.batch.error("Batch conversion error", { error: err.message });
     return NextResponse.json(
-      { error: err.message || "Internal server error", code: mapErrorCode(err.message) },
+      { error: sanitizeError(err) || "Internal server error", code: mapErrorCode(err.message) },
       { status: 500 }
     );
   }

@@ -1,4 +1,4 @@
-# Self-Evolving Skill Framework
+﻿# Self-Evolving Skill Framework
 
 ## Purpose
 A meta-skill that observes its own usage, learns from success/failure, and automatically improves its instructions over time.
@@ -45,9 +45,9 @@ Analyze patterns:
 - New request patterns suggest gaps
 
 ## Constraints
-- Never delete working instructions — mark as [deprecated] first
+- Never delete working instructions 鈥?mark as [deprecated] first
 - Always keep at least 3 previous versions
-- Evolution must be reviewable — do not auto-apply blindly
+- Evolution must be reviewable 鈥?do not auto-apply blindly
 - Log ALL evolutions with rationale
 
 ## Quick Start
@@ -57,3 +57,17 @@ To create a new self-evolving skill:
 3. Create the directory structure below
 4. Start logging usage immediately
 5. Review and evolve after first 10 uses
+
+## Domain Instructions
+
+### PDF conversion
+Before converting PDF to EPUB, analyze layout complexity. For text-heavy PDFs, use OCR fallback. For formatted PDFs, warn about potential layout loss.
+
+### DOCX conversion
+When converting DOCX to EPUB, preserve heading hierarchy (h1→h6). Note: complex tables and custom styles may not translate perfectly — add a disclaimer.
+
+### Image handling
+For conversions involving images (EPUB→PNG/JPG, PDF→images), maintain original image quality. Set density to 150+ for high-res output.
+
+### Batch processing
+Always show progress bar. Support resume from last successful file on failure.

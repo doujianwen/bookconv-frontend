@@ -1,0 +1,57 @@
+﻿## P1-6: 缺少中间件保护敏感路由 — API 无全局守卫
+
+### 问题
+项目中没有 src/middleware.ts，意味着：
+
+1. /api/convert/*、/api/payments/* 等 API 路由没有统一的路由守卫
+2. Supabase auth 只在 uth.ts helper 里做，但没有全局中间件拦截未认证请求
+3. 任何暴露的 API endpoint 都可以被直接调用，无需经过统一鉴权逻辑
+
+### 影响
+- 付费功能无法通过中间件拦截
+- 批量转换等 Pro 功能没有服务端 gate
+- 无法统一处理 auth token 验证
+
+### 修复方案
+创建 src/middleware.ts：
+
+1. 使用 Next.js middleware 保护 /api/payments/*（必须认证）
+2. 对 /api/convert/batch/* 检查用户订阅状态（Pro 才可用）
+3. 匿名用户走公共路径不受影响
+4. 添加 rate-limit 中间件包装
+
+`	ypescript
+// src/middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  
+  // Payments always require authentication
+  if (pathname.startsWith('/api/payments/')) {
+    // Check for valid session/token
+  }
+  
+  // Batch conversion requires Pro subscription
+  if (pathname.startsWith('/api/convert/batch/')) {
+    // Check subscription status
+  }
+  
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/api/payments/:path*', '/api/convert/batch/:path*'],
+}
+`
+
+### 参考文件
+- ebook-converter/src/lib/auth.ts
+- ebook-converter/src/app/api/payments/webhook/route.ts
+- ebook-converter/src/app/api/convert/batch/route.ts
+
+### 验证方法
+- 匿名访问 /api/payments → 应返回 401
+- 匿名访问 /api/convert/batch → 应返回 403
+- 正常转换 API 不受影响

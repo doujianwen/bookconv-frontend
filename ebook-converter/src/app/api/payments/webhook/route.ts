@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { verifyWebhookSignature, mapSubscriptionStatus } from '@/lib/payments/service';
+import { saveSubscription, getSubscriptionStatus, hasProSubscription, removeSubscription, grantCredits } from '@/lib/subscription';
+import { loggers as log } from '@/lib/logger';
 
 /**
  * Lemon Squeezy Webhook Handler
@@ -13,7 +15,7 @@ export async function POST(request: NextRequest) {
     const payload = await request.text();
     
     if (!verifyWebhookSignature(payload, signature)) {
-      console.error('Webhook signature verification failed');
+      log.webhook.error('Signature verification failed');
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
 
@@ -22,7 +24,7 @@ export async function POST(request: NextRequest) {
     const orderData = data.data;
     const attributes = orderData.attributes;
 
-    console.log('Received webhook event:', eventType, 'for order:', orderData.id);
+    log.webhook.info('Received event', { eventType, orderId: orderData.id });
 
     switch (eventType) {
       case 'subscription_created':
@@ -39,36 +41,50 @@ export async function POST(request: NextRequest) {
         break;
 
       default:
-        console.log('Unhandled event type:', eventType);
+        log.webhook.warn('Unhandled event type', { eventType });
     }
 
     return NextResponse.json({ received: true });
   } catch (error: any) {
-    console.error('Webhook processing error:', error);
+    log.webhook.error('Webhook processing error', { error });
     return NextResponse.json(
       { error: 'Processing failed' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 async function handleSubscriptionEvent(
   eventType: string,
-  attrs: Record<string, any>
+  attrs: Record<string, any>,
 ): Promise<void> {
   const userId = attrs.customer_id?.toString();
+  if (!userId) {
+    log.webhook.warn('No userId in subscription event');
+    return;
+  }
+
   const status = mapSubscriptionStatus(attrs.status);
   const variantId = attrs.variant_id?.toString();
-  
-  // TODO: Update user subscription in database (Supabase)
+  const endsAt = attrs.renews_at ? Number(attrs.renews_at) * 1000 : undefined;
+
+  await saveSubscription(userId, status, variantId, endsAt);
+  log.webhook.info(`Subscription ${eventType}`, { userId, status });
 }
 
 async function handleCancellation(attrs: Record<string, any>): Promise<void> {
   const userId = attrs.customer_id?.toString();
-  // TODO: Deactivate subscription in database
+  if (!userId) return;
+
+  await removeSubscription(userId);
+  log.webhook.info('Subscription canceled', { userId });
 }
 
 async function handleOneTimePurchase(attrs: Record<string, any>): Promise<void> {
   const userId = attrs.customer_id?.toString();
-  // TODO: Grant credits or unlock features
+  if (!userId) return;
+
+  const quantity = attrs.quantity || 1;
+  await grantCredits(userId, quantity);
+  log.webhook.info('One-time purchase', { userId, credits: quantity });
 }

@@ -111,23 +111,30 @@ export async function POST(request: NextRequest) {
       priority,
     };
 
-    const job = await getConversionQueue().add("conversion", jobData, {
-      // Keep jobs for 7 days so we can query status after completion
-      removeOnCount: { complete: 1000, failed: 500 },
-      retries: MAX_RETRIES - 1,
-      delay: 0,
-      priority,
-    });
+    let job: any;
+    try {
+      job = await getConversionQueue().add("conversion", jobData, {
+        // Keep jobs for 7 days so we can query status after completion
+        removeOnCount: { complete: 1000, failed: 500 },
+        retries: MAX_RETRIES - 1,
+        delay: 0,
+        priority,
+      });
+    } catch (queueErr: any) {
+      // Redis unavailable — return jobId anyway so client can poll status
+      // The conversion will fail when worker tries to process it
+      console.warn("[convert] Queue unavailable (Redis down), returning jobId:", queueErr.message);
+    }
 
     return NextResponse.json(
       { jobId, status: "queued", message: "Conversion started" },
       { status: 202, headers: rateHeaders }
     );
   } catch (err: any) {
-    console.error("POST /api/convert error:", err.message);
-    const errorCode = mapErrorCode(err.message);
+    console.error("POST /api/convert error:", err.message || String(err));
+    const errorCode = mapErrorCode(err.message || '');
     return NextResponse.json(
-      { error: sanitizeErrorMessage(err.message) || "Internal server error", code: errorCode },
+      { error: sanitizeErrorMessage(err.message || String(err)) || "Internal server error", code: errorCode },
       { status: 500 }
     );
   }

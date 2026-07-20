@@ -1,12 +1,13 @@
-// src/lib/rate-limit.ts
+﻿// src/lib/rate-limit.ts
 import IORedis from 'ioredis';
 import { getRedisClient } from './redis';
+import { loggers as log } from './logger';
 
 /**
- * 分层限流策略配置
+ * 分层限速策略配置
  *
- * 使用 Redis 滑动窗口计数器实现，支持多实例部署、按 IP/用户/端点区分限流。
- * Redis 不可用时自动降级为内存限流（per-instance，但总比没有好）。
+ * 使用 Redis 滑动窗口计数器实现，支持多实例部署、按 IP/用户/端点区分限速。
+ * Redis 不可用时自动降级为内存限速（per-instance，但总比没有好）。
  */
 
 export interface RateLimitResult {
@@ -23,7 +24,7 @@ export interface RateLimitOptions {
   maxRequests?: number;
 }
 
-/** 预定义的分层限流策略 */
+/** 预定义的分层限速策略 */
 export const RATE_LIMIT_STRATEGIES = {
   /** 未认证用户：每 IP 60 秒 60 次 */
   anonymous: { windowMs: 60_000, maxRequests: 60 },
@@ -33,13 +34,34 @@ export const RATE_LIMIT_STRATEGIES = {
   convertApi: { windowMs: 60_000, maxRequests: 20 },
   /** 支付回调：每 IP 60 秒 10 次 */
   paymentWebhook: { windowMs: 60_000, maxRequests: 10 },
-  /** 健康检查：不限流 */
+  /** 健康检查：不限速 */
   health: { windowMs: 1_000, maxRequests: 999_999 },
+  /** 下载接口：每 IP 3600 秒 50 次 */
+  downloadApi: { windowMs: 3600_000, maxRequests: 50 },
 } as const;
 
 const REDIS_KEY_PREFIX = "ratelimit:";
 
-// ── In-memory fallback store ──────────────────────────────────
+// --- Trust-proxy configuration ---------------------------------------------------
+const TRUST_PROXY = process.env.TRUST_PROXY === 'true';
+
+const TRUSTED_PROXY_IPS = (process.env.TRUSTED_PROXIES || '127.0.0.1,::1')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+/**
+ * Well-known Cloudflare IP ranges (top 4 CIDRs).
+ * Full list: https://www.cloudflare.com/ips/
+ */
+const CLOUDFLARE_CIDRS = [
+  '103.21.244.0/15',
+  '103.22.200.0/22',
+  '103.31.4.0/22',
+  '104.16.0.0/13',
+] as const;
+
+// 鈹€鈹€ In-memory fallback store 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 interface MemRecord {
   count: number;
   windowStart: number;
@@ -75,12 +97,12 @@ function memCheck(identifier: string, windowMs: number, maxRequests: number): Ra
 }
 
 /**
- * 基于 Redis 的滑动窗口计数器限流
+ * 基于 Redis 的滑动窗口计数器限速
  *
- * 算法：在每个时间窗口开始时重置计数器，窗口内累加请求。
+ * 算法：在每个时间窗口开始时重置计数器，窗口内累计请求。
  * 使用 Redis INCR + EXPIRE 保证原子性和自动过期。
  *
- * Redis 不可用时自动降级为内存限流（per-instance）。
+ * Redis 不可用时自动降级为内存限速（per-instance）。
  */
 export async function checkRateLimit(
   identifier: string,
@@ -133,14 +155,14 @@ export async function checkRateLimit(
       ...(retryAfter !== undefined && { retryAfter }),
     };
   } catch (err: any) {
-    console.error("[rate-limit] Redis error, falling back to in-memory limiter:", err.message);
+    log.rateLimit.error('Redis error, falling back to in-memory limiter', { error: err.message });
     // Fallback to in-memory rate limiting instead of allowing all requests
     return memCheck(identifier, windowMs, maxRequests);
   }
 }
 
 /**
- * 构建限流响应头
+ * 构建限速响应头
  */
 export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number) {
   const headers: Record<string, string> = {
@@ -156,10 +178,90 @@ export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number
   return headers;
 }
 
-/** Extract the real client IP from x-forwarded-for header (first IP only) */
+/**
+ * Internal helper: parse the first (leftmost) IP from an x-forwarded-for header.
+ * Only used within getClientIp() when TRUST_PROXY is enabled.
+ * External callers should use getClientIp() directly.
+ */
 function extractFirstIp(headerValue: string | null): string {
   if (!headerValue) return '';
   return headerValue.split(',')[0].trim();
+}
+
+/**
+ * Determine the real client IP from a request, respecting trust-proxy config.
+ *
+ * Priority:
+ * 1. ``request.ip`` — Next.js built-in (most reliable when available)
+ * 2. ``x-forwarded-for`` — only trusted when behind a known proxy
+ * 3. Socket address (`request.socket.remoteAddress`)
+ * 4. ``"unknown"`` as last resort
+ */
+function getClientIp(request: any): string {
+  // 1. Next.js built-in IP — already resolved by framework
+  if (request.ip) {
+    return String(request.ip);
+  }
+
+  // 2. Trusted reverse-proxy path
+  if (TRUST_PROXY) {
+    const xff = request.headers?.get?.('x-forwarded-for');
+    if (xff) {
+      const firstIp = extractFirstIp(xff);
+      // Validate that the immediate peer (last hop in XFF chain) is trusted
+      // or belongs to a known CDN range.
+      if (isTrustedSource(firstIp)) {
+        return firstIp;
+      }
+    }
+  }
+
+  // 3. Fall back to socket address
+  const socketAddr = request.socket?.remoteAddress;
+  if (socketAddr && socketAddr !== '::1' && socketAddr !== '127.0.0.1') {
+    return socketAddr;
+  }
+
+  // 4. Last resort
+  return 'unknown';
+}
+
+/** Check whether an IP is trusted (explicit list or Cloudflare CIDR). */
+function isTrustedSource(ip: string): boolean {
+  // Direct match against explicit trusted proxies
+  if (TRUSTED_PROXY_IPS.includes(ip)) {
+    return true;
+  }
+
+  // Check against Cloudflare CIDR ranges
+  if (ipInAnyCidr(ip, CLOUDFLARE_CIDRS)) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Simple IPv4 CIDR containment check.
+ * Only supports /8–/32 ranges; sufficient for our Cloudflare entries.
+ */
+function ipToNumber(ip: string): number {
+  return (
+    (parseInt(ip.split('.')[0], 10) << 24) |
+    (parseInt(ip.split('.')[1], 10) << 16) |
+    (parseInt(ip.split('.')[2], 10) << 8) |
+    parseInt(ip.split('.')[3], 10)
+  ) >>> 0;
+}
+
+function ipInAnyCidr(ip: string, cidrs: readonly string[]): boolean {
+  const ipNum = ipToNumber(ip);
+  return cidrs.some((cidr) => {
+    const [net, prefixLenStr] = cidr.split('/');
+    const prefixLen = parseInt(prefixLenStr, 10);
+    const mask = prefixLen === 0 ? 0 : (~0 << (32 - prefixLen)) >>> 0;
+    return (ipNum & mask) === (ipToNumber(net) & mask);
+  });
 }
 
 /**
@@ -172,12 +274,12 @@ export function getRateLimitIdentifier(
   if (userId) {
     return `user:${userId}`;
   }
-  const ip = request.ip || extractFirstIp(request.headers.get("x-forwarded-for")) || "unknown";
+  const ip = getClientIp(request);
   return `ip:${ip}`;
 }
 
 /**
- * 便捷函数：使用预定义策略进行限流
+ * 便捷函数：使用预定义策略进行限速
  */
 export async function checkRateLimitWithStrategy(
   request: any,

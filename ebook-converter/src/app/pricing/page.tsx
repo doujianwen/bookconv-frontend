@@ -1,13 +1,14 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { PLANS, formatPrice } from "@/lib/payments/service"
-import { getLocale, getMessage } from '@/i18n/utils'
+import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
+import UpgradeButton from "@/components/pricing/UpgradeButton"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
+  const t = (key: string) => resolvePath(messages, key) || key;
 
   return {
     title: t('pricing.title') + " | BookConv",
@@ -28,31 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function PricingPage() {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
-  const plans = PLANS
-
-  const handleUpgrade = async (planId: string) => {
-    try {
-      const response = await fetch("/api/payments/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId, email: "" }),
-      })
-
-      const result = await response.json()
-
-      if (result.checkoutUrl) {
-        window.location.href = result.checkoutUrl
-      } else if (result.success) {
-        alert(result.message)
-      } else {
-        alert(result.error || "Something went wrong")
-      }
-    } catch (error) {
-      console.error("Checkout error:", error)
-      alert("Failed to start checkout")
-    }
-  }
+  const t = (key: string) => resolvePath(messages, key) || key;
+  const plans = PLANS;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-16">
@@ -109,17 +87,17 @@ export default async function PricingPage() {
                 {t('pricing.getStartedFree')}
               </button>
             ) : (
-              <button
-                onClick={() => handleUpgrade(plan.id)}
-                disabled={!plan.lemonSqueezyVariantId}
-                className={"w-full rounded-lg px-4 py-3 text-sm font-semibold transition-colors" + (plan.id === "pro" ? " bg-blue-600 text-white hover:bg-blue-700" : " bg-gray-100 text-gray-900 hover:bg-gray-200")}
-              >
-                {!plan.lemonSqueezyVariantId
-                  ? t('pricing.comingSoon')
-                  : plan.id === "api"
-                  ? t('pricing.contactSales')
-                  : t('pricing.startProTrial')}
-              </button>
+              <UpgradeButton
+                planId={plan.id}
+                hasVariantId={!!plan.lemonSqueezyVariantId}
+                label={
+                  !plan.lemonSqueezyVariantId
+                    ? t('pricing.comingSoon')
+                    : plan.id === "api"
+                    ? t('pricing.contactSales')
+                    : t('pricing.startProTrial')
+                }
+              />
             )}
           </div>
         ))}
@@ -161,5 +139,5 @@ export default async function PricingPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

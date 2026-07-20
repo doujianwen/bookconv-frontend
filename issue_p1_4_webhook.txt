@@ -1,0 +1,44 @@
+﻿## P1-4: 支付 Webhook 未实现数据库操作 — 订阅不生效
+
+### 问题
+src/app/api/payments/webhook/route.ts 是 Lemon Squeezy 的 webhook 端点，但三个核心处理函数都是空 TODO：
+
+`	ypescript
+async function handleSubscriptionEvent(...) { /* TODO: Update user subscription in database */ }
+async function handleCancellation(...) { /* TODO: Deactivate subscription in database */ }
+async function handleOneTimePurchase(...) { /* TODO: Grant credits or unlock features */ }
+`
+
+Lemon Squeezy 会发送 subscription_created、subscription_updated、subscription_cancelled、order_created 事件，但服务端收到后不执行任何用户权限变更。
+
+### 影响
+- 用户付费后不会获得 Pro 权限
+- 取消订阅后用户仍保持 Pro 状态
+- 一次性购买不会发放积分或解锁功能
+- 支付流程形同虚设
+
+### 修复方案
+由于 Supabase 当前未配置（可选依赖），需要实现一个**无数据库的降级方案**：
+
+1. 使用 Redis 存储订阅状态（key: sub:{userId}, value: JSON）
+2. handleSubscriptionEvent:
+   - 解析 ttributes.status → 调用 mapSubscriptionStatus
+   - 写入 Redis，TTL 7 天
+   - 返回 200 确认收到
+3. handleCancellation:
+   - 从 Redis 删除对应 key 或标记为 canceled
+4. handleOneTimePurchase:
+   - 写入 Redis credits 记录
+5. 在 uth.ts 中增加检查订阅状态的辅助函数
+6. 在转换 API 中检查订阅状态决定并发限制
+
+### 参考文件
+- ebook-converter/src/app/api/payments/webhook/route.ts (全部 TODO)
+- ebook-converter/src/lib/payments/service.ts (PLANS, mapSubscriptionStatus)
+- ebook-converter/src/lib/auth.ts (getCurrentUserId)
+- ebook-converter/src/lib/redis.ts
+
+### 验证方法
+- 使用 Lemon Squeezy webhook mock 工具测试各事件
+- 确认 Redis 中有正确的订阅记录
+- 确认取消订阅后权限被撤销

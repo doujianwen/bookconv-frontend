@@ -1,6 +1,7 @@
 // src/app/api/convert/[jobId]/status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getJobStatus } from '@/lib/queue';
+import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
 
 export async function GET(
   _request: NextRequest,
@@ -34,6 +35,6 @@ export async function GET(
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Internal server error';
     console.error('GET /api/convert/[jobId]/status error:', message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: sanitizeError(message)}, { status: 500 });
   }
 }

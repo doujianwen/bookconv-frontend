@@ -1,0 +1,21 @@
+﻿## 开始执行 EBO-28: 缺少 sitemap.xml
+
+请按以下步骤执行：
+
+Step 1: 分析现有代码结构，确定所有需要包含在 sitemap 中的页面
+- 列出所有 28 个转换页面的 slug
+- 列出所有博客文章
+- 列出静态页面（定价、隐私、条款等）
+
+Step 2: 创建 sitemap.xml
+- 在 ebook-converter/public/sitemap.xml 中创建
+- 包含首页、所有转换页、博客页、静态页
+- 同时包含英语和西班牙语版本 URL
+- 设置正确的 lastmod 和 priority
+
+Step 3: 验证
+- 运行 npm run dev，访问 http://localhost:3000/sitemap.xml 确认返回有效 XML
+- 检查 XML 包含所有预期 URL
+- 运行 npm run build 确认构建不报错
+
+请开始执行，完成后汇报进展。

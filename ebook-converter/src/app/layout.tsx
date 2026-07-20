@@ -1,18 +1,18 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import LoginButton from '@/components/auth/LoginButton'
 import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessage } from '@/i18n/utils'
+import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import './globals.css'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
+  const t = (key: string) => resolvePath(messages, key) || key;
 
   return {
     metadataBase: new URL('https://bookconv.com'),
@@ -75,7 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
+  const t = (key: string) => resolvePath(messages, key) || key;
 
   return (
     <html lang={locale} dir='ltr'>
@@ -180,7 +180,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
                 <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>
-              <p className='text-xs text-gray-400'>© {new Date().getFullYear()} {t('common.siteName') || 'BookConv'}. {t('common.allRightsReserved') || 'All rights reserved.'}</p>
+              <p className='text-xs text-gray-400'>漏 {new Date().getFullYear()} {t('common.siteName') || 'BookConv'}. {t('common.allRightsReserved') || 'All rights reserved.'}</p>
             </div>
           </footer>
         </NextIntlClientProvider>

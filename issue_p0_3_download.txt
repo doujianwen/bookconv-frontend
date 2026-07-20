@@ -1,0 +1,49 @@
+﻿## P0-3: 下载接口未配置 R2 时降级路径缺失
+
+### 问题
+src/app/api/download/route.ts 在 R2 未配置时直接返回 503：
+
+`	ypescript
+if (!isR2Configured()) {
+  return NextResponse.json(
+    { error: 'Download service unavailable' },
+    { status: 503 },
+  );
+}
+`
+
+但 .env.example 明确标注 R2 是**可选的**（fallback to local /tmp）：
+`
+# Cloudflare R2 (optional, falls back to local /tmp)
+`
+
+同时 src/lib/storage/r2.ts 中 uploadToR2 可以正常工作（R2 可选），但 downloadFromR2 依赖 R2 client。
+
+转换完成后，结果文件的 base64 数据在 queue.ts 中返回给客户端，但下载端点却要求 R2。
+
+### 影响
+- 用户没有 R2 凭证时，转换成功但无法下载
+- .env.example 承诺了 fallback 行为但未实现
+- 本地开发和简单部署场景完全不可用
+
+### 修复方案
+修改 pi/download/route.ts：
+
+1. 当 R2 未配置时，从本地存储读取结果文件
+   - 查找 /tmp/ebook-uploads/{jobId}/output.{ext}
+   - 验证文件存在性和大小
+2. 保留 R2 优先逻辑：有 R2 则从 R2 下载，无 R2 则回退本地
+3. 添加本地存储清理机制（与 queue.ts 中的 cleanupDir 配合）
+
+参考 src/lib/queue.ts 中转换完成后的文件路径约定。
+
+### 参考文件
+- ebook-converter/src/app/api/download/route.ts (L75: R2 check)
+- ebook-converter/.env.example (L8-9: R2 optional note)
+- ebook-converter/src/lib/storage/r2.ts
+- ebook-converter/src/lib/queue.ts (L78: cleanupDir after conversion)
+
+### 验证方法
+- 不设置 R2 环境变量，启动服务
+- 提交转换任务 → 确认能下载结果
+- 设置 R2 环境变量 → 确认优先走 R2

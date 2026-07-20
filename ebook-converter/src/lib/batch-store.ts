@@ -3,6 +3,7 @@
 // Falls back to in-memory store when Redis is unavailable.
 
 import { getRedisClient } from './redis';
+import { loggers as log } from './logger';
 
 export interface BatchFileItem {
   index: number;
@@ -133,7 +134,7 @@ export async function cleanupExpiredBatches(): Promise<number> {
   }
 
   if (cleaned > 0) {
-    console.log(`[batch-store] Cleaned ${cleaned} expired batch(es), ${memStore.size} remaining`);
+    log.batch.info(`Cleaned ${cleaned} expired batch(es)`, { remaining: memStore.size });
   }
   return cleaned;
 }

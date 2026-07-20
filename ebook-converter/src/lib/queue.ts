@@ -1,10 +1,11 @@
-// src/lib/queue.ts
+﻿// src/lib/queue.ts
 import { Queue, Worker, Job, QueueEvents } from 'bullmq';
 import { getRedisClient } from './redis';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import { loggers as log } from './logger';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -15,7 +16,10 @@ let _worker: any = null;
 let _queueEvents: any = null;
 
 function makeQueue() {
-  return new Queue('ebook-conversions', { connection: getRedisClient() });
+  const client = getRedisClient();
+  // Connect eagerly so we fail fast with a clear error
+  client.connect().catch(() => {});
+  return new Queue('ebook-conversions', { connection: client });
 }
 
 export function getConversionQueue() {
@@ -24,7 +28,8 @@ export function getConversionQueue() {
 }
 
 export type ConversionJobData = {
-  fileBuffer: string;
+  fileBuffer?: string;
+  inputFilePath?: string;
   sourceFormat: string;
   targetFormat: string;
   jobId: string;
@@ -56,11 +61,36 @@ export type JobStatusResponse = {
 const execFileAsync = promisify(execFile);
 
 /** Safely remove a directory, logging errors instead of swallowing them silently */
-async function cleanupDir(dir: string) {
+async function cleanupDir(dir: string, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      rmSync(dir, { recursive: true, force: true });
+      return;
+    } catch (err: any) {
+      if (attempt === maxRetries) {
+        log.storage.error(`Failed to cleanup ${dir} after ${maxRetries} attempts`, { error: err.message });
+      } else {
+        await new Promise(resolve => setTimeout(resolve, 100 * Math.pow(2, attempt - 1)));
+      }
+    }
+  }
+}
+
+export async function cleanupOrphanedTempDirs(maxAgeMs = 24*60*60*1000) {
+  const fs = require('node:fs/promises');
   try {
-    rmSync(dir, { recursive: true, force: true });
+    const entries = await fs.readdir(UPLOAD_DIR, { withFileTypes: true });
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const dirPath = path.join(UPLOAD_DIR, entry.name);
+      const stats = await fs.stat(dirPath);
+      if (Date.now() - stats.mtimeMs > maxAgeMs) {
+        await fs.rm(dirPath, { recursive: true, force: true });
+        log.storage.info('Cleaned orphaned temp dir', { dir: dirPath });
+      }
+    }
   } catch (err: any) {
-    console.error(`Failed to cleanup temp directory ${dir}:`, err.message);
+    log.storage.error('Periodic cleanup error', { error: err.message });
   }
 }
 
@@ -81,7 +111,13 @@ function getMimeType(ext: string): string {
   return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
 
-async function executeConversion(fileBuffer: string, sourceFormat: string, targetFormat: string, jobId: string) {
+async function executeConversion(
+  fileBuffer: string | null,
+  inputFilePath: string | null,
+  sourceFormat: string,
+  targetFormat: string,
+  jobId: string,
+) {
   // Validate format strings to prevent path traversal
   if (!isValidFormat(sourceFormat)) {
     throw new Error(`Invalid source format: ${sourceFormat}`);
@@ -92,13 +128,25 @@ async function executeConversion(fileBuffer: string, sourceFormat: string, targe
 
   const jobDir = path.join(UPLOAD_DIR, jobId);
   mkdirSync(jobDir, { recursive: true });
-  const inputPath = path.join(jobDir, jobId + '.' + sourceFormat);
-  const buffer = Buffer.from(fileBuffer, 'base64');
 
-  // Validate decoded buffer size matches expectations
-  const expectedMinSize = 1024; // At least 1KB to be a valid file
-  if (buffer.length < expectedMinSize) {
-    throw new Error(`Invalid input file: too small (${buffer.length} bytes)`);
+  let inputPath: string;
+  
+  // Use provided input file path directly (new mode - avoids base64 memory bloat)
+  if (inputFilePath && existsSync(inputFilePath)) {
+    inputPath = inputFilePath;
+  } else {
+    // Legacy base64 mode — decode and write to temp file
+    if (!fileBuffer) {
+      throw new Error('Either fileBuffer or inputFilePath must be provided');
+    }
+    inputPath = path.join(jobDir, jobId + '.' + sourceFormat);
+    writeFileSync(inputPath, Buffer.from(fileBuffer, 'base64'));
+    
+    // Validate decoded buffer size matches expectations
+    const expectedMinSize = 30; // At least 30 bytes to be a valid file
+    if (Buffer.byteLength(fileBuffer, 'base64') < expectedMinSize) {
+      throw new Error(`Invalid input file: too small (${Buffer.byteLength(fileBuffer, 'base64')} bytes)`);
+    }
   }
 
   let ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
@@ -106,9 +154,11 @@ async function executeConversion(fileBuffer: string, sourceFormat: string, targe
   try {
     await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
     if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
-    const outputData = readFileSync(outputPath);
+    
+    // Return the output file path instead of encoding to base64
+    // Caller can stream-read it as needed
     await cleanupDir(jobDir);
-    return { base64Data: outputData.toString('base64'), extension: ext, mimeType: getMimeType(ext), fileSize: outputData.length };
+    return { outputFilePath: outputPath, extension: ext, mimeType: getMimeType(ext) };
   } catch (err: any) {
     await cleanupDir(jobDir);
     throw err;
@@ -122,19 +172,25 @@ async function executeConversion(fileBuffer: string, sourceFormat: string, targe
  * thrown so BullMQ can retry with exponential backoff.
  */
 export async function processConversion(job: any) {
-  const { fileBuffer, sourceFormat, targetFormat, jobId } = job.data;
+  const { fileBuffer, inputFilePath, sourceFormat, targetFormat, jobId } = job.data;
   const attempt = job.attemptsMade + 1;
   const maxRetryCount = MAX_RETRIES;
 
   job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount });
 
   try {
-    const result = await executeConversion(fileBuffer, sourceFormat, targetFormat, jobId);
+    const result = await executeConversion(
+      fileBuffer ?? null,
+      inputFilePath ?? null,
+      sourceFormat,
+      targetFormat,
+      jobId,
+    );
     job.updateProgress(100);
     return result;
   } catch (err: any) {
     const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
-    console.error('Conversion attempt ' + attempt + '/' + maxRetryCount + ' failed for job ' + jobId + ': ' + errMsg);
+    log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, { jobId, attempt, maxRetries: maxRetryCount, error: errMsg });
     job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: errMsg });
     throw err; // BullMQ will retry with backoff
   }
@@ -142,7 +198,39 @@ export async function processConversion(job: any) {
 
 export async function getJobStatus(jobId: string) {
   const queue = getConversionQueue();
-  const job = await queue.getJob(jobId);
+  // BullMQ 5.x getJob() uses internal numeric ID, not custom jobId.
+  // We need to find the job by scanning or using the numeric ID from Redis.
+  const redis = getRedisClient();
+  if (!redis.connected) {
+    await redis.connect().catch(() => {});
+  }
+
+  // Find the BullMQ internal job ID by searching Redis keys
+  // BullMQ stores jobs as "bull:<queueName>:<id>"
+  const keys = await redis.keys(`bull:ebook-conversions:*`);
+  let bullJobId: string | null = null;
+  for (const key of keys) {
+    const parts = key.split(':');
+    // Key format: "bull:ebook-conversions:<id>"
+    // parts[0]="bull", parts[1]="ebook-conversions", parts[2]=id
+    if (parts.length < 3) continue;
+    const id = parts[2];
+    if (isNaN(Number(id))) continue; // skip meta keys like "id", "meta", "prioritized"
+    const jobData = await redis.hget(key, 'data');
+    if (jobData) {
+      try {
+        const data = JSON.parse(jobData);
+        if (data.jobId === jobId) {
+          bullJobId = id;
+          break;
+        }
+      } catch { /* skip */ }
+    }
+  }
+
+  if (!bullJobId) return null;
+
+  const job = await queue.getJob(bullJobId);
   if (!job) return null;
   const progress = job.progress;
   let progressValue = 0;
@@ -159,13 +247,22 @@ export async function getJobStatus(jobId: string) {
   }
 
   return {
-    jobId, status: job.state || 'waiting', progress: progressValue,
-    attempt: job.attemptsMade + 1, maxRetries: MAX_RETRIES, eta,
+    jobId,
+    status: job.state || (job.finishedOn ? 'completed' : 'waiting'),
+    progress: progressValue,
+    attempt: job.attemptsMade + 1,
+    maxRetries: MAX_RETRIES,
+    eta,
     error: job.failedReason || undefined,
-    result: job.state === 'completed' ? job.returnvalue : undefined,
-    createdAt: job.timestamp, updatedAt: job.updatedAt || job.timestamp,
+    result: job.state === 'completed' || job.finishedOn ? job.returnvalue : undefined,
+    createdAt: job.timestamp,
+    updatedAt: job.updatedAt || job.timestamp,
   };
 }
+
+
+// Clean orphaned temp dirs on startup
+cleanupOrphanedTempDirs().catch(() => {});
 
 export async function startWorker() {
   if (_worker) return _worker;
@@ -183,18 +280,18 @@ export async function startWorker() {
     },
   });
   _worker.on('completed', (job: any) => {
-    console.log('Job ' + job.id + ' completed');
+    log.queue.info('Job completed', { jobId: job.id });
     // Keep jobs for 7 days instead of removing immediately
     getConversionQueue().trim(1000, false);
   });
   _worker.on('failed', async (job: any, err: any) => {
-    const jobIdStr = job?.id || "?";
-    console.error('Job ' + jobIdStr + ' failed after ' + (job?.attemptsMade || 0) + ' attempts: ' + err.message);
+    const jobIdStr = job?.id || '?';
+    log.queue.error('Job failed', { jobId: jobIdStr, attempts: job?.attemptsMade, error: err.message });
 
     // Send alert notification for failed jobs
     await notifyFailedJob(jobIdStr, job?.data, err.message);
   });
-  _worker.on('error', (err: any) => { console.error('Worker error:', err.message); });
+  _worker.on('error', (err: any) => { log.queue.error('Worker error', { error: err.message }); });
   return _worker;
 }
 
@@ -209,23 +306,50 @@ async function notifyFailedJob(jobId: string, jobData: any, error: string) {
       'Timestamp: ' + new Date().toISOString();
 
     // Log to file or send to monitoring service
-    console.error(message);
+    log.conversion.error(`Conversion job ${jobId} failed`, {
+      jobId,
+      sourceFormat: jobData?.sourceFormat,
+      targetFormat: jobData?.targetFormat,
+      userId: jobData?.userId,
+      error,
+    });
 
     // TODO: Integrate with real notification service (Slack, email, etc.)
     // Example: await sendSlackAlert(message);
     // Example: await sendEmailNotification(userId, message);
   } catch (alertErr: any) {
-    console.error('Failed to send alert notification:', alertErr.message);
+    log.conversion.error('Failed to send alert notification', { error: alertErr.message });
   }
 }
 
 export function startQueueEvents() {
   if (_queueEvents) return _queueEvents;
   _queueEvents = new QueueEvents('ebook-conversions', { connection: getRedisClient() });
-  _queueEvents.on('completed', (data: any) => console.log('QueueEvent: job ' + data.jobId + ' completed'));
-  _queueEvents.on('failed', (data: any) => console.log('QueueEvent: job ' + data.jobId + ' failed: ' + (data.failedReason || 'unknown')));
+  _queueEvents.on('completed', (data: any) => log.queue.info('QueueEvent: job completed', { jobId: data.jobId }));
+  _queueEvents.on('failed', (data: any) => log.queue.error('QueueEvent: job failed', { jobId: data.jobId, reason: data.failedReason }));
   return _queueEvents;
 }
 
 export async function closeWorker() { if (_worker) { await _worker.close(); _worker = null; } }
 export async function closeQueueEvents() { if (_queueEvents) { await _queueEvents.close(); _queueEvents = null; } }
+
+// Graceful shutdown hooks
+process.on('SIGTERM', async () => {
+  log.redis.info('SIGTERM received, closing worker...');
+  await closeWorker();
+  await closeQueueEvents();
+  process.exit(0);
+});
+process.on('SIGINT', async () => {
+  log.redis.info('SIGINT received, closing worker...');
+  await closeWorker();
+  await closeQueueEvents();
+  process.exit(0);
+});
+
+// Auto-start worker in development AND production (for local testing)
+if (typeof window === 'undefined') {
+  startWorker().catch((err) => {
+    console.error('[queue] Failed to auto-start worker:', err.message);
+  });
+}

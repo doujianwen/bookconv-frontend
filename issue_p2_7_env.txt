@@ -1,0 +1,27 @@
+﻿## P2-7: 环境变量 LEMON_SQUEEZY_WEBHOOK_SECRET 未在 .env.example 中声明
+
+### 问题
+src/lib/payments/service.ts 读取 LEMON_SQUEEZY_WEBHOOK_SECRET 变量用于 webhook 签名验证：
+`	ypescript
+const LS_WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
+`
+
+但 .env.example 中没有这个变量。部署时容易遗漏，导致 webhook 签名验证被跳过（!LS_WEBHOOK_SECRET ? return true），存在安全风险。
+
+### 修复方案
+在 .env.example 中添加：
+`env
+# Lemon Squeezy (optional)
+LEMON_SQUEEZY_WEBHOOK_SECRET=
+LEMON_SQUEEZY_PRO_MONTHLY_VARIANT_ID=
+LEMON_SQUEEZY_API_MONTHLY_VARIANT_ID=
+`
+
+### 参考文件
+- ebook-converter/.env.example
+- ebook-converter/src/lib/payments/service.ts (L3)
+
+### 验证方法
+- 运行 
+pm run build 确认不报环境变量缺失警告
+- 检查 .env.example 包含所有代码中引用的变量

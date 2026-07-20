@@ -1,4 +1,4 @@
-// Lemon Squeezy payment service -- plan definitions + helpers
+﻿// Lemon Squeezy payment service -- plan definitions + helpers
 const LS_WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
 
 export interface PlanConfig {
@@ -74,6 +74,14 @@ export function getPlans(): Omit<PlanConfig, 'lemonSqueezyVariantId'>[] {
 
 export function getPlanById(id: string): PlanConfig | undefined {
   return PLANS.find((p) => p.id === id);
+}
+
+/** Look up a plan by its Lemon Squeezy variant ID */
+export function getPlanByVariantId(variantId: string | undefined): PlanConfig | undefined {
+  if (!variantId) return undefined;
+  return PLANS.find(
+    (p) => p.lemonSqueezyVariantId === variantId && p.id !== 'free'
+  );
 }
 
 export function formatPrice(cents: number): string {

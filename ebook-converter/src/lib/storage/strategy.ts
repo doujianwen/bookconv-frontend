@@ -1,6 +1,7 @@
 ﻿// src/lib/storage/strategy.ts
+import path from 'node:path';
 import { isR2Configured, uploadToR2 as r2Upload, checkR2Health, downloadFromR2, deleteFromR2 } from './r2';
-import { storeLocalFile as localStore, getLocalFile as localGet, deleteLocalFile as localDelete, cleanupExpiredLocalFiles, isLocalStorageAvailable } from './local';
+import { saveToLocal as localStore, readFromLocal as localGet, deleteLocal as localDelete } from './local';
 import type { StoreResult, StorageStrategy } from './types';
 
 /** Unified storage strategy: tries R2 first, falls back to local */
@@ -22,11 +23,13 @@ export const storageStrategy: StorageStrategy = {
     }
 
     // Fallback to local storage
-    if (!isLocalStorageAvailable()) {
-      throw new Error('No storage backend available');
+    try {
+      localStore(key, buffer);
+      return { url: '', backend: 'local', key } as any;
+    } catch (storeErr: unknown) {
+      const msg = storeErr instanceof Error ? storeErr.message : String(storeErr);
+      throw new Error('No storage backend available: ' + msg);
     }
-    const result = localStore(key, buffer, ttlHours);
-    return { ...result, backend: 'local', url: '' };
   },
 
   async retrieve(key: string): Promise<Buffer | null> {
@@ -93,7 +96,26 @@ export const storageStrategy: StorageStrategy = {
         console.warn('R2 cleanup failed:', msg);
       }
     }
-    localCleaned = cleanupExpiredLocalFiles();
+    // Local cleanup: scan and remove expired files
+    try {
+      const fs = require('node:fs');
+      const fsPromises = require('node:fs/promises');
+      const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
+      const localPath = path.join(UPLOAD_DIR, 'local-results');
+      if (fs.existsSync(localPath)) {
+        const files = fs.readdirSync(localPath);
+        let cleaned = 0;
+        for (const file of files) {
+          const filePath = path.join(localPath, file);
+          const stats = fs.statSync(filePath);
+          if (Date.now() - stats.mtimeMs > 24 * 60 * 60 * 1000) {
+            fs.rmSync(filePath, { force: true });
+            cleaned++;
+          }
+        }
+        localCleaned = cleaned;
+      }
+    } catch (e) { /* ignore */ }
     return { r2: 0, local: localCleaned };
   },
 };

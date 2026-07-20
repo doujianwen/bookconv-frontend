@@ -1,12 +1,12 @@
 ﻿import type { Metadata } from "next"
 import Link from "next/link"
 import { BookOpen, Calendar, Tag } from "lucide-react"
-import { getLocale, getMessage } from '@/i18n/utils'
+import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
+  const t = (key: string) => resolvePath(messages, key) || key;
 
   return {
     title: t('blog.title') + " | BookConv",
@@ -59,7 +59,7 @@ const posts: BlogPost[] = [
 export default async function BlogPage() {
   const locale = await getLocale();
   const messages = await getMessage(locale);
-  const t = (key: string) => (messages as any)[key] || key;
+  const t = (key: string) => resolvePath(messages, key) || key;
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
