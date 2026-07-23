@@ -1,0 +1,8 @@
+# Deploy packages
+deploy-pkg/
+ebook-converter/deploy-pkg/
+node_modules/
+.next/
+ebook-converter/node_modules/
+.env
+ebook-converter/.env
