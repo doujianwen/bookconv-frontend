@@ -347,9 +347,10 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-// Auto-start worker in development AND production (for local testing)
-if (typeof window === 'undefined') {
+// Auto-start worker in development ONLY (not on Vercel/serverless)
+if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
   startWorker().catch((err) => {
     console.error('[queue] Failed to auto-start worker:', err.message);
   });
 }
+

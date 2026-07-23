@@ -28,7 +28,6 @@ function addCorsHeaders(request: NextRequest, response: NextResponse): NextRespo
 }
 
 export async function middleware(request: NextRequest) {
-  console.log("[MIDDLEWARE] pathname:", request.nextUrl.pathname, "method:", request.method);
   const { pathname } = request.nextUrl;
 
   // Handle CORS preflight requests
