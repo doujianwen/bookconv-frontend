@@ -4,7 +4,6 @@ import { getJobStatus } from '@/lib/queue';
 import { uploadToR2, isR2Configured } from '@/lib/storage/r2';
 import { canAccessResult } from '@/lib/auth';
 import { saveToLocal } from '@/lib/storage/local';
-import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
 
 const DOWNLOAD_TTL_HOURS = 24;
 const INLINE_MAX_SIZE = 5 * 1024 * 1024; // 5MB threshold for inline vs R2
