@@ -1,4 +1,5 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
+import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
 import { getJobStatus } from '@/lib/queue';
 import { uploadToR2, isR2Configured } from '@/lib/storage/r2';
 import { canAccessResult } from '@/lib/auth';
