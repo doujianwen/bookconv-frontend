@@ -26,10 +26,6 @@ export function FAQSection({ faqs, sourceFormat, targetFormat }: FAQSectionProps
   return (
     <section className="space-y-4">
       <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
       <div className="divide-y rounded-xl border bg-white">
         {faqs.map((faq, i) => (
           <details key={i} className="group p-4">

@@ -1,6 +1,6 @@
 'use client'
+import Head from 'next/head'
 import Link from 'next/link'
-import { generateSoftwareApplicationSchema } from '@/lib/seo/schema'
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
@@ -149,8 +149,9 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   )
   return (
     <>
-      <script
-        type="application/ld+json"
+      <Head>
+        <script
+          type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -234,50 +235,19 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 mainEntity: faqs.map((f) => ({
                   "@type": "Question",
                   name: f.question,
-                  acceptedAnswer: { "@type": "Answer", text: f.answer },
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: f.answer,
+                    datePublished: new Date().toISOString(),
+                    dateModified: new Date().toISOString(),
+                  },
                 })),
-              },
-              {
-                "@type": "QAPage",
-                mainEntity: [
-                  {
-                    "@type": "Question",
-                    name: "How to convert " + sourceDisplay + " to " + targetDisplay + " online?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Use our free online converter: drag and drop your " + sourceDisplay + " file, select " + targetDisplay + " as the output format, and click Convert. The conversion is powered by Calibre and completes in seconds. No registration required.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "Is " + sourceDisplay + " to " + targetDisplay + " conversion free?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: "Yes. Our " + sourceDisplay + " to " + targetDisplay + " converter is completely free to use. No registration, no watermarks, no file size limits for individual conversions.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "What is " + sourceDisplay + " format used for?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: FORMAT_DISPLAY_NAMES[source] || source.toUpperCase() + " is a popular ebook format used for digital reading on various devices and platforms.",
-                    },
-                  },
-                  {
-                    "@type": "Question",
-                    name: "What is " + targetDisplay + " format used for?",
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: FORMAT_DISPLAY_NAMES[target] || target.toUpperCase() + " is a widely supported format for ebooks and digital documents, compatible with most e-readers and devices.",
-                    },
-                  },
-                ],
               },
             ],
           }),
         }}
-      />
+        />
+      </Head>
       <main className="mx-auto max-w-3xl space-y-10 px-4 py-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
