@@ -1,7 +1,7 @@
 // src/app/api/convert/[jobId]/status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getJobStatus } from '@/lib/queue';
-import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
+import { sanitizeError, mapErrorCode, getFriendlyMessage } from "@/lib/error-handler";
 
 export async function GET(
   _request: NextRequest,
@@ -29,6 +29,11 @@ export async function GET(
       maxRetries: status.maxRetries,
       eta: etaSeconds,
       error: status.error,
+      errorCode: status.error ? mapErrorCode(status.error) : undefined,
+      friendlyMessage: status.error ? getFriendlyMessage(mapErrorCode(status.error)) : undefined,
+      retryable: status.error ? (getFriendlyMessage(mapErrorCode(status.error)) !== undefined && [
+        'CONVERSION_TIMEOUT', 'TOO_MANY_OPEN_FILES', 'CONVERSION_FAILED'
+      ].includes(mapErrorCode(status.error || ''))) : true,
       createdAt: new Date(status.createdAt).toISOString(),
       updatedAt: new Date(status.updatedAt).toISOString(),
     });

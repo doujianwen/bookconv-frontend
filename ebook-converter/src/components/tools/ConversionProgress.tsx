@@ -1,6 +1,8 @@
-﻿"use client"
+"use client"
 
-import { Loader2, CheckCircle2, XCircle } from "lucide-react"
+import { Loader2, CheckCircle2, AlertTriangle, FileX } from "lucide-react"
+import type { ErrorCode } from "@/lib/error-handler"
+import { getFriendlyMessage, isRetryable } from "@/lib/error-handler"
 
 export type ConversionStatus = "idle" | "uploading" | "converting" | "done" | "error"
 
@@ -8,9 +10,18 @@ interface ConversionProgressProps {
   status: ConversionStatus
   progress?: number
   errorMessage?: string
+  errorCode?: ErrorCode
 }
 
-export function ConversionProgress({ status, progress = 0, errorMessage }: ConversionProgressProps) {
+/** Map of error codes to icon + hint shown below the main message */
+const ERROR_HINTS: Record<string, { icon: React.ReactNode; hint: string }> = {
+  CORRUPT_INPUT: { icon: <FileX className="h-4 w-4 text-red-500" />, hint: "This file appears damaged. Re-download and try again." },
+  DRM_PROTECTED: { icon: <AlertTriangle className="h-4 w-4 text-amber-500" />, hint: "DRM-protected file — remove DRM before converting." },
+  MEMORY_LIMIT: { icon: <FileX className="h-4 w-4 text-orange-500" />, hint: "File too large or complex for conversion." },
+  CONVERSION_FAILED: { icon: <AlertTriangle className="h-4 w-4 text-red-500" />, hint: isRetryable("CONVERSION_FAILED") ? "Click retry or try a different file." : "" },
+}
+
+export function ConversionProgress({ status, progress = 0, errorMessage, errorCode }: ConversionProgressProps) {
   if (status === "idle") return null
 
   return (
@@ -45,11 +56,20 @@ export function ConversionProgress({ status, progress = 0, errorMessage }: Conve
       )}
 
       {status === "error" && (
-        <div className="flex items-center gap-3">
-          <XCircle className="h-5 w-5 text-red-500" />
-          <span className="text-sm text-red-600">
-            {errorMessage || "Conversion failed. Please try again."}
-          </span>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <FileX className="h-5 w-5 text-red-500" />
+            <span className="text-sm text-red-600">
+              {errorMessage || getFriendlyMessage(errorCode ?? "CONVERSION_FAILED")}
+            </span>
+          </div>
+          {/* Extra hint for known error types */}
+          {errorCode && ERROR_HINTS[errorCode]?.hint && (
+            <div className="flex items-start gap-2 pl-8">
+              {ERROR_HINTS[errorCode].icon}
+              <span className="text-xs text-gray-500">{ERROR_HINTS[errorCode].hint}</span>
+            </div>
+          )}
         </div>
       )}
     </div>

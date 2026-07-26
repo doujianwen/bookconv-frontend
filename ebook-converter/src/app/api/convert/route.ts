@@ -8,35 +8,9 @@ import {
   getRateLimitHeaders,
   RATE_LIMIT_STRATEGIES,
 } from "@/lib/rate-limit";
+import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024;
-
-const ERROR_CODE_MAP: Record<string, string> = {
-  // Calibre / ebook-convert errors
-  'ENOENT': 'FILE_NOT_FOUND',
-  'EACCES': 'PERMISSION_DENIED',
-  'ETIMEDOUT': 'CONVERSION_TIMEOUT',
-  'EMFILE': 'TOO_MANY_OPEN_FILES',
-  'EBUSY': 'CONVERSION_BUSY',
-  // Generic errors
-  'UNSUPPORTED_FORMAT': 'UNSUPPORTED_FORMAT',
-  'output not generated': 'CONVERSION_FAILED',
-};
-
-function mapErrorCode(message: string): string {
-  for (const [key, code] of Object.entries(ERROR_CODE_MAP)) {
-    if (message.includes(key)) {
-      return code;
-    }
-  }
-  return 'CONVERSION_FAILED';
-}
-
-/** Sanitize error messages before sending to client to avoid leaking internals */
-function sanitizeErrorMessage(message: string): string {
-  // Strip stack traces, internal paths, and technical details
-  return message.replace(/at\s+.+/g, '').replace(/Error: /g, '').trim();
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -131,10 +105,11 @@ export async function POST(request: NextRequest) {
       { status: 202, headers: rateHeaders }
     );
   } catch (err: any) {
-    console.error("POST /api/convert error:", err.message || String(err));
-    const errorCode = mapErrorCode(err.message || '');
+    const message = sanitizeError(err);
+    console.error("POST /api/convert error:", message);
+    const errorCode = mapErrorCode(message);
     return NextResponse.json(
-      { error: sanitizeErrorMessage(err.message || String(err)) || "Internal server error", code: errorCode },
+      { error: getFriendlyMessage(errorCode), code: errorCode },
       { status: 500 }
     );
   }

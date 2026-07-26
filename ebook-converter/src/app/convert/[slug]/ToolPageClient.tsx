@@ -7,6 +7,7 @@ import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { FileDropZone } from "@/components/tools/FileDropZone"
 import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
+import type { ErrorCode } from "@/lib/error-handler"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
 import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
@@ -69,6 +70,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
+  const [errorCode, setErrorCode] = useState<ErrorCode | undefined>()
   const [progress, setProgress] = useState(0)
   const [originalFileName, setOriginalFileName] = useState("")
   const [originalFileSize, setOriginalFileSize] = useState(0)
@@ -77,6 +79,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     setDownloadUrl("")
     setFileName("")
     setErrorMessage("")
+    setErrorCode(undefined)
     setProgress(0)
     setOriginalFileName("")
     setOriginalFileSize(0)
@@ -115,6 +118,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
       setStatus("uploading")
       setProgress(10)
       setErrorMessage("")
+      setErrorCode(undefined)
       setDownloadUrl("")
       setFileName("")
       try {
@@ -125,11 +129,13 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         setProgress(30)
         setStatus("converting")
         const response = await fetch("/api/convert", { method: "POST", body: formData })
-        setProgress(80)
+        setProgress(40)
         if (!response.ok) {
-          const errData = await response.json().catch(() => ({ error: "Server error" }))
-          throw new Error(errData.error || "HTTP error")
+          const errData = await response.json().catch(() => ({ error: "Server error", code: "CONVERSION_FAILED" }))
+          const errorMsg = typeof errData?.error === 'string' ? errData.error : String(errData?.error || "Server error")
+          throw new Error(errorMsg, { cause: errData })
         }
+        // Synchronous mode: response is the converted file blob directly
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
         const outputName = file.name.replace(/\.[^.]+$/, ".converted.")
@@ -141,6 +147,13 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         setStatus("done")
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err: any) {
+        // Extract error code and friendly message from response data if available
+        const cause = err.cause as { errorCode?: string; code?: string } | undefined
+        const rawCode = cause?.errorCode || cause?.code
+        const mappedCode = rawCode && !/^(FILE_NOT_FOUND|PERMISSION_DENIED|CONVERSION_TIMEOUT|TOO_MANY_OPEN_FILES|DRM_PROTECTED|CONVERSION_FAILED|INTERNAL_ERROR|CORRUPT_INPUT|MEMORY_LIMIT)$/.test(rawCode)
+          ? undefined
+          : (rawCode as ErrorCode | undefined)
+        setErrorCode(mappedCode)
         setErrorMessage(err.message || "Conversion failed")
         setStatus("error")
       }
@@ -280,6 +293,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             status={status}
             progress={status === "converting" ? progress : 0}
             errorMessage={errorMessage}
+            errorCode={errorCode}
           />
           {status === "done" && downloadUrl && originalFileName && (
             <BeforeAfterComparison

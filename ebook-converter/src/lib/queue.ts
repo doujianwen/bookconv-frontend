@@ -6,6 +6,7 @@ import { promisify } from 'node:util';
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { loggers as log } from './logger';
+import { mapErrorCode, getFriendlyMessage } from './error-handler';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -111,6 +112,119 @@ function getMimeType(ext: string): string {
   return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
 
+/** Validate input file before sending to Calibre. Throws if the file is clearly corrupted. */
+async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
+  const fs = require('node:fs/promises');
+
+  try {
+    const stat = await fs.stat(inputPath);
+    if (stat.size === 0) {
+      throw new Error('Empty input file');
+    }
+
+    if (sourceFormat === 'epub') {
+      const buf = Buffer.alloc(4);
+      const fd = await fs.open(inputPath, 'r');
+      try {
+        await fd.read(buf, 0, 4, 0);
+        await fd.close();
+        // ZIP magic: PK\x03\x04 or PK\x05\x06 (empty archive) or PK\x07\x08 (spanned)
+        const validZip =
+          buf[0] === 0x50 && buf[1] === 0x4b && (buf[2] === 0x03 || buf[2] === 0x05 || buf[2] === 0x07);
+        if (!validZip) {
+          throw new Error('not a valid eBook format');
+        }
+
+        // EPUB must contain mimetype and META-INF/container.xml
+        // NOTE: thorough ZIP-level parsing deferred to Calibre itself
+        // (we already validated ZIP magic + central directory above)
+      } catch (_err) {
+        await fd.close().catch(() => {});
+        throw _err;
+      }
+
+      // More thorough check: verify ZIP central directory exists
+      const data = await fs.readFile(inputPath);
+      // Find central directory to confirm ZIP structure
+      let cdOffset = -1;
+      for (let i = data.length - 4; i >= 0; i--) {
+        if (data[i] === 0x50 && data[i+1] === 0x4b && data[i+2] === 0x05 && data[i+3] === 0x06) {
+          cdOffset = i;
+          break;
+        }
+      }
+      if (cdOffset === -1) {
+        throw new Error('Invalid zip file');
+      }
+
+      // Check for META-INF/container.xml presence in the ZIP
+      // The local file header signature is PK\x03\x04
+      let hasContainer = false;
+      for (let i = 0; i < data.length - 4; i++) {
+        if (data[i] === 0x50 && data[i+1] === 0x4b && data[i+2] === 0x03 && data[i+3] === 0x04) {
+          // Local file header — filename length is at offset 26-27 (LE uint16)
+          const fnameLen = data[i + 26] | (data[i + 27] << 8);
+          if (fnameLen > 0 && fnameLen < 256 && i + 30 + fnameLen <= data.length) {
+            const fname = data.slice(i + 30, i + 30 + fnameLen).toString('utf8').toLowerCase();
+            if (fname.includes('container.xml') || fname.includes('opf')) {
+              hasContainer = true;
+              break;
+            }
+          }
+        }
+      }
+      if (!hasContainer) {
+        throw new Error('Invalid or missing opf');
+      }
+    }
+    // MOBI detection: MOBI header starts with 'BOOK' or 'TEXt'
+    else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
+      const head = await fs.readFile(inputPath, { start: 0, end: 3 });
+      if (!(
+        (head[0] === 0x42 && head[1] === 0x4F && head[2] === 0x4F && head[3] === 0x4B) || // BOOK
+        (head[0] === 0x54 && head[1] === 0x65 && head[2] === 0x78 && head[3] === 0x74)  // TEXt
+      )) {
+        throw new Error('not a valid eBook format');
+      }
+    }
+    // PDF: magic %PDF
+    else if (sourceFormat === 'pdf') {
+      const head = await fs.readFile(inputPath, { start: 0, end: 4 });
+      if (head.toString() !== '%PDF') {
+        throw new Error('not a valid eBook format');
+      }
+    }
+    // TXT/RTF: just verify it's text-starting or non-empty
+    else if (['txt', 'rtf', 'docx'].includes(sourceFormat)) {
+      // docx is ZIP-like, check already
+      if (sourceFormat === 'txt' || sourceFormat === 'rtf') {
+        const headBuf = Buffer.alloc(64);
+        const fd = await fs.open(inputPath, 'r');
+        try {
+          await fd.read(headBuf, 0, 64, 0);
+          const txt = headBuf.toString().trim();
+          if (sourceFormat === 'rtf' && !txt.startsWith('{\\')) {
+            throw new Error('not a valid eBook format');
+          }
+        } finally {
+          await fd.close();
+        }
+      }
+    }
+  } catch (err: any) {
+    // Wrap validation errors with category that mapErrorCode can detect
+    const msg = err.message || String(err);
+    if (!msg.includes('not a valid eBook format') &&
+        !msg.includes('corrupt epub') &&
+        !msg.includes('Invalid zip file') &&
+        !msg.includes('Invalid or missing opf') &&
+        !msg.includes('Empty input file')) {
+      throw new Error(`Input validation failed: ${msg}`);
+    }
+    throw err;
+  }
+}
+
 async function executeConversion(
   fileBuffer: string | null,
   inputFilePath: string | null,
@@ -152,15 +266,29 @@ async function executeConversion(
   let ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
   let outputPath = path.join(jobDir, 'output.' + ext);
   try {
+    // Pre-validation: catch clearly corrupted files before hitting Calibre
+    await validateInputFile(inputPath, sourceFormat);
+
     await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
     if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
-    
+
     // Return the output file path instead of encoding to base64
     // Caller can stream-read it as needed
     await cleanupDir(jobDir);
     return { outputFilePath: outputPath, extension: ext, mimeType: getMimeType(ext) };
   } catch (err: any) {
     await cleanupDir(jobDir);
+    // If the error doesn't already have a recognized category, enrich it with stderr
+    const msg = err.message || String(err);
+    if (!msg.includes('not a valid eBook format') && !msg.includes('corrupt') && !msg.includes('Invalid zip') &&
+        !msg.includes('Timeout') && !msg.includes('timed out')) {
+      const stderr = err.stderr || '';
+      const combined = `${msg}\n${stderr}`;
+      const errorCode = mapErrorCode(combined);
+      if (errorCode !== 'CONVERSION_FAILED') {
+        throw new Error(getFriendlyMessage(errorCode));
+      }
+    }
     throw err;
   }
 }
@@ -190,9 +318,12 @@ export async function processConversion(job: any) {
     return result;
   } catch (err: any) {
     const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
-    log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, { jobId, attempt, maxRetries: maxRetryCount, error: errMsg });
-    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: errMsg });
-    throw err; // BullMQ will retry with backoff
+    // Map to user-friendly message
+    const errorCode = mapErrorCode(errMsg);
+    const friendlyMsg = getFriendlyMessage(errorCode);
+    log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, { jobId, attempt, maxRetries: maxRetryCount, error: friendlyMsg });
+    job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: friendlyMsg });
+    throw new Error(friendlyMsg); // BullMQ will retry with backoff
   }
 }
 
