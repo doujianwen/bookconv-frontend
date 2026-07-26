@@ -3,13 +3,30 @@ interface FAQItem {
   answer: string;
 }
 
-export function generateFAQSchema(faqs: FAQItem[]): string {
-  const items = faqs.map((f) => ({
+export function generateFAQSchema(faqs: FAQItem[], url?: string): string {
+  const items = faqs.map((f, i) => ({
     '@type': 'Question',
     name: f.question,
-    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    answerCount: 1,
+    author: { '@type': 'Organization', name: 'BookConv' },
+    url: url ? url + '#faq-' + (i + 1) : undefined,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+      datePublished: new Date().toISOString(),
+      author: { '@type': 'Organization', name: 'BookConv' },
+      url: url ? url + '#faq-' + (i + 1) : undefined,
+    },
   }));
-  return JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items }, null, 2);
+  const base: Record<string, any> = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items,
+    author: { '@type': 'Organization', name: 'BookConv' },
+    datePublished: '2026-01-01T00:00:00+00:00',
+  };
+  if (url) base.url = url;
+  return JSON.stringify(base, null, 2);
 }
 
 export function generateBreadcrumbSchema(items: { name: string; url: string }[]): string {
@@ -55,15 +72,16 @@ export function generateSoftwareApplicationSchema(opts: SoftwareAppSchemaOpts): 
 }
 
 interface ArticleSchemaOpts {
-  headline: string; description: string; url: string; image?: string; authorName?: string; datePublished?: string; dateModified?: string;
+  headline: string; description: string; url: string; text?: string; image?: string; authorName?: string; datePublished?: string; dateModified?: string;
 }
 
 export function generateArticleSchema(opts: ArticleSchemaOpts): string {
-  const { headline, description, url, image, authorName = 'BookConv Team', datePublished, dateModified } = opts;
+  const { headline, description, url, image, authorName = 'BookConv Team', datePublished, dateModified, text } = opts;
   const graph: Record<string, any>[] = [{
     '@type': 'Article',
     headline,
     description,
+    text: text || undefined,
     author: { '@type': 'Person', name: authorName },
     publisher: {
       '@type': 'Organization',

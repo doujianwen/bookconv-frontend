@@ -205,6 +205,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
                 "@type": "Article",
                 headline: "How to Convert " + sourceDisplay + " to " + targetDisplay + " Online — Free Guide",
                 description: contentData?.hero?.subtitle || "Free online " + sourceDisplay + " to " + targetDisplay + " converter guide with step-by-step instructions.",
+                text: (contentData?.sections && contentData.sections.length > 0 ? contentData.sections.map((s) => s.heading + '\n' + s.body).join('\n\n') : "") ||
+                  "Free online " + sourceDisplay + " to " + targetDisplay + " converter guide. Learn how to convert ebooks with Calibre engine, no registration required.",
                 author: { "@type": "Organization", name: "BookConv", url: baseUrl },
                 publisher: { "@type": "Organization", name: "BookConv", logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" } },
                 datePublished: "2026-01-01T00:00:00+00:00",
@@ -245,16 +247,23 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
               },
               {
                 "@type": "FAQPage",
-                mainEntity: faqs.map((f) => ({
+                "mainEntity": faqs.map((f, i) => ({
                   "@type": "Question",
-                  name: f.question,
-                  acceptedAnswer: {
+                  "name": f.question,
+                  "answerCount": 1,
+                  "author": { "@type": "Organization", "name": "BookConv" },
+                  "url": pageUrl + "#faq-" + (i + 1),
+                  "acceptedAnswer": {
                     "@type": "Answer",
-                    text: f.answer,
-                    datePublished: new Date().toISOString(),
-                    dateModified: new Date().toISOString(),
+                    "text": f.answer,
+                    "datePublished": new Date().toISOString(),
+                    "author": { "@type": "Organization", "name": "BookConv" },
+                    "url": pageUrl + "#faq-" + (i + 1),
                   },
                 })),
+                "author": { "@type": "Organization", "name": "BookConv" },
+                "datePublished": "2026-01-01T00:00:00+00:00",
+                "url": pageUrl,
               },
             ],
           }),

@@ -270,12 +270,15 @@ export default function HomePage() {
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
-                mainEntity: [
-                  { "@type": "Question", name: t('faq.q1'), acceptedAnswer: { "@type": "Answer", text: t('faq.a1') } },
-                  { "@type": "Question", name: t('faq.q2'), acceptedAnswer: { "@type": "Answer", text: t('faq.a2') } },
-                  { "@type": "Question", name: t('faq.q3'), acceptedAnswer: { "@type": "Answer", text: t('faq.a3') } },
-                  { "@type": "Question", name: t('faq.q4'), acceptedAnswer: { "@type": "Answer", text: t('faq.a4') } },
-                  { "@type": "Question", name: t('faq.q5'), acceptedAnswer: { "@type": "Answer", text: t('faq.a5') } },
+                "author": { "@type": "Organization", "name": "BookConv" },
+                "datePublished": "2026-01-01T00:00:00+00:00",
+                "url": "https://bookconv.com",
+                "mainEntity": [
+                  { "@type": "Question", "name": t('faq.q1'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a1') } },
+                  { "@type": "Question", "name": t('faq.q2'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a2') } },
+                  { "@type": "Question", "name": t('faq.q3'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a3') } },
+                  { "@type": "Question", "name": t('faq.q4'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a4') } },
+                  { "@type": "Question", "name": t('faq.q5'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a5') } },
                 ],
               }),
             }}

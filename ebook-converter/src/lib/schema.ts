@@ -102,10 +102,27 @@ export function generateSchema(
   ];
 
   if (faqs && faqs.length > 0) {
+    const pageUrl = baseUrl + '/convert/' + slug;
     graph.push({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+      author: { '@type': 'Organization', name: 'BookConv' },
+      datePublished: '2026-01-01T00:00:00+00:00',
+      url: pageUrl,
+      mainEntity: faqs.map((f, i) => ({
+        '@type': 'Question',
+        name: f.question,
+        answerCount: 1,
+        author: { '@type': 'Organization', name: 'BookConv' },
+        url: pageUrl + '#faq-' + (i + 1),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.answer,
+          datePublished: new Date().toISOString(),
+          author: { '@type': 'Organization', name: 'BookConv' },
+          url: pageUrl + '#faq-' + (i + 1),
+        },
+      })),
     });
   }
 
