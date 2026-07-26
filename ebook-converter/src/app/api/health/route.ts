@@ -1,8 +1,9 @@
+// src/app/api/health/route.ts — Enhanced health check with Redis, Calibre, disk space.
 import { NextRequest, NextResponse } from 'next/server';
 import { getRedisClient } from '@/lib/redis';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
+import { sanitizeError } from "@/lib/error-handler";
 
 const execFileAsync = promisify(execFile);
 
@@ -10,12 +11,11 @@ async function checkRedis(): Promise<{ ok: boolean; latency?: number; error?: st
   try {
     const client = getRedisClient();
     if (!client) {
-      return { ok: false, error: 'Redis client not initialized' };
+      return { ok: false, error: 'Redis not configured' };
     }
     const start = Date.now();
     await client.ping();
-    const latency = Date.now() - start;
-    return { ok: true, latency };
+    return { ok: true, latency: Date.now() - start };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return { ok: false, error: message };
@@ -34,86 +34,114 @@ async function checkCalibre(): Promise<{ ok: boolean; version?: string; error?: 
   }
 }
 
-function isVerboseAllowed(req: NextRequest): boolean {
-  const apiKey = process.env.VERIFICATION_API_KEY || '';
-  const requestApiKey = req.headers.get('x-api-key') || '';
-  if (apiKey && requestApiKey === apiKey) {
-    return true;
+async function checkDiskSpace(): Promise<{ ok: boolean; totalMb?: number; freeMb?: number; error?: string }> {
+  try {
+    // Use `df` on Linux/Mac or PowerShell/WMIC on Windows
+    const command = process.platform === 'win32'
+      ? 'wmic_logicaldisk get Size,FreeSpace /format:list'
+      : 'df -k "' + (process.env.UPLOAD_DIR || '/tmp') + '" | tail -1';
+
+    const { execFile: ef } = await import('node:child_process');
+    const execAsync = promisify(ef);
+    const { stdout } = await execAsync(command);
+
+    if (process.platform === 'win32') {
+      const freeMatch = stdout.match(/FreeSpace=(\d+)/);
+      const sizeMatch = stdout.match(/Size=(\d+)/);
+      const freeMb = freeMatch ? Math.round(parseInt(freeMatch[1]) / (1024 * 1024)) : undefined;
+      const totalMb = sizeMatch ? Math.round(parseInt(sizeMatch[1]) / (1024 * 1024)) : undefined;
+      return { ok: !freeMb || freeMb > 50, totalMb, freeMb };
+    } else {
+      // df output: block free (in KB)
+      const parts = stdout.trim().split(/\s+/);
+      const freeKb = parseInt(parts[parts.length - 2] || '0');
+      const freeMb = Math.round(freeKb / 1024);
+      return { ok: freeMb > 50, freeMb, totalMb: freeMb * 4 }; // rough estimate
+    }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return { ok: false, error: message };
   }
-  const ip = req.headers.get('x-forwarded-for') || '';
-  const cleanedIp = ip.includes(',') ? ip.split(',')[0].trim() : ip.trim();
-  return cleanedIp === '127.0.0.1';
+}
+
+/** Check if job queue has stuck jobs (> 30 min old and still active ) */
+async function checkQueueStuckJobs(): Promise<{ ok: boolean; stuckCount?: number; error?: string }> {
+  try {
+    const client = getRedisClient();
+    if (!client) return { ok: false, error: 'Redis not configured' };
+
+    const keys = await client.keys('bull:ebook-conversions:*:lock');
+    let stuckCount = 0;
+    for (const key of keys) {
+      const ttl = await client.ttl(key);
+      // Lock held for more than 30 minutes means the worker is stuck
+      if (ttl > 0 && ttl < 60) continue;
+      if (ttl <= 0) {
+        // TTL expired but lock still exists — zombie lock
+        stuckCount++;
+      }
+    }
+    return { ok: true, stuckCount };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return { ok: false, error: message };
+  }
 }
 
 export async function GET(req: NextRequest) {
   const verbose = req.nextUrl.searchParams.get('verbose') === 'true';
-  const verboseAllowed = !verbose || isVerboseAllowed(req);
+  const apiKey = req.headers.get('x-api-key') || '';
+  const allowed = apiKey === (process.env.VERIFICATION_API_KEY || '');
 
-  const redisResult = await checkRedis();
-  const calibreResult = await checkCalibre();
+  const [redisResult, calibreResult, diskResult, queueResult] = await Promise.all([
+    checkRedis(),
+    checkCalibre(),
+    checkDiskSpace(),
+    checkQueueStuckJobs(),
+  ]);
 
-  const allOk = redisResult.ok && calibreResult.ok;
+  const allOk = redisResult.ok && calibreResult.ok && diskResult.ok;
   const status = allOk ? 'ok' : 'degraded';
+  const statusCode = allOk ? 200 : 503;
 
-  // Build internal checks object (always computed, but may be stripped for output)
   const checks: Record<string, unknown> = {
     redis: { ok: redisResult.ok },
     calibre: { ok: calibreResult.ok },
+    disk: { ok: diskResult.ok },
   };
 
-  if (verboseAllowed) {
-    // In verbose mode, always include latency for redis
-    if (redisResult.latency !== undefined) {
-      (checks.redis as Record<string, unknown>).latency = redisResult.latency;
-    }
-    // Only include version if everything is ok (never leak version on degraded)
-    if (calibreResult.ok && calibreResult.version) {
-      (checks.calibre as Record<string, unknown>).version = calibreResult.version;
-    }
+  if (redisResult.error && (verbose || !allowed)) {
+    (checks.redis as Record<string, unknown>).error = redisResult.error;
+  }
+  if (redisResult.latency !== undefined) {
+    (checks.redis as Record<string, unknown>).latency = redisResult.latency;
   }
 
-  // In production, never expose detailed error messages
-  const isProduction = process.env.NODE_ENV === 'production';
-  if (isProduction && !verboseAllowed) {
-    // Strip everything — return minimal response
-    return NextResponse.json(
-      {
-        status,
-        timestamp: new Date().toISOString(),
-      },
-      { status: allOk ? 200 : 503 },
-    );
+  if (calibreResult.error && (verbose || !allowed)) {
+    (checks.calibre as Record<string, unknown>).error = calibreResult.error;
+  }
+  if (calibreResult.ok && calibreResult.version && (verbose || !allowed)) {
+    (checks.calibre as Record<string, unknown>).version = calibreResult.version;
   }
 
-  if (isProduction && verboseAllowed) {
-    // Production + verbose: include checks but strip error details
-    const sanitizedChecks: Record<string, unknown> = {
-      redis: { ok: redisResult.ok },
-      calibre: { ok: calibreResult.ok },
-    };
-    if (redisResult.latency !== undefined) {
-      (sanitizedChecks.redis as Record<string, unknown>).latency = redisResult.latency;
-    }
-    if (calibreResult.ok && calibreResult.version) {
-      (sanitizedChecks.calibre as Record<string, unknown>).version = calibreResult.version;
-    }
-    return NextResponse.json(
-      {
-        status,
-        timestamp: new Date().toISOString(),
-        checks: sanitizedChecks,
-      },
-      { status: allOk ? 200 : 503 },
-    );
+  (checks.disk as Record<string, unknown>).total = diskResult.totalMb;
+  (checks.disk as Record<string, unknown>).free = diskResult.freeMb;
+  if (diskResult.error && (verbose || !allowed)) {
+    (checks.disk as Record<string, unknown>).error = diskResult.error;
   }
 
-  // Development mode: include full checks with errors
-  return NextResponse.json(
-    {
-      status,
-      timestamp: new Date().toISOString(),
-      checks,
-    },
-    { status: allOk ? 200 : 503 },
-  );
+  if ('stuckCount' in queueResult) {
+    (checks.queue as Record<string, unknown>) = { stuckJobs: queueResult.stuckCount };
+  }
+
+  // Production non-verbose: minimal response
+  if (process.env.NODE_ENV === 'production' && !verbose && allowed) {
+    return NextResponse.json({ status, timestamp: new Date().toISOString() }, { status: statusCode });
+  }
+
+  return NextResponse.json({
+    status,
+    timestamp: new Date().toISOString(),
+    checks,
+  }, { status: statusCode });
 }

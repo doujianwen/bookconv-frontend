@@ -8,6 +8,9 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import './globals.css'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
+import { PlausibleScript } from '@/components/analytics/PlausibleScript'
+// Initialize Sentry in production (side-effect import)
+import '@/lib/sentry-setup'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -91,6 +94,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel='icon' href='/icon.svg' type='image/svg+xml' sizes='any' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
         <link rel='manifest' href='/manifest.json' />
+        {/* Plausible Analytics */}
+        <PlausibleScript />
         <link rel='canonical' href={`https://bookconv.com${locale === 'es' ? '/es' : ''}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />

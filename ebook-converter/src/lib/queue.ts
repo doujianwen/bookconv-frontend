@@ -426,17 +426,10 @@ export async function startWorker() {
   return _worker;
 }
 
-// Failed job alert notification
+// Failed job alert notification — sends to Feishu webhook if configured
 async function notifyFailedJob(jobId: string, jobData: any, error: string) {
   try {
     const { sourceFormat, targetFormat, userId } = jobData || {};
-    const message = '[Alert] Conversion job ' + jobId + ' failed.\n' +
-      'Source: ' + sourceFormat + ' -> Target: ' + targetFormat + '\n' +
-      'Error: ' + error + '\n' +
-      'User: ' + (userId || 'anonymous') + '\n' +
-      'Timestamp: ' + new Date().toISOString();
-
-    // Log to file or send to monitoring service
     log.conversion.error(`Conversion job ${jobId} failed`, {
       jobId,
       sourceFormat: jobData?.sourceFormat,
@@ -445,12 +438,81 @@ async function notifyFailedJob(jobId: string, jobData: any, error: string) {
       error,
     });
 
-    // TODO: Integrate with real notification service (Slack, email, etc.)
-    // Example: await sendSlackAlert(message);
-    // Example: await sendEmailNotification(userId, message);
+    // Send Feishu webhook alert if configured
+    const webhookUrl = process.env.FEISHU_WEBHOOK_URL;
+    if (webhookUrl) {
+      await sendFeishuAlert({
+        webhookUrl,
+        jobId,
+        sourceFormat,
+        targetFormat,
+        userId,
+        error,
+      }).catch(() => {});
+    }
   } catch (alertErr: any) {
     log.conversion.error('Failed to send alert notification', { error: alertErr.message });
   }
+}
+
+interface FeishuAlertPayload {
+  jobId: string;
+  webhookUrl: string;
+  sourceFormat?: string;
+  targetFormat?: string;
+  userId?: string;
+  error: string;
+}
+
+/** Send an alert message to a Feishu group webhook */
+async function sendFeishuAlert(payload: FeishuAlertPayload): Promise<void> {
+  const { webhookUrl, jobId, sourceFormat, targetFormat, error, userId } = payload;
+
+  const errorCode = mapErrorCode(error);
+  const friendlyMsg = getFriendlyMessage(errorCode);
+
+  const msg = JSON.stringify({
+    msg_type: 'interactive',
+    card: {
+      config: { wide_screen_mode: true },
+      header: {
+        title: { tag: 'plain_text', content: `🚨 Conversion Failed — ${jobId.slice(0, 8)}` },
+        template: 'red' as const,
+      },
+      elements: [
+        {
+          tag: 'div',
+          text: {
+            tag: 'lark_md',
+            content: [
+              '**Job:**', jobId, '\n',
+              '**Format:**', `${sourceFormat || '?'} → ${targetFormat || '?'}`, '\n',
+              '**Error Code:**', errorCode, '\n',
+              '**User:**', userId || 'anonymous', '\n',
+              '**Time:**', new Date().toISOString(), '\n',
+            ].join(''),
+          },
+        },
+        {
+          tag: 'note',
+          elements: [
+            {
+              tag: 'plain_text',
+              content: friendlyMsg,
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: msg,
+  }).catch(() => {
+    log.conversion.warn('Feishu webhook request failed');
+  });
 }
 
 export function startQueueEvents() {

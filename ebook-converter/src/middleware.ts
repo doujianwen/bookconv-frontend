@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { applySecurityHeaders } from './middleware/security';
 
 const CORS_ORIGINS = (process.env.CORS_ORIGINS || process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com')
   .split(',')
@@ -28,6 +29,9 @@ function addCorsHeaders(request: NextRequest, response: NextResponse): NextRespo
 }
 
 export async function middleware(request: NextRequest) {
+  // Apply security headers to every response
+  applySecurityHeaders(request);
+
   const { pathname } = request.nextUrl;
 
   // Handle CORS preflight requests
