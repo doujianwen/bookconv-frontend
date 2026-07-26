@@ -1,0 +1,99 @@
+{
+    "common":  {
+                   "siteName":  "BookConv",
+                   "freeOnlineEbookConverter":  "Free Online Ebook Format Converter",
+                   "noRegistrationRequired":  "No registration, no watermarks, no limits.",
+                   "poweredByCalibre":  "Powered by Calibre Engine",
+                   "skipToMainContent":  "Skip to main content",
+                   "home":  "Home",
+                   "pricing":  "Pricing",
+                   "blog":  "Blog",
+                   "privacyPolicy":  "Privacy Policy",
+                   "termsOfService":  "Terms of Service",
+                   "allRightsReserved":  "All rights reserved.",
+                   "startConvertingNow":  "Start Converting Now",
+                   "searchConversions":  "Search conversions... (e.g., EPUB to MOBI)",
+                   "allFormats":  "All Formats",
+                   "ebook":  "eBook",
+                   "document":  "Document",
+                   "image":  "Image",
+                   "comic":  "Comic"
+               },
+    "home":  {
+                 "heroTitle":  "Free Online Ebook\nFormat Converter",
+                 "heroSubtitle":  "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, no limits.",
+                 "ctaReadyTitle":  "Ready to Convert Your Ebooks?",
+                 "ctaReadyDesc":  "Join thousands of readers who trust our free converter.",
+                 "faqTitle":  "Frequently Asked Questions",
+                 "supportedFormatsTitle":  "Supported Ebook Formats",
+                 "supportedFormatsDesc":  "BookConv supports conversion between 17+ ebook formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and more. Whether you need to convert Kindle books, rescue old LIT files, or transform documents to EPUB, we have you covered.",
+                 "formatsSectionDesc":  "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
+                 "poweredByCalibre":  "Powered by Calibre Engine"
+             },
+    "faq":  {
+                "q1":  "Is BookConv free to use?",
+                "a1":  "Yes! BookConv is completely free to use with no registration required. Free users get 5 conversions per hour with up to 10 MB file size.",
+                "q2":  "What formats does BookConv support?",
+                "a2":  "BookConv supports 17+ ebook formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents.",
+                "q3":  "Is my data safe when I upload files?",
+                "a3":  "Absolutely. All files are transferred over encrypted HTTPS connections and automatically deleted within 1 hour after conversion. We never read, store, or share your content.",
+                "q4":  "Do I need to install any software?",
+                "a4":  "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file 鈥?no software installation needed.",
+                "q5":  "Can I convert Kindle books to EPUB?",
+                "a5":  "Yes! BookConv supports converting AZW3 and MOBI (Kindle formats) to EPUB and other formats. Simply upload your Kindle file and choose your desired output format."
+            },
+    "pricing":  {
+                    "title":  "Simple, Transparent Pricing",
+                    "subtitle":  "Start free. Upgrade when you need more. No hidden fees, cancel anytime.",
+                    "mostPopular":  "Most Popular",
+                    "getStartedFree":  "Get Started Free",
+                    "comingSoon":  "Coming Soon",
+                    "contactSales":  "Contact Sales",
+                    "startProTrial":  "Start Pro Trial",
+                    "perfectForCasual":  "Perfect for casual users",
+                    "forPowerUsers":  "For power users who need more",
+                    "forDevelopers":  "For developers and businesses",
+                    "featureComparison":  "Free vs Pro: Feature Comparison",
+                    "conversionsPerHour":  "Conversions per hour",
+                    "maxFileSize":  "Max file size",
+                    "batchConversion":  "Batch conversion",
+                    "priorityQueue":  "Priority queue",
+                    "apiAccess":  "API access",
+                    "unlimited":  "Unlimited",
+                    "faqTitle":  "Frequently Asked Questions",
+                    "pqa1_q":  "Can I cancel anytime?",
+                    "pqa1_a":  "Yes, you can cancel your subscription at any time from your account settings.",
+                    "pqa2_q":  "What payment methods do you accept?",
+                    "pqa2_a":  "We accept all major credit cards via Lemon Squeezy, including Visa, Mastercard, and American Express.",
+                    "pqa3_q":  "Is there a free trial?",
+                    "pqa3_a":  "Yes! All paid plans come with a 14-day free trial. You can cancel anytime during the trial.",
+                    "pqa4_q":  "What happens to my files?",
+                    "pqa4_a":  "All uploaded files are encrypted and automatically deleted within 1 hour of conversion, regardless of your plan.",
+                    "pqa5_q":  "Do you offer refunds?",
+                    "pqa5_a":  "Yes, we offer a full refund within 30 days of purchase if you are not satisfied with the service."
+                },
+    "blog":  {
+                 "title":  "Ebook Conversion Blog",
+                 "subtitle":  "Expert guides, format comparisons, and tips for getting the most out of your ebook library.",
+                 "popularConversions":  "Popular Conversions",
+                 "tryThese":  "Try these conversions directly:",
+                 "publishedOn":  "Published on",
+                 "backToList":  "Back to Blog"
+             },
+    "nav":  {
+                "home":  "Home",
+                "pricing":  "Pricing",
+                "blog":  "Blog",
+                "language":  "Language"
+            },
+    "localeSwitcher":  {
+                           "english":  "English",
+                           "spanish":  "Espa帽ol",
+                           "currentLocale":  "Current locale: {locale}",
+                           "language":  "Language"
+                       },
+    "seo":  {
+                "defaultTitle":  "BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
+                "defaultDescription":  "Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits."
+            }
+}
