@@ -57,7 +57,7 @@ const config: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-          { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: ${CORS_ORIGINS.map((o) => o.replace(/^https?:\/\//, '')).join(' ')}; font-src 'self' data:; connect-src 'self' ${CORS_ORIGINS.join(' ')}; frame-ancestors 'none'; base-uri 'self'; form-action 'self';` },
+          { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: ${CORS_ORIGINS.map((o) => o.replace(/^https?:\/\//, '')).join(' ')}; font-src 'self' data:; connect-src 'self' ${CORS_ORIGINS.join(' ')} https://www.google-analytics.com https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';` },
           { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
         ],
       },
