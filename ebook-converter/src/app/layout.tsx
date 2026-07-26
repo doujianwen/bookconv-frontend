@@ -96,6 +96,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel='manifest' href='/manifest.json' />
         {/* Plausible Analytics */}
         <PlausibleScript />
+        {/* Google Analytics 4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJTM9CFPWZ" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QJTM9CFPWZ');
+            `.trim(),
+          }}
+        />
         <link rel='canonical' href={`https://bookconv.com${locale === 'es' ? '/es' : ''}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />
