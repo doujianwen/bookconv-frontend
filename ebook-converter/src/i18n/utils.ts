@@ -1,3 +1,7 @@
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'es' }];
+}
+
 ﻿import { getRequestConfig } from 'next-intl/server';
 import { cookies } from 'next/headers';
 

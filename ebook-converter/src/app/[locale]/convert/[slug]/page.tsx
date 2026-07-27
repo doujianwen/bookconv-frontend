@@ -25,6 +25,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
+  const { locale } = await params;
   const { slug } = await params
   const displayName = getDisplayName(slug)
   const [source, target] = slug.split("-to-")
@@ -48,13 +49,13 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       "ebook converter", "calibre", "free",
     ],
     alternates: {
-      canonical: `https://bookconv.com/convert/${slug}`,
+      canonical: `https://bookconv.com${locale === 'es' ? '/es' : ''}/convert/${slug}`,
     },
     openGraph: {
       title,
       description,
       type: "website",
-      url: `https://bookconv.com/convert/${slug}`,
+      url: `https://bookconv.com${locale === 'es' ? '/es' : ''}/convert/${slug}`,
       siteName: "BookConv",
       images: [
         {

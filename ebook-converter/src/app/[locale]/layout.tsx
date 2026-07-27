@@ -6,14 +6,49 @@ import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
+import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
+import { PlausibleScript } from '@/components/analytics/PlausibleScript'
+// Initialize Sentry in production (side-effect import)
+import '@/lib/sentry-setup'
+
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'es' }];
+}
+
+import type { Metadata } from 'next'
+import { BookOpen } from 'lucide-react'
+import Link from 'next/link'
+import LoginButton from '@/components/auth/LoginButton'
+import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
+import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
+import { PlausibleScript } from '@/components/analytics/PlausibleScript'
+// Initialize Sentry in production (side-effect import)
+import '@/lib/sentry-setup'
+
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'es' }];
+}
+
+﻿import type { Metadata } from 'next'
+import { BookOpen } from 'lucide-react'
+import Link from 'next/link'
+import LoginButton from '@/components/auth/LoginButton'
+import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import './globals.css'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
 import { PlausibleScript } from '@/components/analytics/PlausibleScript'
 // Initialize Sentry in production (side-effect import)
 import '@/lib/sentry-setup'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeFromParams } = await params;
+  const locale = localeFromParams || (await getLocale());
   const messages = await getMessage(locale);
   const t = (key: string) => resolvePath(messages, key) || key;
 
@@ -31,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'kindle format converter', 'ebook format conversion',
     ],
     alternates: {
-      canonical: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+      canonical: `https://bookconv.com${'/' + (locale || '')}`,
       languages: {
         'en': '/en',
         'es': '/es',
@@ -41,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: locale === 'es' ? 'es_ES' : 'en_US',
-      url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+      url: `https://bookconv.com${'/' + (locale || '')}`,
       siteName: t('common.siteName') || 'BookConv',
       title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.',
@@ -91,7 +126,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/og-image.svg" type="image/svg+xml" />
         <link rel='icon' href='/favicon.ico' sizes='48x48' />
-        <link rel='icon' href='/icon.svg' type="image/svg+xml" sizes='any' />
+        <link rel='icon' href='/icon.svg' type='image/svg+xml' sizes='any' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
         <link rel='manifest' href='/manifest.json' />
         {/* Plausible Analytics */}
@@ -108,7 +143,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             `.trim(),
           }}
         />
-        <link rel='canonical' href={`https://bookconv.com${locale === 'es' ? '/es' : ''}`} />
+        <link rel='canonical' href={`https://bookconv.com${'/' + (locale || '')}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />
         <meta name='msapplication-TileColor' content='#2563eb' />
@@ -122,29 +157,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               '@graph': [
                 {
                   '@type': 'WebSite',
-                  '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#website`,
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  '@id': `https://bookconv.com${'/' + (locale || '')}#website`,
+                  url: `https://bookconv.com${'/' + (locale || '')}`,
                   name: t('common.siteName') || 'BookConv',
                   description: 'Free online ebook format converter',
-                  publisher: { '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#organization` },
+                  publisher: { '@id': `https://bookconv.com${'/' + (locale || '')}#organization` },
                   potentialAction: {
                     '@type': 'SearchAction',
-                    target: { '@type': 'EntryPoint', urlTemplate: `https://bookconv.com${locale === 'es' ? '/es' : ''}/?q={search_term_string}` },
+                    target: { '@type': 'EntryPoint', urlTemplate: `https://bookconv.com${'/' + (locale || '')}/?q={search_term_string}` },
                     'query-input': 'required name=search_term_string',
                   },
                 },
                 {
                   '@type': 'Organization',
-                  '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#organization`,
+                  '@id': `https://bookconv.com${'/' + (locale || '')}#organization`,
                   name: t('common.siteName') || 'BookConv',
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  url: `https://bookconv.com${'/' + (locale || '')}`,
                   logo: 'https://bookconv.com/icon.svg',
                   sameAs: [],
                 },
                 {
                   '@type': 'WebApplication',
                   name: t('common.siteName') || 'BookConv',
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  url: `https://bookconv.com${'/' + (locale || '')}`,
                   description: 'Free online ebook format converter supporting 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF.',
                   applicationCategory: 'UtilityApplication',
                   operatingSystem: 'Any',
@@ -162,40 +197,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     worstRating: '1',
                   },
                 },
-                {
-                  '@type': 'FAQPage',
-                  'mainEntity': [
-                    {
-                      '@type': 'Question',
-                      'name': t('faq.question') || 'How do I convert EPUB to MOBI?',
-                      'text': t('faq.questionText') || 'What is the process to convert an EPUB file to MOBI format?',
-                      'author': {
-                        '@type': 'Person',
-                        'name': t('faq.author') || 'BookConv Team'
-                      },
-                      'datePublished': new Date().toISOString(),
-                      'acceptedAnswer': {
-                        '@type': 'Answer',
-                        'text': t('faq.answerText') || 'To convert EPUB to MOBI, use our free online converter. Upload your EPUB file, select MOBI as the output format, and click Convert. The conversion happens instantly in your browser with no registration required.',
-                        'author': {
-                          '@type': 'Person',
-                          'name': t('faq.author') || 'BookConv Team'
-                        },
-                        'datePublished': new Date().toISOString(),
-                        'url': `https://bookconv.com${locale === "es" ? "/es" : ''}#epub-to-mobi`
-                      }
-                    }
-                  ]
-                },
               ],
             }),
           }}
-        />
-              {/* Plausible Analytics */}
-        <script
-          defer
-          data-domain="bookconv.com"
-          src="https://plausible.io/js/plausible.js"
         />
       </head>
       <body className='min-h-screen bg-gray-50 font-sans text-gray-900 antialiased'>
@@ -232,9 +236,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
           </footer>
         </NextIntlClientProvider>
-        <ServiceWorkerRegistration />
+          <ServiceWorkerRegistration />
       </body>
     </html>
   )
 }
-

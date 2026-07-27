@@ -6,8 +6,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   return {
     title: "Privacy Policy | BookConv",
-    alternates: { canonical: `https://bookconv.com${locale === 'es' ? '/es' : ''}/privacy` },
-    openGraph: { url: `https://bookconv.com${locale === 'es' ? '/es' : ''}/privacy`, type: "website" },
+    alternates: { canonical: `https://bookconv.com${'/' + locale}/privacy` },
+    openGraph: { url: `https://bookconv.com${'/' + locale}/privacy`, type: "website" },
   };
 }
 

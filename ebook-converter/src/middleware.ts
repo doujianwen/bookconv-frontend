@@ -2,30 +2,16 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { applySecurityHeaders } from './middleware/security';
 
-const CORS_ORIGINS = (process.env.CORS_ORIGINS || process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
+const locales = ['en', 'es'];
+const defaultLocale = 'en';
 
-const ALLOWED_HEADERS = 'Content-Type, Authorization, Idempotency-Key, X-Request-ID';
-
-/** Extract the real client IP from x-forwarded-for header */
-function getClientIp(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  return 'unknown';
-}
-
-/** Add CORS headers to a response */
-function addCorsHeaders(request: NextRequest, response: NextResponse): NextResponse {
-  const origin = request.headers.get('origin') || '*';
-  if (CORS_ORIGINS.includes(origin) || CORS_ORIGINS.includes('*')) {
-    response.headers.set('Access-Control-Allow-Origin', origin);
+// Get locale from URL path (e.g., /es/blog -> 'es')
+function getLocaleFromPath(pathname: string): string | null {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length > 0 && locales.includes(segments[0])) {
+    return segments[0];
   }
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', ALLOWED_HEADERS);
-  response.headers.set('Access-Control-Max-Age', '86400');
-  return response;
+  return null;
 }
 
 export async function middleware(request: NextRequest) {
@@ -37,19 +23,48 @@ export async function middleware(request: NextRequest) {
   // Handle CORS preflight requests
   if (request.method === 'OPTIONS') {
     const corsResponse = new NextResponse(null, { status: 204 });
-    return addCorsHeaders(request, corsResponse);
+    return corsResponse;
   }
 
-  // Only process API routes
-  if (!pathname.startsWith('/api/')) {
+  // Only process non-API routes for locale detection
+  if (pathname.startsWith('/api/')) {
     return NextResponse.next();
   }
 
-  // Add CORS headers to all API responses
-  const response = NextResponse.next();
-  return addCorsHeaders(request, response);
+  // Check if locale is already in the path
+  const localeFromPath = getLocaleFromPath(pathname);
+  
+  if (localeFromPath && locales.includes(localeFromPath)) {
+    // Locale is in path, set cookie and continue
+    const response = NextResponse.next();
+    response.cookies.set('locale', localeFromPath, { maxAge: 31536000, path: '/' });
+    return response;
+  }
+
+  // No locale in path ¡ª check cookie
+  const cookieLocale = request.cookies.get('locale')?.value;
+  if (cookieLocale && locales.includes(cookieLocale)) {
+    // Redirect to add locale prefix
+    const url = request.nextUrl.clone();
+    url.pathname = '/' + cookieLocale + url.pathname;
+    return NextResponse.redirect(url);
+  }
+
+  // No locale ¡ª redirect to default (en)
+  const url = request.nextUrl.clone();
+  url.pathname = '/' + defaultLocale + url.pathname;
+  return NextResponse.redirect(url);
 }
 
 export const config = {
-  matcher: ['/api/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 };
