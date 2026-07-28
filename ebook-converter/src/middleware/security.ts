@@ -2,9 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function applySecurityHeaders(request: NextRequest): NextResponse {
-  const response = NextResponse.next();
-
+export function applySecurityHeaders(request: NextRequest, response: NextResponse = NextResponse.next()): NextResponse {
   // HTTPS-only (HSTS) — 1 year, includeSubDomains
   response.headers.set(
     'Strict-Transport-Security',
