@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
   // Check if locale is already in the path
   const localeFromPath = getLocaleFromPath(pathname);
-  
+
   if (localeFromPath && locales.includes(localeFromPath)) {
     // Locale is in path, set cookie and continue
     const response = NextResponse.next();
@@ -41,16 +41,31 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // No locale in path — check cookie
+  // SEO: English is the default locale served at / (no prefix)
+  // If someone explicitly visits /en, redirect to canonical /
+  if (pathname === '/en' || pathname === '/en/') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/';
+    return NextResponse.redirect(url, { status: 301 });
+  }
+
+  // Root path "/" serves the English homepage directly — no redirect needed
+  if (pathname === '/') {
+    const response = NextResponse.next();
+    response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
+    return response;
+  }
+
+  // No locale in path for other URLs (e.g., /pricing) — check cookie first
   const cookieLocale = request.cookies.get('locale')?.value;
   if (cookieLocale && locales.includes(cookieLocale)) {
-    // Redirect to add locale prefix
+    // Redirect to add locale prefix for non-root paths
     const url = request.nextUrl.clone();
     url.pathname = '/' + cookieLocale + url.pathname;
     return NextResponse.redirect(url);
   }
 
-  // No locale — redirect to default (en)
+  // No locale — redirect to default locale prefix for non-root paths
   const url = request.nextUrl.clone();
   url.pathname = '/' + defaultLocale + url.pathname;
   return NextResponse.redirect(url);

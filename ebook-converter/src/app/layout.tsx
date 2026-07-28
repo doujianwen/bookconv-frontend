@@ -85,7 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <link rel="sitemap" href="/sitemap.xml" />
         <link rel="alternate" hrefLang="x-default" href="https://bookconv.com" />
-        <link rel="alternate" hrefLang="en" href="https://bookconv.com/en" />
+        <link rel="alternate" hrefLang="en" href="https://bookconv.com/" />
         <link rel="alternate" hrefLang="es" href="https://bookconv.com/es" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
