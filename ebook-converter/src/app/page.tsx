@@ -221,28 +221,28 @@ export default function HomePage() {
               {/* Featured Video Tutorials */}
         <section className="bg-white py-16">
           <div className="mx-auto max-w-4xl px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">热门转换教程</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('home.tutorialTitle')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Link href="/convert/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">LIT → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">3 分钟学会转换</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialLitDesc')}</p>
               </Link>
               <Link href="/convert/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">PDF → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">保留排版的秘诀</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialPdfDesc')}</p>
               </Link>
               <Link href="/convert/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">EPUB → TXT</h3>
-                <p className="text-sm text-gray-500 mt-1">提取纯文本内容</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialEpubDesc')}</p>
               </Link>
             </div>
           </div>

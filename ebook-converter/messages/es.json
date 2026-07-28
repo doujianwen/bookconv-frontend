@@ -28,7 +28,11 @@
                  "supportedFormatsTitle":  "Formatos de Ebook Soportados",
                  "supportedFormatsDesc":  "BookConv soporta conversi贸n entre m谩s de 17 formatos de ebook incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y m谩s. Ya sea que necesites convertir libros Kindle, rescatar archivos LIT antiguos o transformar documentos a EPUB, tenemos la soluci贸n.",
                  "formatsSectionDesc":  "Convierte EPUB, MOBI, AZW3, PDF, DOCX y m谩s al instante. Sin registro necesario.",
-                 "poweredByCalibre":  "Impulsado por Calibre Engine"
+                 "poweredByCalibre":  "Impulsado por Calibre Engine",
+                 "tutorialTitle":  "Tutoriales populares de conversi贸n",
+                 "tutorialLitDesc":  "Convierte en 3 minutos",
+                 "tutorialPdfDesc":  "Mant茅n tu dise帽o intacto",
+                 "tutorialEpubDesc":  "Extrae texto sin formato"
              },
     "faq":  {
                 "q1":  "驴Es BookConv gratuito?",
