@@ -4,6 +4,9 @@ import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import * as blogEpubMobi from "@/data/blog/how-to-convert-epub-to-mobi"
 import * as blogFormatsExplained from "@/data/blog/ebook-formats-explained"
 import * as blogLitToEpub from "@/data/blog/why-convert-lit-to-epub"
+import * const blogEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
+import * const blogFormatsExplainedEn from "@/data/blog/ebook-formats-explained-en"
+import * const blogLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
 
 interface BlogPostData {
   slug: string
@@ -29,6 +32,18 @@ const BLOG_POSTS: Record<string, BlogPostData> = {
   "why-convert-lit-to-epub": {
     slug: blogLitToEpub.slug, title: blogLitToEpub.title, date: blogLitToEpub.date,
     author: blogLitToEpub.author, tags: blogLitToEpub.tags, content: blogLitToEpub.content,
+  },
+  "how-to-convert-epub-to-mobi-en": {
+    slug: blogEpubMobiEn.slug, title: blogEpubMobiEn.title, date: blogEpubMobiEn.date,
+    author: blogEpubMobiEn.author, tags: blogEpubMobiEn.tags, content: blogEpubMobiEn.content,
+  },
+  "ebook-formats-explained-en": {
+    slug: blogFormatsExplainedEn.slug, title: blogFormatsExplainedEn.title, date: blogFormatsExplainedEn.date,
+    author: blogFormatsExplainedEn.author, tags: blogFormatsExplainedEn.tags, content: blogFormatsExplainedEn.content,
+  },
+  "why-convert-lit-to-epub-en": {
+    slug: blogLitToEpubEn.slug, title: blogLitToEpubEn.title, date: blogLitToEpubEn.date,
+    author: blogLitToEpubEn.author, tags: blogLitToEpubEn.tags, content: blogLitToEpubEn.content,
   },
 }
 
@@ -179,7 +194,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               )}
               {source && (
                 <Link
-                  href="/#"
+                  href="#"
                   className="inline-flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50"
                 >
                   Browse All Converters
@@ -213,7 +228,7 @@ function renderMarkdownToHtml(markdown: string): string {
   let html = markdown.replace(/\\n\\n/g, "\n\n").replace(/\\n/g, "<br />")
   html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
   html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
+  html = /^- (.+)$/gm, "<li>$1</li>")
   html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class=\"list-disc pl-6 space-y-2\">$&</ul>")
   html = html.replace(/\n\n/g, "</p><p>")
   html = "<p>" + html + "</p>"

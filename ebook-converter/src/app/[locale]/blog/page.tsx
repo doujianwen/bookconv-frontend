@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: t('blog.title') + " | BookConv",
     },
-  };
+  }
 }
 
 interface BlogPost {
@@ -53,6 +53,27 @@ const posts: BlogPost[] = [
     date: "2026-07-09",
     excerpt: "Microsoft has discontinued LIT format support. Learn why converting is essential.",
     tags: ["LIT", "EPUB", "Data Migration", "Microsoft Reader"],
+  },
+  {
+    title: "How to Convert EPUB to MOBI: A Complete Guide for Kindle Users (US)",
+    slug: "how-to-convert-epub-to-mobi-en",
+    date: "2026-07-12",
+    excerpt: "US-optimized guide to converting EPUB files to MOBI for American Kindle owners.",
+    tags: ["EPUB", "MOBI", "Kindle", "Conversion Guide", "US"],
+  },
+  {
+    title: "Ebook Formats Explained: EPUB vs AZW3 vs MOBI — Which Should US Readers Choose?",
+    slug: "ebook-formats-explained-en",
+    date: "2026-07-12",
+    excerpt: "US market-specific recommendations for EPUB, AZW3, and MOBI format selection.",
+    tags: ["Ebook Formats", "Comparison", "Guide", "Kindle", "US"],
+  },
+  {
+    title: "Why You Should Convert LIT to EPUB: Preserving Your Digital Library (US)",
+    slug: "why-convert-lit-to-epub-en",
+    date: "2026-07-12",
+    excerpt: "Guide for US residents on converting LIT files to EPUB format to preserve their digital library.",
+    tags: ["LIT", "EPUB", "Microsoft Reader", "ebook preservation", "US"],
   },
 ]
 
