@@ -4,9 +4,9 @@ import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import * as blogEpubMobi from "@/data/blog/how-to-convert-epub-to-mobi"
 import * as blogFormatsExplained from "@/data/blog/ebook-formats-explained"
 import * as blogLitToEpub from "@/data/blog/why-convert-lit-to-epub"
-import * const blogEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
-import * const blogFormatsExplainedEn from "@/data/blog/ebook-formats-explained-en"
-import * const blogLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
+import * as blogEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
+import * as blogFormatsExplainedEn from "@/data/blog/ebook-formats-explained-en"
+import * as blogLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
 
 interface BlogPostData {
   slug: string
@@ -228,7 +228,7 @@ function renderMarkdownToHtml(markdown: string): string {
   let html = markdown.replace(/\\n\\n/g, "\n\n").replace(/\\n/g, "<br />")
   html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
   html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
-  html = /^- (.+)$/gm, "<li>$1</li>")
+  html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
   html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class=\"list-disc pl-6 space-y-2\">$&</ul>")
   html = html.replace(/\n\n/g, "</p><p>")
   html = "<p>" + html + "</p>"

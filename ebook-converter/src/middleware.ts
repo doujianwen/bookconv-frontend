@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // No locale in path ¡ª check cookie
+  // No locale in path â€” check cookie
   const cookieLocale = request.cookies.get('locale')?.value;
   if (cookieLocale && locales.includes(cookieLocale)) {
     // Redirect to add locale prefix
@@ -50,7 +50,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // No locale ¡ª redirect to default (en)
+  // No locale â€” redirect to default (en)
   const url = request.nextUrl.clone();
   url.pathname = '/' + defaultLocale + url.pathname;
   return NextResponse.redirect(url);

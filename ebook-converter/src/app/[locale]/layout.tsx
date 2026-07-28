@@ -10,42 +10,11 @@ import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistra
 import { PlausibleScript } from '@/components/analytics/PlausibleScript'
 // Initialize Sentry in production (side-effect import)
 import '@/lib/sentry-setup'
+import '../globals.css'
 
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'es' }];
 }
-
-import type { Metadata } from 'next'
-import { BookOpen } from 'lucide-react'
-import Link from 'next/link'
-import LoginButton from '@/components/auth/LoginButton'
-import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
-import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
-import { PlausibleScript } from '@/components/analytics/PlausibleScript'
-// Initialize Sentry in production (side-effect import)
-import '@/lib/sentry-setup'
-
-export async function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'es' }];
-}
-
-﻿import type { Metadata } from 'next'
-import { BookOpen } from 'lucide-react'
-import Link from 'next/link'
-import LoginButton from '@/components/auth/LoginButton'
-import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
-import './globals.css'
-import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
-import { PlausibleScript } from '@/components/analytics/PlausibleScript'
-// Initialize Sentry in production (side-effect import)
-import '@/lib/sentry-setup'
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: localeFromParams } = await params;
   const locale = localeFromParams || (await getLocale());
