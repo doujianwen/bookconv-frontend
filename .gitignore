@@ -6,3 +6,5 @@ node_modules/
 ebook-converter/node_modules/
 .env
 ebook-converter/.env
+# 运维脚本密钥/凭证（webhook 等）
+**/.feishu-webhook

@@ -27,6 +27,9 @@ Thumbs.db
 !next.config.*
 !tailwind.config.*
 !postcss.config.*
+# 运维脚本例外（正式运维脚本，需进 git 供 CI 构建镜像使用，否则生产镜像无审计/博客生成脚本）
+!scripts/ai-audit.js
+!scripts/generate-blogs.js
 fix*.js
 fix*.py
 _fix*.py

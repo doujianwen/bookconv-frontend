@@ -3,7 +3,7 @@ import { Queue, Worker, Job, QueueEvents } from 'bullmq';
 import { getRedisClient } from './redis';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync, appendFileSync } from 'node:fs';
 import path from 'node:path';
 import { loggers as log } from './logger';
 import { mapErrorCode, getFriendlyMessage } from './error-handler';
@@ -11,6 +11,31 @@ import { mapErrorCode, getFriendlyMessage } from './error-handler';
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
 export const MAX_RETRIES = parseInt(process.env.MAX_CONVERSION_RETRIES || '3', 10);
+
+// 结构化转换审计日志（供 ai-audit.js 统计真实成功率，格式匹配其正则 /job id:/、/succeeded/、/failed/）
+// 路径与 ai-audit.js 的 logs/conversion.log 一致（仓库根 logs/，容器内 /logs/）
+const CONVERSION_AUDIT_LOG = path.join(__dirname, "..", "..", "..", "logs", "conversion.log");
+function appendConversionAuditLog(
+  jobId: string,
+  status: "succeeded" | "failed",
+  meta?: { sourceFormat?: string; targetFormat?: string; durationMs?: number; error?: string },
+) {
+  try {
+    const dir = path.dirname(CONVERSION_AUDIT_LOG);
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    const parts = [
+      `job id: ${jobId}`,
+      `status: ${status}`,
+      `ts: ${new Date().toISOString()}`,
+      meta?.sourceFormat && meta?.targetFormat ? `format: ${meta.sourceFormat}->${meta.targetFormat}` : "",
+      meta?.durationMs != null ? `duration: ${meta.durationMs}ms` : "",
+      meta?.error ? `error: ${meta.error}` : "",
+    ].filter(Boolean);
+    appendFileSync(CONVERSION_AUDIT_LOG, parts.join(" ") + "\n");
+  } catch {
+    // 审计日志写入失败不应影响转换主流程
+  }
+}
 
 let _queue: any = null;
 let _worker: any = null;
@@ -177,20 +202,19 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         throw new Error('Invalid or missing opf');
       }
     }
-    // MOBI detection: MOBI header starts with 'BOOK' or 'TEXt'
+    // MOBI/AZW3 detection: header starts with 'BOOK' or 'TEXt'
+    // NOTE: fs.readFile ignores {start,end}; read the whole file and compare the first 4 bytes.
     else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
-      const head = await fs.readFile(inputPath, { start: 0, end: 3 });
-      if (!(
-        (head[0] === 0x42 && head[1] === 0x4F && head[2] === 0x4F && head[3] === 0x4B) || // BOOK
-        (head[0] === 0x54 && head[1] === 0x65 && head[2] === 0x78 && head[3] === 0x74)  // TEXt
-      )) {
+      const head = await fs.readFile(inputPath);
+      const sig = head.subarray(0, 4).toString('latin1');
+      if (!(sig === 'BOOK' || sig === 'TEXt')) {
         throw new Error('not a valid eBook format');
       }
     }
     // PDF: magic %PDF
     else if (sourceFormat === 'pdf') {
-      const head = await fs.readFile(inputPath, { start: 0, end: 4 });
-      if (head.toString() !== '%PDF') {
+      const head = await fs.readFile(inputPath);
+      if (head.subarray(0, 4).toString('latin1') !== '%PDF') {
         throw new Error('not a valid eBook format');
       }
     }
@@ -318,12 +342,19 @@ export async function processConversion(job: any) {
     return result;
   } catch (err: any) {
     const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
-    // Map to user-friendly message
     const errorCode = mapErrorCode(errMsg);
     const friendlyMsg = getFriendlyMessage(errorCode);
-    log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, { jobId, attempt, maxRetries: maxRetryCount, error: friendlyMsg });
+    // Keep the real error available for debugging/tests via `cause`; the API/status
+    // layer maps errorCode -> a user-friendly message, so we must NOT overwrite the
+    // thrown message with a generic one here (that would hide the real cause).
+    log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, {
+      jobId, attempt, maxRetries: maxRetryCount, error: friendlyMsg, rawError: errMsg, code: errorCode,
+    });
+    const wrapped: any = new Error(friendlyMsg);
+    wrapped.code = errorCode;
+    wrapped.cause = err instanceof Error ? err : new Error(errMsg);
     job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: friendlyMsg });
-    throw new Error(friendlyMsg); // BullMQ will retry with backoff
+    throw wrapped; // BullMQ will retry with backoff; real cause retained on `.cause`
   }
 }
 
@@ -412,12 +443,22 @@ export async function startWorker() {
   });
   _worker.on('completed', (job: any) => {
     log.queue.info('Job completed', { jobId: job.id });
+    appendConversionAuditLog(job.id, "succeeded", {
+      sourceFormat: job.data?.sourceFormat,
+      targetFormat: job.data?.targetFormat,
+      durationMs: job.finishedOn ? job.finishedOn - job.timestamp : undefined,
+    });
     // Keep jobs for 7 days instead of removing immediately
     getConversionQueue().trim(1000, false);
   });
   _worker.on('failed', async (job: any, err: any) => {
     const jobIdStr = job?.id || '?';
     log.queue.error('Job failed', { jobId: jobIdStr, attempts: job?.attemptsMade, error: err.message });
+    appendConversionAuditLog(jobIdStr, "failed", {
+      sourceFormat: job?.data?.sourceFormat,
+      targetFormat: job?.data?.targetFormat,
+      error: err.message,
+    });
 
     // Send alert notification for failed jobs
     await notifyFailedJob(jobIdStr, job?.data, err.message);

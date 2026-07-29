@@ -12,6 +12,8 @@ services:
       - MAX_FILE_SIZE_MB=10
       - CALIBRE_PATH=ebook-convert
       - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      # 运营审计飞书推送（从 .env 读，未设则 ai-audit.js 跳过推送）
+      - FEISHU_WEBHOOK=${FEISHU_WEBHOOK:-}
     volumes:
       - uploads:/tmp/ebook-uploads
     depends_on:
