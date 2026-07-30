@@ -3,8 +3,12 @@ import os from 'node:os';
 import fs from 'node:fs';
 
 let _execCalls: { cmd: string; args: string[] }[] = [];
-const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
-const FAKE_CONTENT = Buffer.alloc(1024, 'x');
+const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-perf-uploads');
+// 合法输入 fixtures（满足 validateInputFile 校验），让转换在离线/mock 环境下通过
+const EPUB_FIXTURE = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.epub'));
+const MOBI_FIXTURE = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.mobi'));
+const PDF_FIXTURE = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.pdf'));
+const fixtureFor = (src: string) => (src === 'mobi' ? MOBI_FIXTURE : src === 'pdf' ? PDF_FIXTURE : EPUB_FIXTURE);
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((_cmd, args, optsOrCb, cb) => {
@@ -30,8 +34,12 @@ describe('Performance: Concurrent conversion throughput', () => {
   });
 
   afterEach(async () => {
-    if (fs.existsSync(TEST_UPLOAD_DIR)) {
-      fs.rmSync(TEST_UPLOAD_DIR, { recursive: true, force: true });
+    try {
+      if (fs.existsSync(TEST_UPLOAD_DIR)) {
+        fs.rmSync(TEST_UPLOAD_DIR, { recursive: true, force: true });
+      }
+    } catch {
+      // Tolerate Windows file-lock (EPERM) during cleanup; the unique dir avoids cross-test collisions.
     }
   });
 
@@ -42,7 +50,7 @@ describe('Performance: Concurrent conversion throughput', () => {
       Array.from({ length: 5 }, (_, i) =>
         processConversion({
           data: {
-            fileBuffer: FAKE_CONTENT.toString('base64'),
+            fileBuffer: EPUB_FIXTURE.toString('base64'),
             sourceFormat: 'epub',
             targetFormat: 'pdf',
             jobId: `perf-concurrent-${i}`,
@@ -67,7 +75,7 @@ describe('Performance: Concurrent conversion throughput', () => {
       Array.from({ length: 20 }, (_, i) =>
         processConversion({
           data: {
-            fileBuffer: FAKE_CONTENT.toString('base64'),
+            fileBuffer: EPUB_FIXTURE.toString('base64'),
             sourceFormat: 'epub',
             targetFormat: 'txt',
             jobId: `perf-bulk-${i}`,
@@ -89,7 +97,7 @@ describe('Performance: Concurrent conversion throughput', () => {
       pairs.map(([src, tgt], i) =>
         processConversion({
           data: {
-            fileBuffer: FAKE_CONTENT.toString('base64'),
+            fileBuffer: fixtureFor(src).toString('base64'),
             sourceFormat: src,
             targetFormat: tgt,
             jobId: `perf-mixed-${i}`,
@@ -134,8 +142,12 @@ describe('Performance: Conversion speed benchmark', () => {
   });
 
   afterEach(async () => {
-    if (fs.existsSync(TEST_UPLOAD_DIR)) {
-      fs.rmSync(TEST_UPLOAD_DIR, { recursive: true, force: true });
+    try {
+      if (fs.existsSync(TEST_UPLOAD_DIR)) {
+        fs.rmSync(TEST_UPLOAD_DIR, { recursive: true, force: true });
+      }
+    } catch {
+      // Tolerate Windows file-lock (EPERM) during cleanup; the unique dir avoids cross-test collisions.
     }
   });
 
@@ -143,7 +155,7 @@ describe('Performance: Conversion speed benchmark', () => {
     const { processConversion } = require('@/lib/queue');
     const mockJob = {
       data: {
-        fileBuffer: FAKE_CONTENT.toString('base64'),
+        fileBuffer: EPUB_FIXTURE.toString('base64'),
         sourceFormat: 'epub',
         targetFormat: 'pdf',
         jobId: 'perf-benchmark-001',
@@ -165,9 +177,9 @@ describe('Performance: Conversion speed benchmark', () => {
     for (let i = 0; i < 10; i++) {
       const mockJob = {
         data: {
-          fileBuffer: FAKE_CONTENT.toString('base64'),
-          sourceFormat: 'epub',
-          targetFormat: 'txt',
+        fileBuffer: EPUB_FIXTURE.toString('base64'),
+        sourceFormat: 'epub',
+        targetFormat: 'txt',
           jobId: `perf-seq-${i}`,
         },
         updateProgress: jest.fn(),

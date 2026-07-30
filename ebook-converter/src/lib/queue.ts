@@ -287,8 +287,8 @@ async function executeConversion(
     }
   }
 
-  let ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
-  let outputPath = path.join(jobDir, 'output.' + ext);
+  const ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
+  const outputPath = path.join(jobDir, 'output.' + ext);
   try {
     // Pre-validation: catch clearly corrupted files before hitting Calibre
     await validateInputFile(inputPath, sourceFormat);

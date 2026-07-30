@@ -1,0 +1,35 @@
+---
+title: "Batch_result"
+slug: batch_result
+date: 2026-07-29T23:37:11.371Z
+---
+
+# Batch_result
+
+This article covers the batch_result topic for the ebook format converter station.
+
+## Overview
+
+## P1-5: 批量转换结果未持久化 — 用户查不到已完成文件
+### 问题
+src/app/api/convert/batch/route.ts 中 queueSingleConversion 函数：
+1. 提交 BullMQ job 后轮询等待完成
+2. 但完成后只更新 liveItem.status = "completed"...
+
+## Details
+
+The original issue file contained 26 lines of documentation. Key topics include:
+
+1. ## P1-5: 批量转换结果未持久化 — 用户查不到已完成文件
+2. ### 问题
+3. src/app/api/convert/batch/route.ts 中 queueSingleConversion 函数：
+4. 1. 提交 BullMQ job 后轮询等待完成
+5. 2. 但完成后只更新 liveItem.status = "completed"
+6. 3. **转换结果的 base64Data 没有被保存回 batch store**
+
+
+...(truncated)...
+
+---
+
+*Generated automatically from issue file: issue_p1_5_batch_result.txt*

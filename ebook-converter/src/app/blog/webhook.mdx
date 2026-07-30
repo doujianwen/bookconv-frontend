@@ -1,0 +1,35 @@
+---
+title: "Webhook Integration Guide"
+slug: webhook
+date: 2026-07-29T23:37:11.366Z
+---
+
+# Webhook Integration Guide
+
+This article covers the webhook topic for the ebook format converter station.
+
+## Overview
+
+## P1-4: 支付 Webhook 未实现数据库操作 — 订阅不生效
+### 问题
+src/app/api/payments/webhook/route.ts 是 Lemon Squeezy 的 webhook 端点，但三个核心处理函数都是空 TODO：
+`	ypescript
+async function handleSubscriptionEvent(...) { /* TODO: Update user subscription in database */ }...
+
+## Details
+
+The original issue file contained 36 lines of documentation. Key topics include:
+
+1. ## P1-4: 支付 Webhook 未实现数据库操作 — 订阅不生效
+2. ### 问题
+3. src/app/api/payments/webhook/route.ts 是 Lemon Squeezy 的 webhook 端点，但三个核心处理函数都是空 TODO：
+4. `	ypescript
+5. async function handleSubscriptionEvent(...) { /* TODO: Update user subscription in database */ }
+6. async function handleCancellation(...) { /* TODO: Deactivate subscription in database */ }
+
+
+...(truncated)...
+
+---
+
+*Generated automatically from issue file: issue_p1_4_webhook.txt*

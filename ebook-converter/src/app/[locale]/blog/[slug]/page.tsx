@@ -1,13 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
-import * as blogEpubMobi from "@/data/blog/how-to-convert-epub-to-mobi"
-import * as blogFormatsExplained from "@/data/blog/ebook-formats-explained"
-import * as blogLitToEpub from "@/data/blog/why-convert-lit-to-epub"
-import * as blogEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
-import * as blogFormatsExplainedEn from "@/data/blog/ebook-formats-explained-en"
-import * as blogLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
-
 interface BlogPostData {
   slug: string
   title: string
@@ -20,32 +13,7 @@ interface BlogPostData {
   }
 }
 
-const BLOG_POSTS: Record<string, BlogPostData> = {
-  "how-to-convert-epub-to-mobi": {
-    slug: blogEpubMobi.slug, title: blogEpubMobi.title, date: blogEpubMobi.date,
-    author: blogEpubMobi.author, tags: blogEpubMobi.tags, content: blogEpubMobi.content,
-  },
-  "ebook-formats-explained": {
-    slug: blogFormatsExplained.slug, title: blogFormatsExplained.title, date: blogFormatsExplained.date,
-    author: blogFormatsExplained.author, tags: blogFormatsExplained.tags, content: blogFormatsExplained.content,
-  },
-  "why-convert-lit-to-epub": {
-    slug: blogLitToEpub.slug, title: blogLitToEpub.title, date: blogLitToEpub.date,
-    author: blogLitToEpub.author, tags: blogLitToEpub.tags, content: blogLitToEpub.content,
-  },
-  "how-to-convert-epub-to-mobi-en": {
-    slug: blogEpubMobiEn.slug, title: blogEpubMobiEn.title, date: blogEpubMobiEn.date,
-    author: blogEpubMobiEn.author, tags: blogEpubMobiEn.tags, content: blogEpubMobiEn.content,
-  },
-  "ebook-formats-explained-en": {
-    slug: blogFormatsExplainedEn.slug, title: blogFormatsExplainedEn.title, date: blogFormatsExplainedEn.date,
-    author: blogFormatsExplainedEn.author, tags: blogFormatsExplainedEn.tags, content: blogFormatsExplainedEn.content,
-  },
-  "why-convert-lit-to-epub-en": {
-    slug: blogLitToEpubEn.slug, title: blogLitToEpubEn.title, date: blogLitToEpubEn.date,
-    author: blogLitToEpubEn.author, tags: blogLitToEpubEn.tags, content: blogLitToEpubEn.content,
-  },
-}
+const BLOG_POSTS: Record<string, BlogPostData> = {}
 
 interface BlogSlugProps {
   params: Promise<{ slug: string }>
@@ -228,6 +196,7 @@ function renderMarkdownToHtml(markdown: string): string {
   let html = markdown.replace(/\\n\\n/g, "\n\n").replace(/\\n/g, "<br />")
   html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
   html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
   html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class=\"list-disc pl-6 space-y-2\">$&</ul>")
   html = html.replace(/\n\n/g, "</p><p>")

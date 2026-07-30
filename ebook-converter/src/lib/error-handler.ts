@@ -42,7 +42,7 @@ export function mapErrorCode(message: string): ErrorCode {
   for (const [key, code] of Object.entries(ERROR_CODE_MAP)) {
     if (lower.includes(key.toLowerCase())) return code;
   }
-  return "CONVERSION_FAILED";
+  return "INTERNAL_ERROR";
 }
 
 /** Return a safe, user-friendly message for each error code */

@@ -5,7 +5,8 @@ import fs from 'node:fs';
 let _execCalls: { cmd: string; args: string[] }[] = [];
 
 const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
-const MINIMAL_FAKE_CONTENT = Buffer.alloc(1024, 'x');
+// 合法 EPUB 输入（满足 validateInputFile 的 ZIP+container.xml 校验），让转换在离线/mock 环境下通过
+const MINIMAL_FAKE_CONTENT = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.epub'));
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((cmd, args, optsOrCb, cb) => {
@@ -33,7 +34,7 @@ describe('Boundary: File size limits', () => {
 
   it('should handle near-maximum file size (1MB mock)', async () => {
     const { processConversion } = require('@/lib/queue');
-    const largeBuffer = Buffer.alloc(1024 * 1024, 'x');
+    const largeBuffer = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid-large.epub'));
     const mockJob = {
       data: {
         fileBuffer: largeBuffer.toString('base64'),
@@ -51,7 +52,7 @@ describe('Boundary: File size limits', () => {
 
   it('should handle exactly 1MB file', async () => {
     const { processConversion } = require('@/lib/queue');
-    const buffer = Buffer.alloc(1024 * 1024, 'y');
+    const buffer = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid-large.epub'));
     const mockJob = {
       data: {
         fileBuffer: buffer.toString('base64'),
@@ -168,7 +169,11 @@ describe('Boundary: Empty and zero-byte files', () => {
       updateProgress: jest.fn(),
     };
 
-    await expect(processConversion(mockJob)).rejects.toThrow('must be provided');
+    // Real error is preserved on `.cause`; the user-facing message stays friendly.
+    await expect(processConversion(mockJob)).rejects.toMatchObject({
+      code: 'INTERNAL_ERROR',
+      cause: expect.objectContaining({ message: expect.stringContaining('must be provided') }),
+    });
   });
 
   it('should handle whitespace-only content (min size)', async () => {
@@ -200,7 +205,7 @@ describe('Boundary: Corrupted input handling', () => {
     }
   });
 
-  it('should handle completely random binary data', async () => {
+  it('should reject completely random binary data as corrupt', async () => {
     const { processConversion } = require('@/lib/queue');
     const randomBuffer = Buffer.from(Array.from({ length: 1024 }, () => Math.floor(Math.random() * 256)));
     const mockJob = {
@@ -213,8 +218,8 @@ describe('Boundary: Corrupted input handling', () => {
       updateProgress: jest.fn(),
     };
 
-    const result = await processConversion(mockJob);
-    expect(result).toBeDefined();
+    // Random bytes are not a valid ebook -> rejected with CORRUPT_INPUT (real error on `.cause`).
+    await expect(processConversion(mockJob)).rejects.toMatchObject({ code: 'CORRUPT_INPUT' });
   });
 
   it('should reject truncated ZIP data (too small)', async () => {
@@ -230,7 +235,11 @@ describe('Boundary: Corrupted input handling', () => {
       updateProgress: jest.fn(),
     };
 
-    await expect(processConversion(mockJob)).rejects.toThrow('too small');
+    // Real cause preserved on `.cause`; the user-facing message stays friendly.
+    await expect(processConversion(mockJob)).rejects.toMatchObject({
+      code: 'INTERNAL_ERROR',
+      cause: expect.objectContaining({ message: expect.stringContaining('too small') }),
+    });
   });
 });
 

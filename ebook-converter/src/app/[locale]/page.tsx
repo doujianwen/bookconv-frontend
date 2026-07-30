@@ -50,13 +50,6 @@ const TOP_CONVERTERS = [
   { label: "TXT to EPUB", href: "/convert/txt-to-epub" },
 ]
 
-// Popular blog posts for internal linking
-const POPULAR_POSTS = [
-  { title: "How to Convert EPUB to MOBI for Free", href: "/blog/how-to-convert-epub-to-mobi" },
-  { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", href: "/blog/ebook-formats-explained" },
-  { title: "Why You Should Convert LIT to EPUB", href: "/blog/why-convert-lit-to-epub" },
-]
-
 export default function HomePage() {
   const t = useTranslations()
   const [searchQuery, setSearchQuery] = useState("")

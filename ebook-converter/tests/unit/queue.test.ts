@@ -5,7 +5,8 @@ import fs from 'node:fs';
 let _execCalls: { cmd: string; args: string[] }[] = [];
 
 const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
-const MINIMAL_FAKE_CONTENT = Buffer.alloc(1024, 'x');
+// 合法 EPUB 输入（满足 validateInputFile 的 ZIP+container.xml 校验），让转换在离线/mock 环境下通过
+const MINIMAL_FAKE_CONTENT = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.epub'));
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((_cmd, args, optsOrCb, cb) => {

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { User, LogIn, Mail, Lock, UserPlus, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { LogIn, Mail, Lock, UserPlus, AlertCircle, CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
 
 type Mode = 'login' | 'register';
 
@@ -62,9 +63,9 @@ export default function AuthPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 mb-8 justify-center text-blue-600">
+        <Link href="/" className="flex items-center gap-2 mb-8 justify-center text-blue-600">
           <span className="text-2xl font-bold tracking-tight">BookConv</span>
-        </a>
+        </Link>
 
         <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
           {/* Header */}
@@ -180,7 +181,7 @@ export default function AuthPage() {
 
         {/* Footer link */}
         <p className="mt-6 text-center text-sm text-gray-500">
-          <a href="/" className="text-blue-600 hover:underline">← Back to BookConv</a>
+          <Link href="/" className="text-blue-600 hover:underline">← Back to BookConv</Link>
         </p>
       </div>
     </div>
