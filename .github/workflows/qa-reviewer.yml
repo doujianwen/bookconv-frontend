@@ -1,0 +1,68 @@
+# Ebook QA Reviewer Gatekeeper
+# Pure error correction agent that runs on every PR and merge to main
+# Based on the "´¿¾À´íÖÇÄÜÌå" principles: role fixation, information isolation, veto power
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ebook-converter/**'
+      - '.github/workflows/qa-reviewer.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'ebook-converter/**'
+
+jobs:
+  ebook-qa-reviewer:
+    name: Ebook QA Reviewer Agent
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ebook-converter
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - Setup Node with cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ebook-converter/package-lock.json
+
+      - Install dependencies
+        run: npm ci
+
+      # Run our pure error correction agent script
+      - Run Ebook QA Reviewer Agent
+        id: qa-reviewer
+        run: |
+          cd ebook-converter
+          npm install --save-dev typescript ts-node
+          npx ts-node scripts/qa/runner.ts --target pr --verbose
+        env:
+          CI: true
+
+      # Critical: Fail the whole workflow if QA Reviewer finds critical issues
+      - Check Results and Block if Needed
+        run: |
+          REPORT=$PWD/results/qa-report.json
+          if [ -f "$REPORT" ]; then
+            CONCLUSION=$(python3 -c "import json; d=json.load(open('$REPORT')); print(d['conclusion'])")
+            echo "QA Conclusion: $CONCLUSION"
+            if [ "$CONCLUSION" = "failed" ]; then
+              echo "? EBOOK QA REVIEWER: CRITICAL ISSUES FOUND - MERGER BLOCKED"
+              exit 1
+            else
+              echo "? All QA checks passed - no critical blockers"
+            fi
+          fi
+
+      - Upload QA Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: qa-report
+          path: results/qa-report.json
+          retention-days: 30
