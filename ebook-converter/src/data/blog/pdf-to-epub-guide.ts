@@ -64,7 +64,7 @@ So the conversion has to invent semantics the source never stored. Results vary 
 - **Textbooks with sidebars and captions** scatter those elements into the middle of paragraphs
 - **Scanned books** produce nothing usable without OCR first
 
-Documents that started life as Word files are a different story. [DOCX to EPUB](/convert/docx-to-epub) gives much cleaner output, because the heading structure was actually stored rather than implied by font size. If you can find the original DOCX, use it. Our [ebook formats explained](/blog/ebook-formats-explained-en) post covers which formats hold structure and which don't.`
+Documents that started life as Word files are a different story. [DOCX to EPUB](/convert/docx-to-epub) gives much cleaner output, because the heading structure was actually stored rather than implied by font size. If you can find the original DOCX, use it. Our [ebook formats explained](/blog/ebook-formats-explained) post covers which formats hold structure and which don't.`
     },
     {
       heading: `Fixing Broken Line Breaks, Headers, and Hyphens`,

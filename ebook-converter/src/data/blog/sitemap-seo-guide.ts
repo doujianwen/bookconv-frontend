@@ -84,7 +84,7 @@ The same logic applies to canonical URLs. Every sitemap entry should be the cano
 
 Two of these are worth automating rather than remembering: generate from live data, and route every URL through one canonical builder. That kills stale entries and duplicate variants in a single move.
 
-The pages themselves still have to earn their place. A conversion page that only repeats its own title won't hold attention, which is why we pair each one with real explanation — for instance [what actually differs between ebook formats](/blog/ebook-formats-explained-en). Discovery gets you seen; substance gets you kept.`
+The pages themselves still have to earn their place. A conversion page that only repeats its own title won't hold attention, which is why we pair each one with real explanation — for instance [what actually differs between ebook formats](/blog/ebook-formats-explained). Discovery gets you seen; substance gets you kept.`
     },
     {
       heading: `Key Takeaways`,
