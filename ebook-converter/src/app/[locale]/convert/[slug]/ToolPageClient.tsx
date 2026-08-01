@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
+import type { RelatedPostRef } from "@/lib/internal-links"
 import { FileDropZone } from "@/components/tools/FileDropZone"
 import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
@@ -27,6 +28,7 @@ interface ToolPageClientProps {
   tool: string
   description: string
   contentData?: ContentData | null
+  relatedBlogPosts?: RelatedPostRef[]
 }
 
 
@@ -65,7 +67,7 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
   },
 }
 
-export function ToolPageClient({ source, target, keyword, tool, description, contentData }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, keyword, tool, description, contentData, relatedBlogPosts }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
@@ -108,11 +110,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     { name: "Conversion starts automatically", text: "Our Calibre-powered engine converts your file in seconds." },
     { name: "Download result", text: "Once complete, download your converted " + targetDisplay + " file instantly." },
   ]
-  const relatedBlogPosts = [
-    { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", slug: "ebook-formats-explained", href: "/blog/ebook-formats-explained", excerpt: "Compare the three most popular ebook formats.", tags: ["epub", "azw3", "pdf"] },
-    { title: "How to Convert EPUB to MOBI for Free", slug: "how-to-convert-epub-to-mobi", href: "/blog/how-to-convert-epub-to-mobi", excerpt: "A complete guide to converting EPUB files to MOBI format.", tags: ["epub", "mobi"] },
-    { title: "Why You Should Convert LIT to EPUB", slug: "why-convert-lit-to-epub", href: "/blog/why-convert-lit-to-epub", excerpt: "Microsoft has discontinued LIT format support.", tags: ["lit", "epub"] },
-  ].filter((post) => post.tags.some((t) => source.includes(t) || target.includes(t))).slice(0, 3);
   const handleFileSelect = useCallback(
     async (file: File) => {
       setStatus("uploading")
@@ -425,6 +422,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         {/* FAQ with Schema */}
         <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
         {/* Related blog posts */}
+        {relatedBlogPosts && relatedBlogPosts.length > 0 && (
         <section className="rounded-xl border bg-gray-50 p-6">
           <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Guides &amp; Tutorials</h2>
           <p className="mb-4 text-sm text-gray-600">Deepen your understanding with expert conversion guides:</p>
@@ -437,6 +435,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             ))}
           </div>
         </section>
+        )}
         {/* Video Tutorial for S-tier conversions */}
         <section className="mb-12 rounded-xl border bg-gray-50 p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Video Tutorial</h2>

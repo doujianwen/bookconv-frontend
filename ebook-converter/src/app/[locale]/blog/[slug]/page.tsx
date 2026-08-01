@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml } from "@/data/blog/types"
+import { getRelatedPosts } from "@/lib/internal-links"
 
 interface BlogPostData {
   slug: string
@@ -82,9 +83,10 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
     )
   }
 
-  const baseUrl = "https://bookconv.com"
-  const postUrl = `${baseUrl}/blog/${post.slug}`
-  const { source, target } = extractSourceTarget(post.title)
+    const baseUrl = "https://bookconv.com"
+    const postUrl = `${baseUrl}/blog/${post.slug}`
+    const { source, target } = extractSourceTarget(post.title)
+    const relatedPosts = getRelatedPosts(post.slug, 3)
 
   return (
     <>
@@ -181,6 +183,20 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
                   Browse All Converters
                 </Link>
               )}
+            </div>
+          </section>
+        )}
+
+        {relatedPosts.length > 0 && (
+          <section className="mt-12">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related posts</h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {relatedPosts.map((rp) => (
+                <Link key={rp.slug} href={rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
+                </Link>
+              ))}
             </div>
           </section>
         )}
