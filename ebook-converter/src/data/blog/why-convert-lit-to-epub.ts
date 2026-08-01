@@ -1,4 +1,4 @@
-export const slug = why-convert-lit-to-epub
+export const slug = "why-convert-lit-to-epub"
 export const title = 'Why Convert LIT to EPUB (And How to Do It on BookConv)';
 export const date = '2026-07-12';
 export const author = 'BookConv Team';

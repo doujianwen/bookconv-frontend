@@ -30,7 +30,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     })
 
-    const staticPages = [
+    const staticPages: {
+      path: string
+      frequency: 'monthly' | 'weekly' | 'yearly'
+      priority: number
+      date?: string
+    }[] = [
       { path: '/pricing', frequency: 'monthly', priority: 0.8 },
       { path: '/blog', frequency: 'weekly', priority: 0.7 },
       { path: '/privacy', frequency: 'yearly', priority: 0.3, date: '2026-07-11' },
@@ -42,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       allUrls.push({
         url,
         lastModified: page.date ? new Date(page.date) : new Date(),
-        changeFrequency: page.frequency as const,
+        changeFrequency: page.frequency,
         priority: page.priority,
       })
     }
