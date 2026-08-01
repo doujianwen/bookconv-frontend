@@ -1,30 +1,138 @@
 export const slug = `epub-to-mobi-guide`;
-export const title = `EPUB to MOBI: The Definitive Kindle Conversion Guide`;
+export const title = `How to Convert EPUB to MOBI for Kindle: The Definitive Guide`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Kindle", "conversion", "guide"];
 
 export const content = {
-  intro: `Expert guide to EPUB to MOBI conversion for Kindle devices. Learn formats tools techniques and troubleshooting tips for flawless ebook preparation.`,
+  intro: `Most people who want to convert EPUB to MOBI don't actually need MOBI anymore, and the ones who do have a very specific reason. This guide shows you which camp you're in, how to run the conversion properly, and how to fix the covers, metadata, and table-of-contents problems that ruin most attempts.`,
   sections: [
     {
-      heading: `Understanding MOBI Format Evolution and Modern Context`,
-      body: `MOBI stands Mobile Book originating from Mobipocket technology acquired by Amazon in 2007. It evolved into proprietary specifications governing Kindle ebook distribution formats comprising primarily MOBI Basic and Extended KF8 reflecting progressively richer formatting capabilities introduced alongside newer hardware generations supporting enhanced multimedia styling typography interactivity features distinguishing contemporary reading experiences from earlier constrained implementations limited simple plain-text representations lacking sophisticated typographic controls graphical elements interactive components rich media integrations defining modern multifaceted reading ecosystems expanding beyond traditional textual boundaries encompassing audio-video elements embedded animations hyperlinks interactive forms dynamic content updates real-time synchronization cloud-based storage collaborative annotations sharing capabilities cross-platform compatibility seamless transitions between devices uninterrupted reading journeys personalized learning pathways adaptive interfaces responsive design principles catering diverse user preferences accessibility requirements technological landscapes evolving continuously adapting advancing innovative methodologies leveraging cutting-edge technologies enhancing productivity engagement satisfaction fulfillment enjoyment enrichment education entertainment communication collaboration social interaction community building knowledge dissemination intellectual development creative expression artistic achievement professional advancement personal growth self-improvement lifelong learning curiosity exploration discovery wonder inspiration insight wisdom understanding comprehension mastery expertise competence proficiency excellence achievement success accomplishment triumph victory celebration joy happiness pleasure delight gratification contentment peace tranquility serenity harmony balance equilibrium stability security safety confidence assurance certainty conviction faith hope optimism enthusiasm passion drive determination resilience perseverance endurance stamina vigor vitality energy power force might strength capability capacity potential possibility opportunity prospect future tomorrow dawn sunrise beginnings origins roots foundations groundwork infrastructure systems processes methods strategies tactics plans schemes designs blueprints roadmaps guides manuals handbooks textbooks treatises monographs essays articles reports papers studies investigations research experiments trials tests assessments evaluations reviews critiques analyses syntheses integrations combinations amalgamations mergings unifications consolidations centralizations standardizations normalizations regularizations harmonizations synchronizations alignments couplings connections linkages associations relationships interactions engagements collaborations partnerships alliances networks communities groups teams organizations institutions enterprises corporations businesses companies startups ventures projects initiatives campaigns programs operations functions roles responsibilities duties obligations commitments promises agreements contracts treaties pacts accords settlements resolutions decisions judgments rulings verdicts opinions views perspectives beliefs convictions ideologies philosophies worldviews outlooks attitudes mindsets frames lenses filters prisms mirrors windows doors gates thresholds boundaries limits parameters constraints conditions circumstances situations contexts settings environments atmospheres moods tones styles voices languages dialects accents registers jargon terminology vocabulary lexicons glossaries dictionaries encyclopedias compendiums repositories collections archives libraries databases catalogs indexes directories listings registries schedules timetables calendars agendas plans blueprints designs architectures frameworks structures models patterns templates formats schemas protocols rules regulations guidelines policies standards specifications requirements criteria metrics measures indicators statistics numbers figures data information knowledge facts evidence proof testimony witness account narrative story tale legend myth folklore tradition culture heritage history chronology timeline sequence order arrangement organization composition configuration setup installation deployment implementation execution operation utilization application usage employment exercise performance display exhibition demonstration presentation revelation disclosure communication transmission propagation dissemination distribution circulation flow movement progression evolution development advancement improvement enhancement enrichment expansion extension amplification magnification intensification concentration focus attention dedication commitment devotion loyalty fidelity allegiance patriotism nationalism identity selfhood personality character temperament disposition nature essence being existence reality actuality truth veracity authenticity genuineness sincerity honesty integrity righteousness morality ethics values virtues principles ideals standards norms conventions customs practices habits routines rituals ceremonies traditions celebrations festivities occasions events happenings incidents episodes moments instants seconds minutes hours days weeks months years decades centuries epochs eras periods intervals durations spans stretches extents ranges scopes scales dimensions magnitudes quantities qualities attributes characteristics properties features traits aspects elements constituents components parts pieces segments sections divisions regions zones areas territories domains spheres realms fields disciplines subjects topics themes issues concerns matters questions problems challenges difficulties obstacles hurdles impediments barriers hindrances restrictions prohibitions limitations constraints burdens weights pressures stresses strains tensions conflicts disputes disagreements arguments debates discussions dialogues conversations exchanges negotiations mediations arbitrations reconciliations settlements compromises agreements understandings arrangements terms conditions stipulations provisions clauses paragraphs sentences words phrases expressions utterances pronouncements declarations announcements statements assertions claims allegations accusations indictments charges complaints grievances appeals motions petitions requests applications submissions proposals offers bids tenders quotations estimates projections forecasts predictions expectations anticipations hopes wishes desires wants needs requirements necessities essentials prerequisites preconditions preliminaries introductions beginnings initiations launches commencements openings start-ups kickoffs roll-outs unveilings debuts premieres showcases displays exhibitions presentations demonstrations revelations disclosures communications transmissions propagations disseminations distributions circulations flows movements progressions evolutions developments advancements improvements enhancements enrichments expansions extensions amplifications magnifications intensifications concentrations focuses attentions dedications commitments loyalties fidelities allegiances identities selves personalities characters temperaments dispositions natures essences beings existences realities truths veracities authenticities genuinenesses sincerities integrities righteous moralities ethics values virtues principles ideals standards norms convention custom practice habit routine ritual ceremony tradition celebration festival occasion event incident episode moment instant second minute hour day week month year decade century epoch era period interval duration span stretch extent range scope scale dimension magnitude quantity quality attribute characteristic property feature trait aspect element constituent component part piece segment section division region zone area territory domain sphere realm field discipline subject topic theme issue concern matter question problem challenge difficulty obstacle hurdle impediment barrier hindrance restriction prohibition limitation constraint burden weight pressure stress strain tension conflict dispute disagreement argument debate discussion dialogue conversation exchange negotiation mediation arbitration reconciliation settlement compromise agreement understanding arrangement term condition stipulation provision clause paragraph sentence word phrase expression utterance pronouncement declaration announcement statement assertion claim allegation accusation indictment charge complaint grievance appeal motion petition request application submission proposal offer bid tender quotation estimate projection forecast prediction expectation anticipation hope wish desire want need requirement necessity essential prerequisite precondition preliminary introduction beginning initiation launch commencement opening startup kickoff rollout unveiling debut premiere showcase display exhibition demonstration revelation disclosure communication transmission propagation dissemination distribution circulation flow movement progression evolution development advancement improvement enhancement enrichment expansion extension amplification magnification intensification concentration focus attention dedication commitment devotion loyalty fidelity allegiance
+      heading: `Do You Actually Need MOBI Anymore?`,
+      body: `Start here, because the answer saves most readers a step. If your Kindle was made after roughly 2015, you don't need MOBI at all. Send the EPUB straight to the device and Amazon handles the rest.
 
----
+MOBI came out of Mobipocket, a French company Amazon bought in 2007. Amazon built the early Kindle ecosystem on it, then moved on: KF8 (the format inside AZW3 files) replaced plain MOBI for anything with real styling, and in August 2022 Amazon stopped accepting MOBI files through Send to Kindle entirely. Meanwhile EPUB became the format Amazon *does* accept.
 
-*Published July 2026 by the Ebook Format Converter Team*`
+So MOBI is now a legacy target. You still want it in a few real cases:
+
+- **Pre-2015 Kindle hardware** such as the Kindle Keyboard, Kindle 4, Kindle Touch, and early Paperwhite units that you sideload over USB
+- **Offline sideloading** where you have no Wi-Fi or no email access to the device
+- **Archival copies** of a library you already keep in MOBI and want to stay consistent
+- **Old third-party readers** that were built around Mobipocket and never added EPUB support
+
+If none of those apply, skip to the Send to Kindle section below. If one does, the Calibre method is next.
+
+For a plainer walkthrough aimed at first-timers, we also have a shorter [step-by-step EPUB to MOBI tutorial](/blog/how-to-convert-epub-to-mobi-en). And if you're still deciding which format to standardise on, [ebook formats explained](/blog/ebook-formats-explained-en) covers the trade-offs.`
+    },
+    {
+      heading: `Converting EPUB to MOBI With Calibre, Step by Step`,
+      body: `Calibre is free, runs on Windows, macOS, and Linux, and gives you more control than any web tool. It's the reference implementation most other converters copy.
+
+1. Install Calibre from the official site and open it.
+2. Click **Add books** and pick your EPUB, or just drag the file into the library window.
+3. Select the book in the list, then click **Convert books**.
+4. In the top-right dropdown, set **Output format** to MOBI. Input format should already read EPUB.
+5. Open the **MOBI Output** panel on the left. Set **MOBI file type** to *old* if you're targeting a pre-2015 Kindle — the *both* and *new* options embed KF8 data that old firmware chokes on.
+6. Open **Metadata** and confirm the title, author, and cover are correct before you convert, not after.
+7. Click **OK**. Watch the jobs counter in the bottom-right corner; when it hits zero, the MOBI is ready.
+8. Right-click the book, choose **Save to disk**, or connect your Kindle over USB and use **Send to device**.
+
+### Settings worth changing
+
+Two options in the **Look & feel** panel matter more than the rest. **Remove spacing between paragraphs** fixes EPUBs that were built with CSS margins the old MOBI renderer ignores. **Base font size** is worth setting to 0 so the Kindle's own font controls stay in charge.
+
+Under **Structure detection**, leave the defaults alone unless your chapters aren't splitting. The full option reference lives in the [Calibre conversion documentation](https://manual.calibre-ebook.com/conversion.html), which is genuinely well written.
+
+If you'd rather not install anything, our [EPUB to MOBI converter](/convert/epub-to-mobi) runs the same conversion in the browser. For newer Kindles that support KF8 styling, [EPUB to AZW3](/convert/epub-to-azw3) is the better target.`
+    },
+    {
+      heading: `The Faster Route: Send to Kindle Accepts EPUB Directly`,
+      body: `Here's the part that makes most conversions unnecessary. Amazon's Send to Kindle service takes EPUB files and converts them on Amazon's servers into KF8, using the same pipeline that handles Kindle Store books.
+
+You've got three ways in:
+
+- **Email** — send the EPUB as an attachment to your device's @kindle.com address from an approved sender address
+- **Web** — drag the file into the Send to Kindle page in a browser
+- **App** — the desktop and mobile Send to Kindle apps take drag-and-drop
+
+Amazon's conversion is usually cleaner than a local one, because it's the same engine that renders commercial titles. You get working X-Ray-style navigation, correct chapter breaks, and Whispersync position tracking across devices. A locally converted MOBI often won't sync at all.
+
+The catch: you need an Amazon account, an internet connection, and a device registered to that account. Files also land in your Kindle library rather than staying purely local, which some people don't want. Amazon's own [Send to Kindle help page](https://www.amazon.com/sendtokindle) lists the current file size limits and supported types.
+
+Rule of thumb — modern Kindle, use Send to Kindle. Old Kindle or no account, convert to MOBI yourself.`
+    },
+    {
+      heading: `Keeping Covers, Metadata, and the Table of Contents Intact`,
+      body: `Conversions rarely fail outright. They fail quietly, and you notice three weeks later when your library is a wall of grey placeholder tiles.
+
+### Covers
+
+MOBI stores the cover as a specially flagged image inside the file, not as a separate asset. If the source EPUB references its cover only through an OPF manifest entry and no guide reference, some converters drop it. In Calibre, open the metadata editor before converting and make sure a cover thumbnail is actually showing. If it isn't, click **Download cover** or point it at a JPEG yourself. A 1600x2560 pixel JPEG is a safe size.
+
+### Metadata
+
+Title and author are what your Kindle sorts by, so fix them at the source. Series information is trickier — MOBI has no native series field, and Calibre fakes it by writing the series name into the title. That's fine for a personal library, confusing if you share files.
+
+### Table of contents
+
+Kindles use two separate navigation systems: the inline TOC page you can tap into, and the NCX index the Go To menu reads. An EPUB with only an HTML contents page and no proper nav document will convert into a MOBI with a dead Go To menu.
+
+Calibre can rebuild the NCX from your heading structure. Under **Table of Contents**, set **Level 1 TOC** to an XPath expression like //h:h1 and Calibre will index every H1 as a chapter. Tick **Force use of auto-generated Table of Contents** only when the existing one is broken, since it overwrites a good TOC just as happily as a bad one.
+
+The underlying structure comes from the source file, which is why a well-built EPUB converts well and a sloppy one doesn't. The [W3C EPUB 3 specification](https://www.w3.org/TR/epub-33/) defines what that nav document should look like.`
+    },
+    {
+      heading: `Fixing the Errors That Ruin Most Conversions`,
+      body: `Four problems account for nearly every failed EPUB to MOBI conversion.
+
+### Garbled or boxed-out text
+
+Almost always an encoding problem. The source EPUB declares one character set and actually uses another, so accented characters and smart quotes turn into question marks or black diamonds. Fix it by opening the EPUB in Calibre's editor and checking that every XHTML file declares UTF-8. Non-Latin scripts need an embedded font too — old Kindle firmware ships with limited glyph coverage, and no conversion setting invents characters the device can't draw.
+
+### Missing cover on the device
+
+If the cover looks right in Calibre but not on the Kindle, the device cached the old thumbnail. Delete the book from the Kindle, then delete the matching folder in the hidden system thumbnail cache, then re-sideload. Annoying, but it's a caching bug, not a conversion bug.
+
+### Broken or empty table of contents
+
+Covered above — rebuild the NCX with an XPath rule. If chapters run together into one giant page, your EPUB is probably a single XHTML file. Set **Split on** to the same heading tag in the Structure detection panel.
+
+### Wildly wrong formatting
+
+Justified text collapsing, images overflowing the screen, indents everywhere. Old MOBI supports a small subset of CSS and drops the rest. Tick **Filter style information** or run the conversion through AZW3 instead, which handles modern CSS properly. This is the clearest sign you should stop fighting MOBI and use a format the device was designed for.
+
+Going the other direction? Our [MOBI to EPUB converter](/convert/mobi-to-epub) handles DRM-free MOBI files if you're migrating an old library to something more portable.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **Check your Kindle first.** Anything made after about 2015 reads EPUB through Send to Kindle, so MOBI conversion is usually wasted effort.
+- **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022 and moved to KF8 inside AZW3 files years before that.
+- **Calibre is the tool** for genuinely old hardware. Set MOBI file type to *old*, verify metadata before converting, and rebuild the NCX if the TOC is broken.
+- **Fix problems at the source.** Bad encoding, missing nav documents, and absent covers come from the EPUB, and no output setting repairs them after the fact.
+- **Use AZW3 for modern Kindles** if you insist on sideloading a converted file, since it supports current CSS and MOBI doesn't.`
     },
     {
       heading: `Frequently Asked Questions`,
-      body: `**Q: What is the difference between MOBI and EPUB formats?**
-A: MOBI is Amazon's proprietary format designed specifically for Kindle devices while EPUB is an open standard supported by most e-readers except older Kindles. Newer Kindle Oasis Voyage Fire HDX models support EPUB natively making separate MOBI conversion unnecessary unless you're using pre-2015 hardware. Try our [EPUB to MOBI converter](/convert/epub-to-mobi) if targeting legacy devices.
+      body: `Q: Does my Kindle still support MOBI files?
+A: If it's a physical Kindle, yes — sideloading a MOBI over USB still works on virtually every model. What changed is Send to Kindle, which stopped accepting MOBI uploads in August 2022. So you can put MOBI on the device by cable, but you can't email it there.
 
-**Q: Should I convert EPUB to MOBI for my Kindle?**
-A: Only if your Kindle model predates 2015 and doesn't support EPUB natively. Otherwise convert directly using Send-to-Kindle email feature which automatically handles MOBI conversion from EPUB submissions maintaining metadata cover art table-of-links and other formatting attributes superior to manual conversion pipelines avoiding potential corruption artifacts common third-party conversion utilities producing malformed mobi container files resulting unrenderable ebooks requiring complete reprocessing wasting time frustration avoidable through native EPUB support available most current generation Kindle hardware purchasing recommendations always check device specifications before committing irreversible conversion workflows
+Q: What's the difference between MOBI and AZW3?
+A: AZW3 contains KF8, the newer Kindle format. It supports modern CSS, embedded fonts, proper tables, and fixed-layout content. Plain MOBI supports a much smaller subset and dates back to Mobipocket. For any Kindle from the last decade, AZW3 gives noticeably better results.
 
-**Q: What conversion tools work best for EPUB to MOBI?**
-A: Calibre remains gold standard free conversion built-in Mobi conversion engine offering comprehensive format support customization options including advanced CSS stripping intelligent character encoding detection automated table-of-contents generation cover embedding metadata injection batch processing capabilities scheduled recurring transformations triggered external events cron jobs systemd timers Windows Task Scheduler integration providing robust enterprise-scale ebook management infrastructure suitable individual publishers large-scale institutional digitization projects alike comprehensive feature set documented thoroughly official documentation companion tutorials community support forums active developer engagement ensuring continuous improvement adaptation emerging industry standards evolving reader expectations technological advances shaping future ebook consumption patterns globally worldwide planet earth universe existence reality cosmos celestial bodies planetary systems solar system galactic clusters superclusters voids filaments walls bubbles cosmic web structure formation evolution dynamics thermodynamics statistical mechanics quantum theory relativity gravity electromagnetism nuclear forces strong weak fundamental constants universal laws physical phenomena observed natural world measured quantified modeled simulated predicted controlled engineered optimized improved developed innovated discovered explored investigated studied analyzed understood comprehended appreciated enjoyed valued respected honored celebrated revered`
+Q: Will converting EPUB to MOBI lose my highlights and notes?
+A: Yes. Annotations live in the device's own database and are tied to a specific file, so a converted copy is a new book as far as the Kindle is concerned. Export existing notes before you replace the file.
+
+Q: Why does my converted book show no cover on the Kindle?
+A: Two likely causes. Either the cover wasn't embedded during conversion — check the metadata editor showed a thumbnail — or the Kindle cached the old placeholder. Removing the book and re-adding it clears the second one.
+
+Q: Can I convert DRM-protected EPUB files to MOBI?
+A: No. DRM-protected files are encrypted and no converter can open them. That includes files from library lending services and most retail stores. You can only convert books you own DRM-free.
+
+Q: Is Calibre or an online converter better?
+A: Calibre if you need fine control over TOC structure, CSS filtering, or batch jobs. An online tool if you have one file and don't want a desktop install. Both use similar underlying logic, so a clean EPUB converts about the same either way.
+
+Q: My converted MOBI has no page numbers. Why?
+A: MOBI uses location markers rather than pages, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and conversion can't add that mapping.`
     }
   ]
 };
