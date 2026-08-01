@@ -15,7 +15,7 @@ const ToolPageClientDynamic = dynamic(
 )
 
 interface ToolPageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }
 
 export async function generateStaticParams() {
