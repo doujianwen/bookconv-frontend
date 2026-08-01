@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: FormatPageProps): Promise<Met
     return { title: 'Format Not Found' }
   }
   const display = FORMAT_DISPLAY_NAMES[format] || format.toUpperCase()
-  const title = "${display} Ebook Format Guide | BookConv"
-  const description = "${display} is a popular ebook format. Learn about its pros, cons, ideal use cases, and how to convert it to other formats."
+  const title = "${display} 电子书格式介绍 | BookConv"
+  const description = "${display} 是一种流行的电子书格式。了解它的优缺点、适用场景，以及如何与其他格式互转。"
   return {
     title,
     description,
@@ -52,10 +52,10 @@ export default async function FormatPage({ params }: FormatPageProps) {
   if (!data) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-12 text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Format Not Found</h1>
-        <p className="mt-2 text-gray-500">We don't have a guide page for this format yet.</p>
+        <h1 className="text-2xl font-bold text-gray-900">格式未找到</h1>
+        <p className="mt-2 text-gray-500">当前不支持该格式的科普页面。</p>
         <Link href="/formats/epub" className="mt-4 inline-block text-blue-600 hover:underline">
-          ← View all supported formats
+          ← 查看所有支持格式
         </Link>
       </div>
     )

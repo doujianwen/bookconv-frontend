@@ -50,6 +50,13 @@ const TOP_CONVERTERS = [
   { label: "TXT to EPUB", href: "/convert/txt-to-epub" },
 ]
 
+// Popular blog posts for internal linking
+const POPULAR_POSTS = [
+  { title: "How to Convert EPUB to MOBI for Free", href: "/blog/how-to-convert-epub-to-mobi" },
+  { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", href: "/blog/ebook-formats-explained" },
+  { title: "Why You Should Convert LIT to EPUB", href: "/blog/why-convert-lit-to-epub" },
+]
+
 export default function HomePage() {
   const t = useTranslations()
   const [searchQuery, setSearchQuery] = useState("")
@@ -214,28 +221,28 @@ export default function HomePage() {
               {/* Featured Video Tutorials */}
         <section className="bg-white py-16">
           <div className="mx-auto max-w-4xl px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('home.tutorialTitle')}</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">热门转换教程</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Link href="/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">LIT → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialLitDesc')}</p>
+                <p className="text-sm text-gray-500 mt-1">3 分钟学会转换</p>
               </Link>
               <Link href="/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">PDF → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialPdfDesc')}</p>
+                <p className="text-sm text-gray-500 mt-1">保留排版的秘诀</p>
               </Link>
               <Link href="/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">EPUB → TXT</h3>
-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialEpubDesc')}</p>
+                <p className="text-sm text-gray-500 mt-1">提取纯文本内容</p>
               </Link>
             </div>
           </div>

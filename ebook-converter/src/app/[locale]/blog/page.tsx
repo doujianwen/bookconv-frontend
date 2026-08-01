@@ -1,6 +1,5 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import Link from "next/link"
-import { getAllPosts } from "@/data/blog"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 
@@ -22,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: t('blog.title') + " | BookConv",
     },
-  }
+  };
 }
 
 interface BlogPost {
@@ -33,13 +32,29 @@ interface BlogPost {
   tags: string[]
 }
 
-const posts: BlogPost[] = getAllPosts().map((p) => ({
-  title: p.title,
-  slug: p.slug,
-  date: p.date,
-  excerpt: p.content.intro,
-  tags: p.tags,
-}))
+const posts: BlogPost[] = [
+  {
+    title: "How to Convert EPUB to MOBI for Free",
+    slug: "how-to-convert-epub-to-mobi",
+    date: "2026-07-11",
+    excerpt: "A complete guide to converting EPUB files to MOBI format for older Kindle devices.",
+    tags: ["EPUB", "MOBI", "Kindle", "Conversion Guide"],
+  },
+  {
+    title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF",
+    slug: "ebook-formats-explained",
+    date: "2026-07-10",
+    excerpt: "Compare the three most popular ebook formats. Understand their strengths and weaknesses.",
+    tags: ["EPUB", "AZW3", "PDF", "Format Comparison"],
+  },
+  {
+    title: "Why You Should Convert LIT to EPUB",
+    slug: "why-convert-lit-to-epub",
+    date: "2026-07-09",
+    excerpt: "Microsoft has discontinued LIT format support. Learn why converting is essential.",
+    tags: ["LIT", "EPUB", "Data Migration", "Microsoft Reader"],
+  },
+]
 
 export default async function BlogPage() {
   const locale = await getLocale();

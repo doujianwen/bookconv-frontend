@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getDisplayName, getSlug } from "@/lib/utils"
@@ -16,7 +15,7 @@ const ToolPageClientDynamic = dynamic(
 )
 
 interface ToolPageProps {
-  params: Promise<{ locale: string; slug: string }>
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -31,17 +30,6 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const displayName = getDisplayName(slug)
   const [source, target] = slug.split("-to-")
   const conversion = getConversion(source, target)
-
-  // Invalid slug (e.g. epub-to-zip) → return 404 metadata with noindex.
-  // Prevents Google from indexing a "Conversion not supported" soft-404 page
-  // that leaks a misleading tool title like "epub to zip Converter".
-  if (!conversion) {
-    return {
-      title: "Page Not Found | BookConv",
-      robots: { index: false, follow: true },
-    }
-  }
-
   const contentData = CONTENT_MAP[slug]
 
   const title = contentData?.title || `${source} to ${target} Converter -- Free Online`
@@ -99,12 +87,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
   const conversion = getConversion(source, target)
   const contentData = CONTENT_MAP[slug]
 
-  // Invalid slug (e.g. epub-to-zip) → real 404, not a 200 "Conversion not
-  // supported" soft-404 page. Paired with the noindex metadata above so
-  // Google drops the URL from its index instead of serving a misleading
-  // "epub to zip Converter" title with zero conversion value.
   if (!keyword || !conversion) {
-    notFound()
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900">Conversion not supported</h1>
+          <p className="mt-2 text-gray-500">Please check our homepage for supported formats.</p>
+        </div>
+      </div>
+    )
   }
 
   // Use dynamically imported component

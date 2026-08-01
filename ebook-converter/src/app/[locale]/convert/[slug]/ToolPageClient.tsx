@@ -108,7 +108,11 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     { name: "Conversion starts automatically", text: "Our Calibre-powered engine converts your file in seconds." },
     { name: "Download result", text: "Once complete, download your converted " + targetDisplay + " file instantly." },
   ]
-  const relatedBlogPosts: Array<{ title: string; slug: string; href: string; excerpt: string; tags: string[] }> = [];
+  const relatedBlogPosts = [
+    { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", slug: "ebook-formats-explained", href: "/blog/ebook-formats-explained", excerpt: "Compare the three most popular ebook formats.", tags: ["epub", "azw3", "pdf"] },
+    { title: "How to Convert EPUB to MOBI for Free", slug: "how-to-convert-epub-to-mobi", href: "/blog/how-to-convert-epub-to-mobi", excerpt: "A complete guide to converting EPUB files to MOBI format.", tags: ["epub", "mobi"] },
+    { title: "Why You Should Convert LIT to EPUB", slug: "why-convert-lit-to-epub", href: "/blog/why-convert-lit-to-epub", excerpt: "Microsoft has discontinued LIT format support.", tags: ["lit", "epub"] },
+  ].filter((post) => post.tags.some((t) => source.includes(t) || target.includes(t))).slice(0, 3);
   const handleFileSelect = useCallback(
     async (file: File) => {
       setStatus("uploading")
