@@ -6,7 +6,6 @@ import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
-import './globals.css'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
 // Initialize Sentry in production (side-effect import)
 import '@/lib/sentry-setup'
