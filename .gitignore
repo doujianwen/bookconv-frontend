@@ -8,3 +8,34 @@ ebook-converter/node_modules/
 ebook-converter/.env
 # 运维脚本密钥/凭证（webhook 等）
 **/.feishu-webhook
+
+# Dev / temp scripts and outputs
+*_clean*.py
+*_gen*.py
+*_write*.js
+*_write*.py
+*_fix*.py
+*_sync*.py
+create_blogs.js
+create_blogs.py
+generate_blogs.py
+blog_sitemap_guide.md
+_temp.txt
+test.txt
+temp.txt
+
+# Dev artifacts
+.qc/
+.workbuddy/
+logs/
+docs/
+ebook-converter/docs/
+ebook-converter/ebook-converter/
+ebook-converter/scripts/qa/
+ebook-converter/src/data/blog/.synccheck/
+.multica-templates/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
