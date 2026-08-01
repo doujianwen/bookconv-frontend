@@ -220,6 +220,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
                 <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>
+              <p className='text-xs text-gray-400'>
+                <a href='mailto:hello@bookconv.com' className='hover:text-gray-700'>{t('common.contact') || 'Contact'}: hello@bookconv.com</a>
+              </p>
               <p className='text-xs text-gray-400'>{new Date().getFullYear()} {t('common.siteName') || 'BookConv'}. {t('common.allRightsReserved') || 'All rights reserved.'}</p>
             </div>
           </footer>
