@@ -5,6 +5,15 @@ import { applySecurityHeaders } from './middleware/security';
 const locales = ['en', 'es'];
 const defaultLocale = 'en';
 
+// 301 redirects for deduplicated conversion pages.
+// These slugs were removed from KEYWORDS (and thus sitemap/generateStaticParams)
+// to avoid keyword cannibalization. Middleware catches any runtime request
+// (including old indexed URLs) and redirects to the canonical page.
+const CONVERSION_REDIRECTS: Record<string, string> = {
+  '/convert/epub-to-text': '/convert/epub-to-txt',
+  '/convert/epub-to-docx': '/convert/epub-to-word',
+};
+
 // Get locale from URL path (e.g., /es/blog -> 'es')
 function getLocaleFromPath(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
@@ -34,6 +43,17 @@ export async function middleware(request: NextRequest) {
   // - /en/* is a legacy/duplicate of the no-prefix English URL → 301 redirect
 
   const localeFromPath = getLocaleFromPath(pathname);
+
+  // 301 redirects for deduplicated conversion pages (before locale handling
+  // to catch /, /es/, and /en/ variants in a single pass — no double redirects)
+  const pathWithoutLocale = localeFromPath ? pathname.replace(/^\/(?:en|es)/, '') : pathname;
+  if (CONVERSION_REDIRECTS[pathWithoutLocale]) {
+    const localePrefix = localeFromPath === 'es' ? '/es' : '';
+    const url = request.nextUrl.clone();
+    url.pathname = localePrefix + CONVERSION_REDIRECTS[pathWithoutLocale];
+    const response = NextResponse.redirect(url, { status: 301 });
+    return applySecurityHeaders(request, response);
+  }
 
   // Case 1: path HAS a locale prefix
   if (localeFromPath) {

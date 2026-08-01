@@ -15,7 +15,6 @@ import * as epub_to_word from './epub-to-word';
 import * as docx_to_epub from './docx-to-epub';
 import * as txt_to_epub from './txt-to-epub';
 import * as html_to_epub from './html-to-epub';
-import * as epub_to_text from './epub-to-text';
 import * as azw3_to_pdf from './azw3-to-pdf';
 import * as mobi_to_epub from './mobi-to-epub';
 import * as epub_to_txt from './epub-to-txt';
@@ -44,7 +43,6 @@ export const CONTENT_MAP: Record<string, any> = {
   'docx-to-epub': docx_to_epub,
   'txt-to-epub': txt_to_epub,
   'html-to-epub': html_to_epub,
-  'epub-to-text': epub_to_text,
   'azw3-to-pdf': azw3_to_pdf,
   'mobi-to-epub': mobi_to_epub,
   'epub-to-txt': epub_to_txt,

@@ -1,75 +1,122 @@
 export const slug = 'epub-to-txt';
 export const title = 'EPUB to TXT Converter';
 export const level = 'S' as const;
-export const wordCount = 3000;
+export const wordCount = 2800;
 
 export const content = {
   hero: {
-    title: 'EPUB to TXT - Extract Pure Text Return to Reading Essence',
-    subtitle: 'Extract clean text from EPUB for backlight-free Kindle reading text analysis NLP processing and pure text reading scenarios.'
-  }
-,
+    title: 'EPUB to TXT — Extract Pure Text from EPUB Files',
+    subtitle: 'Extract clean, readable text from EPUB ebooks. Perfect for analysis, translation, accessibility, and simple reading on any device.'
+  },
 
   sections: [
     {
-      heading: 'When Do You Need to Convert EPUB to TXT?',
-      body: `TXT (plain text) format may seem simple, but in certain specific scenarios it is the best choice:
+      heading: 'When Do You Need EPUB to TXT Conversion?',
+      body: `While EPUB is ideal for rich ebook reading, there are specific scenarios where plain text (TXT) is the preferred format:
 
-**1. Backlight-Free Kindle Reading**
-Older Kindles (such as Kindle Paperwhite before 7th generation) have limited EPUB support. Converting EPUB to TXT ensures smooth reading on any version of Kindle, while significantly reducing file size.
+**1. Text Analysis & NLP Processing**
+Researchers and data scientists often need clean text for natural language processing, sentiment analysis, word frequency statistics, or machine learning training. TXT eliminates XML tags and CSS interference.
 
-**2. Text Analysis & NLP Processing**
-If you need ebook content for natural language processing, word frequency statistics, sentiment analysis, or machine learning training, TXT is the cleanest and most processable format. XML tags, CSS styles in EPUB become interference.
+**2. Accessibility & Screen Readers**
+Plain text works flawlessly with screen readers and assistive technologies. It's the most compatible format for users with visual impairments or those using basic text-to-speech tools.
 
-**3. Summarization & Speed Reading**
-After removing all layout decorations, TXT lets you focus purely on words. For non-fiction books (business, self-improvement, technology), TXT format helps you efficiently extract key information.
+**3. Translation Workflows**
+Professional translators often prefer TXT files because they can easily manage content in translation memory tools without dealing with markup languages.
 
-**4. Cross-Application Sharing**
-TXT is the world's most universal text format. Any editor, note application, code tool can open it.
-`,
+**4. Backlight-Free Reading**
+Older Kindles and basic e-ink devices read TXT files perfectly. For simple novels without images, TXT provides the lightest possible file size.
+
+**5. Content Mining & Summarization**
+Feed your books directly to AI summarization tools, quote extractors, or content analysis platforms that require clean text input.`
     },
     {
-      heading: 'Conversion Quality Assurance',
-      body: `We know that extracting text from EPUB is not simply changing a file extension. Our converter performs intelligent processing:
+      heading: 'Our Intelligent Text Extraction Process',
+      body: `We don't just strip HTML tags—we perform intelligent extraction to preserve readability:
 
-- **Smart Tag Removal**: Strips XHTML tags and CSS references from EPUB while preserving paragraph, heading, and list structure
-- **Special Character Handling**: Preserves Unicode characters (including Chinese, Japanese, Korean, etc.), quotation marks, dashes
-- **Chapter Structure Preservation**: Separates chapters with blank lines for easy subsequent processing
-- **Redundant Whitespace Cleanup**: Removes unnecessary line breaks and spaces while preserving meaningful paragraph spacing
-- **Metadata Extraction**: Book title, author, description information is extracted and added to TXT file header as comments
-`,
+**Smart Tag Removal:**
+- Removes XHTML markup while preserving paragraph structure
+- Maintains chapter breaks with clear separators
+- Keeps meaningful whitespace for readability
+- Preserves Unicode characters including Chinese, Japanese, Korean, Cyrillic, and emoji
+
+**Structure Preservation:**
+- Chapter headings remain clearly marked
+- Lists maintain their bullet/number formatting
+- Quotes are preserved with proper indentation markers
+- Footnotes and endnotes are converted to inline references
+
+**Metadata Extraction:**
+- Book title, author, and description added to file header
+- Table of contents listed as comments at file beginning
+- ISBN and publication information preserved when available
+
+**Quality Assurance:**
+- Redundant line breaks removed
+- Special characters properly encoded
+- Encoding defaults to UTF-8 for maximum compatibility`
     },
     {
-      heading: 'What Gets Lost in Conversion?',
-      body: `Understanding what TXT cannot preserve is important:
+      heading: 'What Gets Lost in EPUB to TXT Conversion?',
+      body: `Understanding limitations helps you choose the right format:
 
-- **Images & Charts**: TXT is pure text, contains no images, charts, or rich text elements. If your book has important images, keep the EPUB format. For pure text books (novels, essays, business books), TXT is ideal.
-- **Hyperlinks**: Links become plain text URLs without clickability
-- **Formatting**: Bold, italic, underline, font sizes are all stripped
-- **Table of Contents**: TXT does not support hyperlink TOC, but we add chapter list as text comments at file head
+**Not Preserved:**
+- ✗ Images and illustrations become inaccessible
+- ✗ Hyperlinks become plain URLs without clickability
+- ✗ Rich formatting (colors, fonts, sizes) is stripped
+- ✗ Interactive elements (videos, audio) are removed
+- ✗ Complex layouts (multi-column, tables) are linearized
 
-For books where visual presentation matters (cookbooks, art books, children's books), consider keeping EPUB or converting to PDF instead.
-`,
+**Still Preserved:**
+- ✓ All text content and paragraphs
+- ✓ Basic structure (headings, lists, quotes)
+- ✓ Chapter organization and navigation markers
+- ✓ Metadata (title, author, TOC) as comments
+- ✓ Unicode characters and special symbols
+
+**When to Keep EPUB Instead:**
+- Cookbooks with images and recipes
+- Art books, photography collections
+- Children's picture books
+- Technical manuals with diagrams
+- Any book where visual presentation matters
+
+**When TXT Is Ideal:**
+- Novels and fiction
+- Essays and non-fiction
+- Business and self-help books
+- Academic papers (text-only versions)
+- Any content for AI processing or translation`
     },
     {
-      heading: 'Use Cases Beyond Reading',
-      body: `TXT conversion opens up possibilities beyond simple reading:
+      heading: 'Use Cases Beyond Simple Reading',
+      body: `TXT conversion opens powerful possibilities:
 
-- **AI Summarization**: Feed clean text to AI tools for automatic summarization
-- **Translation**: Clean text translates more accurately than formatted documents
-- **Content Mining**: Extract quotes, statistics, and key data points programmatically
-- **Accessibility**: Screen readers work best with clean plain text
-- **Archival**: TXT files remain readable decades from now, unlike proprietary formats
+**AI-Powered Summarization**
+Feed clean text to AI tools for automatic chapter summaries, key point extraction, or executive briefs. The absence of markup ensures accurate AI processing.
 
-Whether you are a researcher, writer, student, or just someone who loves reading — TXT conversion gives you maximum flexibility.
-`,
+**Professional Translation**
+TXT files integrate seamlessly with CAT tools (Computer-Assisted Translation) like SDL Trados, MemoQ, and Smartcat. Translators can work efficiently with translation memory and terminology databases.
+
+**Content Mining & Research**
+Extract quotes, statistics, names, and entities programmatically. Perfect for literature reviews, competitive analysis, or building knowledge bases from book collections.
+
+**Accessibility Compliance**
+Generate WCAG-compliant plain text versions for users who need maximum compatibility with assistive technologies.
+
+**Long-Term Archival**
+TXT files remain readable decades from now, unlike proprietary formats. They're ideal for digital preservation and institutional archives.
+
+**Educational Applications**
+Teachers can extract text for worksheets, quizzes, or reading comprehension exercises without dealing with ebook formatting complexities.`
     }
   ],
+
   faq: [
-    { q: 'Will TXT lose images and charts?', a: 'Yes. TXT is a pure text format that contains no images charts or rich text elements. If your book has important images keep the EPUB format. For pure text books (novels essays business books) TXT is the ideal choice.' },
-    { q: 'Can converted TXT retain table of contents?', a: 'TXT does not support hyperlink TOC but we add chapter list as text comments at file head. You can also use text editors that support directory browsing (such as VS Code Sublime Text) to open the file and quickly locate by searching chapter titles.' },
-    { q: 'What encoding does TXT file use?', a: 'Default uses UTF-8 encoding perfectly supporting Chinese Japanese Korean and other multilingual content. If you need other encodings (such as GBK) specify during conversion.' },
-    { q: 'Can I use TXT for AI text analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text format that can be directly fed to any NLP tool AI summarizer or text analysis platform.' },
-    { q: 'How do I convert EPUB to TXT in batch?', a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50MB each. This is perfect for researchers who need to process entire book collections.' }
+    { q: 'Will paragraph and chapter structure be preserved?', a: 'Yes. Although all HTML tags are removed, paragraph separation is maintained through blank lines, and chapter structure is preserved using clear chapter markers and headings.' },
+    { q: 'How are images and charts handled?', a: 'Pure text format cannot contain images. If the original EPUB contains images, we attempt to extract alt text descriptions and insert them as notes in the text where possible.' },
+    { q: 'Can the converted text be used directly for AI analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text that can be directly fed to any NLP tool, AI summarizer, or text analysis platform.' },
+    { q: 'What encoding does the output TXT use?', a: 'Default is UTF-8 supporting Chinese, English, Japanese, Korean, Russian, and other multilingual content. Other encodings (GBK, BIG5) can be specified during conversion if needed.' },
+    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50 MB each, perfect for processing entire book collections.' },
+    { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors.' }
   ]
 };

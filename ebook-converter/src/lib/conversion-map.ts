@@ -63,7 +63,10 @@ export function getConversionKey(source: string, target: string): string {
 }
 
 export function getConversion(source: string, target: string): ConversionEntry | undefined {
-  return CONVERSION_MAP[getConversionKey(source, target)];
+  // Normalize display-name aliases (word→docx, text→txt) before lookup
+  const s = normalizeFormat(source);
+  const t = normalizeFormat(target);
+  return CONVERSION_MAP[getConversionKey(s, t)];
 }
 
 /**

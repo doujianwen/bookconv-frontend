@@ -27,6 +27,7 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'epub', target: 'txt', keyword: 'epub to text converter', kd: 42, searchVolume: 3600, phase: 'P0', status: 'live' },
   { source: 'epub', target: 'html', keyword: 'epub to html converter', kd: 48, searchVolume: 2400, phase: 'P0', status: 'live' },
   { source: 'epub', target: 'doc', keyword: 'epub to word converter', kd: 50, searchVolume: 2900, phase: 'P0', status: 'live' },
+  { source: 'epub', target: 'word', keyword: 'epub to word', kd: 1, searchVolume: 1000, phase: 'P0', status: 'live' },
   { source: 'epub', target: 'rtf', keyword: 'epub to rtf converter', kd: 38, searchVolume: 1900, phase: 'P0', status: 'live' },
   { source: 'mobi', target: 'txt', keyword: 'mobi to text converter', kd: 35, searchVolume: 1600, phase: 'P0', status: 'live' },
   { source: 'mobi', target: 'pdf', keyword: 'mobi to pdf converter', kd: 55, searchVolume: 3600, phase: 'P0', status: 'live' },
@@ -40,12 +41,10 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'epub', target: 'jpg', keyword: 'epub to jpg converter', kd: 35, searchVolume: 1600, phase: 'P0', status: 'live' },
   { source: 'epub', target: 'png', keyword: 'epub to png converter', kd: 33, searchVolume: 1300, phase: 'P0', status: 'live' },
   { source: 'html', target: 'epub', keyword: 'html to epub converter', kd: 30, searchVolume: 1900, phase: 'P0', status: 'live' },
-  { source: 'epub', target: 'text', keyword: 'epub to text converter', kd: 40, searchVolume: 2900, phase: 'P0', status: 'live' },
 
   // P1 — High-value expansions
   { source: 'pdf', target: 'txt', keyword: 'pdf to text extractor', kd: 68, searchVolume: 8100, phase: 'P1', status: 'planned' },
   { source: 'pdf', target: 'docx', keyword: 'pdf to word converter', kd: 85, searchVolume: 22200, phase: 'P1', status: 'planned' },
-  { source: 'epub', target: 'docx', keyword: 'epub to word docx', kd: 45, searchVolume: 2400, phase: 'P1', status: 'planned' },
   { source: 'txt', target: 'pdf', keyword: 'txt to pdf converter', kd: 50, searchVolume: 5400, phase: 'P1', status: 'planned' },
   { source: 'docx', target: 'pdf', keyword: 'word to pdf converter', kd: 90, searchVolume: 33100, phase: 'P1', status: 'planned' },
   { source: 'rtf', target: 'epub', keyword: 'rtf to epub converter', kd: 25, searchVolume: 1000, phase: 'P1', status: 'planned' },
