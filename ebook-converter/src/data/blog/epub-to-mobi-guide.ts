@@ -1,138 +1,139 @@
 export const slug = `epub-to-mobi-guide`;
-export const title = `How to Convert EPUB to MOBI for Kindle: The Definitive Guide`;
+export const title = `How to Convert EPUB to MOBI Online: The BookConv Guide`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
-export const tags = ["EPUB", "MOBI", "Kindle", "conversion", "guide"];
+export const tags = ["EPUB", "MOBI", "Kindle", "BookConv", "conversion", "guide"];
 
 export const content = {
-  intro: `Most people who want to convert EPUB to MOBI don't actually need MOBI anymore, and the ones who do have a very specific reason. This guide shows you which camp you're in, how to run the conversion properly, and how to fix the covers, metadata, and table-of-contents problems that ruin most attempts.`,
+  intro: `Upload your EPUB and convert it to MOBI on BookConv in seconds — no Calibre install, no account, no settings to guess at. This guide shows you how to run the conversion cleanly, whether you even need MOBI in 2026, and how to fix the cover, metadata, and table-of-contents problems that quietly ruin most attempts.`,
   sections: [
     {
-      heading: `Do You Actually Need MOBI Anymore?`,
-      body: `Start here, because the answer saves most readers a step. If your Kindle was made after roughly 2015, you don't need MOBI at all. Send the EPUB straight to the device and Amazon handles the rest.
+      heading: `Convert EPUB to MOBI on BookConv in Three Steps`,
+      body: `Start here. Most people are done in under a minute.
 
-MOBI came out of Mobipocket, a French company Amazon bought in 2007. Amazon built the early Kindle ecosystem on it, then moved on: KF8 (the format inside AZW3 files) replaced plain MOBI for anything with real styling, and in August 2022 Amazon stopped accepting MOBI files through Send to Kindle entirely. Meanwhile EPUB became the format Amazon *does* accept.
+1. Open the [EPUB to MOBI converter](/convert/epub-to-mobi) and drop your file onto the upload area.
+2. Check the metadata preview. BookConv reads the title, author, and cover out of the EPUB and shows them to you *before* anything is converted, so you catch a wrong author or a missing cover while it's still cheap to fix.
+3. Hit convert and watch the progress bar. When it finishes, your MOBI download link appears.
 
-So MOBI is now a legacy target. You still want it in a few real cases:
+That's the whole flow. There's nothing to install, and it runs the same server-side Calibre engine that desktop users run locally — you just don't have to manage it.
 
-- **Pre-2015 Kindle hardware** such as the Kindle Keyboard, Kindle 4, Kindle Touch, and early Paperwhite units that you sideload over USB
-- **Offline sideloading** where you have no Wi-Fi or no email access to the device
-- **Archival copies** of a library you already keep in MOBI and want to stay consistent
-- **Old third-party readers** that were built around Mobipocket and never added EPUB support
+### What the free tier gives you
 
-If none of those apply, skip to the Send to Kindle section below. If one does, the Calibre method is next.
+- **10 MB per file** — comfortably more than a text-heavy novel, which usually lands between 300 KB and 3 MB
+- **5 conversions per hour** — enough for a small batch in one sitting
+- **No account** — no email, no signup wall, no confirmation link
 
-For a plainer walkthrough aimed at first-timers, we also have a shorter [step-by-step EPUB to MOBI tutorial](/blog/how-to-convert-epub-to-mobi-en). And if you're still deciding which format to standardise on, [ebook formats explained](/blog/ebook-formats-explained-en) covers the trade-offs.`
+If you're converting a big illustrated book or a photography-heavy title, Pro raises the per-file ceiling to 50 MB and the API to 100 MB.
+
+### Two things to know before you upload
+
+Download links are **temporary**. Files get deleted after a period, so save the MOBI to your device or your Kindle right away rather than bookmarking the link and coming back tomorrow. If a link has already expired, our [download troubleshooting notes](/blog/download-troubleshooting) cover what to do.
+
+**DRM-protected files are rejected at upload.** That's not a limitation we can tune around — DRM encrypts the book's contents, and no converter can read encrypted text. Library loans and most retail purchases fall into this category. Books you own DRM-free convert fine.`
     },
     {
-      heading: `Converting EPUB to MOBI With Calibre, Step by Step`,
-      body: `Calibre is free, runs on Windows, macOS, and Linux, and gives you more control than any web tool. It's the reference implementation most other converters copy.
+      heading: `Do You Actually Still Need MOBI?`,
+      body: `Worth two minutes of thought, because the answer saves some readers a step entirely.
 
-1. Install Calibre from the official site and open it.
-2. Click **Add books** and pick your EPUB, or just drag the file into the library window.
-3. Select the book in the list, then click **Convert books**.
-4. In the top-right dropdown, set **Output format** to MOBI. Input format should already read EPUB.
-5. Open the **MOBI Output** panel on the left. Set **MOBI file type** to *old* if you're targeting a pre-2015 Kindle — the *both* and *new* options embed KF8 data that old firmware chokes on.
-6. Open **Metadata** and confirm the title, author, and cover are correct before you convert, not after.
-7. Click **OK**. Watch the jobs counter in the bottom-right corner; when it hits zero, the MOBI is ready.
-8. Right-click the book, choose **Save to disk**, or connect your Kindle over USB and use **Send to device**.
+MOBI came out of Mobipocket, a French company Amazon bought in 2007. Amazon built the early Kindle ecosystem on it, then moved on. KF8 — the format inside AZW3 files — replaced plain MOBI for anything with real styling, and in August 2022 Amazon stopped accepting MOBI through Send to Kindle. EPUB is what Amazon takes now.
 
-### Settings worth changing
+So MOBI is a legacy target. It's still the right one in these cases:
 
-Two options in the **Look & feel** panel matter more than the rest. **Remove spacing between paragraphs** fixes EPUBs that were built with CSS margins the old MOBI renderer ignores. **Base font size** is worth setting to 0 so the Kindle's own font controls stay in charge.
+- **Pre-2015 Kindle hardware** like the Kindle Keyboard, Kindle 4, Kindle Touch, and early Paperwhite units you sideload over USB
+- **Offline sideloading** where there's no Wi-Fi and no email path to the device
+- **Archival consistency** if your existing library is already MOBI and you want it to stay that way
+- **Old third-party readers** built around Mobipocket that never added EPUB support
 
-Under **Structure detection**, leave the defaults alone unless your chapters aren't splitting. The full option reference lives in the [Calibre conversion documentation](https://manual.calibre-ebook.com/conversion.html), which is genuinely well written.
+If your Kindle is newer than that and you're sideloading anyway, [convert to AZW3 instead](/convert/epub-to-azw3). AZW3 carries KF8, which means current CSS, embedded fonts, and real tables. MOBI drops most of that.
 
-If you'd rather not install anything, our [EPUB to MOBI converter](/convert/epub-to-mobi) runs the same conversion in the browser. For newer Kindles that support KF8 styling, [EPUB to AZW3](/convert/epub-to-azw3) is the better target.`
+Still deciding what to standardise your library on? [Ebook formats explained](/blog/ebook-formats-explained-en) walks through the trade-offs without the marketing.`
     },
     {
-      heading: `The Faster Route: Send to Kindle Accepts EPUB Directly`,
-      body: `Here's the part that makes most conversions unnecessary. Amazon's Send to Kindle service takes EPUB files and converts them on Amazon's servers into KF8, using the same pipeline that handles Kindle Store books.
+      heading: `Send to Kindle Takes EPUB Now — Here's When to Use It Instead`,
+      body: `Amazon's Send to Kindle service accepts EPUB files directly and converts them on Amazon's servers into KF8, using the same pipeline that handles Kindle Store books. Three ways in: email the file to your device's kindle.com address from an approved sender, drag it into the Send to Kindle web page, or use the desktop or mobile app.
 
-You've got three ways in:
+The upside is real. You get Whispersync position tracking across devices, correct chapter breaks, and the same rendering commercial titles get. A sideloaded MOBI usually won't sync at all.
 
-- **Email** — send the EPUB as an attachment to your device's @kindle.com address from an approved sender address
-- **Web** — drag the file into the Send to Kindle page in a browser
-- **App** — the desktop and mobile Send to Kindle apps take drag-and-drop
+The catch is also real. You need an Amazon account, an internet connection, and a registered device, and the file lands in your Amazon library rather than staying local. Some people specifically don't want that. Amazon's [Send to Kindle help page](https://www.amazon.com/sendtokindle) lists the current size limits and accepted types.
 
-Amazon's conversion is usually cleaner than a local one, because it's the same engine that renders commercial titles. You get working X-Ray-style navigation, correct chapter breaks, and Whispersync position tracking across devices. A locally converted MOBI often won't sync at all.
-
-The catch: you need an Amazon account, an internet connection, and a device registered to that account. Files also land in your Kindle library rather than staying purely local, which some people don't want. Amazon's own [Send to Kindle help page](https://www.amazon.com/sendtokindle) lists the current file size limits and supported types.
-
-Rule of thumb — modern Kindle, use Send to Kindle. Old Kindle or no account, convert to MOBI yourself.`
+Simple rule: modern Kindle and you're fine with Amazon holding the file, use Send to Kindle. Old hardware, no account, or you want the file to stay yours — convert on BookConv and sideload over USB.`
     },
     {
       heading: `Keeping Covers, Metadata, and the Table of Contents Intact`,
-      body: `Conversions rarely fail outright. They fail quietly, and you notice three weeks later when your library is a wall of grey placeholder tiles.
+      body: `Conversions rarely fail loudly. They fail quietly, and you notice three weeks later when your library is a wall of grey placeholder tiles.
 
 ### Covers
 
-MOBI stores the cover as a specially flagged image inside the file, not as a separate asset. If the source EPUB references its cover only through an OPF manifest entry and no guide reference, some converters drop it. In Calibre, open the metadata editor before converting and make sure a cover thumbnail is actually showing. If it isn't, click **Download cover** or point it at a JPEG yourself. A 1600x2560 pixel JPEG is a safe size.
+MOBI stores the cover as a specially flagged image inside the file, not as a separate asset. If the source EPUB points at its cover only through an OPF manifest entry with no guide reference, converters can drop it. This is exactly why BookConv shows you a metadata preview before converting — if no cover thumbnail appears there, the EPUB itself is missing a proper cover reference, and the MOBI will inherit that gap. Fix the source, then re-upload.
 
 ### Metadata
 
-Title and author are what your Kindle sorts by, so fix them at the source. Series information is trickier — MOBI has no native series field, and Calibre fakes it by writing the series name into the title. That's fine for a personal library, confusing if you share files.
+Title and author are what your Kindle sorts by, so they matter more than they look. Series information is trickier: MOBI has no native series field, and converters fake it by folding the series name into the title. Fine for a personal shelf, confusing if you share files with anyone.
 
 ### Table of contents
 
-Kindles use two separate navigation systems: the inline TOC page you can tap into, and the NCX index the Go To menu reads. An EPUB with only an HTML contents page and no proper nav document will convert into a MOBI with a dead Go To menu.
+Kindles use two separate navigation systems — the inline contents page you tap into, and the NCX index behind the Go To menu. An EPUB carrying only an HTML contents page, with no proper nav document, converts into a MOBI with a dead Go To menu.
 
-Calibre can rebuild the NCX from your heading structure. Under **Table of Contents**, set **Level 1 TOC** to an XPath expression like //h:h1 and Calibre will index every H1 as a chapter. Tick **Force use of auto-generated Table of Contents** only when the existing one is broken, since it overwrites a good TOC just as happily as a bad one.
-
-The underlying structure comes from the source file, which is why a well-built EPUB converts well and a sloppy one doesn't. The [W3C EPUB 3 specification](https://www.w3.org/TR/epub-33/) defines what that nav document should look like.`
+The structure comes from the source file. A well-built EPUB converts well and a sloppy one doesn't, which is less satisfying than a magic setting but it's the truth. The [W3C EPUB 3 specification](https://www.w3.org/TR/epub-33/) defines what that nav document should contain, and it's a useful reference if you're checking why a file is broken.`
     },
     {
       heading: `Fixing the Errors That Ruin Most Conversions`,
-      body: `Four problems account for nearly every failed EPUB to MOBI conversion.
+      body: `Four problems account for nearly every bad EPUB to MOBI result.
 
 ### Garbled or boxed-out text
 
-Almost always an encoding problem. The source EPUB declares one character set and actually uses another, so accented characters and smart quotes turn into question marks or black diamonds. Fix it by opening the EPUB in Calibre's editor and checking that every XHTML file declares UTF-8. Non-Latin scripts need an embedded font too — old Kindle firmware ships with limited glyph coverage, and no conversion setting invents characters the device can't draw.
+Almost always encoding. The source EPUB declares one character set and actually uses another, so accented characters and smart quotes come out as question marks or black diamonds. Non-Latin scripts have a second problem: old Kindle firmware ships with limited glyph coverage and needs an embedded font. No conversion setting invents characters a device can't draw.
 
 ### Missing cover on the device
 
-If the cover looks right in Calibre but not on the Kindle, the device cached the old thumbnail. Delete the book from the Kindle, then delete the matching folder in the hidden system thumbnail cache, then re-sideload. Annoying, but it's a caching bug, not a conversion bug.
+If the cover looked right in the metadata preview but not on the Kindle, the device cached the old thumbnail. Delete the book from the Kindle, clear the matching folder in the hidden system thumbnail cache, then re-sideload. It's a caching bug, not a conversion bug.
 
 ### Broken or empty table of contents
 
-Covered above — rebuild the NCX with an XPath rule. If chapters run together into one giant page, your EPUB is probably a single XHTML file. Set **Split on** to the same heading tag in the Structure detection panel.
+If chapters run together into one endless page, your EPUB is probably a single XHTML file with no split points. There's nothing on the output side to fix — the source has no chapter boundaries to find.
 
 ### Wildly wrong formatting
 
-Justified text collapsing, images overflowing the screen, indents everywhere. Old MOBI supports a small subset of CSS and drops the rest. Tick **Filter style information** or run the conversion through AZW3 instead, which handles modern CSS properly. This is the clearest sign you should stop fighting MOBI and use a format the device was designed for.
+Justified text collapsing, images overflowing, stray indents. Old MOBI supports a small slice of CSS and drops the rest. This is the clearest signal to stop fighting MOBI and use [EPUB to AZW3](/convert/epub-to-azw3) instead, assuming your device can read it.
 
-Going the other direction? Our [MOBI to EPUB converter](/convert/mobi-to-epub) handles DRM-free MOBI files if you're migrating an old library to something more portable.`
+### When to fall back to desktop Calibre
+
+BookConv covers the normal path. Desktop Calibre is still worth installing for genuine edge cases: rewriting a broken NCX with a custom XPath rule, running search-and-replace across a file, filtering style information selectively, or batch-converting a few hundred books at once. The [Calibre conversion documentation](https://manual.calibre-ebook.com/conversion.html) is genuinely well written if you get there.
+
+One more note on speed: large or slow files go through a background worker queue rather than blocking your browser. The progress bar keeps updating, so a slow conversion looks slow rather than looking broken. There's more on how that works in our [background workers write-up](/blog/background-workers).
+
+Migrating an old library the other direction? [MOBI to EPUB](/convert/mobi-to-epub) handles DRM-free MOBI files.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Check your Kindle first.** Anything made after about 2015 reads EPUB through Send to Kindle, so MOBI conversion is usually wasted effort.
-- **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022 and moved to KF8 inside AZW3 files years before that.
-- **Calibre is the tool** for genuinely old hardware. Set MOBI file type to *old*, verify metadata before converting, and rebuild the NCX if the TOC is broken.
-- **Fix problems at the source.** Bad encoding, missing nav documents, and absent covers come from the EPUB, and no output setting repairs them after the fact.
-- **Use AZW3 for modern Kindles** if you insist on sideloading a converted file, since it supports current CSS and MOBI doesn't.`
+      body: `- **BookConv is the fast path.** Upload, check the metadata preview, convert, download — no install, no account, 10 MB and 5 conversions an hour on the free tier.
+- **Save your file immediately.** Download links are temporary and converted files are deleted after a period, so don't treat a link as storage.
+- **Check your Kindle first.** Anything made after roughly 2015 reads EPUB through Send to Kindle, which makes MOBI conversion unnecessary for a lot of people.
+- **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022, and AZW3 is the better sideload target for any modern device.
+- **Fix problems at the source.** Bad encoding, missing nav documents, and absent covers live in the EPUB, and no output setting repairs them after the fact.`
     },
     {
       heading: `Frequently Asked Questions`,
-      body: `Q: Does my Kindle still support MOBI files?
-A: If it's a physical Kindle, yes — sideloading a MOBI over USB still works on virtually every model. What changed is Send to Kindle, which stopped accepting MOBI uploads in August 2022. So you can put MOBI on the device by cable, but you can't email it there.
+      body: `Q: Do I need an account to convert EPUB to MOBI on BookConv?
+A: No. The free tier needs no signup at all — 10 MB per file and 5 conversions per hour. Pro raises the per-file limit to 50 MB and the API to 100 MB if you're working with bigger illustrated books.
+
+Q: How long does the download link stay active?
+A: Not indefinitely. Links are temporary and converted files are deleted after a period, so download the MOBI as soon as the progress bar completes rather than saving the link for later.
+
+Q: Why was my file rejected on upload?
+A: Two usual causes. Either it's DRM-protected, which we detect and reject because encrypted content can't be read by any converter, or it's over your tier's size limit — 10 MB free, 50 MB Pro.
+
+Q: Does my Kindle still support MOBI files?
+A: On physical Kindles, yes — sideloading a MOBI over USB still works on virtually every model. What changed is Send to Kindle, which stopped accepting MOBI uploads in August 2022. You can cable it across, you just can't email it.
 
 Q: What's the difference between MOBI and AZW3?
-A: AZW3 contains KF8, the newer Kindle format. It supports modern CSS, embedded fonts, proper tables, and fixed-layout content. Plain MOBI supports a much smaller subset and dates back to Mobipocket. For any Kindle from the last decade, AZW3 gives noticeably better results.
+A: AZW3 contains KF8, the newer Kindle format, with modern CSS, embedded fonts, proper tables, and fixed-layout support. Plain MOBI handles a much smaller subset and dates back to Mobipocket. For any Kindle from the last decade, AZW3 looks noticeably better.
 
 Q: Will converting EPUB to MOBI lose my highlights and notes?
-A: Yes. Annotations live in the device's own database and are tied to a specific file, so a converted copy is a new book as far as the Kindle is concerned. Export existing notes before you replace the file.
+A: Yes. Annotations live in the device's own database and are tied to a specific file, so a converted copy counts as a new book. Export your notes before replacing anything.
 
-Q: Why does my converted book show no cover on the Kindle?
-A: Two likely causes. Either the cover wasn't embedded during conversion — check the metadata editor showed a thumbnail — or the Kindle cached the old placeholder. Removing the book and re-adding it clears the second one.
-
-Q: Can I convert DRM-protected EPUB files to MOBI?
-A: No. DRM-protected files are encrypted and no converter can open them. That includes files from library lending services and most retail stores. You can only convert books you own DRM-free.
-
-Q: Is Calibre or an online converter better?
-A: Calibre if you need fine control over TOC structure, CSS filtering, or batch jobs. An online tool if you have one file and don't want a desktop install. Both use similar underlying logic, so a clean EPUB converts about the same either way.
-
-Q: My converted MOBI has no page numbers. Why?
-A: MOBI uses location markers rather than pages, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and conversion can't add that mapping.`
+Q: Why does my converted MOBI have no page numbers?
+A: MOBI uses location markers instead, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and no conversion can add that mapping.`
     }
   ]
 };

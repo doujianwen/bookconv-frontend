@@ -1,111 +1,114 @@
 export const slug = `download-troubleshooting`;
-export const title = `Converted File Won't Download or Open? Fixes That Actually Work`;
+export const title = `BookConv File Won't Download or Open? Fixes That Actually Work`;
 export const date = `2026-07-30`;
-export const author = "BookConv Team";
-export const tags = ["download", "troubleshooting", "ebook", "FAQ"];
+export const author = `BookConv Team`;
+export const tags = [`Download`, `Troubleshooting`, `BookConv`, `Ebook`, `FAQ`];
 
 export const content = {
-  intro: `Clicked download after converting and nothing happened, or the file arrived and your reader refuses to open it? Nearly every case comes down to five causes: a browser blocking the download, an expired link, a file over the size limit, a damaged source file, or the wrong format for your device. Here's how to tell which one you've hit and fix it.`,
+  intro: `If BookConv finished the conversion but the file won't download — or it lands on your disk and your reader refuses it — you're almost certainly hitting one of five things: a browser blocking the save, an expired download link, a file over your plan's size cap, a DRM or damaged source, or the wrong format for the device. Here's how to tell them apart in about a minute.`,
   sections: [
     {
-      heading: `Two-Minute Triage: Try These First`,
-      body: `Run through this list before digging any deeper. It clears up most download problems on its own.
+      heading: `Sixty-Second Triage: Try These First`,
+      body: `Work down this list before digging into anything specific. It clears most download problems on its own.
 
-1. Check your Downloads folder — the file may already be there, saved without any notification
-2. Look for a blocked-download icon or bar near your browser's address bar
-3. Reload the result page and click the download button again
-4. Open the same page in a private window, where extensions are usually disabled
-5. If you see an expired-link message, run the conversion again and download straight away
+1. Check your Downloads folder — the file is often already there, saved without a prompt
+2. Look for a blocked-download icon at the right edge of your browser's address bar
+3. Reload the result page and click the download button once more
+4. Open BookConv in a private window, where extensions are disabled by default
+5. If you see an expired-link message, run the conversion again and save the file straight away
 
-Still stuck? The rest of this post is organised by symptom, so jump to the section that matches what you're seeing.`
+Nothing yet? The sections below are grouped by symptom, so jump to whichever one matches your screen.`
     },
     {
       heading: `When the Download Never Starts`,
-      body: `Nothing happens on click, or the file simply never appears. This is almost always browser-side, not server-side.
+      body: `You click, and nothing happens. In almost every case this is your browser, not our server — the conversion already finished and the file is sitting behind a link your browser won't follow.
 
-### Your browser blocked it silently
-Chrome, Edge and Safari all block downloads they consider unusual, and ebook extensions like EPUB, MOBI and AZW3 trip that filter more often than you'd expect. Look for a small icon at the right end of the address bar, open it, and choose to keep the file. Chrome's own [download help page](https://support.google.com/chrome/answer/6261569) shows where those controls live.
+### Chrome, Edge, or Safari blocked it quietly
+Ebook extensions like EPUB, MOBI, and AZW3 land in the same bucket as unusual downloads, so browsers sometimes stop them with no visible warning. Look for a small download icon near the address bar, open it, and choose to keep the file. Chrome's [download settings help](https://support.google.com/chrome/answer/6261569) shows where those controls live.
 
 ### An extension is swallowing the request
-Ad blockers, privacy tools and download managers sometimes intercept the request and drop it. A private window disables most extensions, so if the download works there, you've found your culprit. Whitelist the site rather than turning the extension off permanently.
+Ad blockers, privacy add-ons, and download managers occasionally intercept the request and drop it. A private window disables most extensions in one move. If the download works there, whitelist BookConv rather than switching the extension off permanently.
 
-### Mobile browsers save files somewhere else
-On iOS, downloads go to the Files app under On My iPhone, then Downloads — not to Photos, and not to a visible desktop. On Android they land in the Download folder. Check there before concluding the download failed.
+### You're on mobile and the file went somewhere unexpected
+On iOS it goes to the Files app under On My iPhone, then Downloads — never to Photos. On Android it lands in the Download folder. Check both before you conclude the download failed.
 
-### The result tab was closed too early
-Refreshing or closing the page while the job is running can leave you without the link, even if the conversion finished. Convert again and leave the tab open until the file is safely on disk.`
+### The tab closed before the job finished
+Large or slow files hand off to a background worker queue, and the download button appears when that worker finishes. Close the tab early and you lose the link even though the conversion completed. Keep the page open until the progress bar hits the end and the file is on disk. [How our background workers handle heavy jobs](/blog/background-workers) explains what's happening while you wait.`
     },
     {
-      heading: `When the File Downloads but Won't Open`,
-      body: `Start with the file size in your file manager. A 0KB or oddly small file means the transfer was cut short — delete it and download again on a stable connection.
+      heading: `When the File Is Rejected Before Conversion Starts`,
+      body: `Some uploads never make it to the conversion stage at all. That's deliberate, and the error message names the rule you hit.
 
-**The source was already damaged.** A broken EPUB or PDF produces broken output. BookConv rejects obviously corrupt input rather than converting it, but a partly valid file can still slip through. Open the original in a reader first; if it fails there, find a clean copy.
+**It's over the size limit.** The free tier accepts **10 MB per file**. Pro raises that to **50 MB**, and the API plan to **100 MB**. Oversized uploads are refused immediately with the limit stated, so you never sit through a job that was never going to run. Fixes in order of effort: compress the images, split the book into parts, or move up a tier.
 
-**The book is DRM-protected.** Purchases from Kindle, Kobo and Google Play usually carry DRM. Converters can't read those files, so anything you manage to produce won't open. DRM-free sources such as [Project Gutenberg](https://www.gutenberg.org/) convert without any of this drama.
+**It's DRM-protected.** Purchases from Kindle, Kobo, and Google Play usually carry DRM, and those files are rejected on upload. We don't strip protection, so there's no workaround here — you'd need a DRM-free edition of the same title. Public-domain sources like [Project Gutenberg](https://www.gutenberg.org/) convert without any of this drama.
 
-**The extension doesn't match the contents.** Renaming a file from EPUB to MOBI converts nothing, and readers reject the mismatch immediately. Run a real conversion instead.
+**The source is corrupt or truncated.** A half-downloaded EPUB or a PDF that ends mid-file gets refused too. Open the original in whatever reader you normally use. If it fails there, the damage travels with the file and no converter will repair it.
 
-**Your reader doesn't support the format.** An older Kindle won't open EPUB. Apple Books won't open MOBI or AZW3. That's not a broken file, just the wrong one — convert to what the device actually reads with the [EPUB to MOBI](/convert/epub-to-mobi) or [MOBI to EPUB](/convert/mobi-to-epub) tool.`
+**You've hit the rate limit.** Free usage allows **5 conversions per hour** with no account needed. On shared office, campus, or library Wi-Fi, someone else on the same connection can eat part of that quota. Wait for the window to roll over, or switch networks.
+
+One habit worth building: read the metadata preview before you confirm. It shows the title and author BookConv pulled out of the file, which is the fastest way to spot a source that isn't what you thought it was.`
     },
     {
-      heading: `Expired Links, Size Caps and Rate Limits`,
-      body: `Converted files don't sit on our servers indefinitely. Download links are time-limited, and the file is deleted once the link lapses. Your result page shows the window for that job. Miss it and you'll get an expired-link error — the fix is simply to convert again, which takes seconds and costs nothing.
+      heading: `Expired Links: The File Is Already Gone`,
+      body: `Converted files don't live on our servers. Download links are temporary, and once the window closes the file is deleted — that's the point, since we'd rather not keep your books.
 
-Size limits apply before conversion, not after. The free tier caps input at 10MB, Pro at 50MB and the API plan at 100MB. Anything over your ceiling is rejected up front with a message naming the limit, so you'll never wait for a job that was never going to run.
+So if you see an expired-link error, there's nothing to recover on our side. Convert again and save the result immediately. It takes seconds, and on the free tier it costs nothing but one of your five hourly conversions.
 
-Rate limits catch people out too. Free accounts get five conversions an hour, and downloads are capped per IP address to keep automated abuse in check. On shared office, library or campus Wi-Fi, that quota can be consumed by someone else on the same connection. Wait it out or switch networks.
+Three habits that avoid the problem entirely:
 
-Finally, very large or unusually complex books can exceed the conversion timeout. The job then fails cleanly instead of hanging forever. Split the book into parts, compress its images, or run [Calibre](https://calibre-ebook.com/) locally where there's no time limit at all.`
+- Save the file the moment the download button appears, then confirm it opens
+- Don't email yourself the result URL — the link stops working, so send the file instead
+- Converting several books? Download each one as it completes rather than batching at the end
+
+A 0 KB file is an interrupted transfer, not an expired link. Delete it and download again while the link is still live.`
     },
     {
-      heading: `Device-Specific Gotchas`,
-      body: `The file downloaded fine, but your reader still won't cooperate. Each ecosystem has its own quirks.
+      heading: `When It Downloads but Your Reader Won't Open It`,
+      body: `The file is on disk at a sensible size and the reader still says no. At that point it's a format or sideloading problem, not a download problem.
 
-### Kindle
-Copy the file into the documents folder, not the root of the drive, then eject the device properly instead of pulling the cable — an interrupted copy leaves a half-written file that looks fine in a file manager. If the book still doesn't appear, restart the Kindle so it re-indexes. Our [step-by-step Kindle conversion walkthrough](/blog/how-to-convert-epub-to-mobi-en) covers the sideloading process in more detail.
+### The format doesn't match the device
+Easily the most common cause. Apple Books ignores MOBI and AZW3. Older Kindles won't open EPUB. Kobo wants EPUB. Nothing is broken — the book is just on the wrong device. Convert to what the hardware actually reads: [EPUB to AZW3](/convert/epub-to-azw3) for a modern Kindle, [MOBI to EPUB](/convert/mobi-to-epub) for almost everything else.
 
-### Kobo
-Kobo reads EPUB natively, so no conversion is needed for most books. Drag files into the root of the device or a folder you create yourself, eject, and let the device finish its sync before you go looking for the title.
+### Renaming isn't converting
+Changing an extension from EPUB to MOBI does nothing to the contents, and readers reject the mismatch instantly. Run a real conversion.
 
-### iPhone and iPad
-Downloads land in the Files app. Tap the file, choose Share, then Copy to Books. Apple Books handles EPUB and PDF but ignores Kindle formats entirely, so anything in MOBI needs converting to EPUB first.
+### The sideload didn't finish
+On Kindle, copy the file into the documents folder rather than the drive root, then eject the device properly instead of pulling the cable. An interrupted copy leaves a file that looks complete in a file manager and fails on the device. Restart the Kindle afterward so it re-indexes. Our [EPUB to MOBI walkthrough](/blog/how-to-convert-epub-to-mobi-en) covers sideloading step by step.
 
-### Android
-Files save to the Download folder and any EPUB reader can open them from there. If a file looks greyed out or unopenable, check your browser's download list for a paused or failed entry — that's usually a partial file rather than a bad conversion.`
+### It opens, but the layout is a mess
+That's source quality, not a download failure. Messy markup carries straight through into the output. Fixed-layout PDFs are the usual offender — [PDF to EPUB](/convert/pdf-to-epub) gets you reflowable text, though heavily designed pages need cleanup afterward in a desktop editor. The Calibre [conversion documentation](https://manual.calibre-ebook.com/conversion.html) covers the settings that help.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Browser first** — silent blocking and interfering extensions cause more failed downloads than server problems ever do
-- **Zero-byte files** — signal an interrupted transfer, not a failed conversion; just download again
-- **Links expire** — save the file as soon as it's ready, and re-convert if you miss the window
-- **Bad input, bad output** — if the source won't open in a reader, converting it won't repair anything
-- **Match the format** — an unopenable book is often the right file sitting on the wrong device`
+      body: `- **Browser first** — silent blocking and interfering extensions cause more failed downloads than our servers ever do.
+- **Links are temporary** — converted files are deleted after a while, so save the result as soon as it appears and re-convert if you miss the window.
+- **Limits are upfront** — 10 MB free, 50 MB on Pro, 100 MB on API, with rejections at upload instead of halfway through.
+- **DRM stops at the door** — protected files are refused on upload, and there's no workaround on our end.
+- **Wrong device, not bad file** — most unopenable books just need converting to the format the reader supports.`
     },
     {
       heading: `Frequently Asked Questions`,
-      body: `Q: My download button does nothing when I click it. What now?
-A: Open a private browsing window and try again — that rules out extensions in one move. If it works there, whitelist the site in your ad blocker or download manager. If it doesn't, check whether your browser has blocked the file type in its download settings.
+      body: `Q: The download button does nothing when I click it. What now?
+A: Open a private window and try again — that rules out extensions in one move. If it works there, whitelist BookConv in your ad blocker or download manager. If it doesn't, check your browser's download settings for a blocked file type.
 
-Q: The downloaded file is 0KB. What went wrong?
-A: The transfer stopped before it completed, usually from a dropped connection or a full disk. Free up space, reconnect, and download again — the converted file stays valid on our side until its link expires.
+Q: My download link expired. Can you resend the file?
+A: No, and not out of stubbornness — the file has already been deleted. Temporary links are how we avoid storing your books. Convert again and download straight away.
 
-Q: I keep getting a message that the download link has expired.
-A: Links are deliberately short-lived and the file is deleted when they lapse, which is how we avoid storing your books. Convert again and download immediately; it's free and takes seconds.
+Q: The file downloaded at 0 KB. What went wrong?
+A: The transfer stopped early, usually a dropped connection or a full disk. Free up space, reconnect, and download again while the link is still valid.
 
-Q: My converted MOBI won't open on my Kindle.
-A: Check three things in order: the file is in the documents folder, the Kindle was ejected safely, and the device has been restarted since you copied it. If it still won't open, your Kindle likely wants AZW3 instead — try [EPUB to AZW3](/convert/epub-to-azw3).
+Q: My file was rejected before the conversion even started. Why?
+A: Almost always the size cap. The free tier stops at 10 MB per file and names the limit in the error. Compress the images, split the book, or upgrade to Pro for 50 MB. The API plan allows 100 MB.
 
 Q: Can I convert a book I bought from Amazon or Kobo?
-A: Not if it's DRM-protected, which most store purchases are. Converters can't read those files at all, so there's nothing to fix on your end. Look for a DRM-free edition of the same title.
+A: Only if it's DRM-free. Protected purchases are rejected on upload, and we don't remove DRM, so there's nothing to troubleshoot. Look for a DRM-free edition of the same title.
 
-Q: Why was my file rejected before the conversion even started?
-A: Almost always the size cap — 10MB on the free tier, with the error naming the exact limit. Compress the images, split the book, or move to a plan with a higher ceiling.
+Q: I got a message about too many conversions.
+A: Free usage allows 5 conversions per hour without an account. Wait for the hour to roll over, or upgrade if you convert in volume. On shared Wi-Fi, other people on the same connection may have used part of that quota.
 
-Q: The conversion says it succeeded but the formatting is a mess. Is that a download problem?
-A: No, that's a source problem. Messy EPUB markup carries straight through into the output. Clean the file up in Calibre and convert it again.
-
-Q: Nothing here worked. What should I send to support?
-A: The source format, the target format, the file size, your browser and operating system, and the exact error text you saw. That combination is usually enough to reproduce the issue on the first attempt.`
+Q: Nothing here worked. What should I send support?
+A: Source format, target format, file size, browser, operating system, and the exact error text you saw. That combination is usually enough to reproduce the issue on the first try.`
     }
   ]
 };

@@ -1,123 +1,133 @@
 export const slug = `webhook-integration`;
-export const title = `Webhooks Explained: Get Notified the Moment a Conversion Finishes`;
+export const title = `BookConv Webhooks: Get a Signed Notification the Second Your Conversion Finishes`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
-export const tags = ["webhook", "automation", "integration", "technical"];
+export const tags = ["webhook", "automation", "integration", "bookconv", "technical"];
 
 export const content = {
-  intro: `Asking a server "is it done yet?" every three seconds is a waste of everyone's bandwidth. This guide explains what webhooks are, what a conversion event payload looks like, how to verify one is genuine, and which workflows are worth wiring up.`,
+  intro: `BookConv can POST a signed notification to a URL you control the moment a conversion finishes, so your pipeline stops asking and starts listening. This guide covers where that event fits in our queue, how to verify the HMAC signature, and which automations are actually worth wiring up.`,
   sections: [
     {
-      heading: `What a Webhook Is, and Why Polling Wastes Your Time`,
-      body: `A webhook is an API call in reverse. Normally your code asks our server for information. With a webhook, you hand us a URL you control, and our server sends an HTTP POST to that URL the moment something happens.
+      heading: `Why BookConv Notifies You Instead of Making You Poll`,
+      body: `BookConv doesn't convert your file inside the upload request. The file lands, gets checked, and joins a background queue where a worker picks it up and runs it through our server-side Calibre engine. That's why the page shows a live progress bar instead of freezing until a download appears.
 
-The alternative is polling: a loop that checks a status endpoint until the answer changes. Poll too often and you burn requests on answers you already have. Poll too slowly and your automation sits idle long after the file was ready.
+For a person watching the page, that bar is enough. For a script, it isn't. Something has to answer "is it done yet?" — and if that something is a polling loop, you're spending requests to be told nothing changed.
 
-Webhooks flip the cost. Nothing happens until there's actual news, and when there is, you hear about it in roughly one HTTP request's worth of time.
+A webhook flips the direction. You hand us a URL you own, and we POST to it when the job ends. No loop, no guessed interval, no idle gap between the file being ready and your automation noticing.
 
-This matters most for ebook conversion because conversions aren't instant. Files go into a queue and get picked up by background workers, so the gap between "submitted" and "finished" varies with file size and how busy the system is. We wrote about that pipeline in detail in [how background workers handle conversion jobs](/blog/background-workers).
+A 400 KB EPUB and a 40 MB PDF don't finish in the same time, and neither does a quiet queue and a busy one. We covered that scheduling in [how background workers handle conversion jobs](/blog/background-workers).
 
-Think of it as leaving your phone number instead of standing at the counter. You place the order, walk away, and get a text when it's ready.`
+It's the difference between standing at the counter and leaving your phone number.`
     },
     {
-      heading: `What a Conversion Event Payload Looks Like`,
-      body: `Webhook payloads are usually a small JSON object sent as the request body, with a header or a field naming the event type. Field names vary between services, so treat the shape below as the general pattern rather than a fixed contract.
+      heading: `Where the Event Fires in BookConv's Pipeline`,
+      body: `Knowing what happens before the notification tells you what it can mean.
 
-A conversion-finished event typically carries:
+1. **Upload and checks.** The file has to fit your plan's size limit — 10 MB on the free tier, 50 MB on Pro, 100 MB through the API. DRM-protected files are rejected right here, at upload.
+2. **Queued.** The job joins the background queue with an identifier, and progress starts reporting.
+3. **Converted.** A worker runs the file through Calibre on our servers and writes out the target format.
+4. **Finished.** The job settles into one of two states: success with a download available, or failure with a reason.
+5. **Notified.** That final state is what lands on your endpoint.
 
-- **Event name** such as conversion.completed or conversion.failed, so one endpoint can handle several event types
-- **Job identifier** — the same ID you got back when you submitted the file, which is how you match the event to the work you started
-- **Timestamp** of when the event was generated, useful for ordering and for rejecting stale deliveries
-- **Format details** like the source and target formats, for example EPUB in and MOBI out
-- **Result information** — a download reference for successful jobs, or an error code and message for failed ones
+Two product behaviours shape the handler you write.
 
-Two habits will save you pain later. First, read defensively: check that a field exists before using it, and ignore fields you don't recognise instead of erroring on them. Providers add fields over time, and a parser that rejects unknown keys breaks on a Tuesday for no visible reason.
+Free accounts get 5 conversions per hour. If your automation submits in bursts, expect to hit that ceiling and back off rather than retrying in a tight loop.
 
-Second, don't assume a download reference lives forever. Converted files are temporary by design, so fetch the result soon after the event arrives. If a download does fail on you, [our download troubleshooting notes](/blog/download-troubleshooting) cover the usual causes.
+Download links are also temporary — converted files are deleted after a period, which is good for privacy and bad for a script that saves the URL for tomorrow. Treat the webhook as a starting gun and fetch promptly. If a download fails, [our download troubleshooting notes](/blog/download-troubleshooting) cover the usual causes.
 
-And remember a webhook body is a *notification*, not a source of truth. If the payload disagrees with your records, trust a fresh status check over a message that arrived out of order.`
+### What the notification carries
+
+Payloads are small JSON objects sent as the request body, with the event type named in the body or a header. Field names differ between services, so treat this as the shape of the idea rather than a contract to code against blindly. A finished-conversion event generally tells you:
+
+- **Which event happened** — completed or failed — so one endpoint can handle both
+- **Which job** it refers to, using the identifier you got when you submitted the file
+- **When** it was generated, which lets you order events and drop stale ones
+- **What was converted**, source and target format, EPUB in and MOBI out for example
+- **The result** — a download reference on success, an error code and message on failure
+
+Parse defensively: check a field exists before reading it, and ignore keys you don't recognise. Treat the body as a notification rather than the truth — if it disagrees with your records, trust a fresh status check over a message that may have arrived out of order.`
     },
     {
-      heading: `How BookConv Uses Webhooks Behind the Scenes`,
-      body: `We're not just describing this in the abstract. Webhooks are already load-bearing inside BookConv, and the way we use them is a decent template for how you might use them.
+      heading: `Verifying the Signature So Nobody Can Fake a BookConv Event`,
+      body: `Your endpoint is a public URL. Anyone who guesses it can POST whatever they like, and without verification your system will believe a stranger who claims a job finished.
 
-### Job events from the queue
+That's why BookConv signs its notifications. You hold a signing secret, we compute an HMAC over the exact request body with it, and the result travels in a header. You compute the same hash and compare. A match proves two things at once: the body wasn't altered, and the sender knows the secret.
 
-Every conversion runs as a job on a background queue. Workers emit events when a job completes or fails, each tagged with its job ID. That stream is what any outward notification would be built on — the same signal, delivered externally.
+Four details separate real verification from security theatre.
 
-### Failure alerts to a team channel
+1. **Hash the raw body**, not a parsed-and-re-serialised object. Re-encoding JSON can reorder keys or change whitespace, and then nothing matches.
+2. **Compare in constant time.** A plain string equality check can leak information through how fast it fails.
+3. **Reject outright.** Return 401 and stop. A handler that logs a bad signature and processes the event anyway protects nothing.
+4. **Check the timestamp.** Refuse anything older than a few minutes so a captured request can't be replayed later.
 
-When a job fails, the worker builds a short alert containing the job ID, the source and target formats, and a readable error message, then posts it to a team chat webhook URL. That URL isn't hardcoded; it comes from an environment variable, so the alert channel is a deployment setting rather than a code change. Our [environment variables setup guide](/blog/env-variables-setup) explains how that configuration layer is organised.
+Keep the secret in an environment variable, use a different value per environment, and only accept the callback over HTTPS. Our [environment variables setup guide](/blog/env-variables-setup) covers how we organise that layer.
 
-The design detail worth copying: the alert call is fire-and-forget. If the chat service is down, the notification silently gives up instead of taking the pipeline with it. Notifications should never break the thing they're notifying about.
-
-### Payment events from our billing provider
-
-On the receiving side, our billing runs through Lemon Squeezy, which POSTs subscription and order events to an endpoint on our side. That handler reads a signature header, verifies it before parsing anything, and answers with 401 if the signature doesn't match. Only after that check does it act on the event. Their [webhook documentation](https://docs.lemonsqueezy.com/help/webhooks) is a good example of how a provider should document event types.`
+For the underlying standards, [RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104) defines HMAC, and the [Standard Webhooks specification](https://www.standardwebhooks.com/) collects the header, signing, and versioning conventions most providers have converged on.`
     },
     {
-      heading: `Verifying Signatures So Nobody Can Fake an Event`,
-      body: `Your webhook endpoint is a public URL, and anyone who guesses it can POST whatever they like. Without verification, a stranger can tell your system a payment succeeded or a job finished, and your system will believe them.
+      heading: `How We Use Webhooks Inside BookConv`,
+      body: `We're not describing this from the outside. Webhooks already carry weight inside BookConv, and how we use them is a fair template.
 
-The standard fix is a shared signing secret. The sender computes an HMAC — usually HMAC SHA-256 — over the raw request body using that secret and puts the result in a header. You compute the same HMAC and compare. A match means the body wasn't altered and the sender knows the secret.
+### Job events off the queue
 
-Four rules make the difference between real verification and security theatre:
+Every conversion is a job, and workers emit an event when one completes or fails, tagged with its ID. An outward notification is built from that same stream.
 
-1. **Hash the raw body**, not a re-serialised object. Parsing JSON and stringifying it again can reorder keys or change spacing, and the signature won't match.
-2. **Use a constant-time comparison.** A plain equality check on strings can leak information through how long it takes to fail.
-3. **Reject, don't log-and-continue.** Return 401 and stop. A handler that warns about a bad signature and processes the event anyway offers no protection at all.
-4. **Check the timestamp.** If the payload or headers include one, reject anything older than a few minutes so an attacker can't replay a captured request.
+### Failure alerts into a team channel
 
-Keep the secret in an environment variable, use a different one per environment, and serve the endpoint over HTTPS only.
+When a job fails, the worker builds a short alert with the job ID, the two formats, and a readable error, then posts it to a team chat webhook URL. That URL comes from an environment variable, so moving the alert channel is a deployment setting rather than a code change.
 
-For the underlying specs, [RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104) defines HMAC, and the [Standard Webhooks specification](https://www.standardwebhooks.com/) collects the header, signing, and versioning conventions most providers converge on.`
+The detail worth copying: the call is fire-and-forget. If the chat service is down, the alert gives up quietly instead of taking the pipeline with it. A notification shouldn't break the thing it's notifying about.
+
+### Billing events coming the other way
+
+Our billing runs through Lemon Squeezy, which POSTs subscription and order events to an endpoint on our side. That handler reads the signature header, verifies it before parsing anything, and answers 401 on a mismatch. Their [webhook documentation](https://docs.lemonsqueezy.com/help/webhooks) is a good model for documenting event types.`
     },
     {
-      heading: `Retries, Idempotency, and Workflows Worth Automating`,
-      body: `Delivery isn't guaranteed on the first try. Your server might be redeploying, the network might hiccup, your handler might time out. Well-behaved senders retry with a growing delay, which means your endpoint will sometimes see the same event twice.
+      heading: `Retries, Duplicates, and Automations Worth Building`,
+      body: `Delivery isn't guaranteed first time. Your server might be mid-deploy, the network might hiccup, your handler might time out. Retries go out on a growing delay, so your endpoint will eventually see the same event twice.
 
-Two practices handle that cleanly. Make your handler **idempotent** — key your processing on the job or event ID, and if you've already handled that ID, return success and do nothing. And **respond fast**: acknowledge with a 2xx immediately, then do the real work on your own queue. A handler that spends thirty seconds downloading and reprocessing a file will get retried while it's still running, and now you have two of them.
+Two habits handle that. Make the handler **idempotent** — key your processing on the job or event ID, and if you've already handled it, return success and do nothing. And **answer fast** — send a 2xx straight away, then do the real work on your own queue. A handler that spends thirty seconds downloading and reprocessing a file gets retried while it's still running, and now you have two.
 
-### Things people actually build with this
+### What people actually build on this
 
-- **Build pipelines** — a docs repo commits Markdown, CI produces an EPUB, a conversion turns it into the formats you ship, and the webhook triggers the release step. See [our EPUB to MOBI converter](/convert/epub-to-mobi) for a typical pair in that chain.
-- **Library ingestion** — a personal or team library that files finished conversions into the right folder, tags them, and updates a catalogue entry
-- **Reader notifications** — an email or push message when a long conversion is ready, so nobody sits watching a progress bar
-- **Chat alerts** — failures posted to the channel where someone can act on them, exactly like the internal alerts described above
-- **Usage analytics** — recording conversion counts and durations per format to see which pairs actually get used
+- **Publishing pipelines** — a docs repo commits Markdown, CI builds an EPUB, BookConv produces the formats you ship, and the webhook fires the release step. [Our EPUB to MOBI converter](/convert/epub-to-mobi) is a common link in that chain.
+- **Library ingestion** — finished files sorted into the right folder, tagged, and written into a catalogue
+- **Reader notifications** — a message when a long conversion is ready, so nobody watches a progress bar
+- **Chat alerts** — failures posted where someone can act on them
+- **Usage analytics** — counts and durations per format pair, so you see which conversions get used
 
-Start with one event and one consumer. These systems get complicated fast if you fan out to five destinations before confirming the first one works.`
+Start with one event and one consumer. Confirm it works end to end before fanning out.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Webhooks replace polling.** You publish a URL, the sender POSTs to it when something happens, and nobody burns requests on unchanged status.
-- **Payload shapes vary**, so parse defensively — expect an event name, a job ID, a timestamp, and either a result reference or an error.
-- **Verify every request** with an HMAC over the raw body, a constant-time comparison, and a hard 401 on mismatch. Unverified endpoints are open doors.
-- **Assume duplicates.** Idempotent handlers keyed on the event or job ID turn retries from a bug source into a non-event.
-- **Acknowledge first, work later.** Return 2xx quickly and push heavy processing onto your own queue so the sender doesn't retry mid-job.`
+      body: `- **BookConv converts on a queue**, so finish times vary with file size and load. A webhook names the exact moment instead of making you guess an interval.
+- **Verify every request** with an HMAC over the raw body, a constant-time comparison, and a hard 401 on mismatch. An unverified endpoint is an open door.
+- **Assume duplicates.** Idempotent handlers keyed on the job or event ID turn retries into a non-event.
+- **Acknowledge first, work later.** Return 2xx quickly and push heavy processing onto your own queue.
+- **Fetch results promptly**, because download links are temporary and converted files get deleted after a period.`
     },
     {
       heading: `Frequently Asked Questions`,
       body: `Q: What's the difference between a webhook and an API call?
-A: Direction. With an API call your code initiates the request. With a webhook the other service initiates it against a URL you own. Same HTTP machinery, pointed the opposite way.
-
-Q: Can I use webhooks if my app runs on my laptop?
-A: Not directly, since the sender needs a publicly reachable URL. During development most people use a tunnelling tool that forwards a temporary public address to localhost, then switch to the real domain before going live.
-
-Q: What should my endpoint return?
-A: Any 2xx status, as fast as you can manage. Return 401 for a failed signature check, and a 5xx only when you genuinely want the sender to retry.
-
-Q: What happens if my server is down when an event fires?
-A: Most senders retry on a growing schedule, then give up. That's why webhooks shouldn't be your only source of truth — keep a way to query current status and reconcile anything you missed.
-
-Q: How do I test a webhook handler without triggering real events?
-A: Craft a sample payload, sign it with your test secret the way the sender would, and POST it to your endpoint. Then deliberately break the signature and confirm you get a 401. If the tampered request still gets processed, your verification isn't wired up correctly.
+A: Direction. With an API call your code starts the request. With a webhook we start it against a URL you own. Same HTTP machinery, pointed the other way.
 
 Q: Do I need webhooks just to convert a few files?
-A: No. For one-off conversions the normal upload-and-download flow is simpler. Webhooks earn their keep when conversions are part of a repeating automated process where a human isn't watching.
+A: No. For one-off jobs the normal upload-and-download flow is simpler and the progress bar tells you everything. Webhooks earn their keep when conversion is a step in a repeating process nobody watches.
 
-Q: Is one endpoint enough for multiple event types?
-A: Usually yes, and it's easier to secure. Read the event name from the payload and branch from there, logging unknown names rather than treating them as errors.`
+Q: Will I get an event for a file BookConv rejects?
+A: Rejections for DRM protection or an oversized upload happen before a job exists, so that answer comes back in the upload response, not by webhook. The failed event covers problems during conversion.
+
+Q: Can I receive webhooks while developing on my laptop?
+A: Not directly — we need a publicly reachable URL. Most people use a tunnelling tool that forwards a temporary public address to localhost, then switch to the real domain before launch.
+
+Q: What should my endpoint return?
+A: Any 2xx, as fast as you can manage. Return 401 when verification fails, and 5xx only if you want a retry.
+
+Q: What if my server is down when the event fires?
+A: Retries go out on a growing schedule, then stop. So don't make the webhook your only source of truth — keep a way to check status and reconcile what you missed.
+
+Q: How do I test my signature check without a real conversion?
+A: Sign a sample payload with your test secret the way we would and POST it to your endpoint. Then change one character and confirm you get a 401. If the tampered request still gets processed, verification isn't wired up.`
     }
   ]
 };
