@@ -1,7 +1,7 @@
 import type { BlogPostMeta } from "./types";
-import * as post1 from "./how-to-convert-epub-to-mobi-en";
-import * as post2 from "./ebook-formats-explained-en";
-import * as post3 from "./why-convert-lit-to-epub-en";
+import * as post1 from "./how-to-convert-epub-to-mobi";
+import * as post2 from "./ebook-formats-explained";
+import * as post3 from "./why-convert-lit-to-epub";
 import * as post4 from "./epub-to-mobi-guide";
 import * as post5 from "./pdf-to-epub-guide";
 import * as post6 from "./download-troubleshooting";
@@ -10,9 +10,10 @@ import * as post8 from "./env-variables-setup";
 import * as post9 from "./webhook-integration";
 import * as post10 from "./sitemap-seo-guide";
 
-// 保留英文版（正文英文）。中文版（how-to-convert-epub-to-mobi / ebook-formats-explained /
-// why-convert-lit-to-epub，正文为中文）已按需求删除。
-// 另含 codex 生成的 7 篇英文指南（epub-to-mobi-guide 等，由 .mdx 转换而来）。
+// Keep the English versions (English body). The Chinese versions
+// (how-to-convert-epub-to-mobi / ebook-formats-explained / why-convert-lit-to-epub,
+// Chinese body) were deleted per request.
+// Also includes 7 codex-generated English guides (epub-to-mobi-guide etc., converted from .mdx).
 const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {

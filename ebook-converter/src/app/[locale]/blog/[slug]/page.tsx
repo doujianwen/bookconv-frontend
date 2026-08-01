@@ -2,9 +2,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
-import * as blogConvertEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
-import * as blogEbookFormatsEn from "@/data/blog/ebook-formats-explained-en"
-import * as blogConvertLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
+import * as blogConvertEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi"
+import * as blogEbookFormatsEn from "@/data/blog/ebook-formats-explained"
+import * as blogConvertLitToEpubEn from "@/data/blog/why-convert-lit-to-epub"
 import * as blogEpubToMobiGuide from "@/data/blog/epub-to-mobi-guide"
 import * as blogPdfToEpubGuide from "@/data/blog/pdf-to-epub-guide"
 import * as blogDownloadTroubleshooting from "@/data/blog/download-troubleshooting"
@@ -25,7 +25,7 @@ interface BlogPostData {
 }
 
 const BLOG_POSTS: Record<string, BlogPostData> = {
-  "how-to-convert-epub-to-mobi-en": {
+  "how-to-convert-epub-to-mobi": {
     slug: blogConvertEpubMobiEn.slug,
     title: blogConvertEpubMobiEn.title,
     date: blogConvertEpubMobiEn.date,
@@ -33,7 +33,7 @@ const BLOG_POSTS: Record<string, BlogPostData> = {
     tags: blogConvertEpubMobiEn.tags,
     content: blogConvertEpubMobiEn.content,
   },
-  "ebook-formats-explained-en": {
+  "ebook-formats-explained": {
     slug: blogEbookFormatsEn.slug,
     title: blogEbookFormatsEn.title,
     date: blogEbookFormatsEn.date,
@@ -41,7 +41,7 @@ const BLOG_POSTS: Record<string, BlogPostData> = {
     tags: blogEbookFormatsEn.tags,
     content: blogEbookFormatsEn.content,
   },
-  "why-convert-lit-to-epub-en": {
+  "why-convert-lit-to-epub": {
     slug: blogConvertLitToEpubEn.slug,
     title: blogConvertLitToEpubEn.title,
     date: blogConvertLitToEpubEn.date,

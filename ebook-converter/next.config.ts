@@ -83,7 +83,6 @@ const config: NextConfig = {
   },
   experimental: {},
   compress: false,
-  turbopack: {},
 };
 
 export default withNextIntl("./src/i18n/request.ts")(config);
