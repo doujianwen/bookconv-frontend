@@ -1,11 +1,11 @@
 export const slug = `how-to-convert-epub-to-mobi-en`;
-export const title = `EPUB to MOBI: A Step-by-Step Conversion Walkthrough for Kindle`;
+export const title = `How to Convert EPUB to MOBI on BookConv (Step-by-Step)`;
 export const date = `2026-07-12`;
 export const author = "BookConv Team";
-export const tags = ["EPUB", "MOBI", "Kindle", "conversion", "step-by-step"];
+export const tags = ["EPUB", "MOBI", "Kindle", "BookConv", "step-by-step"];
 
 export const content = {
-  intro: `Need to convert EPUB to MOBI for an older Kindle? The short version: clean up the EPUB, run it through a Calibre-based converter, sideload the result over USB, then check the table of contents before you trust it. This walkthrough covers each step and the checks that catch a bad conversion early.`,
+  intro: `Want to convert EPUB to MOBI without installing anything? On BookConv the whole job takes under a minute: upload your EPUB, pick MOBI, let the Calibre engine run server-side, then download the file. This walkthrough covers the exact clicks, the checks that catch bad conversions early, and when MOBI is even the right target.`,
   sections: [
     {
       heading: `Do You Actually Need MOBI?`,
@@ -24,7 +24,7 @@ If your device is a recent Paperwhite, Oasis, Scribe or base Kindle, [convert to
 Worth knowing why EPUB is the safer archive format: it's an open standard maintained by the [W3C](https://www.w3.org/TR/epub-33/), while MOBI is a retired Amazon format. Keep the EPUB, convert copies. For a wider comparison of the two, see our [EPUB to MOBI format guide](/blog/epub-to-mobi-guide).`
     },
     {
-      heading: `Step 1: Prepare the EPUB Before You Convert`,
+      heading: `Step 1: Prepare the EPUB Before Uploading`,
       body: `Ten minutes of prep saves an hour of re-converting. Four things to check.
 
 **Open the EPUB first.** If it won't open in a reader app, converting won't fix it — you'll just get a broken MOBI. Track down a fresh copy of the source instead.
@@ -36,34 +36,25 @@ Worth knowing why EPUB is the safer archive format: it's an open standard mainta
 **Fix the metadata now.** The title and author fields inside the EPUB become what your Kindle shows on its home screen. If the file says "Unknown Author", your library will too. Calibre's metadata editor sorts this out in a couple of clicks, and it's far less annoying than renaming books on a six-inch screen later.`
     },
     {
-      heading: `Step 2: Choose a Conversion Method`,
-      body: `Three realistic options, and the right one depends on how many books you have.
+      heading: `Step 2: Convert on BookConv`,
+      body: `BookConv runs the same [Calibre](https://calibre-ebook.com/) ebook-convert engine you'd use on a desktop, but on our servers, so nothing installs and nothing times out your laptop.
 
-### Online converter — fastest for a few books
-Upload, wait, download. Nothing to install, works on a Chromebook or a phone, and BookConv runs the Calibre engine on the server so the output matches what desktop Calibre would produce. Best when you're converting one book or a small handful.
+### Upload the EPUB
+Open the [EPUB to MOBI converter](/convert/epub-to-mobi). Drag the file onto the upload area, or click to browse. The uploader checks the size immediately and rejects anything over your plan limit with a clear message, so you don't waste time waiting for a job that was never going to run.
 
-### Desktop Calibre — most control
-[Calibre](https://calibre-ebook.com/) is free and open source. You get output profiles, CSS overrides, custom conversion rules and unlimited batch jobs. The trade-off is a crowded interface and a proper install. If you're migrating hundreds of books, this is the one.
+### Check the preview
+BookConv reads the EPUB metadata and shows you the detected title, author and cover before conversion starts. If the metadata is wrong, stop and fix it in Calibre first — the output can only be as clean as the input.
 
-### Send to Kindle — skip the conversion entirely
-Amazon's [Send to Kindle](https://www.amazon.com/sendtokindle) now accepts EPUB and converts on Amazon's side. It won't take new MOBI uploads. If your Kindle is modern, this is usually easier than converting anything yourself.`
+### Start the conversion
+Click **Convert**. Your file joins a server-side job queue, and the page shows a progress bar while the Calibre engine unpacks the EPUB, rewrites the markup for MOBI, re-encodes images and repackages everything. Most novels finish in seconds; image-heavy books take longer.
+
+### Download the result
+When the bar completes, the download button appears. Click it immediately — the generated file is served from a temporary link and is removed from the server once the link expires. If the download doesn't start, the [download troubleshooting guide](/blog/download-troubleshooting) walks through the usual browser blockers.
+
+The free tier gives you five conversions per hour with no account required, which is plenty for a small library migration.`
     },
     {
-      heading: `Step 3: Run the Conversion`,
-      body: `On BookConv the whole job is five steps:
-
-1. Open the [EPUB to MOBI converter](/convert/epub-to-mobi)
-2. Drag your EPUB onto the upload area, or click to browse for it
-3. Check the detected title and author in the preview panel
-4. Start the conversion — a Calibre job runs server-side
-5. Download the MOBI once the progress bar completes
-
-Most novels finish in well under a minute. Image-heavy files take longer, and any job that runs past the server's two-minute limit fails cleanly instead of hanging. If you hit that, shrink the source images or convert locally in Calibre where nothing times out.
-
-A couple of practical notes. The free tier allows five conversions an hour and doesn't ask for a credit card. Download links are temporary and the converted file is removed once the link expires, so save it before you close the tab. If the download itself misbehaves, our [download troubleshooting checklist](/blog/download-troubleshooting) walks through the usual causes.`
-    },
-    {
-      heading: `Step 4: Verify the MOBI Before You Trust It`,
+      heading: `Step 3: Verify the MOBI Before You Trust It`,
       body: `A file appearing in your Downloads folder isn't proof the conversion worked. Two minutes of checking is worth it.
 
 **Open it on a computer first.** Calibre's built-in viewer or Amazon's Kindle Previewer renders MOBI much the way a device does, and it's far quicker than copying to hardware and back.
@@ -80,16 +71,33 @@ A couple of practical notes. The free tier allows five conversions an hour and d
 When formatting looks wrong, the cause is nearly always in the source EPUB rather than the converter. Tidy the EPUB in Calibre, then convert again — same input, same output, every time.`
     },
     {
+      heading: `When to Use Desktop Calibre Instead`,
+      body: `BookConv is fastest for one-off conversions and jobs on computers where you can't install software. Desktop Calibre wins when you need more control.
+
+Use Calibre directly for:
+
+- **Hundreds of books at once** — batch conversion with custom output profiles
+- **Fine styling control** — CSS overrides, custom fonts and per-device profiles
+- **Broken sources** — structure detection, XPath-based TOC fixing and metadata repair
+- **Offline work** — no upload, no queue, no network dependency
+
+Both tools use the same conversion engine, so the output quality is identical. The difference is convenience versus control.`
+    },
+    {
       heading: `Key Takeaways`,
       body: `- **Legacy only** — convert to MOBI for pre-2012 Kindles you sideload to; otherwise AZW3 or EPUB is the better target
 - **Prep pays** — a clean, DRM-free EPUB with correct metadata converts cleanly on the first attempt
-- **Two good tools** — BookConv for speed, desktop Calibre for control and batches; both use the same engine
+- **BookConv is the fastest path** — upload, click Convert, download; the Calibre engine runs server-side with nothing to install
+- **Watch the limits** — 10MB free, 50MB Pro, 100MB API; five conversions per hour on the free tier
 - **Verify every file** — table of contents, chapter breaks, images and special characters, before deleting the original
 - **Save promptly** — download links expire and converted files are deleted from the server afterwards`
     },
     {
       heading: `Frequently Asked Questions`,
-      body: `Q: Does converting EPUB to MOBI lose any content?
+      body: `Q: Does BookConv really use the same engine as Calibre?
+A: Yes. The conversion is powered by Calibre's ebook-convert binary running on our servers. The output matches what desktop Calibre would produce for the same input.
+
+Q: Does converting EPUB to MOBI lose any content?
 A: No text is lost. Words, paragraphs, bold and italic all survive the trip. What does get simplified is complex styling — multi-column layouts, custom fonts and fancy CSS, because MOBI's rendering engine predates most of that.
 
 Q: Why won't my Kindle show the MOBI I just copied over?
@@ -104,11 +112,11 @@ A: 10MB, which covers virtually every novel. Pro handles up to 50MB and the API 
 Q: MOBI or AZW3 for my Kindle?
 A: AZW3 for anything made since 2012. It supports proper CSS, embedded fonts and better line breaking, so the reading experience is noticeably better. Save MOBI for genuinely old hardware.
 
-Q: How long does a conversion take?
-A: Seconds for a typical novel. Larger or image-heavy books take longer, and jobs that exceed the two-minute server limit fail rather than stall, so you'll know quickly either way.
+Q: How long does a conversion take on BookConv?
+A: Seconds for a typical novel. Larger or image-heavy books take longer, and jobs that exceed the server's two-minute limit fail rather than stall, so you'll know quickly either way.
 
 Q: How do I convert a whole shelf of books at once?
-A: Batch conversion is a paid feature here; desktop Calibre does unlimited batches for free. For five or ten books, running them one at a time through the [EPUB to MOBI tool](/convert/epub-to-mobi) is honestly faster than setting up anything else.`
+A: For large libraries, desktop Calibre is the better tool — it does unlimited batches for free. For five or ten books, running them one at a time through the [EPUB to MOBI tool](/convert/epub-to-mobi) is honestly faster than setting up anything else.`
     }
   ]
 };

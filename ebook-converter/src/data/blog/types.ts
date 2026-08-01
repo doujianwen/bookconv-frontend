@@ -45,7 +45,7 @@ export function generateTocHtml(headings: Array<{ id: string; text: string; leve
   if (headings.length === 0) return "";
 
   let html = '<nav class="mb-8 rounded-xl border bg-gray-50 p-5" aria-label="Table of contents">';
-  html += '<h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">Ŀ¼</h2>';
+  html += '<h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">On this page</h2>';
   html += '<ul class="space-y-1.5 text-sm">';
 
   headings.forEach((h) => {

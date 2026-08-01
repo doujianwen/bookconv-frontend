@@ -1,11 +1,11 @@
 export const slug = 'why-convert-lit-to-epub-en';
-export const title = 'Why Convert LIT to EPUB (And How to Do It Properly)';
+export const title = 'Why Convert LIT to EPUB (And How to Do It on BookConv)';
 export const date = '2026-07-12';
 export const author = 'BookConv Team';
-export const tags = ['LIT', 'EPUB', 'Microsoft Reader', 'Calibre', 'Ebook Conversion', 'Archiving'];
+export const tags = ['LIT', 'EPUB', 'Microsoft Reader', 'BookConv', 'Ebook Conversion', 'Archiving'];
 
 export const content = {
-  intro: `LIT is Microsoft Reader's ebook format, and Microsoft shut that app down more than a decade ago. Converting LIT to EPUB is the only practical way to keep those books readable — here's how the conversion works, what survives it, and when it's worth your time.`,
+  intro: `LIT is Microsoft Reader's ebook format, and Microsoft shut that app down more than a decade ago. Converting LIT to EPUB is the only practical way to keep those books readable. You can do it online with BookConv in under a minute, or use Calibre if you need to batch hundreds of files at once.`,
   sections: [
     {
       heading: `What LIT Is, and Why It Stopped Working`,
@@ -38,8 +38,23 @@ Before you plan anything, check whether your files came from a store. Purchased 
 And once a book is EPUB, it can become anything else. [Convert EPUB to AZW3](/convert/epub-to-azw3) if your actual reading happens on a Kindle.`
     },
     {
-      heading: `How to Convert LIT to EPUB with Calibre`,
-      body: `Calibre is the standard desktop tool for this job, and it's free.
+      heading: `Convert LIT to EPUB on BookConv`,
+      body: `If you have a handful of LIT files and don't want to install anything, BookConv is the fastest route. The conversion uses the same Calibre engine as the desktop app, but runs in your browser.
+
+### Upload the LIT file
+Go to the [LIT to EPUB converter](/convert/lit-to-epub). Drag the file onto the upload area or click to browse. The uploader checks the file size immediately — free conversions accept up to 10MB, which covers almost every LIT novel.
+
+### Check the preview
+BookConv reads the metadata and shows the detected title and author before you start. LIT files often have messy metadata, so this is your chance to spot problems before they land in your library.
+
+### Convert and download
+Click **Convert**. The Calibre engine runs server-side, unpacks the LIT container, rebuilds the markup as EPUB, and packages the result. When the progress bar finishes, click the download button right away — the link is temporary and the file is removed from the server after it expires.
+
+For a single book or a small rescue job, this is far less work than installing and learning Calibre.`
+    },
+    {
+      heading: `Convert LIT to EPUB with Calibre (Batch Option)`,
+      body: `Calibre is the standard desktop tool for this job, and it's free. It shines when you have dozens or hundreds of LIT files to rescue.
 
 1. Install Calibre from the [official download page](https://calibre-ebook.com/download) and open it.
 2. Click **Add books** and select your LIT files. A whole folder at once is fine.
@@ -48,9 +63,7 @@ And once a book is EPUB, it can become anything else. [Convert EPUB to AZW3](/co
 5. Open the **Metadata** panel and fix the title and author while you're in there. Old LIT metadata is usually a mess.
 6. Click **OK** and wait. A typical novel finishes in seconds.
 
-The converted file lands in Calibre's library folder, so use **Save to disk** to pull it out where you want it. The [Calibre conversion manual](https://manual.calibre-ebook.com/conversion.html) covers structure detection and styling options if a particular book comes out wrong.
-
-Don't feel like installing anything for two files? Our [LIT to EPUB converter](/convert/lit-to-epub) handles the conversion online and hands you the result.`
+The converted file lands in Calibre's library folder, so use **Save to disk** to pull it out where you want it. The [Calibre conversion manual](https://manual.calibre-ebook.com/conversion.html) covers structure detection and styling options if a particular book comes out wrong.`
     },
     {
       heading: `What Survives the Conversion, and What Doesn't`,
@@ -87,7 +100,8 @@ Then back the results up somewhere sensible. The entire point of this exercise i
       heading: `Key Takeaways`,
       body: `- **LIT is a dead format** — Microsoft retired the Reader app in 2012, and no current platform opens it.
 - **EPUB is the replacement** — open standard, reflowable, and supported by nearly every non-Kindle reader.
-- **Calibre does the heavy lifting** — free, batch-capable, and it lets you fix broken metadata along the way.
+- **BookConv handles small jobs fast** — upload, convert, download; no install, no account, powered by Calibre.
+- **Calibre handles big libraries** — free, batch-capable, and it lets you fix broken metadata along the way.
 - **DRM blocks conversion** — protected LIT files won't convert, and there's no legitimate workaround.
 - **Always check the output** — skim a chapter and the table of contents before deleting the originals.`
     },
@@ -98,6 +112,9 @@ A: No. Microsoft ended distribution in 2012 and the app doesn't run on current W
 
 Q: Is converting my own LIT books legal?
 A: Converting DRM-free files you own, for your own use, is generally fine. Removing DRM is a separate question and not something we support. Treat protected files as unreadable.
+
+Q: Can I convert LIT to EPUB without installing software?
+A: Yes. BookConv's [LIT to EPUB converter](/convert/lit-to-epub) runs the Calibre engine in the cloud, so you only need a browser.
 
 Q: Will the book look different after conversion?
 A: A little. Text, chapters, and images carry over cleanly, while exact spacing and page breaks may shift. EPUB reflows anyway, so fixed pagination was never going to survive the trip.

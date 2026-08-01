@@ -20,7 +20,7 @@ export function generateRssFeed(baseUrl: string): string {
     <title>BookConv Blog</title>
     <link>${baseUrl}</link>
     <description>Expert guides on ebook format conversion</description>
-    <language>zh-CN</language>
+    <language>en</language>
     <lastBuildDate>${new Date(posts[0]?.date || Date.now()).toUTCString()}</lastBuildDate>
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml" />
     ${items}
