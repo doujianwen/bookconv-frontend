@@ -15,7 +15,7 @@ export interface KeywordData {
 export const PHASES = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5'];
 
 export const KEYWORDS: KeywordData[] = [
-  // P0 — 核心转换页面 (最高优先级)
+  // P0 — Core conversion pages (highest priority)
   { source: 'epub', target: 'pdf', keyword: 'epub to pdf converter', kd: 72, searchVolume: 18100, phase: 'P0', status: 'live' },
   { source: 'mobi', target: 'epub', keyword: 'mobi to epub converter', kd: 65, searchVolume: 9900, phase: 'P0', status: 'live' },
   { source: 'azw3', target: 'epub', keyword: 'azw3 to epub converter', kd: 58, searchVolume: 5400, phase: 'P0', status: 'live' },
@@ -42,7 +42,7 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'html', target: 'epub', keyword: 'html to epub converter', kd: 30, searchVolume: 1900, phase: 'P0', status: 'live' },
   { source: 'epub', target: 'text', keyword: 'epub to text converter', kd: 40, searchVolume: 2900, phase: 'P0', status: 'live' },
 
-  // P1 — 高价值扩展
+  // P1 — High-value expansions
   { source: 'pdf', target: 'txt', keyword: 'pdf to text extractor', kd: 68, searchVolume: 8100, phase: 'P1', status: 'planned' },
   { source: 'pdf', target: 'docx', keyword: 'pdf to word converter', kd: 85, searchVolume: 22200, phase: 'P1', status: 'planned' },
   { source: 'epub', target: 'docx', keyword: 'epub to word docx', kd: 45, searchVolume: 2400, phase: 'P1', status: 'planned' },
@@ -54,7 +54,7 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'azw', target: 'epub', keyword: 'azw to epub converter', kd: 28, searchVolume: 1000, phase: 'P1', status: 'planned' },
   { source: 'pdb', target: 'epub', keyword: 'pdb to epub converter', kd: 18, searchVolume: 400, phase: 'P1', status: 'planned' },
 
-  // P2 — 长尾关键词
+  // P2 — Long-tail keywords
   { source: 'epub', target: 'lrf', keyword: 'epub to lrf converter', kd: 15, searchVolume: 200, phase: 'P2', status: 'planned' },
   { source: 'prc', target: 'epub', keyword: 'prc to epub converter', kd: 12, searchVolume: 300, phase: 'P2', status: 'planned' },
   { source: 'snb', target: 'epub', keyword: 'snb to epub converter', kd: 10, searchVolume: 200, phase: 'P2', status: 'planned' },
@@ -66,7 +66,7 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'txt', target: 'azw3', keyword: 'txt to azw3 converter', kd: 22, searchVolume: 1000, phase: 'P2', status: 'planned' },
   { source: 'pdf', target: 'azw', keyword: 'pdf to azw converter', kd: 20, searchVolume: 800, phase: 'P2', status: 'planned' },
 
-  // P3 — 极低搜索量
+  // P3 — Very low search volume
   { source: 'html', target: 'pdf', keyword: 'html to pdf converter', kd: 70, searchVolume: 12100, phase: 'P3', status: 'planned' },
   { source: 'epub', target: 'zip', keyword: 'epub to zip', kd: 15, searchVolume: 400, phase: 'P3', status: 'planned' },
 ];

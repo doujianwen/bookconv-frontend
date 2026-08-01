@@ -12,8 +12,9 @@ const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
 export const MAX_RETRIES = parseInt(process.env.MAX_CONVERSION_RETRIES || '3', 10);
 
-// 结构化转换审计日志（供 ai-audit.js 统计真实成功率，格式匹配其正则 /job id:/、/succeeded/、/failed/）
-// 路径与 ai-audit.js 的 logs/conversion.log 一致（仓库根 logs/，容器内 /logs/）
+// Structured conversion audit log (consumed by ai-audit.js for true success-rate stats;
+// matches its regexes /job id:/, /succeeded/, /failed/)
+// Path matches ai-audit.js's logs/conversion.log (repo-root logs/, /logs/ in container)
 const CONVERSION_AUDIT_LOG = path.join(__dirname, "..", "..", "..", "logs", "conversion.log");
 function appendConversionAuditLog(
   jobId: string,
@@ -33,7 +34,7 @@ function appendConversionAuditLog(
     ].filter(Boolean);
     appendFileSync(CONVERSION_AUDIT_LOG, parts.join(" ") + "\n");
   } catch {
-    // 审计日志写入失败不应影响转换主流程
+    // Audit-log write failure must not break the conversion flow
   }
 }
 

@@ -8,7 +8,6 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import './globals.css'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
-import { PlausibleScript } from '@/components/analytics/PlausibleScript'
 // Initialize Sentry in production (side-effect import)
 import '@/lib/sentry-setup'
 
@@ -94,8 +93,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel='icon' href='/icon.svg' type="image/svg+xml" sizes='any' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
         <link rel='manifest' href='/manifest.json' />
-        {/* Plausible Analytics */}
-        <PlausibleScript />
+
         {/* Google Analytics 4 */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJTM9CFPWZ" />
         <script
@@ -190,12 +188,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               ],
             }),
           }}
-        />
-              {/* Plausible Analytics */}
-        <script
-          defer
-          data-domain="bookconv.com"
-          src="https://plausible.io/js/plausible.js"
         />
       </head>
       <body className='min-h-screen bg-gray-50 font-sans text-gray-900 antialiased'>

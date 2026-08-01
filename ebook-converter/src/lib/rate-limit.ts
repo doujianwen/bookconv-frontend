@@ -4,10 +4,12 @@ import { getRedisClient } from './redis';
 import { loggers as log } from './logger';
 
 /**
- * 分层限速策略配置
+ * Layered rate-limit strategy configuration.
  *
- * 使用 Redis 滑动窗口计数器实现，支持多实例部署、按 IP/用户/端点区分限速。
- * Redis 不可用时自动降级为内存限速（per-instance，但总比没有好）。
+ * Implemented with a Redis sliding-window counter, supporting multi-instance
+ * deployments and per-IP / per-user / per-endpoint limits.
+ * When Redis is unavailable it gracefully degrades to an in-memory limiter
+ * (per-instance, but better than nothing).
  */
 
 export interface RateLimitResult {
@@ -18,25 +20,25 @@ export interface RateLimitResult {
 }
 
 export interface RateLimitOptions {
-  /** 窗口大小（毫秒），默认 60 秒 */
+  /** Window size in milliseconds (default 60s) */
   windowMs?: number;
-  /** 窗口内最大请求数，默认 100 */
+  /** Maximum requests allowed within the window (default 100) */
   maxRequests?: number;
 }
 
-/** 预定义的分层限速策略 */
+/** Pre-defined layered rate-limit strategies */
 export const RATE_LIMIT_STRATEGIES = {
-  /** 未认证用户：每 IP 60 秒 60 次 */
+  /** Anonymous users: 60 requests per IP per 60s */
   anonymous: { windowMs: 60_000, maxRequests: 60 },
-  /** 已认证用户：每用户 60 秒 300 次 */
+  /** Authenticated users: 300 requests per user per 60s */
   authenticated: { windowMs: 60_000, maxRequests: 300 },
-  /** 转换接口：每 IP 60 秒 20 次（ heavier operation ）*/
+  /** Convert API: 20 requests per IP per 60s (heavier operation) */
   convertApi: { windowMs: 60_000, maxRequests: 20 },
-  /** 支付回调：每 IP 60 秒 10 次 */
+  /** Payment webhook: 10 requests per IP per 60s */
   paymentWebhook: { windowMs: 60_000, maxRequests: 10 },
-  /** 健康检查：不限速 */
+  /** Health check: not rate-limited */
   health: { windowMs: 1_000, maxRequests: 999_999 },
-  /** 下载接口：每 IP 3600 秒 50 次 */
+  /** Download API: 50 requests per IP per 3600s */
   downloadApi: { windowMs: 3600_000, maxRequests: 50 },
 } as const;
 
@@ -61,7 +63,7 @@ const CLOUDFLARE_CIDRS = [
   '104.16.0.0/13',
 ] as const;
 
-// 鈹€鈹€ In-memory fallback store 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
+// ---- In-memory fallback store ----
 interface MemRecord {
   count: number;
   windowStart: number;
@@ -97,12 +99,12 @@ function memCheck(identifier: string, windowMs: number, maxRequests: number): Ra
 }
 
 /**
- * 基于 Redis 的滑动窗口计数器限速
+ * Redis-based sliding-window counter rate limiter.
  *
- * 算法：在每个时间窗口开始时重置计数器，窗口内累计请求。
- * 使用 Redis INCR + EXPIRE 保证原子性和自动过期。
+ * Algorithm: reset the counter at the start of each time window and accumulate
+ * requests within the window. Uses Redis INCR + EXPIRE for atomicity and auto-expiry.
  *
- * Redis 不可用时自动降级为内存限速（per-instance）。
+ * Gracefully degrades to an in-memory limiter when Redis is unavailable.
  */
 export async function checkRateLimit(
   identifier: string,
@@ -141,7 +143,7 @@ export async function checkRateLimit(
     const remaining = Math.max(0, maxRequests - currentCount);
     const allowed = currentCount <= maxRequests;
 
-    // 计算重试等待时间
+    // Compute retry-after wait time
     let retryAfter: number | undefined;
     if (!allowed) {
       const ttl = await redis.ttl(key);
@@ -162,7 +164,7 @@ export async function checkRateLimit(
 }
 
 /**
- * 构建限速响应头
+ * Build rate-limit response headers
  */
 export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number) {
   const headers: Record<string, string> = {
@@ -265,7 +267,7 @@ function ipInAnyCidr(ip: string, cidrs: readonly string[]): boolean {
 }
 
 /**
- * 从 NextRequest 中提取标识符（IP 或用户 ID）
+ * Build the rate-limit identifier (IP or user ID) from a NextRequest
  */
 export function getRateLimitIdentifier(
   request: any,
@@ -279,7 +281,7 @@ export function getRateLimitIdentifier(
 }
 
 /**
- * 便捷函数：使用预定义策略进行限速
+ * Convenience helper: rate-limit using a predefined strategy
  */
 export async function checkRateLimitWithStrategy(
   request: any,
