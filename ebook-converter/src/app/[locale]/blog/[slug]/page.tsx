@@ -157,6 +157,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
   const baseUrl = "https://bookconv.com"
   const postUrl = `${baseUrl}/blog/${post.slug}`
   const { source, target } = extractSourceTarget(post.title)
+  const sections = post.content?.sections || []
 
   return (
     <>
@@ -183,13 +184,15 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
             inLanguage: "en-US",
-            wordCount: (post.content?.intro || "").split("\s").length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split("\s").length, 0) || 0),
+            wordCount:
+              (post.content?.intro || "").split(/\s/).length +
+              (sections.reduce((a, s) => a + (s.body || "").split(/\s/).length, 0) || 0),
             keywords: post.tags.join(", "),
           }),
         }}
       />
 
-      <main className="mx-auto max-w-3xl px-4 py-16">
+      <main className="mx-auto max-w-5xl px-4 py-16">
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
             <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
@@ -219,17 +222,39 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           </div>
         </header>
 
-        <article className="prose prose-gray max-w-none">
-          {post.content?.intro && (
-            <p className="text-lg text-gray-700 leading-relaxed border-l-4 border-blue-500 pl-4 italic">{post.content.intro}</p>
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:gap-12">
+          <article className="prose prose-gray max-w-none">
+            {post.content?.intro && (
+              <p className="text-lg leading-relaxed text-gray-700 border-l-4 border-blue-500 pl-4 italic">{post.content.intro}</p>
+            )}
+            {sections.map((section, index) => {
+              const id = slugify(section.heading)
+              return (
+                <section key={index} className="mt-8">
+                  <h2 id={id} className="scroll-mt-24 text-2xl font-bold text-gray-900">{section.heading}</h2>
+                  <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(section.body) }} />
+                </section>
+              )
+            })}
+          </article>
+
+          {sections.length > 1 && (
+            <aside className="hidden lg:block">
+              <div className="sticky top-24">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">On this page</p>
+                <ul className="space-y-2 text-sm">
+                  {sections.map((section, index) => (
+                    <li key={index}>
+                      <a href={`#${slugify(section.heading)}`} className="text-gray-500 hover:text-blue-600 hover:underline">
+                        {section.heading}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
           )}
-          {post.content?.sections?.map((section, index) => (
-            <section key={index} className="mt-8">
-              <h2 className="text-2xl font-bold text-gray-900">{section.heading}</h2>
-              <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(section.body) }} />
-            </section>
-          ))}
-        </article>
+        </div>
 
         {(source || target) && (
           <section className="mt-12 rounded-xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
@@ -269,23 +294,89 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 }
 
 function extractSourceTarget(title: string): { source?: string; target?: string } {
-  const patterns = [/(w+)s+tos+(w+)/i, /(w+)s*vss*(w+)/i]
-  for (const pattern of patterns) {
-    const match = title.match(pattern)
-    if (match) return { source: match[1], target: match[2] }
-  }
+  const match = title.match(/(\w+)\s+to\s+(\w+)/i)
+  if (match) return { source: match[1], target: match[2] }
   return {}
 }
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+}
+
+function inlineMd(s: string): string {
+  let t = escapeHtml(s)
+  t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+  t = t.replace(/\*(.+?)\*/g, "<em>$1</em>")
+  t = t.replace(/`([^`]+)`/g, '<code class="rounded bg-gray-100 px-1 py-0.5 text-sm text-pink-600">$1</code>')
+  t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
+  return t
+}
+
+function slugify(heading: string): string {
+  return heading
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
 function renderMarkdownToHtml(markdown: string): string {
-  let html = markdown.replace(/\\n\\n/g, "\n\n").replace(/\\n/g, "<br />")
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class=\"list-disc pl-6 space-y-2\">$&</ul>")
-  html = html.replace(/\n\n/g, "</p><p>")
-  html = "<p>" + html + "</p>"
-  html = html.replace(/<p>\s*<\/p>/g, "")
-  return html
+  const normalized = markdown.replace(/\r\n/g, "\n").replace(/---+/g, "").trim()
+  const blocks = normalized.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean)
+  const html: string[] = []
+
+  for (const block of blocks) {
+    const lines = block.split("\n").map((l) => l.trim()).filter(Boolean)
+    if (lines.length === 0) continue
+
+    const qIdx = lines.findIndex((l) => /^(?:\*\*)?(?:#{1,4}\s*)?Q:\s/i.test(l))
+    if (qIdx !== -1) {
+      const qRaw = lines[qIdx].replace(/^(?:\*\*\s*)?(?:#{1,4}\s*)?Q:\s*/i, "").replace(/\*\*$/, "")
+      const answer = lines.filter((_, i) => i !== qIdx).join(" ").replace(/^A:\s*/i, "")
+      html.push(
+        `<div class="my-4 rounded-lg border border-gray-200 bg-gray-50 p-4">` +
+          `<p class="mb-1 font-semibold text-gray-900">Q: ${inlineMd(qRaw)}</p>` +
+          (answer ? `<p class="text-gray-700">${inlineMd(answer)}</p>` : "") +
+        `</div>`
+      )
+      continue
+    }
+
+    if (lines.length === 1) {
+      const h3 = lines[0].match(/^###\s+(.*)$/)
+      if (h3) {
+        html.push(`<h3 class="mt-8 mb-3 text-xl font-bold text-gray-900">${inlineMd(h3[1])}</h3>`)
+        continue
+      }
+      const h4 = lines[0].match(/^####\s+(.*)$/)
+      if (h4) {
+        html.push(`<h4 class="mt-6 mb-2 text-lg font-semibold text-gray-900">${inlineMd(h4[1])}</h4>`)
+        continue
+      }
+    }
+
+    if (lines.every((l) => /^[-*]\s+/.test(l))) {
+      html.push(
+        `<ul class="my-4 list-disc space-y-1 pl-6">${lines
+          .map((l) => `<li>${inlineMd(l.replace(/^[-*]\s+/, ""))}</li>`)
+          .join("")}</ul>`
+      )
+      continue
+    }
+    if (lines.every((l) => /^\d+\.\s+/.test(l))) {
+      html.push(
+        `<ol class="my-4 list-decimal space-y-1 pl-6">${lines
+          .map((l) => `<li>${inlineMd(l.replace(/^\d+\.\s+/, ""))}</li>`)
+          .join("")}</ol>`
+      )
+      continue
+    }
+
+    const text = lines.join(" ")
+    if (/^\*Published/i.test(text)) {
+      html.push(`<p class="mt-6 text-xs italic text-gray-400">${inlineMd(text)}</p>`)
+      continue
+    }
+    html.push(`<p class="my-4 leading-relaxed text-gray-700">${inlineMd(text)}</p>`)
+  }
+  return html.join("\n")
 }
