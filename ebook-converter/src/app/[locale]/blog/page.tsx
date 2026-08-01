@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { getAllPosts } from "@/data/blog"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 
@@ -32,7 +33,13 @@ interface BlogPost {
   tags: string[]
 }
 
-const posts: BlogPost[] = []
+const posts: BlogPost[] = getAllPosts().map((p) => ({
+  title: p.title,
+  slug: p.slug,
+  date: p.date,
+  excerpt: p.content.intro,
+  tags: p.tags,
+}))
 
 export default async function BlogPage() {
   const locale = await getLocale();

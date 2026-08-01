@@ -1,6 +1,16 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
+import * as blogConvertEpubMobiEn from "@/data/blog/how-to-convert-epub-to-mobi-en"
+import * as blogEbookFormatsEn from "@/data/blog/ebook-formats-explained-en"
+import * as blogConvertLitToEpubEn from "@/data/blog/why-convert-lit-to-epub-en"
+import * as blogEpubToMobiGuide from "@/data/blog/epub-to-mobi-guide"
+import * as blogPdfToEpubGuide from "@/data/blog/pdf-to-epub-guide"
+import * as blogDownloadTroubleshooting from "@/data/blog/download-troubleshooting"
+import * as blogBackgroundWorkers from "@/data/blog/background-workers"
+import * as blogEnvVariablesSetup from "@/data/blog/env-variables-setup"
+import * as blogWebhookIntegration from "@/data/blog/webhook-integration"
+import * as blogSitemapSeoGuide from "@/data/blog/sitemap-seo-guide"
 interface BlogPostData {
   slug: string
   title: string
@@ -13,7 +23,88 @@ interface BlogPostData {
   }
 }
 
-const BLOG_POSTS: Record<string, BlogPostData> = {}
+const BLOG_POSTS: Record<string, BlogPostData> = {
+  "how-to-convert-epub-to-mobi-en": {
+    slug: blogConvertEpubMobiEn.slug,
+    title: blogConvertEpubMobiEn.title,
+    date: blogConvertEpubMobiEn.date,
+    author: blogConvertEpubMobiEn.author,
+    tags: blogConvertEpubMobiEn.tags,
+    content: blogConvertEpubMobiEn.content,
+  },
+  "ebook-formats-explained-en": {
+    slug: blogEbookFormatsEn.slug,
+    title: blogEbookFormatsEn.title,
+    date: blogEbookFormatsEn.date,
+    author: blogEbookFormatsEn.author,
+    tags: blogEbookFormatsEn.tags,
+    content: blogEbookFormatsEn.content,
+  },
+  "why-convert-lit-to-epub-en": {
+    slug: blogConvertLitToEpubEn.slug,
+    title: blogConvertLitToEpubEn.title,
+    date: blogConvertLitToEpubEn.date,
+    author: blogConvertLitToEpubEn.author,
+    tags: blogConvertLitToEpubEn.tags,
+    content: blogConvertLitToEpubEn.content,
+  },
+  "epub-to-mobi-guide": {
+    slug: blogEpubToMobiGuide.slug,
+    title: blogEpubToMobiGuide.title,
+    date: blogEpubToMobiGuide.date,
+    author: blogEpubToMobiGuide.author,
+    tags: blogEpubToMobiGuide.tags,
+    content: blogEpubToMobiGuide.content,
+  },
+  "pdf-to-epub-guide": {
+    slug: blogPdfToEpubGuide.slug,
+    title: blogPdfToEpubGuide.title,
+    date: blogPdfToEpubGuide.date,
+    author: blogPdfToEpubGuide.author,
+    tags: blogPdfToEpubGuide.tags,
+    content: blogPdfToEpubGuide.content,
+  },
+  "download-troubleshooting": {
+    slug: blogDownloadTroubleshooting.slug,
+    title: blogDownloadTroubleshooting.title,
+    date: blogDownloadTroubleshooting.date,
+    author: blogDownloadTroubleshooting.author,
+    tags: blogDownloadTroubleshooting.tags,
+    content: blogDownloadTroubleshooting.content,
+  },
+  "background-workers": {
+    slug: blogBackgroundWorkers.slug,
+    title: blogBackgroundWorkers.title,
+    date: blogBackgroundWorkers.date,
+    author: blogBackgroundWorkers.author,
+    tags: blogBackgroundWorkers.tags,
+    content: blogBackgroundWorkers.content,
+  },
+  "env-variables-setup": {
+    slug: blogEnvVariablesSetup.slug,
+    title: blogEnvVariablesSetup.title,
+    date: blogEnvVariablesSetup.date,
+    author: blogEnvVariablesSetup.author,
+    tags: blogEnvVariablesSetup.tags,
+    content: blogEnvVariablesSetup.content,
+  },
+  "webhook-integration": {
+    slug: blogWebhookIntegration.slug,
+    title: blogWebhookIntegration.title,
+    date: blogWebhookIntegration.date,
+    author: blogWebhookIntegration.author,
+    tags: blogWebhookIntegration.tags,
+    content: blogWebhookIntegration.content,
+  },
+  "sitemap-seo-guide": {
+    slug: blogSitemapSeoGuide.slug,
+    title: blogSitemapSeoGuide.title,
+    date: blogSitemapSeoGuide.date,
+    author: blogSitemapSeoGuide.author,
+    tags: blogSitemapSeoGuide.tags,
+    content: blogSitemapSeoGuide.content,
+  },
+}
 
 interface BlogSlugProps {
   params: Promise<{ slug: string }>
