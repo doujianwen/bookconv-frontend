@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
-import * as blogEpubMobi from "@/data/blog/how-to-convert-epub-to-mobi"
-import * as blogFormatsExplained from "@/data/blog/ebook-formats-explained"
-import * as blogLitToEpub from "@/data/blog/why-convert-lit-to-epub"
+import { getAllPosts } from "@/data/blog"
+import { renderMarkdownToHtml } from "@/data/blog/types"
 
 interface BlogPostData {
   slug: string
@@ -17,19 +16,16 @@ interface BlogPostData {
   }
 }
 
-const BLOG_POSTS: Record<string, BlogPostData> = {
-  "how-to-convert-epub-to-mobi": {
-    slug: blogEpubMobi.slug, title: blogEpubMobi.title, date: blogEpubMobi.date,
-    author: blogEpubMobi.author, tags: blogEpubMobi.tags, content: blogEpubMobi.content,
-  },
-  "ebook-formats-explained": {
-    slug: blogFormatsExplained.slug, title: blogFormatsExplained.title, date: blogFormatsExplained.date,
-    author: blogFormatsExplained.author, tags: blogFormatsExplained.tags, content: blogFormatsExplained.content,
-  },
-  "why-convert-lit-to-epub": {
-    slug: blogLitToEpub.slug, title: blogLitToEpub.title, date: blogLitToEpub.date,
-    author: blogLitToEpub.author, tags: blogLitToEpub.tags, content: blogLitToEpub.content,
-  },
+const BLOG_POSTS: Record<string, BlogPostData> = {};
+for (const p of getAllPosts()) {
+  BLOG_POSTS[p.slug] = {
+    slug: p.slug,
+    title: p.title,
+    date: p.date,
+    author: p.author,
+    tags: p.tags,
+    content: p.content,
+  };
 }
 
 interface BlogSlugProps {
@@ -207,16 +203,4 @@ function extractSourceTarget(title: string): { source?: string; target?: string 
     if (match) return { source: match[1], target: match[2] }
   }
   return {}
-}
-
-function renderMarkdownToHtml(markdown: string): string {
-  let html = markdown.replace(/\\n\\n/g, "\n\n").replace(/\\n/g, "<br />")
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, "<ul class=\"list-disc pl-6 space-y-2\">$&</ul>")
-  html = html.replace(/\n\n/g, "</p><p>")
-  html = "<p>" + html + "</p>"
-  html = html.replace(/<p>\s*<\/p>/g, "")
-  return html
 }

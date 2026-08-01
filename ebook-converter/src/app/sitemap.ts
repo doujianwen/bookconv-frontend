@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllPosts } from '@/data/blog'
 
 const CONVERSION_PAGES = [
   'epub-to-mobi', 'epub-to-azw3', 'epub-to-pdf', 'epub-to-txt',
@@ -8,11 +9,10 @@ const CONVERSION_PAGES = [
   'cbr-to-pdf', 'epub-to-doc', 'epub-to-rtf', 'mobi-to-txt',
 ]
 
-const BLOG_SLUGS = [
-  'how-to-convert-epub-to-mobi',
-  'ebook-formats-explained',
-  'why-convert-lit-to-epub',
-]
+const BLOG_POSTS = getAllPosts()
+const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug)
+const BLOG_DATES: Record<string, string> = {};
+BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.date; })
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com'
 
@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const slug of BLOG_SLUGS) {
       allUrls.push({
         url: baseUrl + prefix + '/blog/' + slug,
-        lastModified: new Date('2026-07-12'),
+        lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
         changeFrequency: 'yearly' as const,
         priority: 0.6,
       })

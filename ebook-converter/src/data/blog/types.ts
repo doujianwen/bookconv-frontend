@@ -72,6 +72,9 @@ export function renderMarkdownToHtml(markdown: string): string {
   html = html.replace(/`(.+?)`/g, "<code class=\"rounded bg-gray-100 px-1.5 py-0.5 text-sm font-mono text-pink-600\">$1</code>");
   // Links
   html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener">$1</a>');
+  // Headings (subheadings inside blog bodies, e.g. ### Subheading)
+  html = html.replace(/^###\s+(.+)$/gm, "<h3 class=\"mt-5 mb-2 text-lg font-semibold text-gray-900\">$1</h3>");
+  html = html.replace(/^##\s+(.+)$/gm, "<h2 class=\"mt-6 mb-2 text-xl font-bold text-gray-900\">$1</h2>");
   // Unordered list items
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
   // Ordered list items
@@ -85,6 +88,9 @@ export function renderMarkdownToHtml(markdown: string): string {
   html = html.replace(/<p>\s*<\/p>/g, "");
   html = html.replace(/<p>(<ul[^>]*>)/g, "$1");
   html = html.replace(/(<\/ul>)<\/p>/g, "$1");
+  // Unwrap headings that landed inside <p>
+  html = html.replace(/<p>(<h[23][^>]*>)/g, "$1");
+  html = html.replace(/(<\/h[23]>)<\/p>/g, "$1");
 
   return html;
 }
