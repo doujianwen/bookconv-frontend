@@ -113,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
             inLanguage: "en-US",
-            wordCount: (post.content?.intro || "").split("\s").length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split("\s").length, 0) || 0),
+            wordCount: (post.content?.intro || "").split(/\s/).length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split(/\s/).length, 0) || 0),
             keywords: post.tags.join(", "),
           }),
         }}
@@ -177,7 +177,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               )}
               {source && (
                 <Link
-                  href="/#"
+                  href="/convert"
                   className="inline-flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50"
                 >
                   Browse All Converters
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 }
 
 function extractSourceTarget(title: string): { source?: string; target?: string } {
-  const patterns = [/(w+)s+tos+(w+)/i, /(w+)s*vss*(w+)/i]
+  const patterns = [/(\w+)\s+to\s+(\w+)/i, /(\w+)\s+vs\s+(\w+)/i]
   for (const pattern of patterns) {
     const match = title.match(pattern)
     if (match) return { source: match[1], target: match[2] }

@@ -1,115 +1,117 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { KEYWORDS } from "@/lib/constants"
-import { getConversion } from "@/lib/conversion-map"
-import { getDisplayName, getSlug } from "@/lib/utils"
-// Step 3: Dynamic import for heavy client component — reduces initial bundle
-import dynamic from "next/dynamic"
-import { CONTENT_MAP } from "@/data/content"
-import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/seo/schema"
+import { getConversion, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
+import { getSlug } from "@/lib/utils"
 
-// Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
-
-const ToolPageClientDynamic = dynamic(
-  () => import("./[slug]/ToolPageClient").then((mod) => ({ default: mod.ToolPageClient })),
-  { loading: () => <div className="flex min-h-[50vh] items-center justify-center"><p className="text-gray-500">Loading converter…</p></div> },
-)
-
-interface ToolPageProps {
-  params: Promise<{ slug: string }>
+interface ConvertIndexProps {
+  params: Promise<{ locale: string }>
 }
 
-export async function generateStaticParams() {
-  return KEYWORDS.map((k) => ({
-    slug: k.source + "-to-" + k.target
-  }))
-}
+const BASE_URL = "https://www.bookconv.com"
 
-export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
-  const { slug } = await params
-  const displayName = getDisplayName(slug)
-  const [source, target] = slug.split("-to-")
-  const conversion = getConversion(source, target)
-  const contentData = CONTENT_MAP[slug]
-
-  const title = contentData?.title || `${source} to ${target} Converter -- Free Online`
-  const subtitle = contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`
-  const description = subtitle
-
+export async function generateMetadata({ params }: ConvertIndexProps): Promise<Metadata> {
+  const { locale } = await params
+  const title = "All Ebook Format Conversions | BookConv"
+  const description =
+    "Browse every ebook format conversion BookConv supports — EPUB, AZW3, MOBI, PDF, and more. Pick a pair and convert free in your browser, no install."
+  const url = `${BASE_URL}/convert`
   return {
     title,
     description,
-    keywords: [
-      source.toLowerCase(), target.toLowerCase(),
-      `${source} to ${target}`,
-      `${source} to ${target} converter`,
-      `convert ${source} to ${target}`,
-      `free ${source} to ${target} online`,
-      `online ${source} to ${target} converter`,
-      "ebook converter", "calibre", "free",
-    ],
+    keywords: ["ebook converter", "convert ebook", "epub", "azw3", "mobi", "pdf", "calibre", "free"],
     alternates: {
-      canonical: `https://www.bookconv.com/convert/${slug}`,
-      languages: {
-        'en': `/convert/${slug}`,
-        'es': `/es/convert/${slug}`,
-      },
+      canonical: url,
+      languages: { en: "/convert", es: "/es/convert" },
     },
     openGraph: {
       title,
       description,
       type: "website",
-      url: `https://www.bookconv.com/convert/${slug}`,
+      url,
       siteName: "BookConv",
-      images: [
-        {
-          url: `https://www.bookconv.com/og-image.svg`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      locale: "en_US",
+      locale: locale === "es" ? "es_ES" : "en_US",
     },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`https://www.bookconv.com/og-image.svg`],
-    },
+    twitter: { card: "summary_large_image", title, description },
   }
 }
 
-export default async function ToolPage({ params }: ToolPageProps) {
-  const { slug } = await params
-  const [source, target] = slug.split("-to-")
-  const keyword = KEYWORDS.find(
-    (k) =>
-      k.source.toLowerCase() === source.toLowerCase() &&
-      k.target.toLowerCase() === target.toLowerCase()
-  )
-  const conversion = getConversion(source, target)
-  const contentData = CONTENT_MAP[slug]
+function formatLabel(format: string): string {
+  return FORMAT_DISPLAY_NAMES[format.toLowerCase()] || format.toUpperCase()
+}
 
-  if (!keyword || !conversion) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Conversion not supported</h1>
-          <p className="mt-2 text-gray-500">Please check our homepage for supported formats.</p>
-        </div>
-      </div>
-    )
+export default async function ConvertIndexPage() {
+  const items = KEYWORDS.map((k) => {
+    const slug = getSlug(k.source, k.target)
+    const conversion = getConversion(k.source, k.target)
+    return {
+      slug,
+      source: k.source,
+      target: k.target,
+      label: `${formatLabel(k.source)} to ${formatLabel(k.target)}`,
+      description: conversion?.description,
+    }
+  })
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Supported ebook format conversions",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${BASE_URL}/convert/${item.slug}`,
+      name: `Convert ${item.label}`,
+    })),
   }
 
-  // Use dynamically imported component
   return (
-    <ToolPageClientDynamic
-      source={source}
-      target={target}
-      keyword={keyword}
-      tool={conversion.tool}
-      description={conversion.description}
-      contentData={contentData}
-    />
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      <main className="mx-auto max-w-5xl px-4 py-16">
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-sm text-gray-500">
+            <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+            <li>/</li>
+            <li aria-current="page" className="font-medium text-gray-900">Converters</li>
+          </ol>
+        </nav>
+
+        <header className="mb-10">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">All Ebook Conversions</h1>
+          <p className="mt-4 max-w-2xl text-lg text-gray-600">
+            Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your
+            browser — no account, no installer, Calibre running server-side.
+          </p>
+        </header>
+
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/convert/${item.slug}`}
+              className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50"
+            >
+              <h2 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">
+                {item.label}
+              </h2>
+              <p className="mt-1 text-sm text-gray-500">
+                Convert {item.source.toUpperCase()} to {item.target.toUpperCase()}
+              </p>
+              {item.description && (
+                <p className="mt-2 text-xs text-gray-400 leading-relaxed">{item.description}</p>
+              )}
+            </Link>
+          ))}
+        </section>
+
+        <div className="mt-12 pt-6 border-t">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+            Back to home
+          </Link>
+        </div>
+      </main>
+    </>
   )
 }
