@@ -9,9 +9,11 @@ import * as mobiToEpub from './mobi-to-epub-keep-formatting'
 import * as epubToAzw3 from './epub-to-azw3-for-kindle'
 import * as djvuToPdf from './djvu-to-pdf'
 import * as cbrToPdf from './cbr-to-pdf'
+import * as litToEpub from './lit-to-epub-keep-formatting'
+import * as epubToTxt from './epub-to-txt-extract'
 import type { GuideMeta } from './types'
 
-const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiVsAzw3, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf] as unknown as GuideMeta[]
+const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiVsAzw3, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt] as unknown as GuideMeta[]
 
 const GUIDE_MAP: Record<string, GuideMeta> = {}
 for (const g of all) GUIDE_MAP[g.slug] = g

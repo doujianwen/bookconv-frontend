@@ -67,6 +67,8 @@ EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
 - [EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting](https://www.bookconv.com/guide/epub-to-azw3-for-kindle)
 - [DJVU to PDF: Turn Scanned Books into a Shareable PDF](https://www.bookconv.com/guide/djvu-to-pdf)
 - [CBR to PDF: Read Your Comics on Any Device](https://www.bookconv.com/guide/cbr-to-pdf)
+- [LIT to EPUB: Convert Old Microsoft Reader Books and Keep Your Formatting](https://www.bookconv.com/guide/lit-to-epub-keep-formatting)
+- [EPUB to TXT: Extract Plain Text Without Losing Your Chapter Order](https://www.bookconv.com/guide/epub-to-txt-extract)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
