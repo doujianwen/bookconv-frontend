@@ -16,12 +16,15 @@ import * as post14 from "./djvu-to-pdf";
 import * as post15 from "./cbr-to-pdf";
 import * as post16 from "./fb2-to-epub";
 import * as post17 from "./epub-to-azw3";
+import * as post18 from "./epub-to-word";
+import * as post19 from "./txt-to-epub";
+import * as post20 from "./mobi-to-epub";
 
 // Keep the English versions (English body). The Chinese versions
 // (how-to-convert-epub-to-mobi / ebook-formats-explained / why-convert-lit-to-epub,
 // Chinese body) were deleted per request.
 // Also includes 7 codex-generated English guides (epub-to-mobi-guide etc., converted from .mdx).
-const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17] as BlogPostMeta[];
+const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
