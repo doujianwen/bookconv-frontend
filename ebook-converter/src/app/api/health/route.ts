@@ -7,8 +7,25 @@ import { sanitizeError } from "@/lib/error-handler";
 
 const execFileAsync = promisify(execFile);
 
-async function checkRedis(): Promise<{ ok: boolean; latency?: number; error?: string }> {
+/**
+ * Runs an async health probe and normalizes any thrown error into the
+ * `{ ok: false, error }` shape. This is the single place where the
+ * try/catch error template used to be copy-pasted across every check
+ * function — extracted here so the failure contract stays consistent.
+ */
+async function safeCheck<T extends { ok: boolean }>(
+  fn: () => Promise<T>,
+): Promise<T | { ok: false; error: string }> {
   try {
+    return await fn();
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return { ok: false, error: message };
+  }
+}
+
+async function checkRedis(): Promise<{ ok: boolean; latency?: number; error?: string }> {
+  return safeCheck(async () => {
     const client = getRedisClient();
     if (!client) {
       return { ok: false, error: 'Redis not configured' };
@@ -16,26 +33,20 @@ async function checkRedis(): Promise<{ ok: boolean; latency?: number; error?: st
     const start = Date.now();
     await client.ping();
     return { ok: true, latency: Date.now() - start };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return { ok: false, error: message };
-  }
+  });
 }
 
 async function checkCalibre(): Promise<{ ok: boolean; version?: string; error?: string }> {
-  try {
+  return safeCheck(async () => {
     const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
     const { stdout } = await execFileAsync(CALIBRE_PATH, ['--version']);
     const version = stdout.trim().split('\n')[0];
     return { ok: true, version };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return { ok: false, error: message };
-  }
+  });
 }
 
 async function checkDiskSpace(): Promise<{ ok: boolean; totalMb?: number; freeMb?: number; error?: string }> {
-  try {
+  return safeCheck(async () => {
     // Use `df` on Linux/Mac or PowerShell/WMIC on Windows
     const command = process.platform === 'win32'
       ? 'wmic_logicaldisk get Size,FreeSpace /format:list'
@@ -58,15 +69,12 @@ async function checkDiskSpace(): Promise<{ ok: boolean; totalMb?: number; freeMb
       const freeMb = Math.round(freeKb / 1024);
       return { ok: freeMb > 50, freeMb, totalMb: freeMb * 4 }; // rough estimate
     }
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return { ok: false, error: message };
-  }
+  });
 }
 
 /** Check if job queue has stuck jobs (> 30 min old and still active ) */
 async function checkQueueStuckJobs(): Promise<{ ok: boolean; stuckCount?: number; error?: string }> {
-  try {
+  return safeCheck(async () => {
     const client = getRedisClient();
     if (!client) return { ok: false, error: 'Redis not configured' };
 
@@ -82,10 +90,7 @@ async function checkQueueStuckJobs(): Promise<{ ok: boolean; stuckCount?: number
       }
     }
     return { ok: true, stuckCount };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    return { ok: false, error: message };
-  }
+  });
 }
 
 export async function GET(req: NextRequest) {
