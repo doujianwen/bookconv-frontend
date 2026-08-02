@@ -5,7 +5,6 @@ export {
   generateBreadcrumbSchema,
   generateSoftwareApplicationSchema,
   generateArticleSchema,
-  generateReviewSnippet,
   getLocale,
   generateHrefLangTags,
 } from './seo/schema';
@@ -82,7 +81,6 @@ export function generateSchema(
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
-      aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '1200', bestRating: '5', worstRating: '1' },
       featureList: ['No registration required', 'No watermarks', 'Files auto-deleted within 1 hour', 'Batch conversion (Pro)', 'High-quality Calibre engine'],
     },
     {
@@ -104,7 +102,6 @@ export function generateSchema(
   if (faqs && faqs.length > 0) {
     const pageUrl = baseUrl + '/convert/' + slug;
     graph.push({
-      '@context': 'https://schema.org',
       '@type': 'FAQPage',
       author: { '@type': 'Organization', name: 'BookConv' },
       datePublished: '2026-01-01T00:00:00+00:00',
@@ -118,30 +115,13 @@ export function generateSchema(
         acceptedAnswer: {
           '@type': 'Answer',
           text: f.answer,
-          datePublished: new Date().toISOString(),
+          datePublished: '2026-01-01T00:00:00+00:00',
           author: { '@type': 'Organization', name: 'BookConv' },
           url: pageUrl + '#faq-' + (i + 1),
         },
       })),
     });
   }
-
-  graph.push(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Review',
-      reviewBody: 'Excellent free online ebook converter. Fast, no watermarks, preserves formatting perfectly.',
-      author: { '@type': 'Person', name: 'Alex M.' },
-      datePublished: '2026-05-12',
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Review',
-      reviewBody: 'Finally a converter that handles AZW3 to EPUB without mangling the table of contents. Highly recommended.',
-      author: { '@type': 'Person', name: 'Sarah K.' },
-      datePublished: '2026-06-01',
-    },
-  );
 
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }

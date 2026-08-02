@@ -58,7 +58,6 @@ export function generateSoftwareApplicationSchema(opts: SoftwareAppSchemaOpts): 
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price, priceCurrency, availability: 'https://schema.org/InStock' },
-      aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '1200', bestRating: '5', worstRating: '1' },
       featureList: [
         sourceFormat + " to " + targetFormat,
         'No registration required',
@@ -96,14 +95,124 @@ export function generateArticleSchema(opts: ArticleSchemaOpts): string {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }
 
-export function generateReviewSnippet(): string {
-  return JSON.stringify({
-    '@context': 'https://schema.org',
-    '@graph': [
-      { '@type': 'Review', reviewBody: 'Excellent free online ebook converter. Fast, no watermarks.', author: { '@type': 'Person', name: 'Alex M.' }, datePublished: '2026-05-12' },
-      { '@type': 'Review', reviewBody: 'Handles AZW3 to EPUB without mangling TOC. Highly recommended.', author: { '@type': 'Person', name: 'Sarah K.' }, datePublished: '2026-06-01' },
-    ],
-  }, null, 2);
+interface ConversionContentLite {
+  hero?: { title?: string; subtitle?: string };
+  sections?: Array<{ heading: string; body: string }>;
+  faq?: Array<{ q: string; a: string }>;
+}
+
+function defaultFaqsFor(source: string, target: string): FAQItem[] {
+  const s = source.toUpperCase();
+  const t = target.toUpperCase();
+  return [
+    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Convert up to 5 files per hour for free.` },
+    { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. The result is optimized for readability on your target device.` },
+    { question: `How long does ${s} to ${t} conversion take?`, answer: `Most conversions complete in under 30 seconds. Larger files may take slightly longer depending on size and complexity.` },
+    { question: `Is my ${s} file safe when I upload it?`, answer: `Yes. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour after conversion. We never read or share your content.` },
+  ];
+}
+
+/**
+ * Server-side structured data for a conversion page.
+ * Rendered by the [locale]/convert/[slug]/page.tsx server component so crawlers
+ * (Google / AI engines) can read it in the initial HTML — the client-only
+ * ToolPageClient cannot output JSON-LD during SSR.
+ */
+export function generateConversionPageSchema(
+  source: string,
+  target: string,
+  contentData?: ConversionContentLite,
+): string {
+  const baseUrl = 'https://bookconv.com';
+  const sourceDisplay = source.toUpperCase();
+  const targetDisplay = target.toUpperCase();
+  const slug = source + '-to-' + target;
+  const pageUrl = baseUrl + '/convert/' + slug;
+  const faqs: FAQItem[] = (contentData?.faq && contentData.faq.length > 0)
+    ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
+    : defaultFaqsFor(source, target);
+
+  const graph = [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+        { '@type': 'ListItem', position: 2, name: 'Converters', item: baseUrl + '/convert' },
+        { '@type': 'ListItem', position: 3, name: sourceDisplay + ' to ' + targetDisplay, item: pageUrl },
+      ],
+    },
+    {
+      '@type': 'HowTo',
+      name: 'How to Convert ' + sourceDisplay + ' to ' + targetDisplay + ' Online',
+      description: 'Follow these simple steps to convert ' + sourceDisplay + ' files to ' + targetDisplay + ' format online for free.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Upload your file', text: 'Drag and drop your ' + sourceDisplay + ' file or click to browse.' },
+        { '@type': 'HowToStep', position: 2, name: 'Conversion starts automatically', text: 'Our Calibre-powered engine converts your file in seconds.' },
+        { '@type': 'HowToStep', position: 3, name: 'Download result', text: 'Once complete, download your converted ' + targetDisplay + ' file instantly.' },
+      ],
+      totalTime: 'PT2M',
+      supply: [{ '@type': 'HowToSupply', name: sourceDisplay + ' file' }],
+      tool: [{ '@type': 'HowToTool', name: 'Calibre' }],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+      url: pageUrl,
+      name: 'Free Online ' + sourceDisplay + ' to ' + targetDisplay + ' Converter',
+      description: contentData?.hero?.subtitle || ('Convert ' + sourceDisplay + ' to ' + targetDisplay + ' online for free.'),
+      isPartOf: { '@id': baseUrl + '#website' },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'Article',
+      headline: 'How to Convert ' + sourceDisplay + ' to ' + targetDisplay + ' Online — Free Guide',
+      description: contentData?.hero?.subtitle || ('Free online ' + sourceDisplay + ' to ' + targetDisplay + ' converter guide with step-by-step instructions.'),
+      author: { '@type': 'Organization', name: 'BookConv', url: baseUrl },
+      publisher: { '@type': 'Organization', name: 'BookConv', logo: { '@type': 'ImageObject', url: baseUrl + '/icon.svg' } },
+      datePublished: '2026-01-01T00:00:00+00:00',
+      dateModified: '2026-07-14T00:00:00+00:00',
+      mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+      image: baseUrl + '/og-image.svg',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: sourceDisplay + ' to ' + targetDisplay + ' Online',
+      description: sourceDisplay + ' to ' + targetDisplay + ' converter powered by Calibre. Free, no registration, no watermarks.',
+      url: pageUrl,
+      applicationCategory: 'UtilityApplication',
+      operatingSystem: 'Any',
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+      featureList: [
+        sourceDisplay + ' to ' + targetDisplay,
+        'No registration required',
+        'No watermarks',
+        'Files auto-deleted within 1 hour',
+        'Batch conversion (Pro)',
+        'High-quality Calibre engine',
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f, i) => ({
+        '@type': 'Question',
+        name: f.question,
+        answerCount: 1,
+        author: { '@type': 'Organization', name: 'BookConv' },
+        url: pageUrl + '#faq-' + (i + 1),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.answer,
+          datePublished: '2026-01-01T00:00:00+00:00',
+          author: { '@type': 'Organization', name: 'BookConv' },
+          url: pageUrl + '#faq-' + (i + 1),
+        },
+      })),
+      author: { '@type': 'Organization', name: 'BookConv' },
+      datePublished: '2026-01-01T00:00:00+00:00',
+      url: pageUrl,
+    },
+  ];
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }
 
 const LOCALE_MAP = {

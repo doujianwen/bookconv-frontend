@@ -5,13 +5,42 @@ Disallow: /api/
 Disallow: /auth/
 Disallow: /_next/
 
-# Allow all search engines to crawl content pages
-Allow: /convert/
-Allow: /blog/
-Allow: /pricing/
+# Allow AI search crawlers to read and cite content
+User-agent: GPTBot
+Allow: /
 
-# Crawl delay for polite crawling
-Crawl-delay: 1
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: AI2Bot
+Allow: /
 
 # Sitemap location
 Sitemap: https://bookconv.com/sitemap.xml

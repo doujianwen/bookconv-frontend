@@ -5,7 +5,7 @@ import { getDisplayName, getSlug } from "@/lib/utils"
 // Step 3: Dynamic import for heavy client component — reduces initial bundle
 import dynamic from "next/dynamic"
 import { CONTENT_MAP } from "@/data/content"
-import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/seo/schema"
+import { generateFAQSchema, generateBreadcrumbSchema, generateConversionPageSchema } from "@/lib/seo/schema"
 import { getRelatedBlogPostsForConversion } from "@/lib/internal-links"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
@@ -101,15 +101,25 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   // Use dynamically imported component
   const relatedBlogPosts = getRelatedBlogPostsForConversion(source, target)
+  const jsonLd = generateConversionPageSchema(source, target, contentData)
   return (
-    <ToolPageClientDynamic
-      source={source}
-      target={target}
-      keyword={keyword}
-      tool={conversion.tool}
-      description={conversion.description}
-      contentData={contentData}
-      relatedBlogPosts={relatedBlogPosts}
-    />
+    <>
+      {/* Server-rendered structured data so crawlers / AI engines read it in
+          the initial HTML. The client-only ToolPageClient cannot emit JSON-LD
+          during SSR. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
+      <ToolPageClientDynamic
+        source={source}
+        target={target}
+        keyword={keyword}
+        tool={conversion.tool}
+        description={conversion.description}
+        contentData={contentData}
+        relatedBlogPosts={relatedBlogPosts}
+      />
+    </>
   )
 }

@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
       languages: {
-        'en': '/en',
+        'en': '/',
         'es': '/es',
         'x-default': '/',
       },
@@ -125,11 +125,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   name: t('common.siteName') || 'BookConv',
                   description: 'Free online ebook format converter',
                   publisher: { '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#organization` },
-                  potentialAction: {
-                    '@type': 'SearchAction',
-                    target: { '@type': 'EntryPoint', urlTemplate: `https://bookconv.com${locale === 'es' ? '/es' : ''}/?q={search_term_string}` },
-                    'query-input': 'required name=search_term_string',
-                  },
                 },
                 {
                   '@type': 'Organization',
@@ -140,7 +135,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   sameAs: [],
                 },
                 {
-                  '@type': 'WebApplication',
+                  '@type': 'SoftwareApplication',
                   name: t('common.siteName') || 'BookConv',
                   url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
                   description: 'Free online ebook format converter supporting 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF.',
@@ -152,38 +147,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     priceCurrency: 'USD',
                   },
                   browserRequirements: 'Requires JavaScript. Requires HTML5.',
-                  aggregateRating: {
-                    '@type': 'AggregateRating',
-                    ratingValue: '4.8',
-                    ratingCount: '1200',
-                    bestRating: '5',
-                    worstRating: '1',
-                  },
                 },
                 {
                   '@type': 'FAQPage',
-                  'mainEntity': [
-                    {
-                      '@type': 'Question',
-                      'name': t('faq.question') || 'How do I convert EPUB to MOBI?',
-                      'text': t('faq.questionText') || 'What is the process to convert an EPUB file to MOBI format?',
-                      'author': {
-                        '@type': 'Person',
-                        'name': t('faq.author') || 'BookConv Team'
-                      },
-                      'datePublished': new Date().toISOString(),
-                      'acceptedAnswer': {
-                        '@type': 'Answer',
-                        'text': t('faq.answerText') || 'To convert EPUB to MOBI, use our free online converter. Upload your EPUB file, select MOBI as the output format, and click Convert. The conversion happens instantly in your browser with no registration required.',
-                        'author': {
-                          '@type': 'Person',
-                          'name': t('faq.author') || 'BookConv Team'
-                        },
-                        'datePublished': new Date().toISOString(),
-                        'url': `https://bookconv.com${locale === "es" ? "/es" : ''}#epub-to-mobi`
-                      }
-                    }
-                  ]
+                  'mainEntity': [1, 2, 3, 4, 5].map((i) => ({
+                    '@type': 'Question',
+                    'name': t('faq.q' + i) || ('faq.q' + i),
+                    'acceptedAnswer': {
+                      '@type': 'Answer',
+                      'text': t('faq.a' + i) || ('faq.a' + i),
+                    },
+                  })).filter((f) => f.name.indexOf('faq.') !== 0),
                 },
               ],
             }),

@@ -253,29 +253,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Homepage FAQ for Rich Snippets */}
+      {/* Homepage FAQ — visible accordion only; the FAQPage rich snippet is
+          provided globally by the root layout so it stays consistent across all pages. */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-3xl px-4">
           <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.faqTitle')}</h2>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "author": { "@type": "Organization", "name": "BookConv" },
-                "datePublished": "2026-01-01T00:00:00+00:00",
-                "url": "https://bookconv.com",
-                "mainEntity": [
-                  { "@type": "Question", "name": t('faq.q1'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a1') } },
-                  { "@type": "Question", "name": t('faq.q2'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a2') } },
-                  { "@type": "Question", "name": t('faq.q3'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a3') } },
-                  { "@type": "Question", "name": t('faq.q4'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a4') } },
-                  { "@type": "Question", "name": t('faq.q5'), "answerCount": 1, "acceptedAnswer": { "@type": "Answer", "text": t('faq.a5') } },
-                ],
-              }),
-            }}
-          />
           <div className="space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <details key={i} className="rounded-xl border bg-white p-4">
