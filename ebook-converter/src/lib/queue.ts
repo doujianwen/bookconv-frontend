@@ -7,6 +7,7 @@ import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync, appendFileS
 import path from 'node:path';
 import { loggers as log } from './logger';
 import { mapErrorCode, getFriendlyMessage } from './error-handler';
+import { verifyConversion } from './conversion-verifier';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -297,6 +298,22 @@ async function executeConversion(
     await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
     if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
 
+    // ── 输出验证闸门（纯纠错层 · 一票否决）──
+    // 在 Calibre 报成功之后执行。纠察层只见到 inputPath / outputPath / 声明格式
+    // （信息隔离），一旦否决，该结果绝不交付给用户。
+    const verdict = await verifyConversion(inputPath, outputPath, sourceFormat, targetFormat);
+    if (!verdict.pass) {
+      const detail = verdict.findings
+        .filter((f) => f.severity === 'critical')
+        .map((f) => `${f.id}: ${f.message}`)
+        .join('; ');
+      throw new Error(`Conversion output failed verification: ${detail}`);
+    }
+    // 非阻断型告警仅记录，不导致任务失败
+    for (const w of verdict.findings.filter((f) => f.severity === 'warn')) {
+      log.conversion.warn('Conversion verification warning', { jobId, id: w.id, message: w.message });
+    }
+
     // Return the output file path instead of encoding to base64
     // Caller can stream-read it as needed
     await cleanupDir(jobDir);
@@ -305,6 +322,10 @@ async function executeConversion(
     await cleanupDir(jobDir);
     // If the error doesn't already have a recognized category, enrich it with stderr
     const msg = err.message || String(err);
+    // 纠察层否决：保留详尽 verdict 细节，交由 processConversion 映射为 VERIFICATION_FAILED
+    if (msg.startsWith('Conversion output failed verification')) {
+      throw err;
+    }
     if (!msg.includes('not a valid eBook format') && !msg.includes('corrupt') && !msg.includes('Invalid zip') &&
         !msg.includes('Timeout') && !msg.includes('timed out')) {
       const stderr = err.stderr || '';

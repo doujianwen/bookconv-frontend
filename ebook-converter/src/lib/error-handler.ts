@@ -7,7 +7,8 @@ export type ErrorCode =
   | "CONVERSION_FAILED"
   | "INTERNAL_ERROR"
   | "CORRUPT_INPUT"
-  | "MEMORY_LIMIT";
+  | "MEMORY_LIMIT"
+  | "VERIFICATION_FAILED";
 
 export interface ErrorResponse {
   code: ErrorCode;
@@ -30,6 +31,7 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   'Invalid zip file': 'CORRUPT_INPUT',
   'Invalid or missing opf': 'CORRUPT_INPUT',
   'DRM': 'DRM_PROTECTED',
+  'failed verification': 'VERIFICATION_FAILED',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',
@@ -56,6 +58,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'INTERNAL_ERROR': { message: 'An unexpected error occurred. Please try again later.', retryable: true },
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
+  'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
 };
 
 /** Get a friendly, user-facing message from an error code */
