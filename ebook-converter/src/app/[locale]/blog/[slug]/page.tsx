@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
-import { renderMarkdownToHtml } from "@/data/blog/types"
+import { renderMarkdownToHtml, stripMarkdown } from "@/data/blog/types"
 import { getRelatedPosts, isHubTag, slugifyTag } from "@/lib/internal-links"
 
 interface BlogPostData {
@@ -15,6 +15,7 @@ interface BlogPostData {
     intro?: string
     sections?: Array<{ heading: string; body: string }>
   }
+  faqs?: Array<{ question: string; answer: string }>
 }
 
 const BLOG_POSTS: Record<string, BlogPostData> = {};
@@ -26,6 +27,7 @@ for (const p of getAllPosts()) {
     author: p.author,
     tags: p.tags,
     content: p.content,
+    faqs: p.faqs,
   };
 }
 
@@ -174,6 +176,40 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             </section>
           ))}
         </article>
+
+        {post.faqs && post.faqs.length > 0 && (
+          <section className="mt-12" aria-labelledby="faq-heading">
+            <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {post.faqs.map((f, i) => (
+                <div key={i} className="rounded-xl border bg-white p-5">
+                  <h3 className="text-base font-semibold text-gray-900">{f.question}</h3>
+                  <div
+                    className="mt-2 text-sm text-gray-600 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(f.answer) }}
+                  />
+                </div>
+              ))}
+            </div>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: post.faqs.map((f) => ({
+                    "@type": "Question",
+                    name: f.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: stripMarkdown(f.answer),
+                    },
+                  })),
+                }),
+              }}
+            />
+          </section>
+        )}
 
         {(source || target) && (
           <section className="mt-12 rounded-xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-6">

@@ -117,29 +117,37 @@ The honest test is what you plan to do with the file. Reading long-form prose on
 - **Save the file right away.** Download links are temporary and converted files are deleted after a period.
 - **PDF stores position, not structure.** Every converter is guessing at paragraphs and chapters, which is why a novel converts cleanly and a textbook doesn't.
 - **Some PDFs shouldn't be converted.** Comics, sheet music, forms, and reference documents lose their meaning the moment text reflows.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Can BookConv convert a scanned PDF to EPUB?
-A: It will produce a file, but not a useful one. A scan contains images rather than text, so you'd get an EPUB of unsearchable page pictures. Run OCR first with something like Tesseract or Acrobat Pro, then upload the result.
-
-Q: How do I know if my PDF is scanned?
-A: Try selecting a sentence with your cursor. If the text highlights, there's a real text layer. If you get a selection rectangle over an image, it's a scan. Zooming in is the second check — scanned text pixelates, real text stays sharp.
-
-Q: What's the file size limit?
-A: 10 MB per file on the free tier, 50 MB on Pro, and 100 MB through the API. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.
-
-Q: Can I convert a password-protected PDF?
-A: Not while it's protected — encrypted content can't be read by any conversion tool. Remove the password yourself first if it's your own file. DRM-protected files are rejected at upload and can't be converted at all.
-
-Q: Why does my converted EPUB have one line per paragraph?
-A: The converter read each visual line as a separate paragraph, which usually means the source PDF has unusual line spacing or narrow columns. Desktop Calibre lets you tune the line unwrapping factor manually if you need that level of control.
-
-Q: Does converting to EPUB reduce quality?
-A: Text quality holds up when the PDF has a proper text layer. What you lose is layout — exact positioning, page breaks, and typography. Images are re-encoded, so very high-resolution figures may come out slightly softer.
-
-Q: My conversion is taking a while. Is it stuck?
-A: Probably not. Large or slow files go through a background worker queue, and the progress bar keeps updating while that runs. Leave the page open until the download link appears.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Can BookConv convert a scanned PDF to EPUB?`,
+    answer: `It will produce a file, but not a useful one. A scan contains images rather than text, so you'd get an EPUB of unsearchable page pictures. Run OCR first with something like Tesseract or Acrobat Pro, then upload the result.`,
+  },
+  {
+    question: `How do I know if my PDF is scanned?`,
+    answer: `Try selecting a sentence with your cursor. If the text highlights, there's a real text layer. If you get a selection rectangle over an image, it's a scan. Zooming in is the second check — scanned text pixelates, real text stays sharp.`,
+  },
+  {
+    question: `What's the file size limit?`,
+    answer: `10 MB per file on the free tier, 50 MB on Pro, and 100 MB through the API. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.`,
+  },
+  {
+    question: `Can I convert a password-protected PDF?`,
+    answer: `Not while it's protected — encrypted content can't be read by any conversion tool. Remove the password yourself first if it's your own file. DRM-protected files are rejected at upload and can't be converted at all.`,
+  },
+  {
+    question: `Why does my converted EPUB have one line per paragraph?`,
+    answer: `The converter read each visual line as a separate paragraph, which usually means the source PDF has unusual line spacing or narrow columns. Desktop Calibre lets you tune the line unwrapping factor manually if you need that level of control.`,
+  },
+  {
+    question: `Does converting to EPUB reduce quality?`,
+    answer: `Text quality holds up when the PDF has a proper text layer. What you lose is layout — exact positioning, page breaks, and typography. Images are re-encoded, so very high-resolution figures may come out slightly softer.`,
+  },
+  {
+    question: `My conversion is taking a while. Is it stuck?`,
+    answer: `Probably not. Large or slow files go through a background worker queue, and the progress bar keeps updating while that runs. Leave the page open until the download link appears.`,
+  }
+];

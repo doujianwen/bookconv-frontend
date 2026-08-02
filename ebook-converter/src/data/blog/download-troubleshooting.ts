@@ -86,29 +86,37 @@ That's source quality, not a download failure. Messy markup carries straight thr
 - **Limits are upfront** — 10 MB free, 50 MB on Pro, 100 MB on API, with rejections at upload instead of halfway through.
 - **DRM stops at the door** — protected files are refused on upload, and there's no workaround on our end.
 - **Wrong device, not bad file** — most unopenable books just need converting to the format the reader supports.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: The download button does nothing when I click it. What now?
-A: Open a private window and try again — that rules out extensions in one move. If it works there, whitelist BookConv in your ad blocker or download manager. If it doesn't, check your browser's download settings for a blocked file type.
-
-Q: My download link expired. Can you resend the file?
-A: No, and not out of stubbornness — the file has already been deleted. Temporary links are how we avoid storing your books. Convert again and download straight away.
-
-Q: The file downloaded at 0 KB. What went wrong?
-A: The transfer stopped early, usually a dropped connection or a full disk. Free up space, reconnect, and download again while the link is still valid.
-
-Q: My file was rejected before the conversion even started. Why?
-A: Almost always the size cap. The free tier stops at 10 MB per file and names the limit in the error. Compress the images, split the book, or upgrade to Pro for 50 MB. The API plan allows 100 MB.
-
-Q: Can I convert a book I bought from Amazon or Kobo?
-A: Only if it's DRM-free. Protected purchases are rejected on upload, and we don't remove DRM, so there's nothing to troubleshoot. Look for a DRM-free edition of the same title.
-
-Q: I got a message about too many conversions.
-A: Free usage allows 5 conversions per hour without an account. Wait for the hour to roll over, or upgrade if you convert in volume. On shared Wi-Fi, other people on the same connection may have used part of that quota.
-
-Q: Nothing here worked. What should I send support?
-A: Source format, target format, file size, browser, operating system, and the exact error text you saw. That combination is usually enough to reproduce the issue on the first try.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `The download button does nothing when I click it. What now?`,
+    answer: `Open a private window and try again — that rules out extensions in one move. If it works there, whitelist BookConv in your ad blocker or download manager. If it doesn't, check your browser's download settings for a blocked file type.`,
+  },
+  {
+    question: `My download link expired. Can you resend the file?`,
+    answer: `No, and not out of stubbornness — the file has already been deleted. Temporary links are how we avoid storing your books. Convert again and download straight away.`,
+  },
+  {
+    question: `The file downloaded at 0 KB. What went wrong?`,
+    answer: `The transfer stopped early, usually a dropped connection or a full disk. Free up space, reconnect, and download again while the link is still valid.`,
+  },
+  {
+    question: `My file was rejected before the conversion even started. Why?`,
+    answer: `Almost always the size cap. The free tier stops at 10 MB per file and names the limit in the error. Compress the images, split the book, or upgrade to Pro for 50 MB. The API plan allows 100 MB.`,
+  },
+  {
+    question: `Can I convert a book I bought from Amazon or Kobo?`,
+    answer: `Only if it's DRM-free. Protected purchases are rejected on upload, and we don't remove DRM, so there's nothing to troubleshoot. Look for a DRM-free edition of the same title.`,
+  },
+  {
+    question: `I got a message about too many conversions.`,
+    answer: `Free usage allows 5 conversions per hour without an account. Wait for the hour to roll over, or upgrade if you convert in volume. On shared Wi-Fi, other people on the same connection may have used part of that quota.`,
+  },
+  {
+    question: `Nothing here worked. What should I send support?`,
+    answer: `Source format, target format, file size, browser, operating system, and the exact error text you saw. That combination is usually enough to reproduce the issue on the first try.`,
+  }
+];

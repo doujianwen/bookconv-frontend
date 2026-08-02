@@ -102,29 +102,37 @@ Desktop Calibre is still worth having if you manage thousands of books, edit met
 - **AZW3 wins on Kindle** — better fonts, tables, and layout than MOBI, with no compatibility cost inside Amazon's ecosystem.
 - **MOBI is a fallback** — keep it for pre-KF8 hardware, don't choose it otherwise.
 - **Convert on demand** — one clean source plus a browser beats three half-maintained copies of every book.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Can a Kindle read EPUB files now?
-A: Not directly. Kindle hardware still won't display EPUB, though Send to Kindle converts one on the way in. Doing it yourself with [EPUB to AZW3](/convert/epub-to-azw3) gives you a predictable result instead of whatever Amazon's pipeline decides.
-
-Q: Is AZW3 actually better than MOBI?
-A: On any Kindle that supports it, yes. AZW3 renders fonts, tables, and layout that MOBI simply can't handle. MOBI only makes sense on hardware too old for KF8.
-
-Q: Which format should I archive in?
-A: EPUB. It's a published open standard, so the files stay readable long after today's apps disappear. Generate AZW3 or MOBI copies whenever a device asks for one.
-
-Q: Will converting wreck my formatting?
-A: Plain novels come through almost perfectly. Books with heavy CSS, tables, footnotes, or fixed layouts can shift, so check the first couple of chapters and the table of contents. The metadata preview catches title and author problems before you convert.
-
-Q: Do I have to install Calibre?
-A: No. BookConv runs a Calibre engine server-side, so the conversion quality is the same with nothing on your machine. Install the desktop app only if you want a full library manager — its [conversion documentation](https://manual.calibre-ebook.com/conversion.html) explains every setting.
-
-Q: My book is bigger than 10 MB. What now?
-A: The free tier rejects it up front rather than failing halfway through. Compress the images, split the book, or move to Pro for 50 MB per file. The API plan allows 100 MB.
-
-Q: What about DRM-protected purchases?
-A: They're rejected on upload, and we don't remove DRM. Conversion works on DRM-free files you already own, which includes public-domain titles and most indie store purchases.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Can a Kindle read EPUB files now?`,
+    answer: `Not directly. Kindle hardware still won't display EPUB, though Send to Kindle converts one on the way in. Doing it yourself with [EPUB to AZW3](/convert/epub-to-azw3) gives you a predictable result instead of whatever Amazon's pipeline decides.`,
+  },
+  {
+    question: `Is AZW3 actually better than MOBI?`,
+    answer: `On any Kindle that supports it, yes. AZW3 renders fonts, tables, and layout that MOBI simply can't handle. MOBI only makes sense on hardware too old for KF8.`,
+  },
+  {
+    question: `Which format should I archive in?`,
+    answer: `EPUB. It's a published open standard, so the files stay readable long after today's apps disappear. Generate AZW3 or MOBI copies whenever a device asks for one.`,
+  },
+  {
+    question: `Will converting wreck my formatting?`,
+    answer: `Plain novels come through almost perfectly. Books with heavy CSS, tables, footnotes, or fixed layouts can shift, so check the first couple of chapters and the table of contents. The metadata preview catches title and author problems before you convert.`,
+  },
+  {
+    question: `Do I have to install Calibre?`,
+    answer: `No. BookConv runs a Calibre engine server-side, so the conversion quality is the same with nothing on your machine. Install the desktop app only if you want a full library manager — its [conversion documentation](https://manual.calibre-ebook.com/conversion.html) explains every setting.`,
+  },
+  {
+    question: `My book is bigger than 10 MB. What now?`,
+    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images, split the book, or move to Pro for 50 MB per file. The API plan allows 100 MB.`,
+  },
+  {
+    question: `What about DRM-protected purchases?`,
+    answer: `They're rejected on upload, and we don't remove DRM. Conversion works on DRM-free files you already own, which includes public-domain titles and most indie store purchases.`,
+  }
+];

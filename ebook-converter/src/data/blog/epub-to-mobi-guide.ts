@@ -111,29 +111,37 @@ Migrating an old library the other direction? [MOBI to EPUB](/convert/mobi-to-ep
 - **Check your Kindle first.** Anything made after roughly 2015 reads EPUB through Send to Kindle, which makes MOBI conversion unnecessary for a lot of people.
 - **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022, and AZW3 is the better sideload target for any modern device.
 - **Fix problems at the source.** Bad encoding, missing nav documents, and absent covers live in the EPUB, and no output setting repairs them after the fact.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Do I need an account to convert EPUB to MOBI on BookConv?
-A: No. The free tier needs no signup at all — 10 MB per file and 5 conversions per hour. Pro raises the per-file limit to 50 MB and the API to 100 MB if you're working with bigger illustrated books.
-
-Q: How long does the download link stay active?
-A: Not indefinitely. Links are temporary and converted files are deleted after a period, so download the MOBI as soon as the progress bar completes rather than saving the link for later.
-
-Q: Why was my file rejected on upload?
-A: Two usual causes. Either it's DRM-protected, which we detect and reject because encrypted content can't be read by any converter, or it's over your tier's size limit — 10 MB free, 50 MB Pro.
-
-Q: Does my Kindle still support MOBI files?
-A: On physical Kindles, yes — sideloading a MOBI over USB still works on virtually every model. What changed is Send to Kindle, which stopped accepting MOBI uploads in August 2022. You can cable it across, you just can't email it.
-
-Q: What's the difference between MOBI and AZW3?
-A: AZW3 contains KF8, the newer Kindle format, with modern CSS, embedded fonts, proper tables, and fixed-layout support. Plain MOBI handles a much smaller subset and dates back to Mobipocket. For any Kindle from the last decade, AZW3 looks noticeably better.
-
-Q: Will converting EPUB to MOBI lose my highlights and notes?
-A: Yes. Annotations live in the device's own database and are tied to a specific file, so a converted copy counts as a new book. Export your notes before replacing anything.
-
-Q: Why does my converted MOBI have no page numbers?
-A: MOBI uses location markers instead, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and no conversion can add that mapping.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Do I need an account to convert EPUB to MOBI on BookConv?`,
+    answer: `No. The free tier needs no signup at all — 10 MB per file and 5 conversions per hour. Pro raises the per-file limit to 50 MB and the API to 100 MB if you're working with bigger illustrated books.`,
+  },
+  {
+    question: `How long does the download link stay active?`,
+    answer: `Not indefinitely. Links are temporary and converted files are deleted after a period, so download the MOBI as soon as the progress bar completes rather than saving the link for later.`,
+  },
+  {
+    question: `Why was my file rejected on upload?`,
+    answer: `Two usual causes. Either it's DRM-protected, which we detect and reject because encrypted content can't be read by any converter, or it's over your tier's size limit — 10 MB free, 50 MB Pro.`,
+  },
+  {
+    question: `Does my Kindle still support MOBI files?`,
+    answer: `On physical Kindles, yes — sideloading a MOBI over USB still works on virtually every model. What changed is Send to Kindle, which stopped accepting MOBI uploads in August 2022. You can cable it across, you just can't email it.`,
+  },
+  {
+    question: `What's the difference between MOBI and AZW3?`,
+    answer: `AZW3 contains KF8, the newer Kindle format, with modern CSS, embedded fonts, proper tables, and fixed-layout support. Plain MOBI handles a much smaller subset and dates back to Mobipocket. For any Kindle from the last decade, AZW3 looks noticeably better.`,
+  },
+  {
+    question: `Will converting EPUB to MOBI lose my highlights and notes?`,
+    answer: `Yes. Annotations live in the device's own database and are tied to a specific file, so a converted copy counts as a new book. Export your notes before replacing anything.`,
+  },
+  {
+    question: `Why does my converted MOBI have no page numbers?`,
+    answer: `MOBI uses location markers instead, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and no conversion can add that mapping.`,
+  }
+];

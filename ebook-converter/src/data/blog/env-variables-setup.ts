@@ -91,29 +91,37 @@ For observability, **LOG_LEVEL** accepts debug, info, warn, or error. **NEXT_PUB
 - **Storage is optional, not required.** S3-compatible credentials unlock object storage with a health check; leave them empty and results land on local disk.
 - **Rotate the placeholders.** AUTH_SECRET ships as a known default and the webhook signing secret starts empty; both are real risks in production.
 - **Commit the example, never the real file.** Keep .env.example in git as living documentation and keep .env.local out of it.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: What's the smallest set of variables I need to run BookConv locally?
-A: REDIS_URL pointing at a running Redis, and Calibre installed so ebook-convert resolves on your PATH. UPLOAD_DIR, MAX_FILE_SIZE_MB, and CALIBRE_PATH all have workable defaults. Everything else — storage, Supabase, payments, analytics — is optional.
-
-Q: Should I commit .env.example to version control?
-A: Yes. It contains no real secrets, only placeholders and comments explaining each variable. The file with actual values stays in .gitignore.
-
-Q: What happens if I don't configure S3-compatible storage?
-A: Conversions work normally and results are written to local disk under your upload directory. That's fine for a single server. If you run multiple instances behind a load balancer, configure shared storage — otherwise a result written on one instance won't be found by another.
-
-Q: Is it safe to leave AUTH_SECRET at its default?
-A: Only on your own machine. The default is a hardcoded placeholder visible to anyone reading the source, so an attacker could forge session tokens. Generate a long random value for any deployment reachable from the internet.
-
-Q: How do I manage different values for development, staging, and production?
-A: Keep local overrides in .env.local, and inject production values through your host's secret manager or deployment config rather than a file on disk. Managed platforms and container orchestrators both support this natively, keeping production credentials off developer laptops.
-
-Q: My rate limits stopped working after I moved behind a CDN. Why?
-A: Every request now arrives with your CDN's IP address, so the limiter sees one client instead of many. Enable TRUST_PROXY and list your CDN's addresses in TRUSTED_PROXIES so the real client IP is read from forwarded headers.
-
-Q: Do I have to restart BookConv after changing a variable?
-A: Yes. Values are read at process startup, so a change only takes effect on the next boot. That's expected twelve-factor behavior, and it's why config changes should go through your normal deploy process.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `What's the smallest set of variables I need to run BookConv locally?`,
+    answer: `REDIS_URL pointing at a running Redis, and Calibre installed so ebook-convert resolves on your PATH. UPLOAD_DIR, MAX_FILE_SIZE_MB, and CALIBRE_PATH all have workable defaults. Everything else — storage, Supabase, payments, analytics — is optional.`,
+  },
+  {
+    question: `Should I commit .env.example to version control?`,
+    answer: `Yes. It contains no real secrets, only placeholders and comments explaining each variable. The file with actual values stays in .gitignore.`,
+  },
+  {
+    question: `What happens if I don't configure S3-compatible storage?`,
+    answer: `Conversions work normally and results are written to local disk under your upload directory. That's fine for a single server. If you run multiple instances behind a load balancer, configure shared storage — otherwise a result written on one instance won't be found by another.`,
+  },
+  {
+    question: `Is it safe to leave AUTH_SECRET at its default?`,
+    answer: `Only on your own machine. The default is a hardcoded placeholder visible to anyone reading the source, so an attacker could forge session tokens. Generate a long random value for any deployment reachable from the internet.`,
+  },
+  {
+    question: `How do I manage different values for development, staging, and production?`,
+    answer: `Keep local overrides in .env.local, and inject production values through your host's secret manager or deployment config rather than a file on disk. Managed platforms and container orchestrators both support this natively, keeping production credentials off developer laptops.`,
+  },
+  {
+    question: `My rate limits stopped working after I moved behind a CDN. Why?`,
+    answer: `Every request now arrives with your CDN's IP address, so the limiter sees one client instead of many. Enable TRUST_PROXY and list your CDN's addresses in TRUSTED_PROXIES so the real client IP is read from forwarded headers.`,
+  },
+  {
+    question: `Do I have to restart BookConv after changing a variable?`,
+    answer: `Yes. Values are read at process startup, so a change only takes effect on the next boot. That's expected twelve-factor behavior, and it's why config changes should go through your normal deploy process.`,
+  }
+];

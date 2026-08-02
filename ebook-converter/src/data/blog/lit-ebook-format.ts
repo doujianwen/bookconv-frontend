@@ -71,29 +71,37 @@ None of these are locked to a single vendor's account system, which is exactly w
 - **Nothing Microsoft ships opens it now** — the app won't run and the DRM servers are gone.
 - **Calibre or an online converter is the fix** — both unpack the container and rebuild it as EPUB.
 - **Convert to EPUB, don't just view** — a converted file is portable; a Calibre-only view keeps you locked to one tool.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: What is a LIT file?
-A: LIT (Literature) is Microsoft Reader's native ebook format from 2000. It's a compressed bundle of HTML and CSS wrapped in Microsoft's own container, usually with DRM attached.
-
-Q: Can I still open LIT files on Windows 11?
-A: Not with Microsoft's software — the Reader app was retired in 2012 and won't run on current Windows. You'll need Calibre or an online converter to read or convert the file.
-
-Q: Is the LIT format still used?
-A: No. Microsoft discontinued it in 2012 and nothing has adopted it since. Any LIT file you find today is a legacy book from the early 2000s.
-
-Q: How do I convert LIT to a readable format?
-A: Use Calibre (desktop, batch-capable) or an online tool like [BookConv's LIT to EPUB converter](/convert/lit-to-epub). Both unpack the container and rebuild it as EPUB.
-
-Q: Will converting LIT to EPUB keep my book intact?
-A: Text, chapters, and images carry over cleanly. Exact spacing and page breaks may shift because EPUB reflows. DRM-protected LIT files won't convert at all.
-
-Q: Why did Microsoft kill the LIT format?
-A: Microsoft Reader never gained meaningful market share, and Amazon's Kindle plus the open EPUB standard won the ebook war. Microsoft ended the app in 2012 with no successor.
-
-Q: Is LIT the same as EPUB?
-A: No, but they're cousins. LIT is HTML-based like EPUB, but wrapped in a proprietary Microsoft container with optional DRM. EPUB is an open standard with no vendor lock-in.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `What is a LIT file?`,
+    answer: `LIT (Literature) is Microsoft Reader's native ebook format from 2000. It's a compressed bundle of HTML and CSS wrapped in Microsoft's own container, usually with DRM attached.`,
+  },
+  {
+    question: `Can I still open LIT files on Windows 11?`,
+    answer: `Not with Microsoft's software — the Reader app was retired in 2012 and won't run on current Windows. You'll need Calibre or an online converter to read or convert the file.`,
+  },
+  {
+    question: `Is the LIT format still used?`,
+    answer: `No. Microsoft discontinued it in 2012 and nothing has adopted it since. Any LIT file you find today is a legacy book from the early 2000s.`,
+  },
+  {
+    question: `How do I convert LIT to a readable format?`,
+    answer: `Use Calibre (desktop, batch-capable) or an online tool like [BookConv's LIT to EPUB converter](/convert/lit-to-epub). Both unpack the container and rebuild it as EPUB.`,
+  },
+  {
+    question: `Will converting LIT to EPUB keep my book intact?`,
+    answer: `Text, chapters, and images carry over cleanly. Exact spacing and page breaks may shift because EPUB reflows. DRM-protected LIT files won't convert at all.`,
+  },
+  {
+    question: `Why did Microsoft kill the LIT format?`,
+    answer: `Microsoft Reader never gained meaningful market share, and Amazon's Kindle plus the open EPUB standard won the ebook war. Microsoft ended the app in 2012 with no successor.`,
+  },
+  {
+    question: `Is LIT the same as EPUB?`,
+    answer: `No, but they're cousins. LIT is HTML-based like EPUB, but wrapped in a proprietary Microsoft container with optional DRM. EPUB is an open standard with no vendor lock-in.`,
+  }
+];

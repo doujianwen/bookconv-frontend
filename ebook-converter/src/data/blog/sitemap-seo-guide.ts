@@ -93,29 +93,37 @@ The pages themselves still have to earn their place. A conversion page that only
 - **Submit once in Search Console** and let Google re-fetch on its own — resubmitting after every build accomplishes nothing.
 - **Keep robots.txt consistent** with the sitemap, and name the sitemap inside robots.txt so crawlers beyond Google find it.
 - **Use honest metadata.** Real last-modified dates and differentiated priorities carry signal; identical values everywhere carry none.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Where is BookConv's sitemap?
-A: At /sitemap.xml, generated fresh with every build. We also reference it from robots.txt and publish an RSS feed for the blog, so there are three separate ways to find new content.
-
-Q: How often should a sitemap be regenerated?
-A: Every build, if it's generated from code. Ours rebuilds with the site, so the deploy that ships a new page ships its sitemap entry at the same time.
-
-Q: Does a higher priority value make a page rank better?
-A: No. Priority is a relative hint about which of your own pages matter most, used at most for crawl ordering. Search engines are free to ignore it, and often do.
-
-Q: Search Console says my pages are discovered but not indexed. Is that broken?
-A: It's a normal state, not a failure. The URL is known and hasn't been selected. The fix is usually making the page more distinct and useful, or linking to it better from pages that already perform.
-
-Q: Should each language get its own sitemap file?
-A: Not necessarily. One file can hold every locale, which is how ours works — both language variants live in the same list. Splitting only helps once the file gets large enough to be awkward.
-
-Q: Can I include pages that robots.txt blocks?
-A: You can, but don't. The two instructions contradict each other, Search Console reports the conflict, and nothing good comes of it. Decide whether the page is public, then make both files agree.
-
-Q: What about Bing and other search engines?
-A: Bing has its own webmaster tools with an equivalent submission flow, and most other crawlers pick up the sitemap through the robots.txt reference. The file itself needs no changes.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Where is BookConv's sitemap?`,
+    answer: `At /sitemap.xml, generated fresh with every build. We also reference it from robots.txt and publish an RSS feed for the blog, so there are three separate ways to find new content.`,
+  },
+  {
+    question: `How often should a sitemap be regenerated?`,
+    answer: `Every build, if it's generated from code. Ours rebuilds with the site, so the deploy that ships a new page ships its sitemap entry at the same time.`,
+  },
+  {
+    question: `Does a higher priority value make a page rank better?`,
+    answer: `No. Priority is a relative hint about which of your own pages matter most, used at most for crawl ordering. Search engines are free to ignore it, and often do.`,
+  },
+  {
+    question: `Search Console says my pages are discovered but not indexed. Is that broken?`,
+    answer: `It's a normal state, not a failure. The URL is known and hasn't been selected. The fix is usually making the page more distinct and useful, or linking to it better from pages that already perform.`,
+  },
+  {
+    question: `Should each language get its own sitemap file?`,
+    answer: `Not necessarily. One file can hold every locale, which is how ours works — both language variants live in the same list. Splitting only helps once the file gets large enough to be awkward.`,
+  },
+  {
+    question: `Can I include pages that robots.txt blocks?`,
+    answer: `You can, but don't. The two instructions contradict each other, Search Console reports the conflict, and nothing good comes of it. Decide whether the page is public, then make both files agree.`,
+  },
+  {
+    question: `What about Bing and other search engines?`,
+    answer: `Bing has its own webmaster tools with an equivalent submission flow, and most other crawlers pick up the sitemap through the robots.txt reference. The file itself needs no changes.`,
+  }
+];

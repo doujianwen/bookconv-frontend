@@ -63,29 +63,37 @@ When a job is truly stuck, BookConv can fire an [HMAC-signed webhook](/blog/webh
 - **Throttling keeps things fast.** Limited concurrency means Calibre conversions stay predictable instead of starving each other.
 - **Links are temporary.** BookConv deletes finished files after a period, so download as soon as the bar completes.
 - **Retries belong to the queue.** Three attempts with backoff and clear error messages when a file is genuinely unrecoverable.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Why does my BookConv conversion sit at "queued" for a while?
-A: Your job is waiting for a free worker slot. Concurrency is capped on purpose, so during a busy stretch jobs line up. The wait is usually short, and the status endpoint reports the moment your job moves to active.
-
-Q: Can I make a conversion finish faster?
-A: Mostly by simplifying the input. Large embedded images, scanned-page PDFs, and heavy custom CSS all add real work. A text-heavy EPUB converts far quicker than an image-heavy one. The format pair matters too — EPUB to MOBI is a lighter transformation than PDF to EPUB.
-
-Q: What happens if I close the tab mid-conversion?
-A: The job keeps running — it lives in Redis, not in your browser. But the job ID lives in the page, so if you lose the tab you lose the handle to the result. Keep it open until the download starts.
-
-Q: Is there a hard limit on conversion time?
-A: Yes. Calibre runs under a two-minute timeout per attempt. If a file is complex enough to exceed that, BookConv reports it as a timeout rather than hanging indefinitely.
-
-Q: Do failed jobs retry forever?
-A: No. Three attempts by default, with the delay increasing each time. After that the job is marked failed with an error code and a readable message, and the attempt count stays visible in the status response.
-
-Q: What are the BookConv free-tier limits?
-A: Free accounts get 10 MB per file and 5 conversions per hour. Pro raises the file cap to 50 MB, and the API tier allows files up to 100 MB. When you self-host, those ceilings come from your own environment variables.
-
-Q: Are my converted files kept forever?
-A: No. Download links are temporary and BookConv deletes files after a set period, so save your result as soon as it's ready. If a link expires, re-run the conversion to get a fresh one.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Why does my BookConv conversion sit at "queued" for a while?`,
+    answer: `Your job is waiting for a free worker slot. Concurrency is capped on purpose, so during a busy stretch jobs line up. The wait is usually short, and the status endpoint reports the moment your job moves to active.`,
+  },
+  {
+    question: `Can I make a conversion finish faster?`,
+    answer: `Mostly by simplifying the input. Large embedded images, scanned-page PDFs, and heavy custom CSS all add real work. A text-heavy EPUB converts far quicker than an image-heavy one. The format pair matters too — EPUB to MOBI is a lighter transformation than PDF to EPUB.`,
+  },
+  {
+    question: `What happens if I close the tab mid-conversion?`,
+    answer: `The job keeps running — it lives in Redis, not in your browser. But the job ID lives in the page, so if you lose the tab you lose the handle to the result. Keep it open until the download starts.`,
+  },
+  {
+    question: `Is there a hard limit on conversion time?`,
+    answer: `Yes. Calibre runs under a two-minute timeout per attempt. If a file is complex enough to exceed that, BookConv reports it as a timeout rather than hanging indefinitely.`,
+  },
+  {
+    question: `Do failed jobs retry forever?`,
+    answer: `No. Three attempts by default, with the delay increasing each time. After that the job is marked failed with an error code and a readable message, and the attempt count stays visible in the status response.`,
+  },
+  {
+    question: `What are the BookConv free-tier limits?`,
+    answer: `Free accounts get 10 MB per file and 5 conversions per hour. Pro raises the file cap to 50 MB, and the API tier allows files up to 100 MB. When you self-host, those ceilings come from your own environment variables.`,
+  },
+  {
+    question: `Are my converted files kept forever?`,
+    answer: `No. Download links are temporary and BookConv deletes files after a set period, so save your result as soon as it's ready. If a link expires, re-run the conversion to get a fresh one.`,
+  }
+];

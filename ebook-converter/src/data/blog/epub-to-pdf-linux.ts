@@ -71,26 +71,33 @@ Going the other way? [PDF to EPUB](/convert/pdf-to-epub) is the move when you ne
 - **Permission errors are a sandbox issue** — snap/flatpak Calibre can't see your files until you grant filesystem access.
 - **Missing fonts mean missing glyphs** — install the font or add it to \`~/.fonts\` and run \`fc-cache -f\` before reconverting.
 - **Set paper size explicitly** — a wrong-sized PDF is almost always a default mismatch, fixed with \`--paper-size\`.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: What's the command to convert EPUB to PDF on Linux?
-A: With Calibre installed, run \`ebook-convert book.epub book.pdf\` in a terminal. Add flags like \`--paper-size a4\` or \`--pdf-page-numbers\` for control over the output.
-
-Q: Why does my PDF have missing or wrong fonts on Linux?
-A: Calibre embeds only fonts present on the system. Install the missing font (or add it to \`~/.fonts\` and run \`fc-cache -f\`) and reconvert. Boxes or a fallback serif mean the glyph wasn't available.
-
-Q: Can I batch convert multiple EPUBs to PDF at once?
-A: Yes. Loop over the folder: \`for f in *.epub; do ebook-convert "$f" "\${f%.epub}.pdf"; done\`. Desktop Calibre's bulk conversion also handles large batches in a single job.
-
-Q: Do I need to install anything, or can I do it online?
-A: You don't need to install anything. BookConv's [EPUB to PDF converter](/convert/epub-to-pdf) runs in the browser and uses the same Calibre engine, which is handy on locked-down or borrowed machines.
-
-Q: Why is my output PDF the wrong page size?
-A: The default paper size didn't match your expectation. Pass \`--paper-size letter\` or \`--paper-size a4\` explicitly, or set it in Calibre's Page Setup panel, then reconvert.
-
-Q: Will converting EPUB to PDF keep my images and formatting?
-A: Images and basic layout carry over. But PDF is fixed-layout, so the text won't reflow or resize the way it does in an EPUB reader — that's the trade you're making for a printable page.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `What's the command to convert EPUB to PDF on Linux?`,
+    answer: `With Calibre installed, run \\\`ebook-convert book.epub book.pdf\\\` in a terminal. Add flags like \\\`--paper-size a4\\\` or \\\`--pdf-page-numbers\\\` for control over the output.`,
+  },
+  {
+    question: `Why does my PDF have missing or wrong fonts on Linux?`,
+    answer: `Calibre embeds only fonts present on the system. Install the missing font (or add it to \\\`~/.fonts\\\` and run \\\`fc-cache -f\\\`) and reconvert. Boxes or a fallback serif mean the glyph wasn't available.`,
+  },
+  {
+    question: `Can I batch convert multiple EPUBs to PDF at once?`,
+    answer: `Yes. Loop over the folder: \\\`for f in *.epub; do ebook-convert "$f" "\\\${f%.epub}.pdf"; done\\\`. Desktop Calibre's bulk conversion also handles large batches in a single job.`,
+  },
+  {
+    question: `Do I need to install anything, or can I do it online?`,
+    answer: `You don't need to install anything. BookConv's [EPUB to PDF converter](/convert/epub-to-pdf) runs in the browser and uses the same Calibre engine, which is handy on locked-down or borrowed machines.`,
+  },
+  {
+    question: `Why is my output PDF the wrong page size?`,
+    answer: `The default paper size didn't match your expectation. Pass \\\`--paper-size letter\\\` or \\\`--paper-size a4\\\` explicitly, or set it in Calibre's Page Setup panel, then reconvert.`,
+  },
+  {
+    question: `Will converting EPUB to PDF keep my images and formatting?`,
+    answer: `Images and basic layout carry over. But PDF is fixed-layout, so the text won't reflow or resize the way it does in an EPUB reader — that's the trade you're making for a printable page.`,
+  }
+];

@@ -82,29 +82,37 @@ Desktop Calibre is worth installing only if you're batch-converting a whole shel
 - **MOBI only wins on old hardware** — pre-2015 Kindles and a few legacy tools are the sole holdouts.
 - **Converting drops quality one way** — AZW3 to MOBI loses styling, not text; it can't be recovered going back.
 - **One engine does it all** — Calibre powers both BookConv and the desktop app, so the output is the same either way.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Is AZW3 better than MOBI?
-A: Yes, for any modern Kindle. AZW3 (KF8) supports modern CSS, embedded fonts, and tables; MOBI supports almost none of that. MOBI only wins on compatibility with pre-2015 hardware.
-
-Q: Can my Kindle read both AZW3 and MOBI?
-A: Every Kindle ever made reads MOBI, and every model from the last decade reads AZW3. The difference is that older devices can't display AZW3's extra styling, so it falls back to a plainer look.
-
-Q: Which should I send to my Kindle?
-A: Send AZW3, or send EPUB through Send to Kindle (which becomes KF8 on Amazon's side). Use MOBI only for very old devices that don't handle AZW3 well over USB.
-
-Q: Does converting AZW3 to MOBI lose quality?
-A: It loses styling, not text. Embedded fonts, complex tables, and advanced CSS are dropped because MOBI can't represent them. The words and chapter structure survive.
-
-Q: What's the difference between AZW3 and KFX?
-A: KFX is Amazon's even newer format with enhanced typesetting and compliance features, used for Store purchases. AZW3/KF8 is the open-to-converters format you'll actually produce yourself.
-
-Q: Can I convert MOBI back to AZW3?
-A: You can, but you won't recover what MOBI threw away. Converting MOBI to AZW3 gives you the container; the lost fonts and layout don't come back. Start from the original EPUB if you still have it.
-
-Q: Is AZW3 the same as KF8?
-A: Yes. AZW3 is Amazon's consumer-facing name; KF8 (Kindle Format 8) is the technical specification. They refer to the same format.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Is AZW3 better than MOBI?`,
+    answer: `Yes, for any modern Kindle. AZW3 (KF8) supports modern CSS, embedded fonts, and tables; MOBI supports almost none of that. MOBI only wins on compatibility with pre-2015 hardware.`,
+  },
+  {
+    question: `Can my Kindle read both AZW3 and MOBI?`,
+    answer: `Every Kindle ever made reads MOBI, and every model from the last decade reads AZW3. The difference is that older devices can't display AZW3's extra styling, so it falls back to a plainer look.`,
+  },
+  {
+    question: `Which should I send to my Kindle?`,
+    answer: `Send AZW3, or send EPUB through Send to Kindle (which becomes KF8 on Amazon's side). Use MOBI only for very old devices that don't handle AZW3 well over USB.`,
+  },
+  {
+    question: `Does converting AZW3 to MOBI lose quality?`,
+    answer: `It loses styling, not text. Embedded fonts, complex tables, and advanced CSS are dropped because MOBI can't represent them. The words and chapter structure survive.`,
+  },
+  {
+    question: `What's the difference between AZW3 and KFX?`,
+    answer: `KFX is Amazon's even newer format with enhanced typesetting and compliance features, used for Store purchases. AZW3/KF8 is the open-to-converters format you'll actually produce yourself.`,
+  },
+  {
+    question: `Can I convert MOBI back to AZW3?`,
+    answer: `You can, but you won't recover what MOBI threw away. Converting MOBI to AZW3 gives you the container; the lost fonts and layout don't come back. Start from the original EPUB if you still have it.`,
+  },
+  {
+    question: `Is AZW3 the same as KF8?`,
+    answer: `Yes. AZW3 is Amazon's consumer-facing name; KF8 (Kindle Format 8) is the technical specification. They refer to the same format.`,
+  }
+];

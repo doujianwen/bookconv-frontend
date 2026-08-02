@@ -105,29 +105,37 @@ Start with one event and one consumer. Confirm it works end to end before fannin
 - **Assume duplicates.** Idempotent handlers keyed on the job or event ID turn retries into a non-event.
 - **Acknowledge first, work later.** Return 2xx quickly and push heavy processing onto your own queue.
 - **Fetch results promptly**, because download links are temporary and converted files get deleted after a period.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: What's the difference between a webhook and an API call?
-A: Direction. With an API call your code starts the request. With a webhook we start it against a URL you own. Same HTTP machinery, pointed the other way.
-
-Q: Do I need webhooks just to convert a few files?
-A: No. For one-off jobs the normal upload-and-download flow is simpler and the progress bar tells you everything. Webhooks earn their keep when conversion is a step in a repeating process nobody watches.
-
-Q: Will I get an event for a file BookConv rejects?
-A: Rejections for DRM protection or an oversized upload happen before a job exists, so that answer comes back in the upload response, not by webhook. The failed event covers problems during conversion.
-
-Q: Can I receive webhooks while developing on my laptop?
-A: Not directly — we need a publicly reachable URL. Most people use a tunnelling tool that forwards a temporary public address to localhost, then switch to the real domain before launch.
-
-Q: What should my endpoint return?
-A: Any 2xx, as fast as you can manage. Return 401 when verification fails, and 5xx only if you want a retry.
-
-Q: What if my server is down when the event fires?
-A: Retries go out on a growing schedule, then stop. So don't make the webhook your only source of truth — keep a way to check status and reconcile what you missed.
-
-Q: How do I test my signature check without a real conversion?
-A: Sign a sample payload with your test secret the way we would and POST it to your endpoint. Then change one character and confirm you get a 401. If the tampered request still gets processed, verification isn't wired up.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `What's the difference between a webhook and an API call?`,
+    answer: `Direction. With an API call your code starts the request. With a webhook we start it against a URL you own. Same HTTP machinery, pointed the other way.`,
+  },
+  {
+    question: `Do I need webhooks just to convert a few files?`,
+    answer: `No. For one-off jobs the normal upload-and-download flow is simpler and the progress bar tells you everything. Webhooks earn their keep when conversion is a step in a repeating process nobody watches.`,
+  },
+  {
+    question: `Will I get an event for a file BookConv rejects?`,
+    answer: `Rejections for DRM protection or an oversized upload happen before a job exists, so that answer comes back in the upload response, not by webhook. The failed event covers problems during conversion.`,
+  },
+  {
+    question: `Can I receive webhooks while developing on my laptop?`,
+    answer: `Not directly — we need a publicly reachable URL. Most people use a tunnelling tool that forwards a temporary public address to localhost, then switch to the real domain before launch.`,
+  },
+  {
+    question: `What should my endpoint return?`,
+    answer: `Any 2xx, as fast as you can manage. Return 401 when verification fails, and 5xx only if you want a retry.`,
+  },
+  {
+    question: `What if my server is down when the event fires?`,
+    answer: `Retries go out on a growing schedule, then stop. So don't make the webhook your only source of truth — keep a way to check status and reconcile what you missed.`,
+  },
+  {
+    question: `How do I test my signature check without a real conversion?`,
+    answer: `Sign a sample payload with your test secret the way we would and POST it to your endpoint. Then change one character and confirm you get a 401. If the tampered request still gets processed, verification isn't wired up.`,
+  }
+];

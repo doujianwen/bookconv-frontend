@@ -91,32 +91,41 @@ Both tools use the same conversion engine, so the output quality is identical. T
 - **Watch the limits** — 10MB free, 50MB Pro, 100MB API; five conversions per hour on the free tier
 - **Verify every file** — table of contents, chapter breaks, images and special characters, before deleting the original
 - **Save promptly** — download links expire and converted files are deleted from the server afterwards`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Does BookConv really use the same engine as Calibre?
-A: Yes. The conversion is powered by Calibre's ebook-convert binary running on our servers. The output matches what desktop Calibre would produce for the same input.
-
-Q: Does converting EPUB to MOBI lose any content?
-A: No text is lost. Words, paragraphs, bold and italic all survive the trip. What does get simplified is complex styling — multi-column layouts, custom fonts and fancy CSS, because MOBI's rendering engine predates most of that.
-
-Q: Why won't my Kindle show the MOBI I just copied over?
-A: Three usual suspects: the file landed in the root of the drive instead of the documents folder, the device needs a restart to re-index, or the source EPUB was damaged. Open the file in Kindle Previewer on a computer to work out which one it is.
-
-Q: Can I convert a book I bought from a store?
-A: Not if it carries DRM, and most store purchases do. Converters can't read those files at all. Buying DRM-free where possible — many indie publishers offer it — avoids the problem entirely.
-
-Q: What's the biggest EPUB I can convert for free?
-A: 10MB, which covers virtually every novel. Pro handles up to 50MB and the API plan up to 100MB, which is where illustrated books and textbooks usually land.
-
-Q: MOBI or AZW3 for my Kindle?
-A: AZW3 for anything made since 2012. It supports proper CSS, embedded fonts and better line breaking, so the reading experience is noticeably better. Save MOBI for genuinely old hardware.
-
-Q: How long does a conversion take on BookConv?
-A: Seconds for a typical novel. Larger or image-heavy books take longer, and jobs that exceed the server's two-minute limit fail rather than stall, so you'll know quickly either way.
-
-Q: How do I convert a whole shelf of books at once?
-A: For large libraries, desktop Calibre is the better tool — it does unlimited batches for free. For five or ten books, running them one at a time through the [EPUB to MOBI tool](/convert/epub-to-mobi) is honestly faster than setting up anything else.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Does BookConv really use the same engine as Calibre?`,
+    answer: `Yes. The conversion is powered by Calibre's ebook-convert binary running on our servers. The output matches what desktop Calibre would produce for the same input.`,
+  },
+  {
+    question: `Does converting EPUB to MOBI lose any content?`,
+    answer: `No text is lost. Words, paragraphs, bold and italic all survive the trip. What does get simplified is complex styling — multi-column layouts, custom fonts and fancy CSS, because MOBI's rendering engine predates most of that.`,
+  },
+  {
+    question: `Why won't my Kindle show the MOBI I just copied over?`,
+    answer: `Three usual suspects: the file landed in the root of the drive instead of the documents folder, the device needs a restart to re-index, or the source EPUB was damaged. Open the file in Kindle Previewer on a computer to work out which one it is.`,
+  },
+  {
+    question: `Can I convert a book I bought from a store?`,
+    answer: `Not if it carries DRM, and most store purchases do. Converters can't read those files at all. Buying DRM-free where possible — many indie publishers offer it — avoids the problem entirely.`,
+  },
+  {
+    question: `What's the biggest EPUB I can convert for free?`,
+    answer: `10MB, which covers virtually every novel. Pro handles up to 50MB and the API plan up to 100MB, which is where illustrated books and textbooks usually land.`,
+  },
+  {
+    question: `MOBI or AZW3 for my Kindle?`,
+    answer: `AZW3 for anything made since 2012. It supports proper CSS, embedded fonts and better line breaking, so the reading experience is noticeably better. Save MOBI for genuinely old hardware.`,
+  },
+  {
+    question: `How long does a conversion take on BookConv?`,
+    answer: `Seconds for a typical novel. Larger or image-heavy books take longer, and jobs that exceed the server's two-minute limit fail rather than stall, so you'll know quickly either way.`,
+  },
+  {
+    question: `How do I convert a whole shelf of books at once?`,
+    answer: `For large libraries, desktop Calibre is the better tool — it does unlimited batches for free. For five or ten books, running them one at a time through the [EPUB to MOBI tool](/convert/epub-to-mobi) is honestly faster than setting up anything else.`,
+  }
+];

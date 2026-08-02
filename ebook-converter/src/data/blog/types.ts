@@ -8,6 +8,11 @@ export interface BlogPostContent {
   sections: BlogSection[];
 }
 
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -17,6 +22,7 @@ export interface BlogPostMeta {
   content: BlogPostContent;
   relatedSlugs?: string[];
   internalLinkTargets?: string[];
+  faqs?: BlogFaq[];
 }
 
 export interface BlogPostWithLinks extends BlogPostMeta {
@@ -93,6 +99,18 @@ export function renderMarkdownToHtml(markdown: string): string {
   html = html.replace(/(<\/h[23]>)<\/p>/g, "$1");
 
   return html;
+}
+
+export function stripMarkdown(markdown: string): string {
+  if (!markdown) return "";
+  return markdown
+    .replace(/\[(.+?)\]\((.+?)\)/g, "$1") // links -> text
+    .replace(/`(.+?)`/g, "$1") // inline code
+    .replace(/\*\*([^*]+)\*\*/g, "$1") // bold
+    .replace(/\*([^*]+)\*/g, "$1") // italic
+    .replace(/\n+/g, " ") // collapse newlines
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 export function buildInternalLinks(content: BlogPostContent, currentSlug: string, allPosts: Map<string, BlogPostMeta>): string {

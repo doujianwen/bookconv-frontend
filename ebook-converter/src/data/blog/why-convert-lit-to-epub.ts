@@ -104,32 +104,41 @@ Then back the results up somewhere sensible. The entire point of this exercise i
 - **Calibre handles big libraries** — free, batch-capable, and it lets you fix broken metadata along the way.
 - **DRM blocks conversion** — protected LIT files won't convert, and there's no legitimate workaround.
 - **Always check the output** — skim a chapter and the table of contents before deleting the originals.`
-    },
-    {
-      heading: `Frequently Asked Questions`,
-      body: `Q: Can I still install Microsoft Reader on Windows 11?
-A: No. Microsoft ended distribution in 2012 and the app doesn't run on current Windows. Even if you tracked down an installer, the activation service for DRM-protected books is long gone.
-
-Q: Is converting my own LIT books legal?
-A: Converting DRM-free files you own, for your own use, is generally fine. Removing DRM is a separate question and not something we support. Treat protected files as unreadable.
-
-Q: Can I convert LIT to EPUB without installing software?
-A: Yes. BookConv's [LIT to EPUB converter](/convert/lit-to-epub) runs the Calibre engine in the cloud, so you only need a browser.
-
-Q: Will the book look different after conversion?
-A: A little. Text, chapters, and images carry over cleanly, while exact spacing and page breaks may shift. EPUB reflows anyway, so fixed pagination was never going to survive the trip.
-
-Q: Can I convert an entire folder at once?
-A: Yes. Calibre's bulk conversion handles large batches in one run. Online tools generally work file by file, which is fine for a handful.
-
-Q: My converted EPUB has no table of contents. Now what?
-A: Run the conversion again with Calibre's structure detection pointed at your heading tags. The [Calibre documentation](https://manual.calibre-ebook.com/conversion.html) walks through the XPath settings involved.
-
-Q: Should I convert straight to a Kindle format instead?
-A: Go to EPUB first. It's the cleanest intermediate format and the better archival copy. Generate a Kindle file from it afterward if you need one.
-
-Q: How can I tell whether a LIT file has DRM?
-A: If conversion fails or produces an empty file, DRM is the usual culprit. Files shared freely by authors or public archives are typically clean.`
     }
   ]
 };
+
+export const faqs = [
+  {
+    question: `Can I still install Microsoft Reader on Windows 11?`,
+    answer: `No. Microsoft ended distribution in 2012 and the app doesn't run on current Windows. Even if you tracked down an installer, the activation service for DRM-protected books is long gone.`,
+  },
+  {
+    question: `Is converting my own LIT books legal?`,
+    answer: `Converting DRM-free files you own, for your own use, is generally fine. Removing DRM is a separate question and not something we support. Treat protected files as unreadable.`,
+  },
+  {
+    question: `Can I convert LIT to EPUB without installing software?`,
+    answer: `Yes. BookConv's [LIT to EPUB converter](/convert/lit-to-epub) runs the Calibre engine in the cloud, so you only need a browser.`,
+  },
+  {
+    question: `Will the book look different after conversion?`,
+    answer: `A little. Text, chapters, and images carry over cleanly, while exact spacing and page breaks may shift. EPUB reflows anyway, so fixed pagination was never going to survive the trip.`,
+  },
+  {
+    question: `Can I convert an entire folder at once?`,
+    answer: `Yes. Calibre's bulk conversion handles large batches in one run. Online tools generally work file by file, which is fine for a handful.`,
+  },
+  {
+    question: `My converted EPUB has no table of contents. Now what?`,
+    answer: `Run the conversion again with Calibre's structure detection pointed at your heading tags. The [Calibre documentation](https://manual.calibre-ebook.com/conversion.html) walks through the XPath settings involved.`,
+  },
+  {
+    question: `Should I convert straight to a Kindle format instead?`,
+    answer: `Go to EPUB first. It's the cleanest intermediate format and the better archival copy. Generate a Kindle file from it afterward if you need one.`,
+  },
+  {
+    question: `How can I tell whether a LIT file has DRM?`,
+    answer: `If conversion fails or produces an empty file, DRM is the usual culprit. Files shared freely by authors or public archives are typically clean.`,
+  }
+];
