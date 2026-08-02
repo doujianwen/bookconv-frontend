@@ -59,6 +59,10 @@ EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
 - [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)
 - [Convert PDF to EPUB Without Losing Images or Layout](https://www.bookconv.com/guide/pdf-to-epub-keep-formatting)
 - [Calibre vs Online Converters: Which Should You Actually Use?](https://www.bookconv.com/guide/calibre-vs-online-converter)
+- [EPUB to MOBI: Keep Formatting and Read on Any Kindle](https://www.bookconv.com/guide/epub-to-mobi-keep-formatting)
+- [AZW3 to EPUB: Remove Kindle Lock-in and Read Anywhere](https://www.bookconv.com/guide/azw3-to-epub-keep-formatting)
+- [DOCX to EPUB: Turn Your Word Manuscript into a Real Ebook](https://www.bookconv.com/guide/docx-to-epub-self-publish)
+- [MOBI vs AZW3: Which Kindle Format Should You Actually Use?](https://www.bookconv.com/guide/mobi-vs-azw3)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
