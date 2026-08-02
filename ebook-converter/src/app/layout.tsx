@@ -7,9 +7,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import './globals.css'
+import Script from 'next/script'
 import { ServiceWorkerRegistration } from '@/components/sw/ServiceWorkerRegistration'
-// Initialize Sentry in production (side-effect import)
-import '@/lib/sentry-setup'
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -86,26 +85,25 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" hrefLang="x-default" href="https://www.bookconv.com" />
         <link rel="alternate" hrefLang="en" href="https://www.bookconv.com/" />
         <link rel="alternate" hrefLang="es" href="https://www.bookconv.com/es" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/og-image.svg" type="image/svg+xml" />
         <link rel='icon' href='/favicon.ico' sizes='48x48' />
         <link rel='icon' href='/icon.svg' type="image/svg+xml" sizes='any' />
         <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
         <link rel='manifest' href='/manifest.json' />
 
-        {/* Google Analytics 4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJTM9CFPWZ" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-QJTM9CFPWZ');
-            `.trim(),
-          }}
+        {/* Google Analytics 4 — lazyOnload to avoid blocking first paint / LCP */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-QJTM9CFPWZ"
+          strategy="lazyOnload"
         />
+        <Script id="gtag-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-QJTM9CFPWZ');
+          `}
+        </Script>
         <link rel='canonical' href={`https://www.bookconv.com${locale === 'es' ? '/es' : ''}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />

@@ -35,7 +35,6 @@ const config: NextConfig = {
     }
     return config;
   },
-  transpilePackages: ["@/lib/conversion-map"],
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
@@ -82,7 +81,7 @@ const config: NextConfig = {
     ]
   },
   experimental: {},
-  compress: false,
+  compress: true,
 };
 
 export default withNextIntl("./src/i18n/request.ts")(config);
