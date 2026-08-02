@@ -148,17 +148,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   },
                   browserRequirements: 'Requires JavaScript. Requires HTML5.',
                 },
-                {
-                  '@type': 'FAQPage',
-                  'mainEntity': [1, 2, 3, 4, 5].map((i) => ({
-                    '@type': 'Question',
-                    'name': t('faq.q' + i) || ('faq.q' + i),
-                    'acceptedAnswer': {
-                      '@type': 'Answer',
-                      'text': t('faq.a' + i) || ('faq.a' + i),
-                    },
-                  })).filter((f) => f.name.indexOf('faq.') !== 0),
-                },
               ],
             }),
           }}

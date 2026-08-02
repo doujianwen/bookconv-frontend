@@ -106,9 +106,10 @@ function defaultFaqsFor(source: string, target: string): FAQItem[] {
   const t = target.toUpperCase();
   return [
     { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Convert up to 5 files per hour for free.` },
-    { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. The result is optimized for readability on your target device.` },
-    { question: `How long does ${s} to ${t} conversion take?`, answer: `Most conversions complete in under 30 seconds. Larger files may take slightly longer depending on size and complexity.` },
-    { question: `Is my ${s} file safe when I upload it?`, answer: `Yes. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour after conversion. We never read or share your content.` },
+    { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${s} and ${t} format capabilities. The result is optimized for readability on your target device.` },
+    { question: 'Is my file secure?', answer: 'Absolutely. All files are transferred over encrypted HTTPS connections. Your original file and converted file are automatically deleted from our servers within 1 hour. We do not read, store, or share your content.' },
+    { question: 'What is the file size limit?', answer: 'Free users can convert files up to 10 MB. Pro users enjoy up to 50 MB per file and unlimited conversions.' },
+    { question: 'Can I batch convert multiple files?', answer: 'Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.' },
   ];
 }
 

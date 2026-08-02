@@ -10,19 +10,6 @@ interface FAQSectionProps {
 }
 
 export function FAQSection({ faqs, sourceFormat, targetFormat }: FAQSectionProps) {
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  }
-
   return (
     <section className="space-y-4">
       <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>

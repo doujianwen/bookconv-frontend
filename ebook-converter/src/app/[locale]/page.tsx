@@ -260,8 +260,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Homepage FAQ — visible accordion only; the FAQPage rich snippet is
-          provided globally by the root layout so it stays consistent across all pages. */}
+      {/* Homepage FAQ — visible accordion + FAQPage rich snippet (matches the
+          visible accordion below so crawlers see consistent content). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [1, 2, 3, 4, 5].map((i) => ({
+              '@type': 'Question',
+              name: t(`faq.q${i}`),
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: t(`faq.a${i}`),
+              },
+            })),
+          }),
+        }}
+      />
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-3xl px-4">
           <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.faqTitle')}</h2>
