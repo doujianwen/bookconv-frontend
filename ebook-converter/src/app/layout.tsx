@@ -124,6 +124,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   name: t('common.siteName') || 'BookConv',
                   description: 'Free online ebook format converter',
+                  inLanguage: ['en', 'es'],
                   publisher: { '@id': `https://www.bookconv.com${locale === 'es' ? '/es' : ''}#organization` },
                 },
                 {
@@ -133,6 +134,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   logo: 'https://www.bookconv.com/icon.svg',
                   sameAs: [],
+                  areaServed: 'Worldwide',
+                  availableLanguage: ['en', 'es'],
                 },
                 {
                   '@type': 'SoftwareApplication',

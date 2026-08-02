@@ -1,25 +1,58 @@
 # BookConv
 
-> Free online ebook format converter supporting 28+ formats. No registration, no watermarks, no file-size limits for most conversions. Powered by the Calibre engine and runs in your browser.
+> Free online ebook format converter supporting 28+ formats across ebooks, documents, and images. No registration, no watermarks, no file-size limits for most conversions. Powered by the Calibre engine and runs entirely in your browser.
 
-## Popular Conversions
-- [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)
-- [EPUB to MOBI](https://www.bookconv.com/convert/epub-to-mobi)
+## Supported Formats
+EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
+
+## Conversions
 - [EPUB to AZW3](https://www.bookconv.com/convert/epub-to-azw3)
-- [MOBI to EPUB](https://www.bookconv.com/convert/mobi-to-epub)
 - [AZW3 to EPUB](https://www.bookconv.com/convert/azw3-to-epub)
+- [EPUB to MOBI](https://www.bookconv.com/convert/epub-to-mobi)
+- [MOBI to EPUB](https://www.bookconv.com/convert/mobi-to-epub)
+- [AZW3 to MOBI](https://www.bookconv.com/convert/azw3-to-mobi)
+- [MOBI to PDF](https://www.bookconv.com/convert/mobi-to-pdf)
+- [MOBI to TXT](https://www.bookconv.com/convert/mobi-to-txt)
+- [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)
+- [EPUB to DOC](https://www.bookconv.com/convert/epub-to-doc)
+- [EPUB to DOCX](https://www.bookconv.com/convert/epub-to-docx)
+- [EPUB to RTF](https://www.bookconv.com/convert/epub-to-rtf)
+- [EPUB to TXT](https://www.bookconv.com/convert/epub-to-txt)
+- [EPUB to HTMLZ](https://www.bookconv.com/convert/epub-to-html)
+- [EPUB to JPG](https://www.bookconv.com/convert/epub-to-jpg)
+- [EPUB to PNG](https://www.bookconv.com/convert/epub-to-png)
 - [PDF to EPUB](https://www.bookconv.com/convert/pdf-to-epub)
-- [LIT to EPUB](https://www.bookconv.com/convert/lit-to-epub)
+- [DOC to EPUB](https://www.bookconv.com/convert/doc-to-epub)
+- [DOCX to EPUB](https://www.bookconv.com/convert/docx-to-epub)
+- [RTF to EPUB](https://www.bookconv.com/convert/rtf-to-epub)
+- [TXT to EPUB](https://www.bookconv.com/convert/txt-to-epub)
+- [HTML to EPUB](https://www.bookconv.com/convert/html-to-epub)
 - [FB2 to EPUB](https://www.bookconv.com/convert/fb2-to-epub)
+- [LIT to EPUB](https://www.bookconv.com/convert/lit-to-epub)
+- [AZW3 to PDF](https://www.bookconv.com/convert/azw3-to-pdf)
 - [DJVU to PDF](https://www.bookconv.com/convert/djvu-to-pdf)
 - [CBR to PDF](https://www.bookconv.com/convert/cbr-to-pdf)
 
 ## Guides
 - [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://www.bookconv.com/blog/azw3-vs-mobi)
-- [How to Convert EPUB to MOBI (Free, No Software)](https://www.bookconv.com/blog/how-to-convert-epub-to-mobi)
-- [Ebook Formats Explained: EPUB, MOBI, AZW3, PDF, and More](https://www.bookconv.com/blog/ebook-formats-explained)
-- [Convert EPUB to PDF on Linux](https://www.bookconv.com/blog/epub-to-pdf-linux)
-- [What Is the LIT Ebook Format and How to Convert It](https://www.bookconv.com/blog/lit-ebook-format)
+- [How to Convert EPUB to MOBI Online: The BookConv Guide](https://www.bookconv.com/blog/epub-to-mobi-guide)
+- [How to Convert EPUB to MOBI on BookConv (Step-by-Step)](https://www.bookconv.com/blog/how-to-convert-epub-to-mobi)
+- [Ebook Formats Explained: EPUB vs AZW3 vs MOBI & More](https://www.bookconv.com/blog/ebook-formats-explained)
+- [Convert EPUB to PDF on Linux (3 Methods)](https://www.bookconv.com/blog/epub-to-pdf-linux)
+- [How to Convert PDF to EPUB Online (and When You Shouldn't)](https://www.bookconv.com/blog/pdf-to-epub-guide)
+- [What Is the LIT Ebook Format? A Complete Guide](https://www.bookconv.com/blog/lit-ebook-format)
+- [Why Convert LIT to EPUB (and How to Do It on BookConv)](https://www.bookconv.com/blog/why-convert-lit-to-epub)
+- [BookConv File Won't Download or Open? Fixes That Actually Work](https://www.bookconv.com/blog/download-troubleshooting)
+- [How BookConv Runs Your Conversions in the Background](https://www.bookconv.com/blog/background-workers)
+- [Configuring BookConv: Environment Variables for Self-Hosting](https://www.bookconv.com/blog/env-variables-setup)
+- [Inside BookConv's Sitemap: How Every Converter Page Gets Found](https://www.bookconv.com/blog/sitemap-seo-guide)
+- [BookConv Webhooks: Get a Signed Notification When a Conversion Finishes](https://www.bookconv.com/blog/webhook-integration)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
+
+### Privacy & Trust
+- No registration required for free conversions.
+- Uploaded files are encrypted in transit (HTTPS) and deleted automatically within 1 hour.
+- Files with DRM are rejected on upload; conversion only works on DRM-free files the user owns.
+- No watermarks are added to output files.
