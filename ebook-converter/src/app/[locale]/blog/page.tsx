@@ -3,6 +3,7 @@ import Link from "next/link"
 import { BookOpen, Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { getAllPosts } from "@/data/blog"
+import { isHubTag, slugifyTag } from "@/lib/internal-links"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -96,12 +97,21 @@ export default async function BlogPage() {
                   {new Date(post.date).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { year: "numeric", month: "long", day: "numeric" })}
                 </span>
                 <div className="flex items-center gap-1.5">
-                  {post.tags.map((tag) => (
-                    <span key={tag} className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
-                      <Tag className="h-2.5 w-2.5 mr-0.5" />
-                      {tag}
-                    </span>
-                  ))}
+                  {post.tags.map((tag) => {
+                    const clickable = isHubTag(tag)
+                    const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
+                    return clickable ? (
+                      <Link key={tag} href={`/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
+                        <Tag className="h-2.5 w-2.5 mr-0.5" />
+                        {tag}
+                      </Link>
+                    ) : (
+                      <span key={tag} className={cls}>
+                        <Tag className="h-2.5 w-2.5 mr-0.5" />
+                        {tag}
+                      </span>
+                    )
+                  })}
                 </div>
               </div>
             </Link>

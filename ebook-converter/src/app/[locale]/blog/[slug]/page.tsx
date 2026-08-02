@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml } from "@/data/blog/types"
-import { getRelatedPosts } from "@/lib/internal-links"
+import { getRelatedPosts, isHubTag, slugifyTag } from "@/lib/internal-links"
 
 interface BlogPostData {
   slug: string
@@ -88,6 +88,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
     const { source, target } = extractSourceTarget(post.title)
     const relatedPosts = getRelatedPosts(post.slug, 3)
 
+    const allPosts = getAllPosts()
+    const curIdx = allPosts.findIndex((p) => p.slug === post.slug)
+    const newerPost = curIdx > 0 ? allPosts[curIdx - 1] : null
+    const olderPost = curIdx < allPosts.length - 1 ? allPosts[curIdx + 1] : null
+
   return (
     <>
       <script
@@ -138,13 +143,22 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </span>
             <span>{post.author || "BookConv Team"}</span>
-            <div className="flex items-center gap-1.5">
-              {post.tags.map((tag) => (
-                <span key={tag} className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
-                  <Tag className="h-2.5 w-2.5 mr-0.5" />
-                  {tag}
-                </span>
-              ))}
+              <div className="flex items-center gap-1.5">
+              {post.tags.map((tag) => {
+                const clickable = isHubTag(tag)
+                const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
+                return clickable ? (
+                  <Link key={tag} href={`/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
+                    <Tag className="h-2.5 w-2.5 mr-0.5" />
+                    {tag}
+                  </Link>
+                ) : (
+                  <span key={tag} className={cls}>
+                    <Tag className="h-2.5 w-2.5 mr-0.5" />
+                    {tag}
+                  </span>
+                )
+              })}
             </div>
           </div>
         </header>
@@ -199,6 +213,27 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               ))}
             </div>
           </section>
+        )}
+
+        {(newerPost || olderPost) && (
+          <nav aria-label="More posts" className="mt-12 flex items-stretch justify-between gap-4 border-t pt-6">
+            {olderPost ? (
+              <Link href={`/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <span className="text-xs text-gray-400">← Older</span>
+                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
+              </Link>
+            ) : (
+              <span className="flex-1" />
+            )}
+            {newerPost ? (
+              <Link href={`/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <span className="text-xs text-gray-400">Newer →</span>
+                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
+              </Link>
+            ) : (
+              <span className="flex-1" />
+            )}
+          </nav>
         )}
 
         <div className="mt-12 pt-6 border-t">

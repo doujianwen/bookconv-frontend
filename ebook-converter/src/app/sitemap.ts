@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
+import { getHubTags } from '@/lib/internal-links'
 
 const CONVERSION_PAGES = [
   'epub-to-mobi', 'epub-to-azw3', 'epub-to-pdf', 'epub-to-txt',
@@ -67,6 +68,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
         changeFrequency: 'yearly' as const,
         priority: 0.6,
+      })
+    }
+
+    for (const hub of getHubTags()) {
+      allUrls.push({
+        url: baseUrl + prefix + '/blog/tag/' + hub.slug,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
       })
     }
   }

@@ -18,7 +18,7 @@ const DEV_POST_SLUGS = new Set([
 ])
 
 // Generic/brand tags that create noise in similarity scoring (present on almost every post).
-const GENERIC_TAGS = new Set([
+export const GENERIC_TAGS = new Set([
   "bookconv",
   "calibre",
   "ebook",
@@ -119,4 +119,54 @@ export function getRelatedPosts(currentSlug: string, limit = 3): RelatedPostRef[
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map((s) => toRef(s.post))
+}
+
+/**
+ * Normalize a tag into a URL-safe slug (lowercase, non-alphanumerics -> hyphen).
+ * e.g. "Ebook Formats" -> "ebook-formats", "Microsoft Reader" -> "microsoft-reader".
+ */
+export function slugifyTag(tag: string): string {
+  return tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+}
+
+export interface HubTag {
+  slug: string
+  label: string
+  count: number
+}
+
+/**
+ * Tags worth a dedicated hub page: non-generic (brand/format-agnostic noise removed)
+ * AND attached to >= 2 posts (avoids thin 1-post hubs).
+ * Sorted by post count desc. Drives tag pages, clickable chips, and sitemap.
+ */
+export function getHubTags(): HubTag[] {
+  const bySlug = new Map<string, { label: string; count: number }>()
+  for (const p of getAllPosts()) {
+    for (const t of p.tags) {
+      if (GENERIC_TAGS.has(t.toLowerCase())) continue
+      const s = slugifyTag(t)
+      const entry = bySlug.get(s)
+      if (entry) entry.count++
+      else bySlug.set(s, { label: t, count: 1 })
+    }
+  }
+  return [...bySlug.entries()]
+    .filter(([, v]) => v.count >= 2)
+    .map(([slug, v]) => ({ slug, label: v.label, count: v.count }))
+    .sort((a, b) => b.count - a.count)
+}
+
+/** Posts whose tags (after slugify) match the given tag slug. */
+export function getPostsByTagSlug(slug: string): BlogPostMeta[] {
+  return getAllPosts().filter((p) => p.tags.some((t) => slugifyTag(t) === slug))
+}
+
+/** Whether a raw tag string maps to a generated hub page (i.e. should render as a link). */
+export function isHubTag(tag: string): boolean {
+  const s = slugifyTag(tag)
+  return getHubTags().some((h) => h.slug === s)
 }
