@@ -104,7 +104,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             gtag('config', 'G-QJTM9CFPWZ');
           `}
         </Script>
-        <link rel='canonical' href={`https://www.bookconv.com${locale === 'es' ? '/es' : ''}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />
         <meta name='msapplication-TileColor' content='#2563eb' />
