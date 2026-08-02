@@ -14,7 +14,7 @@ const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug)
 const BLOG_DATES: Record<string, string> = {};
 BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.date; })
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com'
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locales = ['en', 'es'] as const;

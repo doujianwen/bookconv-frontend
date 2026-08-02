@@ -30,7 +30,7 @@ export default function TutorialPage() {
             <div className='flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold'>1</div>
             <div>
               <h3 className='font-semibold text-lg'>Visit the website</h3>
-              <p className='text-gray-600'>Open https://bookconv.com and go to the home page</p>
+              <p className='text-gray-600'>Open https://www.bookconv.com and go to the home page</p>
             </div>
           </div>
 

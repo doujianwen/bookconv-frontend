@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
   const post = BLOG_POSTS[slug]
   if (!post) return {}
 
-  const baseUrl = "https://bookconv.com"
+  const baseUrl = "https://www.bookconv.com"
   const description = post.content?.intro || post.title
 
   return {
@@ -83,7 +83,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
     )
   }
 
-    const baseUrl = "https://bookconv.com"
+    const baseUrl = "https://www.bookconv.com"
     const postUrl = `${baseUrl}/blog/${post.slug}`
     const { source, target } = extractSourceTarget(post.title)
     const relatedPosts = getRelatedPosts(post.slug, 3)
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             author: {
               "@type": "Person",
               name: post.author || "BookConv Team",
-              url: "https://bookconv.com",
+              url: "https://www.bookconv.com",
             },
             publisher: {
               "@type": "Organization",

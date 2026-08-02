@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = (key: string) => resolvePath(messages, key) || key;
 
   return {
-    metadataBase: new URL('https://bookconv.com'),
+    metadataBase: new URL('https://www.bookconv.com'),
     title: {
       default: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
       template: `%s | ${t('common.siteName') || 'BookConv'}`,
@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'kindle format converter', 'ebook format conversion',
     ],
     alternates: {
-      canonical: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
       languages: {
         'en': '/',
         'es': '/es',
@@ -40,13 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: locale === 'es' ? 'es_ES' : 'en_US',
-      url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+      url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
       siteName: t('common.siteName') || 'BookConv',
       title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.',
       images: [
         {
-          url: "https://bookconv.com/og-image.svg",
+          url: "https://www.bookconv.com/og-image.svg",
           width: 1200,
           height: 630,
           alt: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.',
-      images: ['https://bookconv.com/og-image.svg'],
+      images: ['https://www.bookconv.com/og-image.svg'],
       creator: '@bookconv',
     },
     robots: {
@@ -83,9 +83,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} dir='ltr'>
       <head>
         <link rel="sitemap" href="/sitemap.xml" />
-        <link rel="alternate" hrefLang="x-default" href="https://bookconv.com" />
-        <link rel="alternate" hrefLang="en" href="https://bookconv.com/" />
-        <link rel="alternate" hrefLang="es" href="https://bookconv.com/es" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.bookconv.com" />
+        <link rel="alternate" hrefLang="en" href="https://www.bookconv.com/" />
+        <link rel="alternate" hrefLang="es" href="https://www.bookconv.com/es" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/og-image.svg" type="image/svg+xml" />
@@ -106,7 +106,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             `.trim(),
           }}
         />
-        <link rel='canonical' href={`https://bookconv.com${locale === 'es' ? '/es' : ''}`} />
+        <link rel='canonical' href={`https://www.bookconv.com${locale === 'es' ? '/es' : ''}`} />
         <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
         <meta name='theme-color' content='#2563eb' />
         <meta name='msapplication-TileColor' content='#2563eb' />
@@ -120,24 +120,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               '@graph': [
                 {
                   '@type': 'WebSite',
-                  '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#website`,
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  '@id': `https://www.bookconv.com${locale === 'es' ? '/es' : ''}#website`,
+                  url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   name: t('common.siteName') || 'BookConv',
                   description: 'Free online ebook format converter',
-                  publisher: { '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#organization` },
+                  publisher: { '@id': `https://www.bookconv.com${locale === 'es' ? '/es' : ''}#organization` },
                 },
                 {
                   '@type': 'Organization',
-                  '@id': `https://bookconv.com${locale === 'es' ? '/es' : ''}#organization`,
+                  '@id': `https://www.bookconv.com${locale === 'es' ? '/es' : ''}#organization`,
                   name: t('common.siteName') || 'BookConv',
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
-                  logo: 'https://bookconv.com/icon.svg',
+                  url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  logo: 'https://www.bookconv.com/icon.svg',
                   sameAs: [],
                 },
                 {
                   '@type': 'SoftwareApplication',
                   name: t('common.siteName') || 'BookConv',
-                  url: `https://bookconv.com${locale === 'es' ? '/es' : ''}`,
+                  url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   description: 'Free online ebook format converter supporting 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF.',
                   applicationCategory: 'UtilityApplication',
                   operatingSystem: 'Any',

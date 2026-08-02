@@ -1,7 +1,7 @@
 ﻿import type { NextConfig } from "next"
 import withNextIntl from "next-intl/plugin";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bookconv.com';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com';
 const CORS_ORIGINS = (process.env.CORS_ORIGINS || APP_URL)
   .split(',')
   .map((o) => o.trim())
@@ -39,7 +39,7 @@ const config: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
-    remotePatterns: [{ protocol: "https", hostname: "bookconv.com", pathname: "/**" }],
+    remotePatterns: [{ protocol: "https", hostname: "www.bookconv.com", pathname: "/**" }],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [60, 75, 85, 95],
@@ -78,7 +78,7 @@ const config: NextConfig = {
   async redirects() {
     return [
       { source: "/converter/:slug", destination: "/convert/:slug", permanent: true },
-      { source: "/(.*)", has: [{ type: "header", key: "x-forwarded-proto", value: "http" }], destination: "https://bookconv.com/$1", permanent: true },
+      { source: "/(.*)", has: [{ type: "header", key: "x-forwarded-proto", value: "http" }], destination: "https://www.bookconv.com/$1", permanent: true },
     ]
   },
   experimental: {},

@@ -12,10 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t('blog.title') + " | BookConv",
     description: t('seo.defaultDescription') || 'Expert guides on ebook conversion.',
-    alternates: { canonical: `https://bookconv.com${'/' + locale}/blog` },
+    alternates: { canonical: `https://www.bookconv.com${'/' + locale}/blog` },
     openGraph: {
       title: t('blog.title') + " | BookConv",
-      url: `https://bookconv.com${'/' + locale}/blog`,
+      url: `https://www.bookconv.com${'/' + locale}/blog`,
       type: "website",
     },
     twitter: {
@@ -56,12 +56,12 @@ export default async function BlogPage() {
             "@type": "Blog",
             name: t('blog.title'),
             description: "Expert guides on ebook format conversion.",
-            url: `https://bookconv.com${'/' + locale}/blog`,
-            publisher: { "@id": "https://bookconv.com/#organization" },
+            url: `https://www.bookconv.com${'/' + locale}/blog`,
+            publisher: { "@id": "https://www.bookconv.com/#organization" },
             blogPost: posts.map((p) => ({
               "@type": "BlogPosting",
               headline: p.title,
-              url: `https://bookconv.com${'/' + locale}/blog/${p.slug}`,
+              url: `https://www.bookconv.com${'/' + locale}/blog/${p.slug}`,
               datePublished: p.date,
             })),
           }),

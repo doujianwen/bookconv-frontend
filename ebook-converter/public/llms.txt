@@ -3,23 +3,23 @@
 > Free online ebook format converter supporting 28+ formats. No registration, no watermarks, no file-size limits for most conversions. Powered by the Calibre engine and runs in your browser.
 
 ## Popular Conversions
-- [EPUB to PDF](https://bookconv.com/convert/epub-to-pdf)
-- [EPUB to MOBI](https://bookconv.com/convert/epub-to-mobi)
-- [EPUB to AZW3](https://bookconv.com/convert/epub-to-azw3)
-- [MOBI to EPUB](https://bookconv.com/convert/mobi-to-epub)
-- [AZW3 to EPUB](https://bookconv.com/convert/azw3-to-epub)
-- [PDF to EPUB](https://bookconv.com/convert/pdf-to-epub)
-- [LIT to EPUB](https://bookconv.com/convert/lit-to-epub)
-- [FB2 to EPUB](https://bookconv.com/convert/fb2-to-epub)
-- [DJVU to PDF](https://bookconv.com/convert/djvu-to-pdf)
-- [CBR to PDF](https://bookconv.com/convert/cbr-to-pdf)
+- [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)
+- [EPUB to MOBI](https://www.bookconv.com/convert/epub-to-mobi)
+- [EPUB to AZW3](https://www.bookconv.com/convert/epub-to-azw3)
+- [MOBI to EPUB](https://www.bookconv.com/convert/mobi-to-epub)
+- [AZW3 to EPUB](https://www.bookconv.com/convert/azw3-to-epub)
+- [PDF to EPUB](https://www.bookconv.com/convert/pdf-to-epub)
+- [LIT to EPUB](https://www.bookconv.com/convert/lit-to-epub)
+- [FB2 to EPUB](https://www.bookconv.com/convert/fb2-to-epub)
+- [DJVU to PDF](https://www.bookconv.com/convert/djvu-to-pdf)
+- [CBR to PDF](https://www.bookconv.com/convert/cbr-to-pdf)
 
 ## Guides
-- [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://bookconv.com/blog/azw3-vs-mobi)
-- [How to Convert EPUB to MOBI (Free, No Software)](https://bookconv.com/blog/how-to-convert-epub-to-mobi)
-- [Ebook Formats Explained: EPUB, MOBI, AZW3, PDF, and More](https://bookconv.com/blog/ebook-formats-explained)
-- [Convert EPUB to PDF on Linux](https://bookconv.com/blog/epub-to-pdf-linux)
-- [What Is the LIT Ebook Format and How to Convert It](https://bookconv.com/blog/lit-ebook-format)
+- [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://www.bookconv.com/blog/azw3-vs-mobi)
+- [How to Convert EPUB to MOBI (Free, No Software)](https://www.bookconv.com/blog/how-to-convert-epub-to-mobi)
+- [Ebook Formats Explained: EPUB, MOBI, AZW3, PDF, and More](https://www.bookconv.com/blog/ebook-formats-explained)
+- [Convert EPUB to PDF on Linux](https://www.bookconv.com/blog/epub-to-pdf-linux)
+- [What Is the LIT Ebook Format and How to Convert It](https://www.bookconv.com/blog/lit-ebook-format)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.

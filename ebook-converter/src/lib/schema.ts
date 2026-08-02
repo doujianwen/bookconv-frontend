@@ -38,7 +38,7 @@ export function generateSchema(
   targetFormat: string,
   faqs?: Array<{ question: string; answer: string }>,
 ) {
-  const baseUrl = 'https://bookconv.com';
+  const baseUrl = 'https://www.bookconv.com';
   const slug = sourceFormat + '-to-' + targetFormat;
   const pageUrl = baseUrl + '/convert/' + slug;
   const sourceDisplay = sourceFormat.toUpperCase();

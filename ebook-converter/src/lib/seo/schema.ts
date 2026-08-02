@@ -85,7 +85,7 @@ export function generateArticleSchema(opts: ArticleSchemaOpts): string {
     publisher: {
       '@type': 'Organization',
       name: 'BookConv',
-      logo: { '@type': 'ImageObject', url: 'https://bookconv.com/icon.svg' },
+      logo: { '@type': 'ImageObject', url: 'https://www.bookconv.com/icon.svg' },
     },
     datePublished: datePublished || new Date().toISOString().split('T')[0],
     dateModified: dateModified || new Date().toISOString().split('T')[0],
@@ -123,7 +123,7 @@ export function generateConversionPageSchema(
   target: string,
   contentData?: ConversionContentLite,
 ): string {
-  const baseUrl = 'https://bookconv.com';
+  const baseUrl = 'https://www.bookconv.com';
   const sourceDisplay = source.toUpperCase();
   const targetDisplay = target.toUpperCase();
   const slug = source + '-to-' + target;

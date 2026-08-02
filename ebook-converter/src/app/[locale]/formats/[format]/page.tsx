@@ -34,12 +34,12 @@ export async function generateMetadata({ params }: FormatPageProps): Promise<Met
   return {
     title,
     description,
-    alternates: { canonical: "https://bookconv.com/formats/${format}" },
+    alternates: { canonical: "https://www.bookconv.com/formats/${format}" },
     openGraph: {
       title,
       description,
       type: 'article',
-      url: "https://bookconv.com/formats/${format}",
+      url: "https://www.bookconv.com/formats/${format}",
       siteName: 'BookConv',
     },
   }

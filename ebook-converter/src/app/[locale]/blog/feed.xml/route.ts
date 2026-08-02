@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { generateRssFeed } from "@/data/blog/rss";
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bookconv.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.bookconv.com";
   const xml = generateRssFeed(baseUrl);
 
   return new NextResponse(xml, {

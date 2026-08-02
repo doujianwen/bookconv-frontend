@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       "ebook converter", "calibre", "free",
     ],
     alternates: {
-      canonical: `https://bookconv.com/convert/${slug}`,
+      canonical: `https://www.bookconv.com/convert/${slug}`,
       languages: {
         'en': `/convert/${slug}`,
         'es': `/es/convert/${slug}`,
@@ -58,11 +58,11 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       title,
       description,
       type: "website",
-      url: `https://bookconv.com/convert/${slug}`,
+      url: `https://www.bookconv.com/convert/${slug}`,
       siteName: "BookConv",
       images: [
         {
-          url: `https://bookconv.com/og-image.svg`,
+          url: `https://www.bookconv.com/og-image.svg`,
           width: 1200,
           height: 630,
           alt: title,
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       card: "summary_large_image",
       title,
       description,
-      images: [`https://bookconv.com/og-image.svg`],
+      images: [`https://www.bookconv.com/og-image.svg`],
     },
   }
 }

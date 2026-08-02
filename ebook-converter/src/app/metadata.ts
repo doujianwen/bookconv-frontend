@@ -10,17 +10,17 @@ export async function generateMetadata(): Promise<Metadata> {
       "ebook format conversion", "epub to pdf", "mobi to epub", "txt to epub"
     ],
     alternates: {
-      canonical: "https://bookconv.com",
+      canonical: "https://www.bookconv.com",
     },
     openGraph: {
       title: "BookConv -- Free Online Ebook Format Converter",
       description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
-      url: "https://bookconv.com",
+      url: "https://www.bookconv.com",
       type: "website",
       siteName: "BookConv",
       images: [
         {
-          url: "https://bookconv.com/og-image.svg",
+          url: "https://www.bookconv.com/og-image.svg",
           width: 1200,
           height: 630,
           alt: "BookConv -- Free Online Ebook Format Converter",
@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "BookConv -- Free Online Ebook Format Converter",
       description: "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.",
-      images: ["https://bookconv.com/og-image.svg"],
+      images: ["https://www.bookconv.com/og-image.svg"],
     },
   }
 }

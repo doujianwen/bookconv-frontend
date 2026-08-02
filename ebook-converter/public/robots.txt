@@ -43,4 +43,4 @@ User-agent: AI2Bot
 Allow: /
 
 # Sitemap location
-Sitemap: https://bookconv.com/sitemap.xml
+Sitemap: https://www.bookconv.com/sitemap.xml

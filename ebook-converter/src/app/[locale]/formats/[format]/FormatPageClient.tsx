@@ -19,7 +19,7 @@ export function FormatPageClient({ format, data }: FormatPageClientProps) {
             '@type': 'Article',
             name: `${data.name} 电子书格式指南`,
             description: data.description,
-            url: "https://bookconv.com/formats/" + format,
+            url: "https://www.bookconv.com/formats/" + format,
           }),
         }}
       />

@@ -2,16 +2,16 @@
   "openapi": "3.0.3",
   "info": {
     "title": "BookConv API",
-    "description": "Ebook format conversion API powered by Calibre. Supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF, and more.\n\n**Base URL:** `https://bookconv.com/api`",
+    "description": "Ebook format conversion API powered by Calibre. Supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF, and more.\n\n**Base URL:** `https://www.bookconv.com/api`",
     "version": "1.0.0",
     "contact": {
       "name": "BookConv Support",
-      "url": "https://bookconv.com"
+      "url": "https://www.bookconv.com"
     }
   },
   "servers": [
     {
-      "url": "https://bookconv.com/api",
+      "url": "https://www.bookconv.com/api",
       "description": "Production"
     },
     {

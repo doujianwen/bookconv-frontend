@@ -13,10 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t('pricing.title') + " | BookConv",
     description: t('seo.defaultDescription') || 'Start converting ebooks for free.',
-    alternates: { canonical: `https://bookconv.com${'/' + locale}/pricing` },
+    alternates: { canonical: `https://www.bookconv.com${'/' + locale}/pricing` },
     openGraph: {
       title: t('pricing.title') + " | BookConv",
-      url: `https://bookconv.com${'/' + locale}/pricing`,
+      url: `https://www.bookconv.com${'/' + locale}/pricing`,
       type: "website",
     },
     twitter: {
