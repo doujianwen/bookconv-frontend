@@ -27,20 +27,10 @@ export function applySecurityHeaders(request: NextRequest, response: NextRespons
     'camera=(), microphone=(), geolocation=(), payment=()',
   );
 
-  // Content Security Policy — allow same-origin scripts, images from self + plausible.io
-  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
-  const cspValue = [
-    "default-src 'self'",
-    "script-src 'self' https://plausible.io",
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https: blob:",
-    "font-src 'self' fonts.googleapis.com",
-    "connect-src 'self' https://plausible.io https://*.sentry.io",
-    "frame-ancestors 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-  ].join('; ');
-  response.headers.set('Content-Security-Policy', cspValue);
+  // Content Security Policy is intentionally NOT set here.
+  // next.config.ts already sets a comprehensive CSP via async headers().
+  // Keeping it here would override that header with a stricter policy that
+  // blocks Next.js inline hydration scripts and third-party analytics.
 
   return response;
 }

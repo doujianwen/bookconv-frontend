@@ -1,5 +1,4 @@
 'use client'
-import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
@@ -87,29 +86,13 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
     setOriginalFileSize(0)
   }, [])
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
-  const targetDisplay = FORMAT_DISPLAY_NAMES[target] || target.toLowerCase() === "htmlz" ? "HTMLZ" : (FORMAT_DISPLAY_NAMES[target] || target.toUpperCase())
+  const targetDisplay = FORMAT_DISPLAY_NAMES[target] || (target.toLowerCase() === "htmlz" ? "HTMLZ" : target.toUpperCase())
   const slug = source + "-to-" + target
-  const getBaseUrl = () => {
-    if (typeof window !== "undefined") return window.location.origin;
-    return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  };
-  const baseUrl = getBaseUrl()
-  const pageUrl = baseUrl + "/convert/" + slug
   const faqs = contentData?.faq
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
     : generateDefaultFAQs(source, target)
-  const breadcrumbs = [
-    { name: "Home", url: baseUrl },
-    { name: "Converters", url: baseUrl + "#" },
-    { name: sourceDisplay + " to " + targetDisplay, url: pageUrl },
-  ]
   // Look up video tutorial for this conversion
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
-  const howToSteps = [
-    { name: "Upload your file", text: "Drag and drop your " + sourceDisplay + " file or click to browse." },
-    { name: "Conversion starts automatically", text: "Our Calibre-powered engine converts your file in seconds." },
-    { name: "Download result", text: "Once complete, download your converted " + targetDisplay + " file instantly." },
-  ]
   const handleFileSelect = useCallback(
     async (file: File) => {
       setStatus("uploading")
@@ -159,114 +142,6 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   )
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                "itemListElement": breadcrumbs.map((b, i) => ({
-                  "@type": "ListItem",
-                  position: i + 1,
-                  name: b.name,
-                  item: b.url,
-                })),
-              },
-              {
-                "@type": "HowTo",
-                name: "How to Convert " + sourceDisplay + " to " + targetDisplay + " Online",
-                description: "Follow these simple steps to convert " + sourceDisplay + " files to " + targetDisplay + " format online for free.",
-                step: howToSteps.map((s, i) => ({
-                  "@type": "HowToStep",
-                  position: i + 1,
-                  name: s.name,
-                  text: s.text,
-                })),
-                totalTime: "PT2M",
-                supply: [{ "@type": "HowToSupply", name: sourceDisplay + " file" }],
-                tool: [{ "@type": "HowToTool", name: "Calibre" }],
-              },
-              {
-                "@type": "WebPage",
-                "@id": pageUrl,
-                url: pageUrl,
-                name: "Free Online " + sourceDisplay + " to " + targetDisplay + " Converter",
-                description: contentData?.hero?.subtitle || "Convert " + sourceDisplay + " to " + targetDisplay + " online for free.",
-                isPartOf: { "@id": baseUrl + "#website" },
-                inLanguage: "en",
-              },
-              {
-                "@type": "Article",
-                headline: "How to Convert " + sourceDisplay + " to " + targetDisplay + " Online — Free Guide",
-                description: contentData?.hero?.subtitle || "Free online " + sourceDisplay + " to " + targetDisplay + " converter guide with step-by-step instructions.",
-                text: (contentData?.sections && contentData.sections.length > 0 ? contentData.sections.map((s) => s.heading + '\n' + s.body).join('\n\n') : "") ||
-                  "Free online " + sourceDisplay + " to " + targetDisplay + " converter guide. Learn how to convert ebooks with Calibre engine, no registration required.",
-                author: { "@type": "Organization", name: "BookConv", url: baseUrl },
-                publisher: { "@type": "Organization", name: "BookConv", logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" } },
-                datePublished: "2026-01-01T00:00:00+00:00",
-                dateModified: "2026-07-14T00:00:00+00:00",
-                mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
-                image: baseUrl + "/og-image.svg",
-                wordCount: keyword?.searchVolume ? Math.max(1200, keyword.searchVolume * 2) : 1500,
-              },
-              {
-                '@context': 'https://schema.org',
-                '@type': 'SoftwareApplication',
-                name: sourceDisplay + " to " + targetDisplay + " Online",
-                description: sourceDisplay + " to " + targetDisplay + " converter powered by Calibre. Free, no registration, no watermarks.",
-                url: pageUrl,
-                applicationCategory: 'Utility',
-                operatingSystem: 'Any',
-                offers: {
-                  '@type': 'Offer',
-                  price: 0,
-                  priceCurrency: 'USD',
-                  availability: 'https://schema.org/InStock',
-                },
-                aggregateRating: {
-                  '@type': 'AggregateRating',
-                  ratingValue: '4.8',
-                  reviewCount: '1200',
-                  bestRating: '5',
-                  worstRating: '1',
-                },
-                featureList: [
-                  sourceDisplay + " to " + targetDisplay,
-                  'No registration required',
-                  'No watermarks',
-                  'Files auto-deleted within 1 hour',
-                  'Batch conversion (Pro)',
-                  'High-quality Calibre engine',
-                ],
-              },
-              {
-                "@type": "FAQPage",
-                "mainEntity": faqs.map((f, i) => ({
-                  "@type": "Question",
-                  "name": f.question,
-                  "answerCount": 1,
-                  "author": { "@type": "Organization", "name": "BookConv" },
-                  "url": pageUrl + "#faq-" + (i + 1),
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": f.answer,
-                    "datePublished": new Date().toISOString(),
-                    "author": { "@type": "Organization", "name": "BookConv" },
-                    "url": pageUrl + "#faq-" + (i + 1),
-                  },
-                })),
-                "author": { "@type": "Organization", "name": "BookConv" },
-                "datePublished": "2026-01-01T00:00:00+00:00",
-                "url": pageUrl,
-              },
-            ],
-          }),
-        }}
-        />
-      </Head>
       <main className="mx-auto max-w-3xl space-y-10 px-4 py-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
