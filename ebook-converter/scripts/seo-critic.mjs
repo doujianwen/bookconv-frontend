@@ -24,6 +24,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..'); // ebook-converter/
 const BLOG_DIR = join(ROOT, 'src', 'data', 'blog');
 const CONTENT_DIR = join(ROOT, 'src', 'data', 'content');
+const GUIDE_DIR = join(ROOT, 'src', 'data', 'guides');
 const MSG_DIR = join(ROOT, 'messages');
 const PUBLIC_DIR = join(ROOT, 'public');
 
@@ -102,8 +103,43 @@ function checkBlogRegistration() {
   return { registeredSlugs: new Set([...diskSlugs.values()].filter(Boolean)), diskCount: diskFiles.length };
 }
 
+// ── 检查 a2：guide 注册收敛 ─────────────────────────────
+function checkGuideRegistration() {
+  const SKIP = new Set(['index', 'types']);
+  const diskFiles = listTs(GUIDE_DIR).flatMap((f) => {
+    const base = f.replace(/\.ts$/, '');
+    if (SKIP.has(base)) return [];
+    const src = read(join(GUIDE_DIR, f)) || '';
+    const m = src.match(/export\s+const\s+slug\s*=\s*["'`]([^"'`]+)["'`]/);
+    return m ? [{ base, slug: m[1] }] : [{ base, slug: null }];
+  });
+
+  const indexSrc = read(join(GUIDE_DIR, 'index.ts')) || '';
+  const importRe = /import\s+\*\s+as\s+(\w+)\s+from\s+["']\.\/([\w-]+)["']/g;
+  const imports = new Map();
+  let mm;
+  while ((mm = importRe.exec(indexSrc))) imports.set(mm[2], mm[1]);
+
+  const allBlock = indexSrc.match(/const\s+all\s*=\s*\[([\s\S]*?)\]/);
+  const allText = allBlock ? allBlock[1] : '';
+
+  for (const { base, slug } of diskFiles) {
+    if (!slug) {
+      add('critical', 'guide-no-slug', `guide 文件缺少 slug 导出：${base}.ts`, 'src/data/guides/' + base + '.ts');
+      continue;
+    }
+    if (!imports.has(base)) {
+      add('critical', 'guide-unregistered', `guide 文件未在 index.ts 注册：${base}.ts`, 'src/data/guides/index.ts');
+    } else if (!allText.includes(imports.get(base))) {
+      add('critical', 'guide-import-not-in-all', `导入的 ${imports.get(base)} (./${base}) 未加入 all 数组`, 'src/data/guides/index.ts');
+    }
+  }
+
+  return new Set(diskFiles.map((d) => d.slug).filter(Boolean));
+}
+
 // ── 检查 b：llms.txt 同步 ───────────────────────────────
-function checkLlmsTxt(registeredSlugs, conversionMapSize) {
+function checkLlmsTxt(registeredSlugs, conversionMapSize, guideSlugSet) {
   const txt = read(join(PUBLIC_DIR, 'llms.txt'));
   if (!txt) { add('warn', 'llms-missing', 'public/llms.txt 不存在', 'public/llms.txt'); return; }
 
@@ -130,10 +166,23 @@ function checkLlmsTxt(registeredSlugs, conversionMapSize) {
     add('warn', 'llms-conv-out-of-sync',
       `llms.txt 转换数(${convLinks.length}) ≠ CONVERSION_MAP(${conversionMapSize})`, 'public/llms.txt');
   }
+
+  const tgMatch = txt.match(/## Troubleshooting Guides([\s\S]*?)(?=\n## |$)/);
+  if (tgMatch) {
+    const tgLinks = (tgMatch[1].match(/\/guide\/([a-z0-9-]+)/g) || []).map((s) => s.replace('/guide/', ''));
+    const tgSet = new Set(tgLinks);
+    if (tgSet.size !== guideSlugSet.size) {
+      const missing = [...guideSlugSet].filter((s) => !tgSet.has(s));
+      add('critical', 'llms-guide-out-of-sync',
+        `llms.txt Troubleshooting Guides 数(${tgSet.size}) ≠ guide 数(${guideSlugSet.size})` +
+        (missing.length ? `；llms.txt 缺：${missing.join(', ')}` : ''),
+        'public/llms.txt');
+    }
+  }
 }
 
 // ── 检查 c：内部死链 ────────────────────────────────────
-function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats) {
+function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats, guideSlugs) {
   const dirs = [BLOG_DIR, CONTENT_DIR].filter(existsSync);
   const files = dirs.flatMap((d) => listTs(d).map((f) => join(d, f)));
   const KNOWN = new Set(['/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
@@ -166,6 +215,10 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
         const fmt = url.slice('/formats/'.length);
         if (supportedFormats.has(fmt)) ok = true;
         else reason = `格式不在 SUPPORTED_FORMATS：${fmt}`;
+      } else if (url.startsWith('/guide/')) {
+        const gslug = url.slice('/guide/'.length).replace(/\/.*$/, '');
+        if (guideSlugs.has(gslug)) ok = true;
+        else reason = `guide slug 未注册：${gslug}`;
       } else {
         reason = `未知内部路径：${url}`;
       }
@@ -217,9 +270,10 @@ function getConversionMapSize() {
 
 function main() {
   const reg = checkBlogRegistration();
+  const guides = checkGuideRegistration();
   const cm = getConversionMapSize();
-  checkLlmsTxt(reg.registeredSlugs, cm.size);
-  checkInternalLinks(reg.registeredSlugs, cm.validConvertSlugs, cm.supportedFormats);
+  checkLlmsTxt(reg.registeredSlugs, cm.size, guides);
+  checkInternalLinks(reg.registeredSlugs, cm.validConvertSlugs, cm.supportedFormats, guides);
   checkI18nParity();
   checkEnRedirects();
 

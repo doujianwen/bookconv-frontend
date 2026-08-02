@@ -20,7 +20,7 @@ If all you need is the raw text, the lighter [EPUB to TXT](/convert/epub-to-txt)
     },
     {
       heading: `Convert EPUB to Word on BookConv in Three Steps`,
-      body: `1. Open the [EPUB to Word converter](/convert/epub-to-word) and drop your .epub onto the upload area.
+      body: `1. Open the [EPUB to Word converter](/convert/epub-to-docx) and drop your .epub onto the upload area.
 2. BookConv unzips the EPUB, extracts the XHTML chapters, and maps them into a WordprocessingML document — no Calibre install, no account.
 3. Download the .docx. It opens in Word, Google Docs, or LibreOffice with the text, paragraphs, headings, and embedded images intact.
 

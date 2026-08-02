@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getHubTags } from '@/lib/internal-links'
+import { getAllGuides } from '@/data/guides'
 
 const CONVERSION_PAGES = [
   'epub-to-mobi', 'epub-to-azw3', 'epub-to-pdf', 'epub-to-txt',
   'mobi-to-epub', 'azw3-to-epub', 'lit-to-epub', 'pdf-to-epub',
-  'fb2-to-epub', 'docx-to-epub', 'txt-to-epub', 'epub-to-word',
+  'fb2-to-epub', 'docx-to-epub', 'txt-to-epub', 'epub-to-docx',
   'epub-to-jpg', 'epub-to-png', 'epub-to-html', 'djvu-to-pdf',
   'cbr-to-pdf', 'epub-to-doc', 'epub-to-rtf', 'mobi-to-txt',
 ]
@@ -66,6 +67,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       allUrls.push({
         url: baseUrl + prefix + '/blog/' + slug,
         lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
+        changeFrequency: 'yearly' as const,
+        priority: 0.6,
+      })
+    }
+
+    for (const g of getAllGuides()) {
+      allUrls.push({
+        url: baseUrl + prefix + '/guide/' + g.slug,
+        lastModified: new Date(g.date || '2026-08-02'),
         changeFrequency: 'yearly' as const,
         priority: 0.6,
       })
