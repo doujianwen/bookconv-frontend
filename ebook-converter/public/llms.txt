@@ -47,6 +47,10 @@ EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
 - [Configuring BookConv: Environment Variables for Self-Hosting](https://www.bookconv.com/blog/env-variables-setup)
 - [Inside BookConv's Sitemap: How Every Converter Page Gets Found](https://www.bookconv.com/blog/sitemap-seo-guide)
 - [BookConv Webhooks: Get a Signed Notification When a Conversion Finishes](https://www.bookconv.com/blog/webhook-integration)
+- [DjVu to PDF: How to Convert Scanned Archives (Step-by-Step)](https://www.bookconv.com/blog/djvu-to-pdf)
+- [CBR to PDF: Convert Comic Books for Printing and Any Device](https://www.bookconv.com/blog/cbr-to-pdf)
+- [FB2 to EPUB: Convert FictionBook for Any Reader (Including Kindle)](https://www.bookconv.com/blog/fb2-to-epub)
+- [EPUB to AZW3: Get Your Ebooks Onto Kindle Natively](https://www.bookconv.com/blog/epub-to-azw3)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.

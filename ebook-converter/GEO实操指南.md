@@ -111,6 +111,28 @@ Applebot-Extended
 7. **extractSourceTarget 正则错**：`(w+)s+` 永远匹配不到 → `(\w+)\s+`。
 8. **别编社媒 `sameAs`**：没有就留空，伪造伤信任。
 9. **内链别带 `-en` 后缀**：从旧帖复制内链易带 `-en`，线上真实 slug 没有 → 404 断链。
+10. **新增内容后忘记回写 `llms.txt`**（本项目实际发生）：sitemap 由代码自动生成、会自动收录新页，但 `llms.txt` 是**静态文件**，不会自动更新。新增 4 篇博文后 sitemap 是 17 篇、llms.txt 仍是 13 篇，AI 引擎看不到新内容。
+
+---
+
+## 3.1 内容增量时的同步规则（强制）
+
+每次**新增/删除任意可索引页**（博文、转换页、落地页），必须同步这几处，缺一不可：
+
+| # | 位置 | 是否自动 | 动作 |
+|---|------|---------|------|
+| 1 | 数据源 index / 注册数组 | 手动 | 新增 import + 加入数组 |
+| 2 | `sitemap.ts` | **自动**（由数据源驱动） | 无需改，但要验证条数 |
+| 3 | `public/llms.txt` | **手动** ⚠️ | 补对应条目（绝对 URL + 标题） |
+| 4 | 内链/相关文章 | 半自动（tag 相似度） | 确认新页有入链，非孤岛 |
+
+上线后一条命令交叉校验，三个数字必须相等：
+
+```bash
+curl -s 站点/sitemap.xml | grep -oE '/blog/[a-z0-9-]+</loc>' | sort -u | wc -l
+curl -s 站点/llms.txt   | grep -oE '/blog/[a-z0-9-]+'       | sort -u | wc -l
+curl -s 站点/blog | grep -oE 'href="/blog/[a-z0-9-]+"' | sort -u | wc -l
+```
 
 ---
 
@@ -136,6 +158,7 @@ Applebot-Extended
 [ ] 批量脚本处理时考虑 CRLF、贪婪匹配、尾逗号
 [ ] 内链用真实 slug，无 -en 后缀，无 404
 [ ] 不伪造 sameAs 社媒链接
+[ ] 新增页后按 3.1 同步 llms.txt，且 sitemap/llms/列表页三数一致
 [ ] 部署后按第 4 节验证
 ```
 
