@@ -37,6 +37,21 @@ jobs:
       - name: TypeScript type check
         run: cd ebook-converter && npx tsc --noEmit
 
+  seo-critic:
+    name: SEO / Link / i18n Critic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run SEO critic (fails on CRITICAL findings)
+        run: cd ebook-converter && node scripts/seo-critic.mjs
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
