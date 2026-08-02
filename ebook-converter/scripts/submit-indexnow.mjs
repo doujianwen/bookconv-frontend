@@ -9,7 +9,7 @@
 // Prerequisite: the key file public/<KEY>.txt MUST be deployed (it is served at
 // https://www.bookconv.com/<KEY>.txt) and the same KEY registered in Bing Webmaster Tools.
 
-const KEY = process.env.INDEXNOW_KEY || '9f2e7c4b1a8d3e6f5c0b7a9d2e4f6c8a';
+const KEY = process.env.INDEXNOW_KEY || '6d8f9d25096b4bb380a718f3d84ee140';
 const SITE_URL =
   process.env.SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com';
 const SITEMAP_URL = `${SITE_URL.replace(/\/$/, '')}/sitemap.xml`;
