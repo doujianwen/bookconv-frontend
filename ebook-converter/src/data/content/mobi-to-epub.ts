@@ -1,12 +1,12 @@
 export const slug = 'mobi-to-epub';
-export const title = 'MOBI to EPUB Converter';
+export const title = 'Free MOBI to EPUB Converter — No Sign-up | BookConv';
 export const level = 'S' as const;
 export const wordCount = 2600;
 
 export const content = {
   hero: {
     title: 'MOBI to EPUB — Modernize Your Kindle Library',
-    subtitle: 'Convert outdated MOBI format to modern EPUB standard. Unlock cross-platform reading on any device, app, or e-reader.'
+    subtitle: 'Free MOBI to EPUB converter. No sign-up, no watermarks — keeps your chapters, images, and metadata intact. Convert in seconds.'
   },
 
   sections: [

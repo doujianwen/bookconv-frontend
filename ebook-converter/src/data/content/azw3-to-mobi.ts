@@ -1,12 +1,12 @@
 export const slug = 'azw3-to-mobi';
-export const title = 'AZW3 to MOBI Converter';
+export const title = 'Free AZW3 to MOBI Converter — No Sign-up | BookConv';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'AZW3 to MOBI - Downgrade to Legacy Kindle Format',
-    subtitle: 'Convert AZW3 to MOBI format for older Kindle device compatibility.'
+    subtitle: 'Free AZW3 to MOBI converter. No sign-up — make DRM-free AZW3 files readable on older Kindle devices (pre-2011) in seconds.'
   },
 
   sections: [

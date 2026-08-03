@@ -1,12 +1,12 @@
 export const slug = 'epub-to-txt';
-export const title = 'EPUB to TXT Converter';
+export const title = 'Free EPUB to TXT Converter — No Sign-up | BookConv';
 export const level = 'S' as const;
 export const wordCount = 2800;
 
 export const content = {
   hero: {
     title: 'EPUB to TXT — Extract Pure Text from EPUB Files',
-    subtitle: 'Extract clean, readable text from EPUB ebooks. Perfect for analysis, translation, accessibility, and simple reading on any device.'
+    subtitle: 'Free EPUB to TXT converter. No sign-up needed — extract clean, readable plain text for analysis, translation, or accessibility in seconds.'
   },
 
   sections: [
