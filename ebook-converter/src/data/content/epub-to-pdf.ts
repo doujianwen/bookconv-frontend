@@ -1,12 +1,12 @@
 export const slug = 'epub-to-pdf';
-export const title = 'EPUB to PDF Converter';
+export const title = 'Free EPUB to PDF Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2000;
 
 export const content = {
   hero: {
     title: 'EPUB to PDF - From Fluid Reading to Fixed Layout',
-    subtitle: 'Convert EPUB ebooks to PDF perfect for printing, sharing, and academic citation.'
+    subtitle: 'Free EPUB to PDF converter. No sign-up — turn reflowable ebooks into print-ready PDFs for sharing and citation.'
   },
 
   sections: [

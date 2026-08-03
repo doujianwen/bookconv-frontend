@@ -1,12 +1,12 @@
 export const slug = 'djvu-to-pdf';
-export const title = 'DjVu to PDF Converter';
+export const title = 'Free DJVU to PDF Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'DjVu to PDF - Convert Archive Format to Universal Standard',
-    subtitle: 'Transform DjVu documents into PDF format for broader compatibility.'
+    subtitle: 'Free DJVU to PDF converter. No sign-up — convert scanned archives into broadly compatible PDFs for viewing and printing.'
   },
 
   sections: [

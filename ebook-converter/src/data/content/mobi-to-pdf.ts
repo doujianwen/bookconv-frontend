@@ -1,12 +1,12 @@
 export const slug = 'mobi-to-pdf';
-export const title = 'MOBI to PDF Converter';
+export const title = 'Free MOBI to PDF Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2500;
 
 export const content = {
   hero: {
     title: 'MOBI to PDF - Turn Kindle Books into Printable Documents',
-    subtitle: 'Convert MOBI ebooks into fixed-layout PDFs for printing, annotating, citing, and sharing with anyone.'
+    subtitle: 'Free MOBI to PDF converter. No sign-up — turn Kindle books into fixed-layout PDFs for printing, citing, and sharing.'
   },
 
   sections: [

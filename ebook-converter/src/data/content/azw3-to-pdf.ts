@@ -1,12 +1,12 @@
 export const slug = 'azw3-to-pdf';
-export const title = 'AZW3 to PDF Converter';
+export const title = 'Free AZW3 to PDF Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2000;
 
 export const content = {
   hero: {
     title: 'AZW3 to PDF - Convert Kindle Format to Printable Document',
-    subtitle: 'Convert AZW3 ebooks to PDF suitable for printing citation and archiving.'
+    subtitle: 'Free AZW3 to PDF converter. No sign-up — turn Kindle books into print-ready PDFs for sharing, citation, and archiving.'
   },
 
   sections: [

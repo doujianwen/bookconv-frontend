@@ -1,12 +1,12 @@
 export const slug = 'epub-to-html';
-export const title = 'EPUB to HTML Converter';
+export const title = 'Free EPUB to HTML Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'EPUB to HTML - Extract Web-Ready Content',
-    subtitle: 'Turn your EPUB ebook into clean, editable HTML you can publish, restyle, or paste straight into a CMS.'
+    subtitle: 'Free EPUB to HTML converter. No sign-up — extract clean, editable HTML you can publish, restyle, or paste into a CMS.'
   },
 
   sections: [

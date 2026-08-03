@@ -1,12 +1,12 @@
 export const slug = 'cbr-to-pdf';
-export const title = 'CBR to PDF Converter';
+export const title = 'Free CBR to PDF Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2500;
 
 export const content = {
   hero: {
     title: 'CBR to PDF - Convert Comic Books to Universal Format',
-    subtitle: 'Transform CBR (Comic Book RAR) files into PDF for easy reading and printing.'
+    subtitle: 'Free CBR to PDF converter. No sign-up — turn comic book archives into easy-to-read, printable PDFs.'
   },
 
   sections: [

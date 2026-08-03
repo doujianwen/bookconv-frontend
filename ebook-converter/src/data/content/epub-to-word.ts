@@ -1,12 +1,12 @@
 export const slug = 'epub-to-word';
-export const title = 'EPUB to Word Converter';
+export const title = 'Free EPUB to Word Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2500;
 
 export const content = {
   hero: {
     title: 'EPUB to Word - Convert Ebooks to DOCX Format',
-    subtitle: 'Transform EPUB ebooks into Microsoft Word DOCX documents for editing and sharing.'
+    subtitle: 'Free EPUB to Word converter. No sign-up — turn ebooks into editable Microsoft Word DOCX documents.'
   },
 
   sections: [

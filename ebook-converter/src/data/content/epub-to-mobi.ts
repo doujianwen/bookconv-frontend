@@ -1,12 +1,12 @@
 export const slug = 'epub-to-mobi';
-export const title = 'EPUB to MOBI Converter';
+export const title = 'Free EPUB to MOBI Converter — No Sign-up';
 export const level = 'S' as const;
 export const wordCount = 2500;
 
 export const content = {
   hero: {
     title: 'EPUB to MOBI — Convert EPUB Files for Kindle',
-    subtitle: 'Convert EPUB to the classic MOBI format ideal for older Kindle devices. Fast, free, and no registration required.'
+    subtitle: 'Free EPUB to MOBI converter. No sign-up — send EPUB books to older Kindle devices as classic MOBI in seconds.'
   },
 
   sections: [

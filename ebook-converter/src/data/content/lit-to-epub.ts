@@ -1,12 +1,12 @@
 export const slug = 'lit-to-epub';
-export const title = 'LIT to EPUB Converter';
+export const title = 'Free LIT to EPUB Converter — No Sign-up';
 export const level = 'S' as const;
 export const wordCount = 3200;
 
 export const content = {
   hero: {
     title: 'LIT to EPUB - Rescue Your Old MS Reader Files',
-    subtitle: 'Microsoft has discontinued LIT format support. Convert your old LIT files to universal EPUB for reading on any device.'
+    subtitle: 'Free LIT to EPUB converter. No sign-up — rescue discontinued Microsoft Reader files into universal EPUB for any device.'
   },
 
   sections: [

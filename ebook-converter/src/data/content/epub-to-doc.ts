@@ -1,12 +1,12 @@
 export const slug = 'epub-to-doc';
-export const title = 'EPUB to DOC Converter';
+export const title = 'Free EPUB to DOC Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'EPUB to DOC - Convert Ebooks to Legacy Word Format',
-    subtitle: 'Convert EPUB ebooks to Microsoft Word 97-2003 DOC format for maximum compatibility.'
+    subtitle: 'Free EPUB to DOC converter. No sign-up — convert ebooks into legacy Word 97-2003 format for maximum compatibility.'
   },
 
   sections: [

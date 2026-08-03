@@ -1,12 +1,12 @@
 export const slug = 'epub-to-png';
-export const title = 'EPUB to PNG Converter';
+export const title = 'Free EPUB to PNG Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'EPUB to PNG - Convert Ebooks to High-Quality Images',
-    subtitle: 'Transform EPUB ebooks into PNG images with perfect quality and detail preservation.'
+    subtitle: 'Free EPUB to PNG converter. No sign-up — render ebook pages into high-quality PNG images with full detail.'
   },
 
   sections: [

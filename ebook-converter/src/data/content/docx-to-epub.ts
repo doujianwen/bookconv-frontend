@@ -1,12 +1,12 @@
 export const slug = 'docx-to-epub';
-export const title = 'DOCX to EPUB Converter';
+export const title = 'Free DOCX to EPUB Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2200;
 
 export const content = {
   hero: {
     title: 'DOCX to EPUB - Convert Word Documents to Universal Ebook Format',
-    subtitle: 'Transform your Word documents into EPUB format for reading on any e-reader, tablet, or phone.'
+    subtitle: 'Free DOCX to EPUB converter. No sign-up — turn Word documents into reflowable ebooks readable on any e-reader or phone.'
   },
 
   sections: [

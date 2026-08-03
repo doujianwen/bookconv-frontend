@@ -1,12 +1,12 @@
 export const slug = 'azw3-to-epub';
-export const title = 'AZW3 to EPUB Converter';
+export const title = 'Free AZW3 to EPUB Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2000;
 
 export const content = {
   hero: {
     title: 'AZW3 to EPUB - Restore Kindle Exclusive Format to Universal Standard',
-    subtitle: 'AZW3 is Amazon proprietary format for Kindle. Convert it to EPUB and read on any e-reader.'
+    subtitle: 'Free AZW3 to EPUB converter. No sign-up — turn Amazon Kindle-exclusive format into universal EPUB readable on any device.'
   },
 
   sections: [

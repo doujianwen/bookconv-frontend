@@ -1,12 +1,12 @@
 export const slug = 'txt-to-epub';
-export const title = 'TXT to EPUB Converter';
+export const title = 'Free TXT to EPUB Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2000;
 
 export const content = {
   hero: {
     title: 'TXT to EPUB - Dress Plain Text in Ebook Clothing',
-    subtitle: 'Convert simple TXT text files to structured EPUB ebooks with table of contents, metadata, and beautiful typography.'
+    subtitle: 'Free TXT to EPUB converter. No sign-up — turn plain text into structured ebooks with table of contents and metadata.'
   },
 
   sections: [

@@ -1,12 +1,12 @@
 export const slug = 'rtf-to-epub';
-export const title = 'RTF to EPUB Converter';
+export const title = 'Free RTF to EPUB Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2300;
 
 export const content = {
   hero: {
     title: 'RTF to EPUB - Turn Rich Text Documents into Real Ebooks',
-    subtitle: 'Convert RTF manuscripts, reports, and old documents into EPUB for comfortable reading on any device.'
+    subtitle: 'Free RTF to EPUB converter. No sign-up — turn rich text manuscripts and reports into ebooks for any device.'
   },
 
   sections: [

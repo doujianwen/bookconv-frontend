@@ -1,12 +1,12 @@
 export const slug = 'epub-to-azw3';
-export const title = 'EPUB to AZW3 Converter';
+export const title = 'Free EPUB to AZW3 Converter — No Sign-up';
 export const level = 'A' as const;
 export const wordCount = 2200;
 
 export const content = {
   hero: {
     title: 'EPUB to AZW3 - Adapt Your Ebooks for Native Kindle Format',
-    subtitle: 'AZW3 (Kindle Format 8) is Amazon advanced ebook format, supporting superior typography and font rendering for Kindle devices.'
+    subtitle: 'Free EPUB to AZW3 converter. No sign-up — optimize your ebooks for native Kindle rendering with enhanced typography.'
   },
 
   sections: [

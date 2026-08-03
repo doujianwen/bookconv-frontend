@@ -1,12 +1,12 @@
 export const slug = 'epub-to-jpg';
-export const title = 'EPUB to JPG Converter';
+export const title = 'Free EPUB to JPG Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 
 export const content = {
   hero: {
     title: 'EPUB to JPG - Convert Ebooks to HD Images',
-    subtitle: 'Convert each page of your EPUB ebook to JPG images perfect for sharing and archiving.'
+    subtitle: 'Free EPUB to JPG converter. No sign-up — convert each ebook page into shareable, high-quality JPG images.'
   },
 
   sections: [
