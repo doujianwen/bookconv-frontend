@@ -1,5 +1,5 @@
 export const slug = 'azw3-to-mobi';
-export const title = 'Free AZW3 to MOBI Converter — No Sign-up | BookConv';
+export const title = 'Free AZW3 to MOBI Converter — No Sign-up';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

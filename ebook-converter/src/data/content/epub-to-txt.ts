@@ -1,5 +1,5 @@
 export const slug = 'epub-to-txt';
-export const title = 'Free EPUB to TXT Converter — No Sign-up | BookConv';
+export const title = 'Free EPUB to TXT Converter — No Sign-up';
 export const level = 'S' as const;
 export const wordCount = 2800;
 

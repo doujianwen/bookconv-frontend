@@ -1,5 +1,5 @@
 export const slug = 'mobi-to-epub';
-export const title = 'Free MOBI to EPUB Converter — No Sign-up | BookConv';
+export const title = 'Free MOBI to EPUB Converter — No Sign-up';
 export const level = 'S' as const;
 export const wordCount = 2600;
 
