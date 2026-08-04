@@ -186,6 +186,102 @@ export type ConversionJobResult = {
   fileSize?: number;
 };
 
+// --- Pure-JS EPUB → TXT (no Calibre required) ---
+//
+// EPUB is a ZIP containing XHTML/HTML files. We parse container.xml → OPF
+// to find the spine (reading order), extract each chapter's HTML, strip
+// tags, and concatenate into plain text with chapter separators.
+
+async function epubToTxt(inputPath: string): Promise<string> {
+  const JSZip = (await import('jszip')).default;
+  const data = readFileSync(inputPath);
+  const zip = await JSZip.loadAsync(data);
+
+  // 1. Parse META-INF/container.xml to find the OPF file path
+  const containerFile = zip.file('META-INF/container.xml');
+  if (!containerFile) throw new Error('Invalid EPUB: missing container.xml');
+  const containerXml = await containerFile.async('text');
+  const opfPathMatch = containerXml.match(/full-path="([^"]+)"/);
+  if (!opfPathMatch) throw new Error('Invalid EPUB: cannot find OPF path in container.xml');
+  const opfPath = opfPathMatch[1];
+  const opfDir = opfPath.includes('/') ? opfPath.replace(/[^/]+$/, '') : '';
+
+  // 2. Parse the OPF to get spine item order
+  const opfFile = zip.file(opfPath);
+  if (!opfFile) throw new Error(`Invalid EPUB: OPF file not found at ${opfPath}`);
+  const opfXml = await opfFile.async('text');
+
+  // Build manifest map: id → href
+  const manifest: Record<string, string> = {};
+  const manifestRegex = /<item[^>]+id="([^"]+)"[^>]+href="([^"]+)"/g;
+  let m;
+  while ((m = manifestRegex.exec(opfXml)) !== null) {
+    manifest[m[1]] = decodeURIComponent(m[2]);
+  }
+  // Also try reversed attribute order (href before id)
+  const manifestRegex2 = /<item[^>]+href="([^"]+)"[^>]+id="([^"]+)"/g;
+  while ((m = manifestRegex2.exec(opfXml)) !== null) {
+    if (!manifest[m[2]]) manifest[m[2]] = decodeURIComponent(m[1]);
+  }
+
+  // Get spine order
+  const spineRegex = /<itemref[^>]+idref="([^"]+)"/g;
+  const spineIds: string[] = [];
+  while ((m = spineRegex.exec(opfXml)) !== null) {
+    spineIds.push(m[1]);
+  }
+
+  if (spineIds.length === 0) {
+    throw new Error('Invalid EPUB: no spine items found');
+  }
+
+  // 3. Extract text from each spine item in order
+  const parts: string[] = [];
+  for (const id of spineIds) {
+    const href = manifest[id];
+    if (!href) continue;
+
+    const fullPath = opfDir + href;
+    const chapterFile = zip.file(fullPath) || zip.file(href);
+    if (!chapterFile) continue;
+
+    let html = await chapterFile.async('text');
+
+    // Strip HTML tags to plain text
+    // Remove script/style blocks entirely
+    html = html.replace(/<(script|style|head|nav|footer)[^>]*>[\s\S]*?<\/\1>/gi, '');
+    // Convert <br> and </p> and </div> and </h*> to newlines
+    html = html.replace(/<br\s*\/?>/gi, '\n');
+    html = html.replace(/<\/(p|div|h[1-6]|li|tr)>/gi, '\n');
+    html = html.replace(/<li[^>]*>/gi, '  - ');
+    // Remove all remaining tags
+    html = html.replace(/<[^>]+>/g, '');
+    // Decode common HTML entities
+    html = html
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+      .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+    // Collapse excessive blank lines
+    html = html.replace(/\n{3,}/g, '\n\n').trim();
+
+    if (html) {
+      parts.push(html);
+    }
+  }
+
+  if (parts.length === 0) {
+    throw new Error('Conversion failed: no text content could be extracted from EPUB');
+  }
+
+  return parts.join('\n\n---\n\n');
+}
+
 /**
  * Execute a single conversion synchronously (no queue / no Redis).
  * Returns the output encoded as base64 so the calling API route can deliver it
@@ -228,11 +324,18 @@ export async function executeConversion(
   // EPUB → ZIP is a direct passthrough: an EPUB file IS a ZIP archive.
   const isZipPassthrough = sourceFormat === 'epub' && targetFormat === 'zip';
 
+  // EPUB → TXT can be done in pure JS (no Calibre): unzip the EPUB, extract
+  // HTML/XHTML content files, strip tags → plain text. Works on Vercel.
+  const isEpubToTxt = sourceFormat === 'epub' && targetFormat === 'txt';
+
   try {
     await validateInputFile(inputPath, sourceFormat);
 
     if (isZipPassthrough) {
       writeFileSync(outputPath, readFileSync(inputPath));
+    } else if (isEpubToTxt) {
+      const txt = await epubToTxt(inputPath);
+      writeFileSync(outputPath, txt, 'utf8');
     } else {
       await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
       if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
