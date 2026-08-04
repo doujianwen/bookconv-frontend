@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { KEYWORDS } from "@/lib/constants"
-import { getConversion } from "@/lib/conversion-map"
+import { getConversion, CONVERSION_MAP } from "@/lib/conversion-map"
 import { getDisplayName, getSlug } from "@/lib/utils"
 
 // Only slugs in generateStaticParams are served; any other /convert/* slug
@@ -27,12 +27,13 @@ interface ToolPageProps {
 }
 
 export async function generateStaticParams() {
-  // Only emit slugs that are actually supported by CONVERSION_MAP.
-  // This drops ~20 "planned" KEYWORDS pairs (epub-to-zip, epub-to-lrf, pdf-to-docx, …)
-  // that have no real conversion backend and must 404 rather than soft-404.
-  return KEYWORDS.filter((k) => getConversion(k.source, k.target)).map((k) => ({
-    slug: k.source + "-to-" + k.target
-  }))
+  // Emit slugs directly from CONVERSION_MAP so the statically-generated
+  // convert pages are guaranteed 1:1 with the sitemap (which derives the
+  // same way). Any other /convert/* slug returns a real 404 (dynamicParams=false).
+  return Object.keys(CONVERSION_MAP).map((key) => {
+    const [source, target] = key.split("-")
+    return { slug: `${source}-to-${target}` }
+  })
 }
 
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {

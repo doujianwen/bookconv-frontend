@@ -2,14 +2,15 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getHubTags } from '@/lib/internal-links'
 import { getAllGuides } from '@/data/guides'
+import { CONVERSION_MAP } from '@/lib/conversion-map'
 
-const CONVERSION_PAGES = [
-  'epub-to-mobi', 'epub-to-azw3', 'epub-to-pdf', 'epub-to-txt',
-  'mobi-to-epub', 'azw3-to-epub', 'lit-to-epub', 'pdf-to-epub',
-  'fb2-to-epub', 'docx-to-epub', 'txt-to-epub', 'epub-to-docx',
-  'epub-to-jpg', 'epub-to-png', 'epub-to-html', 'djvu-to-pdf',
-  'cbr-to-pdf', 'epub-to-doc', 'epub-to-rtf', 'mobi-to-txt',
-]
+// Derive every supported conversion URL from CONVERSION_MAP so the sitemap
+// can never drift out of sync with the actual convert routes (which use
+// dynamicParams=false and generateStaticParams from the same map).
+const CONVERSION_PAGES = Object.keys(CONVERSION_MAP).map((key) => {
+  const [source, target] = key.split('-')
+  return `${source}-to-${target}`
+})
 
 const BLOG_POSTS = getAllPosts()
 const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug)
