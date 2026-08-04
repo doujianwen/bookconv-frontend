@@ -32,6 +32,9 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   'Invalid or missing opf': 'CORRUPT_INPUT',
   'DRM': 'DRM_PROTECTED',
   'failed verification': 'VERIFICATION_FAILED',
+  // EPUB to TXT errors
+  'no text content could be extracted': 'CONVERSION_FAILED',
+  'cannot extract text': 'CONVERSION_FAILED',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',
@@ -54,7 +57,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'CONVERSION_TIMEOUT': { message: 'Conversion timed out. The file may be too large — try a smaller file or different format.', retryable: true },
   'TOO_MANY_OPEN_FILES': { message: 'Server is busy. Please wait a moment and try again.', retryable: true },
   'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
-  'CONVERSION_FAILED': { message: 'Conversion failed. This can happen with complex or damaged files — try a different file.', retryable: true },
+  'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
   'INTERNAL_ERROR': { message: 'An unexpected error occurred. Please try again later.', retryable: true },
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
