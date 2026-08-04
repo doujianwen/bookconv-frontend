@@ -1,0 +1,37 @@
+# 转换页收录核查 URL 列表（配合 scripts/check-indexing.mjs）
+# 每行一个 URL，# 开头为注释。基于 数据分析/GSC收录核实清单.md
+# 分组：P1 早赢(已有曝光) → P2 沉默头部大词 → 异常页
+
+# ── P1 早赢组（先打内容深度）──
+https://www.bookconv.com/convert/mobi-to-epub
+https://www.bookconv.com/convert/epub-to-txt
+https://www.bookconv.com/convert/azw3-to-mobi
+
+# ── P2 沉默头部大词（先核实收录，内容优化后置）──
+https://www.bookconv.com/convert/epub-to-pdf
+https://www.bookconv.com/convert/pdf-to-epub
+https://www.bookconv.com/convert/epub-to-mobi
+https://www.bookconv.com/convert/azw3-to-epub
+https://www.bookconv.com/convert/epub-to-azw3
+https://www.bookconv.com/convert/docx-to-epub
+https://www.bookconv.com/convert/mobi-to-pdf
+https://www.bookconv.com/convert/txt-to-epub
+https://www.bookconv.com/convert/epub-to-doc
+https://www.bookconv.com/convert/doc-to-epub
+https://www.bookconv.com/convert/epub-to-html
+https://www.bookconv.com/convert/epub-to-rtf
+https://www.bookconv.com/convert/azw3-to-pdf
+https://www.bookconv.com/convert/html-to-epub
+https://www.bookconv.com/convert/lit-to-epub
+https://www.bookconv.com/convert/mobi-to-txt
+https://www.bookconv.com/convert/epub-to-jpg
+https://www.bookconv.com/convert/fb2-to-epub
+https://www.bookconv.com/convert/cbr-to-pdf
+https://www.bookconv.com/convert/epub-to-png
+https://www.bookconv.com/convert/epub-to-docx
+https://www.bookconv.com/convert/djvu-to-pdf
+https://www.bookconv.com/convert/rtf-to-epub
+
+# ── 异常页（决定改造或 noindex）──
+https://www.bookconv.com/convert/epub-to-zip
+https://www.bookconv.com/convert/epub-to-lrf

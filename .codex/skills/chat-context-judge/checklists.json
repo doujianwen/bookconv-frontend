@@ -1,0 +1,103 @@
+﻿{
+  \"meta\": {
+    \"agent\": \"chat-context-judge\",
+    \"version\": \"1.0.0\",
+    \"created\": \"2026-08-03\",
+    \"description\": \"Chat Context Judgment Layer — Pure Error-Correction Agent for ebook-converter project\"
+  },
+
+  \"format_matrix\": {
+    \"description\": \"Supported source→target format pairs. Any pair NOT in this map triggers CJ-01-A (CRITICAL).\",
+    \"supported\": [
+      {\"from\": \"pdf\",    \"to\": [\"epub\", \"txt\", \"html\", \"mobi\", \"azw3\", \"docx\", \"rtf\", \"jpg\", \"png\"]},
+      {\"from\": \"epub\",   \"to\": [\"pdf\", \"txt\", \"html\", \"mobi\", \"azw3\", \"docx\", \"rtf\", \"jpg\", \"png\"]},
+      {\"from\": \"txt\",    \"to\": [\"epub\", \"pdf\", \"html\", \"rtf\", \"docx\"]},
+      {\"from\": \"html\",   \"to\": [\"epub\", \"pdf\", \"txt\", \"docx\"]},
+      {\"from\": \"mobi\",   \"to\": [\"epub\", \"pdf\", \"txt\", \"html\"]},
+      {\"from\": \"azw3\",   \"to\": [\"epub\", \"pdf\", \"txt\", \"html\"]},
+      {\"from\": \"docx\",   \"to\": [\"epub\", \"pdf\", \"txt\", \"html\"]},
+      {\"from\": \"doc\",    \"to\": [\"docx\", \"pdf\", \"epub\", \"txt\"]},
+      {\"from\": \"rtf\",    \"to\": [\"docx\", \"pdf\", \"epub\", \"txt\"]},
+      {\"from\": \"pptx\",   \"to\": [\"pdf\", \"png\", \"jpg\"]},
+      {\"from\": \"xlsx\",   \"to\": [\"pdf\", \"csv\", \"xlsx\"]},
+      {\"from\": \"png\",    \"to\": [\"pdf\", \"epub\"]},
+      {\"from\": \"jpg\",    \"to\": [\"pdf\", \"epub\"]},
+      {\"from\": \"cbz\",    \"to\": [\"pdf\", \"epub\", \"png\"]},
+      {\"from\": \"cbr\",    \"to\": [\"pdf\", \"epub\", \"png\"]},
+      {\"from\": \"djvu\",   \"to\": [\"pdf\", \"png\", \"jpg\"]}
+    ],
+    \"aliases\": {
+      \"pdf\": [\"pdf\"],
+      \"epub\": [\"epub\", \"epub3\", \"EPUB\"],
+      \"txt\": [\"txt\", \"text\", \"plain\"],
+      \"html\": [\"html\", \"htm\", \"xhtml\"],
+      \"mobi\": [\"mobi\", \"kindle\"],
+      \"azw3\": [\"azw3\", \"azw\"],
+      \"docx\": [\"docx\", \"word\"],
+      \"doc\": [\"doc\", \"word97\"],
+      \"rtf\": [\"rtf\", \"rich-text\"],
+      \"jpg\": [\"jpg\", \"jpeg\", \"jpe\"],
+      \"png\": [\"png\"],
+      \"cbz\": [\"cbz\", \"comic-zip\"],
+      \"cbr\": [\"cbr\", \"comic-rar\"],
+      \"djvu\": [\"djvu\", \"djv\"]
+    }
+  },
+
+  \"known_risky_pairs\": [
+    {\"from\": \"mobi\",   \"to\": \"pdf\",  \"reason\": \"mobi→pdf 经常丢失排版，需用户确认\"},
+    {\"from\": \"azw3\",  \"to\": \"epub\", \"reason\": \"azw3 DRM 保护文件转换失败率高\"},
+    {\"from\": \"doc\",   \"to\": \"epub\", \"reason\": \"doc（OLE 格式）结构复杂，epub 输出常有排版问题\"},
+    {\"from\": \"djvu\",  \"to\": \"epub\", \"reason\": \"djvu→epub 非典型路径，输出质量不稳定\"}
+  ],
+
+  \"file_size_warnings\": {
+    \"warning_mb\": 200,
+    \"critical_mb\": 500,
+    \"message_warning\": \"文件大小超过 200MB，转换可能较慢，请耐心等待。\",
+    \"message_critical\": \"文件大小超过 500MB，可能超出转换引擎处理能力，建议拆分文件。\"
+  },
+
+  \"security_patterns\": {
+    \"path_traversal\": [
+      {\"pattern\": \"\\\\.\\\\./\",        \"flag\": \"CJ-03-A\", \"description\": \"相对路径穿越（Unix）\"},
+      {\"pattern\": \"\\\\.\\\\.\\\\\\\\\",    \"flag\": \"CJ-03-A\", \"description\": \"相对路径穿越（Windows）\"},
+      {\"pattern\": \"%2e%2e\",           \"flag\": \"CJ-03-A\", \"description\": \"URL 编码路径穿越\"},
+      {\"pattern\": \"..%2f\",            \"flag\": \"CJ-03-A\", \"description\": \"URL 编码路径穿越（斜杠）\"},
+      {\"pattern\": \"\\\\x2e\\\\x2e\",     \"flag\": \"CJ-03-A\", \"description\": \"十六进制路径穿越\"}
+    ],
+    \"shell_injection\": [
+      {\"pattern\": \";\",                \"flag\": \"CJ-03-B\", \"description\": \"分号（命令分隔符）\"},
+      {\"pattern\": \"|\",                \"flag\": \"CJ-03-B\", \"description\": \"管道符\"},
+      {\"pattern\": \"&&\",               \"flag\": \"CJ-03-B\", \"description\": \"逻辑与\"},
+      {\"pattern\": \"||\",               \"flag\": \"CJ-03-B\", \"description\": \"逻辑或\"},
+      {\"pattern\": \"\\\",               \"flag\": \"CJ-03-B\", \"description\": \"反引号（命令注入）\"},
+      {\"pattern\": \"$\",                \"flag\": \"CJ-03-B\", \"description\": \"变量展开\"}
+    ]
+  },
+
+  \"vague_terms\": [
+    {\"term\": \"优化\",        \"context\": \"转换请求中出现'优化'时，提示用户明确意图（优化排版？减小体积？增强可读性？）\"},
+    {\"term\": \"压缩\",        \"context\": \"转换请求中出现'压缩'时，提示用户确认是否指减小文件体积\"},
+    {\"term\": \"修复\",        \"context\": \"转换请求中出现'修复'时，提示用户说明修复目标（修复损坏？修复格式？）\"},
+    {\"term\": \"整理\",        \"context\": \"转换请求中出现'整理'时，提示用户明确操作（整理目录？整理章节？）\"},
+    {\"term\": \"合并\",        \"context\": \"转换请求中出现'合并'时，提示用户确认文件数量和输出格式\"},
+    {\"term\": \"拆分\",        \"context\": \"转换请求中出现'拆分'时，提示用户确认拆分依据（按章节？按页？）\"}
+  ],
+
+  \"drm_signals\": [
+    {\"keyword\": \"drm\",        \"case_insensitive\": true},
+    {\"keyword\": \"encrypted\",  \"case_insensitive\": true},
+    {\"keyword\": \"kindle unlock\", \"case_insensitive\": true},
+    {\"keyword\": \"azw3 drm\",   \"case_insensitive\": true}
+  ],
+
+  \"batch_pattern\": {
+    \"description\": \"检测批量文件输入模式，建议用户使用 batch 接口\",
+    \"patterns\": [
+      {\"regex\": \",\\\\s*\\\\w+\\\\.\",  \"example\": \"file1.pdf, file2.pdf\"},
+      {\"regex\": \"\\\\.txt\\\\s+and\\\\s+\\\\w+\\\\.\\\\w+\", \"example\": \"a.txt and b.pdf\"},
+      {\"regex\": \"(file|document)[-_]?\\\\d\", \"example\": \"file_1.pdf, document_2.docx\"}
+    ]
+  }
+}
