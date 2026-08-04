@@ -63,6 +63,8 @@ export async function convertAndStream(
       jobId,
     );
   } catch (convErr: any) {
+    // DEBUG: Log the actual error for diagnosis
+    console.error('[DEBUG] Conversion error:', convErr?.message || String(convErr));
     const errorCode = mapErrorCode(sanitizeError(convErr));
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode },
