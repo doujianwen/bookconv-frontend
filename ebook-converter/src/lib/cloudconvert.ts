@@ -1,274 +1,96 @@
 // src/lib/cloudconvert.ts
 //
-// CloudConvert API v2 客户端
-// 作为 Calibre 不可用时的转换后端替代方案
+// CloudConvert API v2 客户端 —— 作为 Vercel Serverless 上 Calibre 不可用时的
+// 转换后端替代方案（覆盖 epub→pdf / mobi / azw3 / docx 等 25 个 Calibre 依赖格式）。
 //
-// API 文档: https://developers.cloudconvert.com/api/2/create-task
+// 真实 API 流程（与旧版 /v2/tasks 不同）：
+//   1. POST /v2/jobs  —— 创建 job，tasks 为对象，含 import/upload + convert + export/url
+//   2. POST /v2/uploads —— 把文件以 base64 上传到 import/upload task
+//   3. GET  /v2/jobs/{id} —— 轮询直到 status = finished / error
+//   4. 从 export/url task 的 result.files[0].url 下载结果
+//
+// 文档: https://developers.cloudconvert.com/api/v2
 
-const API_BASE = 'https://api.cloudconvert.com/2.0';
+const API_BASE = 'https://api.cloudconvert.com/v2';
 const API_KEY = process.env.CLOUD_CONVERT_API_KEY;
-const MAX_RETRIES = 3;
-const RETRY_DELAY_MS = 1000;
+const MAX_POLL_ATTEMPTS = 25; // 25 * 2s = 50s，给上传+下载留余量（route maxDuration=120）
+const POLL_INTERVAL_MS = 2000;
 
-/** CloudConvert API 错误类型 */
-export type CloudConvertError = {
-  type: 'config_error' | 'api_error' | 'timeout' | 'task_failed' | 'unknown';
-  message: string;
-  details?: any;
-};
-
-/** 任务状态 */
-export type TaskStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
-
-/** 任务响应数据 */
-export interface TaskData {
-  id: string;
-  status: TaskStatus;
-  result?: {
-    download?: string;
-    files?: Array<{
-      id: string;
-      url?: string;
-      filename?: string;
-      mime_type?: string;
-      size?: number;
-    }>;
-  };
-  error?: {
-    message: string;
-    code?: string;
-  };
-}
-
-/**
- * 检查 API Key 是否已配置
- */
+/** 检查 API Key 是否已配置（决定是否启用 CloudConvert 降级） */
 export function isCloudConvertConfigured(): boolean {
   return !!API_KEY;
 }
 
-/**
- * 带重试的 API 请求
- */
-async function apiRequest<T>(
+/** 带重试的 CloudConvert API 请求（5xx 重试，4xx 直接抛错） */
+async function ccRequest<T>(
   method: string,
   path: string,
-  body?: any,
-  retries = MAX_RETRIES,
+  body?: unknown,
+  retries = 3,
 ): Promise<T> {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const url = `${API_BASE}${path}`;
-      const options: RequestInit = {
+      const res = await fetch(`${API_BASE}${path}`, {
         method,
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json',
         },
-      };
-      if (body) {
-        options.body = JSON.stringify(body);
-      }
+        body: body ? JSON.stringify(body) : undefined,
+      });
 
-      const response = await fetch(url, options);
-
-      if (!response.ok) {
-        const errorText = await response.text().catch(() => response.statusText);
-        let parsedError: any = null;
+      if (!res.ok) {
+        const text = await res.text().catch(() => res.statusText);
+        let msg = text;
         try {
-          parsedError = JSON.parse(errorText);
-        } catch {}
-
-        const errorMessage = parsedError?.message || errorText || response.statusText;
-
-        // 4xx 错误不重试
-        if (response.status >= 400 && response.status < 500) {
-          throw new Error(`CloudConvert API error: ${response.status} - ${errorMessage}`);
+          msg = (JSON.parse(text) as any)?.message || text;
+        } catch {
+          /* keep raw text */
         }
-
-        // 5xx 错误重试
+        // 4xx：配置/参数错误，不重试
+        if (res.status >= 400 && res.status < 500) {
+          throw new Error(`CloudConvert client error ${res.status}: ${msg}`);
+        }
+        // 5xx：服务端错误，重试
         if (attempt === retries) {
-          throw new Error(`CloudConvert API error (after ${retries} retries): ${response.status} - ${errorMessage}`);
+          throw new Error(`CloudConvert server error ${res.status}: ${msg}`);
         }
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * attempt));
+        await new Promise((r) => setTimeout(r, 1000 * attempt));
         continue;
       }
 
-      return await response.json() as T;
-    } catch (err) {
-      if (attempt === retries) throw err;
-      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * attempt));
-    }
-  }
-  throw new Error('Unexpected retry exhaustion');
-}
-
-/**
- * 上传文件到 CloudConvert
- * 返回文件 ID
- */
-export async function uploadFile(
-  filename: string,
-  contentBase64: string,
-): Promise<{ fileId: string }> {
-  // CloudConvert v2 使用 uploads endpoint
-  const response = await apiRequest<{ data: { id: string } }>(
-    'POST',
-    '/uploads',
-    {
-      filename,
-      content_type: 'application/octet-stream',
-      data: contentBase64,
-    },
-  );
-
-  if (!response?.data?.id) {
-    throw new Error('CloudConvert upload did not return a file ID');
-  }
-
-  return { fileId: response.data.id };
-}
-
-/**
- * 创建转换任务
- */
-export async function createConversionTask(
-  fileId: string,
-  sourceFormat: string,
-  targetFormat: string,
-): Promise<{ taskId: string }> {
-  const response = await apiRequest<{ data: TaskData }>(
-    'POST',
-    '/tasks',
-    {
-      input: 'default',
-      output: 'result',
-      tasks: [
-        {
-          input: 'default',
-          converter: 'calibre',
-          inputformat: sourceFormat,
-          outputformat: targetFormat,
-          files: [fileId],
-        },
-      ],
-    },
-  );
-
-  if (!response?.data?.id) {
-    throw new Error('CloudConvert API did not return a task ID');
-  }
-
-  return { taskId: response.data.id };
-}
-
-/**
- * 获取任务状态
- */
-export async function getTaskStatus(taskId: string): Promise<TaskData> {
-  const response = await apiRequest<{ data: TaskData }>(
-    'GET',
-    `/tasks/${taskId}`,
-  );
-
-  return response.data;
-}
-
-/**
- * 轮询任务状态直到完成或失败
- */
-export async function pollTaskStatus(
-  taskId: string,
-  maxAttempts: number = 60,
-  delayMs: number = 2000,
-): Promise<{ status: 'completed' | 'failed'; result?: TaskData['result']; error?: CloudConvertError }> {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    await new Promise(resolve => setTimeout(resolve, delayMs));
-
-    try {
-      const task = await getTaskStatus(taskId);
-
-      if (task.status === 'completed') {
-        return { status: 'completed', result: task.result };
-      }
-
-      if (task.status === 'failed') {
-        return {
-          status: 'failed',
-          error: {
-            type: 'task_failed',
-            message: task.error?.message || 'Task failed',
-            details: task.error,
-          },
-        };
-      }
-
-      // pending / processing: continue polling
-      if (attempt === maxAttempts - 1) {
-        return {
-          status: 'failed',
-          error: {
-            type: 'timeout',
-            message: `Task ${taskId} did not complete within ${maxAttempts * delayMs / 1000}s`,
-          },
-        };
-      }
+      return (await res.json()) as T;
     } catch (err: any) {
-      // API error during polling
-      if (attempt === maxAttempts - 1) {
-        return {
-          status: 'failed',
-          error: {
-            type: 'api_error',
-            message: err.message,
-          },
-        };
-      }
+      // 已经是格式化过的 CloudConvert 错误，直接上抛
+      if (typeof err?.message === 'string' && err.message.startsWith('CloudConvert')) throw err;
+      if (attempt === retries) throw err;
+      await new Promise((r) => setTimeout(r, 1000 * attempt));
     }
   }
+  throw new Error('CloudConvert request failed after retries');
+}
 
-  return {
-    status: 'failed',
-    error: {
-      type: 'timeout',
-      message: 'Polling limit reached',
-    },
+interface CCJobResponse {
+  data: {
+    id: string;
+    status: string;
+    tasks: Array<{
+      id: string;
+      name: string;
+      operation: string;
+      status: string;
+      result?: {
+        id?: string;
+        message?: string;
+        code?: string;
+        files?: Array<{ filename: string; url: string; size?: number }>;
+      };
+    }>;
   };
 }
 
 /**
- * 下载转换结果
- */
-export async function downloadResult(downloadUrl: string): Promise<{
-  buffer: Buffer;
-  mimeType: string;
-  filename: string;
-}> {
-  const response = await fetch(downloadUrl, {
-    headers: {
-      'Authorization': `Bearer ${API_KEY}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to download result: ${response.status}`);
-  }
-
-  const contentLength = response.headers.get('content-length');
-  const buffer = Buffer.from(await response.arrayBuffer());
-  const mimeType = response.headers.get('content-type') || 'application/octet-stream';
-  const contentDisposition = response.headers.get('content-disposition') || '';
-  const filename = (contentDisposition
-    ? contentDisposition.match(/filename[^;=\n]*=((['"]).\2|[^;\n]*)/)
-      ?.[1]
-      ?.replace(/['"]/g, '')
-    : null) || 'converted-file';
-
-  return { buffer, mimeType, filename };
-}
-
-/**
- * 完整的转换流程：上传文件 → 创建任务 → 轮询 → 下载
+ * 完整转换流程：创建 job → 上传文件 → 轮询 → 下载
  */
 export async function convertWithCloudConvert(
   sourceFormat: string,
@@ -285,31 +107,77 @@ export async function convertWithCloudConvert(
     throw new Error('CloudConvert API key is not configured');
   }
 
-  // Step 1: Upload file
-  const uploadFilename = originalFilename || `input.${sourceFormat}`;
-  const { fileId } = await uploadFile(uploadFilename, inputBase64);
+  // 1. 创建 job
+  const job = await ccRequest<CCJobResponse>('POST', '/jobs', {
+    tasks: {
+      'import-file': { operation: 'import/upload' },
+      'convert-file': {
+        operation: 'convert',
+        input: 'import-file',
+        input_format: sourceFormat,
+        output_format: targetFormat,
+        engine: 'calibre',
+      },
+      'export-file': { operation: 'export/url', input: 'convert-file' },
+    },
+  });
 
-  // Step 2: Create conversion task
-  const { taskId } = await createConversionTask(fileId, sourceFormat, targetFormat);
-
-  // Step 3: Poll for completion
-  const pollResult = await pollTaskStatus(taskId);
-
-  if (pollResult.status === 'failed') {
-    throw new Error(`CloudConvert task failed: ${pollResult.error?.message || 'Unknown error'}`);
+  const importTask = job.data.tasks.find((t) => t.operation === 'import/upload');
+  if (!importTask) {
+    throw new Error('CloudConvert: import/upload task not found in job response');
   }
 
-  // Step 4: Download result
-  if (!pollResult.result?.download) {
-    throw new Error('CloudConvert task completed but no download URL available');
+  // 2. 上传文件（base64）到 import/upload task
+  await ccRequest('POST', '/uploads', {
+    task: importTask.id,
+    filename: originalFilename || `input.${sourceFormat}`,
+    data: inputBase64,
+  });
+
+  // 3. 轮询 job 状态
+  let finished: CCJobResponse = job;
+  for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+    finished = await ccRequest<CCJobResponse>('GET', `/jobs/${job.data.id}`);
+    if (finished.data.status === 'finished') break;
+    if (finished.data.status === 'error') {
+      const failed = finished.data.tasks.find((t) => t.status === 'error');
+      const detail =
+        failed?.result?.message || failed?.result?.code || 'unknown failure';
+      throw new Error(`CloudConvert job failed: ${detail}`);
+    }
   }
 
-  const { buffer, mimeType, filename: resultFilename } = await downloadResult(pollResult.result.download);
+  if (finished.data.status !== 'finished') {
+    throw new Error(
+      `CloudConvert job did not finish in time (status: ${finished.data.status})`,
+    );
+  }
+
+  // 4. 取 export URL
+  const exportTask = finished.data.tasks.find((t) => t.operation === 'export/url');
+  const file = exportTask?.result?.files?.[0];
+  if (!file?.url) {
+    throw new Error('CloudConvert: no export file URL in job result');
+  }
+
+  // 5. 下载结果（签名临时 URL，无需 Authorization）
+  const dlRes = await fetch(file.url);
+  if (!dlRes.ok) {
+    throw new Error(`CloudConvert download failed: ${dlRes.status}`);
+  }
+  const buffer = Buffer.from(await dlRes.arrayBuffer());
+  const mimeType = dlRes.headers.get('content-type') || 'application/octet-stream';
+  const cd = dlRes.headers.get('content-disposition') || '';
+  const filenameMatch = cd.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+  const filename =
+    (filenameMatch?.[1]?.replace(/['"]/g, '') || file.filename) ||
+    `output.${targetFormat}`;
 
   return {
     base64Data: buffer.toString('base64'),
     mimeType,
-    filename: resultFilename,
+    filename,
     fileSize: buffer.length,
   };
 }

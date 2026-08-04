@@ -40,10 +40,8 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   // Calibre not available errors
   'Calibre is not available': 'CONVERSION_UNAVAILABLE',
   'Calibre not found': 'CONVERSION_UNAVAILABLE',
-  // CloudConvert errors
-  'CloudConvert API error': 'CLOUD_CONVERT_ERROR',
-  'CloudConvert task failed': 'CLOUD_CONVERT_ERROR',
-  'CloudConvert task completed but no download URL': 'CLOUD_CONVERT_ERROR',
+  // CloudConvert errors (catch-all covers all "CloudConvert ..." messages)
+  'cloudconvert': 'CLOUD_CONVERT_ERROR',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',

@@ -19,7 +19,7 @@ import {
 } from "@/lib/rate-limit";
 import { convertAndStream } from "@/lib/convert-handler";
 
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const BACKEND_URL = process.env.CONVERSION_BACKEND_URL?.replace(/\/+$/, "");
 const INTERNAL_SECRET = process.env.CONVERSION_INTERNAL_SECRET;
