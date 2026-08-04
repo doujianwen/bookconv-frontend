@@ -370,9 +370,8 @@ export async function executeConversion(
       const stderr = err.stderr || '';
       const combined = `${msg}\n${stderr}`;
       const errorCode = mapErrorCode(combined);
-      if (errorCode !== 'CONVERSION_FAILED') {
-        throw new Error(getFriendlyMessage(errorCode));
-      }
+      // Always throw friendly message for known error codes
+      throw new Error(getFriendlyMessage(errorCode));
     }
     throw err;
   }
