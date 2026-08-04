@@ -337,6 +337,14 @@ export async function executeConversion(
       const txt = await epubToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');
     } else {
+      // Check if Calibre is available
+      try {
+        await execFileAsync(CALIBRE_PATH, ['--version'], { timeout: 5000 });
+      } catch (calibreCheckErr: any) {
+        // Calibre not available on this runtime (e.g., Vercel Serverless)
+        throw new Error('Calibre is not available on this server. Please use EPUB to TXT or EPUB to ZIP conversions, or contact support for other formats.');
+      }
+
       await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
       if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
 
