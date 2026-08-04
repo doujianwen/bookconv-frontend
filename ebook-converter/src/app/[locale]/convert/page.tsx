@@ -41,17 +41,22 @@ function formatLabel(format: string): string {
 }
 
 export default async function ConvertIndexPage() {
-  const items = KEYWORDS.map((k) => {
-    const slug = getSlug(k.source, k.target)
-    const conversion = getConversion(k.source, k.target)
-    return {
-      slug,
-      source: k.source,
-      target: k.target,
-      label: `${formatLabel(k.source)} to ${formatLabel(k.target)}`,
-      description: conversion?.description,
-    }
-  })
+  // Only link to pairs that are actually supported by CONVERSION_MAP.
+  // Filtering out "planned" KEYWORDS pairs (epub-to-zip, epub-to-lrf, pdf-to-docx, …)
+  // prevents internal links to 404 pages and stops Google from rediscovering them.
+  const items = KEYWORDS
+    .filter((k) => getConversion(k.source, k.target))
+    .map((k) => {
+      const slug = getSlug(k.source, k.target)
+      const conversion = getConversion(k.source, k.target)
+      return {
+        slug,
+        source: k.source,
+        target: k.target,
+        label: `${formatLabel(k.source)} to ${formatLabel(k.target)}`,
+        description: conversion?.description,
+      }
+    })
 
   const jsonLd = {
     "@context": "https://schema.org",

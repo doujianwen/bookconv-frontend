@@ -10,7 +10,7 @@ import {
 import { useTranslations } from "next-intl"
 import { KEYWORDS } from "@/lib/constants"
 import { getSlug } from "@/lib/utils"
-import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
+import { FORMAT_DISPLAY_NAMES, getConversion } from "@/lib/conversion-map"
 import { TestimonialsSection } from "@/components/tools/TestimonialsSection"
 import { AnimatedCounter } from "@/components/tools/AnimatedCounter"
 import { CONVERSION_COUNTER_TARGET } from "@/data/testimonials"
@@ -63,7 +63,10 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   const filteredKeywords = useMemo(() => {
-    let result = KEYWORDS
+    // Only surface pairs that are actually supported (in CONVERSION_MAP).
+    // Filtering out "planned" KEYWORDS pairs stops the homepage from
+    // internally linking to 404 pages (epub-to-zip, epub-to-lrf, …).
+    let result = KEYWORDS.filter((k) => getConversion(k.source, k.target))
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       result = result.filter(

@@ -1,7 +1,14 @@
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getDisplayName, getSlug } from "@/lib/utils"
+
+// Only slugs in generateStaticParams are served; any other /convert/* slug
+// returns a real 404 instead of a soft-404 "Conversion not supported" page.
+// This prevents KEYWORDS "planned" pairs (epub-to-zip, epub-to-lrf, pdf-to-docx,
+// etc.) that are NOT in CONVERSION_MAP from being indexed as thin content.
+export const dynamicParams = false
 // Step 3: Dynamic import for heavy client component — reduces initial bundle
 import dynamic from "next/dynamic"
 import { CONTENT_MAP } from "@/data/content"
@@ -20,7 +27,10 @@ interface ToolPageProps {
 }
 
 export async function generateStaticParams() {
-  return KEYWORDS.map((k) => ({
+  // Only emit slugs that are actually supported by CONVERSION_MAP.
+  // This drops ~20 "planned" KEYWORDS pairs (epub-to-zip, epub-to-lrf, pdf-to-docx, …)
+  // that have no real conversion backend and must 404 rather than soft-404.
+  return KEYWORDS.filter((k) => getConversion(k.source, k.target)).map((k) => ({
     slug: k.source + "-to-" + k.target
   }))
 }
@@ -89,14 +99,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   const contentData = CONTENT_MAP[slug]
 
   if (!keyword || !conversion) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Conversion not supported</h1>
-          <p className="mt-2 text-gray-500">Please check our homepage for supported formats.</p>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   // Use dynamically imported component

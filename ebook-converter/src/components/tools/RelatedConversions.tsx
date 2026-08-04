@@ -1,6 +1,11 @@
 ﻿import Link from "next/link"
 import { KEYWORDS } from "@/lib/constants"
+import { getConversion } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
+
+// Only link to pairs that are actually supported (in CONVERSION_MAP).
+// Excludes "planned" KEYWORDS pairs that would 404 (epub-to-zip, epub-to-lrf, …).
+const SUPPORTED_KEYWORDS = KEYWORDS.filter((k) => getConversion(k.source, k.target))
 
 interface RelatedConversionsProps {
   currentSource: string
@@ -11,7 +16,7 @@ interface RelatedConversionsProps {
 export function RelatedConversions({ currentSource, currentTarget, max = 6 }: RelatedConversionsProps) {
   const currentKey = `${currentSource}-${currentTarget}`
 
-  const related = KEYWORDS
+  const related = SUPPORTED_KEYWORDS
     .filter((k) => {
       const key = `${k.source}-${k.target}`
       if (key === currentKey) return false
@@ -21,7 +26,7 @@ export function RelatedConversions({ currentSource, currentTarget, max = 6 }: Re
     .slice(0, max)
 
   if (related.length === 0) {
-    const others = KEYWORDS
+    const others = SUPPORTED_KEYWORDS
       .filter((k) => `${k.source}-${k.target}` !== currentKey)
       .slice(0, max)
     return <RelatedLinks keywords={others} />
