@@ -379,7 +379,7 @@ export async function executeConversion(
       const combined = `${msg}\n${stderr}`;
       const errorCode = mapErrorCode(combined);
       // Always throw friendly message for known error codes
-      throw new Error(getFriendlyMessage(errorCode));
+      throw err; // Keep original error for proper error code mapping
     }
     throw err;
   }
