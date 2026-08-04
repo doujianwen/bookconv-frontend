@@ -6,6 +6,7 @@ export type ErrorCode =
   | "DRM_PROTECTED"
   | "CONVERSION_FAILED"
   | "CONVERSION_UNAVAILABLE"
+  | "CLOUD_CONVERT_ERROR"
   | "INTERNAL_ERROR"
   | "CORRUPT_INPUT"
   | "MEMORY_LIMIT"
@@ -39,6 +40,10 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   // Calibre not available errors
   'Calibre is not available': 'CONVERSION_UNAVAILABLE',
   'Calibre not found': 'CONVERSION_UNAVAILABLE',
+  // CloudConvert errors
+  'CloudConvert API error': 'CLOUD_CONVERT_ERROR',
+  'CloudConvert task failed': 'CLOUD_CONVERT_ERROR',
+  'CloudConvert task completed but no download URL': 'CLOUD_CONVERT_ERROR',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',
@@ -63,6 +68,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
   'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
   'CONVERSION_UNAVAILABLE': { message: 'This conversion requires a Calibre-powered backend that is currently unavailable. Please use EPUB to TXT or EPUB to ZIP conversions, which work without Calibre.', retryable: false },
+  'CLOUD_CONVERT_ERROR': { message: 'Conversion service error. Please try again later or use a different format combination.', retryable: true },
   'INTERNAL_ERROR': { message: 'An unexpected error occurred. Please try again later.', retryable: true },
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },

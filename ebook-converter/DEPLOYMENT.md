@@ -1,5 +1,22 @@
 # 电子书转换工具站 - 部署指南
 
+> **最后更新**: 2026-08-05
+
+## 当前生产状态
+
+| 组件 | 状态 | 说明 |
+|------|------|------|
+| 前端 + API（Vercel） | ✅ 已上线 | `bookconv.com` → Vercel Serverless |
+| VPS 后端（Calibre） | ⏳ 待部署 | 莹云 VPS，IP 待注入 SSH 密钥后部署 |
+| Redis 队列 | ❌ 未使用 | Vercel serverless 不支持常驻 Worker，异步队列已降级为同步请求内处理 |
+
+## 生产地址
+
+- 网站：https://bookconv.com（Vercel，Cloudflare 代理）
+- API：https://bookconv.com/api/convert
+
+---
+
 ## 快速开始
 
 ### 本地开发
@@ -20,14 +37,36 @@ docker-compose up -d
 
 ---
 
-## VPS 部署（Hetzner CX22 / $5/月）
+## VPS 部署（莹云，待部署）
 
-### 1. 服务器初始化
+> **重要**：以下 VPS 部署指南为**计划方案**，当前尚未执行。网站目前完全运行在 Vercel 上。
+
+### VPS 信息（莹云控制台）
+
+| 项目 | 值 |
+|------|-----|
+| IP 地址 | `149.104.69.126` |
+| 实例 ID | `ecs-di00005bwn85` |
+| 机房 | SoftBank 日本节点 |
+| SSH 端口 | 22 |
+| 状态 | ⚠️ 未部署本项目（端口 80 运行其他网站） |
+
+### SSH 密钥注入（首次部署前必须执行）
+
+在莹云控制台 → 实例 `ecs-di00005bwn85` → **重置密钥**，注入以下公钥：
+
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+6weQvfTbp63GiuwTZb2bAj57pxWfhAEtzvF3vNLxS 7701484@qq.com
+```
+
+注入成功后即可 SSH 登录：
+```bash
+ssh root@149.104.69.126
+```
+
+### 1. 服务器初始化（SSH 登录后执行）
 
 ```bash
-# SSH 登录
-ssh root@your-vps-ip
-
 # 更新系统
 apt update && apt upgrade -y
 
@@ -57,10 +96,11 @@ newgrp docker
 # Git
 apt install -y git
 ```
+
 ### 3. 克隆项目
 
 ```bash
-git clone https://github.com/your-username/ebook-converter.git
+git clone https://github.com/doujianwen/ebook-converter.git
 cd ebook-converter
 ```
 
@@ -84,7 +124,7 @@ MAX_FILE_SIZE_MB=10
 CALIBRE_PATH=ebook-convert
 
 # 应用地址（域名）
-NEXT_PUBLIC_APP_URL=https://your-domain.com
+NEXT_PUBLIC_APP_URL=https://bookconv.com
 
 # Cloudflare R2（可选，不配则用本地存储）
 # R2_ENDPOINT=https://account-id.r2.cloudflarestorage.com
@@ -115,9 +155,41 @@ pm2 startup systemd
 # 或者使用 Docker
 docker-compose up -d --build
 ```
+
+---
+
+## Vercel 部署（当前生产方案）
+
+网站目前部署在 Vercel，无需 VPS。
+
+### 1. 部署方式
+
+- 连接 GitHub 仓库 `doujianwen/ebook-converter`
+- 在 Vercel Dashboard → Settings → Environment Variables 配置以下变量：
+
+| 变量 | 值 | 说明 |
+|------|-----|------|
+| `REDIS_URL` | `redis://localhost:6379` | Vercel 上不生效，仅作模板 |
+| `UPLOAD_DIR` | `/tmp/ebook-uploads` | 临时文件目录 |
+| `MAX_FILE_SIZE_MB` | `10` | 最大上传文件大小 |
+| `CALIBRE_PATH` | `ebook-convert` | Docker 部署时才需要 |
+| `NEXT_PUBLIC_APP_URL` | `https://bookconv.com` | 生产域名 |
+| `CORS_ORIGINS` | `https://bookconv.com` | 允许的来源 |
+| `LEMON_SQUEEZY_API_KEY` | (从 .env.production 复制) | 支付 API 密钥 |
+| `LEMON_SQUEEZY_STORE_ID` | `438949` | Lemon Squeezy Store ID |
+| `CLOUD_CONVERT_API_KEY` | (CloudConvert API Key) | CloudConvert 转换后端 API Key |
+
+### 2. 注意事项
+
+- Vercel Serverless 限制：无常驻进程，maxDuration=60s（Pro）
+- `api/health` 会超时（Redis 不可达），但不影响转换功能
+- Calibre 格式转换（25 个）在 Vercel 上仍返回 500，需接入 VPS 后端
+
 ---
 
 ## Nginx 反向代理 + SSL
+
+> **Vercel 部署无需此步骤**，SSL 由 Vercel 自动配置。以下仅适用于 VPS 部署。
 
 ### 1. 安装 Nginx
 
@@ -195,77 +267,45 @@ certbot --nginx -d your-domain.com -d www.your-domain.com
 # 自动续期测试
 certbot renew --dry-run
 ```
+
 ---
 
-## Cloudflare CDN 配置
+## Cloudflare CDN 配置（可选）
 
-### 1. DNS 设置
+> **当前状态**：bookconv.com 已接入 Cloudflare（Proxy: ON），DNS 指向 Vercel IP `216.198.79.1`。
 
-1. 登录 Cloudflare Dashboard
-2. 添加域名 your-domain.com
-3. 添加 A 记录：
-   - @ → VPS IP 地址（Proxy: ON）
-   - www → VPS IP 地址（Proxy: ON）
+### 切换到 VPS 作为后端时的 DNS 变更
 
-### 2. SSL/TLS
+如果后续启用 VPS 后端，只需在 Vercel 设置环境变量，**无需修改 DNS**：
+
+- `bookconv.com` 继续指向 Vercel（前端 + 透传格式）
+- VPS 仅作为后端 Calibre 转换节点，通过 `CONVERSION_BACKEND_URL` 访问
+
+### SSL/TLS
 
 - 模式：**Full**（或 Full Strict）
 - 传输加密：TLS 1.2+
 
-### 3. 性能优化
+### 性能优化
 
-- **Auto Minify**: JS/CSS/HTML 勾选
-- **Brotli 压缩**: 开启
-- **HTTP/2**: 默认开启
-- **Cache Rules**: 静态资源缓存 1 小时
+- **Auto Minify**：JS/CSS/HTML 勾选
+- **Brotli 压缩**：开启
+- **HTTP/2**：默认开启
 
 ---
 
-## 监控和维护
+## 运维命令
 
-### 健康检查
-
-```bash
-# 应用健康
-curl -s http://your-domain.com/api/health | jq
-
-# Redis 连接
-redis-cli ping
-
-# Calibre 可用
-ebook-convert --version
-
-# Docker 容器状态
-docker ps
-```
-
-### 日志查看
+### Docker 管理
 
 ```bash
-# PM2 日志
-pm2 logs ebook-converter
-
-# Docker 日志
-docker-compose logs -f app
-
-# Nginx 错误日志
-tail -f /var/log/nginx/error.log
+cd /opt/ebook-converter
+docker-compose down
+docker-compose up -d
+docker logs -f app
+docker image prune -af  # 清理未使用的镜像
 ```
 
-### 磁盘清理
-
-```bash
-# 清理超过 1 天的临时文件
-find /tmp/ebook-uploads -type d -mtime +1 -exec rm -rf {} \;
-
-# 定期任务（crontab）
-crontab -e
-# 添加: 0 3 * * * find /tmp/ebook-uploads -type d -mtime +1 -exec rm -rf {} \;
-
-# Docker 磁盘使用
-docker system df
-docker system prune -af  # 清理未使用的镜像
-```
 ### 备份策略
 
 ```bash
@@ -316,7 +356,7 @@ systemctl restart redis
 
 ```bash
 # 检查内存
-freet -h
+free -h
 
 # 添加 Swap
 dd if=/dev/zero of=/swapfile bs=1M count=1024
@@ -328,23 +368,23 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 ---
 
----
-
 ## Vercel 与 VPS 转换后端接线（Calibre 委派）
 
-Vercel serverless 运行时**没有 Calibre 二进制**，因此 25 个走 Calibre 的格式在 Vercel 上无法转换。方案：Vercel 的 `/api/convert` 在设了 `CONVERSION_BACKEND_URL` 时，把上传**转发到装有 Calibre 的 VPS** 的 `/api/convert-internal`，再把结果流式返回。epub→zip 等纯透传格式无需后端，Vercel 本地即可完成。
+> **当前状态**：VPS 尚未部署，此功能待启用。Vercel 上仅有纯透传格式（epub→zip 等）可用，走 Calibre 的 25 个格式仍返回 500。
+
+Vercel serverless 运行时**没有 Calibre 二进制**，因此 25 个走 Calibre 的格式在 Vercel 上无法转换。方案：Vercel 的 `/api/convert` 在设了 `CONVERSION_BACKEND_URL` 时，把上传**转发**到装 Calibre 的 VPS 的 `/api/convert-internal`，再把结果流式返回。epub→zip 等纯透传格式无需后端，Vercel 本地即可完成。
 
 ### 前置条件
 
-- VPS（`deploy-production` 部署的那台 Hetzner）已安装 Calibre（`ebook-convert --version` 可用）
-- VPS 已从 `main` 重新部署，包含新的 `/api/convert-internal` 路由（见下）
+- VPS（莹云 `149.104.69.126`）已安装 Calibre（`ebook-convert --version` 可用）
+- VPS 已从 `main` 重新部署，包含新的 `/api/convert-internal` 路由
 
-### 步骤 1：重部署 VPS（拉取含 convert-internal 的新镜像）
+### 步骤 1：VPS 重部署（拉取含 convert-internal 的新镜像）
 
 ```bash
-ssh <你的 VPS>
+ssh root@149.104.69.126
 cd /opt/ebook-converter
-# 在 VPS 的 .env 中加入内部密钥（与 Vercel 侧一致）
+# 生成并写入内部密钥（与 Vercel 侧一致）
 echo "CONVERSION_INTERNAL_SECRET=$(openssl rand -hex 32)" >> .env
 docker compose pull app
 docker compose up -d app
@@ -359,8 +399,8 @@ Vercel Dashboard → 项目 → Settings → Environment Variables，添加：
 
 | 变量名 | 值 | 说明 |
 |--------|-----|------|
-| `CONVERSION_BACKEND_URL` | `https://<你的 VPS 域名或 IP>` | VPS 公网地址（需能被 Vercel 出网访问，建议套 Cloudflare/反向代理 + HTTPS） |
-| `CONVERSION_INTERNAL_SECRET` | 与步骤 1 中 VPS `.env` 里的随机串**完全一致** | 校验转发请求，防开放代理 |
+| `CONVERSION_BACKEND_URL` | `http://149.104.69.126` | VPS 公网地址（需能被 Vercel 出站访问） |
+| `CONVERSION_INTERNAL_SECRET` | 与步骤 1 中 VPS `.env` 里的随机串完全一致 | 校验转发请求，防开放代理 |
 
 保存后 Vercel 会自动重建。
 
@@ -376,32 +416,35 @@ curl -F "file=@sample.epub" -F "source_format=epub" -F "target_format=txt" https
 file out.txt
 ```
 
-> 注意：`deploy-production` 的 Verify 步骤仍 `curl https://bookconv.com/api/health`（命中 Vercel），不会校验 VPS。VPS 健康请单独 `curl http://localhost:3000/api/health`（VPS 本地 Redis+Calibre）自查。
+> 注意：`deploy-production` 的 Verify 步骤从 `curl https://bookconv.com/api/health`（命中 Vercel），不会校验 VPS。VPS 健康请单独 `curl http://localhost:3000/api/health`（VPS 本地 Redis+Calibre）自查。
 
 ---
 
 ## 成本估算
 
-| 项目 | 费用 | 备注 |
+| 项目 | 费用 | 说明 |
 |------|------|------|
-| Hetzner CX22 VPS | $5/月 | 2vCPU/4GB/20GB SSD |
+| Vercel Hobby | $0/月 | 当前生产部署 |
 | 域名 (.com) | ~$10/年 | Namecheap / Cloudflare |
 | Cloudflare CDN | $0 | 免费计划足够 |
 | Supabase | $0 | 免费层 500MB DB |
 | Cloudflare R2 | ~$1/月 | 10GB 存储 |
-| **总计** | **~$7/月** | |
+| 莹云 VPS（计划） | 待确认 | 用于 Calibre 后端转换 |
+| **当前总计** | **~$1/月** | 仅域名+R2 |
 
 ---
 
 ## 下一步优化
 
-1. **CI/CD 自动化** — GitHub Actions 自动构建部署
-2. **日志聚合** — 接入 Sentry 错误追踪
-3. **性能监控** — 接入 Plausible 或自建 Statsig
-4. **数据库迁移** — 从 Supabase 迁移到 PostgreSQL 托管
+1. **启用 VPS Calibre 后端** — 注入 SSH 密钥，部署 Docker，设置 `CONVERSION_BACKEND_URL`
+2. **CI/CD 自动化** — GitHub Actions 自动构建部署
+3. **日志聚合** — 接入 Sentry 错误追踪
+4. **性能监控** — 接入 Plausible 或自建 Statsig
 5. **批量转换** — 增加队列并发数和优先级
 6. **用户系统** — 完整实现注册/登录/历史记录
 
 ---
 
-*最后更新: 2026-07-12*
+*最后更新：2026-08-05*
+*当前生产：Vercel（bookconv.com）*
+*计划后端：莹云 VPS 149.104.69.126（未部署）*

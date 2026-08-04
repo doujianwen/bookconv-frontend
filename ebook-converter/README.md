@@ -1,152 +1,161 @@
-# ?? µç×ÓÊé×ª»»¹¤¾ßÕ¾
+# ?? ç”µå­ä¹¦è½¬æ¢å·¥å…·ç«™
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.2-black)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org)
 [![Calibre](https://img.shields.io/badge/Engine-Calibre-green)](https://calibre-ebook.com)
 
-»ùÓÚ Next.js + Calibre µÄµç×ÓÊéÔÚÏß×ª»»Æ½Ì¨£¬Ö§³Ö 28 ÖÖ¸ñÊ½×éºÏ¡£
+åŸºäº Next.js + Calibre çš„ç”µå­ä¹¦åœ¨çº¿è½¬æ¢å¹³å°ï¼Œæ”¯æŒ 28 ç§æ ¼å¼ç»„åˆã€‚
 
-## ? ¹¦ÄÜÌØĞÔ
+## ? åŠŸèƒ½ç‰¹æ€§
 
-- **28 ÖÖ¸ñÊ½×ª»»** ¡ª EPUB¡¢AZW3¡¢MOBI¡¢PDF¡¢TXT¡¢DOCX µÈÖ÷Á÷¸ñÊ½»¥×ª
-- **Òì²½¶ÓÁĞ´¦Àí** ¡ª BullMQ + Redis£¬Ö§³Ö²¢·¢×ª»»²»×èÈû
-- **ÏìÓ¦Ê½Éè¼Æ** ¡ª Tailwind CSS 4£¬ÒÆ¶¯¶ËÓÅÏÈ
-- **SEO ÓÅ»¯** ¡ª SSG ¾²Ì¬Éú³É + ³ÌĞò»¯ SEO + Schema ½á¹¹»¯Êı¾İ
-- **ÓÃ»§ÏµÍ³** ¡ª Supabase OAuth µÇÂ¼£¨¿ÉÑ¡£©
-- **¶ÔÏó´æ´¢** ¡ª Cloudflare R2 ÁÙÊ±ÎÄ¼ş¹ÜÀí£¨¿ÉÑ¡£©
+- **28 ç§æ ¼å¼è½¬æ¢** â€” EPUBã€AZW3ã€MOBIã€PDFã€TXTã€DOCX ç­‰ä¸»æµæ ¼å¼äº’è½¬
+- **å¼‚æ­¥é˜Ÿåˆ—å¤„ç†** â€” BullMQ + Redisï¼Œæ”¯æŒå¹¶å‘è½¬æ¢ä¸é˜»å¡
+- **å“åº”å¼è®¾è®¡** â€” Tailwind CSS 4ï¼Œç§»åŠ¨ç«¯ä¼˜å…ˆ
+- **SEO ä¼˜åŒ–** â€” SSG é™æ€ç”Ÿæˆ + ç¨‹åºåŒ– SEO + Schema ç»“æ„åŒ–æ•°æ®
+- **ç”¨æˆ·ç³»ç»Ÿ** â€” Supabase OAuth ç™»å½•ï¼ˆå¯é€‰ï¼‰
+- **å¯¹è±¡å­˜å‚¨** â€” Cloudflare R2 ä¸´æ—¶æ–‡ä»¶ç®¡ç†ï¼ˆå¯é€‰ï¼‰
 
-## ?? ¿ìËÙ¿ªÊ¼
+## ?? å¿«é€Ÿå¼€å§‹
 
-### »·¾³ÒªÇó
+### ç¯å¢ƒè¦æ±‚
 
 - Node.js >= 20
-- Calibre£¨ebook-convert ÃüÁî£©
-- Redis£¨Òì²½¶ÓÁĞ£¬¿ÉÑ¡µ«ÍÆ¼ö£©
+- Calibreï¼ˆebook-convert å‘½ä»¤ï¼‰
+- Redisï¼ˆå¼‚æ­¥é˜Ÿåˆ—ï¼Œå¯é€‰ä½†æ¨èï¼‰
 
-### ±¾µØ¿ª·¢
+### æœ¬åœ°å¼€å‘
 
 `ash
 npm install
 npm run dev
-# ·ÃÎÊ http://localhost:3000
+# è®¿é—® http://localhost:3000
 `
 
-### Docker ²¿Êğ
+### Docker éƒ¨ç½²
 
 `ash
 docker-compose up -d
 curl http://localhost:3000/api/health
 `
 
-### VPS ²¿Êğ
+### Vercel éƒ¨ç½²ï¼ˆå½“å‰ç”Ÿäº§ï¼‰
 
-ÏêÏ¸Ö¸ÄÏ¼û [DEPLOYMENT.md](./DEPLOYMENT.md)
+ç½‘ç«™å·²éƒ¨ç½²åœ¨ [Vercel](https://vercel.com)ï¼Œè‡ªåŠ¨ä» GitHub `main` åˆ†æ”¯æ„å»ºã€‚
 
-## ?? API ÎÄµµ
+- åŸŸåï¼šhttps://bookconv.com
+- æºä»£ç ï¼šhttps://github.com/doujianwen/ebook-converter
+- **å½“å‰æ— éœ€ VPS**ï¼Œçº¯é€ä¼ æ ¼å¼ï¼ˆepubâ†’zip ç­‰ï¼‰åœ¨ Vercel æœ¬åœ°å¯å®Œæˆ
+- Calibre æ ¼å¼è½¬æ¢ï¼ˆ25 ä¸ªï¼‰éœ€æ¥å…¥ VPS åç«¯ï¼Œè¯¦è§ [DEPLOYMENT.md](./DEPLOYMENT.md)
 
-### Òì²½×ª»» API
+### VPS éƒ¨ç½²
+
+è¯¦ç»†æŒ‡å—è§ [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+## ?? API æ–‡æ¡£
+
+### å¼‚æ­¥è½¬æ¢ API
 
 `ash
-# Ìá½»×ª»»ÈÎÎñ
+# æäº¤è½¬æ¢ä»»åŠ¡
 curl -X POST http://localhost:3000/api/convert \
   -F 'file=@test.epub' \
   -F 'source_format=epub' \
   -F 'target_format=azw3'
 
-# ²éÑ¯×´Ì¬
+# æŸ¥è¯¢çŠ¶æ€
 curl http://localhost:3000/api/convert/{jobId}/status
 
-# ÏÂÔØ½á¹û
+# ä¸‹è½½ç»“æœ
 curl -O http://localhost:3000/api/convert/{jobId}/result
 `
 
-### ½¡¿µ¼ì²é
+### å¥åº·æ£€æŸ¥
 
 `ash
 curl http://localhost:3000/api/health
-# ·µ»Ø: { status: "ok", timestamp: "..." }
+# è¿”å›: { status: "ok", timestamp: "..." }
 `
 
-## ??? ÏîÄ¿½á¹¹
+## ??? é¡¹ç›®ç»“æ„
 
 `
 ebook-converter/
-©À©¤©¤ src/app/              # Next.js App Router
-©¦   ©À©¤©¤ api/convert/      # ×ª»» API Â·ÓÉ
-©¦   ©À©¤©¤ blog/[slug]/      # ²©¿ÍÎÄÕÂÒ³
-©¦   ©À©¤©¤ convert/[slug]/   # ¹¤¾ßÒ³£¨28 ¸ö£©
-©¦   ©¸©¤©¤ page.tsx          # Ê×Ò³
-©À©¤©¤ src/components/       # React ×é¼ş
-©À©¤©¤ src/data/content/     # ¸ñÊ½»¯ÄÚÈİ
-©À©¤©¤ src/lib/              # ¹¤¾ß¿â
-©¦   ©À©¤©¤ queue.ts          # BullMQ ¶ÓÁĞ
-©¦   ©À©¤©¤ redis.ts          # Redis Á¬½Ó
-©¦   ©À©¤©¤ conversion-map.ts # 28 ÖÖ¸ñÊ½Ó³Éä
-©¦   ©À©¤©¤ storage/r2.ts     # R2 ´æ´¢
-©¦   ©¸©¤©¤ seo/              # SEO ¹¤¾ß
-©À©¤©¤ DEPLOYMENT.md         # ²¿ÊğÖ¸ÄÏ
-©À©¤©¤ docker-compose.yml    # Docker Compose
-©À©¤©¤ Dockerfile            # Docker ¾µÏñ
-©¸©¤©¤ .env.example          # »·¾³±äÁ¿Ä£°å
+â”œâ”€â”€ src/app/              # Next.js App Router
+â”‚   â”œâ”€â”€ api/convert/      # è½¬æ¢ API è·¯ç”±
+â”‚   â”œâ”€â”€ blog/[slug]/      # åšå®¢æ–‡ç« é¡µ
+â”‚   â”œâ”€â”€ convert/[slug]/   # å·¥å…·é¡µï¼ˆ28 ä¸ªï¼‰
+â”‚   â””â”€â”€ page.tsx          # é¦–é¡µ
+â”œâ”€â”€ src/components/       # React ç»„ä»¶
+â”œâ”€â”€ src/data/content/     # æ ¼å¼åŒ–å†…å®¹
+â”œâ”€â”€ src/lib/              # å·¥å…·åº“
+â”‚   â”œâ”€â”€ queue.ts          # BullMQ é˜Ÿåˆ—
+â”‚   â”œâ”€â”€ redis.ts          # Redis è¿æ¥
+â”‚   â”œâ”€â”€ conversion-map.ts # 28 ç§æ ¼å¼æ˜ å°„
+â”‚   â”œâ”€â”€ storage/r2.ts     # R2 å­˜å‚¨
+â”‚   â””â”€â”€ seo/              # SEO å·¥å…·
+â”œâ”€â”€ DEPLOYMENT.md         # éƒ¨ç½²æŒ‡å—
+â”œâ”€â”€ docker-compose.yml    # Docker Compose
+â”œâ”€â”€ Dockerfile            # Docker é•œåƒ
+â””â”€â”€ .env.example          # ç¯å¢ƒå˜é‡æ¨¡æ¿
 `
 
-## ?? ¼¼ÊõÕ»
+## ?? æŠ€æœ¯æ ˆ
 
-| ²ã¼¶ | ¼¼Êõ | ËµÃ÷ |
+| å±‚çº§ | æŠ€æœ¯ | è¯´æ˜ |
 |------|------|------|
-| ¿ò¼Ü | Next.js 16 + React 19 | SSR/SSG£¬App Router |
-| ÑùÊ½ | Tailwind CSS 4 | Ô­×Ó»¯ CSS |
-| ×ª»»ÒıÇæ | Calibre CLI | 28 ÖÖ¸ñÊ½Ö§³Ö |
-| Òì²½¶ÓÁĞ | BullMQ + Redis | ·Ç×èÈû×ª»» |
-| ´æ´¢ | Cloudflare R2 / ±¾µØ | ÁÙÊ±ÎÄ¼ş |
-| Êı¾İ¿â | Supabase (PostgreSQL) | ÓÃ»§ÏµÍ³£¨¿ÉÑ¡£©|
-| ²¿Êğ | Docker + PM2 | ÈİÆ÷»¯²¿Êğ |
+| æ¡†æ¶ | Next.js 16 + React 19 | SSR/SSGï¼ŒApp Router |
+| æ ·å¼ | Tailwind CSS 4 | åŸå­åŒ– CSS |
+| è½¬æ¢å¼•æ“ | Calibre CLI | 28 ç§æ ¼å¼æ”¯æŒ |
+| å¼‚æ­¥é˜Ÿåˆ— | BullMQ + Redis | éé˜»å¡è½¬æ¢ |
+| å­˜å‚¨ | Cloudflare R2 / æœ¬åœ° | ä¸´æ—¶æ–‡ä»¶ |
+| æ•°æ®åº“ | Supabase (PostgreSQL) | ç”¨æˆ·ç³»ç»Ÿï¼ˆå¯é€‰ï¼‰|
+| éƒ¨ç½² \| Vercelï¼ˆå·²ä¸Šçº¿ï¼‰+ Docker/VPSï¼ˆå¯é€‰ï¼‰ |
 
-## ?? Ö§³ÖµÄ¸ñÊ½£¨28 ÖÖ£©
+## ?? æ”¯æŒçš„æ ¼å¼ï¼ˆ28 ç§ï¼‰
 
-| Àà±ğ | ¸ñÊ½ | ÊıÁ¿ |
+| ç±»åˆ« | æ ¼å¼ | æ•°é‡ |
 |------|------|------|
 | eBook | EPUB, AZW3, MOBI, LIT, FB2 | 5 |
-| ÎÄµµ | DOC, DOCX, RTF, TXT, HTML | 5 |
+| æ–‡æ¡£ | DOC, DOCX, RTF, TXT, HTML | 5 |
 | PDF | PDF | 1 |
-| Í¼Ïñ | JPG, PNG | 2 |
-| Âş»­ | CBR | 1 |
-| **×ª»»×éºÏ** | 28 ÖÖ¸ñÊ½»¥×ª | **28** |
+| å›¾åƒ | JPG, PNG | 2 |
+| æ¼«ç”» | CBR | 1 |
+| **è½¬æ¢ç»„åˆ** | 28 ç§æ ¼å¼äº’è½¬ | **28** |
 
-## ?? ÄÚÈİ²ßÂÔ
+## ?? å†…å®¹ç­–ç•¥
 
-| ¼¶±ğ | ¹Ø¼ü´ÊÊı | Ã¿Ò³×ÖÊı | Ê¾Àı |
+| çº§åˆ« | å…³é”®è¯æ•° | æ¯é¡µå­—æ•° | ç¤ºä¾‹ |
 |------|---------|---------|------|
-| S ¼¶ | 3 | 3000+ | lit¡úepub, pdf¡úepub, epub¡útxt |
-| A ¼¶ | 7 | 2000+ | epub¡úazw3, azw3¡úepub µÈ |
-| B ¼¶ | 18 | 1000+ | ³¤Î²µÍÁ÷Á¿´Ê |
+| S çº§ | 3 | 3000+ | litâ†’epub, pdfâ†’epub, epubâ†’txt |
+| A çº§ | 7 | 2000+ | epubâ†’azw3, azw3â†’epub ç­‰ |
+| B çº§ | 18 | 1000+ | é•¿å°¾ä½æµé‡è¯ |
 
-## ?? »·¾³±äÁ¿
+## ?? ç¯å¢ƒå˜é‡
 
 `env
-# ±ØÌî
+# å¿…å¡«
 REDIS_URL=redis://localhost:6379
 UPLOAD_DIR=/tmp/ebook-uploads
 CALIBRE_PATH=ebook-convert
 
-# ¿ÉÑ¡ - Cloudflare R2
+# å¯é€‰ - Cloudflare R2
 R2_ENDPOINT=https://xxx.r2.cloudflarestorage.com
 R2_ACCESS_KEY_ID=xxx
 R2_SECRET_ACCESS_KEY=xxx
 R2_BUCKET_NAME=ebook-temp
 
-# ¿ÉÑ¡ - Supabase
+# å¯é€‰ - Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=xxx
 `
 
-## ?? ¹ÊÕÏÅÅ²é
+## ?? æ•…éšœæ’æŸ¥
 
-| ÎÊÌâ | ½â¾ö·½°¸ |
+| é—®é¢˜ | è§£å†³æ–¹æ¡ˆ |
 |------|----------|
-| ×ª»»Ê§°Ü | ¼ì²é Calibre: \ebook-convert --version\ |
-| Redis Á¬½ÓÊ§°Ü | ¼ì²é Redis: \edis-cli ping\ |
-| ÄÚ´æ²»×ã | Ìí¼Ó Swap: \dd if=/dev/zero of=/swapfile bs=1M count=1024\ |
+| è½¬æ¢å¤±è´¥ | æ£€æŸ¥ Calibre: \ebook-convert --version\ |
+| Redis è¿æ¥å¤±è´¥ | æ£€æŸ¥ Redis: \edis-cli ping\ |
+| å†…å­˜ä¸è¶³ | æ·»åŠ  Swap: \dd if=/dev/zero of=/swapfile bs=1M count=1024\ |
 
 ## ?? License
 

@@ -17,6 +17,7 @@ import path from 'node:path';
 import { loggers as log } from './logger';
 import { mapErrorCode, getFriendlyMessage } from './error-handler';
 import { verifyConversion } from './conversion-verifier';
+import { convertWithCloudConvert, isCloudConvertConfigured } from './cloudconvert';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -338,11 +339,41 @@ export async function executeConversion(
       writeFileSync(outputPath, txt, 'utf8');
     } else {
       // Check if Calibre is available
+      let calibreAvailable = false;
       try {
         await execFileAsync(CALIBRE_PATH, ['--version'], { timeout: 5000 });
+        calibreAvailable = true;
       } catch (calibreCheckErr: any) {
         // Calibre not available on this runtime (e.g., Vercel Serverless)
-        throw new Error('Calibre is not available on this server. Please use EPUB to TXT or EPUB to ZIP conversions, or contact support for other formats.');
+        log.conversion.warn('Calibre not available, checking CloudConvert fallback', {
+          hasCloudConvert: isCloudConvertConfigured(),
+        });
+      }
+
+      if (!calibreAvailable) {
+        // Try CloudConvert as fallback
+        if (isCloudConvertConfigured()) {
+          log.conversion.info('Using CloudConvert fallback for conversion', {
+            sourceFormat, targetFormat, jobId,
+          });
+          const cloudResult = await convertWithCloudConvert(
+            sourceFormat,
+            targetFormat,
+            fileBuffer!,
+            `${jobId}.${sourceFormat}`,
+          );
+          const ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
+          const outBuffer = Buffer.from(cloudResult.base64Data, 'base64');
+          await cleanupDir(jobDir);
+          return {
+            base64Data: cloudResult.base64Data,
+            extension: ext,
+            mimeType: cloudResult.mimeType,
+            fileSize: outBuffer.length,
+          };
+        } else {
+          throw new Error('Calibre is not available on this server. Please use EPUB to TXT or EPUB to ZIP conversions, or contact support for other formats.');
+        }
       }
 
       await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
