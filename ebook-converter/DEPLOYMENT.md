@@ -328,6 +328,58 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 ---
 
+---
+
+## Vercel 与 VPS 转换后端接线（Calibre 委派）
+
+Vercel serverless 运行时**没有 Calibre 二进制**，因此 25 个走 Calibre 的格式在 Vercel 上无法转换。方案：Vercel 的 `/api/convert` 在设了 `CONVERSION_BACKEND_URL` 时，把上传**转发到装有 Calibre 的 VPS** 的 `/api/convert-internal`，再把结果流式返回。epub→zip 等纯透传格式无需后端，Vercel 本地即可完成。
+
+### 前置条件
+
+- VPS（`deploy-production` 部署的那台 Hetzner）已安装 Calibre（`ebook-convert --version` 可用）
+- VPS 已从 `main` 重新部署，包含新的 `/api/convert-internal` 路由（见下）
+
+### 步骤 1：重部署 VPS（拉取含 convert-internal 的新镜像）
+
+```bash
+ssh <你的 VPS>
+cd /opt/ebook-converter
+# 在 VPS 的 .env 中加入内部密钥（与 Vercel 侧一致）
+echo "CONVERSION_INTERNAL_SECRET=$(openssl rand -hex 32)" >> .env
+docker compose pull app
+docker compose up -d app
+# 校验内部端点已就绪（无密钥应返回 403）
+curl -s -o /dev/null -w "%{http_code}\n" -X POST http://localhost:3000/api/convert-internal
+# 期望输出: 403
+```
+
+### 步骤 2：在 Vercel 设置两个环境变量
+
+Vercel Dashboard → 项目 → Settings → Environment Variables，添加：
+
+| 变量名 | 值 | 说明 |
+|--------|-----|------|
+| `CONVERSION_BACKEND_URL` | `https://<你的 VPS 域名或 IP>` | VPS 公网地址（需能被 Vercel 出网访问，建议套 Cloudflare/反向代理 + HTTPS） |
+| `CONVERSION_INTERNAL_SECRET` | 与步骤 1 中 VPS `.env` 里的随机串**完全一致** | 校验转发请求，防开放代理 |
+
+保存后 Vercel 会自动重建。
+
+### 步骤 3：验证
+
+```bash
+# 1) 纯透传（Vercel 本地，无需后端）：应直接返回合法 ZIP
+curl -F "file=@sample.epub" -F "source_format=epub" -F "target_format=zip" https://www.bookconv.com/api/convert -o out.zip
+file out.zip   # 期望: Zip archive
+
+# 2) Calibre 格式（经 VPS 委派）：应返回目标格式
+curl -F "file=@sample.epub" -F "source_format=epub" -F "target_format=txt" https://www.bookconv.com/api/convert -o out.txt
+file out.txt
+```
+
+> 注意：`deploy-production` 的 Verify 步骤仍 `curl https://bookconv.com/api/health`（命中 Vercel），不会校验 VPS。VPS 健康请单独 `curl http://localhost:3000/api/health`（VPS 本地 Redis+Calibre）自查。
+
+---
+
 ## 成本估算
 
 | 项目 | 费用 | 备注 |

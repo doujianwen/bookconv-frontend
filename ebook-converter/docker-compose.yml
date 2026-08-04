@@ -14,6 +14,9 @@ services:
       - NEXT_PUBLIC_APP_URL=http://localhost:3000
       # 运营审计飞书推送（从 .env 读，未设则 ai-audit.js 跳过推送）
       - FEISHU_WEBHOOK=${FEISHU_WEBHOOK:-}
+      # 转换后端委派密钥：Vercel 的 /api/convert 转发到本机 /api/convert-internal 时校验。
+      # 须与 Vercel 的 CONVERSION_INTERNAL_SECRET 完全一致。从 VPS 上的 .env 读取。
+      - CONVERSION_INTERNAL_SECRET=${CONVERSION_INTERNAL_SECRET:-}
     volumes:
       - uploads:/tmp/ebook-uploads
     depends_on:
