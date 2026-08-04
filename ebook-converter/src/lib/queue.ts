@@ -621,8 +621,11 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-// Auto-start worker in development ONLY (not on Vercel/serverless)
-if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
+// Auto-start worker in development ONLY (not on Vercel/serverless).
+// On Vercel, serverless functions are frozen after they return, so a long-lived
+// worker can never consume the queue — and importing this module would otherwise
+// attempt a Redis connection that hangs the whole request (504). Keep it off there.
+if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge' && !process.env.VERCEL) {
   startWorker().catch((err) => {
     console.error('[queue] Failed to auto-start worker:', err.message);
   });

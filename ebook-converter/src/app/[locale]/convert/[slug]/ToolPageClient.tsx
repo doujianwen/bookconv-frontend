@@ -118,7 +118,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         // Synchronous mode: response is the converted file blob directly
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
-        const outputName = file.name.replace(/\.[^.]+$/, ".converted.")
+        const outputName = file.name.replace(/\.[^.]+$/, "") + "." + (target === "html" ? "htmlz" : target)
         setOriginalFileName(file.name)
         setOriginalFileSize(file.size)
         setFileName(outputName)
