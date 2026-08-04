@@ -135,6 +135,7 @@ function getMimeType(ext: string): string {
     jpg: 'image/jpeg', png: 'image/png', fb2: 'application/x-fb2+zip',
     cbr: 'application/vnd.comicbook-rar', cbz: 'application/vnd.comicbook+zip',
     djvu: 'image/vnd.djvu', doc: 'application/msword', lit: 'application/x-ms-reader',
+    zip: 'application/zip',
   };
   return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
@@ -291,33 +292,50 @@ async function executeConversion(
 
   const ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
   const outputPath = path.join(jobDir, 'output.' + ext);
+
+  // EPUB → ZIP is a direct passthrough: an EPUB file IS a ZIP archive
+  // (same bytes, different extension). No Calibre step is needed or possible
+  // to "add" a zip output, so we copy the bytes and skip text verification.
+  const isZipPassthrough = sourceFormat === 'epub' && targetFormat === 'zip';
+
   try {
     // Pre-validation: catch clearly corrupted files before hitting Calibre
     await validateInputFile(inputPath, sourceFormat);
 
-    await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
-    if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
+    if (isZipPassthrough) {
+      // Identical archive under a .zip extension — safe, deterministic, no engine.
+      writeFileSync(outputPath, readFileSync(inputPath));
+    } else {
+      await execFileAsync(CALIBRE_PATH, [inputPath, outputPath], { timeout: 120_000, maxBuffer: 50 * 1024 * 1024 });
+      if (!existsSync(outputPath)) throw new Error('Conversion failed: output not generated');
 
-    // ── 输出验证闸门（纯纠错层 · 一票否决）──
-    // 在 Calibre 报成功之后执行。纠察层只见到 inputPath / outputPath / 声明格式
-    // （信息隔离），一旦否决，该结果绝不交付给用户。
-    const verdict = await verifyConversion(inputPath, outputPath, sourceFormat, targetFormat);
-    if (!verdict.pass) {
-      const detail = verdict.findings
-        .filter((f) => f.severity === 'critical')
-        .map((f) => `${f.id}: ${f.message}`)
-        .join('; ');
-      throw new Error(`Conversion output failed verification: ${detail}`);
-    }
-    // 非阻断型告警仅记录，不导致任务失败
-    for (const w of verdict.findings.filter((f) => f.severity === 'warn')) {
-      log.conversion.warn('Conversion verification warning', { jobId, id: w.id, message: w.message });
+      // ── 输出验证闸门（纯纠错层 · 一票否决）──
+      // 在 Calibre 报成功之后执行。纠察层只见到 inputPath / outputPath / 声明格式
+      // （信息隔离），一旦否决，该结果绝不交付给用户。
+      const verdict = await verifyConversion(inputPath, outputPath, sourceFormat, targetFormat);
+      if (!verdict.pass) {
+        const detail = verdict.findings
+          .filter((f) => f.severity === 'critical')
+          .map((f) => `${f.id}: ${f.message}`)
+          .join('; ');
+        throw new Error(`Conversion output failed verification: ${detail}`);
+      }
+      // 非阻断型告警仅记录，不导致任务失败
+      for (const w of verdict.findings.filter((f) => f.severity === 'warn')) {
+        log.conversion.warn('Conversion verification warning', { jobId, id: w.id, message: w.message });
+      }
     }
 
-    // Return the output file path instead of encoding to base64
-    // Caller can stream-read it as needed
+    // Read the output into base64 so the result route can deliver it.
+    // The result route requires `base64Data` (it streams/store it for download);
+    // returning only `outputFilePath` previously broke every download because the
+    // temp file is deleted by cleanupDir before the separate result request runs.
+    const outBuffer = readFileSync(outputPath);
+    const base64Data = outBuffer.toString('base64');
+    const fileSize = outBuffer.length;
+
     await cleanupDir(jobDir);
-    return { outputFilePath: outputPath, extension: ext, mimeType: getMimeType(ext) };
+    return { base64Data, extension: ext, mimeType: getMimeType(ext), fileSize };
   } catch (err: any) {
     await cleanupDir(jobDir);
     // If the error doesn't already have a recognized category, enrich it with stderr

@@ -50,6 +50,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "pdf-epub":   { tool: "calibre", description: "PDF to EPUB" },
   "djvu-pdf":   { tool: "calibre", description: "DJVU to PDF" },
   "epub-mobi":  { tool: "calibre", description: "EPUB to MOBI" },
+  "epub-zip":   { tool: "passthrough", description: "EPUB to ZIP (EPUB is already a ZIP archive)" },
 };
 
 /** Resolve display name aliases to real Calibre format identifiers. */
@@ -93,4 +94,5 @@ export const FORMAT_DISPLAY_NAMES: Record<string, string> = {
   djvu: "DJVU",
   jpg: "JPG",
   png: "PNG",
+  zip: "ZIP",
 };

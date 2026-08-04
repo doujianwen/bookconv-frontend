@@ -3,7 +3,7 @@
 > Free online ebook format converter supporting 28+ formats across ebooks, documents, and images. No registration, no watermarks, no file-size limits for most conversions. Powered by the Calibre engine and runs entirely in your browser.
 
 ## Supported Formats
-EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
+EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, ZIP
 
 ## Conversions
 - [EPUB to AZW3](https://www.bookconv.com/convert/epub-to-azw3)
@@ -21,6 +21,7 @@ EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG
 - [EPUB to HTMLZ](https://www.bookconv.com/convert/epub-to-html)
 - [EPUB to JPG](https://www.bookconv.com/convert/epub-to-jpg)
 - [EPUB to PNG](https://www.bookconv.com/convert/epub-to-png)
+- [EPUB to ZIP](https://www.bookconv.com/convert/epub-to-zip)
 - [PDF to EPUB](https://www.bookconv.com/convert/pdf-to-epub)
 - [DOC to EPUB](https://www.bookconv.com/convert/doc-to-epub)
 - [DOCX to EPUB](https://www.bookconv.com/convert/docx-to-epub)

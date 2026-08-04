@@ -24,6 +24,7 @@ import * as mobi_to_pdf from './mobi-to-pdf';
 import * as pdf_to_epub from './pdf-to-epub';
 import * as djvu_to_pdf from './djvu-to-pdf';
 import * as epub_to_mobi from './epub-to-mobi';
+import * as epub_to_zip from './epub-to-zip';
 
 export const CONTENT_MAP: Record<string, any> = {
   'epub-to-azw3': epub_to_azw3,
@@ -52,6 +53,7 @@ export const CONTENT_MAP: Record<string, any> = {
   'pdf-to-epub': pdf_to_epub,
   'djvu-to-pdf': djvu_to_pdf,
   'epub-to-mobi': epub_to_mobi,
+  'epub-to-zip': epub_to_zip,
 };
 
 export function getContent(slug: string) {
