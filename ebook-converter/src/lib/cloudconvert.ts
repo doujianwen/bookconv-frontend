@@ -3,11 +3,11 @@
 // CloudConvert API v2 客户端 —— 作为 Vercel Serverless 上 Calibre 不可用时的
 // 转换后端替代方案（覆盖 epub→pdf / mobi / azw3 / docx 等 25 个 Calibre 依赖格式）。
 //
-// 真实 API 流程（与旧版 /v2/tasks 不同）：
-//   1. POST /v2/jobs  —— 创建 job，tasks 为对象，含 import/upload + convert + export/url
-//   2. POST /v2/uploads —— 把文件以 base64 上传到 import/upload task
-//   3. GET  /v2/jobs/{id} —— 轮询直到 status = finished / error
-//   4. 从 export/url task 的 result.files[0].url 下载结果
+// 真实 API 流程（CloudConvert v2）：
+//   1. POST /v2/jobs       —— 创建 job，tasks 对象含 import/upload + convert + export/url
+//   2. 取 import/upload 任务的 result.form（S3 签名 URL + AWS 参数），把文件 multipart 上传到该 URL
+//   3. GET  /v2/jobs/{id}  —— 轮询直到 status = finished / error
+//   4. 从 export/url task 的 result.files[0].url 下载结果（签名临时 URL，无需鉴权）
 //
 // 文档: https://developers.cloudconvert.com/api/v2
 
@@ -84,6 +84,10 @@ interface CCJobResponse {
         message?: string;
         code?: string;
         files?: Array<{ filename: string; url: string; size?: number }>;
+        form?: {
+          url: string;
+          parameters: Record<string, string>;
+        };
       };
     }>;
   };
@@ -127,12 +131,27 @@ export async function convertWithCloudConvert(
     throw new Error('CloudConvert: import/upload task not found in job response');
   }
 
-  // 2. 上传文件（base64）到 import/upload task
-  await ccRequest('POST', '/uploads', {
-    task: importTask.id,
-    filename: originalFilename || `input.${sourceFormat}`,
-    data: inputBase64,
-  });
+  // 2. 上传文件到 import/upload 任务给出的签名 URL（S3 直传，不是 /v2/uploads）
+  const uploadForm = importTask.result?.form;
+  if (!uploadForm?.url || !uploadForm.parameters) {
+    throw new Error('CloudConvert: upload form not available in import task result');
+  }
+  const fd = new FormData();
+  for (const [k, v] of Object.entries(uploadForm.parameters)) {
+    fd.append(k, String(v));
+  }
+  // key 参数里含 ${filename} 占位符，S3 会用 file 字段的实际文件名替换它
+  fd.append(
+    'file',
+    new Blob([Buffer.from(inputBase64, 'base64')], { type: 'application/octet-stream' }),
+    originalFilename || `input.${sourceFormat}`,
+  );
+  const upRes = await fetch(uploadForm.url, { method: 'POST', body: fd });
+  // success_action_status=201 → 成功时返回 201
+  if (upRes.status !== 201 && upRes.status !== 200 && upRes.status !== 204) {
+    const t = await upRes.text().catch(() => '');
+    throw new Error(`CloudConvert upload failed ${upRes.status}: ${t.slice(0, 200)}`);
+  }
 
   // 3. 轮询 job 状态
   let finished: CCJobResponse = job;
