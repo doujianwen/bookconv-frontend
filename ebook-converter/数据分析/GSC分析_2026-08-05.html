@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookConv · Google Search Console 数据分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2933; --sub:#647084;
+    --brand:#3b6ef5; --brand2:#22a06b; --warn:#e8743b; --bad:#d64545;
+    --line:#e3e8f0;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:28px 20px 60px; }
+  header h1 { font-size:24px; margin:0 0 4px; }
+  header .meta { color:var(--sub); font-size:13px; }
+  .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:22px 0; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi .v { font-size:26px; font-weight:700; }
+  .kpi .l { font-size:12px; color:var(--sub); margin-top:2px; }
+  .kpi.bad .v { color:var(--bad); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .card h3 { font-size:15px; margin:0 0 12px; }
+  .card.full { grid-column:1 / -1; }
+  .chart-box { position:relative; height:300px; }
+  .diag { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin-top:16px; }
+  .diag h3 { margin-top:0; font-size:17px; }
+  .diag ul { line-height:1.8; padding-left:20px; }
+  .tag { display:inline-block; padding:1px 8px; border-radius:6px; font-size:12px; margin-right:4px; }
+  .t-es { background:#fdecec; color:#c0392b; }
+  .t-it { background:#eaf3ff; color:#2c6fd6; }
+  .t-de { background:#f0f7ec; color:#3f8b32; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--sub); font-weight:600; }
+  .mt { margin-top:14px; }
+  .pill { font-size:11px; padding:1px 7px; border-radius:20px; background:#eef2f8; color:var(--sub); }
+  .note { font-size:12px; color:var(--sub); margin-top:8px; }
+  @media(max-width:780px){ .kpis{grid-template-columns:repeat(2,1fr);} .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>BookConv · 搜索表现数据分析</h1>
+    <div class="meta">数据源：Google Search Console 导出 · 导出日 2026-08-05 · 窗口：过去 28 天 · 站点：www.bookconv.com</div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">131</div><div class="l">总展示 (Impressions)</div></div>
+    <div class="kpi bad"><div class="v">0</div><div class="l">总点击 (Clicks)</div></div>
+    <div class="kpi bad"><div class="v">0.0%</div><div class="l">点击率 (CTR)</div></div>
+    <div class="kpi"><div class="v">53</div><div class="l">平均排名 (加权)</div></div>
+    <div class="kpi"><div class="v">40</div><div class="l">唯一查询词</div></div>
+  </div>
+
+  <div class="card full">
+    <h3>📈 每日展示趋势（2026-07-25 ~ 2026-08-03）</h3>
+    <div class="chart-box"><canvas id="cTrend"></canvas></div>
+    <div class="note">展示从 7/25 的 1 次稳步爬升到 8/3 的 32 次，呈典型「新站收录爬坡」曲线。整段 0 点击。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🔝 展示最高的网页 (Top 10)</h3>
+      <div class="chart-box"><canvas id="cPages"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>🔍 展示最高的查询词 (Top 14)</h3>
+      <div class="chart-box"><canvas id="cQueries"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🌍 国家/地区分布 (Top 10 + 其他)</h3>
+      <div class="chart-box"><canvas id="cGeo"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>💻 设备分布</h3>
+      <div class="chart-box"><canvas id="cDev"></canvas></div>
+      <div class="note">桌面端贡献绝大多数展示，移动端展示少且平均排名更靠前(14.7 vs 56.7)。</div>
+    </div>
+  </div>
+
+  <div class="card full mt">
+    <h3>🌐 多语言意图查询（当前站点仅有英文页，存在覆盖缺口）</h3>
+    <table>
+      <tr><th>查询词</th><th>语言意图</th><th>展示</th></tr>
+      <tr><td>conversor mobi a epub</td><td><span class="t-es">es</span></td><td>1</td></tr><tr><td>convertire mobi in epub</td><td><span class="t-es">es</span><span class="t-it">it</span></td><td>1</td></tr><tr><td>epub oder mobi</td><td><span class="t-de">de</span></td><td>1</td></tr>
+    </table>
+  </div>
+
+  <div class="diag">
+    <h3>🔬 诊断：为什么 0 点击？</h3>
+    <ul>
+      <li><b>根因不是「没被收录」，而是「排得太深」。</b>展示加权平均排名约 <b>53</b>（≈第 6~8 页）。Google 第 1 页(前 10)拿走近 90% 点击，第 5 页之后 CTR 通常 &lt;0.5%。<b>在新站权威不足时，0 点击是位置决定的，不是标题/Snippet 的 bug。</b></li>
+      <li><b>唯一例外 / 最大机会：<code>/convert/epub-to-zip</code></b> 平均排名 <b>20</b>（第 2 页），拿到 29 次展示却 0 点击。这是全站最接近首屏的页面——只要把标题与 meta description 打磨成高点击意图（强调「免费 / 无需上传 / 即时」），排名再升几名进前 10，CTR 可跳到 2~5%。</li>
+      <li><b>流量结构健康度良好</b>：40 个唯一查询词、覆盖 40+ 国家，说明页面已对长尾词产生相关性，只是权威不足压不住排名。这是「可优化」信号，不是「建错页」信号。</li>
+      <li><b>多语言需求已出现</b>：西/意/德语查询（conversor / convertire / oder）已有展示，但站点仅有英文页 → 这些词基本无转化机会。i18n 已具备 es 语言包，可补西语落地页。</li>
+      <li><b>设备维度</b>：移动端展示虽少(12)，但平均排名 14.7 明显优于桌面(56.7)，说明移动端该站更易获得靠前位置，值得优先保证移动端体验与速度。</li>
+    </ul>
+  </div>
+
+  <div class="diag">
+    <h3>🎯 下一步行动（按 ROI 排序）</h3>
+    <ul>
+      <li><b>① 抢占唯一窗口页 epub→zip</b>：优化 title（已在用「Free … — No Sign-up」模板，确认无双品牌）/ meta description 强化「即时下载、不传云端」，目标是把它推进前 10。这是 28 天内最可能出首点击的页面。</li>
+      <li><b>② 外链建设（核心瓶颈）</b>：用 8-04 已识别的「外链推广」资料，针对 <code>mobi-to-epub / azw3-to-mobi / epub-to-txt</code> 等高展示词做客座/目录/相关社区外链，把整站权威抬起来 → 所有页面排名集体上移。</li>
+      <li><b>③ 补西语落地页</b>：复用 es 语言包，为 3~5 个高展示词生成西语转换页，吃掉西/意/德语长尾。</li>
+      <li><b>④ 持续铺量长尾页</b>：保持「一页一词」节奏，新站靠页面数量×权威累积滚雪球。每周找词→建页→验证。</li>
+      <li><b>⑤ 监控首点击里程碑</b>：建议以「首次非零点击周」为北极星，在 GSC 里设 7 天粒度观察 epub-to-zip 与整体 CTR 拐点。</li>
+    </ul>
+  </div>
+
+  <div class="note" style="margin-top:18px;text-align:center;">
+    报告由数据分析脚本自动生成 · 数据快照 2026-08-05 · 指标口径：GSC「网络」搜索类型，过去 28 天
+  </div>
+</div>
+
+<script>
+const D = {"daily_labels": ["2026-07-23", "2026-07-24", "2026-07-25", "2026-07-26", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03"], "daily_impr": [0, 0, 1, 5, 10, 4, 6, 14, 16, 16, 27, 32], "daily_clicks": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "page_labels": ["/convert/mobi-to-epub", "/convert/epub-to-zip", "/blog/epub-to-mobi-guide", "/convert/azw3-to-mobi", "/convert/epub-to-txt", "/blog/ebook-formats-explained", "/blog/how-to-convert-epub-to-mobi", "/blog/why-convert-lit-to-epub", "/convert/epub-to-lrf", "/convert/epub-to-odt"], "page_impr": [45, 29, 17, 13, 10, 8, 3, 3, 1, 1], "page_pos": [68.56, 20.0, 57.41, 50.92, 72.0, 43.62, 61.67, 68.67, 38.0, 43.0], "q_labels": ["mobi to epub", "convert mobi to epub", "epub to zip", "azw3 to mobi", "epub to txt", "azw to mobi", "convert epub to zip", "mobi to epub converter", "convert azw3 to mobi", "lit to mobi", "epub to mobi", "epub txt", "mobi converter", "mobi epub"], "q_impr": [21, 9, 8, 6, 5, 4, 3, 3, 2, 2, 2, 2, 2, 2], "q_pos": [68.52, 70.0, 10.12, 42.83, 69.2, 66.75, 8.0, 68.0, 54.5, 64.5, 66.5, 72.0, 78.0, 79.5], "geo_labels": ["美国", "印度", "捷克", "英国", "加拿大", "马来西亚", "印度尼西亚", "俄罗斯", "墨西哥", "西班牙", "其他"], "geo_impr": [38, 13, 7, 7, 7, 5, 4, 3, 3, 3, 41], "dev_labels": ["桌面", "移动设备"], "dev_impr": [119, 12]};
+const C = { ink:'#1f2933', sub:'#647084', brand:'#3b6ef5', brand2:'#22a06b', warn:'#e8743b', grid:'#e3e8f0' };
+Chart.defaults.font.family = '-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.color = C.sub;
+
+new Chart(document.getElementById('cTrend'), {
+  type:'line',
+  data:{ labels:D.daily_labels, datasets:[{
+    label:'展示', data:D.daily_impr, borderColor:C.brand, backgroundColor:'rgba(59,110,245,.12)',
+    fill:true, tension:.35, pointRadius:3, borderWidth:2
+  }] },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{ y:{ beginAtZero:true, grid:{color:C.grid} }, x:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cPages'), {
+  type:'bar',
+  data:{ labels:D.page_labels, datasets:[{ label:'展示', data:D.page_impr,
+    backgroundColor:C.brand, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cQueries'), {
+  type:'bar',
+  data:{ labels:D.q_labels, datasets:[{ label:'展示', data:D.q_impr,
+    backgroundColor:C.brand2, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cGeo'), {
+  type:'bar',
+  data:{ labels:D.geo_labels, datasets:[{ label:'展示', data:D.geo_impr,
+    backgroundColor:C.warn, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cDev'), {
+  type:'doughnut',
+  data:{ labels:D.dev_labels, datasets:[{ data:D.dev_impr,
+    backgroundColor:[C.brand, C.brand2], borderWidth:2, borderColor:'#fff' }] },
+  options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{ legend:{position:'bottom'} } }
+});
+</script>
+</body>
+</html>

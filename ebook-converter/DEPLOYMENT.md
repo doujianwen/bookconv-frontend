@@ -2,6 +2,8 @@
 
 > **最后更新**: 2026-08-05
 
+> 📘 **新人先看这篇**：[`docs/新人部署上手指南-GitHub到Vercel.md`](./docs/新人部署上手指南-GitHub到Vercel.md) — 面向刚接手项目的开发者，讲清从 GitHub push 到 Vercel 上线的完整步骤与常见坑。本文件偏「VPS + Vercel + Cloudflare 全量方案与接线细节」。
+
 ## 当前生产状态
 
 | 组件 | 状态 | 说明 |
