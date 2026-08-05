@@ -66,7 +66,8 @@ export async function convertAndStream(
     // DEBUG: Log the actual error for diagnosis
     console.error('[DEBUG] Conversion error:', convErr?.message || String(convErr));
     const errorCode = mapErrorCode(sanitizeError(convErr));
-    const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convErr?.message || String(convErr) } : {};
+    // TEMP DIAGNOSTIC: always surface raw error (revert after root cause found)
+    const debugRaw = { _raw: convErr?.message || String(convErr) };
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode, ...debugRaw },
       { status: 500, headers: rateHeaders },
