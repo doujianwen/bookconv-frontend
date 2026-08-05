@@ -47,7 +47,12 @@ async function ccRequest<T>(
         } catch {
           /* keep raw text */
         }
-        // 4xx：配置/参数错误，不重试
+        // 402 (too many jobs at once) / 429 (rate limit) 是瞬态限流，需退避重试
+        if ((res.status === 402 || res.status === 429) && attempt < retries) {
+          await new Promise((r) => setTimeout(r, 3000 * attempt));
+          continue;
+        }
+        // 其他 4xx：配置/参数错误，不重试
         if (res.status >= 400 && res.status < 500) {
           throw new Error(`CloudConvert client error ${res.status}: ${msg}`);
         }
