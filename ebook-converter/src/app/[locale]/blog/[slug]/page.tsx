@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
-import { renderMarkdownToHtml, stripMarkdown } from "@/data/blog/types"
+import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
 import { getRelatedPosts, isHubTag, slugifyTag } from "@/lib/internal-links"
 
 interface BlogPostData {
@@ -11,11 +11,9 @@ interface BlogPostData {
   date: string
   author?: string
   tags: string[]
-  content?: {
-    intro?: string
-    sections?: Array<{ heading: string; body: string }>
-  }
-  faqs?: Array<{ question: string; answer: string }>
+  content: BlogPostContent
+  faqs?: BlogFaq[]
+  es?: BlogPostLocalized
 }
 
 const BLOG_POSTS: Record<string, BlogPostData> = {};
@@ -28,11 +26,12 @@ for (const p of getAllPosts()) {
     tags: p.tags,
     content: p.content,
     faqs: p.faqs,
+    es: p.es,
   };
 }
 
 interface BlogSlugProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -40,38 +39,50 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogSlugProps): Promise<Metadata> {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = BLOG_POSTS[slug]
   if (!post) return {}
 
   const baseUrl = "https://www.bookconv.com"
-  const description = post.content?.intro || post.title
+  const isEs = locale === "es" && !!post.es
+  const displayTitle = isEs ? post.es!.title : post.title
+  const displayContent = isEs ? post.es!.content : post.content
+  const description = displayContent.intro || displayTitle
+  const canonical = `${baseUrl}${isEs ? "/es" : ""}/blog/${slug}`
 
   return {
-    title: `${post.title} | BookConv Blog`,
+    // No brand suffix: the global title template appends "| BookConv".
+    title: displayTitle,
     description,
     keywords: [...post.tags, "ebook converter", "calibre", "epub"],
-    alternates: { canonical: `${baseUrl}/blog/${post.slug}` },
+    alternates: {
+      canonical,
+      languages: {
+        en: `${baseUrl}/blog/${slug}`,
+        es: `${baseUrl}/es/blog/${slug}`,
+        "x-default": `${baseUrl}/blog/${slug}`,
+      },
+    },
     openGraph: {
-      title: post.title,
+      title: displayTitle,
       description,
       type: "article",
       publishedTime: post.date,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: canonical,
       siteName: "BookConv",
       authors: [post.author || "BookConv Team"],
       tags: post.tags,
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
+      title: displayTitle,
       description,
     },
   }
 }
 
 export default async function BlogPostPage({ params }: BlogSlugProps) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = BLOG_POSTS[slug]
 
   if (!post) {
@@ -86,8 +97,12 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
   }
 
     const baseUrl = "https://www.bookconv.com"
-    const postUrl = `${baseUrl}/blog/${post.slug}`
-    const { source, target } = extractSourceTarget(post.title)
+    const isEs = locale === "es" && !!post.es
+    const displayTitle = isEs ? post.es!.title : post.title
+    const displayContent = isEs ? post.es!.content : post.content
+    const displayFaqs = isEs ? post.es?.faqs : post.faqs
+    const postUrl = `${baseUrl}${isEs ? "/es" : ""}/blog/${post.slug}`
+    const { source, target } = extractSourceTarget(displayTitle)
     const relatedPosts = getRelatedPosts(post.slug, 3)
 
     const allPosts = getAllPosts()
@@ -103,8 +118,8 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            headline: post.title,
-            description: post.content?.intro || "",
+            headline: displayTitle,
+            description: displayContent.intro || "",
             datePublished: post.date,
             dateModified: post.date,
             author: {
@@ -119,8 +134,8 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               sameAs: [],
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
-            inLanguage: "en-US",
-            wordCount: (post.content?.intro || "").split(/\s/).length + (post.content?.sections?.reduce((a, s) => a + (s.body || "").split(/\s/).length, 0) || 0),
+            inLanguage: isEs ? "es-ES" : "en-US",
+            wordCount: (displayContent.intro || "").split(/\s/).length + (displayContent.sections?.reduce((a, s) => a + (s.body || "").split(/\s/).length, 0) || 0),
             keywords: post.tags.join(", "),
           }),
         }}
@@ -133,12 +148,12 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             <li>/</li>
             <li><Link href="/blog" className="hover:text-blue-600">Blog</Link></li>
             <li>/</li>
-            <li aria-current="page" className="font-medium text-gray-900 truncate">{post.title}</li>
+            <li aria-current="page" className="font-medium text-gray-900 truncate">{displayTitle}</li>
           </ol>
         </nav>
 
         <header className="mb-10">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">{post.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">{displayTitle}</h1>
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
@@ -166,10 +181,10 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
         </header>
 
         <article className="prose prose-gray max-w-none">
-          {post.content?.intro && (
-            <p className="text-lg text-gray-700 leading-relaxed border-l-4 border-blue-500 pl-4 italic">{post.content.intro}</p>
+          {displayContent.intro && (
+            <p className="text-lg text-gray-700 leading-relaxed border-l-4 border-blue-500 pl-4 italic">{displayContent.intro}</p>
           )}
-          {post.content?.sections?.map((section, index) => (
+          {displayContent.sections?.map((section, index) => (
             <section key={index} className="mt-8">
               <h2 className="text-2xl font-bold text-gray-900">{section.heading}</h2>
               <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(section.body) }} />
@@ -177,11 +192,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           ))}
         </article>
 
-        {post.faqs && post.faqs.length > 0 && (
+        {displayFaqs && displayFaqs.length > 0 && (
           <section className="mt-12" aria-labelledby="faq-heading">
             <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              {post.faqs.map((f, i) => (
+              {displayFaqs!.map((f, i) => (
                 <div key={i} className="rounded-xl border bg-white p-5">
                   <h3 className="text-base font-semibold text-gray-900">{f.question}</h3>
                   <div
@@ -197,7 +212,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "FAQPage",
-                  mainEntity: post.faqs.map((f) => ({
+                  mainEntity: displayFaqs!.map((f) => ({
                     "@type": "Question",
                     name: f.question,
                     acceptedAnswer: {

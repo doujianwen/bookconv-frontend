@@ -13,6 +13,12 @@ export interface BlogFaq {
   answer: string;
 }
 
+export interface BlogPostLocalized {
+  title: string;
+  content: BlogPostContent;
+  faqs?: BlogFaq[];
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -23,6 +29,8 @@ export interface BlogPostMeta {
   relatedSlugs?: string[];
   internalLinkTargets?: string[];
   faqs?: BlogFaq[];
+  /** Spanish (es) translation. When present, /es/blog/[slug] serves real Spanish content. */
+  es?: BlogPostLocalized;
 }
 
 export interface BlogPostWithLinks extends BlogPostMeta {

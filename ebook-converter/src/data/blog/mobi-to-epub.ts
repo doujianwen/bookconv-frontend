@@ -100,3 +100,102 @@ export const faqs = [
     answer: `No. Amazon stopped accepting MOBI uploads through Send to Kindle in August 2022. It takes EPUB now, which is one more reason to keep your library in EPUB.`,
   }
 ];
+
+export const es = {
+  title: `MOBI to EPUB: cómo convertir y por qué conviene`,
+  content: {
+    intro: `¿Tienes un montón de archivos .mobi viejos que solo abren en un Kindle? MOBI es el formato heredado de Amazon, y la mayoría de los lectores que no son Kindle — Kobo, Apple Books, Google Play Books — no lo tocan. Convertir MOBI a EPUB libera tus libros para leerlos en cualquier parte, porque EPUB es el estándar abierto que casi todos los dispositivos soportan. Esta guía cubre la conversión rápida y qué es lo que realmente se traslada.`,
+    sections: [
+      {
+        heading: `Por qué pasar MOBI a EPUB`,
+        body: `MOBI salió de Mobipocket, que Amazon compró en 2007 y luego dejó atrás. Las consecuencias prácticas hoy:
+
+- **EPUB se lee en todas partes.** Kobo, Apple Books, Google Play Books y la mayoría de las apps de móvil usan EPUB. MOBI no.
+- **EPUB es el estándar abierto.** Ninguna empresa lo controla, así que tu archivo no está atado a un ecosistema.
+- **El propio Amazon lo dejó atrás.** Send to Kindle dejó de aceptar subidas MOBI en agosto de 2022. EPUB es lo que Amazon acepta ahora.
+
+Así que un MOBI que convertiste a EPUB es simplemente más útil: el mismo libro, legible en más dispositivos y a salvo frente a la próxima desaparición de un formato.`,
+      },
+      {
+        heading: `Convertir MOBI a EPUB en BookConv en tres pasos`,
+        body: `1. Abre el [conversor de MOBI a EPUB](/convert/mobi-to-epub) y suelta tu .mobi en el área de subida.
+2. BookConv lee el MOBI, extrae el texto, las imágenes y la estructura, y los reempaqueta como un EPUB conforme al estándar.
+3. Descarga el .epub y ábrelo donde quieras.
+
+La capa gratuita maneja archivos de hasta 10 MB. Los archivos MOBI viejos suelen ser pequeños, así que la mayoría convierten sin llegar al límite.
+
+### Dos cosas que saber antes de subir
+
+- **Los enlaces de descarga son temporales.** Los archivos convertidos se borran tras un tiempo, así que guarda el .epub en tu dispositivo en cuanto termine la barra de progreso.
+- **El MOBI con DRM se rechaza.** Si el archivo viene de una tienda con cifrado, ningún conversor puede leerlo. Los archivos MOBI personales sin DRM convierten sin problema.`,
+      },
+      {
+        heading: `Qué se traslada y qué no`,
+        body: `MOBI es un formato recortado, así que un EPUB convertido suele ser una mejora:
+
+**Se conserva**
+- Texto y párrafos del cuerpo
+- Imágenes embebidas, cerca de su posición original
+- Estructura de capítulos, cuando el MOBI de origen llevaba un registro de navegación correcto
+- Estilos básicos de negrita y cursiva
+
+**Puede requerir atención**
+- El estilo de MOBI era limitado, así que a menudo hay poco formato que preservar desde el principio — el EPUB se verá más limpio, no peor
+- Algunos archivos Mobipocket muy viejos no tienen una tabla de contenidos real; el conversor construye una a partir de los encabezados cuando puede
+- Los metadatos de serie que MOBI fingía doblando el nombre de la serie en el título siguen doblados salvo que los limpies
+
+Como EPUB soporta mucho más CSS que MOBI, el destino es el formato más capaz. El límite es lo que el MOBI de origen trajera.`,
+      },
+      {
+        heading: `MOBI a EPUB vs simplemente usar Send to Kindle`,
+        body: `Si tu único objetivo es leer en un Kindle, Send to Kindle acepta EPUB directamente y lo convierte en la nube. Pero eso te mantiene dentro del ecosistema de Amazon y sube tu archivo a sus servidores.
+
+Convierte a EPUB en BookConv cuando quieras que el libro:
+- **Se lea en una app de Kobo, iPhone o Android**, no solo en un Kindle
+- **Permanezca local** — sin cuenta de Amazon, sin subida a la nube
+- **Viva en un formato abierto** que puedas volver a convertir luego (por ejemplo hacia [EPUB to AZW3](/convert/epub-to-azw3) para la carga nativa en Kindle)
+
+Si estás decidiendo qué formato Kindle estandarizar, [AZW3 vs MOBI](/blog/azw3-vs-mobi) desglosa los pros y contras, y [Formatos de ebook explicados](/blog/ebook-formats-explained) cubre el panorama completo.`,
+      },
+      {
+        heading: `Lidiar con archivos MOBI viejos o bloqueados`,
+        body: `Aparecen dos casos límite:
+
+- **MOBI con DRM.** Las compras en tiendas y los préstamos de biblioteca están cifrados. Se rechazan al subir porque ningún conversor puede leer contenido cifrado. Necesitarías leerlos en la app para la que se licenciaron.
+- **Archivos Mobipocket muy viejos.** Algunos preceden a las funciones modernas de Kindle y llevan metadatos mínimos. El texto convierte bien; solo puede que quieras corregir el título y el autor en el EPUB después.
+
+Ninguno de los dos bloquea la biblioteca personal típica de libros MOBI sin DRM.`,
+      },
+      {
+        heading: `Puntos clave`,
+        body: `- **EPUB se lee en todas partes; MOBI solo lee casi solo en Kindle.** Convertir libera tus libros.
+- **Tres pasos en BookConv.** Sube, convierte, descarga — sin instalar, sin cuenta, 10 MB en la capa gratuita.
+- **El destino es el mejor formato.** EPUB soporta más que MOBI, así que la salida rara vez es peor.
+- **El DRM se rechaza.** Los archivos MOBI propios sin DRM convierten; los de tienda o biblioteca bloqueados no.
+- **Guarda de inmediato.** Los enlaces de descarga son temporales y los archivos se borran tras un tiempo.`,
+      },
+    ],
+  },
+  faqs: [
+    {
+      question: `¿Por qué convertir MOBI a EPUB en vez de mantener MOBI?`,
+      answer: `Porque EPUB es el estándar abierto que soportan Kobo, Apple Books, Google Play Books y la mayoría de las apps, mientras que MOBI es el formato heredado de Amazon. Convertir hace que el mismo libro sea legible en muchos más dispositivos.`,
+    },
+    {
+      question: `¿Perderé calidad al convertir de MOBI a EPUB?`,
+      answer: `Casi nunca. MOBI es el formato más limitado, así que el destino EPUB suele verse más limpio. El texto, las imágenes y la estructura de capítulos se conservan; solo se rechazan los archivos con DRM.`,
+    },
+    {
+      question: `¿Puedo abrir el EPUB en mi Kindle después?`,
+      answer: `Sí. Send to Kindle acepta EPUB directamente, o puedes convertir el EPUB hacia AZW3 para la carga nativa. En cualquier caso el libro sigue siendo legible en Kindle.`,
+    },
+    {
+      question: `¿Por qué se rechazó mi archivo MOBI?`,
+      answer: `Dos causas habituales: tiene DRM (archivos de tienda o biblioteca cifrados que ningún conversor puede leer), o supera el límite de tamaño de tu nivel — 10 MB en la capa gratuita. La mayoría de los MOBI viejos están muy por debajo.`,
+    },
+    {
+      question: `¿Amazon sigue aceptando MOBI en Send to Kindle?`,
+      answer: `No. Amazon dejó de aceptar subidas MOBI por Send to Kindle en agosto de 2022. Ahora toma EPUB, que es otra razón para mantener tu biblioteca en EPUB.`,
+    },
+  ],
+};

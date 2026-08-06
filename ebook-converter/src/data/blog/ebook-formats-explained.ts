@@ -136,3 +136,138 @@ export const faqs = [
     answer: `They're rejected on upload, and we don't remove DRM. Conversion works on DRM-free files you already own, which includes public-domain titles and most indie store purchases.`,
   }
 ];
+
+export const es = {
+  title: `EPUB vs AZW3 vs MOBI: ¿qué formato de ebook elegir?`,
+  content: {
+    intro: `EPUB, AZW3 y MOBI contienen el mismo libro — solo que responden a distintos dispositivos. Un Kindle moderno quiere AZW3, todo lo demás quiere EPUB, y MOBI solo merece su sitio en hardware previo a 2012. Aquí está el razonamiento, más cómo cambiar de formato en un navegador sin instalar nada.`,
+    sections: [
+      {
+        heading: `La respuesta corta: empareja el formato con tu dispositivo`,
+        body: `Salta la teoría si quieres. La decisión cabe en tres líneas.
+
+- **Kindle moderno** (Paperwhite, Oasis, Scribe, básicamente cualquiera desde 2012 en adelante): usa **AZW3**. Es nativo de Kindle, así que la tipografía y el diseño de página sobreviven intactos.
+- **iPad, móvil Android, Kobo, Nook, portátil, o una mezcla de los cuatro**: usa **EPUB**. Es el estándar abierto, y casi cualquier app de lectura fuera de Amazon lo habla con fluidez.
+- **Un Kindle previo a KF8** que no puede actualizarse: usa **MOBI**. Es viejo, pero abre.
+
+Todo lo que sigue es el razonamiento detrás de esas tres líneas, más los compromisos que nadie menciona hasta que un libro se renderiza mal.
+
+¿Ya sabes lo que necesitas? [Convert EPUB to AZW3](/convert/epub-to-azw3) corre en tu navegador y suele terminar en menos de un minuto. Sin cuenta, sin instalador.`,
+      },
+      {
+        heading: `EPUB: el estándar abierto que va casi a todas partes`,
+        body: `EPUB empezó en el International Digital Publishing Forum y ahora lo mantiene el W3C. Por dentro es un paquete comprimido de HTML, CSS e imágenes, por eso se comporta como un sitio web muy pequeño.
+
+Esa estructura es lo que te da **texto refulible**. Sube el tamaño de fuente y las palabras se reacomodan para llenar la pantalla en vez de encoger una página fija. En un móvil, ese único comportamiento es toda la experiencia de lectura.
+
+**Dónde brilla EPUB:**
+- Abre en Apple Books, Kobo, Nook, Google Play Books y decenas de apps de escritorio y móvil
+- Se reacomoda limpiamente entre tamaños de pantalla, orientaciones y ajustes de fuente
+- Soporta fuentes embebidas, CSS real y navegación de capítulos adecuada
+- Comprime bien, así que la mayoría de las novelas solo de texto quedan muy por debajo de 10 MB
+
+**Dónde flojea:**
+- El hardware Kindle no muestra EPUB directamente. Amazon convierte uno que envías, pero no controlas el resultado.
+- Los libros con mucho estilo pueden renderizar ligeramente distinto de app a app
+
+Las bibliotecas públicas prestan EPUB por defecto, así que si tomas libros prestados, este es el formato que más encontrarás. La [especificación EPUB 3](https://www.w3.org/TR/epub-33/) tiene el detalle técnico si lo quieres.`,
+      },
+      {
+        heading: `AZW3: lo que los Kindles modernos realmente quieren`,
+        body: `AZW3 es el formato KF8 de Amazon, introducido en 2011 y desplegado por toda la línea Kindle después. Reemplazó el viejo motor Mobipocket por algo mucho más cercano al HTML y CSS modernos.
+
+En la práctica eso significa que AZW3 hace todo lo que MOBI nunca pudo: fuentes embebidas, tablas, capitulares, páginas de diseño fijo para títulos ilustrados y control real sobre márgenes y espaciado.
+
+**Dónde brilla AZW3:**
+- Nativo en hardware Kindle moderno, así nada se reprocesa al entrar
+- La mejor tipografía que obtendrás en una pantalla de tinta electrónica
+- Aguanta libros de texto, obras de consulta y libros cargados de imágenes
+
+**Dónde flojea:**
+- Es un formato de Amazon. Kobo, Nook y la mayoría de las apps de terceros lo ignoran.
+- Los Kindle previos a soporte KF8 no pueden leerlo en absoluto
+
+Si construyes un archivo en vez de leer esta noche, conserva EPUB como tu copia maestra y genera AZW3 bajo demanda. ¿Cambias de plataforma después? [Convert AZW3 to EPUB](/convert/azw3-to-epub) va en el otro sentido igual de limpio. La [página Send to Kindle de Amazon](https://www.amazon.com/sendtokindle) lista qué tipos de archivo acepta tu cuenta ahora mismo.`,
+      },
+      {
+        heading: `MOBI: formato heredado, caso de uso estrecho`,
+        body: `MOBI vino de Mobipocket, una empresa que Amazon compró en 2005. Impulsó los primeros Kindle y se quedó más de una década.
+
+Es simple, lo cual es tanto el atractivo como el techo. MOBI soporta texto plano, imágenes y marcado HTML limitado. Sin fuentes embebidas, sin tablas reales, sin control fino del diseño.
+
+Amazon lo ha venido retirando poco a poco. Send to Kindle dejó de aceptar subidas MOBI en 2022, y los títulos nuevos llegan en formatos más nuevos. Aun así, los archivos MOBI existen por millones en archivos personales, y el hardware Kindle viejo los lee sin quejarse.
+
+**Elige MOBI cuando:**
+- Tu Kindle es previo a KF8 y no se puede actualizar
+- Alguna app de lectura muy vieja es lo único que debe abrir el archivo
+
+**Salta MOBI cuando:**
+- El dispositivo maneja AZW3 o EPUB, porque no hay ventaja
+- El libro tiene tablas, notas al pie o tipografía cuidada
+
+¿Tienes una carpeta de archivos MOBI viejos? [Convert MOBI to EPUB](/convert/mobi-to-epub) los convierte en algo que los lectores futuros puedan usar de verdad, y nuestra [guía EPUB to MOBI](/blog/how-to-convert-epub-to-mobi) cubre el viaje de vuelta si todavía lo necesitas.`,
+      },
+      {
+        heading: `Convertir entre formatos con BookConv`,
+        body: `La elección de formato solo importa si cambiar es indoloro. Eso es lo que BookConv maneja.
+
+Sube el archivo, elige el formato destino, mira la barra de progreso, descarga el resultado. La conversión corre del lado del servidor en un motor Calibre, así obtienes salida de grado de escritorio sin mantener una app de escritorio ni esperar un instalador.
+
+**Qué da la capa gratuita:**
+- Hasta **10 MB por archivo**, lo que cubre casi todas las novelas solo de texto
+- **5 conversiones por hora**, sin cuenta ni registro
+- Una **vista previa de metadatos** antes de comprometerte, así compruebas que el título y el autor se leyeron bien
+- Una **barra de progreso en vivo** — los archivos pesados pasan a una cola de trabajadores en segundo plano en vez de bloquear tu pestaña
+
+**Cuando necesitas más espacio:** Pro sube el techo a **50 MB por archivo**, y el plan API va a **100 MB**. Ahí viven los libros ilustrados, los PDF escaneados y los trabajos por lotes.
+
+Dos cosas que vale la pena saber antes de subir. **Los archivos con DRM se rechazan al subir** — no quitamos protección, así que no hay nada que rodear. Y **los enlaces de descarga son temporales**: los archivos convertidos se borran tras un rato, así que guarda el resultado cuando esté listo en vez de guardar la página en marcadores.
+
+Las rutas que la gente toma más:
+- [EPUB to AZW3](/convert/epub-to-azw3) para un Kindle moderno
+- [MOBI to EPUB](/convert/mobi-to-epub) para rescatar un archivo viejo
+- [PDF to EPUB](/convert/pdf-to-epub) cuando un archivo de diseño fijo necesita refulir
+
+Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, editas metadatos por lotes o necesitas procesar archivos de más de 100 MB. Para uno o dos libros, una pestaña del navegador es más rápida que un gestor de biblioteca.`,
+      },
+      {
+        heading: `Puntos clave`,
+        body: `- **El dispositivo decide** — el formato correcto es el que tu lector principal abre de forma nativa. Todo lo demás está a una conversión de distancia.
+- **EPUB es tu copia maestra** — estándar abierto, refulible, y los otros dos formatos se pueden generar a partir de él.
+- **AZW3 gana en Kindle** — mejores fuentes, tablas y diseño que MOBI, sin coste de compatibilidad dentro del ecosistema de Amazon.
+- **MOBI es una red de seguridad** — consérvalo para hardware previo a KF8, no lo elijas en otro caso.
+- **Convierte bajo demanda** — una fuente limpia más un navegador le ganan a tres copias a medias de cada libro.`,
+      },
+    ],
+  },
+  faqs: [
+    {
+      question: `¿Un Kindle puede leer EPUB ahora?`,
+      answer: `No directamente. El hardware Kindle sigue sin mostrar EPUB, aunque Send to Kindle convierte uno al entrar. Hacerlo tú mismo con [EPUB to AZW3](/convert/epub-to-azw3) te da un resultado predecible en vez de lo que decida la cadena de Amazon.`,
+    },
+    {
+      question: `¿AZW3 es realmente mejor que MOBI?`,
+      answer: `En cualquier Kindle que lo soporte, sí. AZW3 renderiza fuentes, tablas y diseño que MOBI simplemente no puede manejar. MOBI solo tiene sentido en hardware demasiado viejo para KF8.`,
+    },
+    {
+      question: `¿En qué formato debo archivar?`,
+      answer: `EPUB. Es un estándar abierto publicado, así los archivos siguen siendo legibles mucho después de que desaparezcan las apps de hoy. Genera copias AZW3 o MOBI cuando un dispositivo lo pida.`,
+    },
+    {
+      question: `¿Convertir arruinará mi formato?`,
+      answer: `Las novelas simples pasan casi perfectas. Los libros con mucho CSS, tablas, notas al pie o diseño fijo pueden moverse, así que revisa los primeros capítulos y la tabla de contenidos. La vista previa de metadatos captura problemas de título y autor antes de convertir.`,
+    },
+    {
+      question: `¿Tengo que instalar Calibre?`,
+      answer: `No. BookConv corre un motor Calibre del lado del servidor, así la calidad de conversión es la misma sin nada en tu máquina. Instala la app de escritorio solo si quieres un gestor de biblioteca completo — su [documentación de conversión](https://manual.calibre-ebook.com/conversion.html) explica cada ajuste.`,
+    },
+    {
+      question: `¿Mi libro es mayor de 10 MB. Qué ahora?`,
+      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes, divide el libro o pasa a Pro para 50 MB por archivo. El plan API permite 100 MB.`,
+    },
+    {
+      question: `¿Y las compras con DRM?`,
+      answer: `Se rechazan al subir, y no quitamos DRM. La conversión funciona en archivos sin DRM que ya posees, lo que incluye títulos de dominio público y la mayoría de las compras en tiendas independientes.`,
+    },
+  ],
+};

@@ -145,3 +145,147 @@ export const faqs = [
     answer: `MOBI uses location markers instead, because reflowable text has no fixed page boundaries. Real page numbers only appear on Kindle Store books where Amazon has mapped them to a print edition, and no conversion can add that mapping.`,
   }
 ];
+
+export const es = {
+  title: `Cómo convertir EPUB a MOBI en línea: la guía de BookConv`,
+  content: {
+    intro: `Sube tu EPUB y conviértelo a MOBI en BookConv en segundos — sin instalar Calibre, sin cuenta, sin ajustes que adivinar. Esta guía te muestra cómo hacer la conversión limpia, si en 2026 sigues necesitando MOBI, y cómo arreglar la portada, los metadatos y la tabla de contenidos que en silencio arruinan la mayoría de los intentos.`,
+    sections: [
+      {
+        heading: `Convertir EPUB a MOBI en BookConv en tres pasos`,
+        body: `Empieza aquí. La mayoría termina en menos de un minuto.
+
+1. Abre el [conversor de EPUB a MOBI](/convert/epub-to-mobi) y suelta tu archivo en el área de subida.
+2. Revisa la vista previa de metadatos. BookConv lee el título, el autor y la portada del EPUB y te los muestra *antes* de convertir nada, así corriges un autor equivocado o una portada faltante mientras todavía es barato arreglarlo.
+3. Pulsa convertir y mira la barra de progreso. Cuando termina, aparece tu enlace de descarga MOBI.
+
+Ese es todo el flujo. No hay nada que instalar, y usa el mismo motor Calibre del lado del servidor que los usuarios de escritorio ejecutan localmente — solo que tú no tienes que gestionarlo.
+
+### Qué da la capa gratuita
+
+- **10 MB por archivo** — holgadamente más que una novela de texto, que suele estar entre 300 KB y 3 MB
+- **5 conversiones por hora** — suficiente para un lote pequeño de una sentada
+- **Sin cuenta** — sin correo, sin muro de registro, sin enlace de confirmación
+
+Si conviertes un libro ilustrado grande o un título cargado de fotos, Pro sube el tope por archivo a 50 MB y la API a 100 MB.
+
+### Dos cosas que saber antes de subir
+
+Los enlaces de descarga son **temporales**. Los archivos se borran tras un tiempo, así que guarda el MOBI en tu dispositivo o en tu Kindle de inmediato en vez de guardar el enlace en marcadores y volver mañana. Si un enlace ya caducó, nuestras [notas de solución de descargas](/blog/download-troubleshooting) explican qué hacer.
+
+**Los archivos con DRM se rechazan al subir.** No es una limitación que podamos rodear — el DRM cifra el contenido del libro, y ningún conversor puede leer texto cifrado. Los préstamos de biblioteca y la mayoría de las compras en tiendas entran en esta categoría. Los libros que posees sin DRM convierten bien.`,
+      },
+      {
+        heading: `¿Realmente sigues necesitando MOBI?`,
+        body: `Vale dos minutos de reflexión, porque la respuesta le ahorra un paso a algunos lectores.
+
+MOBI salió de Mobipocket, una empresa francesa que Amazon compró en 2007. Amazon construyó los primeros Kindle sobre él y luego siguió adelante. KF8 — el formato dentro de los archivos AZW3 — reemplazó al MOBI plano para cualquier cosa con estilo real, y en agosto de 2022 Amazon dejó de aceptar MOBI por Send to Kindle. EPUB es lo que Amazon toma ahora.
+
+Así que MOBI es un destino heredado. Sigue siendo el correcto en estos casos:
+
+- **Hardware Kindle previo a 2015** como el Kindle Keyboard, Kindle 4, Kindle Touch y las primeras Paperwhite que cargas por USB
+- **Carga sin conexión** donde no hay Wi-Fi ni correo al dispositivo
+- **Coherencia de archivo** si tu biblioteca existente ya es MOBI y quieres que siga así
+- **Lectores de terceros viejos** basados en Mobipocket que nunca añadieron soporte EPUB
+
+Si tu Kindle es más nuevo y de todos modos cargas archivos, [convierte a AZW3 mejor](/convert/epub-to-azw3). AZW3 lleva KF8, lo que significa CSS actual, fuentes embebidas y tablas reales. MOBI pierde la mayor parte de eso.
+
+¿Sigues decidiendo qué estandarizar en tu biblioteca? [Formatos de ebook explicados](/blog/ebook-formats-explained) recorre los pros y contras sin marketing.`,
+      },
+      {
+        heading: `Send to Kindle ya acepta EPUB — cuándo usarlo en su lugar`,
+        body: `El servicio Send to Kindle de Amazon acepta archivos EPUB directamente y los convierte en sus servidores a KF8, usando la misma cadena que maneja los libros de la Tienda Kindle. Tres formas de entrar: manda el archivo por correo a la dirección kindle.com de tu dispositivo desde un remitente aprobado, arrástralo a la página web de Send to Kindle, o usa la app de escritorio o móvil.
+
+La ventaja es real. Obtienes seguimiento de posición Whispersync entre dispositivos, saltos de capítulo correctos y el mismo renderizado que los títulos comerciales. Un MOBI cargado a menudo no sincroniza en absoluto.
+
+El inconveniente también es real. Necesitas una cuenta de Amazon, conexión a internet y un dispositivo registrado, y el archivo entra en tu biblioteca de Amazon en vez de quedarse local. Algunas personas específicamente no quieren eso. La [página de ayuda de Send to Kindle de Amazon](https://www.amazon.com/sendtokindle) lista los límites de tamaño y tipos aceptados actuales.
+
+Regla simple: Kindle moderno y te basta con que Amazon guarde el archivo, usa Send to Kindle. Hardware viejo, sin cuenta o quieres que el archivo siga siendo tuyo — convierte en BookConv y cárgalo por USB.`,
+      },
+      {
+        heading: `Conservar portadas, metadatos y la tabla de contenidos intactos`,
+        body: `Las conversiones rara vez fallan a gritos. Fallan en silencio, y te das cuenta tres semanas después cuando tu biblioteca es un muro de mosaicos grises de marcador de posición.
+
+### Portadas
+
+MOBI guarda la portada como una imagen especialmente marcada dentro del archivo, no como un recurso separado. Si el EPUB de origen apunta a su portada solo por una entrada del manifiesto OPF sin referencia de guía, los conversores pueden soltarla. Por eso justo BookConv te muestra una vista previa de metadatos antes de convertir — si allí no aparece ninguna miniatura de portada, el propio EPUB carece de una referencia de portada adecuada, y el MOBI heredará esa brecha. Arregla el origen y vuelve a subir.
+
+### Metadatos
+
+El título y el autor son por lo que tu Kindle ordena, así que importan más de lo que parecen. La información de serie es más delicada: MOBI no tiene campo de serie nativo, y los conversores lo fingen doblando el nombre de la serie en el título. Bien para un estante personal, confuso si compartes archivos con alguien.
+
+### Tabla de contenidos
+
+Los Kindle usan dos sistemas de navegación separados — la página de contenidos en línea en la que pulsas, y el índice NCX detrás del menú Ir a. Un EPUB que solo lleva una página de contenidos HTML, sin un documento nav adecuado, se convierte en un MOBI con el menú Ir a muerto.
+
+La estructura viene del archivo de origen. Un EPUB bien construido convierte bien y uno descuidado no, lo cual es menos satisfactorio que un ajuste mágico pero es la verdad. La [especificación EPUB 3 del W3C](https://www.w3.org/TR/epub-33/) define qué debe contener ese documento nav, y es una referencia útil si compruebas por qué un archivo está roto.`,
+      },
+      {
+        heading: `Arreglar los errores que arruinan la mayoría de las conversiones`,
+        body: `Cuatro problemas explican casi cada mal resultado de EPUB a MOBI.
+
+### Texto garabateado o enmarcado
+
+Casi siempre codificación. El EPUB de origen declara un juego de caracteres y usa otro, así que los acentos y las comillas tipográficas salen como signos de interrogación o diamantes negros. Las escrituras no latinas tienen un segundo problema: el firmware viejo del Kindle trae cobertura de glifos limitada y necesita una fuente embebida. Ningún ajuste de conversión inventa caracteres que un dispositivo no puede dibujar.
+
+### Portada faltante en el dispositivo
+
+Si la portada se veía bien en la vista previa pero no en el Kindle, el dispositivo guardó en caché la miniatura vieja. Borra el libro del Kindle, limpia la carpeta correspondiente en la caché oculta de miniaturas del sistema, y vuelve a cargarlo. Es un fallo de caché, no de conversión.
+
+### Tabla de contenidos rota o vacía
+
+Si los capítulos se funden en una página interminable, tu EPUB es probablemente un solo archivo XHTML sin puntos de corte. No hay nada que arreglar del lado de salida — el origen no tiene límites de capítulo que encontrar.
+
+### Formato totalmente desatinado
+
+Texto justificado que colapsa, imágenes desbordadas, sangrías sueltas. El MOBI viejo soporta una porción pequeña de CSS y descarta el resto. Esta es la señal más clara de que debes dejar de pelear con MOBI y usar [EPUB to AZW3](/convert/epub-to-azw3) en su lugar, si tu dispositivo puede leerlo.
+
+### Cuándo recurrir a Calibre de escritorio
+
+BookConv cubre el camino normal. Calibre de escritorio sigue valiendo la pena instalarlo para casos realmente límite: reescribir un NCX roto con una regla XPath personalizada, hacer buscar-y-reemplazar en un archivo, filtrar información de estilo selectivamente, o convertir por lotes unos pocos cientos de libros a la vez. La [documentación de conversión de Calibre](https://manual.calibre-ebook.com/conversion.html) está genuinamente bien escrita si llegas ahí.
+
+Una nota más sobre velocidad: los archivos grandes o lentos pasan por una cola de trabajadores en segundo plano en vez de bloquear tu navegador. La barra de progreso sigue actualizándose, así que una conversión lenta se ve lenta en vez de rota. Hay más sobre cómo funciona en nuestra [entrada sobre trabajadores en segundo plano](/blog/background-workers).
+
+¿Migras una biblioteca vieja en el otro sentido? [MOBI to EPUB](/convert/mobi-to-epub) maneja archivos MOBI sin DRM.`,
+      },
+      {
+        heading: `Puntos clave`,
+        body: `- **BookConv es el camino rápido.** Sube, revisa la vista previa de metadatos, convierte, descarga — sin instalar, sin cuenta, 10 MB y 5 conversiones por hora en la capa gratuita.
+- **Guarda tu archivo de inmediato.** Los enlaces de descarga son temporales y los archivos convertidos se borran tras un tiempo, así que no trates un enlace como almacenamiento.
+- **Revisa tu Kindle primero.** Cualquier cosa hecha después de 2015 lee EPUB por Send to Kindle, lo que hace innecesaria la conversión MOBI para mucha gente.
+- **MOBI es heredado.** Amazon dejó de aceptarlo por Send to Kindle en agosto de 2022, y AZW3 es el mejor destino de carga para cualquier dispositivo moderno.
+- **Arregla los problemas en el origen.** La mala codificación, los documentos nav ausentes y las portadas faltantes viven en el EPUB, y ningún ajuste de salida los repara después.`,
+      },
+    ],
+  },
+  faqs: [
+    {
+      question: `¿Necesito una cuenta para convertir EPUB a MOBI en BookConv?`,
+      answer: `No. La capa gratuita no requiere registro alguno — 10 MB por archivo y 5 conversiones por hora. Pro sube el límite por archivo a 50 MB y la API a 100 MB si trabajas con libros ilustrados grandes.`,
+    },
+    {
+      question: `¿Cuánto dura activo el enlace de descarga?`,
+      answer: `No indefinidamente. Los enlaces son temporales y los archivos convertidos se borran tras un tiempo, así que descarga el MOBI en cuanto termine la barra de progreso en vez de guardar el enlace para luego.`,
+    },
+    {
+      question: `¿Por qué se rechazó mi archivo al subir?`,
+      answer: `Dos causas habituales. O tiene DRM, que detectamos y rechazamos porque ningún conversor puede leer contenido cifrado, o supera el límite de tamaño de tu nivel — 10 MB gratis, 50 MB Pro.`,
+    },
+    {
+      question: `¿Mi Kindle sigue soportando archivos MOBI?`,
+      answer: `En los Kindle físicos, sí — cargar un MOBI por USB sigue funcionando en casi todos los modelos. Lo que cambió es Send to Kindle, que dejó de aceptar subidas MOBI en agosto de 2022. Puedes pasarlo por cable, solo no por correo.`,
+    },
+    {
+      question: `¿Cuál es la diferencia entre MOBI y AZW3?`,
+      answer: `AZW3 contiene KF8, el formato Kindle más nuevo, con CSS moderno, fuentes embebidas, tablas adecuadas y soporte de diseño fijo. El MOBI plano maneja un subconjunto mucho menor y viene de Mobipocket. Para cualquier Kindle de la última década, AZW3 se ve notablemente mejor.`,
+    },
+    {
+      question: `¿Convertir EPUB a MOBI perderá mis resaltados y notas?`,
+      answer: `Sí. Las anotaciones viven en la base de datos propia del dispositivo y están atadas a un archivo específico, así que una copia convertida cuenta como un libro nuevo. Exporta tus notas antes de reemplazar nada.`,
+    },
+    {
+      question: `¿Por qué mi MOBI convertido no tiene números de página?`,
+      answer: `MOBI usa marcadores de ubicación en su lugar, porque el texto refulible no tiene límites de página fijos. Los números de página reales solo aparecen en los libros de la Tienda Kindle donde Amazon los ha mapeado a una edición impresa, y ninguna conversión puede añadir ese mapeo.`,
+    },
+  ],
+};
