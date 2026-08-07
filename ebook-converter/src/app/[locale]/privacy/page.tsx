@@ -7,10 +7,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Privacy Policy",
     alternates: {
-      canonical: `https://www.bookconv.com${'/' + locale}/privacy`,
+      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/privacy`,
       languages: { en: '/privacy', es: '/es/privacy', 'x-default': '/privacy' },
     },
-    openGraph: { url: `https://www.bookconv.com${'/' + locale}/privacy`, type: "website" },
+    openGraph: { url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/privacy`, type: "website" },
   };
 }
 

@@ -14,12 +14,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t('blog.title'),
     description: t('seo.defaultDescription') || 'Expert guides on ebook conversion.',
     alternates: {
-      canonical: `https://www.bookconv.com${'/' + locale}/blog`,
+      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog`,
       languages: { en: '/blog', es: '/es/blog', 'x-default': '/blog' },
     },
     openGraph: {
       title: t('blog.title') + " | BookConv",
-      url: `https://www.bookconv.com${'/' + locale}/blog`,
+      url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog`,
       type: "website",
     },
     twitter: {
@@ -60,12 +60,12 @@ export default async function BlogPage() {
             "@type": "Blog",
             name: t('blog.title'),
             description: "Expert guides on ebook format conversion.",
-            url: `https://www.bookconv.com${'/' + locale}/blog`,
+            url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog`,
             publisher: { "@id": "https://www.bookconv.com/#organization" },
             blogPost: posts.map((p) => ({
               "@type": "BlogPosting",
               headline: p.title,
-              url: `https://www.bookconv.com${'/' + locale}/blog/${p.slug}`,
+              url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog/${p.slug}`,
               datePublished: p.date,
             })),
           }),

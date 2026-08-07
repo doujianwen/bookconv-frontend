@@ -50,13 +50,6 @@ const TOP_CONVERTERS = [
   { label: "TXT to EPUB", href: "/convert/txt-to-epub" },
 ]
 
-// Popular blog posts for internal linking
-const POPULAR_POSTS = [
-  { title: "How to Convert EPUB to MOBI for Free", href: "/blog/how-to-convert-epub-to-mobi" },
-  { title: "Best Ebook Formats Explained: EPUB vs AZW3 vs PDF", href: "/blog/ebook-formats-explained" },
-  { title: "Why You Should Convert LIT to EPUB", href: "/blog/why-convert-lit-to-epub" },
-]
-
 export default function HomePage() {
   const t = useTranslations()
   const [searchQuery, setSearchQuery] = useState("")
@@ -64,8 +57,7 @@ export default function HomePage() {
 
   const filteredKeywords = useMemo(() => {
     // Only surface pairs that are actually supported (in CONVERSION_MAP).
-    // Filtering out "planned" KEYWORDS pairs stops the homepage from
-    // internally linking to 404 pages (epub-to-zip, epub-to-lrf, …).
+    // Filtering out "planned" KEYWORDS pairs stops internally linking to 404s.
     let result = KEYWORDS.filter((k) => getConversion(k.source, k.target))
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
@@ -224,28 +216,28 @@ export default function HomePage() {
               {/* Featured Video Tutorials */}
         <section className="bg-white py-16">
           <div className="mx-auto max-w-4xl px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">热门转换教程</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('home.tutorialTitle')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Link href="/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+              <Link href="/convert/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">LIT → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">3 分钟学会转换</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialLitDesc')}</p>
               </Link>
-              <Link href="/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+              <Link href="/convert/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">PDF → EPUB</h3>
-                <p className="text-sm text-gray-500 mt-1">保留排版的秘诀</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialPdfDesc')}</p>
               </Link>
-              <Link href="/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+              <Link href="/convert/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
                 <h3 className="font-semibold text-gray-900">EPUB → TXT</h3>
-                <p className="text-sm text-gray-500 mt-1">提取纯文本内容</p>
+                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialEpubDesc')}</p>
               </Link>
             </div>
           </div>
@@ -257,7 +249,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">{t('home.ctaReadyTitle')}</h2>
           <p className="mt-4 text-lg text-blue-100">{t('home.ctaReadyDesc')}</p>
-          <Link href="/epub-to-mobi" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-blue-50">
+          <Link href="/convert/epub-to-mobi" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-blue-50">
             {t('common.startConvertingNow')} <ArrowRight className="h-5 w-5" />
           </Link>
         </div>

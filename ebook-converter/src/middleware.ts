@@ -71,9 +71,13 @@ export async function middleware(request: NextRequest) {
   }
 
   // Case 2: path has NO locale prefix
-  // Root "/" → English homepage (no prefix)
+  // Root "/" → serve the English homepage through the [locale] route so it
+  // inherits the homepage hreflang from [locale]/layout.tsx (the browser URL
+  // stays "/" — the rewrite is internal only).
   if (pathname === '/') {
-    const response = NextResponse.next();
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/';
+    const response = NextResponse.rewrite(url);
     response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
     return applySecurityHeaders(request, response);
   }

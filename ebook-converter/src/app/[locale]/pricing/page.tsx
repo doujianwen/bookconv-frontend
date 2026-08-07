@@ -14,12 +14,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t('pricing.title'),
     description: t('seo.defaultDescription') || 'Start converting ebooks for free.',
     alternates: {
-      canonical: `https://www.bookconv.com${'/' + locale}/pricing`,
+      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/pricing`,
       languages: { en: '/pricing', es: '/es/pricing', 'x-default': '/pricing' },
     },
     openGraph: {
       title: t('pricing.title') + " | BookConv",
-      url: `https://www.bookconv.com${'/' + locale}/pricing`,
+      url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/pricing`,
       type: "website",
     },
     twitter: {

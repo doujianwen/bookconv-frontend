@@ -12,17 +12,17 @@ const BASE_URL = "https://www.bookconv.com"
 
 export async function generateMetadata({ params }: ConvertIndexProps): Promise<Metadata> {
   const { locale } = await params
-  const title = "All Ebook Format Conversions | BookConv"
+  const title = "All Ebook Format Conversions"
   const description =
     "Browse every ebook format conversion BookConv supports — EPUB, AZW3, MOBI, PDF, and more. Pick a pair and convert free in your browser, no install."
-  const url = `${BASE_URL}/convert`
+  const url = `${BASE_URL}${locale === "es" ? "/es" : ""}/convert`
   return {
     title,
     description,
     keywords: ["ebook converter", "convert ebook", "epub", "azw3", "mobi", "pdf", "calibre", "free"],
     alternates: {
       canonical: url,
-      languages: { en: "/convert", es: "/es/convert" },
+      languages: { en: "/convert", es: "/es/convert", "x-default": "/convert" },
     },
     openGraph: {
       title,
