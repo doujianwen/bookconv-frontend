@@ -1,5 +1,6 @@
 export const slug = 'mobi-to-epub';
 export const title = 'Free MOBI to EPUB Converter — No Sign-up';
+export const metaDescription = 'Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images & metadata intact and read your books on any device. Convert in seconds.';
 export const level = 'S' as const;
 export const wordCount = 2600;
 

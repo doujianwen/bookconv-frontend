@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   const title = contentData?.title || `${source} to ${target} Converter -- Free Online`
   const subtitle = contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`
-  const description = subtitle
+  const description = contentData?.metaDescription || subtitle
 
   return {
     title,
@@ -62,6 +62,11 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
     ],
     alternates: {
       canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/convert/${slug}`,
+      languages: {
+        en: `/convert/${slug}`,
+        es: `/es/convert/${slug}`,
+        'x-default': `/convert/${slug}`,
+      },
     },
     openGraph: {
       title,

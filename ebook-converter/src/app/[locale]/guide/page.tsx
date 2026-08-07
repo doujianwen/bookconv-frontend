@@ -3,9 +3,12 @@ import Link from "next/link"
 import { getAllGuides } from "@/data/guides"
 
 export const metadata: Metadata = {
-  title: "Guides | BookConv",
+  title: "Guides",
   description: "Troubleshooting and how-to guides for ebook format conversion: fix broken layouts, keep images, and choose the right tool for the job.",
-  alternates: { canonical: "https://www.bookconv.com/guide" },
+  alternates: {
+    canonical: "https://www.bookconv.com/guide",
+    languages: { en: '/guide', es: '/es/guide', 'x-default': '/guide' },
+  },
   openGraph: {
     title: "Guides | BookConv",
     description: "Practical fixes and how-tos for ebook conversion problems.",

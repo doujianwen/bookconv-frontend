@@ -5,8 +5,11 @@ import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   return {
-    title: "Privacy Policy | BookConv",
-    alternates: { canonical: `https://www.bookconv.com${'/' + locale}/privacy` },
+    title: "Privacy Policy",
+    alternates: {
+      canonical: `https://www.bookconv.com${'/' + locale}/privacy`,
+      languages: { en: '/privacy', es: '/es/privacy', 'x-default': '/privacy' },
+    },
     openGraph: { url: `https://www.bookconv.com${'/' + locale}/privacy`, type: "website" },
   };
 }

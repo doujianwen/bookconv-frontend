@@ -11,9 +11,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = (key: string) => resolvePath(messages, key) || key;
 
   return {
-    title: t('pricing.title') + " | BookConv",
+    title: t('pricing.title'),
     description: t('seo.defaultDescription') || 'Start converting ebooks for free.',
-    alternates: { canonical: `https://www.bookconv.com${'/' + locale}/pricing` },
+    alternates: {
+      canonical: `https://www.bookconv.com${'/' + locale}/pricing`,
+      languages: { en: '/pricing', es: '/es/pricing', 'x-default': '/pricing' },
+    },
     openGraph: {
       title: t('pricing.title') + " | BookConv",
       url: `https://www.bookconv.com${'/' + locale}/pricing`,

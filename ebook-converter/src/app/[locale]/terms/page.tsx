@@ -5,8 +5,11 @@ import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   return {
-    title: "Terms of Service | BookConv",
-    alternates: { canonical: `https://www.bookconv.com${'/' + locale}/terms` },
+    title: "Terms of Service",
+    alternates: {
+      canonical: `https://www.bookconv.com${'/' + locale}/terms`,
+      languages: { en: '/terms', es: '/es/terms', 'x-default': '/terms' },
+    },
     openGraph: { url: `https://www.bookconv.com${'/' + locale}/terms`, type: "website" },
   };
 }

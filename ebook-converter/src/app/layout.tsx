@@ -30,11 +30,6 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
     alternates: {
       canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
-      languages: {
-        'en': '/',
-        'es': '/es',
-        'x-default': '/',
-      },
     },
     openGraph: {
       type: 'website',
@@ -82,9 +77,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} dir='ltr'>
       <head>
         <link rel="sitemap" href="/sitemap.xml" />
-        <link rel="alternate" hrefLang="x-default" href="https://www.bookconv.com" />
-        <link rel="alternate" hrefLang="en" href="https://www.bookconv.com/" />
-        <link rel="alternate" hrefLang="es" href="https://www.bookconv.com/es" />
         <link rel="preload" as="image" href="/og-image.svg" type="image/svg+xml" />
         <link rel='icon' href='/favicon.ico' sizes='48x48' />
         <link rel='icon' href='/icon.svg' type="image/svg+xml" sizes='any' />

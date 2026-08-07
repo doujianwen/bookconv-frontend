@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "API Documentation | BookConv",
+  title: "API Documentation",
   description: "BookConv API reference documentation with OpenAPI 3.0 spec. Learn how to integrate ebook conversion into your application.",
 };
 

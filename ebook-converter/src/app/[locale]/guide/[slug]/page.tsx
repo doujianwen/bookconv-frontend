@@ -36,10 +36,13 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   const description = g.problem || g.content.intro || g.title
 
   return {
-    title: `${g.title} | BookConv Guides`,
+    title: g.title,
     description,
     keywords: [...g.tags, "ebook converter", "calibre"],
-    alternates: { canonical: `${baseUrl}/guide/${g.slug}` },
+    alternates: {
+      canonical: `${baseUrl}/guide/${g.slug}`,
+      languages: { en: `/guide/${g.slug}`, es: `/es/guide/${g.slug}`, 'x-default': `/guide/${g.slug}` },
+    },
     openGraph: {
       title: g.title,
       description,

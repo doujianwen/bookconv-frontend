@@ -33,9 +33,16 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
   const url = `https://www.bookconv.com${localePrefix(locale)}/blog/tag/${tag}`
 
   return {
-    title: `${label} articles | BookConv Blog`,
+    title: `${label} articles`,
     description: `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        en: `/blog/tag/${tag}`,
+        es: `/es/blog/tag/${tag}`,
+        'x-default': `/blog/tag/${tag}`,
+      },
+    },
     openGraph: {
       title: `${label} articles | BookConv Blog`,
       description: `Expert BookConv guides about ${label}.`,

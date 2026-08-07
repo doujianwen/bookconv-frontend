@@ -29,17 +29,20 @@ export async function generateMetadata({ params }: FormatPageProps): Promise<Met
     return { title: 'Format Not Found' }
   }
   const display = FORMAT_DISPLAY_NAMES[format] || format.toUpperCase()
-  const title = "${display} 电子书格式介绍 | BookConv"
-  const description = "${display} 是一种流行的电子书格式。了解它的优缺点、适用场景，以及如何与其他格式互转。"
+  const title = `${display} 电子书格式介绍`
+  const description = `${display} 是一种流行的电子书格式。了解它的优缺点、适用场景，以及如何与其他格式互转。`
   return {
     title,
     description,
-    alternates: { canonical: "https://www.bookconv.com/formats/${format}" },
+    alternates: {
+      canonical: `https://www.bookconv.com/formats/${format}`,
+      languages: { en: `/formats/${format}`, es: `/es/formats/${format}`, 'x-default': `/formats/${format}` },
+    },
     openGraph: {
       title,
       description,
       type: 'article',
-      url: "https://www.bookconv.com/formats/${format}",
+      url: `https://www.bookconv.com/formats/${format}`,
       siteName: 'BookConv',
     },
   }

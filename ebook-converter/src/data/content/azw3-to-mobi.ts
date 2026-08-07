@@ -1,5 +1,6 @@
 export const slug = 'azw3-to-mobi';
 export const title = 'Free AZW3 to MOBI Converter — No Sign-up';
+export const metaDescription = 'Make DRM-free AZW3 readable on older Kindles (pre-2011) — free AZW3 to MOBI converter, no sign-up. Fast, private, keeps your text intact.';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

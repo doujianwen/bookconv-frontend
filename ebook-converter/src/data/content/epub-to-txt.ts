@@ -1,5 +1,6 @@
 export const slug = 'epub-to-txt';
 export const title = 'Free EPUB to TXT Converter — No Sign-up';
+export const metaDescription = 'Turn EPUB into clean plain text free — no sign-up. Extract readable TXT for AI analysis, translation or screen readers in seconds. Keeps chapters & structure.';
 export const level = 'S' as const;
 export const wordCount = 2800;
 
