@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
@@ -85,16 +86,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
   const { locale, slug } = await params
   const post = BLOG_POSTS[slug]
 
-  if (!post) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Post not found</h1>
-          <Link href="/blog" className="mt-4 inline-block text-blue-600 hover:underline">Back to Blog</Link>
-        </div>
-      </div>
-    )
-  }
+  if (!post) notFound()
 
     const baseUrl = "https://www.bookconv.com"
     const isEs = locale === "es" && !!post.es

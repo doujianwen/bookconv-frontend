@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllGuides } from "@/data/guides"
 import { renderMarkdownToHtml, stripMarkdown, type BlogFaq } from "@/data/blog/types"
@@ -65,16 +66,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
   const { slug } = await params
   const g = GUIDES[slug]
 
-  if (!g) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Guide not found</h1>
-          <Link href="/guide" className="mt-4 inline-block text-blue-600 hover:underline">Back to Guides</Link>
-        </div>
-      </div>
-    )
-  }
+  if (!g) notFound()
 
   const baseUrl = "https://www.bookconv.com"
   const guideUrl = `${baseUrl}/guide/${g.slug}`
