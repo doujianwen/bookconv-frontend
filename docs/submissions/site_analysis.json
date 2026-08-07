@@ -1,0 +1,39 @@
+{
+  "auto_submit": [
+    {
+      "name": "TechAsoft",
+      "url": "https://www.techasoft.com/submit",
+      "type": "contact_form_with_lead_url",
+      "status": 200,
+      "fields": [
+        "lead_url",
+        "contact_fname",
+        "contact_email",
+        "contact_phone",
+        "contact_message",
+        "enquiry"
+      ],
+      "method": "GET",
+      "csrf": false,
+      "note": "Contact form with lead_url. No CSRF. Can submit via GET."
+    }
+  ],
+  "manual_only": [
+    {
+      "name": "PRLog",
+      "url": "https://www.prlog.org/submit-free-press-release.html",
+      "type": "js_rendered_form",
+      "note": "Submit form is JS-rendered. No public API. All /api/* return 301."
+    }
+  ],
+  "blocked": [
+    {
+      "name": "StartupStash",
+      "url": "https://startupstash.com/",
+      "type": "blocked_403",
+      "status": 403,
+      "note": "Returns 403. Needs full browser session with proper headers."
+    }
+  ],
+  "no_info": []
+}

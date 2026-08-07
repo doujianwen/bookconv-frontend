@@ -1,0 +1,16 @@
+{
+  "site": "TechAsoft",
+  "url": "https://www.techasoft.com/submit",
+  "method": "GET",
+  "status": 200,
+  "submitted_data": {
+    "lead_url": "https://yourdomain.com",
+    "enquiry": "1",
+    "contact_fname": "Founder",
+    "contact_email": "founder@yourdomain.com",
+    "contact_phone": "",
+    "contact_message": "EbookConverter: EbookConverter - Free Online Ebook Format Converter\nA free online ebook converter supporting 28+ formats. No signup, no limits, no ads.\nURL: https://yourdomain.com"
+  },
+  "response_preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>404 Page Not  Found</title>\n    <link rel=\"shortcut icon\" href=\"https://www.techasoft.com/debug/img/TS-Logo-LArge-1.ico\">\n    <meta charset=\"utf-8\">\n    <!--<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">-->\n    <!-- <meta name=",
+  "success": true
+}

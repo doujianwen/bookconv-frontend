@@ -1,0 +1,32 @@
+[
+  {
+    "name": "BetaList",
+    "url": "https://betalist.com/",
+    "forms": 56,
+    "submitLinks": 3
+  },
+  {
+    "name": "Toolify",
+    "url": "https://www.toolify.ai/",
+    "forms": 0,
+    "submitLinks": 15
+  },
+  {
+    "name": "FutureTools",
+    "url": "https://futuretools.io/",
+    "forms": 2,
+    "submitLinks": 7
+  },
+  {
+    "name": "ActiveSearch",
+    "url": "https://www.activesearchresults.com/",
+    "forms": 1,
+    "submitLinks": 2
+  },
+  {
+    "name": "SubmitCube",
+    "url": "https://www.submitcube.com/",
+    "forms": 0,
+    "submitLinks": 26
+  }
+]

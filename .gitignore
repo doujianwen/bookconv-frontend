@@ -28,8 +28,6 @@ temp.txt
 .qc/
 .workbuddy/
 logs/
-docs/
-ebook-converter/docs/
 ebook-converter/ebook-converter/
 ebook-converter/scripts/qa/
 ebook-converter/src/data/blog/.synccheck/

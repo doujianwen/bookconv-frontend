@@ -1,0 +1,52 @@
+[
+  {
+    "name": "ProductList",
+    "title": "Just a moment...",
+    "forms": 0,
+    "submitLinks": 0,
+    "blocked": false
+  },
+  {
+    "name": "SAASHub",
+    "title": "Just a moment...",
+    "forms": 0,
+    "submitLinks": 0,
+    "blocked": false
+  },
+  {
+    "name": "Startups",
+    "title": "Online Startup Accelerator | Startups.co",
+    "forms": 0,
+    "submitLinks": 0,
+    "blocked": false
+  },
+  {
+    "name": "SaasScout",
+    "error": "page.goto: net::ERR_CONNECTION_CLOSED at https://saasscout.com/\nCall log:\n\u001b[2m  "
+  },
+  {
+    "name": "SaaSBatch",
+    "error": "page.goto: net::ERR_CONNECTION_CLOSED at https://saasbatchlist.com/\nCall log:\n\u001b["
+  },
+  {
+    "name": "SaaSGenius",
+    "title": "Find the Best Value SaaS Products On the",
+    "forms": 2,
+    "submitLinks": 0,
+    "blocked": false
+  },
+  {
+    "name": "Toolify",
+    "title": "Best AI Tools Directory & AI Tools List ",
+    "forms": 0,
+    "submitLinks": 3,
+    "blocked": false
+  },
+  {
+    "name": "FutureTools",
+    "title": "Future Tools - The Pulse of AI",
+    "forms": 2,
+    "submitLinks": 2,
+    "blocked": false
+  }
+]

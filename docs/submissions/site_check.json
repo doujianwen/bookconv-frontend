@@ -1,0 +1,63 @@
+[
+  {
+    "name": "StartupStash",
+    "url": "https://startupstash.com/",
+    "status": 403,
+    "hasForm": false,
+    "submitLinks": []
+  },
+  {
+    "name": "PRLog",
+    "url": "https://www.prlog.org/",
+    "status": 200,
+    "hasForm": true,
+    "submitLinks": [
+      "href=\"/submit-free-press-release.html\"",
+      "href=\"/submit-free-press-release.html\"",
+      "href=\"/submit-free-press-release.html\""
+    ]
+  },
+  {
+    "name": "GetLeadWave",
+    "url": "https://getleadwave.io/",
+    "status": 200,
+    "hasForm": false,
+    "submitLinks": []
+  },
+  {
+    "name": "SubmitSaaS",
+    "url": "https://submitsaas.com/",
+    "status": 200,
+    "hasForm": false,
+    "submitLinks": [
+      "href=\"https://submitsaas.com\"",
+      "href=\"https://submitsaas.com/static/icons/icon-60x60.png\"",
+      "href=\"https://submitsaas.com/static/icons/icon-120x120.png\""
+    ]
+  },
+  {
+    "name": "LinkDr",
+    "url": "https://linkdr.com/",
+    "status": 200,
+    "hasForm": false,
+    "submitLinks": []
+  },
+  {
+    "name": "PR.com",
+    "url": "https://www.pr.com/",
+    "status": 200,
+    "hasForm": true,
+    "submitLinks": []
+  },
+  {
+    "name": "EReleases",
+    "url": "https://www.ereleases.com/",
+    "status": 200,
+    "hasForm": false,
+    "submitLinks": [
+      "href=\"https://www.ereleases.com/how-to-submit/\"",
+      "href=\"https://www.ereleases.com/how-to-submit/\"",
+      "href=\"https://www.ereleases.com/how-to-submit/\""
+    ]
+  }
+]
