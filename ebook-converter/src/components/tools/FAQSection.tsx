@@ -38,10 +38,6 @@ export function generateDefaultFAQs(source: string, target: string): FAQ[] {
       answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${source.toUpperCase()} and ${target.toUpperCase()} format capabilities. The result is optimized for readability on your target device.`,
     },
     {
-      question: "Is my file secure?",
-      answer: "Absolutely. All files are transferred over encrypted HTTPS connections. Your original file and converted file are automatically deleted from our servers within 1 hour. We do not read, store, or share your content.",
-    },
-    {
       question: "What is the file size limit?",
       answer: "Free users can convert files up to 10 MB. Pro users enjoy up to 50 MB per file and unlimited conversions.",
     },

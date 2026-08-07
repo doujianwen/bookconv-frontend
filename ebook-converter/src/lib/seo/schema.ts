@@ -1,3 +1,5 @@
+import { SECURITY_FAQ } from './securityFaq'
+
 interface FAQItem {
   question: string;
   answer: string;
@@ -107,7 +109,6 @@ function defaultFaqsFor(source: string, target: string): FAQItem[] {
   return [
     { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Convert up to 5 files per hour for free.` },
     { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${s} and ${t} format capabilities. The result is optimized for readability on your target device.` },
-    { question: 'Is my file secure?', answer: 'Absolutely. All files are transferred over encrypted HTTPS connections. Your original file and converted file are automatically deleted from our servers within 1 hour. We do not read, store, or share your content.' },
     { question: 'What is the file size limit?', answer: 'Free users can convert files up to 10 MB. Pro users enjoy up to 50 MB per file and unlimited conversions.' },
     { question: 'Can I batch convert multiple files?', answer: 'Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.' },
   ];
@@ -129,9 +130,14 @@ export function generateConversionPageSchema(
   const targetDisplay = target.toUpperCase();
   const slug = source + '-to-' + target;
   const pageUrl = baseUrl + '/convert/' + slug;
-  const faqs: FAQItem[] = (contentData?.faq && contentData.faq.length > 0)
+  const baseFaqs: FAQItem[] = (contentData?.faq && contentData.faq.length > 0)
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
     : defaultFaqsFor(source, target);
+  // Always surface the security & privacy promise (Gemini/AI-engine trust
+  // signal). Custom per-format FAQs must not silently drop it.
+  const faqs: FAQItem[] = baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
+    ? baseFaqs
+    : [...baseFaqs, SECURITY_FAQ];
 
   const graph = [
     {

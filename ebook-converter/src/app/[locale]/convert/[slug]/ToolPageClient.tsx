@@ -9,6 +9,7 @@ import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
 import type { ErrorCode } from "@/lib/error-handler"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
+import { SECURITY_FAQ } from "@/lib/seo/securityFaq"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
 import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
 import { TestimonialCard } from "@/components/tools/TestimonialCard"
@@ -88,9 +89,14 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || (target.toLowerCase() === "htmlz" ? "HTMLZ" : target.toUpperCase())
   const slug = source + "-to-" + target
-  const faqs = contentData?.faq
+  const baseFaqs = contentData?.faq
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
     : generateDefaultFAQs(source, target)
+  // Always surface the security & privacy promise (Gemini/AI-engine trust
+  // signal). Custom per-format FAQs must not silently drop it.
+  const faqs = baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
+    ? baseFaqs
+    : [...baseFaqs, SECURITY_FAQ]
   // Look up video tutorial for this conversion
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const handleFileSelect = useCallback(
