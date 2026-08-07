@@ -93,11 +93,11 @@ export default async function GuidePage({ params }: GuideSlugProps) {
               "@type": "Organization",
               name: "BookConv",
               logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" },
-              sameAs: [],
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": guideUrl },
             inLanguage: "en-US",
             keywords: g.tags.join(", "),
+            image: baseUrl + "/og-image.svg",
           }),
         }}
       />
