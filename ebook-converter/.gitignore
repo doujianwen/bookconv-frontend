@@ -69,5 +69,8 @@ coverage/
 playwright-report/
 test-results/
 
+# Local Playwright browsers (project-local Chromium for CWV checks)
+.pw-browsers/
+
 # Docker build cache
 .docker/
