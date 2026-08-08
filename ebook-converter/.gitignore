@@ -24,6 +24,8 @@ Thumbs.db
 
 # Debug / Fix scripts (development artifacts)
 *.py
+__pycache__/
+*.pyc
 *.js
 !next.config.*
 !tailwind.config.*
