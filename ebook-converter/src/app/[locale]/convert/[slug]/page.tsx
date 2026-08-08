@@ -101,6 +101,12 @@ export default async function ToolPage({ params }: ToolPageProps) {
   )
   const conversion = getConversion(source, target)
   const contentData = CONTENT_MAP[slug]
+  // CONTENT_MAP values are the raw module namespace ({ slug, title, ...,
+  // content: { hero, sections, faq } }). The client component and the schema
+  // generator expect the FLAT content shape ({ hero, sections, faq }), so
+  // unwrap here — otherwise every custom section/FAQ silently falls back to
+  // the generic template (this bug affected all 27 convert pages).
+  const content = contentData?.content ?? contentData
 
   if (!keyword || !conversion) {
     notFound()
@@ -109,7 +115,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   // Use dynamically imported component
   const relatedBlogPosts = getRelatedBlogPostsForConversion(source, target)
   const relatedGuides = getRelatedGuidesForConversion(source, target)
-  const jsonLd = generateConversionPageSchema(source, target, contentData)
+  const jsonLd = generateConversionPageSchema(source, target, content)
   return (
     <>
       {/* Server-rendered structured data so crawlers / AI engines read it in
@@ -125,7 +131,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         keyword={keyword}
         tool={conversion.tool}
         description={conversion.description}
-        contentData={contentData}
+        contentData={content}
         relatedBlogPosts={relatedBlogPosts}
         relatedGuides={relatedGuides}
       />
