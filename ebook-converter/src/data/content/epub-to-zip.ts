@@ -1,19 +1,23 @@
 export const slug = 'epub-to-zip';
-export const title = 'Free EPUB to ZIP Converter — No Sign-up';
+export const title = 'Convert EPUB to ZIP — Free Online Tool';
 export const metaDescription = 'Extract the files inside any EPUB free — convert EPUB to ZIP and pull out XHTML, CSS, images & fonts in seconds. No sign-up, your file stays private.';
 export const level = 'A' as const;
 export const wordCount = 2000;
 
 export const content = {
   hero: {
-    title: 'EPUB to ZIP - Unlock the Files Inside Your E-book',
+    title: 'Convert EPUB to ZIP Free — Unlock the Files Inside Your E-book',
     subtitle: 'Free EPUB to ZIP converter. No sign-up — extract the raw XHTML, CSS, images, and fonts from any e-book in seconds. Your file is never stored.'
   },
 
   sections: [
     {
       heading: 'What Is an EPUB, Really?',
-      body: 'An EPUB file is not a single opaque document — it is a ZIP archive with a specific internal structure. Open one and you will find XHTML chapters, a CSS stylesheet, embedded images, and an OPF metadata file wired together by META-INF/container.xml. Because the container is standard ZIP, converting EPUB to ZIP does not transform your content at all: it simply re-presents the same bytes under a .zip extension that every operating system can open natively.'
+      body: 'When you convert EPUB to ZIP, you are not changing your book — you are simply renaming the same archive so any tool can open it. An EPUB file is not a single opaque document; it is a ZIP archive with a specific internal structure. Open one and you will find XHTML chapters, a CSS stylesheet, embedded images, and an OPF metadata file wired together by META-INF/container.xml. Because the container is standard ZIP, converting EPUB to ZIP does not transform your content at all: it just re-presents the same bytes under a .zip extension that every operating system can open natively.'
+    },
+    {
+      heading: 'How to Convert EPUB to ZIP Online',
+      body: 'The fastest way to convert EPUB to ZIP is a browser-based tool — no Calibre install, no command line, no sign-up. Steps:\n- Upload your .epub file using the converter above.\n- Wait a second while the server copies the archive (no re-encoding).\n- Download the resulting .zip and open it with any archive viewer.\nBecause the conversion is a byte-exact copy, the whole process takes seconds and works on Windows, macOS, and Linux alike.'
     },
     {
       heading: 'When Should You Convert EPUB to ZIP?',
@@ -42,8 +46,10 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
   ],
 
   faq: [
+    { q: 'How do I convert EPUB to ZIP online for free?', a: 'Use the converter above: upload your .epub, and within a second you get a .zip download — no sign-up, no software install, no cost. The tool performs a byte-exact copy, so the file you receive is the same archive under a .zip extension.' },
     { q: 'Does converting EPUB to ZIP change my content?', a: 'No. The conversion is a byte-exact copy of the same archive under a .zip extension. Your text, images, and metadata are untouched.' },
     { q: 'Can I open the resulting ZIP on Windows or macOS?', a: 'Yes. Any built-in archive viewer (File Explorer, Finder), 7-Zip, or WinRAR opens it. The internal .xhtml and image files are plain, readable formats.' },
+    { q: 'Is converting EPUB to ZIP safe and private?', a: 'Yes. The file is processed only to return the ZIP, with no re-encoding, and we do not retain your original. Your e-book stays private — the conversion is a direct copy on our server and the source is never shared or stored long-term.' },
     { q: 'Is my file uploaded to a server?', a: 'The EPUB is processed to return the ZIP, but the conversion is a direct copy with no re-encoding. We do not retain or modify your original content.' },
     { q: 'Can I turn the ZIP back into an EPUB?', a: 'Yes. After editing, re-zip the folder and rename the archive to .epub. As long as META-INF/container.xml and the OPF are intact, it remains a valid e-book.' },
     { q: 'Why not just rename the file to .zip myself?', a: 'You can — the bytes are identical. Our tool does exactly that for you and delivers a clean download without you hunting for the right extension or worrying about a mislabeled file.' }

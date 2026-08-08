@@ -114,6 +114,18 @@ export const faqs = [
   {
     question: `Is AZW3 the same as KF8?`,
     answer: `Yes. AZW3 is Amazon's consumer-facing name; KF8 (Kindle Format 8) is the technical specification. They refer to the same format.`,
+  },
+  {
+    question: `Does AZW3 work on Kindle?`,
+    answer: `Yes. Every Kindle released in the last decade reads AZW3 (KF8) natively — Paperwhite 3 and later, Oasis, Voyage, and every current model. Only pre-2015 devices lack the styling engine to show AZW3's extras, but they still open the file.`,
+  },
+  {
+    question: `MOBI or AZW3 — which should I use for my Kindle?`,
+    answer: `Use AZW3 for any Kindle made in 2015 or later; it keeps your embedded fonts, tables, and CSS. Reach for MOBI only if you're sideloading onto a very old Kindle (Keyboard, Touch, first-gen Paperwhite) that chokes on AZW3 over USB.`,
+  },
+  {
+    question: `Can a Kindle read AZW3 files directly?`,
+    answer: `Yes. Send the .azw3 file over USB, email it to your Send-to-Kindle address, or convert from EPUB first — any modern Kindle opens it. Amazon's own publishing pipeline outputs KF8, so AZW3 is the format the hardware expects.`,
   }
 ];
 
@@ -228,6 +240,18 @@ Calibre de escritorio vale la pena instalarlo solo si conviertes de golpe toda u
     {
       question: `¿Es AZW3 lo mismo que KF8?`,
       answer: `Sí. AZW3 es el nombre que Amazon usa para el consumidor; KF8 (Kindle Format 8) es la especificación técnica. Se refieren al mismo formato.`,
+    },
+    {
+      question: `¿Funciona AZW3 en Kindle?`,
+      answer: `Sí. Cualquier Kindle de la última década lee AZW3 (KF8) de forma nativa: Paperwhite 3 y posteriores, Oasis, Voyage y todos los modelos actuales. Solo los dispositivos previos a 2015 carecen del motor de estilos para mostrar las ventajas de AZW3, pero igual abren el archivo.`,
+    },
+    {
+      question: `¿MOBI o AZW3 — cuál debo usar para mi Kindle?`,
+      answer: `Usa AZW3 para cualquier Kindle fabricado en 2015 o después; conserva tus fuentes, tablas y CSS. Recurre a MOBI solo si cargas un Kindle muy viejo (Keyboard, Touch, Paperwhite de primera generación) que falla con AZW3 por USB.`,
+    },
+    {
+      question: `¿Puede un Kindle leer archivos AZW3 directamente?`,
+      answer: `Sí. Envía el archivo .azw3 por USB, mándalo a tu dirección Send-to-Kindle o conviértelo desde EPUB primero: cualquier Kindle moderno lo abre. La propia cadena de publicación de Amazon produce KF8, así que AZW3 es el formato que el hardware espera.`,
     },
   ],
 };

@@ -347,38 +347,58 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
   )
 }
 function renderMarkdownToHtml(markdown: string): string {
-  let html = markdown
-  // Handle pipe tables
-  const tableRegex = /\|\s*([^\n|][^\n]*)\|(.+)\n(\|\s*[-:\s|]+\s*\|.+)\n((?:\|.+\n?)+)/g
-  html = html.replace(tableRegex, (match, headerRow, _, separatorRow, bodyRows) => {
-    const headers = headerRow.split("|").map((h: string) => h.trim()).filter(Boolean)
-    const rows = bodyRows.trim().split("\n").map((row: string) => row.split("|").map((c: string) => c.trim()).filter(Boolean))
-    let tableHtml = "<table class=\"w-full text-sm border-collapse\"><thead><tr class=\"border-b bg-gray-50\">"
-    headers.forEach((h: string) => { tableHtml += "<th class=\"px-4 py-3 text-left font-medium text-gray-700\"></th>" })
-    tableHtml += "</tr></thead><tbody>"
-    rows.forEach((row: string[]) => {
-      tableHtml += "<tr class=\"border-b\">"
-      row.forEach((cell: string) => { tableHtml += "<td class=\"px-4 py-2 text-gray-700\"></td>" })
-      tableHtml += "</tr>"
-    })
-    tableHtml += "</tbody></table>"
-    return tableHtml
-  })
+  if (!markdown) return "";
+
+  // Extract pipe-table blocks first so paragraph/list rules don't mangle them.
+  const tables: string[] = [];
+  const ph = (i: number) => `\u0000T${i}\u0000`;
+  let text = markdown.replace(/(\|[^\n]*\|\n?(?:\|[^\n]*\|\n?)*)/g, (block) => {
+    const lines = block.trim().split("\n").filter((l) => l.trim().length > 0);
+    if (lines.length < 2) return block;
+    const isSep = (l: string) => {
+      const core = l.replace(/\|/g, "").trim();
+      return core.length > 0 && /^[-:\s]+$/.test(core) && l.includes("-");
+    };
+    if (!isSep(lines[1])) return block;
+    const parseRow = (l: string) =>
+      l.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+    const headers = parseRow(lines[0]);
+    const rows = lines.slice(2).map(parseRow);
+    const esc = (s: string) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    let out = '<div class="overflow-x-auto my-4"><table class="w-full text-sm border-collapse">';
+    out += '<thead><tr class="border-b bg-gray-50">';
+    headers.forEach((h) => { out += '<th class="px-4 py-3 text-left font-medium text-gray-700">' + esc(h) + "</th>"; });
+    out += "</tr></thead><tbody>";
+    rows.forEach((row) => {
+      out += '<tr class="border-b">';
+      row.forEach((cell) => { out += '<td class="px-4 py-2 text-gray-700">' + esc(cell) + "</td>"; });
+      out += "</tr>";
+    });
+    out += "</tbody></table></div>";
+    tables.push(out);
+    return ph(tables.length - 1);
+  });
+
   // Bold
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
   // Italic
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>")
+  text = text.replace(/\*(.+?)\*/g, "<em>$1</em>")
   // Unordered lists
-  html = html.replace(/^- \*\*(.+?)\*\*:?\s+(.+)$/gm, "<li><strong>$1</strong>: $2</li>")
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>")
+  text = text.replace(/^- \*\*(.+?)\*\*:?\s+(.+)$/gm, "<li><strong>$1</strong>: $2</li>")
+  text = text.replace(/^- (.+)$/gm, "<li>$1</li>")
   // Wrap consecutive <li> elements in <ul>
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
+  text = text.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
     if (match.includes("<li>")) return "<ul class=\"list-disc pl-6 space-y-2\">" + match + "</ul>"
     return match
   })
   // Paragraph breaks
-  html = html.replace(/\n\n/g, "</p><p>")
-  html = "<p>" + html + "</p>"
-  html = html.replace(/<p>\s*<\/p>/g, "")
-  return html
+  text = text.replace(/\n\n/g, "</p><p>")
+  text = "<p>" + text + "</p>"
+  text = text.replace(/<p>\s*<\/p>/g, "")
+  // Restore tables (unwrap the surrounding <p> so the block-level <table> stays valid)
+  text = text.replace(/\u0000T(\d+)\u0000/g, (_m, i) => tables[Number(i)] || "")
+  text = text.replace(/<p>(\s*<div class="overflow-x-auto my-4">)/g, "$1")
+  text = text.replace(/(<\/table><\/div>\s*)<\/p>/g, "$1")
+  return text
 }
