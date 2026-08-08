@@ -100,5 +100,29 @@
     "seo":  {
                 "defaultTitle":  "BookConv -- Convertidor de Ebooks Online Gratuito | Convierte EPUB, MOBI, AZW3, PDF",
                 "defaultDescription":  "Convertidor de ebooks online gratuito que soporta más de 28 formatos: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. Sin registro, sin marcas de agua, sin límites."
+            },
+    "tutorial":  {
+                "metaTitle":  "Tutorial -- Convierte Ebooks en Línea Paso a Paso",
+                "metaDescription":  "Aprende a convertir ebooks online en segundos: abre BookConv, elige un formato, sube tu archivo y descarga el resultado. Sin registro.",
+                "title":  "Tutorial",
+                "subtitle":  "Comienza a convertir formatos de ebook en segundos",
+                "videoTitle":  "Video de demostración",
+                "stepByStep":  "Guía paso a paso",
+                "step1Title":  "Visita el sitio web",
+                "step1Desc":  "Abre https://www.bookconv.com y ve a la página de inicio",
+                "step2Title":  "Selecciona el formato de conversión",
+                "step2Desc":  "Elige tu formato de destino en la página de inicio o en la barra de navegación (por ejemplo, PDF, MOBI, etc.)",
+                "step3Title":  "Sube el archivo",
+                "step3Desc":  "Haz clic en el botón de subir y selecciona tu archivo ebook (compatible con EPUB, AZW3, MOBI, etc.)",
+                "step4Title":  "Espera la conversión",
+                "step4Desc":  "El sistema comenzará a convertir automáticamente; el progreso se muestra en tiempo real (sin registro)",
+                "step5Title":  "Descarga el resultado",
+                "step5Desc":  "Cuando termine la conversión, haz clic en el botón de descarga para guardar tu archivo",
+                "tipsTitle":  "Consejos",
+                "tip1":  "Tamaño máximo de archivo admitido: 10 MB",
+                "tip2":  "Todos los archivos se eliminan automáticamente después de 1 hora para proteger tu privacidad",
+                "tip3":  "Compatible con subida por arrastrar y soltar para mayor comodidad",
+                "tip4":  "Para cualquier duda, contacta al servicio de atención en línea o consulta la documentación de ayuda en cualquier momento",
+                "goHome":  "Volver al inicio"
             }
 }

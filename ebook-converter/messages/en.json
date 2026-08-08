@@ -100,5 +100,29 @@
     "seo":  {
                 "defaultTitle":  "BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
                 "defaultDescription":  "Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits."
+            },
+    "tutorial":  {
+                "metaTitle":  "Tutorial -- Convert Ebooks Online Step by Step",
+                "metaDescription":  "Learn how to convert ebooks online in seconds: open BookConv, pick a format, upload your file, and download the result. No registration required.",
+                "title":  "Tutorial",
+                "subtitle":  "Get started with ebook format conversion in seconds",
+                "videoTitle":  "Demo Video",
+                "stepByStep":  "Step-by-Step Guide",
+                "step1Title":  "Visit the website",
+                "step1Desc":  "Open https://www.bookconv.com and go to the home page",
+                "step2Title":  "Select conversion format",
+                "step2Desc":  "Select your target format on the home page or navigation bar (e.g., PDF, MOBI, etc.)",
+                "step3Title":  "Upload file",
+                "step3Desc":  "Click the upload button and select your ebook file (supports EPUB, AZW3, MOBI, etc.)",
+                "step4Title":  "Wait for conversion",
+                "step4Desc":  "The system will start converting automatically; progress is displayed in real time (no registration required)",
+                "step5Title":  "Download result",
+                "step5Desc":  "After conversion completes, click the download button to save your file",
+                "tipsTitle":  "Tips",
+                "tip1":  "Maximum file size supported: 10MB",
+                "tip2":  "All files are automatically deleted after 1 hour to protect privacy",
+                "tip3":  "Drag-and-drop upload supported for convenience",
+                "tip4":  "For any questions, contact online customer service or view help documentation at any time",
+                "goHome":  "Go Home"
             }
 }
