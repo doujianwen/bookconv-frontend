@@ -7,9 +7,9 @@ import { BatchUpload } from "@/components/tools/BatchUpload";
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const prefix = locale === "es" ? "/es" : "";
-  const title = "Batch Ebook Converter — Convert up to 20 Files at Once";
+  const title = "Batch Ebook Converter — Convert Multiple Files at Once";
   const description =
-    "Convert several ebooks to one format in a single batch on BookConv. Upload up to 20 files, get a ZIP of converted ebooks, no software install.";
+    "Convert several ebooks to one format in a single batch on BookConv. Free during open beta — upload your files, get a ZIP of converted ebooks, no software install.";
   return {
     title,
     description,
@@ -29,11 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
 const FAQ = [
   {
     q: "What is batch ebook conversion?",
-    a: "Batch conversion lets you convert several ebook files to the same target format in one go. On BookConv you can upload up to 20 files per batch and download the results as a single ZIP.",
+    a: "Batch conversion lets you convert several ebook files to the same target format in one go. On BookConv you can upload several files per batch and download the results as a single ZIP.",
   },
   {
     q: "Is batch conversion free?",
-    a: "Batch conversion is included with BookConv Pro. Free accounts use the single-file converter; upgrading to Pro unlocks batch mode and larger per-file size limits.",
+    a: "Yes — batch conversion is free while BookConv is in open beta. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files per batch; other formats are limited to a few per batch because they rely on a metered conversion service. No paid plan is required to use batch mode.",
   },
   {
     q: "Which formats can I convert in a batch?",
@@ -76,23 +76,23 @@ export default async function BatchPage() {
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Batch Ebook Converter</h1>
         <p className="mt-4 text-lg text-gray-600">
-          Convert up to 20 ebooks to one format and download them as a single ZIP.
+          Convert several ebooks to one format and download them as a single ZIP — free while in open beta.
         </p>
       </div>
 
-      {/* Pro upsell banner */}
+      {/* Free open beta banner */}
       <div className="mb-8 flex flex-col items-start gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <Zap className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
           <p className="text-sm text-blue-900">
-            Batch conversion is part of <span className="font-semibold">BookConv Pro</span>. Up to 20 files per batch, 10&nbsp;MB per file — everything runs in your browser and downloads as one ZIP.
+            Batch conversion is <span className="font-semibold">free while in open beta</span>. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch for now. Everything runs in your browser and downloads as one ZIP.
           </p>
         </div>
         <Link
           href={prefix + "/pricing"}
           className="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
         >
-          See Pro plans
+          See plan limits
         </Link>
       </div>
 

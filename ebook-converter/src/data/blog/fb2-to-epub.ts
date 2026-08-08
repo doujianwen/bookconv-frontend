@@ -18,7 +18,7 @@ export const content = {
     {
       heading: `How to Convert FB2 to EPUB`,
       body: `1. Open [BookConv's FB2 to EPUB converter](/convert/fb2-to-epub).
-2. Upload the .fb2 (most novels are under 1 MB — well inside the 50 MB free cap).
+2. Upload the .fb2 (most novels are under 1 MB — well inside the 10 MB free cap).
 3. The converter parses the XML, maps metadata to Dublin Core, and pulls out any embedded images.
 4. Download the EPUB.
 
@@ -46,7 +46,7 @@ Styling and genre tags may flatten slightly, because EPUB expresses them more lo
 - **Kindle works via Send to Kindle** — EPUB is accepted directly now.
 - **FB2 is never DRM-locked** — conversions almost never fail.
 - **Footnotes survive** — as tappable EPUB endnotes.
-- **Most novels are under 1 MB** — far under the 50 MB free cap.`
+- **Most novels are under 1 MB** — far under the 10 MB free cap.`
     }
   ]
 };
@@ -70,7 +70,7 @@ export const faqs = [
   },
   {
     question: `How many FB2 files can I convert at once?`,
-    answer: `Free accounts convert one file at a time up to 50 MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.`,
+    answer: `Free accounts convert one file at a time up to 10 MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.`,
   },
   {
     question: `Is FB2 the same as EPUB?`,

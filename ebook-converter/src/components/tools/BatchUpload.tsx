@@ -32,10 +32,28 @@ const BATCH_MAX_FILES = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILES || "20"
 const MAX_FILE_SIZE_MB = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILE_SIZE_MB || "10", 10);
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-// Conversions run in the browser against the single-file endpoint, a few at a
-// time. Low concurrency keeps us under the per-IP rate limit and keeps each
-// request well inside the serverless execution window.
-const CONCURRENCY = 2;
+// ── Metered vs local conversions ──────────────────────────────
+// Calibre is not installed on the serverless runtime, so only two conversions
+// are handled in-process: EPUB→ZIP (an EPUB already *is* a ZIP container) and
+// EPUB→TXT (pure-JS text extraction). Every other pair falls back to
+// CloudConvert, a third-party service on a metered plan.
+//
+// That free allowance is small (a couple dozen conversions per month) and
+// permits only ONE job at a time. Running a metered batch wide would both burn
+// the monthly pool in a single click and trip the concurrency cap, so metered
+// batches get a much tighter budget than local ones.
+const LOCAL_CONVERSIONS = new Set(["epub>zip", "epub>txt"]);
+
+function isLocalConversion(sourceFormat: string, targetFormat: string): boolean {
+  return LOCAL_CONVERSIONS.has(sourceFormat + ">" + targetFormat);
+}
+
+const METERED_MAX_FILES = parseInt(process.env.NEXT_PUBLIC_BATCH_METERED_MAX_FILES || "3", 10);
+
+// Local work is only bounded by our own rate limit; metered work must stay
+// single-threaded to respect the upstream one-job-at-a-time restriction.
+const LOCAL_CONCURRENCY = 2;
+const METERED_CONCURRENCY = 1;
 const MAX_RETRIES = 3;
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -129,6 +147,16 @@ function uniqueName(name: string, used: Set<string>): string {
   return candidate;
 }
 
+/** Error carrying the API's machine-readable code so callers can branch on it. */
+class ConversionError extends Error {
+  code?: string;
+  constructor(message: string, code?: string) {
+    super(message);
+    this.name = "ConversionError";
+    this.code = code;
+  }
+}
+
 /**
  * Convert a single file through the synchronous /api/convert endpoint.
  * Retries on 429 so one rate-limited request does not kill the whole batch.
@@ -159,7 +187,8 @@ async function convertOne(
       errData && typeof errData.error === "string"
         ? errData.error
         : "Conversion failed (HTTP " + res.status + ")";
-    throw new Error(msg);
+    const code = errData && typeof errData.code === "string" ? errData.code : undefined;
+    throw new ConversionError(msg, code);
   }
 
   return res.blob();
@@ -250,6 +279,18 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
       return;
     }
 
+    // Metered conversions draw on a limited third-party allowance shared by
+    // every visitor, so they are capped far below the overall batch limit.
+    const meteredFiles = validFiles.filter((f) => !isLocalConversion(f.sourceFormat, targetFormat));
+    if (meteredFiles.length > METERED_MAX_FILES) {
+      setError(
+        `Only ${METERED_MAX_FILES} files per batch for ${targetFormat.toUpperCase()} conversions ` +
+          `(you selected ${meteredFiles.length}). EPUB to TXT and EPUB to ZIP run locally and allow ` +
+          `up to ${BATCH_MAX_FILES} files per batch.`
+      );
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
     setBatchResult(null);
@@ -274,10 +315,32 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
     const resultFiles: BatchResult["files"] = [];
 
     // Concurrency-limited worker pool over the synchronous single-file endpoint.
+    // Once the upstream allowance is exhausted every remaining metered request
+    // would fail identically, so the first quota error stops the batch instead
+    // of making the user wait through a cascade of guaranteed failures.
     let cursor = 0;
+    let quotaExhausted = false;
+    const QUOTA_MESSAGE =
+      "Skipped — the conversion service hit its limit earlier in this batch.";
+
     const worker = async () => {
       while (cursor < validFiles.length) {
         const item = validFiles[cursor++];
+
+        if (quotaExhausted && !isLocalConversion(item.sourceFormat, targetFormat)) {
+          failed += 1;
+          markStatus(item.index, "failed", QUOTA_MESSAGE);
+          resultFiles.push({
+            index: item.index,
+            name: item.name,
+            size: item.size,
+            sourceFormat: item.sourceFormat,
+            status: "failed",
+            error: QUOTA_MESSAGE,
+          });
+          continue;
+        }
+
         try {
           const blob = await convertOne(item.file, item.sourceFormat, targetFormat);
           const outName = uniqueName(
@@ -298,6 +361,9 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         } catch (err: any) {
           failed += 1;
           const msg = err?.message || "Conversion failed";
+          if (err?.code === "CONVERSION_QUOTA_EXCEEDED") {
+            quotaExhausted = true;
+          }
           markStatus(item.index, "failed", msg);
           resultFiles.push({
             index: item.index,
@@ -311,7 +377,10 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
       }
     };
 
-    const poolSize = Math.min(CONCURRENCY, validFiles.length);
+    // A single metered file forces the whole batch single-threaded: the
+    // upstream service rejects parallel jobs on the free allowance.
+    const concurrency = meteredFiles.length > 0 ? METERED_CONCURRENCY : LOCAL_CONCURRENCY;
+    const poolSize = Math.min(concurrency, validFiles.length);
     await Promise.all(Array.from({ length: poolSize }, () => worker()));
 
     setConvertedFiles(collected);
@@ -359,6 +428,14 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   const failedCount = files.filter((f) => f.status === "failed").length;
   const overallProgress = files.length > 0 ? Math.round(((completedCount + failedCount) / files.length) * 100) : 0;
 
+  // How many of the currently selected files draw on the metered service, and
+  // therefore which of the two caps applies to this particular selection.
+  const meteredCount = files.filter(
+    (f) => !f.error && !isLocalConversion(f.sourceFormat, targetFormat)
+  ).length;
+  const meteredOverLimit = meteredCount > METERED_MAX_FILES;
+  const effectiveCap = meteredCount > 0 ? METERED_MAX_FILES : BATCH_MAX_FILES;
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -366,9 +443,41 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         <FileDown className="h-6 w-6 text-blue-600" />
         <div>
           <h2 className="text-xl font-bold text-gray-900">Batch Conversion</h2>
-          <p className="text-sm text-gray-500">Convert up to {BATCH_MAX_FILES} files at once — Pro feature</p>
+          <p className="text-sm text-gray-500">
+            Convert several files in one go — free while in beta
+          </p>
         </div>
       </div>
+
+      {/* Limits explainer — the two caps differ by format, so say so up front
+          instead of rejecting the batch after the user has picked files. */}
+      {!batchResult && (
+        <div
+          className={cn(
+            "rounded-xl border p-3 text-sm",
+            meteredOverLimit
+              ? "border-amber-300 bg-amber-50 text-amber-900"
+              : "border-gray-200 bg-gray-50 text-gray-600"
+          )}
+        >
+          <p>
+            <strong>EPUB to TXT</strong> and <strong>EPUB to ZIP</strong> are processed
+            on our own servers — up to {BATCH_MAX_FILES} files per batch.
+          </p>
+          <p className="mt-1">
+            Other formats go through a shared conversion service with a limited
+            allowance, so they run one at a time and are capped at{" "}
+            <strong>{METERED_MAX_FILES} files per batch</strong>.
+          </p>
+          {meteredOverLimit && (
+            <p className="mt-2 font-medium">
+              {meteredCount} selected files need the shared service. Remove{" "}
+              {meteredCount - METERED_MAX_FILES} of them, or switch the target format
+              to TXT or ZIP to convert more at once.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Drop zone */}
       {!batchResult && (
@@ -397,7 +506,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             Drag &amp; drop files here or click to browse
           </p>
           <p className="mb-4 text-sm text-gray-500">
-            {files.length}/{BATCH_MAX_FILES} files selected — Max {MAX_FILE_SIZE_MB}MB each
+            {files.length}/{effectiveCap} files selected — Max {MAX_FILE_SIZE_MB}MB each
           </p>
           <div className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] text-gray-400">
             {["EPUB", "PDF", "MOBI", "AZW3", "TXT", "DOCX", "RTF", "FB2", "DJVU"].map((fmt) => (
@@ -548,7 +657,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         <div className="flex items-center gap-3">
           <Button
             onClick={handleSubmit}
-            disabled={isSubmitting || validCount === 0}
+            disabled={isSubmitting || validCount === 0 || meteredOverLimit}
             className="min-w-[200px]"
             size="lg"
           >

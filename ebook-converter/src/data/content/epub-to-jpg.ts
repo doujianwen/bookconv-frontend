@@ -48,7 +48,7 @@ If you want text that stays adjustable and searchable, this isn't the conversion
     },
     {
       heading: 'How to Convert EPUB to JPG',
-      body: `**1. Upload.** Drag your .epub onto the drop zone or click to browse. Free accounts handle files up to 50MB, which covers basically every ebook — text-only novels are usually 1-3MB, and even illustrated books rarely break 30MB.
+      body: `**1. Upload.** Drag your .epub onto the drop zone or click to browse. Uploads are capped at 10MB. Text-only novels are usually 1-3MB and fit easily; heavily illustrated books can run well past the limit, so those need to be compressed first or handled with a desktop tool.
 
 **2. Let it render.** Calibre lays out the book, then each page gets rasterized at 300 DPI. This takes longer than a typical format conversion because you're generating hundreds of images, not rewriting one file. A short book: well under a minute. A 600-page reference work: a few minutes.
 
@@ -103,6 +103,6 @@ One rule that saves grief: **don't re-save a JPG repeatedly.** Each save runs co
     { q: 'Does JPG lose noticeable quality?', a: 'At quality settings above 85 the loss is essentially invisible on normal viewing — you would need to zoom well past 100% to spot the faint fuzz around letter edges. For photo-heavy pages the difference from PNG is undetectable while the file is several times smaller.' },
     { q: 'Why does my page count differ from the printed edition?', a: 'EPUB text reflows rather than sitting on fixed pages, so the converter has to generate page boundaries during layout. The resulting count reflects the conversion settings and will not match any specific print or Kindle edition.' },
     { q: 'Can I copy or search the text in the JPG files?', a: 'No — once a page is rasterized the text becomes pixels with no underlying text layer. Convert to PDF instead if you need selectable, searchable text, or run OCR on the images afterward.' },
-    { q: 'What is the file size limit for uploads?', a: 'Free accounts accept EPUB files up to 50MB, which comfortably covers even heavily illustrated books since most ebooks are only a few megabytes. Pro accounts raise that limit and add batch processing for converting multiple books at once.' }
+    { q: 'What is the file size limit for uploads?', a: 'Uploads are capped at 10MB. Most ebooks are only a few megabytes, so text-led titles fit comfortably. Image-heavy books are the exception and can exceed the ceiling — compress the images first, or convert those locally with desktop Calibre.' }
   ]
 };

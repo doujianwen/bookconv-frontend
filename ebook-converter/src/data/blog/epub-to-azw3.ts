@@ -24,7 +24,7 @@ Neither path adds DRM; both produce a file you own.`
     {
       heading: `How to Convert EPUB to AZW3`,
       body: `1. Open [BookConv's EPUB to AZW3 converter](/convert/epub-to-azw3).
-2. Upload your .epub (the free tier allows up to 50 MB).
+2. Upload your .epub (the free tier allows up to 10 MB).
 3. The converter uses the Calibre AZW3 engine to map typography, images, navigation, and metadata.
 4. Download the .azw3 and send it to your device.
 

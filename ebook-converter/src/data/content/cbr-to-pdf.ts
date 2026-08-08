@@ -49,7 +49,7 @@ So the rule of thumb is simple. If you read comics regularly on a device with a 
     },
     {
       heading: 'How to Convert CBR to PDF',
-      body: `**1. Drop your file in.** Drag the .cbr or .cbz onto the upload zone. Free accounts handle files up to 50MB, which comfortably covers a single standard issue. Full graphic novels and long manga volumes usually run larger — that's what Pro is for.
+      body: `**1. Drop your file in.** Drag the .cbr or .cbz onto the upload zone. Uploads are capped at 10MB. Comics are image-heavy, so this is the one category where the ceiling bites early — a single issue often lands above it, and full graphic novels almost always do. If your file is over the limit, compress the images first or use desktop [Calibre](https://calibre-ebook.com) for the large ones.
 
 **2. Let it process.** The converter extracts every image from the archive, sorts them by filename, and assembles them into a single PDF using ImageMagick. A 24-page issue finishes in seconds. A 200-page collection takes a minute or two, mostly spent on image processing.
 
@@ -101,6 +101,6 @@ If that seems large, it is — but it's the same pixels you already had, just in
     { q: 'How large will my PDF be?', a: 'Expect roughly the same size as your source archive plus some overhead — a 24-page issue typically lands at 30-80MB, and a 200-page graphic novel can run 150-400MB. PDF cannot compress already-compressed comic scans much further.' },
     { q: 'Will my pages come out in the right order?', a: 'Pages are sorted by their filenames inside the archive, which works correctly for the vast majority of CBR files since most use zero-padded numbering. If a comic was packed with names like page1, page2, page10, the sorting may place page10 too early.' },
     { q: 'Can I search the dialogue in the converted PDF?', a: 'No. CBR pages are images with no text layer, so speech bubbles are just pixels and stay that way in the PDF. Making them searchable would require running OCR separately, and comic lettering fonts give OCR engines a hard time.' },
-    { q: 'Is there a file size limit?', a: 'Free users can upload files up to 50MB, which fits most single issues. Full graphic novels and high-resolution manga volumes usually exceed that, so Pro accounts support larger uploads plus batch conversion for processing a whole series at once.' }
+    { q: 'Is there a file size limit?', a: 'Yes — 10MB per file. Comics hit that ceiling more often than any other format, since scanned pages are large. Slim or lower-resolution issues usually fit; full graphic novels and high-resolution manga volumes generally do not. For those, compress the images beforehand or convert locally with desktop Calibre.' }
   ]
 };

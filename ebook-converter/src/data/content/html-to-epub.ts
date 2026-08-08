@@ -41,7 +41,7 @@ In short, HTML is built for browsing. EPUB is built for sitting down and reading
     },
     {
       heading: 'How to Convert HTML to EPUB',
-      body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to roughly 50MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
+      body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to 10MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
 
 **2. We parse and restructure.** The converter reads your heading hierarchy to work out chapters, pulls the title and author from the document head where they exist, downloads any externally linked images so the book works offline, and rewrites inline styles into EPUB-safe CSS.
 
@@ -88,6 +88,6 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'Will images hosted on the web still show up?', a: 'Yes. Externally linked images are downloaded during conversion and packaged inside the EPUB, so your book keeps working offline even if the original site goes down.' },
     { q: 'What happens to buttons, forms, and JavaScript?', a: 'They do not survive as interactive elements. EPUB readers deliberately restrict scripting, so dynamic content is flattened into its static equivalent or removed.' },
     { q: 'How does the table of contents get built?', a: 'From your heading hierarchy. If your document uses real heading tags in a sensible order, you will get clean chapter navigation. Pages that fake headings with styled text will produce a flat, single-entry TOC.' },
-    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to around 50MB; Pro adds batch conversion and larger uploads for image-heavy documents.' }
+    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' }
   ]
 };

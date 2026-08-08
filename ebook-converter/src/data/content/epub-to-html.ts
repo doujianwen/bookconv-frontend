@@ -44,7 +44,7 @@ HTML has also outlived a dozen "next big thing" document formats. Pages written 
       heading: 'How to Convert EPUB to HTML',
       body: `Three steps, nothing to install.
 
-**1. Upload your EPUB.** Drag it onto the upload area or click to browse. Free accounts handle files up to about 50MB, which covers essentially every text-based ebook and plenty of illustrated ones.
+**1. Upload your EPUB.** Drag it onto the upload area or click to browse. Uploads are capped at 10MB, which covers essentially every text-based ebook. Image-heavy titles can exceed it.
 
 **2. Let the converter unpack it.** We read the OPF spine to get the true chapter order — alphabetical folder order is wrong surprisingly often — then extract the XHTML, rewrite image paths, and normalize the stylesheet.
 

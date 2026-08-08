@@ -43,7 +43,7 @@ The trade-off is the mirror image of MOBI's: PDF gives up flexibility to gain pe
     },
     {
       heading: 'How to Convert MOBI to PDF',
-      body: `**1. Upload your MOBI.** Drag it in or click to browse. Free accounts handle files up to about 50MB — well beyond what a typical MOBI needs, since even a long illustrated title usually sits under 10MB.
+      body: `**1. Upload your MOBI.** Drag it in or click to browse. Uploads are capped at 10MB, which suits most MOBI files — a full-length novel typically lands between 300KB and 2MB. Heavily illustrated titles are the ones that can run past the limit.
 
 **2. We render it to pages.** The converter unpacks the MOBI, rebuilds the HTML content, and lays it out onto real pages with sensible margins and readable type. Navigation points become PDF bookmarks so you can still jump between chapters.
 

@@ -52,7 +52,7 @@ The reason is practical: LibreOffice has the most forgiving DOC parser available
 
 **Your steps are simpler than that sounds:**
 
-1. Upload your .doc file — free accounts handle up to about 50MB, which is far more than any text document needs
+1. Upload your .doc file — free accounts handle up to 10MB, which is far more than any text document needs
 2. Wait while the pipeline runs
 3. Download the EPUB
 

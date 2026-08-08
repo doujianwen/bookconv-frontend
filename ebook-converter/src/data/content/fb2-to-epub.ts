@@ -47,7 +47,7 @@ And EPUB 3 supports things FB2 never got: proper accessibility semantics for scr
     },
     {
       heading: 'How to Convert FB2 to EPUB',
-      body: `**1. Upload the file.** Drag your .fb2 onto the drop zone. FB2 files are small — usually well under 1MB — so the 50MB free limit is never an issue unless the book is stuffed with illustrations. Zipped .fb2.zip files work too; they get unpacked automatically.
+      body: `**1. Upload the file.** Drag your .fb2 onto the drop zone. FB2 files are small — usually well under 1MB — so the 10MB free limit is never an issue unless the book is stuffed with illustrations. Zipped .fb2.zip files work too; they get unpacked automatically.
 
 **2. Conversion runs.** The XML tree is parsed, sections become XHTML chapter files, the metadata block maps onto EPUB's Dublin Core fields, and embedded base64 images are extracted into real image files. Typical novel: a few seconds.
 
@@ -101,6 +101,6 @@ Nothing meaningful is lost. You'll notice the book looks slightly different in a
     { q: 'Will my converted book work on a Kindle?', a: 'Yes. Amazon\'s Send to Kindle service accepts EPUB files directly now, so you can email the converted file to your Kindle address and it will appear on the device. Kindle has never supported FB2 natively, which is exactly why this conversion is needed.' },
     { q: 'Are FB2 files ever DRM-protected?', a: 'Essentially never. The FB2 specification includes no encryption or DRM mechanism, which is part of why it stayed popular among readers who dislike locked files, so conversions rarely fail for rights reasons.' },
     { q: 'Do footnotes and endnotes survive the conversion?', a: 'Yes. FB2 note bodies become linked EPUB endnotes, so tapping a note marker jumps to the note and most readers give you a back link to return to your place.' },
-    { q: 'How many FB2 files can I convert at once?', a: 'Free accounts convert one file at a time up to 50MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.' }
+    { q: 'How many FB2 files can I convert at once?', a: 'Free accounts convert one file at a time up to 10MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.' }
   ]
 };

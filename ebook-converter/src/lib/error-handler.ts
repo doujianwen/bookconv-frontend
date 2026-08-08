@@ -6,6 +6,7 @@ export type ErrorCode =
   | "DRM_PROTECTED"
   | "CONVERSION_FAILED"
   | "CONVERSION_UNAVAILABLE"
+  | "CONVERSION_QUOTA_EXCEEDED"
   | "CLOUD_CONVERT_ERROR"
   | "INTERNAL_ERROR"
   | "CORRUPT_INPUT"
@@ -40,6 +41,11 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   // Calibre not available errors
   'Calibre is not available': 'CONVERSION_UNAVAILABLE',
   'Calibre not found': 'CONVERSION_UNAVAILABLE',
+  // CloudConvert quota exhausted — MUST stay above the 'cloudconvert' catch-all
+  // below, otherwise the generic key swallows it. A 402 that survives the
+  // client's internal backoff means the monthly allowance is gone, not a
+  // transient concurrency bump, so callers should stop rather than retry.
+  'cloudconvert client error 402': 'CONVERSION_QUOTA_EXCEEDED',
   // CloudConvert errors (catch-all covers all "CloudConvert ..." messages)
   'cloudconvert': 'CLOUD_CONVERT_ERROR',
   // Node.js errors
@@ -66,6 +72,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
   'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
   'CONVERSION_UNAVAILABLE': { message: 'This conversion requires a Calibre-powered backend that is currently unavailable. Please use EPUB to TXT or EPUB to ZIP conversions, which work without Calibre.', retryable: false },
+  'CONVERSION_QUOTA_EXCEEDED': { message: 'This format is temporarily at capacity for today. EPUB to TXT and EPUB to ZIP still work right now — for other formats, please try again later.', retryable: false },
   'CLOUD_CONVERT_ERROR': { message: 'Conversion service error. Please try again later or use a different format combination.', retryable: true },
   'INTERNAL_ERROR': { message: 'An unexpected error occurred. Please try again later.', retryable: true },
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },

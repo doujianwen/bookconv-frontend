@@ -44,7 +44,7 @@ The tradeoff is honest: your PDF will be bigger. Sometimes a lot bigger. A 12MB 
       heading: 'How to Convert DjVu to PDF',
       body: `The process is straightforward — no software install, no account required for a single file.
 
-**1. Upload your file.** Drag the .djvu (or .djv) file onto the drop zone, or click to browse. Free accounts handle files up to 50MB, which covers the vast majority of scanned books since DjVu compresses so aggressively.
+**1. Upload your file.** Drag the .djvu (or .djv) file onto the drop zone, or click to browse. Uploads are capped at 10MB. DjVu compresses aggressively, so many scanned books fit — but long or high-resolution scans can still exceed the limit.
 
 **2. Wait for processing.** A 50-page document is usually done in under 15 seconds. A 600-page scanned encyclopedia can take a couple of minutes — the converter has to decode and re-encode every single page image.
 
@@ -94,7 +94,7 @@ The short version: keep the DjVu if disk space matters and you have a viewer you
     { q: 'Will the text be searchable in my converted PDF?', a: 'Only if the original DjVu file already had an OCR text layer — the converter carries that layer through into the PDF. If the DjVu is pure images with no hidden text, the PDF will be pure images too, and you would need a separate OCR step to make it searchable.' },
     { q: 'Why is my PDF so much bigger than the DjVu?', a: 'DjVu uses a specialized layered compression built specifically for scanned pages, and PDF has no direct equivalent. A 3-6x size increase is completely normal, and for very image-heavy documents it can be more.' },
     { q: 'Can I convert a multi-page DjVu book?', a: 'Yes. Entire multi-page documents convert into a single PDF with pages in the original order. Long books with hundreds of scanned pages take a few minutes because every page image has to be decoded and re-encoded.' },
-    { q: 'What is the file size limit?', a: 'Free users can upload files up to 50MB, which covers most DjVu books given how efficiently the format compresses. Pro accounts support larger uploads and batch conversion if you have a whole shelf to process.' },
+    { q: 'What is the file size limit?', a: 'Yes — 10MB per file. DjVu is efficient enough that many scanned books fit under that, but long or high-resolution scans can exceed it. For those, convert locally with a desktop tool.' },
     { q: 'Does converting reduce the scan quality?', a: 'The page images are carried over at their original resolution, so what you see in the DjVu is what you get in the PDF. Any softness or artifacts you notice were baked into the original scan by DjVu compression, not added during conversion.' }
   ]
 };

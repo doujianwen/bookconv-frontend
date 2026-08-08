@@ -41,7 +41,7 @@ If nobody is specifically demanding DOC, use our EPUB to DOCX converter instead.
     },
     {
       heading: 'How to Convert EPUB to DOC',
-      body: `**1. Upload your EPUB.** Drag and drop, or click to browse. Free accounts handle files up to 50MB — that covers essentially any text ebook, since even a 900-page novel rarely exceeds 5MB. Only illustration-heavy books get close to the limit.
+      body: `**1. Upload your EPUB.** Drag and drop, or click to browse. Free accounts handle files up to 10MB — that covers essentially any text ebook, since even a 900-page novel rarely exceeds 5MB. Only illustration-heavy books get close to the limit.
 
 **2. Conversion runs automatically.** The EPUB's HTML structure is parsed, chapters are merged into a single document flow, heading tags become Word heading styles, and images get embedded. Most books finish in under 30 seconds.
 
@@ -93,6 +93,6 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
     { q: 'Can I edit the converted DOC file?', a: 'Yes, fully. It opens and edits in Microsoft Word, LibreOffice Writer, WPS Office, Google Docs, and Apple Pages, though modern Word will show a compatibility-mode notice.' },
     { q: 'Will images survive the conversion?', a: 'Standard raster images like JPG and PNG are extracted and embedded in the document. SVG vector graphics and images positioned with CSS may be simplified or repositioned since DOC has no equivalent layout model.' },
     { q: 'My EPUB will not convert — what is wrong?', a: 'The most common cause is DRM. Books purchased from Kobo, Google Play Books, or similar stores are encrypted and cannot be read by any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without issue.' },
-    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 50MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' }
+    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 10MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' }
   ]
 };
