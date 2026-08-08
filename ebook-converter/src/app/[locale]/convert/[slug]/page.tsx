@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { KEYWORDS } from "@/lib/constants"
-import { getConversion, CONVERSION_MAP } from "@/lib/conversion-map"
+import { getConversion } from "@/lib/conversion-map"
 import { getDisplayName, getSlug } from "@/lib/utils"
 
 // Only slugs in generateStaticParams are served; any other /convert/* slug
@@ -27,13 +27,11 @@ interface ToolPageProps {
 }
 
 export async function generateStaticParams() {
-  // Emit slugs directly from CONVERSION_MAP so the statically-generated
-  // convert pages are guaranteed 1:1 with the sitemap (which derives the
-  // same way). Any other /convert/* slug returns a real 404 (dynamicParams=false).
-  return Object.keys(CONVERSION_MAP).map((key) => {
-    const [source, target] = key.split("-")
-    return { slug: `${source}-to-${target}` }
-  })
+  // Emit canonical content slugs from CONTENT_MAP so the statically-generated
+  // convert pages are guaranteed 1:1 with the sitemap (which derives the same
+  // way) and with the actual content files. Any other /convert/* slug returns
+  // a real 404 (dynamicParams=false).
+  return Object.keys(CONTENT_MAP).map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {

@@ -2,15 +2,14 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getHubTags } from '@/lib/internal-links'
 import { getAllGuides } from '@/data/guides'
-import { CONVERSION_MAP } from '@/lib/conversion-map'
+import { CONTENT_MAP } from '@/data/content'
 
-// Derive every supported conversion URL from CONVERSION_MAP so the sitemap
-// can never drift out of sync with the actual convert routes (which use
-// dynamicParams=false and generateStaticParams from the same map).
-const CONVERSION_PAGES = Object.keys(CONVERSION_MAP).map((key) => {
-  const [source, target] = key.split('-')
-  return `${source}-to-${target}`
-})
+// Derive every supported conversion URL directly from CONTENT_MAP — the
+// canonical source of truth for /convert/[slug] pages (generateStaticParams
+// in the convert route uses the same map). Using CONTENT_MAP keys directly
+// avoids the single-hyphen CONVERSION_MAP bug where "epub-docx" was turned
+// into the wrong slug "epub-to-docx" instead of the real "epub-to-word".
+const CONVERSION_PAGES = Object.keys(CONTENT_MAP)
 
 const BLOG_POSTS = getAllPosts()
 const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug)
