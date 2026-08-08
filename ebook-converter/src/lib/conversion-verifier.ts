@@ -205,9 +205,12 @@ export async function verifyConversion(
 
   const inText = inArchive?.text ?? inPlain ?? '';
   const outText = outArchive?.text ?? outPlain ?? '';
+  // 文本比对仅在输出侧可提取文本时才有意义：pdf/mobi/azw3 等格式输出侧
+  // 无可用文本提取（魔数校验已证明格式正确），若强行比对会误报 content-loss。
+  const outTextExtractable = outArchive !== null || outPlain !== null;
 
   // 攻击 2：把死胡同当成有效路径？—— Calibre 报成功但产出垃圾（文本大量丢失）
-  if (inText.length > 200) {
+  if (inText.length > 200 && outTextExtractable) {
     const ratio = outText.length / inText.length;
     if (outText.length < inText.length * 0.5) {
       findings.push({

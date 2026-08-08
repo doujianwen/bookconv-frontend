@@ -364,6 +364,20 @@ export async function executeConversion(
           );
           const ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
           const outBuffer = Buffer.from(cloudResult.base64Data, 'base64');
+          // Pure-critic gate: verify CloudConvert output before delivery
+          // (parity with the Calibre path — one veto on CRITICAL findings).
+          writeFileSync(outputPath, outBuffer);
+          const verdict = await verifyConversion(inputPath, outputPath, sourceFormat, targetFormat);
+          if (!verdict.pass) {
+            const detail = verdict.findings
+              .filter((f) => f.severity === 'critical')
+              .map((f) => `${f.id}: ${f.message}`)
+              .join('; ');
+            throw new Error(`Conversion output failed verification: ${detail}`);
+          }
+          for (const w of verdict.findings.filter((f) => f.severity === 'warn')) {
+            log.conversion.warn('Conversion verification warning', { jobId, id: w.id, message: w.message });
+          }
           await cleanupDir(jobDir);
           return {
             base64Data: cloudResult.base64Data,
