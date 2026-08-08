@@ -1,7 +1,23 @@
-"use client"
-
-import { Button } from '@/components/ui/button'
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  const prefix = locale === 'es' ? '/es' : ''
+  return {
+    title: 'Tutorial — Convert Ebooks Online Step by Step',
+    description:
+      'Learn how to convert ebooks online in seconds: open BookConv, pick a format, upload your file, and download the result. No registration required.',
+    alternates: {
+      canonical: `https://www.bookconv.com${prefix}/tutorial`,
+      languages: {
+        en: '/tutorial',
+        es: '/es/tutorial',
+        'x-default': '/tutorial',
+      },
+    },
+  }
+}
 
 export default function TutorialPage() {
   return (
