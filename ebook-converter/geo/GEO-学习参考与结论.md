@@ -65,9 +65,11 @@ bookconv.com 的 GEO 基础（llms.txt 全量、GPTBot/ClaudeBot/CCBot 放行、
 
 > 根因细节：转换页 FAQ 逻辑「有自定义 faq 就用自定义、否则用默认」，安全提问只在默认里 → 27 个内容文件全有自定义 faq 且 0 个含安全提问 → 全部漏掉。
 
-### 2.4 竞品真实曝光（`exposure-report.md`，用户手动测）
-- **真实数据替代旧「模拟表」**。bookconv.com 已被 Gemini 引用（如 `lit-to-epub`），证明现网 GEO 基础开始生效。
-- 探针受配额限制：Gemini 免费层额度 / OpenAI 需充值解锁 web search。脚本退避已加但治标不治本（账户侧问题）。
+### 2.4 曝光探针脚本与数据状态（geo/geo-exposure-probe.py）
+- **脚本已就绪**：支持 `probe`（Gemini + ChatGPT 抓引用）、`expand`（Gemini 自动扩词）、`brave`（Brave 搜索）三模式，含 429 退避、`.env` 加载、`--demo` 兜底。
+- **关键纠偏**：`exposure-report.md` 实为 `--demo` 产物（表头"问题数 28 / 引用 4 条"，4 条与 `demo_rows()` 硬编码样例逐字一致，**非真实 API 返回**）。据此得出的"bookconv 已被 Gemini 引用"等结论不成立。
+- **真实运行未产出有效数据**：Gemini 免费层当日配额耗尽（全 429）；ChatGPT 免费层 `web_search_preview` 需 Tier≥1（全 429）+ 沙箱网络对 OpenAI 出站有 SSL 截断。脚本调用/收尾逻辑本身已验证完好（单问题隔离实跑 exit 0）。
+- 待配额解锁（Gemini 等重置 / OpenAI 充值升 Tier≥1）后实跑，方有真实曝光数据。
 
 ---
 

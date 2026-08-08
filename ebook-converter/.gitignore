@@ -27,6 +27,7 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.js
+!geo/geo-exposure-probe.py
 !next.config.*
 !tailwind.config.*
 !postcss.config.*
