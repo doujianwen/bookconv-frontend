@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useCallback, useState, useRef } from "react";
+import JSZip from "jszip";
 import {
   Upload,
   File as FileIcon,
@@ -22,10 +23,22 @@ import { cn, formatBytes } from "@/lib/utils";
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map";
 import { Button } from "@/components/ui/button";
 
-// ── Pro limits ────────────────────────────────────────────────
-const BATCH_MAX_FILES = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILES || "50", 10);
-const MAX_FILE_SIZE_MB = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILE_SIZE_MB || "50", 10);
+// ── Limits ────────────────────────────────────────────────────
+// Defaults are deliberately aligned with what the backend actually enforces:
+//   - /api/convert rejects files above MAX_FILE_SIZE_MB (server default 10MB)
+//   - /api/convert is rate limited to 20 requests / 60s per IP
+// Keeping the batch cap at or below that window avoids guaranteed 429 storms.
+const BATCH_MAX_FILES = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILES || "20", 10);
+const MAX_FILE_SIZE_MB = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILE_SIZE_MB || "10", 10);
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+// Conversions run in the browser against the single-file endpoint, a few at a
+// time. Low concurrency keeps us under the per-IP rate limit and keeps each
+// request well inside the serverless execution window.
+const CONCURRENCY = 2;
+const MAX_RETRIES = 3;
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // ── Types ─────────────────────────────────────────────────────
 interface BatchFileItem {
@@ -43,21 +56,24 @@ interface BatchFileItem {
 interface BatchResult {
   batchId: string;
   total: number;
-  queued: number;
-  processing: number;
   completed: number;
   failed: number;
   files: Array<{
     index: number;
     name: string;
+    outputName?: string;
     size: number;
     sourceFormat: string;
     status: string;
     error?: string;
-    result?: { extension: string; mimeType: string; fileSize?: number };
   }>;
-  zipUrl?: string;
   message: string;
+}
+
+/** A finished conversion held in memory, ready to be zipped locally. */
+interface ConvertedFile {
+  blob: Blob;
+  filename: string;
 }
 
 // ── Format icon helper ────────────────────────────────────────
@@ -87,6 +103,68 @@ function statusConfig(status: string) {
   }
 }
 
+// ── Conversion helpers ────────────────────────────────────────
+/** Extension the API actually produces for a given target format. */
+function outputExtension(targetFormat: string): string {
+  // The HTML target is delivered as an HTMLZ archive, matching the single-file tool page.
+  return targetFormat === "html" ? "htmlz" : targetFormat;
+}
+
+/** Guarantee every entry inside the ZIP has a unique name. */
+function uniqueName(name: string, used: Set<string>): string {
+  if (!used.has(name)) {
+    used.add(name);
+    return name;
+  }
+  const dot = name.lastIndexOf(".");
+  const stem = dot === -1 ? name : name.slice(0, dot);
+  const ext = dot === -1 ? "" : name.slice(dot);
+  let n = 2;
+  let candidate = stem + "-" + n + ext;
+  while (used.has(candidate)) {
+    n += 1;
+    candidate = stem + "-" + n + ext;
+  }
+  used.add(candidate);
+  return candidate;
+}
+
+/**
+ * Convert a single file through the synchronous /api/convert endpoint.
+ * Retries on 429 so one rate-limited request does not kill the whole batch.
+ */
+async function convertOne(
+  file: File,
+  sourceFormat: string,
+  targetFormat: string,
+  attempt = 0,
+): Promise<Blob> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("source_format", sourceFormat);
+  formData.append("target_format", targetFormat);
+
+  const res = await fetch("/api/convert", { method: "POST", body: formData });
+
+  if (res.status === 429 && attempt < MAX_RETRIES) {
+    const retryAfter = parseInt(res.headers.get("Retry-After") || "0", 10);
+    const waitMs = retryAfter > 0 ? retryAfter * 1000 : Math.min(30000, 5000 * Math.pow(2, attempt));
+    await sleep(waitMs);
+    return convertOne(file, sourceFormat, targetFormat, attempt + 1);
+  }
+
+  if (!res.ok) {
+    const errData = await res.json().catch(() => null);
+    const msg =
+      errData && typeof errData.error === "string"
+        ? errData.error
+        : "Conversion failed (HTTP " + res.status + ")";
+    throw new Error(msg);
+  }
+
+  return res.blob();
+}
+
 // ── Main Component ────────────────────────────────────────────
 export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (result: BatchResult) => void }) {
   const [files, setFiles] = useState<BatchFileItem[]>([]);
@@ -96,6 +174,8 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   const [batchResult, setBatchResult] = useState<BatchResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // In-memory blobs from the most recent batch, packaged into a ZIP on the client.
+  const [convertedFiles, setConvertedFiles] = useState<ConvertedFile[]>([]);
 
   // ── File management ───────────────────────────────────────
   const addFiles = useCallback((newFiles: FileList | File[]) => {
@@ -154,6 +234,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   const clearAll = useCallback(() => {
     setFiles([]);
     setBatchResult(null);
+    setConvertedFiles([]);
     setError(null);
   }, []);
 
@@ -172,55 +253,105 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
     setIsSubmitting(true);
     setError(null);
     setBatchResult(null);
+    setConvertedFiles([]);
 
-    try {
-      const formData = new FormData();
-      for (const item of validFiles) {
-        formData.append("files", item.file);
-      }
-      formData.append("target_format", targetFormat);
-
-      const res = await fetch("/api/convert/batch", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data: BatchResult = await res.json();
-      setBatchResult(data);
-
-      // Update local file statuses
+    // Flip every valid item to "processing" before the loop starts.
+    const markStatus = (idx: number, status: BatchFileItem["status"], errMsg?: string) =>
       setFiles((prev) =>
-        prev.map((f) => {
-          const serverFile = data.files.find((sf) => sf.index === f.index);
-          if (serverFile) {
-            return { ...f, status: serverFile.status as BatchFileItem["status"], error: serverFile.error, progress: serverFile.status === "completed" ? 100 : 0 };
-          }
-          return f;
-        })
+        prev.map((f) =>
+          f.index === idx
+            ? { ...f, status, error: errMsg, progress: status === "completed" || status === "failed" ? 100 : 0 }
+            : f
+        )
       );
 
-      onConversionComplete?.(data);
-    } catch (err: any) {
-      setError(err.message || "Batch conversion failed.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    validFiles.forEach((f) => markStatus(f.index, "processing"));
+
+    const collected: ConvertedFile[] = [];
+    const usedNames = new Set<string>();
+    let completed = 0;
+    let failed = 0;
+    const resultFiles: BatchResult["files"] = [];
+
+    // Concurrency-limited worker pool over the synchronous single-file endpoint.
+    let cursor = 0;
+    const worker = async () => {
+      while (cursor < validFiles.length) {
+        const item = validFiles[cursor++];
+        try {
+          const blob = await convertOne(item.file, item.sourceFormat, targetFormat);
+          const outName = uniqueName(
+            item.name.replace(/\.[^.]+$/, "") + "." + outputExtension(targetFormat),
+            usedNames
+          );
+          collected.push({ blob, filename: outName });
+          completed += 1;
+          markStatus(item.index, "completed");
+          resultFiles.push({
+            index: item.index,
+            name: item.name,
+            outputName: outName,
+            size: blob.size,
+            sourceFormat: item.sourceFormat,
+            status: "completed",
+          });
+        } catch (err: any) {
+          failed += 1;
+          const msg = err?.message || "Conversion failed";
+          markStatus(item.index, "failed", msg);
+          resultFiles.push({
+            index: item.index,
+            name: item.name,
+            size: item.size,
+            sourceFormat: item.sourceFormat,
+            status: "failed",
+            error: msg,
+          });
+        }
+      }
+    };
+
+    const poolSize = Math.min(CONCURRENCY, validFiles.length);
+    await Promise.all(Array.from({ length: poolSize }, () => worker()));
+
+    setConvertedFiles(collected);
+
+    const batchId = "batch-" + Date.now().toString(36);
+    const message =
+      failed === 0
+        ? `All ${completed} file(s) converted successfully.`
+        : `${completed} of ${validFiles.length} file(s) converted. ${failed} failed.`;
+
+    const result: BatchResult = {
+      batchId,
+      total: validFiles.length,
+      completed,
+      failed,
+      files: resultFiles,
+      message,
+    };
+    setBatchResult(result);
+    onConversionComplete?.(result);
+    setIsSubmitting(false);
   }, [files, targetFormat, onConversionComplete]);
 
-  // ── Download ZIP ──────────────────────────────────────────
+  // ── Download ZIP (built locally, no server round-trip) ────
   const handleDownloadZip = useCallback(async () => {
-    if (!batchResult?.zipUrl) return;
-    const res = await fetch(batchResult.zipUrl);
-    const blob = await res.blob();
+    if (convertedFiles.length === 0) return;
+    const zip = new JSZip();
+    for (const cf of convertedFiles) {
+      zip.file(cf.filename, cf.blob);
+    }
+    const blob = await zip.generateAsync({ type: "blob" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `converted-batch-${batchResult.batchId.slice(0, 8)}.zip`;
+    a.download = `converted-batch-${(batchResult?.batchId || Date.now().toString(36)).slice(0, 8)}.zip`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  }, [batchResult]);
+  }, [convertedFiles, batchResult]);
 
   // ── Render ────────────────────────────────────────────────
   const validCount = files.filter((f) => !f.error).length;

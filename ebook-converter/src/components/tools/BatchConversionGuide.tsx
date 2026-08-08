@@ -28,13 +28,13 @@ export function BatchConversionGuide({ sourceFormat, targetFormat }: BatchConver
           </div>
 
           <p className="mt-2 text-sm text-gray-600">
-            Upload up to <strong>50 files</strong> at once and convert them all to {targetFormat}.
+            Upload up to <strong>20 files</strong> at once and convert them all to {targetFormat}.
             Perfect for building your entire ebook library.
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500">
             <span className="flex items-center gap-1">
-              <span className="text-green-600">✓</span> Up to 50 files per batch
+              <span className="text-green-600">✓</span> Up to 20 files per batch
             </span>
             <span className="flex items-center gap-1">
               <span className="text-green-600">✓</span> ZIP download
@@ -47,7 +47,7 @@ export function BatchConversionGuide({ sourceFormat, targetFormat }: BatchConver
 
         {/* CTA */}
         <div className="shrink-0">
-          <Link href="/pricing">
+          <Link href="/batch">
             <Button className="gap-2 bg-blue-600 text-white hover:bg-blue-700">
               <Sparkles className="h-4 w-4" />
               Upgrade to Pro — $5/mo

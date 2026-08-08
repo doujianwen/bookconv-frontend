@@ -75,9 +75,13 @@ EPUB, AZW3, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, DJVU, JPG, PNG,
 - [TXT to EPUB: Turn a Plain Text File into a Real Ebook with a TOC](https://www.bookconv.com/guide/txt-to-epub-build-ebook)
 - [Calibre Alternative: Free Online Ebook Converter, No Install](https://www.bookconv.com/guide/calibre-alternative)
 - [AI Ebook Converter: Preparing Ebooks for NotebookLM, ChatGPT & More](https://www.bookconv.com/guide/ai-ebook-converter)
-- [Batch Ebook Converter: How to Convert Many Files (and What BookConv Does)](https://www.bookconv.com/guide/batch-converter)
+- [Batch Ebook Converter: Convert Many Files with BookConv (and When to Use Calibre)](https://www.bookconv.com/guide/batch-converter)
 - [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](https://www.bookconv.com/guide/kindle-formats)
 - [Best Ebook Converter in 2026: How to Choose (Not Just a List)](https://www.bookconv.com/guide/best-ebook-converter)
+
+## Tools
+- [Batch Ebook Converter — convert up to 20 files at once and download a ZIP](https://www.bookconv.com/batch)
+- [Pricing and plans](https://www.bookconv.com/pricing)
 
 ## About
 BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
