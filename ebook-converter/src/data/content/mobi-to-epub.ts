@@ -1,19 +1,29 @@
 export const slug = 'mobi-to-epub';
-export const title = 'Free MOBI to EPUB Converter — No Sign-up';
+export const title = 'Convert MOBI to EPUB — Free Online Tool';
 export const metaDescription = 'Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images & metadata intact and read your books on any device. Convert in seconds.';
 export const level = 'S' as const;
-export const wordCount = 2600;
+export const wordCount = 2800;
 
 export const content = {
   hero: {
-    title: 'MOBI to EPUB — Modernize Your Kindle Library',
-    subtitle: 'Free MOBI to EPUB converter. No sign-up, no watermarks — keeps your chapters, images, and metadata intact. Convert in seconds.'
+    title: 'Convert MOBI to EPUB Free — Read Your Books on Any Device',
+    subtitle: 'Free MOBI to EPUB converter. No sign-up, no watermarks — keeps your chapters, images, and metadata intact. Convert MOBI to EPUB in seconds.'
   },
 
   sections: [
     {
+      heading: 'How to Convert MOBI to EPUB Online',
+      body: `Converting a MOBI file to EPUB takes seconds with the tool above — no software to install, no account to create, and no watermark on your book. Here is the whole flow:
+
+1. Upload your .mobi file using the converter above (up to 10 MB free).
+2. Wait a few seconds while the Calibre engine parses the MOBI structure and rebuilds it as EPUB.
+3. Download your converted .epub and open it in Apple Books, Google Play Books, Kobo, Nook, Moon+ Reader, ReadEra, or any EPUB-compatible reader.
+
+The conversion runs entirely in your browser session — nothing is queued, nothing is emailed, and the file is deleted after processing. If you are converting a whole library of old Kindle books, repeat the same steps per file or check our batch conversion page.`
+    },
+    {
       heading: 'Why Convert MOBI to EPUB?',
-      body: `MOBI is an aging format that served Kindle users well for over a decade, but it has significant limitations that EPUB solves:
+      body: `When you convert MOBI to EPUB, your book stops being locked to Kindle and becomes readable on virtually every device and reading app on the market. MOBI is an aging format that served Kindle users well for over a decade, but it has significant limitations that EPUB solves:
 
 **1. Cross-Platform Compatibility**
 EPUB works on virtually every e-reader and reading app: Apple Books, Google Play Books, Kobo, Nook, Android apps (Moon+ Reader, ReadEra), Windows readers, and more. MOBI only works reliably on Kindle devices.
@@ -101,6 +111,9 @@ EPUB is objectively superior in almost every metric. Converting MOBI to EPUB fut
   ],
 
   faq: [
+    { q: 'How do I convert MOBI to EPUB for free?', a: 'Upload your .mobi file in the converter above, wait a few seconds, and download the converted .epub. No sign-up, no watermark, and no cost — the tool runs entirely in your browser session.' },
+    { q: 'Do I need Calibre to convert MOBI to EPUB?', a: 'No. The converter above runs the same Calibre engine on our server, so you get professional conversion quality without installing anything. Your file is processed in the browser session and deleted afterward.' },
+    { q: 'Is converting MOBI to EPUB safe and private?', a: 'Yes. Your file is uploaded only to be converted, processed in a single request, and deleted immediately after — it is never stored, shared, or used for anything else. No account or email is required.' },
     { q: 'Will I lose any content during conversion?', a: 'No. All text, images, and basic formatting are fully preserved. The conversion actually improves readability by adding proper reflowable text support and enhanced typography.' },
     { q: 'Can I read the converted EPUB on my Kindle?', a: 'Modern Kindles (2022+) can receive EPUB files via Send to Kindle service and automatically convert them. Older Kindles may need Calibre to convert EPUB back to AZW3/MOBI.' },
     { q: 'Does conversion preserve highlights and notes?', a: 'Basic highlights may be partially preserved depending on the source MOBI file. However, EPUB annotation systems are far superior, and you can add new highlights and notes in the converted file.' },
