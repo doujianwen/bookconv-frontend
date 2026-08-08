@@ -1,6 +1,6 @@
 // src/app/api/convert/[jobId]/status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getJobStatus } from '@/lib/queue';
+import { getJobStatusSafe } from '@/lib/queue';
 import { sanitizeError, mapErrorCode, getFriendlyMessage } from "@/lib/error-handler";
 
 export async function GET(
@@ -10,7 +10,7 @@ export async function GET(
   const { jobId } = await params;
 
   try {
-    const status = await getJobStatus(jobId);
+    const status = await getJobStatusSafe(jobId);
 
     if (!status) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });

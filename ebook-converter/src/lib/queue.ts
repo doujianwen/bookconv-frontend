@@ -462,6 +462,34 @@ export async function getJobStatus(jobId: string) {
   };
 }
 
+/**
+ * Fail-safe wrapper around getJobStatus.
+ *
+ * On Vercel the Redis URL is configured but the server is frequently
+ * unreachable; ioredis then retries the connection forever, so a direct
+ * getJobStatus() call can hang the entire request (504 / client timeout).
+ * This races the call against a hard timeout and returns null on timeout OR
+ * error - callers already map null to HTTP 404 ('Job not found'), which is
+ * the correct response for a missing/unreachable job. On reachable Redis the
+ * real status is returned normally.
+ */
+const JOB_STATUS_TIMEOUT_MS = 4000;
+export async function getJobStatusSafe(
+  jobId: string,
+): Promise<Awaited<ReturnType<typeof getJobStatus>> | null> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), JOB_STATUS_TIMEOUT_MS);
+  });
+  // Attach a catch so a late rejection from the abandoned job promise can
+  // never surface as an unhandled rejection after we've already returned.
+  const jobPromise = getJobStatus(jobId).catch(() => null);
+  try {
+    return await Promise.race([jobPromise, timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
 
 // Clean orphaned temp dirs on startup
 cleanupOrphanedTempDirs().catch(() => {});

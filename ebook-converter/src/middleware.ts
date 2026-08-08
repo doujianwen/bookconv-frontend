@@ -102,6 +102,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - sitemap.xml, robots.txt (metadata files — must bypass i18n rewrite)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html)$).*)',
+    '/((?!api|auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html)$).*)',
   ],
 };

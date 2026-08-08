@@ -1,6 +1,6 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
 import { sanitizeError, mapErrorCode } from "@/lib/error-handler";
-import { getJobStatus } from '@/lib/queue';
+import { getJobStatusSafe } from '@/lib/queue';
 import { uploadToR2, isR2Configured } from '@/lib/storage/r2';
 import { canAccessResult } from '@/lib/auth';
 import { saveToLocal } from '@/lib/storage/local';
@@ -15,7 +15,7 @@ export async function GET(
   const { jobId } = await params;
 
   try {
-    const status = await getJobStatus(jobId);
+    const status = await getJobStatusSafe(jobId);
 
     if (!status) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
