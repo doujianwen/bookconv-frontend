@@ -1,5 +1,7 @@
 import { getAllPosts, getPostBySlug } from "@/data/blog"
 import type { BlogPostMeta } from "@/data/blog/types"
+import { getAllGuides, getGuideBySlug } from "@/data/guides"
+import type { GuideMeta } from "@/data/guides/types"
 
 export interface RelatedPostRef {
   title: string
@@ -169,4 +171,160 @@ export function getPostsByTagSlug(slug: string): BlogPostMeta[] {
 export function isHubTag(tag: string): boolean {
   const s = slugifyTag(tag)
   return getHubTags().some((h) => h.slug === s)
+}
+
+// ---------------------------------------------------------------------------
+// Guide (hub) related-link helpers — close the Blog <-> Guide <-> Convert
+// triangle with contextual (in-content) links, not footer soup.
+// ---------------------------------------------------------------------------
+
+export interface RelatedGuideRef {
+  title: string
+  slug: string
+  href: string
+  excerpt: string
+  tags: string[]
+}
+
+function toGuideRef(g: GuideMeta): RelatedGuideRef {
+  return {
+    title: g.title,
+    slug: g.slug,
+    href: "/guide/" + g.slug,
+    excerpt: g.problem || "",
+    tags: g.tags || [],
+  }
+}
+
+/**
+ * Related guides for a conversion page, matched by source/target format and tags.
+ * Wires the "Related Guides" widget on /convert/* pages (was previously
+ * mislabeled and only showed blog posts).
+ */
+export function getRelatedGuidesForConversion(
+  source: string,
+  target: string,
+  limit = 3,
+): RelatedGuideRef[] {
+  const src = source.toLowerCase()
+  const tgt = target.toLowerCase()
+  const scored = getAllGuides().map((g) => {
+    let score = 0
+    const title = g.title.toLowerCase()
+    if (title.includes(src)) score += 2
+    if (title.includes(tgt)) score += 2
+    const gs = (g.formats?.source || "").toLowerCase()
+    const gt = (g.formats?.target || "").toLowerCase()
+    if (gs === src || gt === tgt) score += 3
+    if (gs === tgt || gt === src) score += 2
+    for (const tag of g.tags || []) {
+      const t = tag.toLowerCase()
+      if (t === src || t === tgt) score += 3
+      else if (t.includes(src) || t.includes(tgt)) score += 1
+    }
+    return { g, score }
+  })
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => toGuideRef(s.g))
+}
+
+/**
+ * Related guides for a blog post, matched by shared specific tags + format.
+ * Powers the "Related Guides" widget on /blog/* pages (blog -> guide link).
+ */
+export function getRelatedGuidesForBlogPost(
+  currentSlug: string,
+  limit = 3,
+): RelatedGuideRef[] {
+  const current = getPostBySlug(currentSlug)
+  if (!current) return []
+  const curTags = current.tags.map((t) => t.toLowerCase()).filter((t) => !GENERIC_TAGS.has(t))
+  const scored = getAllGuides().map((g) => {
+    const gTags = (g.tags || []).map((t) => t.toLowerCase()).filter((t) => !GENERIC_TAGS.has(t))
+    const shared = gTags.filter((t) => curTags.includes(t)).length
+    let score = shared * 2
+    const title = g.title.toLowerCase()
+    for (const ct of curTags) {
+      if (ct.length > 2 && title.includes(ct)) score += 1
+    }
+    const gs = (g.formats?.source || "").toLowerCase()
+    const gt = (g.formats?.target || "").toLowerCase()
+    if (curTags.includes(gs) || curTags.includes(gt)) score += 2
+    return { g, score }
+  })
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => toGuideRef(s.g))
+}
+
+/**
+ * Related blog posts for a guide page, matched by format + shared specific tags.
+ * Powers the "Related blog posts" widget on /guide/* pages (guide -> blog link).
+ */
+export function getRelatedBlogPostsForGuide(
+  formats: { source: string; target: string } | undefined,
+  tags: string[],
+  limit = 3,
+): RelatedPostRef[] {
+  const src = (formats?.source || "").toLowerCase()
+  const tgt = (formats?.target || "").toLowerCase()
+  const gTags = (tags || []).map((t) => t.toLowerCase()).filter((t) => !GENERIC_TAGS.has(t))
+  const scored = getAllPosts()
+    .filter((p) => !DEV_POST_SLUGS.has(p.slug))
+    .map((p) => {
+      let score = 0
+      const title = p.title.toLowerCase()
+      if (title.includes(src)) score += 2
+      if (title.includes(tgt)) score += 2
+      for (const tag of p.tags) {
+        const t = tag.toLowerCase()
+        if (t === src || t === tgt) score += 3
+        else if (t.includes(src) || t.includes(tgt)) score += 1
+        if (gTags.includes(t) && !GENERIC_TAGS.has(t)) score += 2
+      }
+      return { p, score }
+    })
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => toRef(s.p))
+}
+
+/**
+ * Related guides for a guide page (replaces the old "More guides" dump that
+ * linked ALL other guides). Ranked by shared specific tags + format match;
+ * capped at `limit` to avoid link dilution (R15).
+ */
+export function getRelatedGuides(currentSlug: string, limit = 5): RelatedGuideRef[] {
+  const current = getGuideBySlug(currentSlug)
+  if (!current) return []
+  const curTags = (current.tags || []).map((t) => t.toLowerCase()).filter((t) => !GENERIC_TAGS.has(t))
+  const cs = (current.formats?.source || "").toLowerCase()
+  const ct = (current.formats?.target || "").toLowerCase()
+  const scored = getAllGuides()
+    .filter((g) => g.slug !== currentSlug)
+    .map((g) => {
+      const gTags = (g.tags || []).map((t) => t.toLowerCase()).filter((t) => !GENERIC_TAGS.has(t))
+      const shared = gTags.filter((t) => curTags.includes(t)).length
+      let score = shared * 2
+      const title = g.title.toLowerCase()
+      for (const ctg of curTags) {
+        if (ctg.length > 2 && title.includes(ctg)) score += 1
+      }
+      const gs = (g.formats?.source || "").toLowerCase()
+      const gt = (g.formats?.target || "").toLowerCase()
+      if ((gs && gs === cs) || (gt && gt === ct)) score += 3
+      return { g, score }
+    })
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => toGuideRef(s.g))
 }

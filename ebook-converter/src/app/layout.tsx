@@ -158,8 +158,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </Link>
               <nav aria-label='Primary navigation' className='flex items-center gap-3 text-sm text-gray-600'>
                 <Link href={locale === 'es' ? '/es' : '/'} className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
-                <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
+                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
                 <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
+                <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
+                <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
                 <LocaleSwitcher />
                 <LoginButton />
               </nav>
@@ -171,7 +173,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
             <div className='mx-auto max-w-5xl space-y-2 px-4'>
               <p>{t('common.siteName') || 'BookConv'} -- {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are automatically deleted within 1 hour.'}</p>
-              <nav aria-label='Footer navigation' className='flex justify-center gap-4'>
+              <nav aria-label='Footer navigation' className='flex flex-wrap justify-center gap-4'>
+                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
+                <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
+                <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-gray-700'>{t('common.guide') || 'Guides'}</Link>
                 <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
                 <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>

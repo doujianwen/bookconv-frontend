@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
-import { getRelatedPosts, isHubTag, slugifyTag } from "@/lib/internal-links"
+import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
 
 interface BlogPostData {
   slug: string
@@ -96,6 +96,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
     const postUrl = `${baseUrl}${isEs ? "/es" : ""}/blog/${post.slug}`
     const { source, target } = extractSourceTarget(displayTitle)
     const relatedPosts = getRelatedPosts(post.slug, 3)
+    const relatedGuides = getRelatedGuidesForBlogPost(post.slug, 3)
 
     const allPosts = getAllPosts()
     const curIdx = allPosts.findIndex((p) => p.slug === post.slug)
@@ -252,6 +253,20 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
                 <Link key={rp.slug} href={rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
                   <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {relatedGuides.length > 0 && (
+          <section className="mt-12">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related Guides</h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {relatedGuides.map((rg) => (
+                <Link key={rg.slug} href={rg.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rg.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rg.excerpt}</p>
                 </Link>
               ))}
             </div>

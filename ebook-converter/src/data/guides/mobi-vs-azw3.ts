@@ -33,7 +33,7 @@ export const content = {
     },
     {
       heading: 'How to convert into each format',
-      body: `Both conversions run on the same Calibre engine. BookConv handles either in the browser with no install — choose MOBI or AZW3 as the target. For a desktop workflow with full output-profile control, Calibre\'s **Convert books** dialog lets you pick the exact format and tweak margins, headings, and reading order.`,
+      body: `Both conversions run on the same Calibre engine. BookConv handles either in the browser with no install — choose MOBI or AZW3 as the target. For a desktop workflow with full output-profile control, Calibre\'s **Convert books** dialog lets you pick the exact format and tweak margins, headings, and reading order.\n\nIf you already have a MOBI file and need a different output, BookConv can also turn it into a printable document ([MOBI to PDF](/convert/mobi-to-pdf)) or pull out just the words ([MOBI to TXT](/convert/mobi-to-txt)).`,
     },
   ],
 }

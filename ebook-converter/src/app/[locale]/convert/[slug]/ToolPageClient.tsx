@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
-import type { RelatedPostRef } from "@/lib/internal-links"
+import type { RelatedPostRef, RelatedGuideRef } from "@/lib/internal-links"
 import { FileDropZone } from "@/components/tools/FileDropZone"
 import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
@@ -29,6 +29,7 @@ interface ToolPageClientProps {
   description: string
   contentData?: ContentData | null
   relatedBlogPosts?: RelatedPostRef[]
+  relatedGuides?: RelatedGuideRef[]
 }
 
 
@@ -67,7 +68,7 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
   },
 }
 
-export function ToolPageClient({ source, target, keyword, tool, description, contentData, relatedBlogPosts }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, keyword, tool, description, contentData, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
@@ -302,16 +303,31 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         )}
         {/* FAQ with Schema */}
         <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
-        {/* Related blog posts */}
+        {/* Related blog posts (mislabeled as "Guides & Tutorials" before) */}
         {relatedBlogPosts && relatedBlogPosts.length > 0 && (
         <section className="rounded-xl border bg-gray-50 p-6">
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Guides &amp; Tutorials</h2>
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Articles</h2>
           <p className="mb-4 text-sm text-gray-600">Deepen your understanding with expert conversion guides:</p>
           <div className="grid gap-3 sm:grid-cols-2">
             {relatedBlogPosts.map((post) => (
               <Link key={post.slug} href={post.href} className="group block rounded-lg border bg-white px-4 py-3 transition-colors hover:border-blue-300 hover:bg-blue-50">
                 <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600">{post.title}</h3>
                 <p className="mt-1 text-xs text-gray-500">{post.excerpt}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+        )}
+        {/* Related guides (real hub guides matched by format) */}
+        {relatedGuides && relatedGuides.length > 0 && (
+        <section className="rounded-xl border border-blue-200 bg-blue-50 p-6">
+          <h2 className="mb-3 text-lg font-semibold text-blue-900">Related Guides</h2>
+          <p className="mb-4 text-sm text-blue-700">Format explainers and in-depth comparisons:</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {relatedGuides.map((guide) => (
+              <Link key={guide.slug} href={guide.href} className="group block rounded-lg border bg-white px-4 py-3 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600">{guide.title}</h3>
+                <p className="mt-1 text-xs text-gray-500">{guide.excerpt}</p>
               </Link>
             ))}
           </div>

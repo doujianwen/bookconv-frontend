@@ -199,6 +199,29 @@ export default function HomePage() {
       </section>
 
 
+      {/* Explore: Blog & Guides entry points (internal linking R2) */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.exploreTitle') || 'Learn More About Ebook Formats'}</h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <Link href="/blog" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.blog') || 'Blog'}</h3>
+                <p className="mt-1 text-sm text-gray-500">Guides, how-tos, and format deep-dives.</p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+            </Link>
+            <Link href="/guide" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.guide') || 'Guides'}</h3>
+                <p className="mt-1 text-sm text-gray-500">Format comparisons and conversion explainers.</p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof & Testimonials */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4 text-center mb-10">

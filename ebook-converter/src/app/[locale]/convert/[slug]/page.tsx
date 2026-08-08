@@ -13,7 +13,7 @@ export const dynamicParams = false
 import dynamic from "next/dynamic"
 import { CONTENT_MAP } from "@/data/content"
 import { generateFAQSchema, generateBreadcrumbSchema, generateConversionPageSchema } from "@/lib/seo/schema"
-import { getRelatedBlogPostsForConversion } from "@/lib/internal-links"
+import { getRelatedBlogPostsForConversion, getRelatedGuidesForConversion } from "@/lib/internal-links"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
 
@@ -110,6 +110,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   // Use dynamically imported component
   const relatedBlogPosts = getRelatedBlogPostsForConversion(source, target)
+  const relatedGuides = getRelatedGuidesForConversion(source, target)
   const jsonLd = generateConversionPageSchema(source, target, contentData)
   return (
     <>
@@ -128,6 +129,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         description={conversion.description}
         contentData={contentData}
         relatedBlogPosts={relatedBlogPosts}
+        relatedGuides={relatedGuides}
       />
     </>
   )

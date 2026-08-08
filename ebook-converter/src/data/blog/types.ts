@@ -74,7 +74,15 @@ export function generateTocHtml(headings: Array<{ id: string; text: string; leve
 export function renderMarkdownToHtml(markdown: string): string {
   if (!markdown) return "";
 
-  let html = markdown
+  // Markdown tables → <table>. Run on raw markdown BEFORE inline replacements
+  // and paragraph wrapping so cell content still gets bold/italic/link formatting
+  // and the generated <table> is not broken by <p>/<br> insertion.
+  const withTables = markdown.replace(
+    /^\|(.+)\|\r?\n\|[-: |]+\|\r?\n(?:\|(.+)\|\r?\n?)*/gm,
+    (block) => renderTableBlock(block)
+  );
+
+  let html = withTables
     .replace(/\\\\n/g, "\n")
     .replace(/\\n/g, "\n");
 
@@ -102,11 +110,51 @@ export function renderMarkdownToHtml(markdown: string): string {
   html = html.replace(/<p>\s*<\/p>/g, "");
   html = html.replace(/<p>(<ul[^>]*>)/g, "$1");
   html = html.replace(/(<\/ul>)<\/p>/g, "$1");
+  // Tables (mirror the <ul> unwrap so they aren't nested inside <p>)
+  html = html.replace(/<p>(<table[^>]*>)/g, "$1");
+  html = html.replace(/(<\/table>)<\/p>/g, "$1");
   // Unwrap headings that landed inside <p>
   html = html.replace(/<p>(<h[23][^>]*>)/g, "$1");
   html = html.replace(/(<\/h[23]>)<\/p>/g, "$1");
 
   return html;
+}
+
+/**
+ * Convert a GitHub-flavored markdown table block into an HTML <table>.
+ * Cell content retains any markdown inline syntax (**bold**, *italic*,
+ * [links](url)) — the caller applies those replacements globally afterwards.
+ */
+function renderTableBlock(markdownTable: string): string {
+  const lines = markdownTable.trim().split("\n").filter((l) => l.trim().length > 0);
+  if (lines.length < 2) return markdownTable;
+
+  const parseRow = (line: string): string[] =>
+    line.replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+
+  const headerCells = parseRow(lines[0]);
+  const bodyRows = lines.slice(2).map(parseRow);
+
+  const headerHtml =
+    "<thead><tr>" +
+    headerCells
+      .map((c) => `<th class="border border-gray-300 px-3 py-2 text-left font-semibold bg-gray-50">${c}</th>`)
+      .join("") +
+    "</tr></thead>";
+
+  const bodyHtml =
+    "<tbody>" +
+    bodyRows
+      .map(
+        (row) =>
+          "<tr>" +
+          row.map((c) => `<td class="border border-gray-300 px-3 py-2 align-top">${c}</td>`).join("") +
+          "</tr>"
+      )
+      .join("") +
+    "</tbody>";
+
+  return `<table class="w-full border-collapse my-6 text-sm not-prose">${headerHtml}${bodyHtml}</table>`;
 }
 
 export function stripMarkdown(markdown: string): string {

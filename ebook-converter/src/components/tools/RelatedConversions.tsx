@@ -3,8 +3,10 @@ import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
 
-// Only link to pairs that are actually supported (in CONVERSION_MAP).
-// Excludes "planned" KEYWORDS pairs that would 404 (epub-to-zip, epub-to-lrf, …).
+// Only link to pairs that are actually supported (present in CONVERSION_MAP
+// via getConversion). Pairs absent from CONVERSION_MAP (e.g. epub-to-lrf,
+// epub-to-odt) return undefined here and are excluded — they would 404.
+// Note: epub-to-zip IS in CONVERSION_MAP (passthrough), so it is included.
 const SUPPORTED_KEYWORDS = KEYWORDS.filter((k) => getConversion(k.source, k.target))
 
 interface RelatedConversionsProps {

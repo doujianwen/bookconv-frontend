@@ -37,12 +37,14 @@ Amazon stopped accepting MOBI through **Send to Kindle in August 2022**, which t
       heading: `AZW3 vs MOBI, Feature by Feature`,
       body: `Here's the honest comparison, not the marketing version.
 
-**Styling** — AZW3 supports modern CSS; MOBI supports a bare minimum.
-**Fonts** — AZW3 embeds them; MOBI uses whatever the device ships with.
-**Tables and images** — AZW3 handles both well; MOBI chokes on complex ones.
-**File size** — AZW3 runs a little larger because it carries more; MOBI is leaner but thinner.
-**Device support** — every Kindle reads both, but only modern models show AZW3's advantages.
-**Future-proofing** — AZW3 is still Amazon's active format; MOBI is frozen in the past.
+| Feature | AZW3 (KF8) | MOBI |
+|---------|------------|------|
+| Styling | Modern CSS, floats, media queries | Bare minimum CSS |
+| Fonts | Embedded, device-independent | Device default only |
+| Tables & images | Handled well | Chokes on complex ones |
+| File size | Slightly larger | Leaner |
+| Device support | Every Kindle from the last decade | Every Kindle ever made |
+| Future-proofing | Amazon's active format | Frozen since 2022 |
 
 There's no category where MOBI beats AZW3 on quality. The only places MOBI still wins are compatibility with ancient hardware and a few stubborn legacy tools.`
     },
@@ -54,7 +56,7 @@ There's no category where MOBI beats AZW3 on quality. The only places MOBI still
 - You want it to look the same across every device
 - You're building a library you expect to keep for years
 
-AZW3 is also the format to aim for if you ever use Send to Kindle, because that service converts your upload into KF8 on Amazon's side anyway. If your reading happens off Kindle, [convert EPUB to AZW3](/convert/epub-to-azw3) is the bridge from the open standard most books start as.`
+AZW3 is also the format to aim for if you ever use Send to Kindle, because that service converts your upload into KF8 on Amazon's side anyway. If your reading happens off Kindle, [convert EPUB to AZW3](/convert/epub-to-azw3) is the bridge from the open standard most books start as. Need the raw files instead? [Convert EPUB to ZIP](/convert/epub-to-zip) to pull the XHTML, CSS, and images out of any e-book in one click.`
     },
     {
       heading: `When MOBI Still Makes Sense`,
@@ -164,12 +166,14 @@ Amazon dejó de aceptar MOBI en **Send to Kindle en agosto de 2022**, lo que dic
         heading: `AZW3 vs MOBI, característica por característica`,
         body: `Esta es la comparación honesta, no la versión de marketing.
 
-**Estilos** — AZW3 soporta CSS moderno; MOBI soporta lo mínimo.
-**Fuentes** — AZW3 las embebe; MOBI usa lo que trae el dispositivo.
-**Tablas e imágenes** — AZW3 maneja ambas bien; MOBI se ahoga con las complejas.
-**Tamaño de archivo** — AZW3 es algo mayor porque lleva más; MOBI es más ligero pero más escaso.
-**Soporte de dispositivos** — todos los Kindle leen ambos, pero solo los modelos modernos muestran las ventajas de AZW3.
-**A prueba de futuro** — AZW3 sigue siendo el formato activo de Amazon; MOBI está congelado en el pasado.
+| Característica | AZW3 (KF8) | MOBI |
+|---------|------------|------|
+| Estilos | CSS moderno, floats, media queries | CSS mínimo |
+| Fuentes | Embebidas, independientes del dispositivo | Solo la fuente del dispositivo |
+| Tablas e imágenes | Las maneja bien | Se ahoga con las complejas |
+| Tamaño de archivo | Algo mayor | Más ligero |
+| Soporte de dispositivos | Cualquier Kindle de la última década | Cualquier Kindle hecho |
+| A prueba de futuro | El formato activo de Amazon | Congelado desde 2022 |
 
 No hay ninguna categoría donde MOBI supere a AZW3 en calidad. Los únicos sitios donde MOBI todavía gana son la compatibilidad con hardware antiguo y unas pocas herramientas heredadas tercos.`,
       },
@@ -181,7 +185,7 @@ No hay ninguna categoría donde MOBI supere a AZW3 en calidad. Los únicos sitio
 - Quieres que se vea igual en todos los dispositivos
 - Estás construyendo una biblioteca que esperas conservar años
 
-AZW3 también es el formato al que apuntar si alguna vez usas Send to Kindle, porque ese servicio convierte tu subida a KF8 del lado de Amazon de todos modos. Si tu lectura ocurre fuera de Kindle, [convert EPUB to AZW3](/convert/epub-to-azw3) es el puente desde el estándar abierto con el que empiezan la mayoría de los libros.`,
+AZW3 también es el formato al que apuntar si alguna vez usas Send to Kindle, porque ese servicio convierte tu subida a KF8 del lado de Amazon de todos modos. Si tu lectura ocurre fuera de Kindle, [convert EPUB to AZW3](/convert/epub-to-azw3) es el puente desde el estándar abierto con el que empiezan la mayoría de los libros. ¿Necesitas los archivos en bruto? [Convierte EPUB a ZIP](/convert/epub-to-zip) para extraer el XHTML, CSS e imágenes de cualquier libro en un clic.`,
       },
       {
         heading: `Cuándo MOBI todavía tiene sentido`,

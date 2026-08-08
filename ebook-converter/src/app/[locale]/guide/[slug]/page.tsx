@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllGuides } from "@/data/guides"
 import { renderMarkdownToHtml, stripMarkdown, type BlogFaq } from "@/data/blog/types"
+import { getRelatedGuides, getRelatedBlogPostsForGuide } from "@/lib/internal-links"
 
 interface GuideData {
   slug: string
@@ -70,7 +71,8 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
   const baseUrl = "https://www.bookconv.com"
   const guideUrl = `${baseUrl}/guide/${g.slug}`
-  const others = getAllGuides().filter((x) => x.slug !== slug)
+  const others = getRelatedGuides(slug, 5)
+  const relatedBlogPostsForGuide = getRelatedBlogPostsForGuide(g.formats, g.tags, 3)
 
   return (
     <>
@@ -219,6 +221,20 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           )}
         </section>
 
+        {relatedBlogPostsForGuide.length > 0 && (
+          <section className="mt-12">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related blog posts</h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {relatedBlogPostsForGuide.map((rp) => (
+                <Link key={rp.slug} href={rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         {others.length > 0 && (
           <section className="mt-12">
             <h2 className="mb-4 text-2xl font-bold text-gray-900">More guides</h2>
@@ -226,7 +242,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
               {others.map((o) => (
                 <Link key={o.slug} href={`/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
                   <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{o.title}</h3>
-                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{o.problem}</p>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{o.excerpt}</p>
                 </Link>
               ))}
             </div>

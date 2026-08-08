@@ -5,7 +5,7 @@ export const author = "BookConv Team";
 export const tags = ["EPUB", "Word", "DOCX", "editing", "BookConv", "conversion", "guide"];
 
 export const content = {
-  intro: `Need to actually edit an EPUB instead of just reading it? EPUB files are zipped HTML — great for e-readers, awkward for word processors. Converting EPUB to DOCX gives you a real .docx you can open in Microsoft Word, Google Docs, or LibreOffice, re-style, cite, or send to a printer. This guide walks through the shortest path and what to expect afterward.`,
+  intro: `Need to actually edit an EPUB instead of just reading it? EPUB files are zipped HTML — great for e-readers, awkward for word processors. Converting EPUB to DOCX gives you a real .docx you can open in Microsoft Word, Google Docs, or LibreOffice, re-style, cite, or send to a printer. This guide walks through the shortest path and what to expect afterward. If you only need the raw container without conversion, [EPUB to ZIP](/convert/epub-to-zip) unpacks it directly.`,
   sections: [
     {
       heading: `Why Convert EPUB to Word?`,
@@ -20,7 +20,7 @@ If all you need is the raw text, the lighter [EPUB to TXT](/convert/epub-to-txt)
     },
     {
       heading: `Convert EPUB to Word on BookConv in Three Steps`,
-      body: `1. Open the [EPUB to Word converter](/convert/epub-to-docx) and drop your .epub onto the upload area.
+      body: `1. Open the [EPUB to Word converter](/convert/epub-to-word) and drop your .epub onto the upload area.
 2. BookConv unzips the EPUB, extracts the XHTML chapters, and maps them into a WordprocessingML document — no Calibre install, no account.
 3. Download the .docx. It opens in Word, Google Docs, or LibreOffice with the text, paragraphs, headings, and embedded images intact.
 
