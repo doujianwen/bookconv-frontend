@@ -74,3 +74,6 @@ test-results/
 
 # Docker build cache
 .docker/
+
+# Output of scripts/verify-batch-live.mjs
+batch-verify.zip
