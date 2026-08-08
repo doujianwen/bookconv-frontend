@@ -6,12 +6,16 @@ geo-exposure-probe.py
 自动探测 Gemini / ChatGPT 在回答电子书转换类问题时引用了哪些页面，
 直接把你《用户意图作战映射表 §3.2》那张「手工留空」的竞品曝光表变成自动产出。
 
-两种用法
+三种用法
 --------
 1) 探针模式（曝光监测）：读 questions-seed.json，调 API，抓引用 URL，生成报告。
      python geo-exposure-probe.py probe geo/questions-seed.json
 2) 扩词模式（意图挖掘）：给一个关键词，让 Gemini 自动生成 10 条真实 NL 问法。
      python geo-exposure-probe.py expand "epub to pdf" -n 10
+    3) 意图挖掘（Google autosuggest，无需 Gemini 配额）：给关键词或 seed 文件，抓「用户还搜什么」。
+     python geo-exposure-probe.py suggest "epub to pdf" -n 10
+     python geo-exposure-probe.py suggest geo/questions-seed.json -n 10
+
 
 依赖：仅标准库（urllib）。API key 走环境变量：
      GEMINI_API_KEY   https://aistudio.google.com/app/apikey
@@ -181,6 +185,32 @@ def call_brave(question: str, count: int = 10) -> list:
     return urls
 
 
+
+
+def call_suggest(query: str, n: int = 10) -> list:
+    """Google autosuggest（公开端点，零 key，零 Gemini/OpenAI 配额）。返回建议列表。
+
+    HTTPS 偶发 SSL EOF（沙箱出口代理不稳定）时自动降级到 HTTP 重试，最多 3 轮。
+    """
+    params = urllib.parse.urlencode({"client": "firefox", "q": query})
+    endpoints = [
+        "https://suggestqueries.google.com/complete/search?" + params,
+        "http://suggestqueries.google.com/complete/search?" + params,
+    ]
+    last_err = None
+    for ep in endpoints:
+        for _ in range(3):
+            try:
+                req = urllib.request.Request(
+                    ep, headers={"User-Agent": "Mozilla/5.0", "Connection": "close"})
+                with urllib.request.urlopen(req, timeout=15) as r:
+                    data = json.loads(r.read().decode("utf-8", "ignore"))
+                suggestions = data[1] if isinstance(data, list) and len(data) > 1 else []
+                return [s for s in suggestions if isinstance(s, str) and s][:n]
+            except Exception as e:
+                last_err = e
+                time.sleep(1)
+    raise last_err
 def domain_of(u: str) -> str:
     return urlparse(u).netloc.lower().replace("www.", "")
 
@@ -388,6 +418,47 @@ def main():
         print(f"已生成：{out_md}  {out_csv}  （结果 {len(rows)} 条，缺口 {len(gaps)} 个）")
         if saw_429 and not rows:
             print("[诊断] Brave 也全 429：检查 BRAVE_API_KEY 配额或等待重置。", file=sys.stderr)
+
+    elif cmd == "suggest":
+        arg = sys.argv[2] if len(sys.argv) > 2 else "epub to pdf"
+        n = 10
+        for i, a in enumerate(sys.argv):
+            if a == "-n" and i + 1 < len(sys.argv):
+                try:
+                    n = int(sys.argv[i + 1])
+                except ValueError:
+                    pass
+        queries = []
+        if arg.endswith(".json"):
+            with open(arg, encoding="utf-8") as f:
+                qs = json.load(f)
+            queries = [q["question"] for q in qs if q.get("question")]
+        else:
+            queries = [arg]
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+        md = [f"# 用户意图挖掘报告（Google Autosuggest）\n",
+              f"> 生成时间：{ts}\n",
+              f"> 查询数：{len(queries)} ｜ 每查询建议上限：{n}\n",
+              "> 数据源：Google 公开 autosuggest 端点（零 key，无需 Gemini/OpenAI 配额）\n"]
+        total = 0
+        for q in queries:
+            try:
+                sugs = call_suggest(q, n)
+            except Exception as e:
+                print(f"[warn] suggest 失败: {q[:40]}... {e}", file=sys.stderr)
+                sugs = []
+            total += len(sugs)
+            time.sleep(1)  # 节流，降低 Google SSL EOF/限流概率
+            md.append(f"\n## 查询：{q}\n")
+            if not sugs:
+                md.append("_（无建议返回）_\n")
+            else:
+                for j, s in enumerate(sugs, 1):
+                    md.append(f"{j}. {s}")
+        out_md = "geo/suggest-report.md"
+        with open(out_md, "w", encoding="utf-8") as f:
+            f.write("\n".join(md))
+        print(f"已生成：{out_md}  （查询 {len(queries)} 个，建议 {total} 条）")
 
     elif cmd == "expand":
         keyword = sys.argv[2] if len(sys.argv) > 2 else "epub to pdf"
