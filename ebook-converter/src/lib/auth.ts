@@ -1,14 +1,15 @@
 // src/lib/auth.ts
-// Server-side auth helper — extracts userId from Supabase session cookie.
-// Designed to work in both Next.js App Router API routes and middleware.
+// Server-side auth helper — resolves plan level and result/batch ownership.
+// Works in Next.js App Router API routes and middleware.
+// Supabase was removed; subscription state resolves from Redis only, and
+// there is no server-side session source, so requests are treated as anonymous.
 
-import { createClientInner } from './supabase/server';
 import { getRedisClient } from './redis';
 
 const REDIS_SUB_KEY = 'sub:';
 
 /**
- * Plan level resolved from either Supabase or Redis fallback.
+ * Plan level resolved from Redis subscription records.
  */
 export type PlanLevel = 'free' | 'pro' | 'api';
 
@@ -21,47 +22,19 @@ interface SubscriptionRecord {
 }
 
 /**
- * Extract the current user's ID from the Supabase session.
- * Returns null if no session is found (anonymous user).
+ * Extract the current user's ID.
+ * Returns null — there is no server-side session source after Supabase removal,
+ * so all requests are treated as anonymous.
  */
 export async function getCurrentUserId(): Promise<string | null> {
-  try {
-    const supabase = await createClientInner();
-    const { data: { session } } = await (supabase as any).auth.getSession();
-    if (session?.user?.id) {
-      return session.user.id;
-    }
-  } catch {
-    // Supabase not configured or error — fall back to anonymous
-  }
   return null;
 }
 
 /**
- * Get the current user's plan level.
- * Checks Supabase first, falls back to Redis subscription records.
+ * Get the current user's plan level from Redis subscription records.
  * Returns 'free' if no subscription is found.
  */
 export async function getUserPlanLevel(userId: string): Promise<PlanLevel> {
-  // Try Supabase first
-  try {
-    const supabase = await createClientInner();
-    const supabaseAny = supabase as any;
-    const { data, error } = await supabaseAny
-      .from('subscriptions')
-      .select('plan, status')
-      .eq('user_id', userId)
-      .eq('status', 'active')
-      .maybeSingle();
-
-    if (!error && data) {
-      return (data as unknown as SubscriptionRecord).plan || 'free';
-    }
-  } catch {
-    // Supabase not configured — fall through to Redis
-  }
-
-  // Fallback to Redis
   try {
     const redis = getRedisClient();
     if (!redis.connected) {
