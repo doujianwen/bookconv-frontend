@@ -9,7 +9,7 @@ export const content = {
   sections: [
     {
       heading: `What the LIT Format Is`,
-      body: `LIT (short for **Literature**) is Microsoft Reader's native ebook format, launched in 2000 alongside the Reader app for Pocket PC and early Windows. A LIT file is, at its core, a compressed bundle of HTML and CSS — Microsoft's own variant of the CHM help-file container, wrapped with ebook-specific metadata.
+      body: `LIT (short for **Literature**) is Microsoft Reader's native ebook format, launched in 2000 alongside the Reader app for Pocket PC and early Windows. A LIT file is, at its core, a compressed bundle of HTML and CSS — Microsoft's own variant of the CHM help-file container, wrapped with ebook-specific metadata. (CHM, the "Compiled HTML Help" format for software manuals, is the same basic idea; if you have a .chm and need it on an old Kindle, [CHM to MOBI](/convert/chm-to-mobi) makes the move.)
 
 Most LIT files you'll encounter also carry **DRM**, locked to a Microsoft account that no longer authorizes anything. That single fact is why so many old LIT books are unreadable today, even when the file itself is perfectly intact.`
     },
@@ -52,7 +52,7 @@ That gets the text on screen, but it leaves you dependent on Calibre forever. Fo
 - Makes it readable on any modern device
 - Gives you a clean intermediate you can later turn into PDF, AZW3, or anything else
 
-[Convert LIT to EPUB on BookConv](/convert/lit-to-epub) takes a single file in the browser, no install. For a whole library, [our longer guide explains the Calibre batch workflow](/blog/why-convert-lit-to-epub).`
+[Convert LIT to EPUB on BookConv](/convert/lit-to-epub) takes a single file in the browser, no install. For a whole library, [our longer guide explains the Calibre batch workflow](/blog/why-convert-lit-to-epub). If your only reader is a legacy Kindle that can't open EPUB, [LIT to MOBI](/convert/lit-to-mobi) is the fallback.`
     },
     {
       heading: `LIT vs the Formats That Replaced It`,

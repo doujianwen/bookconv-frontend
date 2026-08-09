@@ -21,12 +21,27 @@ export const content = {
       body: `**MOBI:** the old standard. Amazon retired MOBI side-loading, so new uploads in MOBI are no longer the recommended path.\n\n**AZW3:** Amazon’s modern ebook format with better typography and features; widely supported by Kindle devices.\n\n**KFX:** Amazon’s current proprietary format with advanced layout; created by Amazon’s own pipeline, not easily produced by third-party converters.\n\n**EPUB:** the open standard. Send to Kindle now accepts EPUB and converts it for your device.`,
     },
     {
+      heading: 'What Is AZW3?',
+      body: `AZW3 is Amazon's **KF8** format, introduced in 2011 to replace the original AZW — a thin wrapper around the old Mobipocket engine. Under the hood it's HTML and CSS packaged much like EPUB, but sealed inside Amazon's own container, which is why only Kindle hardware and apps read it.
+
+What that buys you over the older MOBI/AZW1 lineage:
+- Embedded fonts and real CSS, so typography survives the trip
+- Tables, drop caps, and fixed-layout pages for illustrated titles
+- Better spacing and margin control than Mobipocket ever allowed
+
+It is **not** an open format, so Kobo, Nook, and most third-party readers ignore it. Think of AZW3 as the best format *inside Amazon's walled garden*, and EPUB as the one that travels everywhere else.
+
+Moving in or out is simple: [EPUB to AZW3](/convert/epub-to-azw3) for a modern Kindle, or [AZW to MOBI](/convert/azw-to-mobi) if a legacy device can't read AZW3.`,
+    },
+    {
       heading: 'What to convert to (practical rule)',
       body: `**For sideloading a file yourself:** convert to **AZW3** — BookConv can produce it and Kindles read it well.\n\n**For Send to Kindle:** upload **EPUB or AZW3** and let Amazon convert.\n\n**Avoid:** converting new books to MOBI, and trying to generate KFX yourself.`,
     },
     {
       heading: 'Common Kindle conversion paths',
-      body: `**EPUB → AZW3** for sideloading: [EPUB to AZW3](/convert/epub-to-azw3).\n\n**AZW3 → PDF** if you need a fixed-layout printout: [AZW3 to PDF](/convert/azw3-to-pdf).\n\n**MOBI → EPUB/AZW3** to modernize an old library: [Mobi to EPUB](/convert/mobi-to-epub).`,
+      body: `**EPUB → AZW3** for sideloading: [EPUB to AZW3](/convert/epub-to-azw3).\n\n**AZW3 → PDF** if you need a fixed-layout printout: [AZW3 to PDF](/convert/azw3-to-pdf).\n\n**MOBI → EPUB/AZW3** to modernize an old library: [Mobi to EPUB](/convert/mobi-to-epub).
+
+**AZW → MOBI** only if a legacy Kindle can't read AZW3: [AZW to MOBI](/convert/azw-to-mobi).`,
     },
     {
       heading: 'Why not just use MOBI?',
