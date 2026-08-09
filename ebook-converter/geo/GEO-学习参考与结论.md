@@ -126,3 +126,30 @@ bookconv.com 的 GEO 基础（llms.txt 全量、GPTBot/ClaudeBot/CCBot 放行、
 - **建新页 ROI 低于优化老页**：所有缺口词（lit-to-mobi / zip-to-epub / mobi-to-kobo / azw-to-mobi / chm-to-mobi）合计仅 10 展示。
 - **位置 60-80 的词是权威度问题不是页面问题**——页面优化天花板约到位置 30-40，上首页必须靠外链。这与第 3 节「外链是最大杠杆」的结论互相印证。
 - **样本极小**：单次展示词（位置 8.0/10.0 等）不具统计意义，勿据此做重大决策。
+
+---
+
+## 7. GEO 名词卡片（术语速查，2026-08-09 新增）
+
+> 入门/培训用。每个词条含：定义 + 本项目真实实例 + 作用 + 踩坑点 + 代码出处。
+
+### 7.1 hreflang —— 多语言版本「指路牌」
+- **定义**：HTML 属性（`href` + `lang`），写在 `<head>` 的 `<link rel="alternate">` 里，告诉搜索引擎「这个页面有哪几个语言/地区版本，互相是对应的」。
+- **本项目实例**（bookconv `/convert/epub-to-pdf` live 抓到）：
+  - `en` → `https://www.bookconv.com/convert/epub-to-pdf`
+  - `es` → `https://www.bookconv.com/es/convert/epub-to-pdf`
+  - `x-default` → 兜底版本（谁都不匹配时用）
+- **作用**：避免多语言页被 Google 当成「重复内容」互殴；让西语用户搜到西语页；利好国际 SEO + GEO（AI 知道内容覆盖哪些语言区）。
+- **⚠️ 踩坑**：Next.js 把属性序列化成 `hrefLang`（大写 L）。用脚本抓取时 regex 要匹配大小写，否则会误报「缺失」——我们 8-09 实战踩过这坑，一度错判全站缺 hreflang。
+- **代码出处**：`src/app/[locale]/convert/[slug]/page.tsx` 的 `generateMetadata` → `alternates.languages`（en/es/x-default）全局配置，改一处覆盖全部 30 个转换页。
+
+### 7.2 JSON-LD 块 —— 写给机器的「内容摘要」
+- **定义**：JSON for Linked Data，一种用 `<script type="application/ld+json">` 把网页「含义」结构化的标准格式。人看渲染后的页面，机器先读这块秒懂「这页到底是啥、有啥结构」。
+- **本项目实例**（epub-to-pdf 抓到 4 个块，`@type` 含）：`FAQPage` / `SoftwareApplication`+`Offer` / `HowTo`+`HowToTool(Calibre)` / `Article` / `WebPage` / `WebSite` / `BreadcrumbList` / `Organization`。
+- **作用**：让 Google / AI 引擎更稳地抽取和引用内容（FAQ、步骤、工具属性），是 GEO 的页面级底层信号。
+- **⚠️ 踩坑**：部分 AI 引擎对 `<script>` 内 schema 解析不稳（Gemini 曾没「看到」我们已有的 JSON-LD，反而建议「补 JSON-LD」——前提错，勿当缺失去重加，会覆盖/破坏已生效 schema）。**可见 HTML 结构化内容**（Quick Answer 直答块 / 可见 FAQ 文本 / 对比表格）才是真正扛 GEO 信号的载体，别迷信 JSON-LD 包打天下。
+- **代码出处**：`src/lib/seo/schema.ts` 统一生成；转换页由 `ToolPageClient.tsx` 渲染；安全问答由共享常量 `SECURITY_FAQ` 兜底。
+
+### 7.3 两者共性
+- 都是**「页面级、不靠堆词」的底层信号**——改一处模板（如 `ToolPageClient`、`page.tsx` 的 metadata）即可铺满全站，属于低成本高确定性的 GEO 基建。
+- 都靠 `curl` + 原始 HTML 头核验（而非肉眼看渲染页），核验时注意属性大小写与 `<script>` 块剥离。
