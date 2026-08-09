@@ -2,7 +2,7 @@ export const slug = 'epub-to-zip';
 export const title = 'Convert EPUB to ZIP — Free Online Tool';
 export const metaDescription = 'Extract the files inside any EPUB free — convert EPUB to ZIP and pull out XHTML, CSS, images & fonts in seconds. No sign-up, your file stays private.';
 export const level = 'A' as const;
-export const wordCount = 2000;
+export const wordCount = 2050;
 
 export const content = {
   hero: {
@@ -11,6 +11,10 @@ export const content = {
   },
 
   sections: [
+    {
+      heading: 'Quick Answer: Converting EPUB to ZIP',
+      body: 'An EPUB file is already a ZIP archive in disguise — converting it just renames the same file so any tool can open it. To convert EPUB to ZIP: upload your .epub, wait one second (a byte-exact copy, no re-encoding), then download the .zip and open it with any archive viewer. No software or sign-up needed.'
+    },
     {
       heading: 'What Is an EPUB, Really?',
       body: 'When you convert EPUB to ZIP, you are not changing your book — you are simply renaming the same archive so any tool can open it. An EPUB file is not a single opaque document; it is a ZIP archive with a specific internal structure. Open one and you will find XHTML chapters, a CSS stylesheet, embedded images, and an OPF metadata file wired together by META-INF/container.xml. Because the container is standard ZIP, converting EPUB to ZIP does not transform your content at all: it just re-presents the same bytes under a .zip extension that every operating system can open natively.'

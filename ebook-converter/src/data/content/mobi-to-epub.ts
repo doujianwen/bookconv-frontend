@@ -2,7 +2,7 @@ export const slug = 'mobi-to-epub';
 export const title = 'Convert MOBI to EPUB — Free Online Tool';
 export const metaDescription = 'Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images & metadata intact and read your books on any device. Convert in seconds.';
 export const level = 'S' as const;
-export const wordCount = 2800;
+export const wordCount = 2950;
 
 export const content = {
   hero: {
@@ -86,6 +86,21 @@ Need to analyze text content programmatically? EPUB's clean HTML structure is fa
 
 **Accessibility Advocates**
 EPUB's support for semantic markup, proper reading order, and assistive technology integration makes it the superior choice for inclusive reading experiences.`
+    },
+    {
+      heading: 'Read Your Converted EPUB on Kobo',
+      body: `Kobo e-readers do not read MOBI files — but they read EPUB natively, which makes EPUB the bridge off Kindle. After you convert MOBI to EPUB with the tool above, getting the book onto your Kobo takes one of three routes:
+
+**1. USB Sideload**
+Connect your Kobo by USB, then drag the .epub into the Kobo internal storage (the root folder or the .kobo volume). Eject and the book appears on the home screen.
+
+**2. Kobo Dropbox Sync**
+If you have linked Dropbox in your Kobo account, drop the .epub into the Kobo/Dropbox folder on a computer and it syncs to the device automatically.
+
+**3. Adobe Digital Editions**
+For store-bought EPUBs with DRM, authorize both your computer and Kobo with the same Adobe ID, then transfer through Digital Editions.
+
+Because Kobo skips MOBI entirely, converting once to EPUB is the only step standing between your old Kindle library and a Kobo reader. If you are weighing which format fits which device, our ebook formats guide breaks down reader support across the major e-book standards.`
     },
     {
       heading: 'MOBI vs EPUB Feature Comparison',
