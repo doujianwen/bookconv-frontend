@@ -17,10 +17,15 @@ function isRedisConfigured(): boolean {
  * - maxRetriesPerRequest: null — required by BullMQ
  */
 function createClient(): IORedis {
+  // Upstash and other serverless Redis providers expose a rediss:// (TLS) URL.
+  // ioredis negotiates TLS automatically for rediss://, but we pin
+  // rejectUnauthorized so the connection fails closed on a bad cert.
+  const useTls = redisUrl.startsWith('rediss://');
   return new IORedis(redisUrl, {
     connectTimeout: 3_000,
     lazyConnect: true,
     maxRetriesPerRequest: null,
+    ...(useTls ? { tls: { rejectUnauthorized: true } } : {}),
   });
 }
 

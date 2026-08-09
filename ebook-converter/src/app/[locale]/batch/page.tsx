@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { Zap, Lock } from "lucide-react";
 import { getLocale } from "@/i18n/utils";
 import { BatchUpload } from "@/components/tools/BatchUpload";
+import { getSession } from "@/lib/auth/session";
+import { getPlanByEmail } from "@/lib/subscription";
+import { getPlanById } from "@/lib/payments/service";
+import UpgradeButton from "@/components/pricing/UpgradeButton";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -33,7 +37,7 @@ const FAQ = [
   },
   {
     q: "Is batch conversion free?",
-    a: "Yes — batch conversion is free while BookConv is in open beta. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files per batch; other formats are limited to a few per batch because they rely on a metered conversion service. No paid plan is required to use batch mode.",
+    a: "Batch conversion is included with the Pro plan. During the open beta period Pro members can use batch mode at no extra cost; the free plan is limited to single-file conversions.",
   },
   {
     q: "Which formats can I convert in a batch?",
@@ -52,6 +56,14 @@ const FAQ = [
 export default async function BatchPage() {
   const locale = await getLocale();
   const prefix = locale === "es" ? "/es" : "";
+
+  // Gate: batch conversion is a Pro feature. Resolve the plan from the session
+  // email so anonymous / free users see an upgrade prompt instead of the uploader.
+  const session = await getSession();
+  const plan = await getPlanByEmail(session?.email ?? null);
+  const isPro = plan === "pro" || plan === "api";
+  const proPlan = getPlanById("pro");
+  const proHasVariant = !!proPlan?.lemonSqueezyVariantId;
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -80,12 +92,12 @@ export default async function BatchPage() {
         </p>
       </div>
 
-      {/* Free open beta banner */}
+      {/* Pro feature banner */}
       <div className="mb-8 flex flex-col items-start gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <Zap className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
           <p className="text-sm text-blue-900">
-            Batch conversion is <span className="font-semibold">free while in open beta</span>. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch for now. Everything runs in your browser and downloads as one ZIP.
+            Batch conversion is a <span className="font-semibold">Pro feature</span>. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch. Everything runs in your browser and downloads as one ZIP.
           </p>
         </div>
         <Link
@@ -96,10 +108,32 @@ export default async function BatchPage() {
         </Link>
       </div>
 
-      {/* Converter */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
-        <BatchUpload />
-      </div>
+      {/* Converter — Pro only */}
+      {isPro ? (
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <BatchUpload />
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+            <Lock className="h-6 w-6 text-blue-600" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900">Batch conversion is a Pro feature</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm text-gray-600">
+            Upgrade to Pro to convert many ebooks at once and download them as a single ZIP. The free plan covers single-file conversions.
+          </p>
+          <div className="mx-auto mt-6 max-w-xs">
+            <UpgradeButton
+              planId="pro"
+              hasVariantId={proHasVariant}
+              label={proHasVariant ? "Upgrade to Pro" : "Pro coming soon"}
+            />
+          </div>
+          <p className="mt-4 text-xs text-gray-400">
+            Already a member? <Link href={prefix + "/auth"} className="text-blue-600 hover:underline">Sign in</Link> to continue.
+          </p>
+        </div>
+      )}
 
       {/* FAQ */}
       <section className="mt-16">

@@ -54,13 +54,28 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Resolve the internal user identity from a Lemon Squeezy webhook payload.
+ * The app's identity key is the email (it is what the session JWT carries and
+ * what the gate resolves against). We echo the email through checkout
+ * custom_data, so it comes back verbatim on the webhook. Fall back to nothing —
+ * if we can't tie the event to an email we must NOT silently key it by
+ * Lemon Squeezy's customer_id, or the user will never see their plan.
+ */
+function resolveUserEmail(attrs: Record<string, any>): string | null {
+  const email = attrs?.custom_data?.email?.toString().trim().toLowerCase();
+  return email || null;
+}
+
 async function handleSubscriptionEvent(
   eventType: string,
   attrs: Record<string, any>,
 ): Promise<void> {
-  const userId = attrs.customer_id?.toString();
-  if (!userId) {
-    log.webhook.warn('No userId in subscription event');
+  const email = resolveUserEmail(attrs);
+  if (!email) {
+    log.webhook.warn('Subscription event has no resolvable email; skipping', {
+      customer_id: attrs.customer_id,
+    });
     return;
   }
 
@@ -68,23 +83,33 @@ async function handleSubscriptionEvent(
   const variantId = attrs.variant_id?.toString();
   const endsAt = attrs.renews_at ? Number(attrs.renews_at) * 1000 : undefined;
 
-  await saveSubscription(userId, status, variantId, endsAt);
-  log.webhook.info(`Subscription ${eventType}`, { userId, status });
+  await saveSubscription(email, status, variantId, endsAt);
+  log.webhook.info(`Subscription ${eventType}`, { email, status });
 }
 
 async function handleCancellation(attrs: Record<string, any>): Promise<void> {
-  const userId = attrs.customer_id?.toString();
-  if (!userId) return;
+  const email = resolveUserEmail(attrs);
+  if (!email) {
+    log.webhook.warn('Cancellation has no resolvable email; skipping', {
+      customer_id: attrs.customer_id,
+    });
+    return;
+  }
 
-  await removeSubscription(userId);
-  log.webhook.info('Subscription canceled', { userId });
+  await removeSubscription(email);
+  log.webhook.info('Subscription canceled', { email });
 }
 
 async function handleOneTimePurchase(attrs: Record<string, any>): Promise<void> {
-  const userId = attrs.customer_id?.toString();
-  if (!userId) return;
+  const email = resolveUserEmail(attrs);
+  if (!email) {
+    log.webhook.warn('One-time purchase has no resolvable email; skipping', {
+      customer_id: attrs.customer_id,
+    });
+    return;
+  }
 
   const quantity = attrs.quantity || 1;
-  await grantCredits(userId, quantity);
-  log.webhook.info('One-time purchase', { userId, credits: quantity });
+  await grantCredits(email, quantity);
+  log.webhook.info('One-time purchase', { email, credits: quantity });
 }

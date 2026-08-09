@@ -15,10 +15,29 @@ export default function UpgradeButton({ planId, hasVariantId, label }: UpgradeBu
     if (!hasVariantId || loading) return;
     setLoading(true);
     try {
+      // Resolve the logged-in user's email so the checkout can carry it through
+      // to Lemon Squeezy (custom_data) and the webhook can link the plan back.
+      let email = "";
+      try {
+        const meRes = await fetch("/api/auth/me");
+        if (meRes.ok) {
+          const me = await meRes.json();
+          email = me.email || "";
+        }
+      } catch {
+        email = "";
+      }
+
+      if (!email) {
+        // Not signed in — send to auth so we have an email to link the plan to.
+        window.location.href = "/auth?redirect=" + encodeURIComponent(window.location.pathname);
+        return;
+      }
+
       const response = await fetch("/api/payments/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId, email: "" }),
+        body: JSON.stringify({ planId, email }),
       });
 
       const result = await response.json();
