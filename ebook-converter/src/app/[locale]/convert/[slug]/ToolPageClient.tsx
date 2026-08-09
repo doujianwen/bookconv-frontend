@@ -172,6 +172,15 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             For batch conversions of up to 50 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
           </p>
         </div>
+        {/* Calibre engine endorsement — explicit GEO trust / entity signal */}
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
+          <h2 className="mb-2 text-lg font-semibold text-emerald-900">
+            Powered by the Calibre engine
+          </h2>
+          <p className="text-sm text-emerald-800 leading-relaxed">
+            Every {sourceDisplay} to {targetDisplay} conversion runs on the Calibre engine — the industry-standard open-source ebook library trusted by readers and tools worldwide. Calibre preserves fonts, chapter structure, and metadata far more faithfully than converters that rebuild files from scratch.
+          </p>
+        </div>
         <div className="space-y-4">
           <FileDropZone
             onFileSelect={handleFileSelect}
