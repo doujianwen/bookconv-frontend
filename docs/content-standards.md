@@ -20,12 +20,12 @@
 
 | 子系统 | 数据目录 | 注册入口 | 详情页 | 现状规模 |
 |---|---|---|---|---|
-| 博客 Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 25 |
+| 博客 Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 36 |
 | 指南 Guide | `src/data/guides/*.ts` | `all[]` | `[locale]/guide/[slug]` | 21 |
 | 转换页 Convert | `src/data/content/*.ts` | `CONVERSION_MAP` | `[locale]/convert/[slug]` | 30 |
 
 - 全局导航在根 `src/app/layout.tsx`（Home / Pricing / **Convert** / **Guide** / Blog + LocaleSwitcher / LoginButton）；首页也须有 `/blog`、`/guide` 入口。
-- 规模快照（2026-08-09）：25 博客 + 21 指南 + 30 转换 = 76 内容页。
+- 规模快照（2026-08-09）：36 博客 + 21 指南 + 30 转换 = 87 内容页。
 
 ## 二、内容策略基线
 
