@@ -1,6 +1,6 @@
 # 项目文档中心
 
-本目录是 BookConv 项目的统一文档中心，按用途分为三个子目录。所有文档统一在此管理，不再分散于 `ebook-converter/docs/` 与根级 `docs/`。
+本目录是 BookConv 项目的统一文档中心，按用途分为三个子目录。**2026-08-10 起 `ebook-converter/docs/` 已全部并入本目录**，全项目仅此一个 docs。
 
 ## 目录结构
 
@@ -28,6 +28,8 @@ docs/
 | `weekly_checklist.md` | 周度检查清单 |
 | `codex-multica-sync.md` | Multica 同步脚本说明 |
 | `write_plan.js` | 写作计划辅助脚本 |
+| `外链提交报告_20260809.md` | 外链策略与本周执行计划（2026-08-10 自 ebook-converter/docs 并入） |
+| `审计-SERP竞品分析方法论-2026-08-09.md` | SERP 竞品分析方法论（2026-08-10 并入） |
 
 ## `tech/` — 技术文档与新人培训
 
@@ -37,6 +39,9 @@ docs/
 | `新人部署上手指南-GitHub到Vercel.md` | GitHub → Vercel 部署流程 |
 | `新人指导-内链优化规则.md` | 内链优化规范 |
 | `weekly-guide-loop.md` | 周度指南生产循环 SOP |
+| `weekly-guide-loop-2026-08-10.md` | 周度指南生产循环 SOP（双轨版，2026-08-10 并入） |
+| `upstash-setup-guide.md` | Upstash / Redis 部署指南（2026-08-10 并入） |
+| `新人指导-SERP竞品分析与页面优化方法论.md` | SERP 竞品分析新人指导（2026-08-10 并入） |
 | `getting-started.md` | 新人入门总览（原 `guides/`） |
 
 ## `content/` — 内容生产规范
@@ -50,6 +55,10 @@ docs/
 - `pdf-to-epub-guide.mdx` — PDF→EPUB 指南
 - `sitemap-seo-guide.mdx` — sitemap / SEO 指南
 - `webhook-integration.mdx` — Webhook 集成指南
+
+内容策略方法论（新人必读）：
+
+- `一页吃整簇策略.md` — 关键词簇合并策略（同意图变体合并成页，含判断标准 + 实战验证）
 
 ## 安全说明
 
