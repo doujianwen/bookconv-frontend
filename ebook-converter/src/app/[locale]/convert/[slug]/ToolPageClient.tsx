@@ -12,6 +12,7 @@ import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { SECURITY_FAQ } from "@/lib/seo/securityFaq"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
 import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
+import { TrustBar } from "@/components/tools/TrustBar"
 import { TestimonialCard } from "@/components/tools/TestimonialCard"
 import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
@@ -202,6 +203,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             />
           )}
         </div>
+        {/* Trust proofs above the fold (P1: surface privacy/quality promise at top) */}
+        <TrustBar />
         {/* Batch conversion Pro guide */}
         <BatchConversionGuide sourceFormat={source} targetFormat={target} />
         {/* Custom content sections */}
