@@ -70,6 +70,11 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [10 Common Ebook Format Problems and How to Fix Them](https://www.bookconv.com/blog/common-ebook-format-problems)
 - [FB2 vs EPUB: Which Open Ebook Format Should You Use?](https://www.bookconv.com/blog/fb2-vs-epub)
 - [Checklist: Preparing Your Ebook File Before Converting](https://www.bookconv.com/blog/ebook-conversion-checklist)
+- [How to Read EPUB on iPhone, Android, Windows & Mac](https://www.bookconv.com/blog/read-epub-on-any-device)
+- [EPUB 3 vs EPUB 2: What Changed and Why It Matters](https://www.bookconv.com/blog/epub3-vs-epub2)
+- [How to Convert Scanned PDF to EPUB with OCR](https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr)
+- [Best Free Ebook Reader Apps for Every Device (2026)](https://www.bookconv.com/blog/best-ebook-reader-apps)
+- [How to Convert Kobo Books to EPUB and PDF](https://www.bookconv.com/blog/kobo-to-epub)
 
 ## Troubleshooting Guides
 - [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)
