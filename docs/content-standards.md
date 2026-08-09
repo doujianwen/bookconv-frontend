@@ -1,7 +1,7 @@
 # bookconv.com 内容生成规范与标准
 
 > 汇总自实战与既有文档，作为内容生产（博客 / 指南 / 转换页）的统一规范与新人上手依据。
-> 最后更新：2026-08-08 | 维护：与 `英文博客写作指南.md`、`内部链接审计报告-2026-08-08.md`、`scripts/seo-critic.mjs` 同步。
+> 最后更新：2026-08-09 | 维护：与 `英文博客写作指南.md`、`内部链接审计报告-2026-08-08.md`、`scripts/seo-critic.mjs` 同步。
 
 ## 权威来源
 
@@ -20,12 +20,12 @@
 
 | 子系统 | 数据目录 | 注册入口 | 详情页 | 现状规模 |
 |---|---|---|---|---|
-| 博客 Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 21 |
+| 博客 Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 25 |
 | 指南 Guide | `src/data/guides/*.ts` | `all[]` | `[locale]/guide/[slug]` | 21 |
-| 转换页 Convert | `src/data/content/*.ts` | `CONVERSION_MAP` | `[locale]/convert/[slug]` | 27 |
+| 转换页 Convert | `src/data/content/*.ts` | `CONVERSION_MAP` | `[locale]/convert/[slug]` | 30 |
 
 - 全局导航在根 `src/app/layout.tsx`（Home / Pricing / **Convert** / **Guide** / Blog + LocaleSwitcher / LoginButton）；首页也须有 `/blog`、`/guide` 入口。
-- 规模快照（2026-08-08）：21 博客 + 21 指南 + 27 转换 = 69 内容页。
+- 规模快照（2026-08-09）：25 博客 + 21 指南 + 30 转换 = 76 内容页。
 
 ## 二、内容策略基线
 
