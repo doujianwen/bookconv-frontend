@@ -74,6 +74,23 @@ Also note that USB sideloading is the only reliable delivery path here. Amazon's
 **If none of these apply, stay on AZW3.** It looks better, it's smaller, and every current Kindle handles it. Converting down means giving up quality for compatibility you don't need.`
     },
     {
+      heading: 'Migrating a Whole Library to a Legacy Kindle',
+      body: `Need to move an entire collection — not just one book — onto a pre-2011 Kindle? The per-file steps above still apply, but at library scale a few extra habits save you grief.
+
+**1. Audit what you actually own.** Separate your DRM-free AZW3 files from anything bought on the Kindle Store. Only the DRM-free ones will convert; the rest stay locked no matter what tool you use. Calibre's library view makes this easy — sort by format and flag the encrypted ones.
+
+**2. Convert in small batches.** Even with a Pro batch plan, keep runs to a dozen files or so. If one source file is corrupt, a small batch is far easier to re-run than a hundred-file job that failed halfway.
+
+**3. Preserve your originals.** Keep the AZW3 files exactly as they are. MOBI is a one-way downgrade — once fonts and layout are stripped, you cannot get them back. The AZW3 stays as your master copy; the MOBI is just the legacy-readable copy.
+
+**4. Name files for the device, not the author.** Old Kindles sort by filename and choke on long titles and special characters. A simple "Author - Title.mobi" pattern saves you from a home screen full of truncated, unreadable entries.
+
+**5. Sideload once, verify, repeat.** Copy a batch to the documents folder, eject, and spot-check three or four books open correctly before trusting the rest. It takes two minutes and catches a bad export before you have committed to fifty.
+
+The goal is not to make MOBI look good — it is to make a 2009 Kindle useful again without losing your modern master files in the process.`
+    },
+
+    {
       heading: 'What You Lose in the Downgrade',
       body: `Be clear-eyed about this. Going AZW3 → MOBI is a downgrade, and some things won't survive.
 
@@ -107,6 +124,7 @@ And expect the file to get **bigger**, not smaller. MOBI's older compression is 
     { q: 'Why is my MOBI file larger than the AZW3?', a: 'MOBI uses older, less efficient compression, so the same book typically grows 20-40% during conversion. It feels backwards for a downgrade, but you are moving content from a modern container into a twenty-year-old one.' },
     { q: 'My Kindle Store book will not convert — why?', a: 'Books bought from the Kindle Store carry Amazon DRM, and encrypted files cannot be read by any converter. The conversion works on DRM-free AZW3 files such as your own Calibre exports, Project Gutenberg titles, or purchases from DRM-free publishers.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'No — Amazon removed MOBI support from Send to Kindle in 2022, so email delivery will be rejected. Sideload it over USB by copying the file into the documents folder on your Kindle instead.' },
-    { q: 'How many files can I convert at once?', a: 'Free accounts process one file at a time up to 10MB, which is well beyond what a typical Kindle book needs. Pro accounts add batch conversion, which is the practical choice if you are migrating a whole library to an older device.' }
+    { q: 'How many files can I convert at once?', a: 'Free accounts process one file at a time up to 10MB, which is well beyond what a typical Kindle book needs. Pro accounts add batch conversion, which is the practical choice if you are migrating a whole library to an older device.' },
+    { q: 'How do I migrate my whole library to an old Kindle?', a: 'Convert your DRM-free AZW3 files in small batches of around a dozen, keep the original AZW3 as your master copy, name each .mobi as "Author - Title" so old devices sort it cleanly, and sideload over USB to the documents folder. Books from the Kindle Store will not convert because of DRM, so separate those out first.' }
   ]
 };

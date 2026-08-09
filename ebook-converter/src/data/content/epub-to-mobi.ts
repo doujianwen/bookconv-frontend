@@ -1,18 +1,18 @@
 export const slug = 'epub-to-mobi';
-export const title = 'Free EPUB to MOBI Converter — No Sign-up';
+export const title = 'EPUB to MOBI Online — Free Converter, No Sign-up';
 export const level = 'S' as const;
 export const wordCount = 2500;
 
 export const content = {
   hero: {
     title: 'EPUB to MOBI — Convert EPUB Files for Kindle',
-    subtitle: 'Free EPUB to MOBI converter. No sign-up — send EPUB books to older Kindle devices as classic MOBI in seconds.'
+    subtitle: 'Free EPUB to MOBI converter, online. No sign-up — send EPUB books to older Kindle devices as classic MOBI in seconds.'
   },
 
   sections: [
     {
       heading: 'What is MOBI Format?',
-      body: `MOBI (Mobipocket) is one of the earliest ebook formats supported by Amazon Kindle devices. While modern Kindles prefer AZW3 or EPUB formats, many older Kindle models (pre-2012) still rely on MOBI for file compatibility.
+      body: `MOBI (Mobipocket) is one of the earliest ebook formats supported by Amazon Kindle devices, and a free online EPUB to MOBI converter remains the fastest way to get a modern EPUB onto one of those older readers. While modern Kindles prefer AZW3 or EPUB formats, many older Kindle models (pre-2012) still rely on MOBI for file compatibility.
 
 **Key characteristics of MOBI:**
 - **Wide device support**: Works on virtually all Kindle e-readers, including older models
