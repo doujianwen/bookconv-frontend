@@ -63,6 +63,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [MOBI to Kobo: How to Read Your MOBI Books on a Kobo Reader](https://www.bookconv.com/blog/mobi-to-kobo)
 - [EPUB vs MOBI: Which Ebook Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-mobi)
 - [Batch Ebook Converter: How to Convert Many Files at Once (and When to Use Calibre)](https://www.bookconv.com/blog/batch-converter)
+- [EPUB vs PDF: Which Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-pdf)
 
 ## Troubleshooting Guides
 - [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)

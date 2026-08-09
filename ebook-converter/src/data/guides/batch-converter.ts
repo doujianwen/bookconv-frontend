@@ -32,6 +32,20 @@ export const content = {
       heading: 'A practical decision rule',
       body: `**A few files (up to 20 for local formats):** use [BookConv Batch](/batch), no setup.\n\n**Hundreds of files, recurring:** script Calibre’s command line.\n\n**Sensitive manuscripts in bulk:** Calibre offline — keep the files on your machine.\n\nMatch the tool to the volume; BookConv batch covers the everyday pile, Calibre covers the warehouse.`,
     },
+    {
+      heading: 'How the options compare',
+      body: `When you are converting more than one file, three tools come up. Here is the honest split:
+
+| | BookConv batch | Calibre CLI | CloudConvert |
+|---|---|---|---|
+| Install | None — runs in the browser | Desktop app required | None — web app |
+| Cost | Free during open beta | Free, open source | Metered; free tier has tight limits |
+| Files per run | Up to 20 for local formats | Folders of hundreds | Varies by plan |
+| Offline | No (server-side) | Yes, fully offline | No (server-side) |
+| Best for | The everyday pile | Recurring bulk and privacy | Mixed-format work beyond ebooks |
+
+For most people, BookConv batch covers the pile of files you actually have today, and Calibre covers the warehouse of hundreds. CloudConvert is worth a look when your batch also includes non-ebook formats.`,
+    },
   ],
 }
 export const faqs: BlogFaq[] = [
@@ -40,4 +54,5 @@ export const faqs: BlogFaq[] = [
   { question: 'How do I batch convert ebooks for free?', answer: 'BookConv batch conversion is free during open beta. For very large free bulk work beyond the per-batch limits, Calibre’s command-line tools on your machine are a strong alternative.' },
   { question: 'Can I automate ebook conversion?', answer: 'BookConv batch handles a one-time pile of up to 20 files in the browser. For recurring automation over many files, Calibre’s command-line tools let you script conversions.' },
   { question: 'What formats can I batch convert?', answer: 'The same formats as the single-file converter — EPUB, PDF, MOBI, AZW3, TXT, DOCX, RTF, FB2, DJVU and more — with every file in the batch converting to the target format you choose.' },
+  { question: 'Is there a free CloudConvert alternative for batch ebook conversion?', answer: 'Yes. BookConv batch conversion is free during open beta and handles up to 20 files per run for local formats, with no account needed. CloudConvert also batches files but is metered with tighter free-tier limits, so BookConv is the lighter choice for everyday ebook batches.' },
 ]

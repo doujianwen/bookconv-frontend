@@ -40,6 +40,21 @@ Under the hood it is a ZIP archive of XHTML, CSS, and images, which is exactly w
 In short, HTML is built for browsing. EPUB is built for sitting down and reading for two hours.`
     },
     {
+      heading: 'HTML vs EPUB: Quick Comparison',
+      body: `The two formats share DNA — EPUB is literally a packaged, styled form of HTML — but they are built for different moments. Here is the short version:
+
+| | HTML | EPUB |
+|---|---|---|
+| Purpose | Display content in a browser | Read content as a book |
+| Layout | Fluid or fixed by CSS, bound to a screen | Reflowable, controlled by the reader |
+| Reading tools | Browser tabs, no position memory | Bookmarks, highlights, saved reading position |
+| Offline use | Depends on the host staying up | Self-contained file that always works |
+| Table of contents | None unless you code one | Built automatically from your headings |
+| Best for | Browsing the web and reading on a screen | Sitting down to read for a long stretch |
+
+If you want someone to read your writing like a book — on a commute, on an e-reader, offline — EPUB is the upgrade from raw HTML. If you just need the page to render in a browser, HTML is already enough.`
+    },
+    {
       heading: 'How to Convert HTML to EPUB',
       body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to 10MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
 
@@ -88,6 +103,7 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'Will images hosted on the web still show up?', a: 'Yes. Externally linked images are downloaded during conversion and packaged inside the EPUB, so your book keeps working offline even if the original site goes down.' },
     { q: 'What happens to buttons, forms, and JavaScript?', a: 'They do not survive as interactive elements. EPUB readers deliberately restrict scripting, so dynamic content is flattened into its static equivalent or removed.' },
     { q: 'How does the table of contents get built?', a: 'From your heading hierarchy. If your document uses real heading tags in a sensible order, you will get clean chapter navigation. Pages that fake headings with styled text will produce a flat, single-entry TOC.' },
-    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' }
+    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
+    { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' }
   ]
 };
