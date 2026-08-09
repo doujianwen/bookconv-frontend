@@ -51,6 +51,9 @@ export const CONVERSION_MAP: ConversionMap = {
   "djvu-pdf":   { tool: "calibre", description: "DJVU to PDF" },
   "epub-mobi":  { tool: "calibre", description: "EPUB to MOBI" },
   "epub-zip":   { tool: "passthrough", description: "EPUB to ZIP (EPUB is already a ZIP archive)" },
+  "lit-mobi":   { tool: "calibre", description: "LIT to MOBI (Kindle)" },
+  "azw-mobi":   { tool: "calibre", description: "AZW to MOBI (Kindle)" },
+  "chm-mobi":   { tool: "calibre", description: "CHM to MOBI (Kindle)" },
 };
 
 /** Resolve display name aliases to real Calibre format identifiers. */
@@ -95,4 +98,6 @@ export const FORMAT_DISPLAY_NAMES: Record<string, string> = {
   jpg: "JPG",
   png: "PNG",
   zip: "ZIP",
+  azw: "AZW",
+  chm: "CHM",
 };

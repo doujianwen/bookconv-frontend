@@ -69,6 +69,11 @@ export const KEYWORDS: KeywordData[] = [
   // P3 — Very low search volume
   { source: 'html', target: 'pdf', keyword: 'html to pdf converter', kd: 70, searchVolume: 12100, phase: 'P3', status: 'planned' },
   { source: 'epub', target: 'zip', keyword: 'epub to zip', kd: 15, searchVolume: 400, phase: 'P3', status: 'planned' },
+
+  // P2 long-tail conversions launched 2026-08-09 (GSC-validated niche terms)
+  { source: 'lit', target: 'mobi', keyword: 'lit to mobi converter', kd: 0, searchVolume: 500, phase: 'P2', status: 'live' },
+  { source: 'azw', target: 'mobi', keyword: 'azw to mobi converter', kd: 20, searchVolume: 300, phase: 'P2', status: 'live' },
+  { source: 'chm', target: 'mobi', keyword: 'chm to mobi converter', kd: 5, searchVolume: 200, phase: 'P2', status: 'live' },
 ];
 
 /** Filter keywords by phase */
