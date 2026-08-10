@@ -1,6 +1,6 @@
 export const slug = 'epub-to-zip';
-export const title = 'Convert EPUB to ZIP — Free Online Tool';
-export const metaDescription = 'Extract the files inside any EPUB free — convert EPUB to ZIP and pull out XHTML, CSS, images & fonts in seconds. No sign-up, your file stays private.';
+export const title = 'Convert EPUB to ZIP Free — No Sign-up Required';
+export const metaDescription = 'Convert EPUB to ZIP free — no sign-up, no install. Extract the XHTML, CSS, images & fonts from any e-book in seconds, right in your browser. Your file stays private.';
 export const level = 'A' as const;
 export const wordCount = 2050;
 
@@ -45,7 +45,7 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
     },
     {
       heading: 'What to Do After Extracting',
-      body: `Once you have the ZIP, open it with any archive tool and look for: OEBPS/ or EPUB/ — the folder holding chapter .xhtml files. images/ — cover and inline illustrations. style/ — the CSS that controls typography. META-INF/container.xml and content.opf — the manifest and metadata. Edit what you need, then re-zip and (if required) rename back to .epub to rebuild a valid e-book.`
+      body: `Once you have the ZIP, open it with any archive tool and look for: OEBPS/ or EPUB/ — the folder holding chapter .xhtml files. images/ — cover and inline illustrations. style/ — the CSS that controls typography. META-INF/container.xml and content.opf — the manifest and metadata. Edit what you need, then re-zip and (if required) rename back to .epub to rebuild a valid e-book. Want a readable book instead of raw files? See our [AZW3 vs MOBI comparison](/blog/azw3-vs-mobi) to pick the right Kindle format.`
     }
   ],
 

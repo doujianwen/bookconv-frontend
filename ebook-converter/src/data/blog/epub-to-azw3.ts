@@ -1,11 +1,11 @@
 export const slug = `epub-to-azw3`;
 export const date = `2026-08-02`;
 export const author = "BookConv Team";
-export const title = `EPUB to AZW3: Get Your Ebooks Onto Kindle Natively`;
+export const title = `Free EPUB to AZW3: Get Your Ebooks Onto Kindle Natively`;
 export const tags = ["EPUB", "AZW3", "Kindle", "Amazon", "Ebook Formats", "BookConv"];
 
 export const content = {
-  intro: `Bought an EPUB that your Kindle won't open? Amazon's Send to Kindle works, but it re-processes your file in the cloud. Converting EPUB to AZW3 on your own gives you a native Kindle format with better typography control and no upload to Amazon. This guide explains what AZW3 is, how it beats the old MOBI, and when to use it over Send to Kindle.`,
+  intro: `Bought an EPUB your Kindle won't open? Convert EPUB to AZW3 free — no sign-up, no upload to Amazon. This guide shows how to get a native Kindle format with full typography control, how AZW3 beats the old MOBI, and when to use it instead of Send to Kindle.`,
   sections: [
     {
       heading: `What Is AZW3?`,
@@ -36,7 +36,7 @@ Most files finish in 10–30 seconds; image-heavy or complex layouts take 1–2 
     },
     {
       heading: `When to Use AZW3 (and When Not To)`,
-      body: `Reach for AZW3 when you're a Kindle owner who wants a native file, cares about typography, or prefers not to upload to Amazon. Skip it when you read on non-Kindle devices — Kobo, Apple Books, and most apps don't read AZW3, and for those you should keep the EPUB. AZW3 is an Amazon format; EPUB is the everywhere format.`
+      body: `Reach for AZW3 when you're a Kindle owner who wants a native file, cares about typography, or prefers not to upload to Amazon. Skip it when you read on non-Kindle devices — Kobo, Apple Books, and most apps don't read AZW3, and for those you should keep the EPUB. AZW3 is an Amazon format; EPUB is the everywhere format. Need the raw XHTML, CSS, and images instead? [Pull them free with our EPUB to ZIP tool](/convert/epub-to-zip).`
     },
     {
       heading: `Key Takeaways`,

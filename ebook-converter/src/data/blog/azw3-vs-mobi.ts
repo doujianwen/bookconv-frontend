@@ -11,7 +11,23 @@ export const content = {
       heading: `The Short Version`,
       body: `Use **AZW3** for any Kindle made in the last ten years. It renders modern CSS, keeps your embedded fonts, and handles tables and complex layouts. Reach for **MOBI** only when you're feeding a Kindle old enough to predate decent styling, or when you're stuck with software that never learned anything newer.
 
-If you're not sure which device you own, AZW3 is the safe default. It's the format Amazon's own publishing pipeline produces, and it's what Send to Kindle builds behind the scenes.`
+      If you're not sure which device you own, AZW3 is the safe default. It's the format Amazon's own publishing pipeline produces, and it's what Send to Kindle builds behind the scenes.`
+    },
+    {
+      heading: `AZW3 vs MOBI for Kindle: The 10-Second Decision`,
+      body: `Not sure which format your Kindle needs? It comes down to one thing: the age of the device.
+
+- **Kindle from 2015 or later** (Paperwhite 3, Oasis, Voyage, any current model) — use **AZW3**. It's what Amazon's own pipeline produces, and it keeps your fonts, tables, and CSS.
+- **Kindle older than 2015** (Keyboard, 4, Touch, first-gen Paperwhite) — use **MOBI** only if AZW3 won't sideload cleanly over USB.
+- **Not sure which you own?** AZW3 is the safe default; fall back to MOBI only if it fails.
+
+| Your Kindle | Use |
+|-------------|-----|
+| 2015 or newer | AZW3 |
+| Older than 2015 | MOBI (only if AZW3 fails) |
+| Unsure | AZW3 (safe default) |
+
+That settles the whole "mobi vs azw3 for kindle" question.`
     },
     {
       heading: `What AZW3 Actually Is`,
@@ -128,19 +144,39 @@ export const faqs = [
   {
     question: `Can a Kindle read AZW3 files directly?`,
     answer: `Yes. Send the .azw3 file over USB, email it to your Send-to-Kindle address, or convert from EPUB first — any modern Kindle opens it. Amazon's own publishing pipeline outputs KF8, so AZW3 is the format the hardware expects.`,
+  },
+  {
+    question: `Mobi vs AZW3 for Kindle — which one do I actually need?`,
+    answer: `Match the format to your device. Any Kindle from 2015 or later (Paperwhite 3, Oasis, Voyage, current models) should use AZW3 — it preserves fonts, tables, and CSS. Only reach for MOBI on pre-2015 Kindles (Keyboard, Touch, first-gen Paperwhite) where AZW3 won't sideload cleanly over USB. If you're unsure which device you own, AZW3 is the safe default.`,
   }
 ];
 
 export const es = {
-  title: `AZW3 vs MOBI: ¿Qué formato elegir para tu Kindle?`,
+  title: `AZW3 vs MOBI para Kindle: cuál usar y convertir gratis`,
   content: {
-    intro: `Elegir entre AZW3 y MOBI solo importa si hay un Kindle de por medio — o si quieres pasar un libro a uno. Ambos son formatos propios de Amazon, pero separados por una generación. Esta guía lo resuelve: cuándo gana AZW3, cuándo MOBI es la única opción que queda y cómo convertir en cualquier sentido sin perder el formato.`,
+    intro: `¿AZW3 o MOBI para tu Kindle? Ambos son formatos de Amazon, pero de generaciones distintas. Esta guía gratuita lo resuelve: cuándo gana AZW3, cuándo MOBI es la única opción y cómo convertir entre ambos sin registro, en un clic.`,
     sections: [
       {
         heading: `La versión corta`,
         body: `Usa **AZW3** para cualquier Kindle fabricado en la última década. Renderiza CSS moderno, conserva las fuentes embebidas y maneja tablas y diseños complejos. Recurre a **MOBI** solo cuando alimentas un Kindle lo bastante viejo para no soportar estilos decentes, o cuando el software que usas nunca aprendió nada más nuevo.
 
 Si no estás seguro de qué dispositivo tienes, AZW3 es el valor seguro por defecto. Es el formato que produce la propia cadena de publicación de Amazon, y es lo que Send to Kindle construye por detrás.`,
+      },
+      {
+        heading: `AZW3 vs MOBI para Kindle: la decisión en 10 segundos`,
+        body: `¿No sabes qué formato necesita tu Kindle? Todo se reduce a la antigüedad del dispositivo.
+
+- **Kindle de 2015 o posterior** (Paperwhite 3, Oasis, Voyage, cualquier modelo actual) — usa **AZW3**. Es lo que produce la propia cadena de Amazon y conserva fuentes, tablas y CSS.
+- **Kindle anterior a 2015** (Keyboard, 4, Touch, Paperwhite de primera generación) — usa **MOBI** solo si AZW3 falla por USB.
+- **¿No estás seguro?** AZW3 es el valor seguro por defecto.
+
+| Tu Kindle | Usa |
+|-----------|-----|
+| 2015 o posterior | AZW3 |
+| Anterior a 2015 | MOBI (solo si AZW3 falla) |
+| No estás seguro | AZW3 (por defecto) |
+
+Así se resuelve la duda "mobi vs azw3 para kindle".`,
       },
       {
         heading: `Qué es AZW3 realmente`,
@@ -256,6 +292,10 @@ Calibre de escritorio vale la pena instalarlo solo si conviertes de golpe toda u
     {
       question: `¿Puede un Kindle leer archivos AZW3 directamente?`,
       answer: `Sí. Envía el archivo .azw3 por USB, mándalo a tu dirección Send-to-Kindle o conviértelo desde EPUB primero: cualquier Kindle moderno lo abre. La propia cadena de publicación de Amazon produce KF8, así que AZW3 es el formato que el hardware espera.`,
+    },
+    {
+      question: `Mobi vs AZW3 para Kindle: ¿cuál necesito realmente?`,
+      answer: `Elígelo según el dispositivo. Cualquier Kindle de 2015 o posterior (Paperwhite 3, Oasis, Voyage, modelos actuales) debe usar AZW3: conserva fuentes, tablas y CSS. Recurre a MOBI solo en Kindle previos a 2015 (Keyboard, Touch, Paperwhite de primera generación) donde AZW3 no carga bien por USB. Si no sabes qué dispositivo tienes, AZW3 es el valor seguro.`,
     },
   ],
 };
