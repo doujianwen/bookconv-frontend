@@ -85,7 +85,9 @@ Publishing in EPUB ensures your books reach the widest possible audience across 
 Need to analyze text content programmatically? EPUB's clean HTML structure is far easier to parse and process than MOBI's proprietary format.
 
 **Accessibility Advocates**
-EPUB's support for semantic markup, proper reading order, and assistive technology integration makes it the superior choice for inclusive reading experiences.`
+EPUB's support for semantic markup, proper reading order, and assistive technology integration makes it the superior choice for inclusive reading experiences.
+
+Not sure which format fits your reader? Our [EPUB vs MOBI comparison](/blog/epub-vs-mobi) breaks it down by device. And if you need to go the other direction, [convert EPUB to MOBI](/convert/epub-to-mobi) for an older Kindle.`
     },
     {
       heading: 'Read Your Converted EPUB on Kobo',

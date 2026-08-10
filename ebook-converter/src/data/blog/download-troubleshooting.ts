@@ -74,7 +74,7 @@ Easily the most common cause. Apple Books ignores MOBI and AZW3. Older Kindles w
 Changing an extension from EPUB to MOBI does nothing to the contents, and readers reject the mismatch instantly. Run a real conversion.
 
 ### The sideload didn't finish
-On Kindle, copy the file into the documents folder rather than the drive root, then eject the device properly instead of pulling the cable. An interrupted copy leaves a file that looks complete in a file manager and fails on the device. Restart the Kindle afterward so it re-indexes. Our [EPUB to MOBI walkthrough](/blog/how-to-convert-epub-to-mobi) covers sideloading step by step.
+On Kindle, copy the file into the documents folder rather than the drive root, then eject the device properly instead of pulling the cable. An interrupted copy leaves a file that looks complete in a file manager and fails on the device. Restart the Kindle afterward so it re-indexes. Our [EPUB to MOBI walkthrough](/blog/epub-to-mobi-guide) covers sideloading step by step.
 
 ### It opens, but the layout is a mess
 That's source quality, not a download failure. Messy markup carries straight through into the output. Fixed-layout PDFs are the usual offender — [PDF to EPUB](/convert/pdf-to-epub) gets you reflowable text, though heavily designed pages need cleanup afterward in a desktop editor. The Calibre [conversion documentation](https://manual.calibre-ebook.com/conversion.html) covers the settings that help.`

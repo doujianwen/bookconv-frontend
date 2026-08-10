@@ -1,5 +1,4 @@
 import type { BlogPostMeta } from "./types";
-import * as post1 from "./how-to-convert-epub-to-mobi";
 import * as post2 from "./ebook-formats-explained";
 import * as post3 from "./why-convert-lit-to-epub";
 import * as post4 from "./epub-to-mobi-guide";
@@ -37,10 +36,11 @@ import * as post35 from "./best-ebook-reader-apps";
 import * as post36 from "./kobo-to-epub";
 
 // Keep the English versions (English body). The Chinese versions
-// (how-to-convert-epub-to-mobi / ebook-formats-explained / why-convert-lit-to-epub,
-// Chinese body) were deleted per request.
+// (ebook-formats-explained / why-convert-lit-to-epub, Chinese body) were deleted per request.
 // Also includes 7 codex-generated English guides (epub-to-mobi-guide etc., converted from .mdx).
-const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23, post24, post25, post26, post27, post28, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
+// 2026-08-10: how-to-convert-epub-to-mobi (EN step-by-step) archived to ../_archived/ to dedupe
+//   the "how to convert EPUB to MOBI" intent vs epub-to-mobi-guide; 301 in src/middleware.ts.
+const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23, post24, post25, post26, post27, post28, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

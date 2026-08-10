@@ -55,6 +55,16 @@ If you care about how the book looks and reads, EPUB wins. If you are locked to 
 For the full Amazon-side comparison, see [AZW3 vs MOBI](/blog/azw3-vs-mobi) and the [MOBI vs AZW3 guide](/guide/mobi-vs-azw3). For the broader format landscape, [Ebook Formats Explained](/blog/ebook-formats-explained) covers EPUB, AZW3, MOBI, and more.`
     },
     {
+      heading: `EPUB vs MOBI for Kindle: The 10-Second Decision`,
+      body: `If your only question is "which file do I put on my Kindle," the answer depends entirely on the Kindle's age:
+
+- **Modern Kindle (2015 or later, plus any Paperwhite, Oasis, or Scribe)** → EPUB is now the right answer. Send the EPUB to the device through Amazon's Send to Kindle, and Amazon converts it to AZW3 on their servers. Or pre-convert with [EPUB to AZW3](/convert/epub-to-azw3) for full styling control. MOBI is unnecessary here.
+- **Pre-2015 Kindle (Keyboard, early Paperwhite, Touch)** → MOBI is the format that still sideloads most reliably over USB. [Convert EPUB to MOBI](/convert/epub-to-mobi) only for these older units.
+- **You never actually keep MOBI** → your master library stays EPUB; the Kindle gets a converted copy on demand.
+
+So "EPUB or MOBI for my Kindle" really means "EPUB for every current Kindle, MOBI only for the vintage ones still in service." AZW3 sits between them as Amazon's modern native format — see [AZW3 vs MOBI](/blog/azw3-vs-mobi) for the full cut.`
+    },
+    {
       heading: `Converting Between EPUB and MOBI`,
       body: `The two convert in both directions, and it is a one-click job in a browser converter:
 
@@ -98,5 +108,17 @@ export const faqs = [
   {
     question: `How do I convert between EPUB and MOBI?`,
     answer: `For one or two books, use a browser converter: [EPUB to MOBI](/convert/epub-to-mobi) for an old Kindle, or [MOBI to EPUB](/convert/mobi-to-epub) to free a legacy book. No desktop Calibre install is required for small batches.`,
+  },
+  {
+    question: `EPUB or MOBI for my Kindle?`,
+    answer: `EPUB for any Kindle from 2015 onward — Send to Kindle accepts EPUB by email and converts it to AZW3 automatically, or you can pre-convert with [EPUB to AZW3](/convert/epub-to-azw3). MOBI only matters for pre-2015 Kindles that cannot read the newer formats, where [EPUB to MOBI](/convert/epub-to-mobi) is the fallback.`,
+  },
+  {
+    question: `Can a Kindle read EPUB files directly?`,
+    answer: `Not natively on the device, but you don't need to convert manually. Amazon's Send to Kindle service accepts EPUB and converts it to AZW3 in the cloud. For USB sideloading, convert EPUB to AZW3 or MOBI first with a tool like BookConv.`,
+  },
+  {
+    question: `Should I send EPUB or MOBI to my Kindle via Send to Kindle?`,
+    answer: `Send EPUB. Amazon removed MOBI from Send to Kindle in 2022, so the service only accepts EPUB and PDF now, converting them to AZW3. MOBI is reserved for USB sideloading onto older hardware that predates AZW3 support.`,
   }
 ];

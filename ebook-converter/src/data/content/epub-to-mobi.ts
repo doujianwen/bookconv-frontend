@@ -1,5 +1,6 @@
 export const slug = 'epub-to-mobi';
 export const title = 'EPUB to MOBI Online — Free Converter, No Sign-up';
+export const metaDescription = 'Convert EPUB to MOBI free — no sign-up, no watermarks. Get a classic MOBI for older Kindle devices in seconds. No account needed.';
 export const level = 'S' as const;
 export const wordCount = 2500;
 
@@ -36,7 +37,9 @@ Amazon's "Send to Kindle" email service accepts MOBI files for older devices. Th
 For straightforward novels and text-based books without complex formatting, MOBI provides reliable performance with minimal file bloat.
 
 **4. Backup and Archival**
-Maintaining MOBI copies of your EPUB library ensures you have compatible formats for any device, past or present.`
+Maintaining MOBI copies of your EPUB library ensures you have compatible formats for any device, past or present.
+
+Comparing the two formats before you commit? See our [EPUB vs MOBI comparison](/blog/epub-vs-mobi). And if a book is already a MOBI and you want it everywhere, [convert MOBI to EPUB](/convert/mobi-to-epub) instead.`
     },
     {
       heading: 'Conversion Quality & Considerations',

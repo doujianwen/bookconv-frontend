@@ -14,6 +14,15 @@ const CONVERSION_REDIRECTS: Record<string, string> = {
   '/convert/epub-to-docx': '/convert/epub-to-word',
 };
 
+// 301 redirects for deduplicated blog posts.
+// These slugs were removed from the blog registry (src/data/blog/index.ts)
+// and llms.txt to end keyword cannibalization. Middleware catches any runtime
+// request (including old indexed URLs / backlinks) and redirects to the
+// canonical page. Locale prefix (/, /es/) is preserved by the caller below.
+const BLOG_REDIRECTS: Record<string, string> = {
+  '/blog/how-to-convert-epub-to-mobi': '/blog/epub-to-mobi-guide',
+};
+
 // Get locale from URL path (e.g., /es/blog -> 'es')
 function getLocaleFromPath(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
@@ -47,10 +56,13 @@ export async function middleware(request: NextRequest) {
   // 301 redirects for deduplicated conversion pages (before locale handling
   // to catch /, /es/, and /en/ variants in a single pass — no double redirects)
   const pathWithoutLocale = localeFromPath ? pathname.replace(/^\/(?:en|es)/, '') : pathname;
-  if (CONVERSION_REDIRECTS[pathWithoutLocale]) {
+  // Deduplicated conversion pages + blog posts → 301 to canonical (locale preserved)
+  const redirectTarget =
+    CONVERSION_REDIRECTS[pathWithoutLocale] ?? BLOG_REDIRECTS[pathWithoutLocale];
+  if (redirectTarget) {
     const localePrefix = localeFromPath === 'es' ? '/es' : '';
     const url = request.nextUrl.clone();
-    url.pathname = localePrefix + CONVERSION_REDIRECTS[pathWithoutLocale];
+    url.pathname = localePrefix + redirectTarget;
     const response = NextResponse.redirect(url, { status: 301 });
     return applySecurityHeaders(request, response);
   }

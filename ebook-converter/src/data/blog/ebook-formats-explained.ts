@@ -70,7 +70,7 @@ Amazon has been retiring it steadily. Send to Kindle stopped accepting MOBI uplo
 - The device handles AZW3 or EPUB, because there's no upside
 - The book has tables, footnotes, or careful typography
 
-Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-epub) turns them into something future readers can actually use, and our [EPUB to MOBI walkthrough](/blog/how-to-convert-epub-to-mobi) covers the return trip if you still need it.`
+Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-epub) turns them into something future readers can actually use, and our [EPUB to MOBI walkthrough](/blog/epub-to-mobi-guide) covers the return trip if you still need it.`
     },
     {
       heading: `Convert Between Formats with BookConv`,
@@ -205,7 +205,7 @@ Amazon lo ha venido retirando poco a poco. Send to Kindle dejó de aceptar subid
 - El dispositivo maneja AZW3 o EPUB, porque no hay ventaja
 - El libro tiene tablas, notas al pie o tipografía cuidada
 
-¿Tienes una carpeta de archivos MOBI viejos? [Convert MOBI to EPUB](/convert/mobi-to-epub) los convierte en algo que los lectores futuros puedan usar de verdad, y nuestra [guía EPUB to MOBI](/blog/how-to-convert-epub-to-mobi) cubre el viaje de vuelta si todavía lo necesitas.`,
+¿Tienes una carpeta de archivos MOBI viejos? [Convert MOBI to EPUB](/convert/mobi-to-epub) los convierte en algo que los lectores futuros puedan usar de verdad, y nuestra [guía EPUB to MOBI](/blog/epub-to-mobi-guide) cubre el viaje de vuelta si todavía lo necesitas.`,
       },
       {
         heading: `Convertir entre formatos con BookConv`,

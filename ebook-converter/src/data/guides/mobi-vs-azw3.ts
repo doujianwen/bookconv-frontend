@@ -29,7 +29,7 @@ export const content = {
     },
     {
       heading: 'Which to choose when converting',
-      body: `Rule of thumb:\n\n- Converting **from EPUB for a current Kindle** → pick **AZW3** for the best layout: [/convert/epub-to-azw3](/convert/epub-to-azw3).\n- Converting for a **legacy device** → pick **MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi).\n- Unsure which your device needs → AZW3 first; it is the modern default.\n\nOur deeper comparison lives at [/blog/azw3-vs-mobi](/blog/azw3-vs-mobi).`,
+      body: `Rule of thumb:\n\n- Converting **from EPUB for a current Kindle** → pick **AZW3** for the best layout: [/convert/epub-to-azw3](/convert/epub-to-azw3).\n- Converting for a **legacy device** → pick **MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi).\n- Unsure which your device needs → AZW3 first; it is the modern default.\n\nOur deeper comparison lives at [/blog/azw3-vs-mobi](/blog/azw3-vs-mobi), and the two-way EPUB vs MOBI cut is at [/blog/epub-vs-mobi](/blog/epub-vs-mobi).`,
     },
     {
       heading: 'How to convert into each format',

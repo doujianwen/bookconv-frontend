@@ -30,7 +30,7 @@ export const content = {
     },
     {
       heading: 'Convert with Calibre (more control)',
-      body: `If you want to tweak the output, Calibre gives you a MOBI output profile with options for headings, margins, and reading order. Open the book, pick **Convert books → MOBI**, and adjust the **Structure detection** and **MOBI output** sections. A focused step-by-step lives in [/blog/how-to-convert-epub-to-mobi](/blog/how-to-convert-epub-to-mobi).`,
+      body: `If you want to tweak the output, Calibre gives you a MOBI output profile with options for headings, margins, and reading order. Open the book, pick **Convert books → MOBI**, and adjust the **Structure detection** and **MOBI output** sections. A focused step-by-step lives in [/blog/epub-to-mobi-guide](/blog/epub-to-mobi-guide).`,
     },
     {
       heading: 'EPUB to MOBI vs EPUB to AZW3',

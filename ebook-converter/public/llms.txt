@@ -40,7 +40,6 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 ## Guides
 - [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://www.bookconv.com/blog/azw3-vs-mobi)
 - [How to Convert EPUB to MOBI Online: The BookConv Guide](https://www.bookconv.com/blog/epub-to-mobi-guide)
-- [How to Convert EPUB to MOBI on BookConv (Step-by-Step)](https://www.bookconv.com/blog/how-to-convert-epub-to-mobi)
 - [Ebook Formats Explained: EPUB vs AZW3 vs MOBI & More](https://www.bookconv.com/blog/ebook-formats-explained)
 - [Convert EPUB to PDF on Linux (3 Methods)](https://www.bookconv.com/blog/epub-to-pdf-linux)
 - [How to Convert PDF to EPUB Online (and When You Shouldn't)](https://www.bookconv.com/blog/pdf-to-epub-guide)
