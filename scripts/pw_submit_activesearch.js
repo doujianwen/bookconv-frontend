@@ -10,8 +10,8 @@ async function main() {
   console.log('Title:', await p.title());
   
   // Fill the form
-  await p.locator('input[name=url]').fill('https://yourdomain.com');
-  await p.locator('input[name=email]').fill('founder@yourdomain.com');
+  await p.locator('input[name=url]').fill((process.env.BOOKCONV_DOMAIN || 'https://yourdomain.com'));
+  await p.locator('input[name=email]').fill((process.env.BOOKCONV_EMAIL || 'founder@yourdomain.com'));
   
   // Submit
   await p.locator('input[name=submiturl]').click();

@@ -20,12 +20,12 @@ function postForm(url, data) {
   });
 }
 async function main() {
-  const DOMAIN = 'https://yourdomain.com';
+  const DOMAIN = (process.env.BOOKCONV_DOMAIN || 'https://yourdomain.com');
   const TITLE = 'EbookConverter - Free Online Ebook Format Converter';
   const DESC = 'A free online ebook converter supporting 28+ formats. No signup, no limits, no ads.';
   const SITE_NAME = 'EbookConverter';
   const CONTACT_NAME = 'Founder';
-  const CONTACT_EMAIL = 'founder@yourdomain.com';
+  const CONTACT_EMAIL = (process.env.BOOKCONV_EMAIL || 'founder@yourdomain.com');
   
   const submitData = {
     lead_url: DOMAIN,

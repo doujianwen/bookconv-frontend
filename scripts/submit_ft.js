@@ -12,9 +12,9 @@ async function main() {
   // Fill form fields
   await p.locator('input[name=\"submitter_name\"]').fill('EbookConverter Founder');
   await p.locator('input[name=\"tool_name\"]').fill('EbookConverter');
-  await p.locator('input[name=\"tool_url\"]').fill('https://yourdomain.com');
+  await p.locator('input[name=\"tool_url\"]').fill((process.env.BOOKCONV_DOMAIN || 'https://yourdomain.com'));
   await p.locator('textarea[name=\"description\"]').fill('A free online ebook converter supporting 28+ formats including epub, pdf, mobi, azw3, txt, html. No signup required, no limits, no ads. Built with Calibre engine.');
-  await p.locator('input[name=\"submitter_email\"]').fill('founder@yourdomain.com');
+  await p.locator('input[name=\"submitter_email\"]').fill((process.env.BOOKCONV_EMAIL || 'founder@yourdomain.com'));
   
   // Select category
   const catSelect = p.locator('select[name=\"category\"]');

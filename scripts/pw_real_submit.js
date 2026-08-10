@@ -9,13 +9,13 @@ async function main() {
     {
       name: 'ActiveSearch',
       url: 'https://www.activesearchresults.com/addwebsite.php',
-      fields: {url: 'https://yourdomain.com', email: 'founder@yourdomain.com'},
+      fields: {url: (process.env.BOOKCONV_DOMAIN || 'https://yourdomain.com'), email: (process.env.BOOKCONV_EMAIL || 'founder@yourdomain.com')},
       submitSelector: 'input[name=submiturl]'
     },
     {
       name: 'FutureTools',
       url: 'https://futuretools.io/submit',
-      fields: {company: 'EbookConverter', email: 'founder@yourdomain.com'},
+      fields: {company: 'EbookConverter', email: (process.env.BOOKCONV_EMAIL || 'founder@yourdomain.com')},
       submitSelector: 'input[type=submit]'
     },
   ];
