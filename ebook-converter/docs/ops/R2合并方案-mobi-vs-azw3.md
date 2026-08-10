@@ -190,3 +190,10 @@ git add -A && git commit && git push
 
 - **50MB 不实声明**：在 `ebook-formats-explained.ts`（R1 胜者），**不在 R2 三页** → 本轮不碰（属独立议题待办#4/#5）。
 - 文案全英文（硬约束），禁反引号，内链用真实 slug；ES 与 EN 须同步。
+
+## 11. 执行记录（2026-08-11）
+- **状态**：已执行，本地已提交（commit 待用户本机 `git push origin main` 上线）。
+- **关键修正**：执行中发现 `blog/index.ts` 的 `posts` 数组仍引用已删除 import 的 `post21`（undefined），已移除避免 tsc 报错。
+- **门禁**：tsc 0 错；seo-critic 0 严重/0 警告（注册博文 33 篇；CONVERSION_MAP 30 条）；`next build --webpack` 成功。
+- **核验**：push 后 Vercel 重建（约 75–90s），curl 剥离 `<script>` 验：两败者 → 301（location `/blog/azw3-vs-mobi`，含 `/es`）；胜者 200 + 含扩展决策表 + Calibre「Convert books」段 + `mobi-to-pdf`/`mobi-to-txt` 深链；史实 2005 生效。
+- **commit 哈希回填**：见 `docs/ops/SEO改动溯源.md` R2 条目。

@@ -176,9 +176,9 @@ git add -A && git commit && git push
 
 - **Commit**：`f6a8a1d`（5 文件，48 insertions / 3 deletions，rename `blog → _archived`）
 - **门禁**：tsc 0 错 · seo-critic 0 严重/0 警告 · `next build --webpack` 成功
-- **Push**：待用户本机 `git push origin main`（沙箱 GCM `/dev/tty` 不可用语交互凭据失败，与 c81ee89 同模式）
-- **核验**：push 后 Vercel 重建（约 75–90s），用 curl 剥离 `<script>` 验：
-  - 败者 `/blog/epub-vs-azw3-vs-mobi` → 301 且 `location: /blog/ebook-formats-explained`（含 `/es` 变体）
-  - 胜者 200 + 正文含 `At a Glance` 表 + `Send to Kindle` FAQ
-  - 胜者内链 `/convert/epub-to-azw3`、`/convert/mobi-to-epub` 存活
+- **Push**：✅ 用户本机 `git push origin main` 已上线（沙箱 GCM `/dev/tty` 不可用语交互凭据失败，与 c81ee89 同模式；真实推送走用户机器网络）
+- **核验（2026-08-11，Vercel 重建后 curl 剥离 `<script>` 实测）**：
+  - 败者 `/blog/epub-vs-azw3-vs-mobi` → **301** 且 `location: /blog/ebook-formats-explained` ✅（含 `/es` 变体，locale 保留逻辑生效）
+  - 胜者 200 + 正文含 **`At a Glance` 表**（PASS）+ **`Send to Kindle` FAQ**（PASS）✅
+  - 胜者内链 `/convert/epub-to-azw3`、`/convert/mobi-to-epub` 存活 ✅
 - **溯源**：`docs/ops/SEO改动溯源.md` 已追加 R1 条目

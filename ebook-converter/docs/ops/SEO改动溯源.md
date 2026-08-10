@@ -27,8 +27,24 @@
 - **改动前**：两页 H1 前 22 字符一致（`EPUB vs AZW3 vs MOBI: Which…`），同抢「epub vs azw3 vs mobi」三向对比词，权重分散互拖
 - **改动后**：败者归档至 `src/data/_archived/` 并 301 → 胜者 `ebook-formats-explained`；其唯一高价值内容（At a Glance 紧凑对比表 + Send to Kindle FAQ）并入胜者（EN + ES 同步）；胜者保留为「格式选择」支柱
 - **原因**：整簇总览 R1（最高优先级内耗）。胜者更早注册、带西语版、范围更宽，适合做权威页；grep 全仓确认败者无任何入链 → 合并零死链风险
-- **Commit**：`f6a8a1d`（本地已提交；push 待用户本机 `git push origin main`——沙箱 GCM `/dev/tty` 不可用语交互凭据失败）
+- **Commit**：`f6a8a1d`（已推送 origin/main 并由 Vercel 构建上线）
+- **线上核验（2026-08-11）**：败者 `/blog/epub-vs-azw3-vs-mobi` → 301 `location: /blog/ebook-formats-explained`（含 `/es`）；胜者 200 + 含 `At a Glance` 表 + `Send to Kindle` FAQ。R1 内耗已解除。
 - **构建**：`next build --webpack` 成功（路由表完整）；tsc 0 错；seo-critic 0 严重/0 警告
 - **关联**：整簇治理 `docs/ops/mobi-epub整簇意图分布总览.md` R1；计划 `docs/ops/R1合并方案-epub-vs-azw3-vs-mobi.md`
 - **复测**：2026-08-24 自动化提醒拉 `ebook-formats-explained` 的「epub vs azw3 vs mobi」展示/位置，看是否进前 30；败者 URL 应被 GSC 摘出索引
 - **铁律**：归档用 `git mv`（非 `git rm`/`rm`），避免触发沙箱 safe-delete 连带删父目录（见 MEMORY §7）
+
+---
+
+## 2026-08-11 — R2 合并：MOBI vs AZW3 三页 → azw3-vs-mobi（一页吃整簇）
+- **文件**：败者 `src/data/blog/mobi-or-azw3-for-kindle.ts`、`src/data/guides/mobi-vs-azw3.ts`（归档）；胜者 `src/data/blog/azw3-vs-mobi.ts`（合并内容）；`src/data/blog/index.ts`、`src/data/guides/index.ts`、`src/middleware.ts`、`public/llms.txt`；3 处活页内链改指（`epub-vs-mobi.ts`、`azw3-to-mobi-keep-formatting.ts`、`can-kindle-read-azw3.ts` EN+ES）
+- **类型**：博客/指南近重复页合并（cannibalization 治理）+ 301 重定向 ×2
+- **改动前**：三页同抢「MOBI vs AZW3 for Kindle」意图，title 仅词序不同，权重分散互拖
+- **改动后**：两败者归档至 `src/data/_archived/` 并 301 → 胜者 `azw3-vs-mobi`（blog，更早注册、已是 hub、含 ES）；败者独有资产并入胜者——逐型号决策表（从 3 行粗表扩展为 7 行精确表，EN+ES）、Calibre 桌面「Convert books」工作流 + `/convert/mobi-to-pdf`、`/convert/mobi-to-txt` 深链、FAQ「Does Send to Kindle accept MOBI?」（EN+ES）、史实修正 Mobipocket 收购年 2007→2005（EN+ES）
+- **原因**：整簇总览 R2（过饱和，最高优先之一）。胜者内容最丰富、已被另两页内链指向（de-facto hub）、含 ES、注册最早；合并权重无损反集权
+- **Commit**：`<待 push>`（本地已提交；用户本机 `git push origin main`）
+- **构建**：`next build --webpack` 成功；tsc 0 错；seo-critic 0 严重/0 警告（注册博文 33 篇；CONVERSION_MAP 30 条）
+- **关键修复**：执行中发现 `blog/index.ts` 的 `posts` 数组仍引用已删除 import 的 `post21`（undefined），已移除避免 tsc/运行期报错
+- **关联**：整簇治理 `docs/ops/mobi-epub整簇意图分布总览.md` R2；计划 `docs/ops/R2合并方案-mobi-vs-azw3.md`
+- **复测**：2026-08-24 自动化复测拉 `azw3-vs-mobi` 的「azw3 vs mobi」「mobi vs azw3」「mobi or azw3 for kindle」展示/位置，看是否进前 30；两败者 URL 应被 GSC 摘出索引
+- **铁律**：归档用 `git mv`（非 `git rm`/`rm`）
