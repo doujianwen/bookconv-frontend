@@ -3,6 +3,9 @@ export const title = `Configuring BookConv: Environment Variables for Self-Hosti
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = [`environment`, `configuration`, `self-hosting`, `technical`];
+// Dev/deployment reference doc — keep reachable for self-hosters but keep it
+// out of Google's index so it doesn't burn crawl budget meant for money pages.
+export const noindex = true;
 
 export const content = {
   intro: `Self-hosting BookConv or wiring it into your own stack? Every meaningful setting — Redis, storage, secrets, rate limits — comes from an environment variable. Here's what each one does and which you actually need on day one.`,

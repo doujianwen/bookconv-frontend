@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
-import { getHubTags } from '@/lib/internal-links'
 import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
 
@@ -12,7 +11,9 @@ import { CONTENT_MAP } from '@/data/content'
 const CONVERSION_PAGES = Object.keys(CONTENT_MAP)
 
 const BLOG_POSTS = getAllPosts()
-const BLOG_SLUGS = BLOG_POSTS.map((p) => p.slug)
+// Exclude noindex posts (e.g. dev/internal docs) from the sitemap so they
+// don't waste crawl budget; they stay reachable via internal links.
+const BLOG_SLUGS = BLOG_POSTS.filter((p) => !p.noindex).map((p) => p.slug)
 const BLOG_DATES: Record<string, string> = {};
 BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.date; })
 
@@ -80,15 +81,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(g.date || '2026-08-02'),
         changeFrequency: 'yearly' as const,
         priority: 0.6,
-      })
-    }
-
-    for (const hub of getHubTags()) {
-      allUrls.push({
-        url: baseUrl + prefix + '/blog/tag/' + hub.slug,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.5,
       })
     }
   }

@@ -31,6 +31,8 @@ export interface BlogPostMeta {
   faqs?: BlogFaq[];
   /** Spanish (es) translation. When present, /es/blog/[slug] serves real Spanish content. */
   es?: BlogPostLocalized;
+  /** When true, the page is excluded from search indexes (robots noindex). Use for dev/internal docs that must stay reachable but shouldn't occupy SEO crawl budget. */
+  noindex?: boolean;
 }
 
 export interface BlogPostWithLinks extends BlogPostMeta {

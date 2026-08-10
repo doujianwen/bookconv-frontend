@@ -53,6 +53,9 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
       card: "summary_large_image",
       title: `${label} articles | BookConv Blog`,
     },
+    // Tag archive pages are thin (auto-generated lists) — exclude from index
+    // so Google spends crawl budget on money pages instead.
+    robots: { index: false, follow: true },
   }
 }
 

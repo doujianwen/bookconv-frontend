@@ -15,6 +15,7 @@ interface BlogPostData {
   content: BlogPostContent
   faqs?: BlogFaq[]
   es?: BlogPostLocalized
+  noindex?: boolean
 }
 
 const BLOG_POSTS: Record<string, BlogPostData> = {};
@@ -28,6 +29,7 @@ for (const p of getAllPosts()) {
     content: p.content,
     faqs: p.faqs,
     es: p.es,
+    noindex: p.noindex,
   };
 }
 
@@ -79,6 +81,9 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
       title: displayTitle,
       description,
     },
+    ...(post.noindex
+      ? { robots: { index: false, follow: true } }
+      : {}),
   }
 }
 
