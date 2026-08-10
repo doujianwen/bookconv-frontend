@@ -52,7 +52,7 @@ If you care about how the book looks and reads, EPUB wins. If you are locked to 
 - **A pre-2015 Kindle** → MOBI is the format that sideloads most reliably over USB.
 - **Your master library** → keep EPUB as the source of truth, then convert per device.
 
-For the full Amazon-side comparison, see [AZW3 vs MOBI](/blog/azw3-vs-mobi) and the [MOBI vs AZW3 guide](/guide/mobi-vs-azw3). For the broader format landscape, [Ebook Formats Explained](/blog/ebook-formats-explained) covers EPUB, AZW3, MOBI, and more.`
+For the full Amazon-side comparison, see [AZW3 vs MOBI](/blog/azw3-vs-mobi) and the [MOBI vs AZW3 guide](/blog/azw3-vs-mobi). For the broader format landscape, [Ebook Formats Explained](/blog/ebook-formats-explained) covers EPUB, AZW3, MOBI, and more.`
     },
     {
       heading: `EPUB vs MOBI for Kindle: The 10-Second Decision`,

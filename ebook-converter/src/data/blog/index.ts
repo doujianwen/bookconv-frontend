@@ -18,7 +18,6 @@ import * as post17 from "./epub-to-azw3";
 import * as post18 from "./epub-to-word";
 import * as post19 from "./txt-to-epub";
 import * as post20 from "./mobi-to-epub";
-import * as post21 from "./mobi-or-azw3-for-kindle";
 import * as post22 from "./can-kindle-read-azw3";
 import * as post23 from "./mobi-to-kobo";
 import * as post24 from "./epub-vs-mobi";
@@ -41,7 +40,9 @@ import * as post36 from "./kobo-to-epub";
 //   the "how to convert EPUB to MOBI" intent vs epub-to-mobi-guide; 301 in src/middleware.ts.
 // 2026-08-11: epub-vs-azw3-vs-mobi archived to ../_archived/ — R1 cannibalization vs
 //   ebook-formats-explained (near-identical title). 301 in src/middleware.ts BLOG_REDIRECTS.
-const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
+// 2026-08-11: mobi-or-azw3-for-kindle archived to ../_archived/ — R2 cannibalization vs
+//   azw3-vs-mobi (near-identical "mobi vs azw3 for kindle" intent). 301 in BLOG_REDIRECTS.
+const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

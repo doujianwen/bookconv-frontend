@@ -4,7 +4,6 @@ import * as calibreVsOnline from './calibre-vs-online-converter'
 import * as epubToMobi from './epub-to-mobi-keep-formatting'
 import * as azw3ToEpub from './azw3-to-epub-keep-formatting'
 import * as docxToEpub from './docx-to-epub-self-publish'
-import * as mobiVsAzw3 from './mobi-vs-azw3'
 import * as mobiToEpub from './mobi-to-epub-keep-formatting'
 import * as epubToAzw3 from './epub-to-azw3-for-kindle'
 import * as djvuToPdf from './djvu-to-pdf'
@@ -21,7 +20,7 @@ import * as kindleFormats from './kindle-formats'
 import * as bestEbookConverter from './best-ebook-converter'
 import type { GuideMeta } from './types'
 
-const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiVsAzw3, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter] as unknown as GuideMeta[]
+const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter] as unknown as GuideMeta[]
 
 const GUIDE_MAP: Record<string, GuideMeta> = {}
 for (const g of all) GUIDE_MAP[g.slug] = g

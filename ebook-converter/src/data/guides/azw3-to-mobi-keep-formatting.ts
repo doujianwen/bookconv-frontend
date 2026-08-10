@@ -32,7 +32,7 @@ For most novels this is invisible. For heavily designed books it means a plainer
     },
     {
       heading: 'Convert with BookConv (fastest)',
-      body: `BookConv runs the Calibre engine in the browser, so you get an AZW3 to MOBI conversion with nothing to install. Upload the AZW3, choose **MOBI**, and it keeps your text, images, and chapter order. Start here: [/convert/azw3-to-mobi](/convert/azw3-to-mobi). For the format choice itself, see [/guide/mobi-vs-azw3](/guide/mobi-vs-azw3).`,
+      body: `BookConv runs the Calibre engine in the browser, so you get an AZW3 to MOBI conversion with nothing to install. Upload the AZW3, choose **MOBI**, and it keeps your text, images, and chapter order. Start here: [/convert/azw3-to-mobi](/convert/azw3-to-mobi). For the format choice itself, see [/blog/azw3-vs-mobi](/blog/azw3-vs-mobi).`,
     },
     {
       heading: 'Convert with Calibre (more control)',

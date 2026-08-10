@@ -34,7 +34,7 @@ So the realistic answer is: every currently supported Kindle reads AZW3 fully, a
       heading: `What Happens on a Very Old Kindle`,
       body: `On a pre-2015 device, an AZW3 file still opens — it just won't show its extras. The book's words, chapters, and basic structure survive, but embedded fonts, complex tables, and advanced CSS fall back to a plainer rendering because the older firmware lacks the engine to display them.
 
-If you're stuck with one of those devices and styling matters, convert to MOBI instead: [convert AZW3 to MOBI](/convert/azw3-to-mobi). MOBI is the lowest-common-denominator target those readers handle most cleanly over USB. For the broader decision between the two, see [MOBI or AZW3 for Kindle](/blog/mobi-or-azw3-for-kindle).`
+If you're stuck with one of those devices and styling matters, convert to MOBI instead: [convert AZW3 to MOBI](/convert/azw3-to-mobi). MOBI is the lowest-common-denominator target those readers handle most cleanly over USB. For the broader decision between the two, see [MOBI or AZW3 for Kindle](/blog/azw3-vs-mobi).`
     },
     {
       heading: `How to Get AZW3 Onto Your Kindle`,
@@ -122,7 +122,7 @@ Así que la respuesta realista es: cualquier Kindle actualmente soportado lee AZ
         heading: `Qué pasa en un Kindle muy viejo`,
         body: `En un dispositivo previo a 2015, un archivo AZW3 todavía se abre: simplemente no mostrará sus extras. Las palabras, los capítulos y la estructura básica sobreviven, pero las fuentes embebidas, las tablas complejas y el CSS avanzado caen a un renderizado más simple porque el firmware antiguo carece del motor para mostrarlos.
 
-Si estás atascado con uno de esos dispositivos y los estilos importan, convierte a MOBI en su lugar: [convierte AZW3 a MOBI](/convert/azw3-to-mobi). MOBI es el objetivo de mínimo común denominador que esos lectores manejan más limpiamente por USB. Para la decisión más amplia entre ambos, ve [MOBI o AZW3 para Kindle](/blog/mobi-or-azw3-for-kindle).`,
+Si estás atascado con uno de esos dispositivos y los estilos importan, convierte a MOBI en su lugar: [convierte AZW3 a MOBI](/convert/azw3-to-mobi). MOBI es el objetivo de mínimo común denominador que esos lectores manejan más limpiamente por USB. Para la decisión más amplia entre ambos, ve [MOBI o AZW3 para Kindle](/blog/azw3-vs-mobi).`,
       },
       {
         heading: `Cómo poner AZW3 en tu Kindle`,

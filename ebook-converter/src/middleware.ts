@@ -22,6 +22,8 @@ const CONVERSION_REDIRECTS: Record<string, string> = {
 const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/how-to-convert-epub-to-mobi': '/blog/epub-to-mobi-guide',
   '/blog/epub-vs-azw3-vs-mobi': '/blog/ebook-formats-explained',
+  '/blog/mobi-or-azw3-for-kindle': '/blog/azw3-vs-mobi',
+  '/guide/mobi-vs-azw3': '/blog/azw3-vs-mobi',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
