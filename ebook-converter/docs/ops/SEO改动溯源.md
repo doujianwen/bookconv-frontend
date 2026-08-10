@@ -13,6 +13,22 @@
 - **改动后**：`Convert EPUB to MOBI Online — Free Converter, No Sign-up`
 - **原因**：原 title 不含独立动词 "Convert"，无法精确匹配 #1 交易查询 `convert epub to mobi`（"convert" 只藏在 `Converter` 里）。GSC 诊断（2026-08-11）显示该交易词被指南页 `/blog/epub-to-mobi-guide`（title 含完整短语 "Convert EPUB to MOBI"）以 ~50 名吃下，钱页 ~67 名反被压——cannibalization 优先级颠倒。把动词提到最前可夺回交易意图，并与 Task F 内页外链（提钱页权威）协同把交易词抢回钱页。
 - **未动部分**：`metaDescription`、H1（`EPUB to MOBI — Convert EPUB Files for Kindle` 已含动词）、页面正文与内链均未改。
-- **Commit**：`<待 push 后补>`
+- **Commit**：`c81ee89`（已推送 origin/main 并由 Vercel 构建上线）
+- **构建**：`next build --webpack` 成功（266 路由）；tsc 0 错；seo-critic 0 严重/0 警告
+- **线上核验（2026-08-11）**：`<title>` 已变为 `Convert EPUB to MOBI Online — Free Converter, No Sign-up | BookConv`；Item 4 内链（`/blog/epub-vs-mobi`、`/convert/mobi-to-epub`）仍存活。
 - **关联**：Item 4 收尾 / Task F 内页外链；GSC 诊断 `数据分析/GSC诊断_epub-to-mobi-guide_2026-08-11.md`
 - **复测**：2026-08-24 自动化提醒拉 #67（epub→mobi）GSC 数据，看是否随权威提升 + title 修正进入前 30。
+
+---
+
+## 2026-08-11 — R1 合并：epub-vs-azw3-vs-mobi → ebook-formats-explained
+- **文件**：`src/data/blog/epub-vs-azw3-vs-mobi.ts`（归档）、`src/data/blog/ebook-formats-explained.ts`（合并内容）、`src/data/blog/index.ts`、`src/middleware.ts`、`public/llms.txt`
+- **类型**：博客近重复页合并（cannibalization 治理）+ 301 重定向
+- **改动前**：两页 H1 前 22 字符一致（`EPUB vs AZW3 vs MOBI: Which…`），同抢「epub vs azw3 vs mobi」三向对比词，权重分散互拖
+- **改动后**：败者归档至 `src/data/_archived/` 并 301 → 胜者 `ebook-formats-explained`；其唯一高价值内容（At a Glance 紧凑对比表 + Send to Kindle FAQ）并入胜者（EN + ES 同步）；胜者保留为「格式选择」支柱
+- **原因**：整簇总览 R1（最高优先级内耗）。胜者更早注册、带西语版、范围更宽，适合做权威页；grep 全仓确认败者无任何入链 → 合并零死链风险
+- **Commit**：`f6a8a1d`（本地已提交；push 待用户本机 `git push origin main`——沙箱 GCM `/dev/tty` 不可用语交互凭据失败）
+- **构建**：`next build --webpack` 成功（路由表完整）；tsc 0 错；seo-critic 0 严重/0 警告
+- **关联**：整簇治理 `docs/ops/mobi-epub整簇意图分布总览.md` R1；计划 `docs/ops/R1合并方案-epub-vs-azw3-vs-mobi.md`
+- **复测**：2026-08-24 自动化提醒拉 `ebook-formats-explained` 的「epub vs azw3 vs mobi」展示/位置，看是否进前 30；败者 URL 应被 GSC 摘出索引
+- **铁律**：归档用 `git mv`（非 `git rm`/`rm`），避免触发沙箱 safe-delete 连带删父目录（见 MEMORY §7）
