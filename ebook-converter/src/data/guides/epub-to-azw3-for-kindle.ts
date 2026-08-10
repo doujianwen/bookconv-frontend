@@ -32,7 +32,7 @@ Converting to AZW3 yourself means the file you send is already in the format you
       heading: 'Convert with BookConv (fastest)',
       body: `BookConv runs the Calibre engine in the browser, so you get a clean EPUB to AZW3 conversion with no software. Upload the EPUB, choose **AZW3**, and it embeds your cover and preserves chapter structure. Start here: [/convert/epub-to-azw3](/convert/epub-to-azw3).
 
-A desktop walkthrough is in [/blog/epub-to-azw3](/blog/epub-to-azw3).`,
+A desktop walkthrough is in our [EPUB to AZW3 article](/blog/epub-to-azw3).`,
     },
     {
       heading: 'Convert with Calibre (more control)',
@@ -43,6 +43,27 @@ If you are choosing between a desktop tool and an online converter, see [/guide/
     {
       heading: 'Send the AZW3 to your Kindle',
       body: `Once converted, send the AZW3 via the Send-to-Kindle email or the Kindle app upload. Because the file is already AZW3, Amazon passes it through with minimal changes. For converting the other way (Kindle books off the device), see [/guide/azw3-to-epub-keep-formatting](/guide/azw3-to-epub-keep-formatting).`,
+    },
+    {
+      heading: 'What Is AZW3?',
+      body: `AZW3 — also called Kindle Format 8 or KF8 — is Amazon's premium ebook format, released in 2011 as the successor to MOBI. It supports CSS3, font embedding, and complex layouts, and it's the default format on Paperwhite, Oasis, and Voyage devices. If you want an ebook that feels native on a Kindle rather than translated in the cloud, AZW3 is the target. For a deeper comparison with MOBI (and why KFX belongs to the Store), see [AZW3 vs MOBI](/blog/azw3-vs-mobi).`,
+    },
+    {
+      heading: 'Will My Formatting Survive?',
+      body: `Almost all of it. Fonts, spacing, images, and layout carry over because AZW3 speaks the same modern CSS the EPUB used. Complex or unusual layouts may need minor tweaks, but a standard novel converts cleanly. The full format picture is in [our ebook formats guide](/blog/ebook-formats-explained), and the Kindle-specific trade-offs are in [our AZW3 vs MOBI comparison](/blog/azw3-vs-mobi).`,
+    },
+    {
+      heading: 'When to Use AZW3 (and When Not To)',
+      body: `Reach for AZW3 when you're a Kindle owner who wants a native file, cares about typography, or prefers not to upload to Amazon. Skip it when you read on non-Kindle devices — Kobo, Apple Books, and most apps don't read AZW3, and for those you should keep the EPUB. AZW3 is an Amazon format; EPUB is the everywhere format. For the raw XHTML, CSS, and images behind any EPUB, [convert EPUB to ZIP](/convert/epub-to-zip) lets you inspect or rebuild them directly.`,
+    },
+    {
+      heading: 'Key Takeaways',
+      body: `- **AZW3 is Amazon's KF8** — 2011 successor to MOBI, CSS3 + font embedding.
+- **Native on Kindle** — Paperwhite, Oasis, Voyage.
+- **Beats Send to Kindle** on privacy, speed, typography control.
+- **Formatting survives** — fonts, images, layout carry over.
+- **DRM-free output** — you own the file.
+- **Not for non-Kindle** — keep EPUB for Kobo and Apple Books.`,
     },
   ],
 }

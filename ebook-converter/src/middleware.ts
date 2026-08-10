@@ -24,6 +24,7 @@ const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/epub-vs-azw3-vs-mobi': '/blog/ebook-formats-explained',
   '/blog/mobi-or-azw3-for-kindle': '/blog/azw3-vs-mobi',
   '/guide/mobi-vs-azw3': '/blog/azw3-vs-mobi',
+  '/blog/epub-to-azw3': '/guide/epub-to-azw3-for-kindle',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
