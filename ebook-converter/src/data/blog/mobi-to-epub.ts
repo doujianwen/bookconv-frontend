@@ -45,7 +45,9 @@ The free tier handles files up to 10 MB. Older MOBI files are usually small, so 
 - Some very old Mobipocket files lack a real table of contents; the converter builds one from headings when it can
 - Series metadata MOBI faked by folding the series name into the title stays folded unless you clean it up
 
-Because EPUB supports far more CSS than MOBI, the destination is the more capable format. The constraint is whatever the source MOBI held.`
+Because EPUB supports far more CSS than MOBI, the destination is the more capable format. The constraint is whatever the source MOBI held.
+
+If you need to preserve exact layout — covers, chapter breaks, and custom fonts — our [MOBI to EPUB formatting guide](/guide/mobi-to-epub-keep-formatting) covers the settings that keep fidelity.`
     },
     {
       heading: `MOBI to EPUB vs Just Using Send to Kindle`,
@@ -144,7 +146,9 @@ La capa gratuita maneja archivos de hasta 10 MB. Los archivos MOBI viejos suelen
 - Algunos archivos Mobipocket muy viejos no tienen una tabla de contenidos real; el conversor construye una a partir de los encabezados cuando puede
 - Los metadatos de serie que MOBI fingía doblando el nombre de la serie en el título siguen doblados salvo que los limpies
 
-Como EPUB soporta mucho más CSS que MOBI, el destino es el formato más capaz. El límite es lo que el MOBI de origen trajera.`,
+Como EPUB soporta mucho más CSS que MOBI, el destino es el formato más capaz. El límite es lo que el MOBI de origen trajera.
+
+Si necesitas preservar el diseño exacto — portadas, saltos de capítulo y fuentes personalizadas — nuestra [guía de formato de MOBI a EPUB](/guide/mobi-to-epub-keep-formatting) cubre la configuración que mantiene la fidelidad.`,
       },
       {
         heading: `MOBI a EPUB vs simplemente usar Send to Kindle`,
