@@ -25,7 +25,6 @@ import * as post24 from "./epub-vs-mobi";
 import * as post25 from "./batch-converter";
 import * as post26 from "./epub-vs-pdf";
 import * as post27 from "./why-ebook-wont-open-kindle";
-import * as post28 from "./epub-vs-azw3-vs-mobi";
 import * as post29 from "./common-ebook-format-problems";
 import * as post30 from "./fb2-vs-epub";
 import * as post31 from "./ebook-conversion-checklist";
@@ -40,7 +39,9 @@ import * as post36 from "./kobo-to-epub";
 // Also includes 7 codex-generated English guides (epub-to-mobi-guide etc., converted from .mdx).
 // 2026-08-10: how-to-convert-epub-to-mobi (EN step-by-step) archived to ../_archived/ to dedupe
 //   the "how to convert EPUB to MOBI" intent vs epub-to-mobi-guide; 301 in src/middleware.ts.
-const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23, post24, post25, post26, post27, post28, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
+// 2026-08-11: epub-vs-azw3-vs-mobi archived to ../_archived/ — R1 cannibalization vs
+//   ebook-formats-explained (near-identical title). 301 in src/middleware.ts BLOG_REDIRECTS.
+const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

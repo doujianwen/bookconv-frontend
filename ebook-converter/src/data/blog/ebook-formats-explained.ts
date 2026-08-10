@@ -8,6 +8,20 @@ export const content = {
   intro: `EPUB, AZW3, and MOBI all hold the same book — they just answer to different devices. A modern Kindle wants AZW3, everything else wants EPUB, and MOBI only earns its place on pre-2012 hardware. Here's the reasoning, plus how to switch formats in a browser without installing anything.`,
   sections: [
     {
+      heading: `At a Glance`,
+      body: `If you remember one table, make it this one.
+
+| | EPUB | AZW3 | MOBI |
+|---|---|---|---|
+| Backed by | Open standard (IDPF) | Amazon (KF8) | Amazon (legacy) |
+| Best on | Kobo, Apple Books, most e-readers | All modern Kindles | Pre-2015 Kindles |
+| Styling | Full CSS, embedded fonts | Full CSS, embedded fonts | Limited; flattens layout |
+| Open or locked | Open, portable | Amazon-centric | Amazon-centric |
+| Future | Actively developed | Amazon's current standard | Frozen; deprecated |
+
+The short version: EPUB for everything non-Kindle, AZW3 for any current Kindle, MOBI only for ancient hardware.`
+    },
+    {
       heading: `The Short Answer: Match the Format to Your Device`,
       body: `Skip the theory if you like. The decision fits in three lines.
 
@@ -134,6 +148,14 @@ export const faqs = [
   {
     question: `What about DRM-protected purchases?`,
     answer: `They're rejected on upload, and we don't remove DRM. Conversion works on DRM-free files you already own, which includes public-domain titles and most indie store purchases.`,
+  },
+  {
+    question: `How do I convert EPUB to AZW3?`,
+    answer: `For one or two books, use a browser converter: upload the EPUB, choose AZW3, download. No Calibre install required.`,
+  },
+  {
+    question: `What format does Send to Kindle expect?`,
+    answer: `Send to Kindle accepts EPUB and PDF by email and converts them to AZW3 in the cloud. It no longer accepts MOBI. If you sideload over USB, pre-convert to AZW3 yourself.`,
   }
 ];
 
@@ -142,6 +164,20 @@ export const es = {
   content: {
     intro: `EPUB, AZW3 y MOBI contienen el mismo libro — solo que responden a distintos dispositivos. Un Kindle moderno quiere AZW3, todo lo demás quiere EPUB, y MOBI solo merece su sitio en hardware previo a 2012. Aquí está el razonamiento, más cómo cambiar de formato en un navegador sin instalar nada.`,
     sections: [
+      {
+        heading: `De un vistazo`,
+        body: `Si solo recuerdas una tabla, que sea esta.
+
+| | EPUB | AZW3 | MOBI |
+|---|---|---|---|
+| Respaldado por | Estándar abierto (IDPF) | Amazon (KF8) | Amazon (heredado) |
+| Mejor en | Kobo, Apple Books, la mayoría de lectores | Todos los Kindle modernos | Kindle previos a 2015 |
+| Estilo | CSS completo, fuentes embebidas | CSS completo, fuentes embebidas | Limitado; aplana el diseño |
+| Abierto o cerrado | Abierto, portátil | Centrado en Amazon | Centrado en Amazon |
+| Futuro | En desarrollo activo | Estándar actual de Amazon | Congelado; obsoleto |
+
+En resumen: EPUB para todo lo que no es Kindle, AZW3 para cualquier Kindle actual, MOBI solo para hardware antiguo.`
+      },
       {
         heading: `La respuesta corta: empareja el formato con tu dispositivo`,
         body: `Salta la teoría si quieres. La decisión cabe en tres líneas.
@@ -268,6 +304,14 @@ Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, edita
     {
       question: `¿Y las compras con DRM?`,
       answer: `Se rechazan al subir, y no quitamos DRM. La conversión funciona en archivos sin DRM que ya posees, lo que incluye títulos de dominio público y la mayoría de las compras en tiendas independientes.`,
+    },
+    {
+      question: `¿Cómo convierto EPUB a AZW3?`,
+      answer: `Para uno o dos libros, usa un conversor en el navegador: sube el EPUB, elige AZW3, descarga. Sin instalar Calibre.`,
+    },
+    {
+      question: `¿Qué formato espera Send to Kindle?`,
+      answer: `Send to Kindle acepta EPUB y PDF por correo y los convierte a AZW3 en la nube. Ya no acepta MOBI. Si cargas por USB, convierte a AZW3 tú mismo antes.`,
     },
   ],
 };

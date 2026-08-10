@@ -21,6 +21,7 @@ const CONVERSION_REDIRECTS: Record<string, string> = {
 // canonical page. Locale prefix (/, /es/) is preserved by the caller below.
 const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/how-to-convert-epub-to-mobi': '/blog/epub-to-mobi-guide',
+  '/blog/epub-vs-azw3-vs-mobi': '/blog/ebook-formats-explained',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')

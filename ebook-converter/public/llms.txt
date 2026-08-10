@@ -65,7 +65,6 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [EPUB vs PDF: Which Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-pdf)
 
 - [5 Reasons Your Ebook Won't Open on Kindle (and How to Fix Each One)](https://www.bookconv.com/blog/why-ebook-wont-open-kindle)
-- [EPUB vs AZW3 vs MOBI: Which Kindle Format Should You Use in 2026?](https://www.bookconv.com/blog/epub-vs-azw3-vs-mobi)
 - [10 Common Ebook Format Problems and How to Fix Them](https://www.bookconv.com/blog/common-ebook-format-problems)
 - [FB2 vs EPUB: Which Open Ebook Format Should You Use?](https://www.bookconv.com/blog/fb2-vs-epub)
 - [Checklist: Preparing Your Ebook File Before Converting](https://www.bookconv.com/blog/ebook-conversion-checklist)
