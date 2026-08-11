@@ -41,7 +41,7 @@ That is the whole process. No software to install, no account to create.`
       body: `If you are moving a library *between* ecosystems, the direction matters:
 
 - **Kindle → Kobo**: your MOBI or AZW3 files become EPUB. [Convert MOBI to EPUB](/convert/mobi-to-epub) is the workhorse here.
-- **Kobo → Kindle**: flip it the other way — an EPUB becomes AZW3 or MOBI for an older Kindle. See our [AZW3 vs MOBI breakdown](/blog/azw3-vs-mobi) and the [Kindle Formats guide](/guide/kindle-formats) for the device-by-device call.
+- **Kobo → Kindle**: flip it the other way — an EPUB becomes AZW3 or MOBI for an older Kindle. See our [AZW3 vs MOBI breakdown](/blog/azw3-vs-mobi), the [Kindle Formats guide](/guide/kindle-formats) for the device-by-device call, and our [EPUB to AZW3 conversion guide](/guide/epub-to-azw3-for-kindle) for the actual steps.
 
 The common thread is EPUB as the neutral, portable format. Keep your master copies as EPUB and you can feed almost any reader from one source file.`
     },

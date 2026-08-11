@@ -1,0 +1,222 @@
+{
+  "$meta": {
+    "project": "AI 独立开发实战课",
+    "version": "1.0.0",
+    "register": { "marketing": "brand", "learning": "product" },
+    "scales": {
+      "DESIGN_VARIANCE": { "landing": 7, "app": 4 },
+      "MOTION_INTENSITY": { "landing": 4, "app": 3 },
+      "VISUAL_DENSITY": { "landing": 4, "app": 6 }
+    },
+    "iconLibrary": { "name": "lucide", "package": "lucide-react", "license": "ISC", "sizes": [16, 20, 24], "strokeWidth": { "16": 1.75, "20": 1.75, "24": 1.5 } },
+    "emojiPolicy": "forbidden-as-ui-icon"
+  },
+
+  "color": {
+    "light": {
+      "bg":            { "value": "#F7F8FA", "type": "color", "tier": "A1" },
+      "surface":       { "value": "#FFFFFF", "type": "color", "tier": "A1" },
+      "surface-warm":  { "value": "#EFF1F5", "type": "color", "tier": "B-slot" },
+      "fg":            { "value": "#15181D", "type": "color", "tier": "A1" },
+      "fg-2":          { "value": "#333941", "type": "color", "tier": "B-slot" },
+      "muted":         { "value": "#545C68", "type": "color", "tier": "A1" },
+      "meta":          { "value": "#666E7B", "type": "color", "tier": "B-slot" },
+      "border":        { "value": "#DFE3E9", "type": "color", "tier": "A1" },
+      "border-soft":   { "value": "#EDEFF3", "type": "color", "tier": "B-slot" },
+      "border-strong": { "value": "#838C99", "type": "color", "tier": "B-slot", "note": "交互控件边界 >=3:1" },
+      "accent":        { "value": "#14489C", "type": "color", "tier": "A1" },
+      "accent-on":     { "value": "#FFFFFF", "type": "color", "tier": "A2" },
+      "accent-hover":  { "value": "#0F3A81", "type": "color", "tier": "A2" },
+      "accent-active": { "value": "#0B2E68", "type": "color", "tier": "A2" },
+      "accent-wash":   { "value": "#EBF1FB", "type": "color", "tier": "C-ext" },
+      "success":       { "value": "#147D4B", "type": "color", "tier": "A2" },
+      "warn":          { "value": "#B45309", "type": "color", "tier": "A2" },
+      "danger":        { "value": "#C0342B", "type": "color", "tier": "A2" },
+      "track-video":     { "value": "#14489C", "type": "color", "tier": "C-ext" },
+      "track-doc":       { "value": "#545C68", "type": "color", "tier": "C-ext" },
+      "track-practice":  { "value": "#B45309", "type": "color", "tier": "C-ext" },
+      "progress-fill":   { "value": "#14489C", "type": "color", "tier": "C-ext" },
+      "progress-rail":   { "value": "#EDEFF3", "type": "color", "tier": "C-ext" },
+      "grid-line":       { "value": "rgba(21,24,29,0.04)", "type": "color", "tier": "C-ext" }
+    },
+    "dark": {
+      "bg":            { "value": "#0E1116", "type": "color", "tier": "A1" },
+      "surface":       { "value": "#161A21", "type": "color", "tier": "A1" },
+      "surface-warm":  { "value": "#1E232B", "type": "color", "tier": "B-slot" },
+      "fg":            { "value": "#E8ECF2", "type": "color", "tier": "A1" },
+      "fg-2":          { "value": "#C3CAD4", "type": "color", "tier": "B-slot" },
+      "muted":         { "value": "#9AA4B2", "type": "color", "tier": "A1" },
+      "meta":          { "value": "#828D9B", "type": "color", "tier": "B-slot" },
+      "border":        { "value": "#262C36", "type": "color", "tier": "A1" },
+      "border-soft":   { "value": "rgba(255,255,255,0.06)", "type": "color", "tier": "B-slot" },
+      "border-strong": { "value": "#606A79", "type": "color", "tier": "B-slot", "note": "交互控件边界 >=3:1" },
+      "accent":        { "value": "#5B9BFF", "type": "color", "tier": "A1" },
+      "accent-on":     { "value": "#06101F", "type": "color", "tier": "A2" },
+      "accent-hover":  { "value": "#7BAEFF", "type": "color", "tier": "A2" },
+      "accent-active": { "value": "#4A88EA", "type": "color", "tier": "A2" },
+      "accent-wash":   { "value": "#141C2B", "type": "color", "tier": "C-ext" },
+      "success":       { "value": "#3FBF7F", "type": "color", "tier": "A2" },
+      "warn":          { "value": "#F0A94C", "type": "color", "tier": "A2" },
+      "danger":        { "value": "#F2685C", "type": "color", "tier": "A2" },
+      "track-video":     { "value": "#5B9BFF", "type": "color", "tier": "C-ext" },
+      "track-doc":       { "value": "#9AA4B2", "type": "color", "tier": "C-ext" },
+      "track-practice":  { "value": "#F0A94C", "type": "color", "tier": "C-ext" },
+      "progress-fill":   { "value": "#5B9BFF", "type": "color", "tier": "C-ext" },
+      "progress-rail":   { "value": "rgba(255,255,255,0.08)", "type": "color", "tier": "C-ext" },
+      "grid-line":       { "value": "rgba(255,255,255,0.035)", "type": "color", "tier": "C-ext" }
+    }
+  },
+
+  "font": {
+    "family": {
+      "display": { "value": "Archivo, \"Noto Sans SC\", system-ui, sans-serif", "type": "fontFamily", "tier": "A1" },
+      "body":    { "value": "Inter, \"Noto Sans SC\", system-ui, sans-serif", "type": "fontFamily", "tier": "A1" },
+      "cn":      { "value": "\"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif", "type": "fontFamily", "tier": "A1" },
+      "mono":    { "value": "\"JetBrains Mono\", SFMono-Regular, Consolas, monospace", "type": "fontFamily", "tier": "A2" }
+    },
+    "size": {
+      "xs":      { "value": "0.75rem",  "px": 12, "type": "dimension" },
+      "sm":      { "value": "0.875rem", "px": 14, "type": "dimension" },
+      "base":    { "value": "1rem",     "px": 16, "type": "dimension" },
+      "lg":      { "value": "1.0625rem","px": 17, "type": "dimension", "note": "中文阅读正文" },
+      "xl":      { "value": "1.25rem",  "px": 20, "type": "dimension" },
+      "2xl":     { "value": "1.5rem",   "px": 24, "type": "dimension" },
+      "3xl":     { "value": "2rem",     "px": 32, "type": "dimension" },
+      "4xl":     { "value": "2.5rem",   "px": 40, "type": "dimension" },
+      "display": { "value": "clamp(36px, 5.2vw, 60px)", "type": "dimension", "note": "仅 Landing Hero" }
+    },
+    "weight": {
+      "read":      { "value": 400, "type": "fontWeight" },
+      "emphasize": { "value": 510, "type": "fontWeight", "cnFallback": 500 },
+      "announce":  { "value": 590, "type": "fontWeight", "cnFallback": 700 }
+    },
+    "leading": {
+      "reading": { "value": 1.75, "type": "number", "note": "中文长文" },
+      "body":    { "value": 1.6,  "type": "number" },
+      "small":   { "value": 1.5,  "type": "number" },
+      "tight":   { "value": 1.25, "type": "number" },
+      "display": { "value": 1.1,  "type": "number" },
+      "code":    { "value": 1.7,  "type": "number" }
+    },
+    "tracking": {
+      "body":    { "value": "0",       "type": "dimension" },
+      "small":   { "value": "0.01em",  "type": "dimension" },
+      "heading": { "value": "-0.01em", "type": "dimension" },
+      "display": { "value": "-0.02em", "type": "dimension" },
+      "caps":    { "value": "0.08em",  "type": "dimension", "note": "ALL CAPS 强制" }
+    }
+  },
+
+  "space": {
+    "1":  { "value": "4px",  "type": "dimension" },
+    "2":  { "value": "8px",  "type": "dimension" },
+    "3":  { "value": "12px", "type": "dimension" },
+    "4":  { "value": "16px", "type": "dimension" },
+    "5":  { "value": "20px", "type": "dimension" },
+    "6":  { "value": "24px", "type": "dimension" },
+    "8":  { "value": "32px", "type": "dimension" },
+    "10": { "value": "40px", "type": "dimension" },
+    "12": { "value": "48px", "type": "dimension" },
+    "16": { "value": "64px", "type": "dimension" },
+    "20": { "value": "80px", "type": "dimension" },
+    "24": { "value": "96px", "type": "dimension" }
+  },
+
+  "radius": {
+    "sm":   { "value": "6px",    "type": "dimension" },
+    "md":   { "value": "10px",   "type": "dimension" },
+    "lg":   { "value": "14px",   "type": "dimension", "note": "卡片圆角上限，禁止 >=24px" },
+    "pill": { "value": "9999px", "type": "dimension" }
+  },
+
+  "elevation": {
+    "flat":   { "value": "none", "type": "boxShadow" },
+    "ring":   { "value": "0 0 0 1px var(--border)", "type": "boxShadow" },
+    "raised": {
+      "light": { "value": "0 1px 2px rgba(21,24,29,0.04), 0 6px 16px rgba(21,24,29,0.06)", "type": "boxShadow" },
+      "dark":  { "value": "none", "type": "boxShadow", "note": "深色模式用背景亮度递进替代阴影" }
+    }
+  },
+
+  "focus": {
+    "ring": {
+      "light": { "value": "0 0 0 3px rgba(20,72,156,0.32)", "type": "boxShadow" },
+      "dark":  { "value": "0 0 0 3px rgba(91,155,255,0.40)", "type": "boxShadow" }
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "instant": { "value": "80ms",  "type": "duration", "note": "按钮按下" },
+      "fast":    { "value": "140ms", "type": "duration", "note": "hover / 状态确认" },
+      "base":    { "value": "200ms", "type": "duration", "note": "下拉、Toast" },
+      "slow":    { "value": "320ms", "type": "duration", "note": "进度条、面板展开" },
+      "page":    { "value": "400ms", "type": "duration", "note": "上限，禁止超过" }
+    },
+    "easing": {
+      "standard": { "value": "cubic-bezier(0.2, 0, 0, 1)",    "type": "cubicBezier" },
+      "out-soft": { "value": "cubic-bezier(0.16, 1, 0.3, 1)", "type": "cubicBezier" }
+    },
+    "allowedProperties": ["transform", "opacity", "background-color", "border-color", "box-shadow"],
+    "forbiddenProperties": ["width", "height", "top", "left", "margin", "padding"]
+  },
+
+  "layout": {
+    "container-max":  { "value": "1200px", "type": "dimension", "note": "Landing / 文档" },
+    "container-app":  { "value": "1440px", "type": "dimension", "note": "学习端三栏" },
+    "measure":        { "value": "68ch",   "type": "dimension", "note": "阅读正文行宽" },
+    "gutter": {
+      "desktop": { "value": "24px", "type": "dimension" },
+      "tablet":  { "value": "20px", "type": "dimension" },
+      "phone":   { "value": "16px", "type": "dimension" }
+    },
+    "section-y": {
+      "desktop": { "value": "96px", "type": "dimension" },
+      "tablet":  { "value": "56px", "type": "dimension" },
+      "phone":   { "value": "40px", "type": "dimension" }
+    },
+    "rail": {
+      "nav-left":    { "value": "280px", "type": "dimension" },
+      "outline-right": { "value": "260px", "type": "dimension" },
+      "course-info": { "value": "240px", "type": "dimension" }
+    },
+    "row-height": {
+      "lesson-desktop": { "value": "56px", "type": "dimension" },
+      "lesson-mobile":  { "value": "64px", "type": "dimension" }
+    },
+    "touch-target-min": { "value": "44px", "type": "dimension" }
+  },
+
+  "breakpoint": {
+    "sm": { "value": "640px",  "type": "dimension" },
+    "md": { "value": "768px",  "type": "dimension" },
+    "lg": { "value": "1024px", "type": "dimension" },
+    "xl": { "value": "1280px", "type": "dimension" }
+  },
+
+  "iconMap": {
+    "lesson-video":    "play-circle",
+    "lesson-doc":      "file-text",
+    "lesson-practice": "square-terminal",
+    "state-done":      "circle-check",
+    "state-current":   "circle-dot",
+    "state-todo":      "circle",
+    "state-locked":    "lock",
+    "duration":        "clock-3",
+    "repo":            "git-branch",
+    "download":        "download",
+    "copy":            "copy",
+    "collapse":        "chevron-down",
+    "prompt-block":    "message-square-code",
+    "pitfall-block":   "triangle-alert",
+    "tip-block":       "lightbulb",
+    "checklist":       "list-checks",
+    "deploy":          "cloud-upload",
+    "prev":            "arrow-left",
+    "next":            "arrow-right",
+    "loading":         "loader-circle",
+    "search":          "search",
+    "menu":            "menu",
+    "close":           "x"
+  }
+}

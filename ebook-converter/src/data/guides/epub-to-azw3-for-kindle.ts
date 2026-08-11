@@ -46,7 +46,7 @@ If you are choosing between a desktop tool and an online converter, see [/guide/
     },
     {
       heading: 'What Is AZW3?',
-      body: `AZW3 — also called Kindle Format 8 or KF8 — is Amazon's premium ebook format, released in 2011 as the successor to MOBI. It supports CSS3, font embedding, and complex layouts, and it's the default format on Paperwhite, Oasis, and Voyage devices. If you want an ebook that feels native on a Kindle rather than translated in the cloud, AZW3 is the target. For a deeper comparison with MOBI (and why KFX belongs to the Store), see [AZW3 vs MOBI](/blog/azw3-vs-mobi).`,
+      body: `AZW3 — also called Kindle Format 8 or KF8 — is Amazon's premium ebook format, released in 2011 as the successor to MOBI. It supports CSS3, font embedding, and complex layouts, and it's the default format on Paperwhite, Oasis, and Voyage devices. If you want an ebook that feels native on a Kindle rather than translated in the cloud, AZW3 is the target. For the full format landscape including KFX and when to pick AZW3 vs MOBI, see [Kindle Formats Explained](/guide/kindle-formats).`,
     },
     {
       heading: 'Will My Formatting Survive?',

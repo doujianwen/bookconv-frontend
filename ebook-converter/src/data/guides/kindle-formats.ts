@@ -47,6 +47,18 @@ Moving in or out is simple: [EPUB to AZW3](/convert/epub-to-azw3) for a modern K
       heading: 'Why not just use MOBI?',
       body: `MOBI is legacy. Amazon’s Send to Kindle no longer prioritizes it, and newer features only exist in AZW3/KFX. Converting new content to MOBI risks a file your device handles poorly.\n\nIf you already own MOBI files, convert them forward to AZW3 rather than keeping the old format.`,
     },
+    {
+      heading: 'Related guides for your specific situation',
+      body: `If you're not sure which format fits your device or use case, these deeper guides help:
+- **Can my Kindle read AZW3?** — model-by-model compatibility table. [/blog/can-kindle-read-azw3](/blog/can-kindle-read-azw3)
+- **Your ebook won't open on Kindle?** — five common causes and fixes. [/blog/why-ebook-wont-open-kindle](/blog/why-ebook-wont-open-kindle)
+- **EPUB to AZW3 step-by-step** — convert without losing formatting. [/guide/epub-to-azw3-for-kindle](/guide/epub-to-azw3-for-kindle)
+- **Moving from Kindle to Kobo?** — why EPUB is the right target. [/blog/mobi-to-kobo](/blog/mobi-to-kobo)`,
+    },
+    {
+      heading: 'Start converting now',
+      body: `Ready to convert? Head to the [EPUB to AZW3 converter](/convert/epub-to-azw3) for a modern Kindle, or [MOBI to EPUB](/convert/mobi-to-epub) if you want to escape the Amazon ecosystem entirely. Both run in your browser with no install.`,
+    },
   ],
 }
 export const faqs: BlogFaq[] = [

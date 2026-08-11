@@ -1,0 +1,169 @@
+openapi: 3.0.3
+info:
+  title: bookconv 兼容性实测报告 API（课程演示产物）
+  version: 1.0.0
+  description: |
+    课程演示产物的接口契约。前端据此生成 TS 类型与 Mock，后端据此实现。
+    范围仅覆盖演示产物新增接口；主站存量接口（/api/auth/*、/api/convert/* 等）
+    无版本前缀，不在本契约内，理由见 docs/course/decisions/ADR-003-api-versioning.md。
+servers:
+  - url: https://www.bookconv.com
+    description: 生产
+  - url: http://localhost:3000
+    description: 本地
+
+tags:
+  - name: compat
+    description: 兼容性实测报告
+
+paths:
+  /api/v1/compat/reports:
+    get:
+      tags: [compat]
+      summary: 列出兼容性实测报告
+      parameters:
+        - name: sourceFormat
+          in: query
+          schema: { type: string, example: epub }
+        - name: targetFormat
+          in: query
+          schema: { type: string, example: mobi }
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1, default: 1 }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        required: [items, total, page, limit, hasMore]
+                        properties:
+                          items:
+                            type: array
+                            items: { $ref: '#/components/schemas/CompatReportSummary' }
+                          total: { type: integer, example: 30 }
+                          page: { type: integer, example: 1 }
+                          limit: { type: integer, example: 20 }
+                          hasMore: { type: boolean, example: true }
+
+  /api/v1/compat/reports/{slug}:
+    get:
+      tags: [compat]
+      summary: 获取单份实测报告
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string, example: epub-to-mobi-on-kindle-paperwhite }
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      data: { $ref: '#/components/schemas/CompatReport' }
+        '404':
+          description: 报告不存在
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+              example: { code: 40401, data: null, message: "Report not found" }
+
+components:
+  schemas:
+    Envelope:
+      type: object
+      required: [code, data, message]
+      properties:
+        code:
+          type: integer
+          description: 0 表示成功，非 0 为错误码
+          example: 0
+        data:
+          nullable: true
+        message:
+          type: string
+          example: ""
+
+    CompatReportSummary:
+      type: object
+      required: [slug, sourceFormat, targetFormat, verdict, testedAt]
+      properties:
+        slug: { type: string, example: epub-to-mobi-on-kindle-paperwhite }
+        sourceFormat: { type: string, example: epub }
+        targetFormat: { type: string, example: mobi }
+        verdict:
+          type: string
+          enum: [pass, warn, critical]
+          description: 取自 verifyConversion 的判定结果
+        testedAt: { type: string, format: date-time }
+
+    CompatReport:
+      allOf:
+        - $ref: '#/components/schemas/CompatReportSummary'
+        - type: object
+          required: [sample, checks, engineVersion]
+          properties:
+            sample:
+              type: object
+              description: 实测样本，仅限公共领域书目
+              required: [title, source, sizeBytes, bootstrapped]
+              properties:
+                title: { type: string, example: "Alice's Adventures in Wonderland" }
+                source: { type: string, example: "Project Gutenberg #11" }
+                sizeBytes: { type: integer, example: 184320 }
+                bootstrapped:
+                  type: boolean
+                  default: false
+                  description: |
+                    false = Gutenberg 直接提供的原始格式样本；
+                    true = 经 bookconv/Calibre 引导生成的样本（如 epub→rtf 再作输入）。
+                    引导样本的实测结论反映往返转换质量，需在页面如实标注。
+                bootstrapPath:
+                  type: string
+                  nullable: true
+                  example: "epub -> rtf (calibre)"
+                  description: bootstrapped=true 时的引导路径，便于追溯与复测
+            engineVersion:
+              type: string
+              description: 转换引擎版本，保证结果可复现
+              example: "calibre 7.21.0"
+            outputSizeBytes: { type: integer, example: 201728 }
+            checks:
+              type: array
+              description: 逐项机器实测结论，每项均由 verifyConversion 产出
+              items:
+                type: object
+                required: [id, label, severity, passed]
+                properties:
+                  id: { type: string, example: toc-preserved }
+                  label: { type: string, example: "目录结构保留" }
+                  severity:
+                    type: string
+                    enum: [critical, warn]
+                  passed: { type: boolean }
+                  detail:
+                    type: string
+                    nullable: true
+                    example: "检测到 12 个目录项，转换后保留 12 个"
+
+  responses:
+    Error:
+      description: 统一错误响应
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Envelope' }

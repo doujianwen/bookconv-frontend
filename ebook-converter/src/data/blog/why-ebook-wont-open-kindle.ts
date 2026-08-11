@@ -11,7 +11,7 @@ export const content = {
       heading: `Why Kindles Are Picky About Formats`,
       body: `A Kindle is not a general document reader. It speaks a small set of ebook formats — **AZW3** (its native modern format), **MOBI** (legacy), **PDF** (page-fixed, not ideal), and a few others like TXT and HTML. It does **not** read EPUB, FB2, LIT, or DJVU natively. When a file is in a format it does not understand, the Kindle either hides it or chokes on it.
 
-The good news: nearly every format problem is fixable by converting the file to AZW3 before it reaches the device. Our [Kindle Formats guide](/guide/kindle-formats) maps the right format to each Kindle model.`
+The good news: nearly every format problem is fixable by converting the file to AZW3 before it reaches the device. Our [Kindle Formats guide](/guide/kindle-formats) maps the right format to each Kindle model and explains why AZW3 is the safest target for modern devices.`
     },
     {
       heading: `Reason 1: The File Is DRMed and Locked to Another Account`,
@@ -45,7 +45,7 @@ The good news: nearly every format problem is fixable by converting the file to 
     },
     {
       heading: `How to Convert Almost Any File So It Opens`,
-      body: `The repeatable fix for reasons 2, 3, and 5 is the same: get the book into AZW3.
+      body: `The repeatable fix for reasons 2, 3, and 5 is the same: get the book into AZW3. Our [Kindle Formats guide](/guide/kindle-formats) explains why AZW3 is the safest target for modern Kindles and walks through the format landscape so you know what you're converting to.
 
 1. **Identify the source format** — check the file extension (.epub, .fb2, .lit, .mobi, .pdf).
 2. **Convert to AZW3** — for EPUB use [EPUB to AZW3](/convert/epub-to-azw3); for an older MOBI use [MOBI to AZW3](/convert/azw3-to-mobi) if it is already AZW3-class, or [MOBI to EPUB](/convert/mobi-to-epub) then to AZW3.

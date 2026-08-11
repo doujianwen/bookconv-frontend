@@ -5,7 +5,7 @@ export const author = "BookConv Team";
 export const tags = ["AZW3", "Kindle", "KF8", "Ebook Formats", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively. The nuance is what happens on the handful of very old devices that predate the format, and how you actually get the file onto the reader. This breaks down exactly which models open AZW3, what to expect on older hardware, and the difference between AZW3 and Amazon's newer KFX.`,
+  intro: `Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively. The nuance is what happens on the handful of very old devices that predate the format, and how you actually get the file onto the reader. This breaks down exactly which models open AZW3, what to expect on older hardware, and the difference between AZW3 and Amazon's newer KFX. For the full format landscape including when to pick AZW3 over MOBI, see our [Kindle Formats guide](/guide/kindle-formats).`,
   sections: [
     {
       heading: `Yes — Here's the Direct Answer`,
@@ -138,7 +138,7 @@ Si estás atascado con uno de esos dispositivos y los estilos importan, conviert
         heading: `AZW3 vs KFX: no los confundas`,
         body: `KFX es el formato aún más nuevo de Amazon, usado para compras de la Tienda, con tipografía mejorada y funciones de cumplimiento. AZW3/KF8 es el formato abierto a los conversores que tú mismo produces con Calibre o BookConv.
 
-La distinción práctica: puedes crear un archivo AZW3; generalmente no puedes crear un KFX fuera de la cadena de Amazon. Así que cuando alguien pregunta "¿puede Kindle leer AZW3", la respuesta es sí para cada dispositivo moderno — y KFX es una preocupación aparte, del lado de la tienda, que rara vez necesitas generar. Nuestra [guía Kindle Formats Explained](/guide/kindle-formats) ubica cada formato.`,
+La distinción práctica: puedes crear un archivo AZW3; generalmente no puedes crear un KFX fuera de la cadena de Amazon. Así que cuando alguien pregunta "¿puede Kindle leer AZW3", la respuesta es sí para cada dispositivo moderno — y KFX es una preocupación aparte, del lado de la tienda, que rara vez necesitas generar. Nuestra [guía Kindle Formats Explained](/guide/kindle-formats) ubica cada formato y explica cuándo elegir AZW3 sobre MOBI.`,
       },
       {
         heading: `Puntos clave`,
