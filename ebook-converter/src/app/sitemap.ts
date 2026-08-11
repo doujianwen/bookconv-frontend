@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
+import { COMPAT_MAP } from '@/data/compat'
 
 // Derive every supported conversion URL directly from CONTENT_MAP — the
 // canonical source of truth for /convert/[slug] pages (generateStaticParams
@@ -64,6 +65,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'monthly' as const,
         priority: 0.8,
       })
+    }
+
+    // Compat report pages are English-only (V1 scope, decision #1). Derive
+    // directly from COMPAT_MAP — the single source of truth, same pattern as
+    // CONTENT_MAP. Adding a new report = one new entry in COMPAT_MAP, no
+    // hand-written URL, no slug-derivation bug.
+    if (locale === 'en') {
+      const COMPAT_SLUGS = Object.keys(COMPAT_MAP)
+      for (const slug of COMPAT_SLUGS) {
+        allUrls.push({
+          url: baseUrl + '/compat/' + slug,
+          lastModified: new Date(),
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        })
+      }
     }
 
     for (const slug of BLOG_SLUGS) {
