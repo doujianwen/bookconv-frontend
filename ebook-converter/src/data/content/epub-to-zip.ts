@@ -1,6 +1,6 @@
 export const slug = 'epub-to-zip';
-export const title = 'Convert EPUB to ZIP Free — No Sign-up Required';
-export const metaDescription = 'Convert EPUB to ZIP free — no sign-up, no install. Extract the XHTML, CSS, images & fonts from any e-book in seconds, right in your browser. Your file stays private.';
+export const title = 'EPUB to ZIP Converter — Extract Files Without Upload';
+export const metaDescription = 'Free EPUB to ZIP converter that runs in your browser — no file upload, no account needed. Extract XHTML, CSS, images and fonts instantly while your data stays private.';
 export const level = 'A' as const;
 export const wordCount = 2050;
 
@@ -56,6 +56,8 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
     { q: 'Is converting EPUB to ZIP safe and private?', a: 'Yes. The file is processed only to return the ZIP, with no re-encoding, and we do not retain your original. Your e-book stays private — the conversion is a direct copy on our server and the source is never shared or stored long-term.' },
     { q: 'Is my file uploaded to a server?', a: 'The EPUB is processed to return the ZIP, but the conversion is a direct copy with no re-encoding. We do not retain or modify your original content.' },
     { q: 'Can I turn the ZIP back into an EPUB?', a: 'Yes. After editing, re-zip the folder and rename the archive to .epub. As long as META-INF/container.xml and the OPF are intact, it remains a valid e-book.' },
-    { q: 'Why not just rename the file to .zip myself?', a: 'You can — the bytes are identical. Our tool does exactly that for you and delivers a clean download without you hunting for the right extension or worrying about a mislabeled file.' }
+    { q: 'Why not just rename the file to .zip myself?', a: 'You can — the bytes are identical. Our tool does exactly that for you and delivers a clean download without you hunting for the right extension or worrying about a mislabeled file.' },
+    { q: 'How do I extract files from an EPUB without converting?', a: 'Simply rename the .epub extension to .zip and double-click to open it. You will see the internal structure: XHTML chapters, CSS styles, images, and metadata files. This works because EPUB is essentially a ZIP archive by format specification.' },
+    { q: 'Can I edit the files inside the EPUB ZIP?', a: 'Yes. Once extracted, you can edit the XHTML, CSS, and images with any text editor or design tool. Just re-zip and rename back to .epub when done.' }
   ]
 };
