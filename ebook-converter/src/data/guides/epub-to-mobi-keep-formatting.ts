@@ -26,7 +26,9 @@ export const content = {
     },
     {
       heading: 'Convert with BookConv (fastest)',
-      body: `BookConv runs the Calibre engine in the browser, so you get a proper EPUB to MOBI conversion with no software to install. Upload the EPUB, choose **MOBI**, and it embeds your images and preserves chapter structure. Start here: [/convert/epub-to-mobi](/convert/epub-to-mobi).\n\nFor a broader walkthrough of the same engine in a desktop app, see [/blog/epub-to-mobi-guide](/blog/epub-to-mobi-guide).`,
+      body: `BookConv runs the Calibre engine in the browser, so you get a proper EPUB to MOBI conversion with no software to install. Upload the EPUB, choose **MOBI**, and it embeds your images and preserves chapter structure. Start here: [/convert/epub-to-mobi](/convert/epub-to-mobi).\n\nFor a broader walkthrough of the same engine in a desktop app, see [/blog/epub-to-mobi-guide](/blog/epub-to-mobi-guide).
+
+If your goal is actually to escape Kindle entirely, [convert MOBI to EPUB](/convert/mobi-to-epub) is the faster path — your books become portable across all readers, not just Kindle.`,
     },
     {
       heading: 'Convert with Calibre (more control)',

@@ -35,7 +35,7 @@ Before you plan anything, check whether your files came from a store. Purchased 
 
 **Real navigation** — a well-built EPUB carries a navigation document, so chapter jumps, progress tracking, and search behave the way you'd expect.
 
-And once a book is EPUB, it can become anything else. [Convert EPUB to AZW3](/convert/epub-to-azw3) if your actual reading happens on a Kindle.`
+And once a book is EPUB, it can become anything else. [Convert EPUB to AZW3](/convert/epub-to-azw3) if your actual reading happens on a Kindle. Or go the other direction and [convert MOBI to EPUB](/convert/mobi-to-epub) to free old Kindle files from Amazon's ecosystem entirely.`
     },
     {
       heading: `Convert LIT to EPUB on BookConv`,

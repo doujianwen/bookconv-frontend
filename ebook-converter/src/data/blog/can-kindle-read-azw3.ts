@@ -34,7 +34,9 @@ So the realistic answer is: every currently supported Kindle reads AZW3 fully, a
       heading: `What Happens on a Very Old Kindle`,
       body: `On a pre-2015 device, an AZW3 file still opens — it just won't show its extras. The book's words, chapters, and basic structure survive, but embedded fonts, complex tables, and advanced CSS fall back to a plainer rendering because the older firmware lacks the engine to display them.
 
-If you're stuck with one of those devices and styling matters, convert to MOBI instead: [convert AZW3 to MOBI](/convert/azw3-to-mobi). MOBI is the lowest-common-denominator target those readers handle most cleanly over USB. For the broader decision between the two, see [MOBI or AZW3 for Kindle](/blog/azw3-vs-mobi).`
+If you're stuck with one of those devices and styling matters, convert to MOBI instead: [convert AZW3 to MOBI](/convert/azw3-to-mobi). MOBI is the lowest-common-denominator target those readers handle most cleanly over USB. For the broader decision between the two, see [MOBI or AZW3 for Kindle](/blog/azw3-vs-mobi).
+
+If your library is full of old MOBI files you want to modernize, [convert MOBI to EPUB](/convert/mobi-to-epub) so they work across all your devices — not just Kindle.`
     },
     {
       heading: `How to Get AZW3 Onto Your Kindle`,

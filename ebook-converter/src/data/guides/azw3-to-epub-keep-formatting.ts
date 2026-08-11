@@ -30,7 +30,9 @@ export const content = {
     },
     {
       heading: 'Convert with BookConv (fastest)',
-      body: `For a DRM-free AZW3, BookConv converts to EPUB in the browser with no install. Upload the file, choose **EPUB**, and it preserves images and chapter structure. Start here: [/convert/azw3-to-epub](/convert/azw3-to-epub).`,
+      body: `For a DRM-free AZW3, BookConv converts to EPUB in the browser with no install. Upload the file, choose **EPUB**, and it preserves images and chapter structure. Start here: [/convert/azw3-to-epub](/convert/azw3-to-epub).
+
+Going the other direction? [Convert MOBI to EPUB](/convert/mobi-to-epub) to free old Kindle files from Amazon's ecosystem.`,
     },
     {
       heading: 'Convert with Calibre',

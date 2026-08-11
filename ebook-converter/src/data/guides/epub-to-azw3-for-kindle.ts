@@ -32,7 +32,9 @@ Converting to AZW3 yourself means the file you send is already in the format you
       heading: 'Convert with BookConv (fastest)',
       body: `BookConv runs the Calibre engine in the browser, so you get a clean EPUB to AZW3 conversion with no software. Upload the EPUB, choose **AZW3**, and it embeds your cover and preserves chapter structure. Start here: [/convert/epub-to-azw3](/convert/epub-to-azw3).
 
-A desktop walkthrough is in our [EPUB to AZW3 article](/blog/epub-to-azw3).`,
+A desktop walkthrough is in our [EPUB to AZW3 article](/blog/epub-to-azw3).
+
+If you have a Kindle library of old MOBI files you want to modernize, [convert MOBI to EPUB](/convert/mobi-to-epub) so they work across all your devices — not just Kindle.`,
     },
     {
       heading: 'Convert with Calibre (more control)',
