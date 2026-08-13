@@ -59,6 +59,7 @@
 ## 4. 配套工具
 
 - `scripts/git-sync-check.mjs`：push 后硬验证，exit 0/1。默认 `git ls-remote ssh://git@github.com/doujianwen/bookconv-frontend.git main` 比对 SHA，不依赖本地 tracking。用法：`node scripts/git-sync-check.mjs [remote] [branch]`。
+- **CI 门禁（2026-08-13 新增）**：`.github/workflows/deploy.yml` 的 `deploy-consistency` 作业在 push 到 main 部署后自动跑本脚本（CI 内走 GitHub API 模式，用 `GITHUB_TOKEN` 读远程 main tip，无需 SSH key）。远程 main 与本次部署 SHA 不一致 → workflow 变红、触发告警。本地可 `npm run verify:sync` 复跑同一逻辑。
 - 配套自动化「Pro 链路门禁健康检查」（每周一）：仅读 `/batch` 确认门禁在线与安全态，不验证付费闭环（那需人工跑 Upstash 清单）。
 
 ## 5. 纠错职责边界
