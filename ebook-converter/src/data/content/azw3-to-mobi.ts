@@ -115,7 +115,9 @@ The goal is not to make MOBI look good — it is to make a 2009 Kindle useful ag
 - **Basic emphasis** — bold and italic work fine
 - **Metadata** — title and author carry over
 
-And expect the file to get **bigger**, not smaller. MOBI's older compression is less efficient, so the same book typically gains 20-40% in size. Counterintuitive for a "downgrade," but that's what happens when you swap a modern container for a twenty-year-old one.`
+And expect the file to get **bigger**, not smaller. MOBI's older compression is less efficient, so the same book typically gains 20-40% in size. Counterintuitive for a "downgrade," but that's what happens when you swap a modern container for a twenty-year-old one.
+
+Going the other direction — freeing an old MOBI from Amazon's ecosystem so it reads on every device? [Convert MOBI to EPUB](/convert/mobi-to-epub) instead.`
     }
   ],
 

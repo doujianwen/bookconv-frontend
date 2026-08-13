@@ -1,11 +1,11 @@
 export const slug = `azw3-vs-mobi`;
-export const title = `AZW3 vs MOBI: Which Format Should You Use for Kindle?`;
+export const title = `AZW3 vs MOBI: Use AZW3 for Any Kindle From 2015`;
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `Choosing between AZW3 and MOBI only matters if a Kindle is involved — or you're trying to get a book onto one. Both are Amazon's own formats, but they're a generation apart. This guide settles it: when AZW3 wins, when MOBI is the only option left, and how to convert either way without losing your formatting.`,
+  intro: `Use AZW3 for any Kindle made in the last decade — MOBI only matters for pre-2015 hardware. This guide settles AZW3 vs MOBI with a clear pick, plus the one-click, no-install way to convert either direction without losing your formatting.`,
   sections: [
     {
       heading: `The Short Version`,
@@ -162,9 +162,9 @@ export const faqs = [
 ];
 
 export const es = {
-  title: `AZW3 vs MOBI para Kindle: cuál usar y convertir gratis`,
+  title: `AZW3 vs MOBI: usa AZW3 en cualquier Kindle desde 2015`,
   content: {
-    intro: `¿AZW3 o MOBI para tu Kindle? Ambos son formatos de Amazon, pero de generaciones distintas. Esta guía gratuita lo resuelve: cuándo gana AZW3, cuándo MOBI es la única opción y cómo convertir entre ambos sin registro, en un clic.`,
+    intro: `Usa AZW3 en cualquier Kindle de la última década; MOBI solo importa en hardware previo a 2015. Esta guía gratuita elige un ganador claro para AZW3 vs MOBI y muestra cómo convertir en cualquier sentido sin registro, en un clic.`,
     sections: [
       {
         heading: `La versión corta`,

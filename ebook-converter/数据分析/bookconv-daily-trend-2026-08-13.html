@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>bookconv.com GSC 增长趋势与结构分析 (2026-08-13)</title>
+<script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1e293b; padding: 24px; }
+.container { max-width: 1180px; margin: 0 auto; }
+h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 20px; }
+.card h2 { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #334155; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat { background: #f8fafc; border-radius: 8px; padding: 14px 16px; border: 1px solid #e2e8f0; }
+.stat-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.stat-value { font-size: 24px; font-weight: 700; color: #0f172a; }
+.stat-change { font-size: 12px; margin-top: 2px; }
+.stat-change.up { color: #16a34a; }
+.stat-change.bad { color: #dc2626; }
+.stat-change.neutral { color: #64748b; }
+.chart-wrap { position: relative; height: 360px; }
+.chart-wrap-sm { position: relative; height: 420px; }
+.note { font-size: 12px; color: #94a3b8; margin-top: 12px; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+th { font-weight: 600; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-green { background: #dcfce7; color: #166534; }
+.badge-yellow { background: #fef9c3; color: #854d0e; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.alert { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 4px; font-size: 13px; margin-bottom: 20px; }
+.alert strong { color: #92400e; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 800px) { .grid2 { grid-template-columns: 1fr; } }
+ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
+.code { font-family: ui-monospace, monospace; background: #f1f5f9; padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='container'>
+  <h1>📊 bookconv.com · GSC 增长趋势与结构分析</h1>
+  <p class='subtitle'>导出日 2026-08-13 ｜ 数据窗口 2026-07-25 ~ 2026-08-11（站点 7/26 上线，GSC 延后 1-2 天）｜ 口径：3 个月汇总（实际仅 18 天有数据）</p>
+
+  <div class='alert'>
+    <strong>⚠️ 关键提示：</strong>本窗口 <strong>8/11 截止</strong>，而我们的 P0 优化（epub-to-zip 新标题/meta + FAQ）<strong>8/12 才部署</strong>。因此本次数据<strong>尚未体现任何优化效果</strong>——下个导出（8/14+）才能验证 CTR 是否改善。
+  </div>
+
+  <div class='stats'>
+    <div class='stat'>
+      <div class='stat-label'>累计展示 (7/25-8/11)</div>
+      <div class='stat-value'>716</div>
+      <div class='stat-change up'>▲ vs 前次 469 (+53%)</div>
+    </div>
+    <div class='stat'>
+      <div class='stat-label'>总点击</div>
+      <div class='stat-value'>0</div>
+      <div class='stat-change bad'>CTR 0% — 致命瓶颈</div>
+    </div>
+    <div class='stat'>
+      <div class='stat-label'>有排名关键词</div>
+      <div class='stat-value'>162</div>
+      <div class='stat-change up'>▲ +37% (vs 118)</div>
+    </div>
+    <div class='stat'>
+      <div class='stat-label'>有曝光页面</div>
+      <div class='stat-value'>35</div>
+      <div class='stat-change up'>▲ +25% (vs 28)</div>
+    </div>
+    <div class='stat'>
+      <div class='stat-label'>加权平均排名</div>
+      <div class='stat-value'>#51</div>
+      <div class='stat-change neutral'>整体仍深埋</div>
+    </div>
+    <div class='stat'>
+      <div class='stat-label'>8/9 后日均值</div>
+      <div class='stat-value'>132</div>
+      <div class='stat-change up'>▲ +605% vs 此前 18.8/天</div>
+    </div>
+  </div>
+
+  <div class='card'>
+    <h2>① 每日展示趋势 — 8/9 峰值已固化为新水位</h2>
+    <div class='chart-wrap'>
+      <canvas id='dailyChart'></canvas>
+    </div>
+    <p class='note'>
+      🔵 蓝柱 = 每日展示 &nbsp;|&nbsp; 🟢 绿区 = 8/9 之后的「新水位」（均值 132/天）&nbsp;|&nbsp; 🔴 红柱 = 8/9 单日峰值 150<br>
+      <strong>结论：</strong>8/9 不是噪音。此前基线 18.8/天 → 8/9 起稳定 116-131/天，跃升约 7 倍并已连续 3 天维持。流量台阶式增长已固化。
+    </p>
+  </div>
+
+  <div class='card'>
+    <h2>①b 有排名关键词数增长趋势（累计 GSC 快照）</h2>
+    <div class='chart-wrap'>
+      <canvas id='kwChart'></canvas>
+    </div>
+    <p class='note'>📈 累计有排名关键词数（GSC 导出快照，非每日粒度）：<strong>73 (8/6) → 79 (8/7) → 118 (8/9) → 162 (8/11)</strong>，18 天内增长 2.2 倍，与展示量同步台阶式跃升。两点之间为示意连线（GSC 按导出日给累计快照，无逐日关键词数维度）。</p>
+  </div>
+
+  <div class='grid2'>
+    <div class='card'>
+      <h2>② 顶部页面（按展示）</h2>
+      <div class='chart-wrap-sm'>
+        <canvas id='pageChart'></canvas>
+      </div>
+      <p class='note'>🟣 西语页 <code>/es/blog/azw3-vs-mobi</code> 以 117 展示登顶，碾压英文版（仅 2 展示）。<strong>西语内容成意外王牌。</strong></p>
+    </div>
+    <div class='card'>
+      <h2>③ 顶部查询（按展示，颜色=排名）</h2>
+      <div class='chart-wrap-sm'>
+        <canvas id='queryChart'></canvas>
+      </div>
+      <p class='note'>🟢 排名≤20（真实点击区）&nbsp;|&nbsp; 🔴 排名&gt;50（长尾，无点击）。仅 16 个查询进前 20，却贡献 83 展示 = <strong>唯一可能出点击的池子</strong>。</p>
+    </div>
+  </div>
+
+  <div class='card'>
+    <h2>④ 核心发现与判断</h2>
+    <table>
+      <tr><th>维度</th><th>数据</th><th>判断</th></tr>
+      <tr><td>流量水位</td><td>7/25-8/8 均值 18.8/天 → 8/9-8/11 均值 132/天</td><td><span class='badge badge-green'>+605% 已固化</span></td></tr>
+      <tr><td>点击</td><td>716 展示 / 0 点击（CTR 0%）</td><td><span class='badge badge-red'>致命瓶颈</span></td></tr>
+      <tr><td>排名结构</td><td>加权均位 #51；仅 16 词进前 20（83 展示）</td><td><span class='badge badge-yellow'>头部稀缺</span></td></tr>
+      <tr><td>西语表现</td><td>/es/blog/azw3-vs-mobi 117 展示 #1（pos 14）；西班牙国 #7（24 展示）</td><td><span class='badge badge-blue'>ES 本地化奏效</span></td></tr>
+      <tr><td>P0 目标页</td><td>/convert/epub-to-zip 48 展示，聚合 pos 18.56（窗口内未含 8/12 优化）</td><td><span class='badge badge-yellow'>等下期验证</span></td></tr>
+      <tr><td>P1 目标页</td><td>/convert/mobi-to-epub 96 展示，但聚合 pos 69.34（多数查询深埋）</td><td><span class='badge badge-yellow'>需提权</span></td></tr>
+      <tr><td>富结果</td><td>搜索结果呈现为空 — FAQ JSON-LD 已部署但未被渲染</td><td><span class='badge badge-yellow'>待收录</span></td></tr>
+      <tr><td>设备</td><td>桌面 653 (91%) / 移动 62 (8.6%) / 平板 1</td><td><span class='badge badge-neutral'>符合预期</span></td></tr>
+    </table>
+  </div>
+
+  <div class='card'>
+    <h2>⑤ 进前 20 的「点击候选词」（共 16 个 / 83 展示 / 0 点击）</h2>
+    <table>
+      <tr><th>查询</th><th>展示</th><th>排名</th><th>状态</th></tr>
+      <tr><td>azw3 vs mobi</td><td>25</td><td>10.24</td><td><span class='badge badge-red'>#10 却 0 点击 → 改 title/meta</span></td></tr>
+      <tr><td>epub to zip</td><td>16</td><td>8.69</td><td><span class='badge badge-blue'>8/12 已优化，待验证</span></td></tr>
+      <tr><td>mobi vs azw3</td><td>13</td><td>8.31</td><td><span class='badge badge-red'>#8 却 0 点击 → 改 title/meta</span></td></tr>
+      <tr><td>lit to epub</td><td>11</td><td>20.27</td><td><span class='badge badge-yellow'>临界，冲前 10</span></td></tr>
+      <tr><td>azw3 or mobi / can kindle read azw3 等</td><td>余 18</td><td>11-30</td><td><span class='badge badge-yellow'>长尾头部</span></td></tr>
+    </table>
+    <p class='note'>这 3 个词（azw3 vs mobi / epub to zip / mobi vs azw3）排名 8-10、合计 54 展示，是<strong>全站唯一能稳定出点击的词</strong>。目前 0 点击 = 标题/描述不吸点击。epub-to-zip 已修，另两个待修。</p>
+  </div>
+
+  <div class='card'>
+    <h2>⑥ 下一步行动（按 ROI 排序）</h2>
+    <ul>
+      <li><strong>P0（等数据）：</strong>8/14+ 新导出 → 验证 epub-to-zip 新标题/meta 是否拉动 CTR（pos 8-9 词 CTR 预期 2-5%）。</li>
+      <li><strong>P1（本周可做）：</strong>优化 <code>azw3 vs mobi</code>（#10）与 <code>mobi vs azw3</code>（#8）的 title + meta description —— 这俩排名好却 0 点击，是典型的「展现不吸点击」。</li>
+      <li><strong>P2（加码西语）：</strong>西语页表现碾压英文同主题页。扩 ES 博客/指南（mobi-vs-azw3 已验证），把西语作为第二增长极。</li>
+      <li><strong>P3（提权 P1 目标）：</strong><code>/convert/mobi-to-epub</code> 展示高（96）但聚合排名深（69）。继续内链集权 + 等域名权威积累，目标把主查询 <code>mobi to epub</code> 从 #68 往前推。</li>
+      <li><strong>P4（富结果监控）：</strong>FAQ JSON-LD 已上线但未被渲染为富结果。每月复查「搜索结果呈现」，确认 Google 何时采纳。</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// ① Daily impressions
+const dailyLabels = ['07-25','07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
+const dailyImpr = [1,5,10,4,6,14,16,16,27,32,18,41,47,45,37,150,116,131];
+new Chart(document.getElementById('dailyChart'), {
+  type: 'bar',
+  data: {
+    labels: dailyLabels,
+    datasets: [{
+      label: '每日展示',
+      data: dailyImpr,
+      backgroundColor: dailyImpr.map((v,i) => i>=15 ? 'rgba(34,197,94,0.75)' : (i===15 ? 'rgba(239,68,68,0.85)' : 'rgba(59,130,246,0.7)')),
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => '展示: ' + c.raw + (c.dataIndex===15?' (8/9 峰值)':c.dataIndex>15?' (新水位)':'') } },
+      annotation: false
+    },
+    scales: { x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { beginAtZero: true, title: { display: true, text: '展示数' }, grid: { color: '#f1f5f9' } } }
+  }
+});
+
+// ①b Keyword count (cumulative snapshot line)
+const kwLabels = ['07-25','07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
+const kwData = [null,null,null,null,null,null,null,null,null,null,null,null,73,79,null,118,null,162];
+new Chart(document.getElementById('kwChart'), {
+  type: 'line',
+  data: {
+    labels: kwLabels,
+    datasets: [{
+      label: '累计有排名关键词数',
+      data: kwData,
+      borderColor: 'rgb(168,85,247)',
+      backgroundColor: 'rgba(168,85,247,0.12)',
+      borderWidth: 3,
+      pointRadius: 6,
+      pointBackgroundColor: 'rgb(168,85,247)',
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      tension: 0.2,
+      fill: true,
+      spanGaps: true
+    }]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: c => '关键词数: ' + c.raw } } },
+    scales: { x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { beginAtZero: true, title: { display: true, text: '关键词数' }, grid: { color: '#f1f5f9' } } } }
+});
+
+// ② Top pages
+const pages = [
+  ['/es/blog/azw3-vs-mobi',117],['/blog/epub-to-azw3',103],['/convert/mobi-to-epub',96],
+  ['/blog/epub-to-mobi-guide',85],['/convert/epub-to-zip',48],['/blog/ebook-formats-explained',43],
+  ['/blog/why-convert-lit-to-epub',32],['/',28],['/convert/epub-to-txt',22],['/convert/epub-to-azw3',20],
+  ['/convert/epub-to-docx',20],['/blog/mobi-or-azw3-for-kindle',19]
+];
+new Chart(document.getElementById('pageChart'), {
+  type: 'bar',
+  data: {
+    labels: pages.map(p=>p[0]),
+    datasets: [{ label:'展示', data: pages.map(p=>p[1]),
+      backgroundColor: pages.map(p=>p[0].startsWith('/es')?'rgba(168,85,247,0.8)':'rgba(59,130,246,0.7)'),
+      borderRadius: 4 }]
+  },
+  options: { indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins: { legend: { display:false } },
+    scales: { x: { beginAtZero:true, grid:{color:'#f1f5f9'} }, y: { ticks: { font: { size: 10 } } } } }
+});
+
+// ③ Top queries colored by position
+const queries = [
+  ['mobi to epub',38,68.13],['azw3 vs mobi',25,10.24],['epub to zip',16,8.69],
+  ['convert mobi to epub',16,70.0],['mobi vs azw3',13,8.31],['lit to epub',11,20.27],
+  ['epub to txt',9,67.89],['mobi epub',8,84.25],['azw3 to mobi',7,44.14],
+  ['epub to azw3',7,44.43],['mobi to epub converter',6,70.17],['mobi or azw3',5,14.6]
+];
+new Chart(document.getElementById('queryChart'), {
+  type: 'bar',
+  data: {
+    labels: queries.map(q=>q[0]),
+    datasets: [{ label:'展示', data: queries.map(q=>q[1]),
+      backgroundColor: queries.map(q=>q[2]<=20?'rgba(34,197,94,0.8)':'rgba(239,68,68,0.7)'),
+      borderRadius: 4 }]
+  },
+  options: { indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins: { legend: { display:false },
+      tooltip: { callbacks: { label: c => '展示: '+c.raw+' | 排名: #'+queries[c.dataIndex][2] } } },
+    scales: { x: { beginAtZero:true, grid:{color:'#f1f5f9'} }, y: { ticks: { font: { size: 10 } } } } }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+{
+  "daily_labels": [
+    "07-23",
+    "07-24",
+    "07-25",
+    "07-26",
+    "07-27",
+    "07-28",
+    "07-29",
+    "07-30",
+    "07-31",
+    "08-01",
+    "08-02",
+    "08-03",
+    "08-04",
+    "08-05",
+    "08-06",
+    "08-07",
+    "08-08",
+    "08-09",
+    "08-10",
+    "08-11"
+  ],
+  "daily_impr": [
+    0,
+    0,
+    1,
+    5,
+    10,
+    4,
+    6,
+    14,
+    16,
+    16,
+    27,
+    32,
+    18,
+    41,
+    47,
+    45,
+    37,
+    150,
+    116,
+    131
+  ],
+  "top_q": [
+    {
+      "q": "mobi to epub",
+      "impr": 38,
+      "pos": 68.13
+    },
+    {
+      "q": "azw3 vs mobi",
+      "impr": 25,
+      "pos": 10.24
+    },
+    {
+      "q": "epub to zip",
+      "impr": 16,
+      "pos": 8.69
+    },
+    {
+      "q": "convert mobi to epub",
+      "impr": 16,
+      "pos": 70.0
+    },
+    {
+      "q": "mobi vs azw3",
+      "impr": 13,
+      "pos": 8.31
+    },
+    {
+      "q": "lit to epub",
+      "impr": 11,
+      "pos": 20.27
+    },
+    {
+      "q": "epub to txt",
+      "impr": 9,
+      "pos": 67.89
+    },
+    {
+      "q": "mobi epub",
+      "impr": 8,
+      "pos": 84.25
+    },
+    {
+      "q": "azw3 to mobi",
+      "impr": 7,
+      "pos": 44.14
+    },
+    {
+      "q": "epub to azw3",
+      "impr": 7,
+      "pos": 44.43
+    },
+    {
+      "q": "mobi to epub converter",
+      "impr": 6,
+      "pos": 70.17
+    },
+    {
+      "q": "mobi or azw3",
+      "impr": 5,
+      "pos": 14.6
+    },
+    {
+      "q": "azw3",
+      "impr": 5,
+      "pos": 60.2
+    },
+    {
+      "q": "mobi in epub",
+      "impr": 5,
+      "pos": 69.8
+    },
+    {
+      "q": "convert to mobi",
+      "impr": 5,
+      "pos": 74.0
+    }
+  ],
+  "top_p": [
+    {
+      "url": "/es/blog/azw3-vs-mobi",
+      "impr": 117,
+      "pos": 14.34
+    },
+    {
+      "url": "/blog/epub-to-azw3",
+      "impr": 103,
+      "pos": 34.1
+    },
+    {
+      "url": "/convert/mobi-to-epub",
+      "impr": 96,
+      "pos": 69.34
+    },
+    {
+      "url": "/blog/epub-to-mobi-guide",
+      "impr": 85,
+      "pos": 55.05
+    },
+    {
+      "url": "/convert/epub-to-zip",
+      "impr": 48,
+      "pos": 18.56
+    },
+    {
+      "url": "/blog/ebook-formats-explained",
+      "impr": 43,
+      "pos": 34.23
+    },
+    {
+      "url": "/blog/why-convert-lit-to-epub",
+      "impr": 32,
+      "pos": 24.66
+    },
+    {
+      "url": "/",
+      "impr": 28,
+      "pos": 67.43
+    },
+    {
+      "url": "/convert/epub-to-txt",
+      "impr": 22,
+      "pos": 63.55
+    },
+    {
+      "url": "/convert/epub-to-azw3",
+      "impr": 20,
+      "pos": 48.75
+    },
+    {
+      "url": "/convert/epub-to-docx",
+      "impr": 20,
+      "pos": 55.7
+    },
+    {
+      "url": "/blog/mobi-or-azw3-for-kindle",
+      "impr": 19,
+      "pos": 25.05
+    },
+    {
+      "url": "/blog/can-kindle-read-azw3",
+      "impr": 14,
+      "pos": 13.14
+    },
+    {
+      "url": "/convert/azw3-to-mobi",
+      "impr": 14,
+      "pos": 51.0
+    },
+    {
+      "url": "/convert/epub-to-doc",
+      "impr": 12,
+      "pos": 61.42
+    }
+  ],
+  "top_c": [
+    {
+      "name": "美国",
+      "impr": 143
+    },
+    {
+      "name": "印度",
+      "impr": 74
+    },
+    {
+      "name": "英国",
+      "impr": 58
+    },
+    {
+      "name": "印度尼西亚",
+      "impr": 41
+    },
+    {
+      "name": "菲律宾",
+      "impr": 35
+    },
+    {
+      "name": "西班牙",
+      "impr": 24
+    },
+    {
+      "name": "法国",
+      "impr": 23
+    },
+    {
+      "name": "泰国",
+      "impr": 20
+    },
+    {
+      "name": "加拿大",
+      "impr": 19
+    },
+    {
+      "name": "澳大利亚",
+      "impr": 18
+    }
+  ],
+  "devices": [
+    {
+      "name": "桌面",
+      "impr": 653
+    },
+    {
+      "name": "移动设备",
+      "impr": 62
+    },
+    {
+      "name": "平板电脑",
+      "impr": 1
+    }
+  ],
+  "metrics": {
+    "total_impr": 716,
+    "total_clicks": 0,
+    "n_queries": 162,
+    "n_pages": 35,
+    "weighted_pos": 51.0,
+    "pre_avg": 18.8,
+    "post_avg": 132.3,
+    "top20_impr": 83,
+    "top20_clicks": 0
+  }
+}

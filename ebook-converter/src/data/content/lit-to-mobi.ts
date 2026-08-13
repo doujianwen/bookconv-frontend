@@ -65,7 +65,9 @@ If your LIT files are already DRM-free and you just want to read them, convertin
 - **Embedded fonts** — the device substitutes its built-ins
 - **Complex tables** — simple tables survive; heavily styled ones may degrade
 
-For a standard novel or document, the result reads exactly as intended on a Kindle.`
+For a standard novel or document, the result reads exactly as intended on a Kindle.
+
+Later want that MOBI portable beyond Kindle? [Convert MOBI to EPUB](/convert/mobi-to-epub) frees it for any reader.`
     }
   ],
 
