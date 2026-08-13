@@ -43,7 +43,7 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
 <body>
 <div class='container'>
   <h1>📊 bookconv.com · GSC 增长趋势与结构分析</h1>
-  <p class='subtitle'>导出日 2026-08-13 ｜ 数据窗口 2026-07-25 ~ 2026-08-11（站点 7/26 上线，GSC 延后 1-2 天）｜ 口径：3 个月汇总（实际仅 18 天有数据）</p>
+  <p class='subtitle'>导出日 2026-08-13 ｜ 数据窗口 2026-07-25 ~ 2026-08-11（站点 7/26 上线，GSC 延后 1-2 天）｜ 口径：3 个月汇总（实际仅 18 天有数据）｜ <span class='badge badge-blue'>教学案例 · AI 实战课程</span> 演示 GSC 快照口径与阈值压制</p>
 
   <div class='alert'>
     <strong>⚠️ 关键提示：</strong>本窗口 <strong>8/11 截止</strong>，而我们的 P0 优化（epub-to-zip 新标题/meta + FAQ）<strong>8/12 才部署</strong>。因此本次数据<strong>尚未体现任何优化效果</strong>——下个导出（8/14+）才能验证 CTR 是否改善。
@@ -94,11 +94,18 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
   </div>
 
   <div class='card'>
-    <h2>①b 有排名关键词数增长趋势（累计 GSC 快照）</h2>
+    <h2>①b 有排名关键词数增长趋势（GSC 累计快照 · 教学口径）</h2>
     <div class='chart-wrap'>
       <canvas id='kwChart'></canvas>
     </div>
-    <p class='note'>📈 累计有排名关键词数（GSC 导出快照，非每日粒度）：<strong>73 (8/6) → 79 (8/7) → 118 (8/9) → 162 (8/11)</strong>，18 天内增长 2.2 倍，与展示量同步台阶式跃升。两点之间为示意连线（GSC 按导出日给累计快照，无逐日关键词数维度）。</p>
+    <p class='note'>
+      📈 累计有排名关键词数（GSC 按<strong>导出区间</strong>给的去重词数，即「快照」，非逐日）：<strong>73 (8/6) → 79 (8/7) → 118 (8/9) → 162 (8/11)</strong>。18 天窗口内增长 <strong>2.2 倍</strong>，与展示量同步台阶式跃升；横轴含「7/26 上线」锚点，但该点<strong>无测量值</strong>（站点刚上线、尚未产生排名词）。两点之间为示意连线。
+    </p>
+    <div class='alert' style='margin-top:12px; background:#eff6ff; border-left-color:#3b82f6;'>
+      <strong>🎓 教学要点（数据素养）：</strong>这张图最容易被误读成「8/6 之前关键词数 = 0」。真相有两点：<br>
+      ① <strong>口径 ≠ 逐日</strong>：GSC 单份导出只给「所选区间的累计去重词数」，要画逐日曲线须用 Search Console API 每天拉一份；我们手上只有 4 个快照日，中间是示意连线，不是真实逐日轨迹。<br>
+      ② <strong>阈值压制（(其他) 桶）</strong>：站点 7/26 上线，前 10 天每日仅 1–41 次展示；GSC 把低频词合并进「(其他)」不单列（本期 79 个词里有 52 个仅 1 次展示）。所以 8/6 前并非「没词在排名」，而是「可计数词太少、被隐私阈值吞掉」。<strong>测得到，才画得出来</strong>——这是用 GSC 做增长复盘时最该讲清的坑。
+    </div>
   </div>
 
   <div class='grid2'>
@@ -185,9 +192,9 @@ new Chart(document.getElementById('dailyChart'), {
   }
 });
 
-// ①b Keyword count (cumulative snapshot line)
-const kwLabels = ['07-25','07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
-const kwData = [null,null,null,null,null,null,null,null,null,null,null,null,73,79,null,118,null,162];
+// ①b Keyword count (cumulative SNAPSHOT line — x-axis = export snapshot dates, NOT daily)
+const kwLabels = ['07-26 上线','08-06','08-07','08-09','08-11'];
+const kwData = [null,73,79,118,162];
 new Chart(document.getElementById('kwChart'), {
   type: 'line',
   data: {
