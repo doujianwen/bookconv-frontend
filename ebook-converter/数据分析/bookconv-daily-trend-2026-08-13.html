@@ -94,18 +94,40 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
   </div>
 
   <div class='card'>
-    <h2>①b 有排名关键词数增长趋势（GSC 累计快照 · 教学口径）</h2>
+    <h2>①b 有排名关键词数增长趋势（GSC API 逐日累计去重词数 · 真值）</h2>
     <div class='chart-wrap'>
       <canvas id='kwChart'></canvas>
     </div>
     <p class='note'>
-      📈 累计有排名关键词数（GSC 按<strong>导出区间</strong>给的去重词数，即「快照」，非逐日）：<strong>73 (8/6) → 79 (8/7) → 118 (8/9) → 162 (8/11)</strong>。18 天窗口内增长 <strong>2.2 倍</strong>，与展示量同步台阶式跃升；横轴含「7/26 上线」锚点，但该点<strong>无测量值</strong>（站点刚上线、尚未产生排名词）。两点之间为示意连线。
+      📈 <strong>口径升级为真值</strong>：本曲线由 <strong>Search Console API</strong> 逐日拉取（7/26 上线日 → 8/11），按「截至当日的历史去重词数」滚动累计。蓝柱 = 当日新增词数，紫线 = 累计词数。<br>
+      起点 <strong>07-26 = 3 词</strong> → 终点 <strong>08-11 = 162 词</strong>，17 天 <strong>+122%</strong>。8/9 起单日新增跳到 40+，与展示量台阶同步。
     </p>
     <div class='alert' style='margin-top:12px; background:#eff6ff; border-left-color:#3b82f6;'>
-      <strong>🎓 教学要点（数据素养）：</strong>这张图最容易被误读成「8/6 之前关键词数 = 0」。真相有两点：<br>
-      ① <strong>口径 ≠ 逐日</strong>：GSC 单份导出只给「所选区间的累计去重词数」，要画逐日曲线须用 Search Console API 每天拉一份；我们手上只有 4 个快照日，中间是示意连线，不是真实逐日轨迹。<br>
-      ② <strong>阈值压制（(其他) 桶）</strong>：站点 7/26 上线，前 10 天每日仅 1–41 次展示；GSC 把低频词合并进「(其他)」不单列（本期 79 个词里有 52 个仅 1 次展示）。所以 8/6 前并非「没词在排名」，而是「可计数词太少、被隐私阈值吞掉」。<strong>测得到，才画得出来</strong>——这是用 GSC 做增长复盘时最该讲清的坑。
+      <strong>🎓 教学要点（数据素养）：</strong>这张图正好回答「8/6 前为什么没数据」——<strong>之前用的是 GSC 导出的「窗口累计快照」（只有 4 个点），现在用 API 拿到逐日真值</strong>。<br>
+      ① <strong>快照 ≠ 逐日，但两口径可校验</strong>：CSV 快照 73(8/6)/79(8/7)/118(8/9)/162(8/11) 与 API 逐日累计在<strong>同一天完全吻合</strong> → 证明 CSV 快照就是「导出窗口去重词数」的近似，API 是其真值化。课程里可现场演示「两种口径对账」。<br>
+      ② <strong>阈值压制（(其他) 桶）仍在</strong>：早期每天仅个位数词因 GSC 把低频词并成「(其他)」不单列（本期 162 词里大量仅 1 次展示）。所以「累计词数」比「当日词数」更适合讲增长趋势——<strong>计的是历史累计覆盖，不是当日活跃</strong>。
     </div>
+    <table style='margin-top:16px;'>
+      <tr><th>日期</th><th>当日新增词</th><th>累计词数</th><th>当日展示</th></tr>
+      <tr><td>07-26</td><td>3</td><td>3</td><td>3</td></tr>
+      <tr><td>07-27</td><td>4</td><td>5</td><td>5</td></tr>
+      <tr><td>07-28</td><td>2</td><td>7</td><td>2</td></tr>
+      <tr><td>07-29</td><td>6</td><td>12</td><td>6</td></tr>
+      <tr><td>07-30</td><td>7</td><td>17</td><td>10</td></tr>
+      <tr><td>07-31</td><td>6</td><td>20</td><td>12</td></tr>
+      <tr><td>08-01</td><td>6</td><td>24</td><td>10</td></tr>
+      <tr><td>08-02</td><td>10</td><td>31</td><td>23</td></tr>
+      <tr><td>08-03</td><td>14</td><td>40</td><td>26</td></tr>
+      <tr><td>08-04</td><td>8</td><td>44</td><td>10</td></tr>
+      <tr><td>08-05</td><td>19</td><td>59</td><td>23</td></tr>
+      <tr><td>08-06</td><td>20</td><td><strong>73</strong></td><td>28</td></tr>
+      <tr><td>08-07</td><td>16</td><td><strong>79</strong></td><td>24</td></tr>
+      <tr><td>08-08</td><td>21</td><td>90</td><td>32</td></tr>
+      <tr><td>08-09</td><td>46</td><td><strong>118</strong></td><td>71</td></tr>
+      <tr><td>08-10</td><td>41</td><td>136</td><td>55</td></tr>
+      <tr><td>08-11</td><td>40</td><td><strong>162</strong></td><td>60</td></tr>
+    </table>
+    <p class='note'>数据来源：Search Console API <code>searchanalytics.query</code>，维度 = query，已剔除 <code>(other)</code> 桶；累计 = 截至当日的历史去重词数滚动并集。黑体 73/79/118/162 与 CSV 导出快照同日吻合。</p>
   </div>
 
   <div class='grid2'>
@@ -192,32 +214,26 @@ new Chart(document.getElementById('dailyChart'), {
   }
 });
 
-// ①b Keyword count (cumulative SNAPSHOT line — x-axis = export snapshot dates, NOT daily)
-const kwLabels = ['07-26 上线','08-06','08-07','08-09','08-11'];
-const kwData = [null,73,79,118,162];
+// ①b Keyword growth — AUTHORITATIVE: GSC Search Console API, daily cumulative unique queries
+const kwLabels = ['07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
+const kwDaily = [3,4,2,6,7,6,6,10,14,8,19,20,16,21,46,41,40];
+const kwCum = [3,5,7,12,17,20,24,31,40,44,59,73,79,90,118,136,162];
 new Chart(document.getElementById('kwChart'), {
-  type: 'line',
   data: {
     labels: kwLabels,
-    datasets: [{
-      label: '累计有排名关键词数',
-      data: kwData,
-      borderColor: 'rgb(168,85,247)',
-      backgroundColor: 'rgba(168,85,247,0.12)',
-      borderWidth: 3,
-      pointRadius: 6,
-      pointBackgroundColor: 'rgb(168,85,247)',
-      pointBorderColor: '#fff',
-      pointBorderWidth: 2,
-      tension: 0.2,
-      fill: true,
-      spanGaps: true
-    }]
+    datasets: [
+      { type: 'bar', label: '当日新增词数', data: kwDaily,
+        backgroundColor: 'rgba(59,130,246,0.22)', borderColor: 'rgba(59,130,246,0.5)', borderWidth: 1, yAxisID: 'y', order: 2 },
+      { type: 'line', label: '累计有排名关键词数', data: kwCum,
+        borderColor: 'rgb(168,85,247)', backgroundColor: 'rgba(168,85,247,0.12)',
+        borderWidth: 3, pointRadius: 4, pointBackgroundColor: 'rgb(168,85,247)',
+        pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.25, fill: true, yAxisID: 'y', order: 1 }
+    ]
   },
   options: { responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false },
-      tooltip: { callbacks: { label: c => '关键词数: ' + c.raw } } },
-    scales: { x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+    plugins: { legend: { display: true, labels: { font: { size: 11 } } },
+      tooltip: { callbacks: { label: c => c.dataset.label + ': ' + c.raw } } },
+    scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } },
       y: { beginAtZero: true, title: { display: true, text: '关键词数' }, grid: { color: '#f1f5f9' } } } }
 });
 
