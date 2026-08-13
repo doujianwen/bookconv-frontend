@@ -76,11 +76,26 @@ export function getPlanById(id: string): PlanConfig | undefined {
   return PLANS.find((p) => p.id === id);
 }
 
+/**
+ * Normalize a Lemon Squeezy variant ID for comparison.
+ * Env configs store the ID with a `v_` prefix (e.g. "v_1947491") because that
+ * is what the checkout API expects, but the webhook payloads send the raw
+ * integer ("1947491"). Strip the prefix on both sides so the lookup is robust
+ * to either representation — otherwise a real subscription would never resolve
+ * to its plan and the Pro gate would stay locked forever.
+ */
+function normalizeVariantId(v: string | number | undefined): string {
+  if (v === undefined || v === null) return '';
+  return String(v).replace(/^v_/i, '').trim();
+}
+
 /** Look up a plan by its Lemon Squeezy variant ID */
-export function getPlanByVariantId(variantId: string | undefined): PlanConfig | undefined {
+export function getPlanByVariantId(variantId: string | number | undefined): PlanConfig | undefined {
   if (!variantId) return undefined;
+  const target = normalizeVariantId(variantId);
+  if (!target) return undefined;
   return PLANS.find(
-    (p) => p.lemonSqueezyVariantId === variantId && p.id !== 'free'
+    (p) => p.id !== 'free' && normalizeVariantId(p.lemonSqueezyVariantId) === target
   );
 }
 
@@ -93,7 +108,11 @@ export function verifyWebhookSignature(payload: string, signature: string): bool
   const crypto = require('crypto');
   const hmac = crypto.createHmac('sha256', LS_WEBHOOK_SECRET);
   const digest = hmac.update(payload, 'utf8').digest('hex');
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
+  const sigBuf = Buffer.from(signature || '');
+  const digBuf = Buffer.from(digest);
+  // timingSafeEqual throws on length mismatch — return false (→ 401) instead of 500.
+  if (sigBuf.length !== digBuf.length) return false;
+  return crypto.timingSafeEqual(sigBuf, digBuf);
 }
 
 export type SubscriptionStatus = 'active' | 'past_due' | 'canceled' | 'unpaid';
