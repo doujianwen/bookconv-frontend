@@ -1,5 +1,5 @@
 export const slug = `can-kindle-read-azw3`;
-export const title = `Can Kindle Read AZW3? Compatibility by Model, Explained`;
+export const title = `Can Kindle Read AZW3? Yes — Every Model Since 2015`;
 export const date = `2026-08-08`;
 export const author = "BookConv Team";
 export const tags = ["AZW3", "Kindle", "KF8", "Ebook Formats", "BookConv", "Calibre"];

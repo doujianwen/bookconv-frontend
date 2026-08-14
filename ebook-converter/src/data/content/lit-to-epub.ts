@@ -1,5 +1,6 @@
 export const slug = 'lit-to-epub';
-export const title = 'Free LIT to EPUB Converter — No Sign-up';
+export const title = 'LIT to EPUB: Free Converter for Old Microsoft Reader Books';
+export const metaDescription = 'Still have .LIT files from Microsoft Reader? Convert LIT to EPUB free, no sign-up — readable on any device (Kindle, Kobo, Apple Books). 30 seconds, private, keeps your text intact.';
 export const level = 'S' as const;
 export const wordCount = 3200;
 
