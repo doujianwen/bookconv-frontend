@@ -24,7 +24,7 @@ import crypto from 'node:crypto';
 
 const BASE = process.env.BOOKCONV_BASE || 'https://www.bookconv.com';
 const PROXY = process.env.PROXY || 'http://127.0.0.1:7897';
-const TEST_EMAIL = (process.env.TEST_EMAIL || 'e2e-probe@bookconv.com').toLowerCase();
+const TEST_EMAIL = (process.env.TEST_EMAIL || `e2e-probe+${Date.now()}@bookconv.com`).toLowerCase();
 const WEBHOOK = `${BASE}/api/payments/webhook`;
 
 let SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
@@ -103,10 +103,11 @@ function upstashGet(key) {
   try {
     const m = REDIS_URL.match(/rediss?:\/\/:?([^@]+)@([^:/]+)/);
     if (!m) return null;
-    const password = m[1]; const host = m[2];
+    // Upstash REST auth: Bearer <password> (strip any "default:" user prefix).
+    const password = m[1].replace(/^default:/, ''); const host = m[2];
     const out = execFileSync('curl', [
       '-sS', '-x', PROXY,
-      '-H', `Authorization: ${password}`,
+      '-H', `Authorization: Bearer ${password}`,
       `https://${host}/get/${encodeURIComponent(key)}`,
     ], { encoding: 'utf8', maxBuffer: 1 * 1024 * 1024 });
     return JSON.parse(out || '{}');
