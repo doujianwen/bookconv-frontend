@@ -22,6 +22,7 @@ import {
 import { cn, formatBytes } from "@/lib/utils";
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map";
 import { Button } from "@/components/ui/button";
+import { trackGAEvent } from "@/lib/ga";
 
 // ── Limits ────────────────────────────────────────────────────
 // Defaults are deliberately aligned with what the backend actually enforces:
@@ -329,6 +330,11 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
 
         if (quotaExhausted && !isLocalConversion(item.sourceFormat, targetFormat)) {
           failed += 1;
+          trackGAEvent("conversion_failed", {
+            source_format: item.sourceFormat,
+            target_format: targetFormat,
+            error: "quota_exceeded",
+          });
           markStatus(item.index, "failed", QUOTA_MESSAGE);
           resultFiles.push({
             index: item.index,
@@ -342,6 +348,11 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         }
 
         try {
+          trackGAEvent("file_upload", {
+            source_format: item.sourceFormat,
+            target_format: targetFormat,
+            file_size: item.size,
+          });
           const blob = await convertOne(item.file, item.sourceFormat, targetFormat);
           const outName = uniqueName(
             item.name.replace(/\.[^.]+$/, "") + "." + outputExtension(targetFormat),
@@ -349,6 +360,10 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
           );
           collected.push({ blob, filename: outName });
           completed += 1;
+          trackGAEvent("conversion_complete", {
+            source_format: item.sourceFormat,
+            target_format: targetFormat,
+          });
           markStatus(item.index, "completed");
           resultFiles.push({
             index: item.index,
@@ -364,6 +379,11 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
           if (err?.code === "CONVERSION_QUOTA_EXCEEDED") {
             quotaExhausted = true;
           }
+          trackGAEvent("conversion_failed", {
+            source_format: item.sourceFormat,
+            target_format: targetFormat,
+            error: (msg || "unknown").slice(0, 100),
+          });
           markStatus(item.index, "failed", msg);
           resultFiles.push({
             index: item.index,

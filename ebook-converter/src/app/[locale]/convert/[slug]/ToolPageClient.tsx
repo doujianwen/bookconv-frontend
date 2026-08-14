@@ -17,6 +17,7 @@ import { TestimonialCard } from "@/components/tools/TestimonialCard"
 import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
+import { trackGAEvent } from "@/lib/ga"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
@@ -116,6 +117,11 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         formData.append("target_format", target)
         setProgress(30)
         setStatus("converting")
+        trackGAEvent("file_upload", {
+          source_format: source,
+          target_format: target,
+          file_size: file.size,
+        })
         const response = await fetch("/api/convert", { method: "POST", body: formData })
         setProgress(40)
         if (!response.ok) {
@@ -133,6 +139,10 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         setDownloadUrl(url)
         setProgress(100)
         setStatus("done")
+        trackGAEvent("conversion_complete", {
+          source_format: source,
+          target_format: target,
+        })
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err: any) {
         // Extract error code and friendly message from response data if available
@@ -144,6 +154,11 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
         setErrorCode(mappedCode)
         setErrorMessage(err.message || "Conversion failed")
         setStatus("error")
+        trackGAEvent("conversion_failed", {
+          source_format: source,
+          target_format: target,
+          error: (err?.message || "unknown").slice(0, 100),
+        })
       }
     },
     [source, target]
