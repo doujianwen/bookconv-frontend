@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>bookconv.com GSC 增长趋势与结构分析 (2026-08-13)</title>
+<title>bookconv.com GSC 增长趋势与结构分析 (2026-08-14)</title>
 <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,17 +43,17 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
 <body>
 <div class='container'>
   <h1>📊 bookconv.com · GSC 增长趋势与结构分析</h1>
-  <p class='subtitle'>导出日 2026-08-13 ｜ 数据窗口 2026-07-25 ~ 2026-08-11（站点 7/26 上线，GSC 延后 1-2 天）｜ 口径：3 个月汇总（实际仅 18 天有数据）｜ <span class='badge badge-blue'>教学案例 · AI 实战课程</span> 演示 GSC 快照口径与阈值压制</p>
+  <p class='subtitle'>导出日 2026-08-14 ｜ 数据窗口 2026-07-25 ~ 2026-08-12（站点 7/26 上线；8/13 因 GSC 延迟尚未出数）｜ 数据源：Search Console API 逐日直拉（query 维度=关键词数，date 维度=展示/点击真值）｜ <span class='badge badge-blue'>教学案例 · AI 实战课程</span></p>
 
   <div class='alert'>
-    <strong>⚠️ 关键提示：</strong>本窗口 <strong>8/11 截止</strong>，而我们的 P0 优化（epub-to-zip 新标题/meta + FAQ）<strong>8/12 才部署</strong>。因此本次数据<strong>尚未体现任何优化效果</strong>——下个导出（8/14+）才能验证 CTR 是否改善。
+    <strong>⚠️ 关键提示：</strong>本次已拉到 <strong>8/12</strong> 数据（8/13 因 GSC 1-2 天延迟尚未出数）。P0 优化（epub-to-zip 新标题/meta）8/12 部署，<strong>当日 CTR 仍为 0%</strong>——新标题需 Google 重新抓取+重排 SERP（约 3-7 天），故 8/14+ 导出才能判定其是否改善点击。8/12 展示飙到 221（新峰值）属自然增长/外链，非优化所致。
   </div>
 
   <div class='stats'>
     <div class='stat'>
-      <div class='stat-label'>累计展示 (7/25-8/11)</div>
-      <div class='stat-value'>716</div>
-      <div class='stat-change up'>▲ vs 前次 469 (+53%)</div>
+      <div class='stat-label'>累计展示 (7/25-8/12)</div>
+      <div class='stat-value'>936</div>
+      <div class='stat-change up'>▲ vs 前次 716 (+30%)</div>
     </div>
     <div class='stat'>
       <div class='stat-label'>总点击</div>
@@ -61,9 +61,9 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
       <div class='stat-change bad'>CTR 0% — 致命瓶颈</div>
     </div>
     <div class='stat'>
-      <div class='stat-label'>有排名关键词</div>
-      <div class='stat-value'>162</div>
-      <div class='stat-change up'>▲ +37% (vs 118)</div>
+      <div class='stat-label'>有排名关键词 (8/12)</div>
+      <div class='stat-value'>204</div>
+      <div class='stat-change up'>▲ +26% (vs 162 @ 8/11)</div>
     </div>
     <div class='stat'>
       <div class='stat-label'>有曝光页面</div>
@@ -76,9 +76,9 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
       <div class='stat-change neutral'>整体仍深埋</div>
     </div>
     <div class='stat'>
-      <div class='stat-label'>8/9 后日均值</div>
-      <div class='stat-value'>132</div>
-      <div class='stat-change up'>▲ +605% vs 此前 18.8/天</div>
+      <div class='stat-label'>8/9–8/12 日均值</div>
+      <div class='stat-value'>155</div>
+      <div class='stat-change up'>▲ +724% vs 此前 18.8/天</div>
     </div>
   </div>
 
@@ -88,8 +88,8 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
       <canvas id='dailyChart'></canvas>
     </div>
     <p class='note'>
-      🔵 蓝柱 = 每日展示 &nbsp;|&nbsp; 🟢 绿区 = 8/9 之后的「新水位」（均值 132/天）&nbsp;|&nbsp; 🔴 红柱 = 8/9 单日峰值 150<br>
-      <strong>结论：</strong>8/9 不是噪音。此前基线 18.8/天 → 8/9 起稳定 116-131/天，跃升约 7 倍并已连续 3 天维持。流量台阶式增长已固化。
+      🔵 蓝柱 = 每日展示 &nbsp;|&nbsp; 🟢 绿区 = 8/9 之后的「新水位」（8/9–8/11 均值 132/天）&nbsp;|&nbsp; 🔴 红柱 = 8/12 单日峰值 221<br>
+      <strong>结论：</strong>8/9 不是噪音——此前基线 18.8/天 → 8/9 起稳定 116-150/天；8/12 进一步跳到 <strong>221</strong>（新峰值，+69% vs 8/11），流量台阶式增长持续抬升。8/13 因 GSC 延迟未出数。
     </p>
   </div>
 
@@ -99,13 +99,14 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
       <canvas id='kwChart'></canvas>
     </div>
     <p class='note'>
-      📈 <strong>口径升级为真值</strong>：本曲线由 <strong>Search Console API</strong> 逐日拉取（7/26 上线日 → 8/11），按「截至当日的历史去重词数」滚动累计。蓝柱 = 当日新增词数，紫线 = 累计词数。<br>
-      起点 <strong>07-26 = 3 词</strong> → 终点 <strong>08-11 = 162 词</strong>，17 天 <strong>+122%</strong>。8/9 起单日新增跳到 40+，与展示量台阶同步。
+      📈 <strong>口径升级为真值</strong>：本曲线由 <strong>Search Console API</strong> 逐日拉取（7/26 上线日 → 8/12），按「截至当日的历史去重词数」滚动累计。蓝柱 = 当日新增词数，紫线 = 累计词数。<br>
+      起点 <strong>07-26 = 3 词</strong> → 终点 <strong>08-12 = 204 词</strong>，18 天 <strong>+122%</strong>。8/9 起单日新增跳到 40+；<strong>8/12 单日新增 75 词（窗口最大），累计冲到 204</strong>，与展示量台阶同步。
     </p>
     <div class='alert' style='margin-top:12px; background:#eff6ff; border-left-color:#3b82f6;'>
       <strong>🎓 教学要点（数据素养）：</strong>这张图正好回答「8/6 前为什么没数据」——<strong>之前用的是 GSC 导出的「窗口累计快照」（只有 4 个点），现在用 API 拿到逐日真值</strong>。<br>
       ① <strong>快照 ≠ 逐日，但两口径可校验</strong>：CSV 快照 73(8/6)/79(8/7)/118(8/9)/162(8/11) 与 API 逐日累计在<strong>同一天完全吻合</strong> → 证明 CSV 快照就是「导出窗口去重词数」的近似，API 是其真值化。课程里可现场演示「两种口径对账」。<br>
-      ② <strong>阈值压制（(其他) 桶）仍在</strong>：早期每天仅个位数词因 GSC 把低频词并成「(其他)」不单列（本期 162 词里大量仅 1 次展示）。所以「累计词数」比「当日词数」更适合讲增长趋势——<strong>计的是历史累计覆盖，不是当日活跃</strong>。
+      ② <strong>阈值压制（(其他) 桶）仍在</strong>：早期每天仅个位数词因 GSC 把低频词并成「(其他)」不单列（本期 204 词里大量仅 1 次展示）。所以「累计词数」比「当日词数」更适合讲增长趋势——<strong>计的是历史累计覆盖，不是当日活跃</strong>。<br>
+      ③ <strong>维度选择会改变数字（隐藏坑）</strong>：同一天用 <code>query</code> 维度求和展示量 ≈ 71，用 <code>page</code>/<code>date</code> 维度却是 ~150——GSC 在高流量日把低于隐私阈值的词<strong>整批丢弃且不返回 (other) 行</strong>，query 维度展示量被腰斩。所以<strong>关键词数用 query 维度（只数 GSC 列出的词，精确），展示量必须用 date 维度真值</strong>。课程里这是「同一数据源、不同维度、数字不同」的最佳反例。
     </div>
     <table style='margin-top:16px;'>
       <tr><th>日期</th><th>当日新增词</th><th>累计词数</th><th>当日展示</th></tr>
@@ -126,8 +127,9 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
       <tr><td>08-09</td><td>46</td><td><strong>118</strong></td><td>71</td></tr>
       <tr><td>08-10</td><td>41</td><td>136</td><td>55</td></tr>
       <tr><td>08-11</td><td>40</td><td><strong>162</strong></td><td>60</td></tr>
+      <tr><td>08-12</td><td><strong>75</strong></td><td><strong>204</strong></td><td><strong>221</strong></td></tr>
     </table>
-    <p class='note'>数据来源：Search Console API <code>searchanalytics.query</code>，维度 = query，已剔除 <code>(other)</code> 桶；累计 = 截至当日的历史去重词数滚动并集。黑体 73/79/118/162 与 CSV 导出快照同日吻合。</p>
+    <p class='note'>数据来源：Search Console API <code>searchanalytics.query</code>，维度 = query，已剔除 <code>(other)</code> 桶；累计 = 截至当日的历史去重词数滚动并集。黑体 73/79/118/162 与 CSV 导出快照同日吻合；8/12=204 为新增点（8/13 因 GSC 延迟未出数）。</p>
   </div>
 
   <div class='grid2'>
@@ -151,11 +153,11 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
     <h2>④ 核心发现与判断</h2>
     <table>
       <tr><th>维度</th><th>数据</th><th>判断</th></tr>
-      <tr><td>流量水位</td><td>7/25-8/8 均值 18.8/天 → 8/9-8/11 均值 132/天</td><td><span class='badge badge-green'>+605% 已固化</span></td></tr>
-      <tr><td>点击</td><td>716 展示 / 0 点击（CTR 0%）</td><td><span class='badge badge-red'>致命瓶颈</span></td></tr>
+      <tr><td>流量水位</td><td>7/25-8/8 均值 18.8/天 → 8/9-8/12 均值 155/天（8/12 跳到 221）</td><td><span class='badge badge-green'>+724% 持续抬升</span></td></tr>
+      <tr><td>点击</td><td>936 展示 / 0 点击（CTR 0%）</td><td><span class='badge badge-red'>致命瓶颈</span></td></tr>
       <tr><td>排名结构</td><td>加权均位 #51；仅 16 词进前 20（83 展示）</td><td><span class='badge badge-yellow'>头部稀缺</span></td></tr>
       <tr><td>西语表现</td><td>/es/blog/azw3-vs-mobi 117 展示 #1（pos 14）；西班牙国 #7（24 展示）</td><td><span class='badge badge-blue'>ES 本地化奏效</span></td></tr>
-      <tr><td>P0 目标页</td><td>/convert/epub-to-zip 48 展示，聚合 pos 18.56（窗口内未含 8/12 优化）</td><td><span class='badge badge-yellow'>等下期验证</span></td></tr>
+      <tr><td>P0 目标页</td><td>/convert/epub-to-zip 48 展示，聚合 pos 18.56；8/12 部署新标题/meta，当日 CTR 仍 0，待 8/14+ 判定</td><td><span class='badge badge-yellow'>等 8/14+ 验证</span></td></tr>
       <tr><td>P1 目标页</td><td>/convert/mobi-to-epub 96 展示，但聚合 pos 69.34（多数查询深埋）</td><td><span class='badge badge-yellow'>需提权</span></td></tr>
       <tr><td>富结果</td><td>搜索结果呈现为空 — FAQ JSON-LD 已部署但未被渲染</td><td><span class='badge badge-yellow'>待收录</span></td></tr>
       <tr><td>设备</td><td>桌面 653 (91%) / 移动 62 (8.6%) / 平板 1</td><td><span class='badge badge-neutral'>符合预期</span></td></tr>
@@ -167,12 +169,12 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
     <table>
       <tr><th>查询</th><th>展示</th><th>排名</th><th>状态</th></tr>
       <tr><td>azw3 vs mobi</td><td>25</td><td>10.24</td><td><span class='badge badge-red'>#10 却 0 点击 → 改 title/meta</span></td></tr>
-      <tr><td>epub to zip</td><td>16</td><td>8.69</td><td><span class='badge badge-blue'>8/12 已优化，待验证</span></td></tr>
+      <tr><td>epub to zip</td><td>16</td><td>8.69</td><td><span class='badge badge-yellow'>8/12 部署，CTR 仍 0，待 8/14+</span></td></tr>
       <tr><td>mobi vs azw3</td><td>13</td><td>8.31</td><td><span class='badge badge-red'>#8 却 0 点击 → 改 title/meta</span></td></tr>
       <tr><td>lit to epub</td><td>11</td><td>20.27</td><td><span class='badge badge-yellow'>临界，冲前 10</span></td></tr>
       <tr><td>azw3 or mobi / can kindle read azw3 等</td><td>余 18</td><td>11-30</td><td><span class='badge badge-yellow'>长尾头部</span></td></tr>
     </table>
-    <p class='note'>这 3 个词（azw3 vs mobi / epub to zip / mobi vs azw3）排名 8-10、合计 54 展示，是<strong>全站唯一能稳定出点击的词</strong>。目前 0 点击 = 标题/描述不吸点击。epub-to-zip 已修，另两个待修。</p>
+    <p class='note'>这 3 个词（azw3 vs mobi / epub to zip / mobi vs azw3）排名 8-10、合计 54 展示，是<strong>全站唯一能稳定出点击的词</strong>。目前 0 点击 = 标题/描述不吸点击。epub-to-zip 8/12 部署新标题，待 8/14+ 验证；另两个待修。</p>
   </div>
 
   <div class='card'>
@@ -189,8 +191,8 @@ ul { padding-left: 20px; font-size: 13px; line-height: 1.9; }
 
 <script>
 // ① Daily impressions
-const dailyLabels = ['07-25','07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
-const dailyImpr = [1,5,10,4,6,14,16,16,27,32,18,41,47,45,37,150,116,131];
+const dailyLabels = ['07-25','07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11','08-12'];
+const dailyImpr = [1,5,10,4,6,14,16,16,27,32,18,41,47,45,37,150,116,131,221];
 new Chart(document.getElementById('dailyChart'), {
   type: 'bar',
   data: {
@@ -198,7 +200,7 @@ new Chart(document.getElementById('dailyChart'), {
     datasets: [{
       label: '每日展示',
       data: dailyImpr,
-      backgroundColor: dailyImpr.map((v,i) => i>=15 ? 'rgba(34,197,94,0.75)' : (i===15 ? 'rgba(239,68,68,0.85)' : 'rgba(59,130,246,0.7)')),
+      backgroundColor: dailyImpr.map((v,i) => i===18 ? 'rgba(239,68,68,0.9)' : (i>=15 ? 'rgba(34,197,94,0.75)' : 'rgba(59,130,246,0.7)')),
       borderRadius: 4
     }]
   },
@@ -215,9 +217,9 @@ new Chart(document.getElementById('dailyChart'), {
 });
 
 // ①b Keyword growth — AUTHORITATIVE: GSC Search Console API, daily cumulative unique queries
-const kwLabels = ['07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11'];
-const kwDaily = [3,4,2,6,7,6,6,10,14,8,19,20,16,21,46,41,40];
-const kwCum = [3,5,7,12,17,20,24,31,40,44,59,73,79,90,118,136,162];
+const kwLabels = ['07-26','07-27','07-28','07-29','07-30','07-31','08-01','08-02','08-03','08-04','08-05','08-06','08-07','08-08','08-09','08-10','08-11','08-12'];
+const kwDaily = [3,4,2,6,7,6,6,10,14,8,19,20,16,21,46,41,40,75];
+const kwCum = [3,5,7,12,17,20,24,31,40,44,59,73,79,90,118,136,162,204];
 new Chart(document.getElementById('kwChart'), {
   data: {
     labels: kwLabels,
