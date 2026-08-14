@@ -1,0 +1,26 @@
+name: Vercel Deploy (push to main)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel production deployment from bookconv-frontend
+        continue-on-error: true
+        env:
+          TOKEN: ${{ secrets.VERCEL_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "VERCEL_DEPLOY_TOKEN not set; skipping auto-deploy."
+            echo "Add it in repo Settings > Secrets and variables > Actions to enable push-to-deploy."
+            exit 0
+          fi
+          curl -s -X POST "https://api.vercel.com/v13/deployments?teamId=team_a0qDGfHPDekyykDsQVRS5x15" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"name\":\"ebook-converter-ymfg\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repoId\":1312872088,\"sha\":\"${{ github.sha }}\",\"ref\":\"main\"}}"
+          echo "Vercel production deploy triggered for ${{ github.sha }}"
