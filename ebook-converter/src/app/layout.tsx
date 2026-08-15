@@ -162,6 +162,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
                 <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
                 <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
+                <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
                 <LocaleSwitcher />
                 <LoginButton />
               </nav>
@@ -178,6 +179,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
                 <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-gray-700'>{t('common.guide') || 'Guides'}</Link>
                 <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
+                <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-gray-700'>{t('common.help') || 'Help'}</Link>
                 <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>
               <p className='text-xs text-gray-400'>

@@ -119,6 +119,33 @@ export default async function PricingPage() {
         </div>
       </section>
 
+      {/* Privacy & Security Section */}
+      <section className="mt-16 max-w-3xl mx-auto rounded-2xl border border-green-200 bg-green-50 p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          {t('pricing.privacy.title')}
+        </h2>
+        <div className="space-y-4">
+          {[
+            { icon: '🔒', titleKey: 'pricing.privacy.secure.title', descKey: 'pricing.privacy.secure.desc' },
+            { icon: '🗑️', titleKey: 'pricing.privacy.delete.title', descKey: 'pricing.privacy.delete.desc' },
+            { icon: '🚫', titleKey: 'pricing.privacy.no-store.title', descKey: 'pricing.privacy.no-store.desc' },
+            { icon: '👁️', titleKey: 'pricing.privacy.no-read.title', descKey: 'pricing.privacy.no-read.desc' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-start gap-4">
+              <span className="text-2xl">{item.icon}</span>
+              <div>
+                <h3 className="font-semibold text-gray-900">{t(item.titleKey)}</h3>
+                <p className="text-sm text-gray-600 mt-1">{t(item.descKey)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-sm text-gray-500 italic">{t('pricing.privacy.footer')}</p>
+      </section>
+
       {/* Comparison table */}
       <section className="mt-16 max-w-3xl mx-auto">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('pricing.featureComparison')}</h2>

@@ -7,6 +7,7 @@
                    "skipToMainContent":  "Saltar al contenido principal",
                    "home":  "Inicio",
                    "pricing":  "Precios",
+                   "help":  "Ayuda",
                    "blog":  "Blog",
                    "convert":  "Convertir",
                    "guide":  "Guías",
@@ -78,7 +79,27 @@
                     "pqa4_q":  "¿Qué pasa con mis archivos?",
                     "pqa4_a":  "Todos los archivos subidos se cifran y se eliminan automáticamente dentro de 1 hora después de la conversión, independientemente de tu plan.",
                     "pqa5_q":  "¿Ofrecen reembolsos?",
-                    "pqa5_a":  "Sí, ofrecemos un reembolso completo dentro de los 30 días posteriores a la compra si no estás satisfecho con el servicio."
+                    "pqa5_a":  "Sí, ofrecemos un reembolso completo dentro de los 30 días posteriores a la compra si no estás satisfecho con el servicio.",
+                    "privacy":  {
+                                    "title":  "Tu Privacidad y Seguridad",
+                                    "secure":  {
+                                                   "title":  "Transferencias Cifradas",
+                                                   "desc":  "Todos los archivos se transfieren sobre HTTPS con cifrado de extremo a extremo. Usamos TLS 1.3 estándar de la industria para proteger tus datos en tránsito."
+                                               },
+                                    "delete":  {
+                                                  "title":  "Eliminación Automática Dentro de 1 Hora",
+                                                  "desc":  "Los archivos convertidos se eliminan automáticamente de nuestros servidores dentro de 1 hora después de la conversión. Esto aplica a todos los usuarios independientemente del plan — no almacenamos tus libros."
+                                              },
+                                    "no-store":  {
+                                                   "title":  "Nunca Almacenamos Tus Archivos",
+                                                   "desc":  "Los archivos se procesan en memoria y se eliminan inmediatamente después de completar la conversión. Sin copias de seguridad, sin archivos, sin excepciones."
+                                               },
+                                    "no-read":  {
+                                                  "title":  "No Leemos Tu Contenido",
+                                                  "desc":  "Nuestro motor de conversión automatizado procesa archivos sin revisión humana. Nadie en BookConv lee, analiza o distribuye el contenido de tus ebooks."
+                                              },
+                                    "footer":  "Para más detalles, consulta nuestra [Política de Privacidad](/privacy)."
+                                }
                 },
     "blog":  {
                  "title":  "Blog de Conversión de Ebooks",
@@ -103,6 +124,84 @@
     "seo":  {
                 "defaultTitle":  "BookConv -- Convertidor de Ebooks Online Gratuito | Convierte EPUB, MOBI, AZW3, PDF",
                 "defaultDescription":  "Convertidor de ebooks online gratuito que soporta más de 28 formatos: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. Sin registro, sin marcas de agua, sin límites."
+            },
+    "help":  {
+                "metaTitle":  "Ayuda y Soporte -- BookConv",
+                "metaDescription":  "Obtén ayuda con la conversión de ebooks: soluciona errores, entiende la caducidad de archivos, verifica la calidad y contacta a soporte.",
+                "title":  "Ayuda y Soporte",
+                "subtitle":  "Todo lo que necesitas saber para convertir ebooks con éxito",
+                "quickSearch":  {
+                                    "title":  "¿No encuentras lo que buscas?",
+                                    "desc":  "Usa la barra de búsqueda en nuestra página de inicio para encontrar una conversión específica, o explora nuestro blog para guías sobre problemas comunes.",
+                                    "cta":  "Ir al Inicio"
+                                },
+                "sections":  {
+                                 "troubleshoot":  {
+                                                      "title":  "Solución de Problemas",
+                                                      "desc":  "Soluciones para los problemas más comunes de conversión y descarga",
+                                                      "links":  {
+                                                                    "download":  "Guía de Troubleshooting de Descargas",
+                                                                    "error":  "Referencia de Códigos de Error"
+                                                                }
+                                                  },
+                                 "files":  {
+                                               "title":  "Manejo de Archivos",
+                                               "desc":  "Entendiendo nuestra política de eliminación de archivos y cómo recuperar archivos",
+                                               "links":  {
+                                                            "expiry":  "Política de Caducidad",
+                                                            "recover":  "Recuperar un Archivo"
+                                                        }
+                                             },
+                                 "quality":  {
+                                                "title":  "Control de Calidad",
+                                                "desc":  "Cómo verificar tu archivo convertido y corregir problemas comunes de formato",
+                                                "links":  {
+                                                              "checklist":  "Lista de Verificación",
+                                                              "fix":  "Corregir Problemas de Formato"
+                                                          }
+                                            },
+                                 "contacts":  {
+                                                "title":  "Contactar Soporte",
+                                                "desc":  "Ponte en contacto si necesitas asistencia adicional",
+                                                "links":  {
+                                                              "email":  "Envíanos un Email",
+                                                              "report":  "Reportar un Bug en GitHub"
+                                                          }
+                                            }
+                             },
+                "errorCodes":  {
+                                 "title":  "Referencia de Códigos de Error",
+                                 "codes":  {
+                                               "CONVERSION_FAILED":  "El proceso de conversión falló. Intenta de nuevo o contacta a soporte con los detalles del error.",
+                                               "FILE_TOO_LARGE":  "Tu archivo excede el límite de tamaño. Plan gratuito: 10 MB, Pro: 50 MB, API: 100 MB.",
+                                               "RATE_LIMIT":  "Has alcanzado el límite de 5 conversiones por hora. Espera a que se reinicie la ventana.",
+                                               "DRM_PROTECTED":  "El archivo fuente está protegido por DRM. No podemos convertir archivos protegidos.",
+                                               "CORRUPT_INPUT":  "El archivo subido está corrupto o es inválido. Por favor verifica el archivo fuente."
+                                           }
+                             },
+                "fileExpiry":  {
+                                 "title":  "Política de Caducidad de Archivos",
+                                 "body":  "Por protección de privacidad, todos los archivos convertidos se eliminan automáticamente dentro de 1 hora después de la conversión. Esto aplica a todos los usuarios, independientemente del plan.",
+                                 "points":  {
+                                               "download":  "Descarga inmediatamente después de completar la conversión",
+                                               "immediate":  "No esperes para descargar múltiples archivos en lote",
+                                               "no-recovery":  "Los archivos no pueden recuperarse después del período de caducidad"
+                                           }
+                             },
+                "qualityChecklist":  {
+                                        "title":  "Lista de Verificación de Calidad",
+                                        "checks":  {
+                                                       "fileSize":  "El tamaño del archivo es razonable (no 0 KB ni inusualmente grande)",
+                                                       "toc":  "La tabla de contenidos está presente y es clickeable",
+                                                       "images":  "Las imágenes se muestran correctamente",
+                                                       "open":  "El archivo se abre en tu lector objetivo",
+                                                       "layout":  "El flujo de texto y el formato se ven correctos"
+                                                   },
+                                        "note":  "Si la calidad no es la esperada, intenta convertir desde un formato diferente o ajusta la configuración de salida."
+                                    },
+                "footer":  {
+                               "text":  "¿Todavía tienes preguntas? Estamos aquí para ayudarte."
+                           }
             },
     "tutorial":  {
                 "metaTitle":  "Tutorial -- Convierte Ebooks en Línea Paso a Paso",

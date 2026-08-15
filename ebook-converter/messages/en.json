@@ -7,6 +7,7 @@
                    "skipToMainContent":  "Skip to main content",
                    "home":  "Home",
                    "pricing":  "Pricing",
+                   "help":  "Help",
                    "blog":  "Blog",
                    "convert":  "Convert",
                    "guide":  "Guides",
@@ -78,7 +79,27 @@
                     "pqa4_q":  "What happens to my files?",
                     "pqa4_a":  "All uploaded files are encrypted and automatically deleted within 1 hour of conversion, regardless of your plan.",
                     "pqa5_q":  "Do you offer refunds?",
-                    "pqa5_a":  "Yes, we offer a full refund within 30 days of purchase if you are not satisfied with the service."
+                    "pqa5_a":  "Yes, we offer a full refund within 30 days of purchase if you are not satisfied with the service.",
+                    "privacy":  {
+                                    "title":  "Your Privacy & Security",
+                                    "secure":  {
+                                                   "title":  "Encrypted Transfers",
+                                                   "desc":  "All files are transferred over HTTPS with end-to-end encryption. We use industry-standard TLS 1.3 to protect your data in transit."
+                                               },
+                                    "delete":  {
+                                                  "title":  "Automatic Deletion Within 1 Hour",
+                                                  "desc":  "Converted files are automatically deleted from our servers within 1 hour after conversion. This applies to all users regardless of plan — we don't store your books."
+                                              },
+                                    "no-store":  {
+                                                   "title":  "We Never Store Your Files",
+                                                   "desc":  "Files are processed in memory and deleted immediately after conversion completes. No backups, no archives, no exceptions."
+                                               },
+                                    "no-read":  {
+                                                  "title":  "We Don't Read Your Content",
+                                                  "desc":  "Our automated conversion engine processes files without human review. No person at BookConv reads, analyzes, or distributes your ebook content."
+                                              },
+                                    "footer":  "For more details, see our [Privacy Policy](/privacy)."
+                                }
                 },
     "blog":  {
                  "title":  "Ebook Conversion Blog",
@@ -103,6 +124,84 @@
     "seo":  {
                 "defaultTitle":  "BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",
                 "defaultDescription":  "Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits."
+            },
+    "help":  {
+                "metaTitle":  "Help & Support -- BookConv",
+                "metaDescription":  "Get help with ebook conversion: troubleshoot errors, understand file expiry, check conversion quality, and contact support.",
+                "title":  "Help & Support",
+                "subtitle":  "Everything you need to know about converting ebooks successfully",
+                "quickSearch":  {
+                                    "title":  "Can't find what you need?",
+                                    "desc":  "Use the search bar on our homepage to find a specific conversion, or browse our blog for guides on common issues.",
+                                    "cta":  "Go to Homepage"
+                                },
+                "sections":  {
+                                 "troubleshoot":  {
+                                                      "title":  "Troubleshooting",
+                                                      "desc":  "Solutions for the most common conversion and download problems",
+                                                      "links":  {
+                                                                    "download":  "Download Troubleshooting Guide",
+                                                                    "error":  "Error Code Reference"
+                                                                }
+                                                  },
+                                 "files":  {
+                                               "title":  "File Handling",
+                                               "desc":  "Understanding our file deletion policy and how to recover files",
+                                               "links":  {
+                                                            "expiry":  "File Expiry Policy",
+                                                            "recover":  "Recover a File"
+                                                        }
+                                             },
+                                 "quality":  {
+                                                "title":  "Quality Assurance",
+                                                "desc":  "How to check your converted file and fix common formatting issues",
+                                                "links":  {
+                                                              "checklist":  "Quality Checklist",
+                                                              "fix":  "Fix Formatting Issues"
+                                                          }
+                                            },
+                                 "contacts":  {
+                                                "title":  "Contact Support",
+                                                "desc":  "Get in touch if you need further assistance",
+                                                "links":  {
+                                                              "email":  "Send us an Email",
+                                                              "report":  "Report a Bug on GitHub"
+                                                          }
+                                            }
+                             },
+                "errorCodes":  {
+                                 "title":  "Error Code Reference",
+                                 "codes":  {
+                                               "CONVERSION_FAILED":  "The conversion process failed. Try again or contact support with the error details.",
+                                               "FILE_TOO_LARGE":  "Your file exceeds the size limit. Free tier: 10 MB, Pro: 50 MB, API: 100 MB.",
+                                               "RATE_LIMIT":  "You've hit the free tier limit of 5 conversions per hour. Wait for the window to reset.",
+                                               "DRM_PROTECTED":  "The source file is DRM-protected. We cannot convert protected files.",
+                                               "CORRUPT_INPUT":  "The uploaded file is corrupted or invalid. Please check the source file."
+                                           }
+                             },
+                "fileExpiry":  {
+                                 "title":  "File Expiry Policy",
+                                 "body":  "For privacy protection, all converted files are automatically deleted within 1 hour after conversion. This applies to all users, regardless of plan.",
+                                 "points":  {
+                                               "download":  "Always download immediately after conversion completes",
+                                               "immediate":  "Do not wait to batch-download multiple files",
+                                               "no-recovery":  "Files cannot be recovered after the expiry window"
+                                           }
+                             },
+                "qualityChecklist":  {
+                                        "title":  "Quality Checklist",
+                                        "checks":  {
+                                                       "fileSize":  "File size is reasonable (not 0 KB or unusually large)",
+                                                       "toc":  "Table of contents is present and clickable",
+                                                       "images":  "Images display correctly",
+                                                       "open":  "File opens in your target reader",
+                                                       "layout":  "Text flow and formatting look correct"
+                                                   },
+                                        "note":  "If the quality isn't right, try converting from a different source format or adjusting the output settings."
+                                    },
+                "footer":  {
+                               "text":  "Still have questions? We're here to help."
+                           }
             },
     "tutorial":  {
                 "metaTitle":  "Tutorial -- Convert Ebooks Online Step by Step",
