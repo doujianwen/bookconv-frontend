@@ -71,6 +71,10 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [How to Convert Scanned PDF to EPUB with OCR](https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr)
 - [Best Free Ebook Reader Apps for Every Device (2026)](https://www.bookconv.com/blog/best-ebook-reader-apps)
 - [How to Convert Kobo Books to EPUB and PDF](https://www.bookconv.com/blog/kobo-to-epub)
+- [Conversion Failed? Here's How to Fix Common Ebook Conversion Errors](https://www.bookconv.com/blog/conversion-error-guide)
+- [How to Convert Large Ebooks (Over 10 MB): Free Methods and When to Upgrade](https://www.bookconv.com/blog/large-file-conversion-guide)
+- [How to Check Your Converted Ebook's Quality: A 5-Minute Checklist](https://www.bookconv.com/blog/check-converted-file-quality)
+- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](https://www.bookconv.com/blog/sync-reading-across-devices)
 
 ## Troubleshooting Guides
 - [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)

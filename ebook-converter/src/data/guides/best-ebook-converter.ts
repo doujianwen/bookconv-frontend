@@ -30,7 +30,7 @@ export const content = {
     },
     {
       heading: 'A simple decision checklist',
-      body: `**No account, instant, one file** → BookConv.\n\n**Hundreds of files / offline** → Calibre.\n\n**Rare format or API integration** → CloudConvert/Convertio.\n\n**Sensitive manuscript** → Calibre offline (no upload).`,
+      body: `**No account, instant, one file** → BookConv.\n\n**Hundreds of files / offline** → Calibre.\n\n**Rare format or API integration** → CloudConvert/Convertio.\n\n**Sensitive manuscript** → Calibre offline (no upload).\n\nFor device-specific format advice, see [Kindle Formats Explained](/guide/kindle-formats). To understand how BookConv compares to Calibre directly, read [Calibre Alternative: Free Online Ebook Converter](/guide/calibre-alternative).`,
     },
   ],
 }

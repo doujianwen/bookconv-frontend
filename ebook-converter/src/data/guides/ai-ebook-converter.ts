@@ -34,7 +34,7 @@ export const content = {
     },
     {
       heading: 'Choosing a converter for AI workflows',
-      body: `Pick by output quality, not by the “AI” label:\n\n- Need **clean text for RAG/NotebookLM** → TXT output, watch for layout noise.\n- Need **layout preserved** → PDF.\n- Want **no account, instant** → BookConv.\n\nThe “AI” in your workflow is the assistant you feed the file to — not the converter.`,
+      body: `Pick by output quality, not by the "AI" label:\n\n- Need **clean text for RAG/NotebookLM** → TXT output, watch for layout noise.\n- Need **layout preserved** → PDF.\n- Want **no account, instant** → BookConv.\n\nThe "AI" in your workflow is the assistant you feed the file to — not the converter. For tool comparison across formats, see [Best Ebook Converter in 2026](/guide/best-ebook-converter). To understand which output format your Kindle expects, read [Kindle Formats Explained](/guide/kindle-formats).`,
     },
   ],
 }

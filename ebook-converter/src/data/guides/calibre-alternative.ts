@@ -45,7 +45,7 @@ If you convert the occasional ebook, a focused free tool is the lighter path. Re
     },
     {
       heading: 'How to choose',
-      body: `**Use a Calibre alternative (BookConv) when:** it is a one-off file, you are on a device without Calibre, or you want the result now.\n\n**Use Calibre when:** you convert in bulk, need device-specific output, or the file is private enough that any upload is a non-starter.\n\nMost people keep Calibre installed but rarely open it — and bookmark a fast online converter for everything else.`,
+      body: `**Use a Calibre alternative (BookConv) when:** it is a one-off file, you are on a device without Calibre, or you want the result now.\n\n**Use Calibre when:** you convert in bulk, need device-specific output, or the file is private enough that any upload is a non-starter.\n\nMost people keep Calibre installed but rarely open it — and bookmark a fast online converter for everything else. For device-specific format advice, see [Kindle Formats Explained](/guide/kindle-formats). To compare tools side by side, check [Best Ebook Converter in 2026](/guide/best-ebook-converter).`,
     },
   ],
 }
