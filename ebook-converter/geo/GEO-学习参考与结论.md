@@ -153,3 +153,38 @@ bookconv.com 的 GEO 基础（llms.txt 全量、GPTBot/ClaudeBot/CCBot 放行、
 ### 7.3 两者共性
 - 都是**「页面级、不靠堆词」的底层信号**——改一处模板（如 `ToolPageClient`、`page.tsx` 的 metadata）即可铺满全站，属于低成本高确定性的 GEO 基建。
 - 都靠 `curl` + 原始 HTML 头核验（而非肉眼看渲染页），核验时注意属性大小写与 `<script>` 块剥离。
+
+### 7.4 Slug —— URL 中的「友好标识符」
+- **定义**：URL 路径段中用于唯一标识页面的文本片段，通常由标题派生、全小写、空格用连字符 `-` 分隔。
+- **本项目实例**（bookconv.com）：
+  | 元素 | 值 | 说明 |
+  |---|---|---|
+  | Slug | `batch-converter` | URL 中的标识符 |
+  | 完整 URL | `https://bookconv.com/blog/batch-converter` | slug 拼接路径 |
+  | Title | `Batch Ebook Conversion API / Tool` | 页面标题（显示给用户） |
+  | Query | `"What is the best Calibre alternative?"` | AI 检测时的搜索词 |
+- **作用**：
+  - URL 简洁可读（`/blog/batch-converter` 优于 `/blog?id=3`）；
+  - SEO 友好（Google 能从 URL 识别页面主题）；
+  - 一致性（slug 通常与标题关键词关联，如 "Best Free Calibre Alternative" → `calibre-alternative`）。
+- **⚠️ 踩坑**：
+  - **不含空格和特殊字符**（用连字符 `-` 分隔），写 data 文件时必须手动 slugify；
+  - **不能表达完整意图**（只是关键词压缩），AI 检测时需用 Query 而非 slug 匹配用户提问；
+  - **软 404 风险**（已修复）：未知 slug 的路由会 HTTP 200 兜底（3 个历史缺口 `/blog/epub-vs-mobi`、`/blog/best-ebook-converter`、`/guide/epub-vs-azw3`），现已改 `notFound()` 返真 404；
+  - **slug ≠ title ≠ query** 三者分工不同：slug 给机器看（路径），title 给人类看（显示），query 给 AI 看（意图匹配）。
+- **代码出处**：博客 `src/data/blog/*.ts`、指南 `src/data/guides/*.ts`、转换 `src/data/content/*.ts` 的 `slug` 字段；路由 `src/app/[locale]/blog/[slug]/page.tsx`、`src/app/[locale]/guide/[slug]/page.tsx`、`src/app/[locale]/convert/[slug]/page.tsx`。
+
+### 7.5 三层分工：Slug / Title / Query
+三个概念共同构成 GEO 的「可读 → 可搜 → 可答」链路：
+
+| 层 | 名称 | 用途 | 示例 |
+|---|---|---|---|
+| **路径层** | Slug | URL 路径，给搜索引擎和机器 | `batch-converter` |
+| **显示层** | Title | 页面标题、meta 标签，给人类 | `Batch Ebook Conversion API / Tool` |
+| **意图层** | Query | AI 引擎的检测词、用户提问 | `"What is the best Calibre alternative?"` |
+
+- **Slug → Title**：SEO 的「从 URL 到主题」的第一印象，影响点击率（CTR）。
+- **Title → Query**：GEO 的核心——AI 把用户的自然语言 Query 映射到页面 Title 的语义，若匹配则抽取引用。
+- **Query → 页面内容**：AI 最终引用的是 FAQ、对比表、Quick Answer 等结构化内容，而非 Slug 本身。
+
+> 实务口诀：**Slug 管路径、Title 管展示、Query 管意图**——三者要一致对齐，否则 AI 抽不到。
