@@ -51,6 +51,22 @@ const FAQ = [
     q: "What is the maximum file size per file?",
     a: "Each file in a batch can be up to 10 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
   },
+  {
+    q: "What if one file in my batch fails?",
+    a: "If a single file fails (e.g., it's too large or corrupted), that file is skipped and the rest of your batch still converts successfully. You'll see which files succeeded and which failed in the result ZIP.",
+  },
+  {
+    q: "Why did my batch upload timeout?",
+    a: "Uploads may time out if you have many large files or a slow connection. Try uploading fewer files at once, or compress your EPUBs before batching. The free tier also limits concurrent uploads.",
+  },
+  {
+    q: "Can I mix different source formats in one batch?",
+    a: "Yes — you can upload a mix of EPUB, MOBI, AZW3, PDF, etc. and they'll all be converted to the single target format you select.",
+  },
+  {
+    q: "Where do I find my batch results?",
+    a: "After all files finish converting, a download button appears for the result ZIP. Save it immediately — downloaded links expire within 1 hour for privacy.",
+  },
 ];
 
 export default async function BatchPage() {
