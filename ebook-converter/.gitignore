@@ -80,3 +80,11 @@ test-results/
 
 # Output of scripts/verify-batch-live.mjs
 batch-verify.zip
+
+# Pure-correction-agent gate reports (generated, not source)
+data/critic_layer_*.json
+data/
+
+# Excel tracking sheets (large binary, not source)
+*.xlsx
+*.xls
