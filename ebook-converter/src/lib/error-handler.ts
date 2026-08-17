@@ -48,6 +48,8 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   'cloudconvert client error 402': 'CONVERSION_QUOTA_EXCEEDED',
   // CloudConvert errors (catch-all covers all "CloudConvert ..." messages)
   'cloudconvert': 'CLOUD_CONVERT_ERROR',
+  // CloudConvert polling timeout — 大文件（50+页）Calibre渲染超过轮询窗口
+  'did not finish in time': 'CONVERSION_TIMEOUT',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',

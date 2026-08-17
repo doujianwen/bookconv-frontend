@@ -13,7 +13,7 @@
 
 const API_BASE = 'https://api.cloudconvert.com/v2';
 const API_KEY = process.env.CLOUD_CONVERT_API_KEY;
-const MAX_POLL_ATTEMPTS = 25; // 25 * 2s = 50s，给上传+下载留余量（route maxDuration=120）
+const MAX_POLL_ATTEMPTS = 55; // 55 * 2s = 110s，适配大文件（50+页EPUB→PDF需Calibre渲染60-90s）；route maxDuration=120s，留10s给创建job+上传+下载开销
 const POLL_INTERVAL_MS = 2000;
 
 /** 检查 API Key 是否已配置（决定是否启用 CloudConvert 降级） */

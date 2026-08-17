@@ -19,7 +19,7 @@ import {
 } from "@/lib/rate-limit";
 import { convertAndStream } from "@/lib/convert-handler";
 
-export const maxDuration = 120;
+export const maxDuration = 300; // Vercel Pro 支持 300s；大文件（50+页EPUB→PDF经Calibre引擎）需 60-120s 处理时间
 
 const BACKEND_URL = process.env.CONVERSION_BACKEND_URL?.replace(/\/+$/, "");
 const INTERNAL_SECRET = process.env.CONVERSION_INTERNAL_SECRET;
