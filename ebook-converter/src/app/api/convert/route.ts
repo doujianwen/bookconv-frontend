@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     const errorCode = mapErrorCode(message);
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode },
-      { status: 500, headers: { "X-Conv-Build": "v94a3003-poll55-dur300" } },
+      { status: 500 },
     );
   }
 }

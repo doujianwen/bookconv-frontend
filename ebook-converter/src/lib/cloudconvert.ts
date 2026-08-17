@@ -168,9 +168,22 @@ export async function convertWithCloudConvert(
       const failed = finished.data.tasks.find((t) => t.status === 'error');
       const detail =
         failed?.result?.message || failed?.result?.code || 'unknown failure';
-      // 诊断：把失败任务的完整 result 也抛出来，定位 CloudConvert 真实失败原因
-      const fullDetail = JSON.stringify(failed?.result ?? failed ?? finished.data.tasks);
-      throw new Error(`CloudConvert job failed: ${detail} | FULL: ${fullDetail}`);
+      // 服务端日志：把失败任务的完整结果打出来，便于在 Vercel 函数日志里定位 CloudConvert 真实失败原因
+      console.error(
+        '[CloudConvert] job failed. detail=',
+        detail,
+        '| failedTask=',
+        JSON.stringify(failed?.result ?? failed),
+        '| allTasks=',
+        JSON.stringify(
+          finished.data.tasks.map((t) => ({
+            op: t.operation,
+            status: t.status,
+            result: t.result,
+          })),
+        ),
+      );
+      throw new Error(`CloudConvert job failed: ${detail}`);
     }
   }
 
