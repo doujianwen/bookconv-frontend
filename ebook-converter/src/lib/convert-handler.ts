@@ -69,7 +69,10 @@ export async function convertAndStream(
     console.error('[DEBUG] Conversion error:', convErr?.message || String(convErr));
     const errorCode = mapErrorCode(sanitizeError(convErr));
     // 诊断：临时无条件暴露原始错误，定位 CloudConvert 真实报错（后续移除）
-    const debugRaw = { _raw: convErr?.message || String(convErr) };
+    const debugRaw = {
+      _raw: convErr?.message || String(convErr),
+      _rawFull: JSON.stringify(convErr, Object.getOwnPropertyNames(convErr)),
+    };
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode, build: CONV_BUILD, ...debugRaw },
       { status: 500, headers: { ...rateHeaders, "X-Conv-Build": CONV_BUILD } },
