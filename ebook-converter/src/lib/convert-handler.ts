@@ -14,6 +14,8 @@ import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-han
 import { runConversion } from "@/lib/conversion";
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024;
+// 诊断标记：部署后 curl -I /api/convert 看此头是否存在，以确认本次代码是否真的上线
+const CONV_BUILD = "v94a3003-poll55-dur300";
 
 export async function convertAndStream(
   formData: FormData,
@@ -26,7 +28,7 @@ export async function convertAndStream(
   if (!file || !sourceFormat || !targetFormat) {
     return NextResponse.json(
       { error: "Missing required fields: file, source_format, target_format" },
-      { status: 400, headers: rateHeaders },
+      { status: 400, headers: { ...rateHeaders, "X-Conv-Build": CONV_BUILD } },
     );
   }
 
@@ -46,7 +48,7 @@ export async function convertAndStream(
   if (file.size > MAX_FILE_SIZE) {
     return NextResponse.json(
       { error: `File too large. Max ${process.env.MAX_FILE_SIZE_MB || "10"}MB` },
-      { status: 413, headers: rateHeaders },
+      { status: 413, headers: { ...rateHeaders, "X-Conv-Build": CONV_BUILD } },
     );
   }
 
@@ -70,7 +72,7 @@ export async function convertAndStream(
     const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convErr?.message || String(convErr) } : {};
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode, ...debugRaw },
-      { status: 500, headers: rateHeaders },
+      { status: 500, headers: { ...rateHeaders, "X-Conv-Build": CONV_BUILD } },
     );
   }
 
@@ -85,6 +87,7 @@ export async function convertAndStream(
       "Content-Type": mimeType,
       "Content-Disposition": `attachment; filename="${baseName}.${ext}"`,
       "Cache-Control": "no-store",
+      "X-Conv-Build": CONV_BUILD,
       ...rateHeaders,
     },
   });
