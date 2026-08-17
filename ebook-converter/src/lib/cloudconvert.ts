@@ -168,7 +168,9 @@ export async function convertWithCloudConvert(
       const failed = finished.data.tasks.find((t) => t.status === 'error');
       const detail =
         failed?.result?.message || failed?.result?.code || 'unknown failure';
-      throw new Error(`CloudConvert job failed: ${detail}`);
+      // 诊断：把失败任务的完整 result 也抛出来，定位 CloudConvert 真实失败原因
+      const fullDetail = JSON.stringify(failed?.result ?? failed ?? finished.data.tasks);
+      throw new Error(`CloudConvert job failed: ${detail} | FULL: ${fullDetail}`);
     }
   }
 
