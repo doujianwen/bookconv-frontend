@@ -90,7 +90,7 @@ export function generateSchema(
       description: 'Free online ' + sourceDisplay + ' to ' + targetDisplay + ' converter guide with step-by-step instructions.',
       author: { '@type': 'Organization', name: 'BookConv', url: baseUrl },
       publisher: { '@type': 'Organization', name: 'BookConv', logo: { '@type': 'ImageObject', url: baseUrl + '/icon.svg' } },
-      datePublished: '2026-01-01T00:00:00+00:00',
+      datePublished: '2026-07-26T00:00:00+00:00',
       dateModified: new Date().toISOString(),
       mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
       image: baseUrl + '/og-image.svg',
@@ -104,7 +104,7 @@ export function generateSchema(
     graph.push({
       '@type': 'FAQPage',
       author: { '@type': 'Organization', name: 'BookConv' },
-      datePublished: '2026-01-01T00:00:00+00:00',
+      datePublished: '2026-07-26T00:00:00+00:00',
       url: pageUrl,
       mainEntity: faqs.map((f, i) => ({
         '@type': 'Question',
@@ -115,7 +115,7 @@ export function generateSchema(
         acceptedAnswer: {
           '@type': 'Answer',
           text: f.answer,
-          datePublished: '2026-01-01T00:00:00+00:00',
+          datePublished: '2026-07-26T00:00:00+00:00',
           author: { '@type': 'Organization', name: 'BookConv' },
           url: pageUrl + '#faq-' + (i + 1),
         },

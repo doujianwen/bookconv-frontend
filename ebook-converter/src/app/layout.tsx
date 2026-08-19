@@ -122,7 +122,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   name: t('common.siteName') || 'BookConv',
                   url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   logo: 'https://www.bookconv.com/icon.svg',
-                  sameAs: [],
+                  sameAs: [
+                    'https://github.com/doujianwen/bookconv-frontend',
+                    'https://www.reddit.com/r/ebooks/comments/1v8ypvd/',
+                  ],
                   areaServed: 'Worldwide',
                   availableLanguage: ['en', 'es'],
                 },

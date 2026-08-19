@@ -25,7 +25,6 @@ export function generateFAQSchema(faqs: FAQItem[], url?: string): string {
     '@type': 'FAQPage',
     mainEntity: items,
     author: { '@type': 'Organization', name: 'BookConv' },
-    datePublished: '2026-01-01T00:00:00+00:00',
   };
   if (url) base.url = url;
   return JSON.stringify(base, null, 2);
@@ -171,17 +170,6 @@ export function generateConversionPageSchema(
       inLanguage: 'en',
     },
     {
-      '@type': 'Article',
-      headline: 'How to Convert ' + sourceDisplay + ' to ' + targetDisplay + ' Online — Free Guide',
-      description: contentData?.hero?.subtitle || ('Free online ' + sourceDisplay + ' to ' + targetDisplay + ' converter guide with step-by-step instructions.'),
-      author: { '@type': 'Organization', name: 'BookConv', url: baseUrl },
-      publisher: { '@type': 'Organization', name: 'BookConv', logo: { '@type': 'ImageObject', url: baseUrl + '/icon.svg' } },
-      datePublished: '2026-01-01T00:00:00+00:00',
-      dateModified: '2026-07-14T00:00:00+00:00',
-      mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
-      image: baseUrl + '/og-image.svg',
-    },
-    {
       '@type': 'SoftwareApplication',
       name: sourceDisplay + ' to ' + targetDisplay + ' Online',
       description: sourceDisplay + ' to ' + targetDisplay + ' converter powered by Calibre. Free, no registration, no watermarks.',
@@ -209,13 +197,11 @@ export function generateConversionPageSchema(
         acceptedAnswer: {
           '@type': 'Answer',
           text: f.answer,
-          datePublished: '2026-01-01T00:00:00+00:00',
           author: { '@type': 'Organization', name: 'BookConv' },
           url: pageUrl + '#faq-' + (i + 1),
         },
       })),
       author: { '@type': 'Organization', name: 'BookConv' },
-      datePublished: '2026-01-01T00:00:00+00:00',
       url: pageUrl,
     },
   ];
