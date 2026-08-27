@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 560" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="850" height="560" fill="#fafafa" rx="8"/>
+  
+  <!-- Title -->
+  <text x="425" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">Citation Share 语义确认 · 算术验证法</text>
+  <text x="425" y="50" text-anchor="middle" font-size="12" fill="#666">验证公式：share = 我们 citations ÷ 该 query AI 引用总槽位</text>
+  
+  <!-- Input box -->
+  <rect x="325" y="70" width="200" height="48" rx="6" fill="#e8f4fd" stroke="#2196F3" stroke-width="1.5"/>
+  <text x="425" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565C0">输入：Query CSV 含 Share 列</text>
+  <text x="425" y="106" text-anchor="middle" font-size="11" fill="#555">例：djvu to pdf | 27 | 2.91%</text>
+  
+  <!-- Arrow down -->
+  <line x1="425" y1="118" x2="425" y2="144" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  
+  <!-- Verification step -->
+  <rect x="275" y="150" width="300" height="68" rx="6" fill="#fff8e1" stroke="#FF9800" stroke-width="1.5"/>
+  <text x="425" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">Step 1: 算术验证</text>
+  <text x="425" y="188" text-anchor="middle" font-size="11" fill="#333">Harry Potter: 18 citations / share=58.06%</text>
+  <text x="425" y="204" text-anchor="middle" font-size="11" fill="#D32F2F">18 ÷ 287 = 6.27% ≠ 58.06% → "占比"读法错误</text>
+  
+  <!-- Arrow split -->
+  <line x1="425" y1="218" x2="425" y2="242" stroke="#555" stroke-width="1.5"/>
+  <line x1="425" y1="242" x2="180" y2="272" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="425" y1="242" x2="670" y2="272" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="425" y="238" text-anchor="middle" font-size="10" fill="#666">验证结果</text>
+  
+  <!-- Wrong interpretation box -->
+  <rect x="15" y="278" width="280" height="92" rx="6" fill="#ffebee" stroke="#f44336" stroke-width="1.5"/>
+  <text x="155" y="300" text-anchor="middle" font-size="13" font-weight="bold" fill="#c62828">❌ 错误解读 A</text>
+  <text x="35" y="320" font-size="11" fill="#333">share = 我们citations ÷ 全站总citations</text>
+  <text x="35" y="340" font-size="11" fill="#333">验证：18 ÷ 287 = 6.27%</text>
+  <text x="35" y="358" font-size="11" fill="#d32f2f">→ 与实际58.06%不符</text>
+  <text x="35" y="370" font-size="10" fill="#666">该读法不可信，share另有定义</text>
+  
+  <!-- Correct interpretation box -->
+  <rect x="555" y="278" width="280" height="92" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+  <text x="695" y="300" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">✅ 正确解读 B</text>
+  <text x="575" y="320" font-size="11" fill="#333">share = 我们 ÷ 该query AI总槽位</text>
+  <text x="575" y="340" font-size="11" fill="#333">反推：总槽位 ≈ 18 ÷ 0.5806 ≈ 31</text>
+  <text x="575" y="358" font-size="11" fill="#2e7d32">→ 该query AI答案出现约31次</text>
+  <text x="575" y="370" font-size="10" fill="#666">我们占58%份额</text>
+  
+  <!-- Output table header -->
+  <rect x="100" y="385" width="650" height="32" rx="6" fill="#e3f2fd" stroke="#2196F3" stroke-width="1.5"/>
+  <!-- Header columns with generous spacing -->
+  <text x="130" y="406" font-size="11" font-weight="bold" fill="#1565C0">Query</text>
+  <text x="260" y="406" font-size="11" font-weight="bold" fill="#1565C0">我们</text>
+  <text x="350" y="406" font-size="11" font-weight="bold" fill="#1565C0">Share</text>
+  <text x="460" y="406" font-size="11" font-weight="bold" fill="#1565C0">反推槽位</text>
+  <text x="600" y="406" font-size="11" font-weight="bold" fill="#1565C0">解读</text>
+  
+  <!-- Output table row 1 -->
+  <rect x="100" y="421" width="650" height="28" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="130" y="439" font-size="10" fill="#333">djvu to pdf</text>
+  <text x="260" y="439" font-size="10" fill="#333">27</text>
+  <text x="350" y="439" font-size="10" fill="#333">2.91%</text>
+  <text x="460" y="439" font-size="10" fill="#333">~927</text>
+  <text x="600" y="439" font-size="10" fill="#1565C0">大池子，份额低</text>
+  
+  <!-- Output table row 2 -->
+  <rect x="100" y="451" width="650" height="28" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="130" y="469" font-size="10" fill="#333">epub to mobi</text>
+  <text x="260" y="469" font-size="10" fill="#333">35</text>
+  <text x="350" y="469" font-size="10" fill="#333">2.55%</text>
+  <text x="460" y="469" font-size="10" fill="#333">~1374</text>
+  <text x="600" y="469" font-size="10" fill="#1565C0">最大池子</text>
+  
+  <!-- Output table row 3 -->
+  <rect x="100" y="481" width="650" height="28" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="130" y="499" font-size="10" fill="#333">Harry Potter...</text>
+  <text x="260" y="499" font-size="10" fill="#333">18</text>
+  <text x="350" y="499" font-size="10" fill="#333">58.06%</text>
+  <text x="460" y="499" font-size="10" fill="#333">~31</text>
+  <text x="600" y="499" font-size="10" fill="#2e7d32">小众词，垄断</text>
+  
+  <!-- Warning notes -->
+  <rect x="150" y="522" width="550" height="22" rx="4" fill="#fff3e0" stroke="#ff9800" stroke-width="1"/>
+  <text x="425" y="537" text-anchor="middle" font-size="10" fill="#e65100">⚠️ 槽位为量级估计，非精确值 | cross-export对比需窗口一致</text>
+</svg>
