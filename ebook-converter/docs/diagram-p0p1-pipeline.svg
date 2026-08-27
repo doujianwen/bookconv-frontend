@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+  
+  <rect width="700" height="500" fill="#fafafa" rx="8"/>
+  
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a1a1a">P0/P1 执行管线</text>
+  <text x="350" y="50" text-anchor="middle" font-size="12" fill="#666">GEO优化 → 内链增强 →  freshness信号</text>
+  
+  <!-- P0 Box -->
+  <rect x="30" y="70" width="300" height="120" rx="8" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="180" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">P0：answer-first 块</text>
+  
+  <text x="50" y="118" font-size="11" fill="#333">1. 首段定义 + 三步操作</text>
+  <text x="50" y="136" font-size="11" fill="#333">2. 链接到转换工具页</text>
+  <text x="50" y="154" font-size="11" fill="#333">3. FAQ加"How do I X?"型</text>
+  <text x="50" y="176" font-size="10" fill="#666">目标页：guide/djvu-to-pdf</text>
+  <text x="50" y="190" font-size="10" fill="#666">          guide/epub-to-mobi</text>
+  
+  <!-- P1 Box -->
+  <rect x="370" y="70" width="300" height="120" rx="8" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/>
+  <text x="520" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#1565C0">P1：内链增强</text>
+  
+  <text x="390" y="118" font-size="11" fill="#333">1. blog页内链指向guide页</text>
+  <text x="390" y="136" font-size="11" fill="#333">2. 簇集权：pillar策略</text>
+  <text x="390" y="154" font-size="11" fill="#333">3. lastUpdated信号</text>
+  <text x="390" y="176" font-size="10" fill="#666">目标页：blog/djvu-to-pdf</text>
+  <text x="390" y="190" font-size="10" fill="#666">          blog/epub-to-azw3</text>
+  
+  <!-- Arrow from P0 to validation -->
+  <line x1="180" y1="190" x2="180" y2="220" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="520" y1="190" x2="520" y2="220" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
+  
+  <!-- Validation row -->
+  <rect x="80" y="225" width="540" height="60" rx="6" fill="#fff8e1" stroke="#FF9800" stroke-width="1.5"/>
+  <text x="350" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">验证层（Socratic审计前置）</text>
+  <text x="120" y="268" font-size="11" fill="#333">□ R1: /convert/* Bing索引状态</text>
+  <text x="350" y="268" font-size="11" fill="#333">□ R2: 窗口一致性核验</text>
+  <text x="560" y="268" font-size="11" fill="#333">□ R3: 增量来源追踪</text>
+  
+  <!-- Arrow to execution -->
+  <line x1="350" y1="285" x2="350" y2="315" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
+  
+  <!-- Execution box -->
+  <rect x="80" y="320" width="540" height="80" rx="6" fill="#fce4ec" stroke="#e91e63" stroke-width="1.5"/>
+  <text x="350" y="345" text-anchor="middle" font-size="13" font-weight="bold" fill="#880e4f">执行层（git commit + push）</text>
+  <text x="120" y="368" font-size="11" fill="#333">git add -f src/data/{guides,blog}/*.ts</text>
+  <text x="350" y="368" font-size="11" fill="#333">git add -f src/app/[locale]/blog/[slug]/page.tsx</text>
+  <text x="120" y="388" font-size="10" fill="#666">commit: P0 answer-first + 簇集权</text>
+  <text x="350" y="388" font-size="10" fill="#666">commit: P1 lastUpdated信号</text>
+  
+  <!-- Arrow to deployment -->
+  <line x1="350" y1="400" x2="350" y2="425" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
+  
+  <!-- Deployment box -->
+  <rect x="150" y="430" width="400" height="55" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.5"/>
+  <text x="350" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#283593">Vercel 自动构建</text>
+  <text x="350" y="472" text-anchor="middle" font-size="11" fill="#555">GitHub webhook → build → deploy（~75-90s）</text>
+  
+  <!-- Next step note -->
+  <rect x="100" y="495" width="500" height="18" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+  <text x="350" y="507" text-anchor="middle" font-size="10" fill="#6a1b9a">下一步：8/28 验证日 — 检查 guide 页 GSC 信号是否改善</text>
+</svg>
