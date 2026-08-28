@@ -1,0 +1,99 @@
+{
+  "pull_date": "2026-08-29",
+  "site": "https://www.bookconv.com",
+  "range": [
+    "2026-08-19",
+    "2026-08-29"
+  ],
+  "expected_last_valid": "2026-08-27",
+  "site_daily": [
+    {
+      "date": "2026-08-19",
+      "impressions": 164,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 64.5
+    },
+    {
+      "date": "2026-08-20",
+      "impressions": 150,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 62.5
+    },
+    {
+      "date": "2026-08-21",
+      "impressions": 142,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 65.1
+    },
+    {
+      "date": "2026-08-22",
+      "impressions": 32,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 60.6
+    },
+    {
+      "date": "2026-08-23",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 79.8
+    },
+    {
+      "date": "2026-08-24",
+      "impressions": 31,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 46.4
+    },
+    {
+      "date": "2026-08-25",
+      "impressions": 24,
+      "clicks": 1,
+      "ctr": 4.17,
+      "position": 80.6
+    },
+    {
+      "date": "2026-08-26",
+      "impressions": 27,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 86.1
+    }
+  ],
+  "guide_page_daily": {
+    "2026-08-19": {
+      "impressions": 7,
+      "clicks": 0,
+      "position": 54.1
+    },
+    "2026-08-20": {
+      "impressions": 7,
+      "clicks": 0,
+      "position": 48.4
+    },
+    "2026-08-21": {
+      "impressions": 4,
+      "clicks": 0,
+      "position": 38.5
+    },
+    "2026-08-22": {
+      "impressions": 3,
+      "clicks": 0,
+      "position": 62.3
+    },
+    "2026-08-24": {
+      "impressions": 2,
+      "clicks": 0,
+      "position": 4.5
+    },
+    "2026-08-25": {
+      "impressions": 1,
+      "clicks": 0,
+      "position": 82
+    }
+  }
+}
