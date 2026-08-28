@@ -1,0 +1,60 @@
+<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="有排名关键词增长趋势：每日新增柱 + 累计折线（7/26~8/16，22天）">
+  <rect x="0" y="0" width="680" height="360" fill="#ffffff"/>
+  <line x1="60" y1="320.0" x2="650" y2="320.0" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="278.6" x2="650" y2="278.6" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="237.1" x2="650" y2="237.1" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="195.7" x2="650" y2="195.7" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="154.3" x2="650" y2="154.3" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="112.9" x2="650" y2="112.9" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="71.4" x2="650" y2="71.4" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="30.0" x2="650" y2="30.0" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="60" y1="320" x2="650" y2="320" stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="60" y1="30" x2="60" y2="320" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="52" y="324.0" font-size="11" fill="#64748b" text-anchor="end">0</text>
+  <text x="52" y="282.6" font-size="11" fill="#64748b" text-anchor="end">50</text>
+  <text x="52" y="241.1" font-size="11" fill="#64748b" text-anchor="end">100</text>
+  <text x="52" y="199.7" font-size="11" fill="#64748b" text-anchor="end">150</text>
+  <text x="52" y="158.3" font-size="11" fill="#64748b" text-anchor="end">200</text>
+  <text x="52" y="116.9" font-size="11" fill="#64748b" text-anchor="end">250</text>
+  <text x="52" y="75.4" font-size="11" fill="#64748b" text-anchor="end">300</text>
+  <text x="52" y="34.0" font-size="11" fill="#64748b" text-anchor="end">350</text>
+  <!-- bars: daily new -->
+  <g fill="#bfdbfe">
+    <rect x="51.0" y="317.4" width="18" height="2.5"/>
+    <rect x="79.1" y="316.6" width="18" height="3.4"/>
+    <rect x="107.2" y="318.3" width="18" height="1.7"/>
+    <rect x="135.3" y="314.9" width="18" height="5.1"/>
+    <rect x="163.4" y="314.1" width="18" height="6.0"/>
+    <rect x="191.5" y="314.9" width="18" height="5.1"/>
+    <rect x="219.6" y="314.9" width="18" height="5.1"/>
+    <rect x="247.7" y="311.5" width="18" height="8.5"/>
+    <rect x="275.8" y="308.1" width="18" height="11.9"/>
+    <rect x="303.9" y="313.2" width="18" height="6.8"/>
+    <rect x="332.0" y="303.9" width="18" height="16.1"/>
+    <rect x="360.0" y="303.0" width="18" height="17.0"/>
+    <rect x="388.1" y="306.4" width="18" height="13.6"/>
+    <rect x="416.2" y="302.1" width="18" height="17.8"/>
+    <rect x="444.3" y="280.9" width="18" height="39.1"/>
+    <rect x="472.4" y="285.1" width="18" height="34.9"/>
+    <rect x="500.5" y="286.0" width="18" height="34.0"/>
+    <rect x="528.6" y="256.2" width="18" height="63.8"/>
+    <rect x="556.7" y="274.9" width="18" height="45.0"/>
+    <rect x="584.8" y="285.1" width="18" height="34.9"/>
+    <rect x="612.9" y="292.8" width="18" height="27.2"/>
+    <rect x="641.0" y="286.9" width="18" height="33.1"/>
+  </g>
+  <!-- cumulative line -->
+  <polyline fill="none" stroke="#1d4ed8" stroke-width="2.5" points="60.0,317.5 88.1,315.9 116.2,314.2 144.3,310.1 172.4,305.9 200.5,303.4 228.6,300.1 256.7,294.3 284.8,286.9 312.9,283.5 341.0,271.1 369.0,259.5 397.1,254.5 425.2,245.4 453.3,222.2 481.4,207.3 509.5,185.8 537.6,151.0 565.7,130.3 593.8,112.9 621.9,102.9 650.0,70.6"/>
+  <circle cx="60" cy="317.5" r="3" fill="#1d4ed8"/>
+  <circle cx="650" cy="70.6" r="3" fill="#1d4ed8"/>
+  <text x="60.0" y="334" font-size="10" fill="#64748b" text-anchor="middle">7/26</text>
+  <text x="200.5" y="334" font-size="10" fill="#64748b" text-anchor="middle">7/31</text>
+  <text x="341.0" y="334" font-size="10" fill="#64748b" text-anchor="middle">8/05</text>
+  <text x="481.4" y="334" font-size="10" fill="#64748b" text-anchor="middle">8/10</text>
+  <text x="650.0" y="334" font-size="10" fill="#64748b" text-anchor="middle">8/16</text>
+  <text x="650" y="22" font-size="11" fill="#1d4ed8" text-anchor="end" font-weight="bold">累计 301</text>
+  <rect x="430" y="44" width="12" height="12" fill="#bfdbfe"/>
+  <text x="448" y="54" font-size="11" fill="#475569">当日新增</text>
+  <rect x="430" y="62" width="12" height="12" fill="#1d4ed8"/>
+  <text x="448" y="72" font-size="11" fill="#475569">累计去重</text>
+</svg>

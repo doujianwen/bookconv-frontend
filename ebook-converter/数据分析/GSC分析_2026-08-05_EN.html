@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookConv · Google Search Console Data Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2933; --sub:#647084;
+    --brand:#3b6ef5; --brand2:#22a06b; --warn:#e8743b; --bad:#d64545;
+    --line:#e3e8f0;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:28px 20px 60px; }
+  header h1 { font-size:24px; margin:0 0 4px; }
+  header .meta { color:var(--sub); font-size:13px; }
+  .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:22px 0; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi .v { font-size:26px; font-weight:700; }
+  .kpi .l { font-size:12px; color:var(--sub); margin-top:2px; }
+  .kpi.bad .v { color:var(--bad); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .card h3 { font-size:15px; margin:0 0 12px; }
+  .card.full { grid-column:1 / -1; }
+  .chart-box { position:relative; height:300px; }
+  .diag { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin-top:16px; }
+  .diag h3 { margin-top:0; font-size:17px; }
+  .diag ul { line-height:1.8; padding-left:20px; }
+  .tag { display:inline-block; padding:1px 8px; border-radius:6px; font-size:12px; margin-right:4px; }
+  .t-es { background:#fdecec; color:#c0392b; }
+  .t-it { background:#eaf3ff; color:#2c6fd6; }
+  .t-de { background:#f0f7ec; color:#3f8b32; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--sub); font-weight:600; }
+  .mt { margin-top:14px; }
+  .pill { font-size:11px; padding:1px 7px; border-radius:20px; background:#eef2f8; color:var(--sub); }
+  .note { font-size:12px; color:var(--sub); margin-top:8px; }
+  @media(max-width:780px){ .kpis{grid-template-columns:repeat(2,1fr);} .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>BookConv · Search Performance Data Analysis</h1>
+    <div class="meta">Source: Google Search Console export · Exported 2026-08-05 · Window: last 28 days · Site: www.bookconv.com</div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">131</div><div class="l">Total Impressions</div></div>
+    <div class="kpi bad"><div class="v">0</div><div class="l">Total Clicks</div></div>
+    <div class="kpi bad"><div class="v">0.0%</div><div class="l">CTR</div></div>
+    <div class="kpi"><div class="v">53</div><div class="l">Avg. Position (weighted)</div></div>
+    <div class="kpi"><div class="v">40</div><div class="l">Unique Queries</div></div>
+  </div>
+
+  <div class="card full">
+    <h3>📈 Daily Impressions Trend (2026-07-25 ~ 2026-08-03)</h3>
+    <div class="chart-box"><canvas id="cTrend"></canvas></div>
+    <div class="note">Impressions climbed steadily from 1 on 7/25 to 32 on 8/3 — a classic "new site indexation ramp" curve. Zero clicks across the entire period.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🔝 Top Pages by Impressions (Top 10)</h3>
+      <div class="chart-box"><canvas id="cPages"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>🔍 Top Queries by Impressions (Top 14)</h3>
+      <div class="chart-box"><canvas id="cQueries"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🌍 Country / Region Distribution (Top 10 + Other)</h3>
+      <div class="chart-box"><canvas id="cGeo"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>💻 Device Distribution</h3>
+      <div class="chart-box"><canvas id="cDev"></canvas></div>
+      <div class="note">Desktop drives the vast majority of impressions; mobile shows fewer but ranks much higher on average (14.7 vs 56.7).</div>
+    </div>
+  </div>
+
+  <div class="card full mt">
+    <h3>🌐 Multilingual-Intent Queries (site currently has English pages only — coverage gap)</h3>
+    <table>
+      <tr><th>Query</th><th>Language Intent</th><th>Impressions</th></tr>
+      <tr><td>conversor mobi a epub</td><td><span class="t-es">es</span></td><td>1</td></tr><tr><td>convertire mobi in epub</td><td><span class="t-es">es</span><span class="t-it">it</span></td><td>1</td></tr><tr><td>epub oder mobi</td><td><span class="t-de">de</span></td><td>1</td></tr>
+    </table>
+  </div>
+
+  <div class="diag">
+    <h3>🔬 Diagnosis: Why Zero Clicks?</h3>
+    <ul>
+      <li><b>Root cause is not "not indexed" but "ranked too deep".</b> Impressions average a weighted position of about <b>53</b> (&approx; page 6–8). Google's first page (top 10) captures nearly 90% of all clicks; beyond page 5 CTR is typically &lt;0.5%. <b>With a new site lacking domain authority, zero clicks are driven by position, not by a title/snippet bug.</b></li>
+      <li><b>The one exception / biggest opportunity: <code>/convert/epub-to-zip</code></b> averages position <b>20</b> (page 2), with 29 impressions yet 0 clicks. This is the page closest to the first screen site-wide — polish its title and meta description into a high-click intent (emphasize "free / instant / files never uploaded"), push it a few spots into the top 10, and CTR can jump to 2–5%.</li>
+      <li><b>Traffic structure is healthy</b>: 40 unique queries across 40+ countries show the pages already rank for long-tail terms — authority is just too low to push positions up. This is an "optimizable" signal, not a "wrong page" signal.</li>
+      <li><b>Multilingual demand has already appeared</b>: Spanish/Italian/German queries (conversor / convertire / oder) already show impressions, but the site has English pages only → those terms have essentially zero conversion opportunity. The i18n es language pack already exists, so a Spanish landing page can be added.</li>
+      <li><b>Device dimension</b>: mobile impressions are low (12) but average position 14.7 is clearly better than desktop (56.7), meaning the site earns higher positions more easily on mobile — worth prioritizing mobile UX and speed.</li>
+    </ul>
+  </div>
+
+  <div class="diag">
+    <h3>🎯 Next Steps (sorted by ROI)</h3>
+    <ul>
+      <li><b>① Capture the only window page, epub→zip</b>: optimize the title (already using the "Free … — No Sign-up" template, confirmed no double brand) / meta description to emphasize "instant download, files never stored", aiming to push it into the top 10. This is the most likely page to earn the first click within 28 days.</li>
+      <li><b>② Backlink building (core bottleneck)</b>: using the "backlink outreach" materials identified on 8-04, build guest/directory/community backlinks for high-impression terms like <code>mobi-to-epub / azw3-to-mobi / epub-to-txt</code> to lift overall site authority → all pages move up together.</li>
+      <li><b>③ Add Spanish landing pages</b>: reuse the es language pack to generate Spanish conversion pages for 3–5 high-impression terms, capturing the Spanish/Italian/German long tail.</li>
+      <li><b>④ Keep scaling long-tail pages</b>: maintain the "one page, one keyword" cadence; a new site snowballs through page count × growing authority. Each week: find terms → build pages → validate.</li>
+      <li><b>⑤ Monitor the first-click milestone</b>: recommend treating "first week with non-zero clicks" as the north-star metric, observing the CTR inflection of epub-to-zip and the site overall in GSC at 7-day granularity.</li>
+    </ul>
+  </div>
+
+  <div class="note" style="margin-top:18px;text-align:center;">
+    Report auto-generated by the data-analysis script · Data snapshot 2026-08-05 · Metrics scope: GSC "Web" search type, last 28 days
+  </div>
+</div>
+
+<script>
+const D = {"daily_labels": ["2026-07-23", "2026-07-24", "2026-07-25", "2026-07-26", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-01", "2026-08-02", "2026-08-03"], "daily_impr": [0, 0, 1, 5, 10, 4, 6, 14, 16, 16, 27, 32], "daily_clicks": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "page_labels": ["/convert/mobi-to-epub", "/convert/epub-to-zip", "/blog/epub-to-mobi-guide", "/convert/azw3-to-mobi", "/convert/epub-to-txt", "/blog/ebook-formats-explained", "/blog/how-to-convert-epub-to-mobi", "/blog/why-convert-lit-to-epub", "/convert/epub-to-lrf", "/convert/epub-to-odt"], "page_impr": [45, 29, 17, 13, 10, 8, 3, 3, 1, 1], "page_pos": [68.56, 20.0, 57.41, 50.92, 72.0, 43.62, 61.67, 68.67, 38.0, 43.0], "q_labels": ["mobi to epub", "convert mobi to epub", "epub to zip", "azw3 to mobi", "epub to txt", "azw to mobi", "convert epub to zip", "mobi to epub converter", "convert azw3 to mobi", "lit to mobi", "epub to mobi", "epub txt", "mobi converter", "mobi epub"], "q_impr": [21, 9, 8, 6, 5, 4, 3, 3, 2, 2, 2, 2, 2, 2], "q_pos": [68.52, 70.0, 10.12, 42.83, 69.2, 66.75, 8.0, 68.0, 54.5, 64.5, 66.5, 72.0, 78.0, 79.5], "geo_labels": ["United States", "India", "Czechia", "United Kingdom", "Canada", "Malaysia", "Indonesia", "Russia", "Mexico", "Spain", "Other"], "geo_impr": [38, 13, 7, 7, 7, 5, 4, 3, 3, 3, 41], "dev_labels": ["Desktop", "Mobile"], "dev_impr": [119, 12]};
+const C = { ink:'#1f2933', sub:'#647084', brand:'#3b6ef5', brand2:'#22a06b', warn:'#e8743b', grid:'#e3e8f0' };
+Chart.defaults.font.family = '-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.color = C.sub;
+
+new Chart(document.getElementById('cTrend'), {
+  type:'line',
+  data:{ labels:D.daily_labels, datasets:[{
+    label:'Impressions', data:D.daily_impr, borderColor:C.brand, backgroundColor:'rgba(59,110,245,.12)',
+    fill:true, tension:.35, pointRadius:3, borderWidth:2
+  }] },
+  options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{ y:{ beginAtZero:true, grid:{color:C.grid} }, x:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cPages'), {
+  type:'bar',
+  data:{ labels:D.page_labels, datasets:[{ label:'Impressions', data:D.page_impr,
+    backgroundColor:C.brand, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cQueries'), {
+  type:'bar',
+  data:{ labels:D.q_labels, datasets:[{ label:'Impressions', data:D.q_impr,
+    backgroundColor:C.brand2, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cGeo'), {
+  type:'bar',
+  data:{ labels:D.geo_labels, datasets:[{ label:'Impressions', data:D.geo_impr,
+    backgroundColor:C.warn, borderRadius:4 }] },
+  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{ x:{beginAtZero:true, grid:{color:C.grid}}, y:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('cDev'), {
+  type:'doughnut',
+  data:{ labels:D.dev_labels, datasets:[{ data:D.dev_impr,
+    backgroundColor:[C.brand, C.brand2], borderWidth:2, borderColor:'#fff' }] },
+  options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{ legend:{position:'bottom'} } }
+});
+</script>
+</body>
+</html>

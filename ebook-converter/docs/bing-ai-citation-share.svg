@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 460" font-family="sans-serif">
+<rect width="940" height="460" fill="#ffffff"/>
+<text x="20" y="28" font-size="18" font-weight="bold" fill="#1e293b">Bing AI Citation Share（我们占该 Query 引用槽位比例）</text>
+<text x="20" y="48" font-size="12" fill="#64748b">Share = 我们 citations ÷ 该 Query AI 引用总槽位（量级估计）</text>
+<text x="340" y="87" font-size="11" fill="#334155" text-anchor="end">Harry Potter digital books multiple devices</text>
+<rect x="360" y="70" width="522.5" height="22" rx="4" fill="#059669"/>
+<text x="890.5" y="86" font-size="11" fill="#0f172a" font-weight="bold">58.06%</text>
+<text x="340" y="125" font-size="11" fill="#334155" text-anchor="end">apps for romance books sync across devices</text>
+<rect x="360" y="108" width="405.0" height="22" rx="4" fill="#059669"/>
+<text x="773.0" y="124" font-size="11" fill="#0f172a" font-weight="bold">45.00%</text>
+<text x="340" y="163" font-size="11" fill="#334155" text-anchor="end">ebook syncing virtual reading groups</text>
+<rect x="360" y="146" width="385.7" height="22" rx="4" fill="#059669"/>
+<text x="753.7" y="162" font-size="11" fill="#0f172a" font-weight="bold">42.86%</text>
+<text x="340" y="201" font-size="11" fill="#334155" text-anchor="end">convert from epub to mobi</text>
+<rect x="360" y="184" width="236.9" height="22" rx="4" fill="#0891b2"/>
+<text x="604.9" y="200" font-size="11" fill="#0f172a" font-weight="bold">26.32%</text>
+<text x="340" y="239" font-size="11" fill="#334155" text-anchor="end">convert to epub free</text>
+<rect x="360" y="222" width="200.0" height="22" rx="4" fill="#0891b2"/>
+<text x="568.0" y="238" font-size="11" fill="#0f172a" font-weight="bold">22.22%</text>
+<text x="340" y="277" font-size="11" fill="#334155" text-anchor="end">transfer ebooks between devices</text>
+<rect x="360" y="260" width="174.2" height="22" rx="4" fill="#94a3b8"/>
+<text x="542.1" y="276" font-size="11" fill="#0f172a" font-weight="bold">19.35%</text>
+<text x="340" y="315" font-size="11" fill="#334155" text-anchor="end">epub to mobi converter free</text>
+<rect x="360" y="298" width="92.6" height="22" rx="4" fill="#94a3b8"/>
+<text x="460.6" y="314" font-size="11" fill="#0f172a" font-weight="bold">10.29%</text>
+<text x="340" y="353" font-size="11" fill="#334155" text-anchor="end">ebook reader app</text>
+<rect x="360" y="336" width="88.9" height="22" rx="4" fill="#94a3b8"/>
+<text x="456.9" y="352" font-size="11" fill="#0f172a" font-weight="bold">9.88%</text>
+<text x="340" y="391" font-size="11" fill="#334155" text-anchor="end">djvu to pdf</text>
+<rect x="360" y="374" width="43.2" height="22" rx="4" fill="#94a3b8"/>
+<text x="411.2" y="390" font-size="11" fill="#0f172a" font-weight="bold">4.80%</text>
+<text x="340" y="429" font-size="11" fill="#334155" text-anchor="end">epub to mobi</text>
+<rect x="360" y="412" width="22.9" height="22" rx="4" fill="#94a3b8"/>
+<text x="390.9" y="428" font-size="11" fill="#0f172a" font-weight="bold">2.55%</text>
+</svg>

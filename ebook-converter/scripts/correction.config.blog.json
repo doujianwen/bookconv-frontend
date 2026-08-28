@@ -1,0 +1,31 @@
+{
+  "root": ".",
+  "blogDir": "src/data/blog",
+  "reportsDir": "data",
+  "deliverablePath": "src/data/blog",
+  "guardPlugin": "correction-guards.blog.mjs",
+  "skipFiles": ["index", "types", "rss"],
+  "sourceList": ["src/data/blog/*.ts"],
+  "requiredFields": ["slug", "title", "content"],
+  "numericBounds": [],
+  "wordCount": {
+    "thinWarn": 800,
+    "minPer1000Internal": 2,
+    "minExternal": 1
+  },
+  "title": {
+    "maxLen": 60,
+    "minLen": 20
+  },
+  "faq": {
+    "minCount": 5,
+    "blockIfZero": true
+  },
+  "deAiWords": [
+    "leverage", "utilize", "utilise", "delve into", "in today's world",
+    "it is important to note", "needless to say", "as a matter of fact",
+    "it goes without saying", "with that being said", "game-changer",
+    "cutting-edge", "robust", "comprehensive", "facilitate", "landscape",
+    "realm", "navigate the", "unlock the power", "in conclusion, it can be said"
+  ]
+}

@@ -1,0 +1,90 @@
+﻿# Build
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Env
+.env
+.env.local
+.env*.local
+.env.production
+.env.development.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug / Fix scripts (development artifacts)
+*.py
+__pycache__/
+*.pyc
+*.js
+!geo/geo-exposure-probe.py
+!next.config.*
+!tailwind.config.*
+!postcss.config.*
+# 运维脚本例外（正式运维脚本，需进 git 供 CI 构建镜像使用，否则生产镜像无审计/博客生成脚本）
+!scripts/ai-audit.js
+!scripts/generate-blogs.js
+fix*.js
+fix*.py
+_fix*.py
+debug*.py
+scan*.txt
+tsc_*.txt
+check.txt
+temp*.txt
+check.py
+qa_*
+reply.md
+comment_*.txt
+*_raw.json
+pdf-to-epub-orig.ts
+gen_files.py
+
+# Backup files
+*.bak
+*.original
+*.tmp
+
+# Test fixtures
+_final_test*.ts
+_test*.ts
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage output
+coverage/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Local Playwright browsers (project-local Chromium for CWV checks)
+.pw-browsers/
+
+# Docker build cache
+.docker/
+
+# Output of scripts/verify-batch-live.mjs
+batch-verify.zip
+
+# Pure-correction-agent gate reports (generated, not source) — 仅顶层 data/，勿误伤 src/data 内容系统
+/data/critic_layer_*.json
+/data/
+
+# Excel tracking sheets (large binary, not source)
+*.xlsx
+*.xls

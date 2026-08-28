@@ -1,0 +1,70 @@
+# ----------------------------------------
+# 报告概况
+# 账号：bookconv
+# 媒体资源：https://www.bookconv.com/
+# ----------------------------------------
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+活跃用户,新用户数,每位活跃用户的平均互动时长,事件数
+10,9,9,37
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+网页标题和屏幕类,浏览次数,活跃用户,事件数,跳出率
+"BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF",6,6,17,0.8333333333333334
+AZW3 vs MOBI: Use AZW3 for Any Kindle From 2015 | BookConv,1,1,4,1
+CBR to PDF: Read Your Comics on Any Device | BookConv,1,1,4,1
+EPUB 3 vs EPUB 2: What Changed and Why It Matters | BookConv,1,1,4,1
+EPUB to TXT: Extract Plain Text Without Losing Your Chapter Order | BookConv,1,1,3,1
+Free EPUB to PDF Converter — No Sign-up | BookConv,1,1,5,0
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+带来用户首次互动的来源/媒介,活跃用户
+(direct) / (none),9
+tagassistant.google.com / referral,1
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+带来会话的来源/媒介,会话数
+(direct) / (none),9
+app.seobotai.com / referral,1
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+第 N 天,new,returning
+0000,1,0
+0001,1,1
+0002,1,0
+0003,1,0
+0004,1,0
+0005,3,0
+0006,1,0
+
+# 您各平台上的活动相比较的结果如何？
+# 开始日期：20260816
+# 结束日期：20260822
+平台,关键事件数
+
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+城市,活跃用户
+Nanjing,3
+Beijing,1
+Chengdu,1
+Hangzhou,1
+Shenzhen,1
+Zhangjiajie,1
+
+#  
+# 开始日期：20260816
+# 结束日期：20260822
+受众群体名称,活跃用户
+All Users,10

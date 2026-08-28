@@ -1,0 +1,119 @@
+# BookConv
+
+> Free online ebook format converter supporting 28+ formats (17+ dedicated ebook formats plus documents and images). No registration, no watermarks. Free conversions handle files up to 10 MB (5 files/hour); Pro unlocks up to 50 MB. Powered by the Calibre engine and runs entirely in your browser.
+
+## Supported Formats
+EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU, JPG, PNG, ZIP
+
+## Conversions
+- [EPUB to AZW3](https://www.bookconv.com/convert/epub-to-azw3)
+- [AZW3 to EPUB](https://www.bookconv.com/convert/azw3-to-epub)
+- [EPUB to MOBI](https://www.bookconv.com/convert/epub-to-mobi)
+- [MOBI to EPUB](https://www.bookconv.com/convert/mobi-to-epub)
+- [AZW3 to MOBI](https://www.bookconv.com/convert/azw3-to-mobi)
+- [MOBI to PDF](https://www.bookconv.com/convert/mobi-to-pdf)
+- [MOBI to TXT](https://www.bookconv.com/convert/mobi-to-txt)
+- [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)
+- [EPUB to DOC](https://www.bookconv.com/convert/epub-to-doc)
+- [EPUB to DOCX](https://www.bookconv.com/convert/epub-to-docx)
+- [EPUB to RTF](https://www.bookconv.com/convert/epub-to-rtf)
+- [EPUB to TXT](https://www.bookconv.com/convert/epub-to-txt)
+- [EPUB to HTML](https://www.bookconv.com/convert/epub-to-html)
+- [EPUB to JPG](https://www.bookconv.com/convert/epub-to-jpg)
+- [EPUB to PNG](https://www.bookconv.com/convert/epub-to-png)
+- [EPUB to ZIP](https://www.bookconv.com/convert/epub-to-zip)
+- [PDF to EPUB](https://www.bookconv.com/convert/pdf-to-epub)
+- [DOC to EPUB](https://www.bookconv.com/convert/doc-to-epub)
+- [DOCX to EPUB](https://www.bookconv.com/convert/docx-to-epub)
+- [RTF to EPUB](https://www.bookconv.com/convert/rtf-to-epub)
+- [TXT to EPUB](https://www.bookconv.com/convert/txt-to-epub)
+- [HTML to EPUB](https://www.bookconv.com/convert/html-to-epub)
+- [FB2 to EPUB](https://www.bookconv.com/convert/fb2-to-epub)
+- [LIT to EPUB](https://www.bookconv.com/convert/lit-to-epub)
+- [AZW3 to PDF](https://www.bookconv.com/convert/azw3-to-pdf)
+- [DJVU to PDF](https://www.bookconv.com/convert/djvu-to-pdf)
+- [CBR to PDF](https://www.bookconv.com/convert/cbr-to-pdf)
+- [LIT to MOBI](https://www.bookconv.com/convert/lit-to-mobi)
+- [AZW to MOBI](https://www.bookconv.com/convert/azw-to-mobi)
+- [CHM to MOBI](https://www.bookconv.com/convert/chm-to-mobi)
+
+## Guides
+- [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://www.bookconv.com/blog/azw3-vs-mobi)
+- [How to Convert EPUB to MOBI Online: The BookConv Guide](https://www.bookconv.com/blog/epub-to-mobi-guide)
+- [Ebook Formats Explained: EPUB vs AZW3 vs MOBI & More](https://www.bookconv.com/blog/ebook-formats-explained)
+- [Convert EPUB to PDF on Linux (3 Methods)](https://www.bookconv.com/blog/epub-to-pdf-linux)
+- [How to Convert PDF to EPUB Online (and When You Shouldn't)](https://www.bookconv.com/blog/pdf-to-epub-guide)
+- [What Is the LIT Ebook Format? A Complete Guide](https://www.bookconv.com/blog/lit-ebook-format)
+- [Why Convert LIT to EPUB (and How to Do It on BookConv)](https://www.bookconv.com/blog/why-convert-lit-to-epub)
+- [BookConv File Won't Download or Open? Fixes That Actually Work](https://www.bookconv.com/blog/download-troubleshooting)
+- [How BookConv Runs Your Conversions in the Background](https://www.bookconv.com/blog/background-workers)
+- [Configuring BookConv: Environment Variables for Self-Hosting](https://www.bookconv.com/blog/env-variables-setup)
+- [Inside BookConv's Sitemap: How Every Converter Page Gets Found](https://www.bookconv.com/blog/sitemap-seo-guide)
+- [BookConv Webhooks: Get a Signed Notification When a Conversion Finishes](https://www.bookconv.com/blog/webhook-integration)
+- [DjVu to PDF: How to Convert Scanned Archives (Step-by-Step)](https://www.bookconv.com/blog/djvu-to-pdf)
+- [CBR to PDF: Convert Comic Books for Printing and Any Device](https://www.bookconv.com/blog/cbr-to-pdf)
+- [FB2 to EPUB: Convert FictionBook for Any Reader (Including Kindle)](https://www.bookconv.com/blog/fb2-to-epub)
+- [How to Convert EPUB to an Editable Word Document (DOCX)](https://www.bookconv.com/blog/epub-to-word)
+- [How to Turn a Plain TXT File into an EPUB with a Table of Contents](https://www.bookconv.com/blog/txt-to-epub)
+- [How to Convert MOBI to EPUB (And Why You'd Want To)](https://www.bookconv.com/blog/mobi-to-epub)
+- [Can Kindle Read AZW3? Compatibility by Model, Explained](https://www.bookconv.com/blog/can-kindle-read-azw3)
+- [MOBI to Kobo: How to Read Your MOBI Books on a Kobo Reader](https://www.bookconv.com/blog/mobi-to-kobo)
+- [EPUB vs MOBI: Which Ebook Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-mobi)
+- [Batch Ebook Converter: How to Convert Many Files at Once (and When to Use Calibre)](https://www.bookconv.com/blog/batch-converter)
+- [EPUB vs PDF: Which Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-pdf)
+
+- [5 Reasons Your Ebook Won't Open on Kindle (and How to Fix Each One)](https://www.bookconv.com/blog/why-ebook-wont-open-kindle)
+- [10 Common Ebook Format Problems and How to Fix Them](https://www.bookconv.com/blog/common-ebook-format-problems)
+- [FB2 vs EPUB: Which Open Ebook Format Should You Use?](https://www.bookconv.com/blog/fb2-vs-epub)
+- [Checklist: Preparing Your Ebook File Before Converting](https://www.bookconv.com/blog/ebook-conversion-checklist)
+- [How to Read EPUB on iPhone, Android, Windows & Mac](https://www.bookconv.com/blog/read-epub-on-any-device)
+- [EPUB 3 vs EPUB 2: What Changed and Why It Matters](https://www.bookconv.com/blog/epub3-vs-epub2)
+- [How to Convert Scanned PDF to EPUB with OCR](https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr)
+- [Best Free Ebook Reader Apps for Every Device (2026)](https://www.bookconv.com/blog/best-ebook-reader-apps)
+- [How to Convert Kobo Books to EPUB and PDF](https://www.bookconv.com/blog/kobo-to-epub)
+- [Conversion Failed? Here's How to Fix Common Ebook Conversion Errors](https://www.bookconv.com/blog/conversion-error-guide)
+- [How to Convert Large Ebooks (Over 10 MB): Free Methods and When to Upgrade](https://www.bookconv.com/blog/large-file-conversion-guide)
+- [How to Check Your Converted Ebook's Quality: A 5-Minute Checklist](https://www.bookconv.com/blog/check-converted-file-quality)
+- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](https://www.bookconv.com/blog/sync-reading-across-devices)
+- [How to Sync Ebooks for Book Clubs and Reading Groups Across Devices](https://www.bookconv.com/blog/sync-ebooks-reading-groups)
+- [AZW3, EPUB & MOBI: Best Kindle & Kobo Formats](https://www.bookconv.com/blog/azw3-epub-mobi-kindle-compatibility)
+- [Best Ebook Conversion Tools for Authors & Librarians](https://www.bookconv.com/blog/ebook-conversion-tools)
+- [Epub to Various Other Formats: The Ultimate Guide](https://www.bookconv.com/blog/epub-converter)
+- [How to Convert EPUB to Word (DOCX) Free & Fast](https://www.bookconv.com/blog/epub-to-docx)
+- [How to Convert EPUB to Text (TXT) - Easy Guide](https://www.bookconv.com/blog/epub-to-text)
+- [Epub to Various Other Formats: The Ultimate Guide](https://www.bookconv.com/blog/epub-to-various-other)
+
+## Troubleshooting Guides
+- [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)
+- [Convert PDF to EPUB Without Losing Images or Layout](https://www.bookconv.com/guide/pdf-to-epub-keep-formatting)
+- [Calibre vs Online Converters: Which Should You Actually Use?](https://www.bookconv.com/guide/calibre-vs-online-converter)
+- [EPUB to MOBI: Keep Formatting and Read on Any Kindle](https://www.bookconv.com/guide/epub-to-mobi-keep-formatting)
+- [AZW3 to EPUB: Remove Kindle Lock-in and Read Anywhere](https://www.bookconv.com/guide/azw3-to-epub-keep-formatting)
+- [DOCX to EPUB: Turn Your Word Manuscript into a Real Ebook](https://www.bookconv.com/guide/docx-to-epub-self-publish)
+- [MOBI to EPUB: Keep Formatting and Read Your Kindle Books Anywhere](https://www.bookconv.com/guide/mobi-to-epub-keep-formatting)
+- [EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting](https://www.bookconv.com/guide/epub-to-azw3-for-kindle)
+- [DJVU to PDF: Turn Scanned Books into a Shareable PDF](https://www.bookconv.com/guide/djvu-to-pdf)
+- [CBR to PDF: Read Your Comics on Any Device](https://www.bookconv.com/guide/cbr-to-pdf)
+- [LIT to EPUB: Convert Old Microsoft Reader Books and Keep Your Formatting](https://www.bookconv.com/guide/lit-to-epub-keep-formatting)
+- [EPUB to TXT: Extract Plain Text Without Losing Your Chapter Order](https://www.bookconv.com/guide/epub-to-txt-extract)
+- [FB2 to EPUB: Convert FictionBook for Any Reader (Including Kindle)](https://www.bookconv.com/guide/fb2-to-epub-keep-formatting)
+- [AZW3 to MOBI: Convert for Older Kindles Without Losing Your Book](https://www.bookconv.com/guide/azw3-to-mobi-keep-formatting)
+- [TXT to EPUB: Turn a Plain Text File into a Real Ebook with a TOC](https://www.bookconv.com/guide/txt-to-epub-build-ebook)
+- [Calibre Alternative: Free Online Ebook Converter, No Install](https://www.bookconv.com/guide/calibre-alternative)
+- [AI Ebook Converter: Preparing Ebooks for NotebookLM, ChatGPT & More](https://www.bookconv.com/guide/ai-ebook-converter)
+- [Batch Ebook Converter: Convert Many Files with BookConv (and When to Use Calibre)](https://www.bookconv.com/guide/batch-converter)
+- [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](https://www.bookconv.com/guide/kindle-formats)
+- [Best Ebook Converter in 2026: How to Choose (Not Just a List)](https://www.bookconv.com/guide/best-ebook-converter)
+
+## Tools
+- [Batch Ebook Converter — convert up to 20 files at once and download a ZIP](https://www.bookconv.com/batch)
+- [Pricing and plans](https://www.bookconv.com/pricing)
+
+## About
+BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
+
+### Privacy & Trust
+- No registration required for free conversions.
+- Uploaded files are encrypted in transit (HTTPS) and deleted automatically within 1 hour.
+- Files with DRM are rejected on upload; conversion only works on DRM-free files the user owns.
+- No watermarks are added to output files.

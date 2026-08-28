@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 720" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+<rect width="920" height="720" fill="#ffffff"/>
+<text x="40" y="45" font-size="22" font-weight="700" fill="#1a1a1a">Bing AI Citations 分布 (Top 10 被引用页面)</text>
+<text x="40" y="70" font-size="14" fill="#666">总 404 citations · 21 个有效页面 · 数据 2026-08-28</text>
+<line x1="240" y1="83" x2="840" y2="83" stroke="#ddd" stroke-width="1"/>
+<rect x="240" y="95" width="600" height="42" rx="4" fill="#e74c3c"/>
+<text x="230" y="121" font-size="13" fill="#222" text-anchor="end">sync-reading-across-devices</text>
+<text x="848" y="121" font-size="13" font-weight="600" fill="#222">114 (28.2%)</text>
+<text x="230" y="91" font-size="10" fill="#8e44ad">BLOG</text>
+<rect x="240" y="143" width="263" height="42" rx="4" fill="#e67e22"/>
+<text x="230" y="169" font-size="13" fill="#222" text-anchor="end">guide/djvu-to-pdf</text>
+<text x="511" y="169" font-size="13" font-weight="600" fill="#222">50 (12.4%)</text>
+<text x="230" y="139" font-size="10" fill="#16a085">GUIDE</text>
+<rect x="240" y="191" width="247" height="42" rx="4" fill="#e67e22"/>
+<text x="230" y="217" font-size="13" fill="#222" text-anchor="end">blog/best-ebook-reader-apps</text>
+<text x="495" y="217" font-size="13" font-weight="600" fill="#222">47 (11.6%)</text>
+<text x="230" y="187" font-size="10" fill="#8e44ad">BLOG</text>
+<rect x="240" y="239" width="221" height="42" rx="4" fill="#f39c12"/>
+<text x="230" y="265" font-size="13" fill="#222" text-anchor="end">home (/)</text>
+<text x="469" y="265" font-size="13" font-weight="600" fill="#222">42 (10.4%)</text>
+<text x="230" y="235" font-size="10" fill="#7f8c8d">HOME</text>
+<rect x="240" y="287" width="184" height="42" rx="4" fill="#f39c12"/>
+<text x="230" y="313" font-size="13" fill="#222" text-anchor="end">guide/epub-to-mobi-keep-fmt</text>
+<text x="432" y="313" font-size="13" font-weight="600" fill="#222">35 (8.7%)</text>
+<text x="230" y="283" font-size="10" fill="#16a085">GUIDE</text>
+<rect x="240" y="335" width="94" height="42" rx="4" fill="#3498db"/>
+<text x="230" y="361" font-size="13" fill="#222" text-anchor="end">guide/kindle-formats</text>
+<text x="342" y="361" font-size="13" font-weight="600" fill="#222">18 (4.5%)</text>
+<text x="230" y="331" font-size="10" fill="#16a085">GUIDE</text>
+<rect x="240" y="383" width="78" height="42" rx="4" fill="#3498db"/>
+<text x="230" y="409" font-size="13" fill="#222" text-anchor="end">blog/djvu-to-pdf</text>
+<text x="326" y="409" font-size="13" font-weight="600" fill="#222">15 (3.7%)</text>
+<text x="230" y="379" font-size="10" fill="#8e44ad">BLOG</text>
+<rect x="240" y="431" width="68" height="42" rx="4" fill="#3498db"/>
+<text x="230" y="457" font-size="13" fill="#222" text-anchor="end">guide/mobi-vs-azw3</text>
+<text x="316" y="457" font-size="13" font-weight="600" fill="#222">13 (3.2%)</text>
+<text x="230" y="427" font-size="10" fill="#16a085">GUIDE</text>
+<rect x="240" y="479" width="47" height="42" rx="4" fill="#3498db"/>
+<text x="230" y="505" font-size="13" fill="#222" text-anchor="end">blog/can-kindle-read-azw3</text>
+<text x="295" y="505" font-size="13" font-weight="600" fill="#222">9 (2.2%)</text>
+<text x="230" y="475" font-size="10" fill="#8e44ad">BLOG</text>
+<rect x="240" y="527" width="47" height="42" rx="4" fill="#3498db"/>
+<text x="230" y="553" font-size="13" fill="#222" text-anchor="end">blog/epub3-vs-epub2</text>
+<text x="295" y="553" font-size="13" font-weight="600" fill="#222">9 (2.2%)</text>
+<text x="230" y="523" font-size="10" fill="#8e44ad">BLOG</text>
+<rect x="40" y="585" width="840" height="80" rx="8" fill="#fdf2f2" stroke="#e74c3c" stroke-width="1.5"/>
+<text x="60" y="613" font-size="15" font-weight="700" fill="#c0392b">⚠️ 单点风险：Top10 集中度 87.1%</text>
+<text x="60" y="637" font-size="13" fill="#444">Top1 sync-reading 独占 28.2% · Top3 占 52.2% · Top5 占 71.3%</text>
+<text x="60" y="655" font-size="13" fill="#444">双页面协同：Avg. Cited Pages = 2 → AI 常组合 sync-reading + 其他页作答</text>
+<text x="40" y="685" font-size="12" font-weight="600" fill="#333">图例：</text>
+<rect x="100" y="673" width="14" height="14" rx="3" fill="#e74c3c"/>
+<text x="120" y="685" font-size="12" fill="#555">Top1</text>
+<rect x="240" y="673" width="14" height="14" rx="3" fill="#e67e22"/>
+<text x="260" y="685" font-size="12" fill="#555">Top2-3</text>
+<rect x="380" y="673" width="14" height="14" rx="3" fill="#f39c12"/>
+<text x="400" y="685" font-size="12" fill="#555">Top4-5</text>
+<rect x="520" y="673" width="14" height="14" rx="3" fill="#3498db"/>
+<text x="540" y="685" font-size="12" fill="#555">Top6-10</text>
+</svg>

@@ -1,0 +1,135 @@
+export type ErrorCode =
+  | "FILE_NOT_FOUND"
+  | "PERMISSION_DENIED"
+  | "CONVERSION_TIMEOUT"
+  | "TOO_MANY_OPEN_FILES"
+  | "DRM_PROTECTED"
+  | "CONVERSION_FAILED"
+  | "CONVERSION_UNAVAILABLE"
+  | "CONVERSION_QUOTA_EXCEEDED"
+  | "CLOUD_CONVERT_ERROR"
+  | "INTERNAL_ERROR"
+  | "CORRUPT_INPUT"
+  | "MEMORY_LIMIT"
+  | "VERIFICATION_FAILED";
+
+export interface ErrorResponse {
+  code: ErrorCode;
+  message: string;
+  status: number;
+  retryable?: boolean;
+}
+
+const ERROR_CODE_MAP: Record<string, ErrorCode> = {
+  // Calibre / ebook-convert errors
+  'ENOENT': 'FILE_NOT_FOUND',
+  'EACCES': 'PERMISSION_DENIED',
+  'ETIMEDOUT': 'CONVERSION_TIMEOUT',
+  'EMFILE': 'TOO_MANY_OPEN_FILES',
+  'Error converting book': 'CONVERSION_FAILED',
+  'output not generated': 'CONVERSION_FAILED',
+  'not a valid eBook format': 'CORRUPT_INPUT',
+  'corrupt epub': 'CORRUPT_INPUT',
+  'Zip error': 'CORRUPT_INPUT',
+  'Invalid zip file': 'CORRUPT_INPUT',
+  'Invalid or missing opf': 'CORRUPT_INPUT',
+  'DRM': 'DRM_PROTECTED',
+  'failed verification': 'VERIFICATION_FAILED',
+  // EPUB to TXT errors
+  'no text content could be extracted': 'CONVERSION_FAILED',
+  'cannot extract text': 'CONVERSION_FAILED',
+  // Calibre not available errors
+  'Calibre is not available': 'CONVERSION_UNAVAILABLE',
+  'Calibre not found': 'CONVERSION_UNAVAILABLE',
+  // CloudConvert quota exhausted — MUST stay above the 'cloudconvert' catch-all
+  // below, otherwise the generic key swallows it. A 402 that survives the
+  // client's internal backoff means the monthly allowance is gone, not a
+  // transient concurrency bump, so callers should stop rather than retry.
+  'cloudconvert client error 402': 'CONVERSION_QUOTA_EXCEEDED',
+  // CloudConvert errors (catch-all covers all "CloudConvert ..." messages)
+  'cloudconvert': 'CLOUD_CONVERT_ERROR',
+  // CloudConvert polling timeout — 大文件（50+页）Calibre渲染超过轮询窗口
+  'did not finish in time': 'CONVERSION_TIMEOUT',
+  // Node.js errors
+  'signal SIGKILL': 'MEMORY_LIMIT',
+  'signal SIGTERM': 'MEMORY_LIMIT',
+  'JavaScript heap out of memory': 'MEMORY_LIMIT',
+};
+
+/** Map an error message to a user-friendly error code */
+export function mapErrorCode(message: string): ErrorCode {
+  const lower = message.toLowerCase();
+  for (const [key, code] of Object.entries(ERROR_CODE_MAP)) {
+    if (lower.includes(key.toLowerCase())) return code;
+  }
+  return "INTERNAL_ERROR";
+}
+
+/** Return a safe, user-friendly message for each error code */
+const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }> = {
+  'FILE_NOT_FOUND': { message: 'Input file not found. Please try uploading again.', retryable: true },
+  'PERMISSION_DENIED': { message: 'Permission denied when accessing the file. Please try a different file.', retryable: false },
+  'CONVERSION_TIMEOUT': { message: 'Conversion timed out. The file may be too large — try a smaller file or different format.', retryable: true },
+  'TOO_MANY_OPEN_FILES': { message: 'Server is busy. Please wait a moment and try again.', retryable: true },
+  'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
+  'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
+  'CONVERSION_UNAVAILABLE': { message: 'This conversion requires a Calibre-powered backend that is currently unavailable. Please use EPUB to TXT or EPUB to ZIP conversions, which work without Calibre.', retryable: false },
+  'CONVERSION_QUOTA_EXCEEDED': { message: 'This format is temporarily at capacity for today. EPUB to TXT and EPUB to ZIP still work right now — for other formats, please try again later.', retryable: false },
+  'CLOUD_CONVERT_ERROR': { message: 'Conversion service error. Please try again later or use a different format combination.', retryable: true },
+  'INTERNAL_ERROR': { message: 'An unexpected error occurred. Please try again later.', retryable: true },
+  'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
+  'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
+  'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
+};
+
+/** Get a friendly, user-facing message from an error code */
+export function getFriendlyMessage(code: ErrorCode): string {
+  return ERROR_MESSAGES[code]?.message ?? ERROR_MESSAGES['INTERNAL_ERROR'].message;
+}
+
+/** Check if an error is retriable (server-side/transient vs permanent) */
+export function isRetryable(code: ErrorCode): boolean {
+  return ERROR_MESSAGES[code]?.retryable ?? true;
+}
+
+/** Strip stack traces, internal paths, and technical details from error messages */
+export function sanitizeError(err: unknown): string {
+  if (typeof err === "string") {
+    return cleanMessage(err);
+  }
+  if (err instanceof Error) {
+    return cleanMessage(err.message);
+  }
+  const str = String(err);
+  return cleanMessage(str);
+}
+
+function cleanMessage(raw: string): string {
+  let msg = raw;
+
+  // Strip stack traces (at ... line/col patterns)
+  msg = msg.replace(/at .+/g, "");
+
+  // Remove internal file paths
+  msg = msg.replace(/\/tmp\/[^\s,)}"']*/gi, "");
+  msg = msg.replace(/C:\\[^\s,)}"']*/gi, "");
+  msg = msg.replace(/node_modules\/[^\s,)}"']*/gi, "");
+
+  // Strip "Error:" prefix
+  msg = msg.replace(/^Error:\s*/i, "");
+
+  msg = msg.trim();
+
+  // Limit to 200 characters
+  if (msg.length > 200) {
+    msg = msg.slice(0, 200).trimEnd();
+  }
+
+  // Default fallback
+  if (!msg || msg.length < 3) {
+    return "An unexpected error occurred";
+  }
+
+  return msg;
+}
+

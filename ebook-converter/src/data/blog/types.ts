@@ -1,0 +1,201 @@
+export interface BlogSection {
+  heading: string;
+  body: string;
+}
+
+export interface BlogPostContent {
+  intro: string;
+  sections: BlogSection[];
+}
+
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
+export interface BlogPostLocalized {
+  title: string;
+  content: BlogPostContent;
+  faqs?: BlogFaq[];
+}
+
+export interface BlogPostMeta {
+  slug: string;
+  title: string;
+  date: string;
+  /** ISO date string of last substantive content update (distinct from initial publish date). Used for freshness signal and human-visible "Last updated" display. */
+  lastUpdated?: string;
+  author?: string;
+  tags: string[];
+  content: BlogPostContent;
+  relatedSlugs?: string[];
+  internalLinkTargets?: string[];
+  faqs?: BlogFaq[];
+  /** Spanish (es) translation. When present, /es/blog/[slug] serves real Spanish content. */
+  es?: BlogPostLocalized;
+  /** When true, the page is excluded from search indexes (robots noindex). Use for dev/internal docs that must stay reachable but shouldn't occupy SEO crawl budget. */
+  noindex?: boolean;
+}
+
+export interface BlogPostWithLinks extends BlogPostMeta {
+  relatedSlugs: string[];
+  internalLinkTargets: string[];
+}
+
+export function extractHeadings(content: BlogPostContent): Array<{ id: string; text: string; level: number }> {
+  const results: Array<{ id: string; text: string; level: number }> = [];
+
+  if (content.intro) {
+    results.push({ id: "intro", text: content.intro.slice(0, 50), level: 2 });
+  }
+
+  content.sections.forEach((section) => {
+    const id = section.heading.toLowerCase()
+      .replace(/[^\w\u4e00-\u9fff]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    results.push({ id, text: section.heading, level: 2 });
+  });
+
+  return results;
+}
+
+export function generateTocHtml(headings: Array<{ id: string; text: string; level: number }>): string {
+  if (headings.length === 0) return "";
+
+  let html = '<nav class="mb-8 rounded-xl border bg-gray-50 p-5" aria-label="Table of contents">';
+  html += '<h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">On this page</h2>';
+  html += '<ul class="space-y-1.5 text-sm">';
+
+  headings.forEach((h) => {
+    const indent = h.level === 2 ? "ml-0" : "ml-4";
+    html += "<li class=\"" + indent + "\"><a href=\"#" + h.id + "\" class=\"text-blue-600 hover:text-blue-800 transition-colors\">" + h.text + "</a></li>";
+  });
+
+  html += "</ul></nav>";
+  return html;
+}
+
+export function renderMarkdownToHtml(markdown: string): string {
+  if (!markdown) return "";
+
+  // Markdown tables → <table>. Run on raw markdown BEFORE inline replacements
+  // and paragraph wrapping so cell content still gets bold/italic/link formatting
+  // and the generated <table> is not broken by <p>/<br> insertion.
+  const withTables = markdown.replace(
+    /^\|(.+)\|\r?\n\|[-: |]+\|\r?\n(?:\|(.+)\|\r?\n?)*/gm,
+    (block) => renderTableBlock(block)
+  );
+
+  let html = withTables
+    .replace(/\\\\n/g, "\n")
+    .replace(/\\n/g, "\n");
+
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  // Italic
+  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  // Inline code
+  html = html.replace(/`(.+?)`/g, "<code class=\"rounded bg-gray-100 px-1.5 py-0.5 text-sm font-mono text-pink-600\">$1</code>");
+  // Links
+  html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener">$1</a>');
+  // Headings (subheadings inside blog bodies, e.g. ### Subheading)
+  html = html.replace(/^###\s+(.+)$/gm, "<h3 class=\"mt-5 mb-2 text-lg font-semibold text-gray-900\">$1</h3>");
+  html = html.replace(/^##\s+(.+)$/gm, "<h2 class=\"mt-6 mb-2 text-xl font-bold text-gray-900\">$1</h2>");
+  // Unordered list items
+  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
+  // Ordered list items
+  html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/((?:<li>.*?<\/li>\n?)+)/g, '<ul class="list-disc pl-6 space-y-1.5">$1</ul>');
+  // Paragraphs
+  html = html.replace(/\n\n/g, "</p><p>");
+  html = html.replace(/\n/g, "<br />");
+  html = "<p>" + html + "</p>";
+  html = html.replace(/<p>\s*<\/p>/g, "");
+  html = html.replace(/<p>(<ul[^>]*>)/g, "$1");
+  html = html.replace(/(<\/ul>)<\/p>/g, "$1");
+  // Tables (mirror the <ul> unwrap so they aren't nested inside <p>)
+  html = html.replace(/<p>(<table[^>]*>)/g, "$1");
+  html = html.replace(/(<\/table>)<\/p>/g, "$1");
+  // Unwrap headings that landed inside <p>
+  html = html.replace(/<p>(<h[23][^>]*>)/g, "$1");
+  html = html.replace(/(<\/h[23]>)<\/p>/g, "$1");
+
+  return html;
+}
+
+/**
+ * Convert a GitHub-flavored markdown table block into an HTML <table>.
+ * Cell content retains any markdown inline syntax (**bold**, *italic*,
+ * [links](url)) — the caller applies those replacements globally afterwards.
+ */
+function renderTableBlock(markdownTable: string): string {
+  const lines = markdownTable.trim().split("\n").filter((l) => l.trim().length > 0);
+  if (lines.length < 2) return markdownTable;
+
+  const parseRow = (line: string): string[] =>
+    line.replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+
+  const headerCells = parseRow(lines[0]);
+  const bodyRows = lines.slice(2).map(parseRow);
+
+  const headerHtml =
+    "<thead><tr>" +
+    headerCells
+      .map((c) => `<th class="border border-gray-300 px-3 py-2 text-left font-semibold bg-gray-50">${c}</th>`)
+      .join("") +
+    "</tr></thead>";
+
+  const bodyHtml =
+    "<tbody>" +
+    bodyRows
+      .map(
+        (row) =>
+          "<tr>" +
+          row.map((c) => `<td class="border border-gray-300 px-3 py-2 align-top">${c}</td>`).join("") +
+          "</tr>"
+      )
+      .join("") +
+    "</tbody>";
+
+  return `<table class="w-full border-collapse my-6 text-sm not-prose">${headerHtml}${bodyHtml}</table>`;
+}
+
+export function stripMarkdown(markdown: string): string {
+  if (!markdown) return "";
+  return markdown
+    .replace(/\[(.+?)\]\((.+?)\)/g, "$1") // links -> text
+    .replace(/`(.+?)`/g, "$1") // inline code
+    .replace(/\*\*([^*]+)\*\*/g, "$1") // bold
+    .replace(/\*([^*]+)\*/g, "$1") // italic
+    .replace(/\n+/g, " ") // collapse newlines
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+export function buildInternalLinks(content: BlogPostContent, currentSlug: string, allPosts: Map<string, BlogPostMeta>): string {
+  const linkMap = new Map<string, { slug: string; title: string }>();
+
+  allPosts.forEach((post, slug) => {
+    if (slug === currentSlug) return;
+
+    const body = post.content.intro + post.content.sections.map(s => s.body).join("");
+    const titleWords = post.title.split(/[\s\u3000]+/);
+
+    for (const word of titleWords) {
+      if (word.length >= 2 && !linkMap.has(word)) {
+        linkMap.set(word, { slug, title: post.title });
+      }
+    }
+  });
+
+  let html = content.intro + content.sections.map(s => s.body).join("\n\n");
+
+  linkMap.forEach(({ slug, title }) => {
+    const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp("(" + escapedTitle + ")", "g");
+    html = html.replace(regex, '<a href="/blog/' + slug + '" class="internal-link text-blue-600 hover:underline font-medium" data-target-slug="' + slug + '">' + title + "</a>");
+  });
+
+  return html;
+}

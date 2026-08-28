@@ -1,0 +1,230 @@
+{
+    "common":  {
+                   "siteName":  "BookConv",
+                   "freeOnlineEbookConverter":  "Convertidor de Formatos de Ebooks Online Gratuito",
+                   "noRegistrationRequired":  "Sin registro, sin marcas de agua, sin cuenta.",
+                   "poweredByCalibre":  "Impulsado por el Motor Calibre",
+                   "skipToMainContent":  "Saltar al contenido principal",
+                   "home":  "Inicio",
+                   "pricing":  "Precios",
+                   "help":  "Ayuda",
+                   "blog":  "Blog",
+                   "convert":  "Convertir",
+                   "guide":  "Guías",
+                   "privacyPolicy":  "Política de Privacidad",
+                   "termsOfService":  "Términos de Servicio",
+                   "allRightsReserved":  "Todos los derechos reservados.",
+                   "contact":  "Contacto",
+                   "startConvertingNow":  "Comenzar a Convertir",
+                   "searchConversions":  "Buscar conversiones... (por ejemplo, EPUB a MOBI)",
+                   "allFormats":  "Todos los Formatos",
+                   "ebook":  "Ebook",
+                   "document":  "Documento",
+                   "image":  "Imagen",
+                   "comic":  "Cómic"
+               },
+    "home":  {
+                 "heroTitle":  "Convertidor de Formatos de Ebooks\nOnline Gratuito",
+                 "heroSubtitle":  "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más al instante.\nSin registro, sin marcas de agua, sin cuenta.",
+                 "ctaReadyTitle":  "¿Listo para Convertir tus Ebooks?",
+                 "ctaReadyDesc":  "Únete a miles de lectores que confían en nuestro convertidor gratuito.",
+                 "faqTitle":  "Preguntas Frecuentes",
+                 "supportedFormatsTitle":  "Formatos de Ebook Soportados",
+                 "supportedFormatsDesc":  "BookConv soporta conversión entre más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y más. Ya sea que necesites convertir libros Kindle, rescatar archivos LIT antiguos o transformar documentos a EPUB, tenemos la solución.",
+                 "exploreTitle":  "Aprende Más Sobre los Formatos de Ebook",
+                 "formatsSectionDesc":  "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más al instante. Sin registro necesario.",
+                 "poweredByCalibre":  "Impulsado por Calibre Engine",
+                 "tutorialTitle":  "Tutoriales populares de conversión",
+                 "tutorialLitDesc":  "Convierte en 3 minutos",
+                 "tutorialPdfDesc":  "Mantén tu diseño intacto",
+                 "tutorialEpubDesc":  "Extrae texto sin formato"
+             },
+    "faq":  {
+                "q1":  "¿Es BookConv gratuito?",
+                "a1":  "¡Sí! BookConv es completamente gratuito sin necesidad de registro. Los usuarios gratuitos obtienen 5 conversiones por hora con archivos de hasta 10 MB.",
+                "q2":  "¿Qué formatos soporta BookConv?",
+                "a2":  "BookConv soporta más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y documentos Word.",
+                "q3":  "¿Mis datos están seguros al subir archivos?",
+                "a3":  "Absolutamente. Todos los archivos se transfieren mediante conexiones HTTPS cifradas y se eliminan automáticamente dentro de 1 hora después de la conversión. Nunca leemos, almacenamos ni compartimos tu contenido.",
+                "q4":  "¿Necesito instalar algún software?",
+                "a4":  "¡No! BookConv funciona completamente en tu navegador. Simplemente sube tu archivo, selecciona el formato de salida y descarga tu archivo convertido —no se necesita instalación de software.",
+                "q5":  "¿Puedo convertir libros Kindle a EPUB?",
+                "a5":  "¡Sí! BookConv soporta la conversión de AZW3 y MOBI (formatos Kindle) a EPUB y otros formatos. Simplemente sube tu archivo Kindle y elige el formato de salida deseado."
+            },
+    "pricing":  {
+                    "title":  "Precios Simples y Transparentes",
+                    "subtitle":  "Comienza gratis. Actualiza cuando necesites más. Sin tarifas ocultas, cancela cuando quieras.",
+                    "mostPopular":  "Más Popular",
+                    "getStartedFree":  "Comenzar Gratis",
+                    "comingSoon":  "Próximamente",
+                    "contactSales":  "Contactar Ventas",
+                    "startProTrial":  "Iniciar Prueba Pro",
+                    "perfectForCasual":  "Perfecto para usuarios ocasionales",
+                    "forPowerUsers":  "Para usuarios avanzados que necesitan más",
+                    "forDevelopers":  "Para desarrolladores y empresas",
+                    "featureComparison":  "Comparación: Gratuito vs Pro",
+                    "conversionsPerHour":  "Conversiones por hora",
+                    "maxFileSize":  "Tamaño máximo de archivo",
+                    "batchConversion":  "Conversión por lotes",
+                    "priorityQueue":  "Cola prioritaria",
+                    "apiAccess":  "Acceso API",
+                    "unlimited":  "Ilimitado",
+                    "faqTitle":  "Preguntas Frecuentes",
+                    "pqa1_q":  "¿Puedo cancelar en cualquier momento?",
+                    "pqa1_a":  "Sí, puedes cancelar tu suscripción en cualquier momento desde la configuración de tu cuenta.",
+                    "pqa2_q":  "¿Qué métodos de pago aceptan?",
+                    "pqa2_a":  "Aceptamos todas las tarjetas de crédito principales a través de Lemon Squeezy, incluyendo Visa, Mastercard y American Express.",
+                    "pqa3_q":  "¿Hay una prueba gratuita?",
+                    "pqa3_a":  "¡Sí! Todos los planes pagos vienen con una prueba gratuita de 14 días. Puedes cancelar en cualquier momento durante la prueba.",
+                    "pqa4_q":  "¿Qué pasa con mis archivos?",
+                    "pqa4_a":  "Todos los archivos subidos se cifran y se eliminan automáticamente dentro de 1 hora después de la conversión, independientemente de tu plan.",
+                    "pqa5_q":  "¿Ofrecen reembolsos?",
+                    "pqa5_a":  "Sí, ofrecemos un reembolso completo dentro de los 30 días posteriores a la compra si no estás satisfecho con el servicio.",
+                    "privacy":  {
+                                    "title":  "Tu Privacidad y Seguridad",
+                                    "secure":  {
+                                                   "title":  "Transferencias Cifradas",
+                                                   "desc":  "Todos los archivos se transfieren sobre HTTPS con cifrado de extremo a extremo. Usamos TLS 1.3 estándar de la industria para proteger tus datos en tránsito."
+                                               },
+                                    "delete":  {
+                                                  "title":  "Eliminación Automática Dentro de 1 Hora",
+                                                  "desc":  "Los archivos convertidos se eliminan automáticamente de nuestros servidores dentro de 1 hora después de la conversión. Esto aplica a todos los usuarios independientemente del plan — no almacenamos tus libros."
+                                              },
+                                    "no-store":  {
+                                                   "title":  "Nunca Almacenamos Tus Archivos",
+                                                   "desc":  "Los archivos se procesan en memoria y se eliminan inmediatamente después de completar la conversión. Sin copias de seguridad, sin archivos, sin excepciones."
+                                               },
+                                    "no-read":  {
+                                                  "title":  "No Leemos Tu Contenido",
+                                                  "desc":  "Nuestro motor de conversión automatizado procesa archivos sin revisión humana. Nadie en BookConv lee, analiza o distribuye el contenido de tus ebooks."
+                                              },
+                                    "footer":  "Para más detalles, consulta nuestra [Política de Privacidad](/privacy)."
+                                }
+                },
+    "blog":  {
+                 "title":  "Blog de Conversión de Ebooks",
+                 "subtitle":  "Guías expertas, comparaciones de formatos y consejos para sacar el máximo provecho de tu biblioteca de ebooks.",
+                 "popularConversions":  "Conversiones Populares",
+                 "tryThese":  "Prueba estas conversiones directamente:",
+                 "publishedOn":  "Publicado el",
+                 "backToList":  "Volver al Blog"
+             },
+    "nav":  {
+                "home":  "Inicio",
+                "pricing":  "Precios",
+                "blog":  "Blog",
+                "language":  "Idioma"
+            },
+    "localeSwitcher":  {
+                           "english":  "English",
+                           "spanish":  "Español",
+                           "currentLocale":  "Idioma actual: {locale}",
+                           "language":  "Idioma"
+                       },
+    "seo":  {
+                "defaultTitle":  "BookConv -- Convertidor de Ebooks Online Gratuito | Convierte EPUB, MOBI, AZW3, PDF",
+                "defaultDescription":  "Convertidor de ebooks online gratuito que soporta más de 28 formatos: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. Sin registro, sin marcas de agua, sin cuenta."
+            },
+    "help":  {
+                "metaTitle":  "Ayuda y Soporte -- BookConv",
+                "metaDescription":  "Obtén ayuda con la conversión de ebooks: soluciona errores, entiende la caducidad de archivos, verifica la calidad y contacta a soporte.",
+                "title":  "Ayuda y Soporte",
+                "subtitle":  "Todo lo que necesitas saber para convertir ebooks con éxito",
+                "quickSearch":  {
+                                    "title":  "¿No encuentras lo que buscas?",
+                                    "desc":  "Usa la barra de búsqueda en nuestra página de inicio para encontrar una conversión específica, o explora nuestro blog para guías sobre problemas comunes.",
+                                    "cta":  "Ir al Inicio"
+                                },
+                "sections":  {
+                                 "troubleshoot":  {
+                                                      "title":  "Solución de Problemas",
+                                                      "desc":  "Soluciones para los problemas más comunes de conversión y descarga",
+                                                      "links":  {
+                                                                    "download":  "Guía de Troubleshooting de Descargas",
+                                                                    "error":  "Referencia de Códigos de Error"
+                                                                }
+                                                  },
+                                 "files":  {
+                                               "title":  "Manejo de Archivos",
+                                               "desc":  "Entendiendo nuestra política de eliminación de archivos y cómo recuperar archivos",
+                                               "links":  {
+                                                            "expiry":  "Política de Caducidad",
+                                                            "recover":  "Recuperar un Archivo"
+                                                        }
+                                             },
+                                 "quality":  {
+                                                "title":  "Control de Calidad",
+                                                "desc":  "Cómo verificar tu archivo convertido y corregir problemas comunes de formato",
+                                                "links":  {
+                                                              "checklist":  "Lista de Verificación",
+                                                              "fix":  "Corregir Problemas de Formato"
+                                                          }
+                                            },
+                                 "contacts":  {
+                                                "title":  "Contactar Soporte",
+                                                "desc":  "Ponte en contacto si necesitas asistencia adicional",
+                                                "links":  {
+                                                              "email":  "Envíanos un Email",
+                                                              "report":  "Reportar un Bug en GitHub"
+                                                          }
+                                            }
+                             },
+                "errorCodes":  {
+                                 "title":  "Referencia de Códigos de Error",
+                                 "codes":  {
+                                               "CONVERSION_FAILED":  "El proceso de conversión falló. Intenta de nuevo o contacta a soporte con los detalles del error.",
+                                               "FILE_TOO_LARGE":  "Tu archivo excede el límite de tamaño. Plan gratuito: 10 MB, Pro: 50 MB, API: 100 MB.",
+                                               "RATE_LIMIT":  "Has alcanzado el límite de 5 conversiones por hora. Espera a que se reinicie la ventana.",
+                                               "DRM_PROTECTED":  "El archivo fuente está protegido por DRM. No podemos convertir archivos protegidos.",
+                                               "CORRUPT_INPUT":  "El archivo subido está corrupto o es inválido. Por favor verifica el archivo fuente."
+                                           }
+                             },
+                "fileExpiry":  {
+                                 "title":  "Política de Caducidad de Archivos",
+                                 "body":  "Por protección de privacidad, todos los archivos convertidos se eliminan automáticamente dentro de 1 hora después de la conversión. Esto aplica a todos los usuarios, independientemente del plan.",
+                                 "points":  {
+                                               "download":  "Descarga inmediatamente después de completar la conversión",
+                                               "immediate":  "No esperes para descargar múltiples archivos en lote",
+                                               "no-recovery":  "Los archivos no pueden recuperarse después del período de caducidad"
+                                           }
+                             },
+                "qualityChecklist":  {
+                                        "title":  "Lista de Verificación de Calidad",
+                                        "checks":  {
+                                                       "fileSize":  "El tamaño del archivo es razonable (no 0 KB ni inusualmente grande)",
+                                                       "toc":  "La tabla de contenidos está presente y es clickeable",
+                                                       "images":  "Las imágenes se muestran correctamente",
+                                                       "open":  "El archivo se abre en tu lector objetivo",
+                                                       "layout":  "El flujo de texto y el formato se ven correctos"
+                                                   },
+                                        "note":  "Si la calidad no es la esperada, intenta convertir desde un formato diferente o ajusta la configuración de salida."
+                                    },
+                "footer":  {
+                               "text":  "¿Todavía tienes preguntas? Estamos aquí para ayudarte."
+                           }
+            },
+    "tutorial":  {
+                "metaTitle":  "Tutorial -- Convierte Ebooks en Línea Paso a Paso",
+                "metaDescription":  "Aprende a convertir ebooks online en segundos: abre BookConv, elige un formato, sube tu archivo y descarga el resultado. Sin registro.",
+                "title":  "Tutorial",
+                "subtitle":  "Comienza a convertir formatos de ebook en segundos",
+                "videoTitle":  "Video de demostración",
+                "stepByStep":  "Guía paso a paso",
+                "step1Title":  "Visita el sitio web",
+                "step1Desc":  "Abre https://www.bookconv.com y ve a la página de inicio",
+                "step2Title":  "Selecciona el formato de conversión",
+                "step2Desc":  "Elige tu formato de destino en la página de inicio o en la barra de navegación (por ejemplo, PDF, MOBI, etc.)",
+                "step3Title":  "Sube el archivo",
+                "step3Desc":  "Haz clic en el botón de subir y selecciona tu archivo ebook (compatible con EPUB, AZW3, MOBI, etc.)",
+                "step4Title":  "Espera la conversión",
+                "step4Desc":  "El sistema comenzará a convertir automáticamente; el progreso se muestra en tiempo real (sin registro)",
+                "step5Title":  "Descarga el resultado",
+                "step5Desc":  "Cuando termine la conversión, haz clic en el botón de descarga para guardar tu archivo",
+                "tipsTitle":  "Consejos",
+                "tip1":  "Tamaño máximo de archivo admitido: 10 MB",
+                "tip2":  "Todos los archivos se eliminan automáticamente después de 1 hora para proteger tu privacidad",
+                "tip3":  "Compatible con subida por arrastrar y soltar para mayor comodidad",
+                "tip4":  "Para cualquier duda, contacta al servicio de atención en línea o consulta la documentación de ayuda en cualquier momento",
+                "goHome":  "Volver al inicio"
+            }
+}

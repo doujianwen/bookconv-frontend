@@ -1,0 +1,31 @@
+# BookConv — SEO-friendly robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+Allow: /_next/static/
+
+# Explicitly allow AI search crawlers to read and cite content,
+# while still protecting API/auth routes and Next.js app internals.
+# (Grouping multiple User-agent lines applies the same rule block to all of them.)
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: Applebot-Extended
+User-agent: cohere-ai
+User-agent: AI2Bot
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+Allow: /_next/static/
+
+# Sitemap location
+Sitemap: https://www.bookconv.com/sitemap.xml

@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""
+safe-push.py — 防破坏性强推助手（替代危险的 do_git_push.py）
+
+设计原则（堵住 "pull 失败就无脑 git push -f" 的事故根因）：
+  1. 绝不允许对受保护分支（main/master/prod/production）做任何 force push。
+  2. 默认只做普通 push；绝不因 pull/rebase 失败而自动 force push。
+  3. 需要 force 时必须显式传 --force，且一律用 --force-with-lease
+     （若远端自上次 fetch 后被别人改动过，会安全失败而非覆盖）。
+  4. 任何 push 前先 fetch 并检测「远端是否领先本地」：
+     - 远端领先（behind>0）且未显式 --force → 直接中止，提示先 pull --rebase。
+     - 这才是正确的「先检查远端是否领先」逻辑。
+  5. 不删除任何文件、不做任何 rebase，所有冲突交由人工处理。
+
+用法：
+  python scripts/safe-push.py              # 普通推送当前分支
+  python scripts/safe-push.py --force      # 仅当你确信要丢弃远端领先提交时
+"""
+import subprocess
+import sys
+
+# 受保护分支：禁止任何 force push，普通 push 也建议走 PR/评审流程
+PROTECTED_BRANCHES = {"main", "master", "prod", "production"}
+
+
+def run(cmd):
+    return subprocess.run(cmd, capture_output=True, text=True)
+
+
+def current_branch():
+    r = run(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+    if r.returncode != 0:
+        print("[ERROR] 无法获取当前分支，请确认在 git 仓库内。")
+        sys.exit(1)
+    return r.stdout.strip()
+
+
+def main():
+    force = "--force" in sys.argv[1:]
+    branch = current_branch()
+
+    if branch in PROTECTED_BRANCHES:
+        print(f"[ABORT] 当前在受保护分支 '{branch}'，禁止推送（尤其禁止 force）。")
+        print("         更新 main 请走 PR / 评审合入流程。")
+        sys.exit(1)
+
+    # 1) 先 fetch，确保掌握远端真实状态
+    print("=== git fetch origin ===")
+    fr = run(["git", "fetch", "origin"])
+    if fr.stderr:
+        print(fr.stderr.strip())
+    if fr.returncode != 0:
+        print("[ABORT] fetch 失败，无法判断远端状态，停止推送。")
+        sys.exit(1)
+
+    upstream = f"origin/{branch}"
+    ahead = run(["git", "rev-list", "--count", f"{upstream}..HEAD"]).stdout.strip() or "0"
+    behind = run(["git", "rev-list", "--count", f"HEAD..{upstream}"]).stdout.strip() or "0"
+    ahead_n, behind_n = int(ahead), int(behind)
+    print(f"[info] 本地领先远端 {ahead_n} 个提交，远端领先本地 {behind_n} 个提交。")
+
+    # 2) 远端领先但未要求 force → 中止，避免覆盖他人工作
+    if behind_n > 0 and not force:
+        print(f"[ABORT] 远端 '{upstream}' 领先本地 {behind_n} 个提交。")
+        print("         请先 `git pull --rebase` 合并远端改动，不要盲目强推。")
+        sys.exit(1)
+
+    # 3) 执行推送
+    if force:
+        if behind_n > 0:
+            print(f"[WARN] 即将 force-with-lease 覆盖远端 {behind_n} 个提交——")
+            print("         仅在你确信这些远端提交应被丢弃时才应继续。")
+        print("=== git push --force-with-lease ===")
+        pr = run(["git", "push", "--force-with-lease", "origin", branch])
+    else:
+        print("=== git push ===")
+        pr = run(["git", "push", "origin", branch])
+
+    if pr.stdout:
+        print(pr.stdout.strip())
+    if pr.stderr:
+        print(pr.stderr.strip())
+
+    if pr.returncode != 0:
+        print("[FAIL] 推送失败，请查看上方错误信息。")
+        sys.exit(pr.returncode)
+    print("Done.")
+
+
+if __name__ == "__main__":
+    main()

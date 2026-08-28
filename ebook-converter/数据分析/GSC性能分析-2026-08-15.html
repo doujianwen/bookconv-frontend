@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>GSC 有排名关键词增长趋势 2026-08-15</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+<body style="font-family:system-ui;max-width:900px;margin:2rem auto">
+<h2>BookConv · 有排名唯一关键词增长趋势</h2>
+<p>窗口 2026-07-26 ~ 2026-08-14 ｜ 末有效日 8/13 累计 <b>229</b> 词（上次拉取 204，+25）</p>
+<canvas id="c" height="120"></canvas>
+<p style="color:#666;font-size:13px">紫线=累计唯一词（只增，抗阈值抑制）；蓝柱=当日新增。8/14=0 为 GSC 延迟。</p>
+<script>
+new Chart(document.getElementById('c'),{
+  type:'bar',
+  data:{labels:['07-26', '07-27', '07-28', '07-29', '07-30', '07-31', '08-01', '08-02', '08-03', '08-04', '08-05', '08-06', '08-07', '08-08', '08-09', '08-10', '08-11', '08-12', '08-13', '08-14'],datasets:[
+    {type:'line',label:'累计唯一词',data:[3, 5, 7, 12, 17, 20, 24, 31, 40, 44, 59, 73, 79, 90, 118, 136, 162, 204, 229, 229],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.1)',yAxisID:'y',tension:.25,fill:true},
+    {label:'当日新增',data:[3, 4, 2, 6, 7, 6, 6, 10, 14, 8, 19, 20, 16, 21, 46, 41, 40, 75, 53, 0],backgroundColor:'rgba(59,130,246,.35)',yAxisID:'y'}
+  ]},
+  options:{scales:{y:{beginAtZero:true}}}
+});
+</script></body></html>

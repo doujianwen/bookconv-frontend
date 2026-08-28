@@ -1,0 +1,3040 @@
+{
+  "site": "https://www.bookconv.com",
+  "range": [
+    "2026-07-26",
+    "2026-08-14"
+  ],
+  "note": "query-dim = keyword counts (drop (other)); date-dim = TRUE daily impressions/clicks (site total). Do NOT sum query-dim impressions.",
+  "per_day": [
+    {
+      "date": "2026-07-26",
+      "query_count": 3,
+      "total_impressions": 3,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 to mobi",
+          1,
+          0,
+          18
+        ],
+        [
+          "convert epub to zip",
+          1,
+          0,
+          9
+        ],
+        [
+          "epub to zip",
+          1,
+          0,
+          6
+        ]
+      ],
+      "cumulative_queries": 3
+    },
+    {
+      "date": "2026-07-27",
+      "query_count": 4,
+      "total_impressions": 5,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 to mobi",
+          2,
+          0,
+          37
+        ],
+        [
+          "azw to mobi",
+          1,
+          0,
+          69
+        ],
+        [
+          "epub to zip",
+          1,
+          0,
+          9
+        ],
+        [
+          "lit ebook format",
+          1,
+          0,
+          85
+        ]
+      ],
+      "cumulative_queries": 5
+    },
+    {
+      "date": "2026-07-28",
+      "query_count": 2,
+      "total_impressions": 2,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 vs mobi",
+          1,
+          0,
+          22
+        ],
+        [
+          "zip epub",
+          1,
+          0,
+          33
+        ]
+      ],
+      "cumulative_queries": 7
+    },
+    {
+      "date": "2026-07-29",
+      "query_count": 6,
+      "total_impressions": 6,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "epub to txt convert",
+          1,
+          0,
+          77
+        ],
+        [
+          "epub to txt converter",
+          1,
+          0,
+          77
+        ],
+        [
+          "epub to zip",
+          1,
+          0,
+          9
+        ],
+        [
+          "epub txt converter",
+          1,
+          0,
+          76
+        ],
+        [
+          "mobi in epub",
+          1,
+          0,
+          56
+        ],
+        [
+          "mobi into epub",
+          1,
+          0,
+          69
+        ]
+      ],
+      "cumulative_queries": 12
+    },
+    {
+      "date": "2026-07-30",
+      "query_count": 7,
+      "total_impressions": 10,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi to epub",
+          3,
+          0,
+          78
+        ],
+        [
+          "convert mobi to epub",
+          2,
+          0,
+          76.5
+        ],
+        [
+          "conversor mobi a epub",
+          1,
+          0,
+          48
+        ],
+        [
+          "convert epub to zip",
+          1,
+          0,
+          7
+        ],
+        [
+          "epub to txt",
+          1,
+          0,
+          69
+        ],
+        [
+          "epub to zip",
+          1,
+          0,
+          8
+        ],
+        [
+          "mobi convert to epub",
+          1,
+          0,
+          68
+        ]
+      ],
+      "cumulative_queries": 17
+    },
+    {
+      "date": "2026-07-31",
+      "query_count": 6,
+      "total_impressions": 12,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "epub to txt",
+          4,
+          0,
+          69.25
+        ],
+        [
+          "mobi to epub",
+          4,
+          0,
+          66.25
+        ],
+        [
+          "convert epub to zip",
+          1,
+          0,
+          8
+        ],
+        [
+          "convertire mobi in epub",
+          1,
+          0,
+          57
+        ],
+        [
+          "epub or mobi for kindle",
+          1,
+          0,
+          77
+        ],
+        [
+          "how to change epub to mobi",
+          1,
+          0,
+          84
+        ]
+      ],
+      "cumulative_queries": 20
+    },
+    {
+      "date": "2026-08-01",
+      "query_count": 6,
+      "total_impressions": 10,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "convert mobi to epub",
+          3,
+          0,
+          68
+        ],
+        [
+          "convert azw3 to mobi",
+          2,
+          0,
+          54.5
+        ],
+        [
+          "epub txt",
+          2,
+          0,
+          72
+        ],
+        [
+          "epub oder mobi",
+          1,
+          0,
+          83
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          80
+        ],
+        [
+          "zip to epub",
+          1,
+          0,
+          47
+        ]
+      ],
+      "cumulative_queries": 24
+    },
+    {
+      "date": "2026-08-02",
+      "query_count": 10,
+      "total_impressions": 23,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi to epub",
+          8,
+          0,
+          66.38
+        ],
+        [
+          "convert mobi to epub",
+          4,
+          0,
+          68.25
+        ],
+        [
+          "epub to zip",
+          2,
+          0,
+          11.5
+        ],
+        [
+          "mobi epub",
+          2,
+          0,
+          79.5
+        ],
+        [
+          "mobi to epub converter",
+          2,
+          0,
+          67
+        ],
+        [
+          "change mobi to epub",
+          1,
+          0,
+          75
+        ],
+        [
+          "convert to mobi",
+          1,
+          0,
+          81
+        ],
+        [
+          "lit to epub",
+          1,
+          0,
+          28
+        ],
+        [
+          "mobi to epub conversion",
+          1,
+          0,
+          68
+        ],
+        [
+          "mobi to epub convert",
+          1,
+          0,
+          63
+        ]
+      ],
+      "cumulative_queries": 31
+    },
+    {
+      "date": "2026-08-03",
+      "query_count": 14,
+      "total_impressions": 26,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi to epub",
+          5,
+          0,
+          65.8
+        ],
+        [
+          "azw to mobi",
+          3,
+          0,
+          66
+        ],
+        [
+          "azw3 to mobi",
+          3,
+          0,
+          55
+        ],
+        [
+          "epub to mobi",
+          2,
+          0,
+          66.5
+        ],
+        [
+          "epub to zip",
+          2,
+          0,
+          13
+        ],
+        [
+          "lit to mobi",
+          2,
+          0,
+          64.5
+        ],
+        [
+          "mobi converter",
+          2,
+          0,
+          78
+        ],
+        [
+          "chm to mobi",
+          1,
+          0,
+          68
+        ],
+        [
+          "conversion epub mobi",
+          1,
+          0,
+          60
+        ],
+        [
+          "conversion mobi epub",
+          1,
+          0,
+          72
+        ],
+        [
+          "convert epub to mobi",
+          1,
+          0,
+          72
+        ],
+        [
+          "converting epub to mobi",
+          1,
+          0,
+          65
+        ],
+        [
+          "mobi conversion",
+          1,
+          0,
+          85
+        ],
+        [
+          "mobi to epub converter",
+          1,
+          0,
+          70
+        ]
+      ],
+      "cumulative_queries": 40
+    },
+    {
+      "date": "2026-08-04",
+      "query_count": 8,
+      "total_impressions": 10,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi in epub",
+          2,
+          0,
+          75
+        ],
+        [
+          "mobi to epub",
+          2,
+          0,
+          63.5
+        ],
+        [
+          "convert mobi to epub",
+          1,
+          0,
+          68
+        ],
+        [
+          "convert to mobi",
+          1,
+          0,
+          71
+        ],
+        [
+          "converter mobi to epub",
+          1,
+          0,
+          64
+        ],
+        [
+          "epub 2 mobi",
+          1,
+          0,
+          68
+        ],
+        [
+          "live original epub",
+          1,
+          0,
+          44
+        ],
+        [
+          "mobi to kobo",
+          1,
+          0,
+          38
+        ]
+      ],
+      "cumulative_queries": 44
+    },
+    {
+      "date": "2026-08-05",
+      "query_count": 19,
+      "total_impressions": 23,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "convertir en mobi",
+          3,
+          0,
+          72.33
+        ],
+        [
+          "epub to mobi online",
+          2,
+          0,
+          60.5
+        ],
+        [
+          "mobi to epub conversion",
+          2,
+          0,
+          72
+        ],
+        [
+          "azw3 kindle",
+          1,
+          0,
+          52
+        ],
+        [
+          "azw3 or mobi",
+          1,
+          0,
+          11
+        ],
+        [
+          "azw3 vs mobi",
+          1,
+          0,
+          10
+        ],
+        [
+          "bigconv",
+          1,
+          0,
+          43
+        ],
+        [
+          "book converter",
+          1,
+          0,
+          72
+        ],
+        [
+          "can kindle read azw3",
+          1,
+          0,
+          40
+        ],
+        [
+          "convert epub to mobi online",
+          1,
+          0,
+          55
+        ],
+        [
+          "does azw3 work on kindle",
+          1,
+          0,
+          12
+        ],
+        [
+          "e-book converter",
+          1,
+          0,
+          83
+        ],
+        [
+          "ebook conversion",
+          1,
+          0,
+          86
+        ],
+        [
+          "ebook converter",
+          1,
+          0,
+          86
+        ],
+        [
+          "epub to mobi",
+          1,
+          0,
+          67
+        ],
+        [
+          "mobi or azw3 for kindle",
+          1,
+          0,
+          10
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          63
+        ],
+        [
+          "mobi vs azw3",
+          1,
+          0,
+          10
+        ],
+        [
+          "what are azw3 files",
+          1,
+          0,
+          71
+        ]
+      ],
+      "cumulative_queries": 59
+    },
+    {
+      "date": "2026-08-06",
+      "query_count": 20,
+      "total_impressions": 28,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi to epub",
+          3,
+          0,
+          76.33
+        ],
+        [
+          "mobi vs azw3",
+          3,
+          0,
+          9.67
+        ],
+        [
+          "azw3 vs mobi",
+          2,
+          0,
+          9
+        ],
+        [
+          "change epub to mobi",
+          2,
+          0,
+          65
+        ],
+        [
+          "change mobi to epub",
+          2,
+          0,
+          80.5
+        ],
+        [
+          "what is azw3",
+          2,
+          0,
+          58.5
+        ],
+        [
+          "azw3 or mobi for kindle",
+          1,
+          0,
+          9
+        ],
+        [
+          "calibre ebook converter",
+          1,
+          0,
+          46
+        ],
+        [
+          "conversor mobi epub",
+          1,
+          0,
+          74
+        ],
+        [
+          "convert epub to azw3",
+          1,
+          0,
+          44
+        ],
+        [
+          "convertir ebook",
+          1,
+          0,
+          73
+        ],
+        [
+          "epub a awz3",
+          1,
+          0,
+          44
+        ],
+        [
+          "epub to lrf",
+          1,
+          0,
+          15
+        ],
+        [
+          "epub to mob",
+          1,
+          0,
+          70
+        ],
+        [
+          "epub to txt",
+          1,
+          0,
+          71
+        ],
+        [
+          "epub to zip converter",
+          1,
+          0,
+          37
+        ],
+        [
+          "mobi in epub",
+          1,
+          0,
+          72
+        ],
+        [
+          "mobi vs azw3 for kindle",
+          1,
+          0,
+          10
+        ],
+        [
+          "mobipocket to epub",
+          1,
+          0,
+          62
+        ],
+        [
+          "what is a azw3 file",
+          1,
+          0,
+          62
+        ]
+      ],
+      "cumulative_queries": 73
+    },
+    {
+      "date": "2026-08-07",
+      "query_count": 16,
+      "total_impressions": 24,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 vs mobi",
+          5,
+          0,
+          10
+        ],
+        [
+          "convert mobi to epub",
+          3,
+          0,
+          73
+        ],
+        [
+          "convert epub to mobi",
+          2,
+          0,
+          70
+        ],
+        [
+          "epub to zip",
+          2,
+          0,
+          8
+        ],
+        [
+          "azw format",
+          1,
+          0,
+          83
+        ],
+        [
+          "azw3 or mobi for kindle",
+          1,
+          0,
+          9
+        ],
+        [
+          "azw3 to mobi",
+          1,
+          0,
+          52
+        ],
+        [
+          "azw3 vs mobi for kindle",
+          1,
+          0,
+          7
+        ],
+        [
+          "convert epub to zip",
+          1,
+          0,
+          9
+        ],
+        [
+          "epub en mobi",
+          1,
+          0,
+          67
+        ],
+        [
+          "epub mobi",
+          1,
+          0,
+          84
+        ],
+        [
+          "epub to mobi",
+          1,
+          0,
+          69
+        ],
+        [
+          "mobi file converter",
+          1,
+          0,
+          82
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          67
+        ],
+        [
+          "mobi vs azw3 for kindle",
+          1,
+          0,
+          9
+        ],
+        [
+          "mobi2epub",
+          1,
+          0,
+          75
+        ]
+      ],
+      "cumulative_queries": 79
+    },
+    {
+      "date": "2026-08-08",
+      "query_count": 21,
+      "total_impressions": 32,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 vs mobi",
+          5,
+          0,
+          9.8
+        ],
+        [
+          "mobi to epub",
+          4,
+          0,
+          67.25
+        ],
+        [
+          "convert to mobi",
+          3,
+          0,
+          72.67
+        ],
+        [
+          "change epub to mobi",
+          2,
+          0,
+          69
+        ],
+        [
+          "epub to azw3",
+          2,
+          0,
+          46
+        ],
+        [
+          "azw3 or mobi",
+          1,
+          0,
+          11
+        ],
+        [
+          "azw3 vs mobi for kindle",
+          1,
+          0,
+          11
+        ],
+        [
+          "conversor epub mobi",
+          1,
+          0,
+          54
+        ],
+        [
+          "convert mobi to epub",
+          1,
+          0,
+          67
+        ],
+        [
+          "convert rtf to epub",
+          1,
+          0,
+          46
+        ],
+        [
+          "converter epub to azw3",
+          1,
+          0,
+          48
+        ],
+        [
+          "docx to epub",
+          1,
+          0,
+          86
+        ],
+        [
+          "ebook mobi",
+          1,
+          0,
+          88
+        ],
+        [
+          "epub and mobi",
+          1,
+          0,
+          89
+        ],
+        [
+          "epub mobi converter",
+          1,
+          0,
+          73
+        ],
+        [
+          "epub mobi format",
+          1,
+          0,
+          90
+        ],
+        [
+          "epub to zip converter",
+          1,
+          0,
+          7
+        ],
+        [
+          "mobi or azw3",
+          1,
+          0,
+          10
+        ],
+        [
+          "mobi vs azw3",
+          1,
+          0,
+          10
+        ],
+        [
+          "mobi vs azw3 for kindle",
+          1,
+          0,
+          11
+        ],
+        [
+          "send azw3 to kindle",
+          1,
+          0,
+          32
+        ]
+      ],
+      "cumulative_queries": 90
+    },
+    {
+      "date": "2026-08-09",
+      "query_count": 46,
+      "total_impressions": 71,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "lit to epub",
+          4,
+          0,
+          19.25
+        ],
+        [
+          "mobi epub",
+          4,
+          0,
+          86
+        ],
+        [
+          "mobi or azw3",
+          4,
+          0,
+          15.75
+        ],
+        [
+          "mobi to epub",
+          4,
+          0,
+          64.25
+        ],
+        [
+          "azw3 vs mobi",
+          3,
+          0,
+          10
+        ],
+        [
+          "mobi vs azw3",
+          3,
+          0,
+          7.67
+        ],
+        [
+          "azw3",
+          2,
+          0,
+          64.5
+        ],
+        [
+          "convertire epub in azw3",
+          2,
+          0,
+          42
+        ],
+        [
+          "docx to epub",
+          2,
+          0,
+          80
+        ],
+        [
+          "epub para doc",
+          2,
+          0,
+          46.5
+        ],
+        [
+          "epub to azw3",
+          2,
+          0,
+          43.5
+        ],
+        [
+          "epub to docx converter",
+          2,
+          0,
+          59
+        ],
+        [
+          "epub to word converter",
+          2,
+          0,
+          58
+        ],
+        [
+          "mobi to epub converter",
+          2,
+          0,
+          71
+        ],
+        [
+          "mobipocket to epub",
+          2,
+          0,
+          69.5
+        ],
+        [
+          "azw3 or mobi for kindle",
+          1,
+          0,
+          10
+        ],
+        [
+          "azw3 vs epub vs mobi",
+          1,
+          0,
+          8
+        ],
+        [
+          "azw3 vs mobi for kindle",
+          1,
+          0,
+          10
+        ],
+        [
+          "change mobi to epub",
+          1,
+          0,
+          70
+        ],
+        [
+          "comm click here to order (epub|pdf|mobi)",
+          1,
+          0,
+          87
+        ],
+        [
+          "conversion mobi epub",
+          1,
+          0,
+          74
+        ],
+        [
+          "convert epub to azw3",
+          1,
+          0,
+          46
+        ],
+        [
+          "convert mobi to epub",
+          1,
+          0,
+          60
+        ],
+        [
+          "converter epub em docx",
+          1,
+          0,
+          38
+        ],
+        [
+          "converter mobi pra epub",
+          1,
+          0,
+          47
+        ],
+        [
+          "convertidor de epub a docx",
+          1,
+          0,
+          55
+        ],
+        [
+          "converting azw3 to epub",
+          1,
+          0,
+          46
+        ],
+        [
+          "epub convert to txt",
+          1,
+          0,
+          63
+        ],
+        [
+          "epub doc",
+          1,
+          0,
+          85
+        ],
+        [
+          "epub mobi format",
+          1,
+          0,
+          80
+        ],
+        [
+          "epub to amz",
+          1,
+          0,
+          48
+        ],
+        [
+          "epub to doc",
+          1,
+          0,
+          48
+        ],
+        [
+          "epub to docx",
+          1,
+          0,
+          52
+        ],
+        [
+          "epub to word",
+          1,
+          0,
+          51
+        ],
+        [
+          "epub vs mobi for kobo",
+          1,
+          0,
+          47
+        ],
+        [
+          "is azw3 compatible with kindle",
+          1,
+          0,
+          32
+        ],
+        [
+          "kindle format epub or mobi",
+          1,
+          0,
+          73
+        ],
+        [
+          "kindle mobi or epub",
+          1,
+          0,
+          74
+        ],
+        [
+          "lit vs epub",
+          1,
+          0,
+          8
+        ],
+        [
+          "mobi a epub",
+          1,
+          0,
+          79
+        ],
+        [
+          "mobi epub converter",
+          1,
+          0,
+          58
+        ],
+        [
+          "mobi in epub",
+          1,
+          0,
+          71
+        ],
+        [
+          "mobi to rtf",
+          1,
+          0,
+          41
+        ],
+        [
+          "prc to mobi",
+          1,
+          0,
+          58
+        ],
+        [
+          "rtf to epub",
+          1,
+          0,
+          40
+        ],
+        [
+          "transform epub to mobi",
+          1,
+          0,
+          67
+        ]
+      ],
+      "cumulative_queries": 118
+    },
+    {
+      "date": "2026-08-10",
+      "query_count": 41,
+      "total_impressions": 55,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "epub to zip",
+          4,
+          0,
+          7.75
+        ],
+        [
+          "mobi vs azw3",
+          4,
+          0,
+          6.25
+        ],
+        [
+          "can kindle read azw3",
+          2,
+          0,
+          25
+        ],
+        [
+          "converter epub em docx",
+          2,
+          0,
+          38.5
+        ],
+        [
+          "ebook converter",
+          2,
+          0,
+          81.5
+        ],
+        [
+          "ebook online convert",
+          2,
+          0,
+          72
+        ],
+        [
+          "epub para docx",
+          2,
+          0,
+          42
+        ],
+        [
+          "epub to txt",
+          2,
+          0,
+          68
+        ],
+        [
+          "lit to epub",
+          2,
+          0,
+          24
+        ],
+        [
+          "rtf a epub",
+          2,
+          0,
+          40
+        ],
+        [
+          "azw3",
+          1,
+          0,
+          55
+        ],
+        [
+          "azw3 kindle",
+          1,
+          0,
+          36
+        ],
+        [
+          "azw3 or mobi",
+          1,
+          0,
+          11
+        ],
+        [
+          "azw3 to epub",
+          1,
+          0,
+          60
+        ],
+        [
+          "azw3 vs mobi",
+          1,
+          0,
+          8
+        ],
+        [
+          "calibre converter",
+          1,
+          0,
+          27
+        ],
+        [
+          "calibre ebook convert",
+          1,
+          0,
+          60
+        ],
+        [
+          "calibre ebook converter",
+          1,
+          0,
+          55
+        ],
+        [
+          "calibre ebook-convert",
+          1,
+          0,
+          60
+        ],
+        [
+          "change mobi to epub",
+          1,
+          0,
+          73
+        ],
+        [
+          "convert ebook",
+          1,
+          0,
+          79
+        ],
+        [
+          "convert epub to azw",
+          1,
+          0,
+          52
+        ],
+        [
+          "convert mobi file to epub",
+          1,
+          0,
+          98
+        ],
+        [
+          "convert mobi to epub",
+          1,
+          0,
+          76
+        ],
+        [
+          "convertisseur epub azw3",
+          1,
+          0,
+          67
+        ],
+        [
+          "docx to epub",
+          1,
+          0,
+          79
+        ],
+        [
+          "ebook conversion",
+          1,
+          0,
+          87
+        ],
+        [
+          "ebook converter online",
+          1,
+          0,
+          67
+        ],
+        [
+          "ebook convertor",
+          1,
+          0,
+          75
+        ],
+        [
+          "epub para doc",
+          1,
+          0,
+          45
+        ],
+        [
+          "epub to azw",
+          1,
+          0,
+          49
+        ],
+        [
+          "epub to azw3",
+          1,
+          0,
+          43
+        ],
+        [
+          "epub to text",
+          1,
+          0,
+          82
+        ],
+        [
+          "format mobi",
+          1,
+          0,
+          79
+        ],
+        [
+          "kindle paperwhite epub or mobi",
+          1,
+          0,
+          46
+        ],
+        [
+          "mobi epub",
+          1,
+          0,
+          91
+        ],
+        [
+          "mobi or azw3 for kindle",
+          1,
+          0,
+          9
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          71
+        ],
+        [
+          "mobi to epub converter",
+          1,
+          0,
+          75
+        ],
+        [
+          "rtf to epub",
+          1,
+          0,
+          41
+        ],
+        [
+          "send awz3 to kindle",
+          1,
+          0,
+          19
+        ]
+      ],
+      "cumulative_queries": 136
+    },
+    {
+      "date": "2026-08-11",
+      "query_count": 40,
+      "total_impressions": 60,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "azw3 vs mobi",
+          7,
+          0,
+          9.86
+        ],
+        [
+          "lit to epub",
+          4,
+          0,
+          17.5
+        ],
+        [
+          "book conversion",
+          3,
+          0,
+          75.67
+        ],
+        [
+          ".lcpl to epub",
+          2,
+          0,
+          41
+        ],
+        [
+          "azw3",
+          2,
+          0,
+          58.5
+        ],
+        [
+          "convert epub to azw3",
+          2,
+          0,
+          49.5
+        ],
+        [
+          "epub a azw3",
+          2,
+          0,
+          49.5
+        ],
+        [
+          "epub para txt",
+          2,
+          0,
+          50
+        ],
+        [
+          "epub to azw3",
+          2,
+          0,
+          44.5
+        ],
+        [
+          "epub to zip",
+          2,
+          0,
+          5.5
+        ],
+        [
+          "epub vs mobi",
+          2,
+          0,
+          67.5
+        ],
+        [
+          "how to add azw3 to kindle",
+          2,
+          0,
+          33.5
+        ],
+        [
+          ".azw3 to epub",
+          1,
+          0,
+          61
+        ],
+        [
+          ".lit to epub",
+          1,
+          0,
+          29
+        ],
+        [
+          "azw3 vs epub",
+          1,
+          0,
+          25
+        ],
+        [
+          "azw3 vs kfx",
+          1,
+          0,
+          29
+        ],
+        [
+          "book conversion to ebook",
+          1,
+          0,
+          86
+        ],
+        [
+          "book converter",
+          1,
+          0,
+          64
+        ],
+        [
+          "book convertor",
+          1,
+          0,
+          59
+        ],
+        [
+          "books converter",
+          1,
+          0,
+          65
+        ],
+        [
+          "can kindle read azw3 files",
+          1,
+          0,
+          11
+        ],
+        [
+          "conversor mobi epub",
+          1,
+          0,
+          63
+        ],
+        [
+          "convert book",
+          1,
+          0,
+          66
+        ],
+        [
+          "convert books",
+          1,
+          0,
+          77
+        ],
+        [
+          "convert ebooks",
+          1,
+          0,
+          72
+        ],
+        [
+          "convert epub to amz3",
+          1,
+          0,
+          47
+        ],
+        [
+          "convert epub to doc",
+          1,
+          0,
+          62
+        ],
+        [
+          "convert epub to rtf",
+          1,
+          0,
+          40
+        ],
+        [
+          "convert epub to txt",
+          1,
+          0,
+          71
+        ],
+        [
+          "convert txt to epub",
+          1,
+          0,
+          75
+        ],
+        [
+          "docx to epub",
+          1,
+          0,
+          84
+        ],
+        [
+          "ebook convertor",
+          1,
+          0,
+          72
+        ],
+        [
+          "ebook lit",
+          1,
+          0,
+          31
+        ],
+        [
+          "epub to awz3",
+          1,
+          0,
+          46
+        ],
+        [
+          "epub to prc",
+          1,
+          0,
+          49
+        ],
+        [
+          "epub to txt",
+          1,
+          0,
+          58
+        ],
+        [
+          "mobi epub",
+          1,
+          0,
+          80
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          67
+        ],
+        [
+          "mobi toepub",
+          1,
+          0,
+          76
+        ],
+        [
+          "mobi vs azw3",
+          1,
+          0,
+          11
+        ]
+      ],
+      "cumulative_queries": 162
+    },
+    {
+      "date": "2026-08-12",
+      "query_count": 75,
+      "total_impressions": 99,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi vs azw3",
+          4,
+          0,
+          13.25
+        ],
+        [
+          "azw3 vs mobi",
+          3,
+          0,
+          10.33
+        ],
+        [
+          "ebook converter",
+          3,
+          0,
+          85.67
+        ],
+        [
+          "lit to epub",
+          3,
+          0,
+          23.67
+        ],
+        [
+          ".mobi to epub converter",
+          2,
+          0,
+          80
+        ],
+        [
+          "azw3 kindle paperwhite",
+          2,
+          0,
+          25
+        ],
+        [
+          "calibre ebook-convert",
+          2,
+          0,
+          60
+        ],
+        [
+          "convert mobi file to epub",
+          2,
+          0,
+          81
+        ],
+        [
+          "converter mobi para epub",
+          2,
+          0,
+          60.5
+        ],
+        [
+          "does kindle read azw3",
+          2,
+          0,
+          40.5
+        ],
+        [
+          "epub para doc",
+          2,
+          0,
+          46
+        ],
+        [
+          "epub para txt",
+          2,
+          0,
+          54
+        ],
+        [
+          "epub to azw3",
+          2,
+          0,
+          48
+        ],
+        [
+          "epub to txt",
+          2,
+          0,
+          64.5
+        ],
+        [
+          "epub vs mobi",
+          2,
+          0,
+          69.5
+        ],
+        [
+          "kindle format mobi or epub",
+          2,
+          0,
+          85
+        ],
+        [
+          "lit format",
+          2,
+          0,
+          39.5
+        ],
+        [
+          "mobi para epub",
+          2,
+          0,
+          63.5
+        ],
+        [
+          "rtf to epub",
+          2,
+          0,
+          46
+        ],
+        [
+          "azw3",
+          1,
+          0,
+          69
+        ],
+        [
+          "azw3 file",
+          1,
+          0,
+          70
+        ],
+        [
+          "azw3 file to kindle",
+          1,
+          0,
+          55
+        ],
+        [
+          "azw3 kindle",
+          1,
+          0,
+          38
+        ],
+        [
+          "book converter",
+          1,
+          0,
+          80
+        ],
+        [
+          "caliber ebook converter",
+          1,
+          0,
+          60
+        ],
+        [
+          "calibre convert epub to mobi",
+          1,
+          0,
+          10
+        ],
+        [
+          "calibre converter",
+          1,
+          0,
+          45
+        ],
+        [
+          "calibre ebook convert",
+          1,
+          0,
+          61
+        ],
+        [
+          "calibre ebook converter",
+          1,
+          0,
+          56
+        ],
+        [
+          "can kobo read azw3",
+          1,
+          0,
+          10
+        ],
+        [
+          "conversion mobi epub",
+          1,
+          0,
+          76
+        ],
+        [
+          "convert .lit to epub",
+          1,
+          0,
+          30
+        ],
+        [
+          "convert book into ebook",
+          1,
+          0,
+          75
+        ],
+        [
+          "convert ebook online",
+          1,
+          0,
+          81
+        ],
+        [
+          "convert from mobi to epub",
+          1,
+          0,
+          78
+        ],
+        [
+          "convert lit to epub",
+          1,
+          0,
+          31
+        ],
+        [
+          "convert mobi to epub",
+          1,
+          0,
+          78
+        ],
+        [
+          "convert rtf to epub",
+          1,
+          0,
+          47
+        ],
+        [
+          "converter epub para azw3",
+          1,
+          0,
+          49
+        ],
+        [
+          "converter mobi epub",
+          1,
+          0,
+          58
+        ],
+        [
+          "converting mobi to epub",
+          1,
+          0,
+          84
+        ],
+        [
+          "convertir epub en txt",
+          1,
+          0,
+          57
+        ],
+        [
+          "docx to epub",
+          1,
+          0,
+          83
+        ],
+        [
+          "does kindle support azw3",
+          1,
+          0,
+          11
+        ],
+        [
+          "ebook conversions",
+          1,
+          0,
+          92
+        ],
+        [
+          "ebook converter online",
+          1,
+          0,
+          66
+        ],
+        [
+          "ebook online converter",
+          1,
+          0,
+          70
+        ],
+        [
+          "epub to azw converter",
+          1,
+          0,
+          39
+        ],
+        [
+          "epub to kindle converter",
+          1,
+          0,
+          22
+        ],
+        [
+          "epub to txt converter",
+          1,
+          0,
+          62
+        ],
+        [
+          "epub to word",
+          1,
+          0,
+          62
+        ],
+        [
+          "epub to zip",
+          1,
+          0,
+          7
+        ],
+        [
+          "epub vs azw3 for kindle",
+          1,
+          0,
+          51
+        ],
+        [
+          "free ebook converter for kindle",
+          1,
+          0,
+          93
+        ],
+        [
+          "how do i convert mobi to epub",
+          1,
+          0,
+          80
+        ],
+        [
+          "how to change mobi to epub",
+          1,
+          0,
+          85
+        ],
+        [
+          "kindle epub or mobi",
+          1,
+          0,
+          67
+        ],
+        [
+          "lit file kindle",
+          1,
+          0,
+          41
+        ],
+        [
+          "mobi convert to epub",
+          1,
+          0,
+          73
+        ],
+        [
+          "mobi converter to epub",
+          1,
+          0,
+          77
+        ],
+        [
+          "mobi e epub",
+          1,
+          0,
+          73
+        ],
+        [
+          "mobi epub converter",
+          1,
+          0,
+          75
+        ],
+        [
+          "mobi to epub",
+          1,
+          0,
+          75
+        ],
+        [
+          "mobi to epub conversion",
+          1,
+          0,
+          72
+        ],
+        [
+          "mobi to epub convert",
+          1,
+          0,
+          78
+        ],
+        [
+          "mobi to epub converter",
+          1,
+          0,
+          75
+        ],
+        [
+          "mobi to epub online free",
+          1,
+          0,
+          68
+        ],
+        [
+          "mobi vs epub",
+          1,
+          0,
+          74
+        ],
+        [
+          "online ebook conversion",
+          1,
+          0,
+          78
+        ],
+        [
+          "online ebook convert",
+          1,
+          0,
+          74
+        ],
+        [
+          "online ebook converter",
+          1,
+          0,
+          63
+        ],
+        [
+          "send azw3 to kindle",
+          1,
+          0,
+          32
+        ],
+        [
+          "txt epub",
+          1,
+          0,
+          75
+        ],
+        [
+          "txt to epub",
+          1,
+          0,
+          72
+        ],
+        [
+          "what is mobi format for ebooks",
+          1,
+          0,
+          100
+        ]
+      ],
+      "cumulative_queries": 204
+    },
+    {
+      "date": "2026-08-13",
+      "query_count": 53,
+      "total_impressions": 87,
+      "other_bucket_impressions": 0,
+      "queries": [
+        [
+          "mobi to epub",
+          11,
+          0,
+          72.55
+        ],
+        [
+          "azw3 file format",
+          4,
+          0,
+          80
+        ],
+        [
+          "azw3 vs mobi",
+          4,
+          0,
+          11
+        ],
+        [
+          "azw3 kindle",
+          3,
+          0,
+          29.33
+        ],
+        [
+          "calibre converter",
+          3,
+          0,
+          48
+        ],
+        [
+          "epub to azw3",
+          3,
+          0,
+          46.33
+        ],
+        [
+          "what is azw3",
+          3,
+          0,
+          75
+        ],
+        [
+          "best mobi to epub converter",
+          2,
+          0,
+          80.5
+        ],
+        [
+          "convert mobi to epub",
+          2,
+          0,
+          86.5
+        ],
+        [
+          "converting mobi to epub",
+          2,
+          0,
+          87.5
+        ],
+        [
+          "epub a azw3",
+          2,
+          0,
+          50
+        ],
+        [
+          "epub convert to txt",
+          2,
+          0,
+          68
+        ],
+        [
+          "epub para doc",
+          2,
+          0,
+          46
+        ],
+        [
+          "epub vs mobi",
+          2,
+          0,
+          75
+        ],
+        [
+          "lit to epub",
+          2,
+          0,
+          18
+        ],
+        [
+          "mobi to epub linux",
+          2,
+          0,
+          92
+        ],
+        [
+          "transform mobi to epub",
+          2,
+          0,
+          68
+        ],
+        [
+          "azw3",
+          1,
+          0,
+          53
+        ],
+        [
+          "azw3 vs kfx",
+          1,
+          0,
+          6
+        ],
+        [
+          "book to ebook converter",
+          1,
+          0,
+          89
+        ],
+        [
+          "caliber ebook converter",
+          1,
+          0,
+          43
+        ],
+        [
+          "calibre convert",
+          1,
+          0,
+          47
+        ],
+        [
+          "calibre online",
+          1,
+          0,
+          48
+        ],
+        [
+          "calibre online converter",
+          1,
+          0,
+          39
+        ],
+        [
+          "can you convert mobi to epub",
+          1,
+          0,
+          79
+        ],
+        [
+          "can't send azw3 to kindle",
+          1,
+          0,
+          89
+        ],
+        [
+          "cloudconvert epub to txt",
+          1,
+          0,
+          62
+        ],
+        [
+          "convertire epub in azw",
+          1,
+          0,
+          55
+        ],
+        [
+          "docx in epub",
+          1,
+          0,
+          82
+        ],
+        [
+          "docx to epub",
+          1,
+          0,
+          81
+        ],
+        [
+          "ebook converter",
+          1,
+          0,
+          87
+        ],
+        [
+          "ebook file formats",
+          1,
+          0,
+          88
+        ],
+        [
+          "epub amobi",
+          1,
+          0,
+          92
+        ],
+        [
+          "epub converter mobi",
+          1,
+          0,
+          80
+        ],
+        [
+          "epub to amz3",
+          1,
+          0,
+          55
+        ],
+        [
+          "epub to azw3 online converter",
+          1,
+          0,
+          56
+        ],
+        [
+          "epub to mobi converter",
+          1,
+          0,
+          72
+        ],
+        [
+          "epub to txt",
+          1,
+          0,
+          61
+        ],
+        [
+          "epub to zip converter",
+          1,
+          0,
+          7
+        ],
+        [
+          "how to convert mobi to epub",
+          1,
+          0,
+          83
+        ],
+        [
+          "is azw3 compatible with kindle",
+          1,
+          0,
+          6
+        ],
+        [
+          "is epub the best format",
+          1,
+          0,
+          57
+        ],
+        [
+          "kindle format epub or mobi",
+          1,
+          0,
+          74
+        ],
+        [
+          "kindle is epub or mobi",
+          1,
+          0,
+          73
+        ],
+        [
+          "lit vs epub",
+          1,
+          0,
+          7
+        ],
+        [
+          "mobi ebook",
+          1,
+          0,
+          95
+        ],
+        [
+          "mobi epub",
+          1,
+          0,
+          73
+        ],
+        [
+          "mobi epub converter",
+          1,
+          0,
+          80
+        ],
+        [
+          "mobi in epub",
+          1,
+          0,
+          55
+        ],
+        [
+          "mobi to awz3",
+          1,
+          0,
+          61
+        ],
+        [
+          "mobi to epub converter",
+          1,
+          0,
+          74
+        ],
+        [
+          "mobi vs epub",
+          1,
+          0,
+          79
+        ],
+        [
+          "turn book into ebook",
+          1,
+          0,
+          85
+        ]
+      ],
+      "cumulative_queries": 229
+    },
+    {
+      "date": "2026-08-14",
+      "query_count": 0,
+      "total_impressions": 0,
+      "other_bucket_impressions": 0,
+      "queries": [],
+      "cumulative_queries": 229
+    }
+  ],
+  "unique_queries_total": 229,
+  "unique_query_list": [
+    ".azw3 to epub",
+    ".lcpl to epub",
+    ".lit to epub",
+    ".mobi to epub converter",
+    "azw format",
+    "azw to mobi",
+    "azw3",
+    "azw3 file",
+    "azw3 file format",
+    "azw3 file to kindle",
+    "azw3 kindle",
+    "azw3 kindle paperwhite",
+    "azw3 or mobi",
+    "azw3 or mobi for kindle",
+    "azw3 to epub",
+    "azw3 to mobi",
+    "azw3 vs epub",
+    "azw3 vs epub vs mobi",
+    "azw3 vs kfx",
+    "azw3 vs mobi",
+    "azw3 vs mobi for kindle",
+    "best mobi to epub converter",
+    "bigconv",
+    "book conversion",
+    "book conversion to ebook",
+    "book converter",
+    "book convertor",
+    "book to ebook converter",
+    "books converter",
+    "caliber ebook converter",
+    "calibre convert",
+    "calibre convert epub to mobi",
+    "calibre converter",
+    "calibre ebook convert",
+    "calibre ebook converter",
+    "calibre ebook-convert",
+    "calibre online",
+    "calibre online converter",
+    "can kindle read azw3",
+    "can kindle read azw3 files",
+    "can kobo read azw3",
+    "can you convert mobi to epub",
+    "can't send azw3 to kindle",
+    "change epub to mobi",
+    "change mobi to epub",
+    "chm to mobi",
+    "cloudconvert epub to txt",
+    "comm click here to order (epub|pdf|mobi)",
+    "conversion epub mobi",
+    "conversion mobi epub",
+    "conversor epub mobi",
+    "conversor mobi a epub",
+    "conversor mobi epub",
+    "convert .lit to epub",
+    "convert azw3 to mobi",
+    "convert book",
+    "convert book into ebook",
+    "convert books",
+    "convert ebook",
+    "convert ebook online",
+    "convert ebooks",
+    "convert epub to amz3",
+    "convert epub to azw",
+    "convert epub to azw3",
+    "convert epub to doc",
+    "convert epub to mobi",
+    "convert epub to mobi online",
+    "convert epub to rtf",
+    "convert epub to txt",
+    "convert epub to zip",
+    "convert from mobi to epub",
+    "convert lit to epub",
+    "convert mobi file to epub",
+    "convert mobi to epub",
+    "convert rtf to epub",
+    "convert to mobi",
+    "convert txt to epub",
+    "converter epub em docx",
+    "converter epub para azw3",
+    "converter epub to azw3",
+    "converter mobi epub",
+    "converter mobi para epub",
+    "converter mobi pra epub",
+    "converter mobi to epub",
+    "convertidor de epub a docx",
+    "converting azw3 to epub",
+    "converting epub to mobi",
+    "converting mobi to epub",
+    "convertir ebook",
+    "convertir en mobi",
+    "convertir epub en txt",
+    "convertire epub in azw",
+    "convertire epub in azw3",
+    "convertire mobi in epub",
+    "convertisseur epub azw3",
+    "docx in epub",
+    "docx to epub",
+    "does azw3 work on kindle",
+    "does kindle read azw3",
+    "does kindle support azw3",
+    "e-book converter",
+    "ebook conversion",
+    "ebook conversions",
+    "ebook converter",
+    "ebook converter online",
+    "ebook convertor",
+    "ebook file formats",
+    "ebook lit",
+    "ebook mobi",
+    "ebook online convert",
+    "ebook online converter",
+    "epub 2 mobi",
+    "epub a awz3",
+    "epub a azw3",
+    "epub amobi",
+    "epub and mobi",
+    "epub convert to txt",
+    "epub converter mobi",
+    "epub doc",
+    "epub en mobi",
+    "epub mobi",
+    "epub mobi converter",
+    "epub mobi format",
+    "epub oder mobi",
+    "epub or mobi for kindle",
+    "epub para doc",
+    "epub para docx",
+    "epub para txt",
+    "epub to amz",
+    "epub to amz3",
+    "epub to awz3",
+    "epub to azw",
+    "epub to azw converter",
+    "epub to azw3",
+    "epub to azw3 online converter",
+    "epub to doc",
+    "epub to docx",
+    "epub to docx converter",
+    "epub to kindle converter",
+    "epub to lrf",
+    "epub to mob",
+    "epub to mobi",
+    "epub to mobi converter",
+    "epub to mobi online",
+    "epub to prc",
+    "epub to text",
+    "epub to txt",
+    "epub to txt convert",
+    "epub to txt converter",
+    "epub to word",
+    "epub to word converter",
+    "epub to zip",
+    "epub to zip converter",
+    "epub txt",
+    "epub txt converter",
+    "epub vs azw3 for kindle",
+    "epub vs mobi",
+    "epub vs mobi for kobo",
+    "format mobi",
+    "free ebook converter for kindle",
+    "how do i convert mobi to epub",
+    "how to add azw3 to kindle",
+    "how to change epub to mobi",
+    "how to change mobi to epub",
+    "how to convert mobi to epub",
+    "is azw3 compatible with kindle",
+    "is epub the best format",
+    "kindle epub or mobi",
+    "kindle format epub or mobi",
+    "kindle format mobi or epub",
+    "kindle is epub or mobi",
+    "kindle mobi or epub",
+    "kindle paperwhite epub or mobi",
+    "lit ebook format",
+    "lit file kindle",
+    "lit format",
+    "lit to epub",
+    "lit to mobi",
+    "lit vs epub",
+    "live original epub",
+    "mobi a epub",
+    "mobi conversion",
+    "mobi convert to epub",
+    "mobi converter",
+    "mobi converter to epub",
+    "mobi e epub",
+    "mobi ebook",
+    "mobi epub",
+    "mobi epub converter",
+    "mobi file converter",
+    "mobi in epub",
+    "mobi into epub",
+    "mobi or azw3",
+    "mobi or azw3 for kindle",
+    "mobi para epub",
+    "mobi to awz3",
+    "mobi to epub",
+    "mobi to epub conversion",
+    "mobi to epub convert",
+    "mobi to epub converter",
+    "mobi to epub linux",
+    "mobi to epub online free",
+    "mobi to kobo",
+    "mobi to rtf",
+    "mobi toepub",
+    "mobi vs azw3",
+    "mobi vs azw3 for kindle",
+    "mobi vs epub",
+    "mobi2epub",
+    "mobipocket to epub",
+    "online ebook conversion",
+    "online ebook convert",
+    "online ebook converter",
+    "prc to mobi",
+    "rtf a epub",
+    "rtf to epub",
+    "send awz3 to kindle",
+    "send azw3 to kindle",
+    "transform epub to mobi",
+    "transform mobi to epub",
+    "turn book into ebook",
+    "txt epub",
+    "txt to epub",
+    "what are azw3 files",
+    "what is a azw3 file",
+    "what is azw3",
+    "what is mobi format for ebooks",
+    "zip epub",
+    "zip to epub"
+  ],
+  "cumulative_per_day": [
+    {
+      "date": "2026-07-26",
+      "daily": 3,
+      "cumulative": 3
+    },
+    {
+      "date": "2026-07-27",
+      "daily": 4,
+      "cumulative": 5
+    },
+    {
+      "date": "2026-07-28",
+      "daily": 2,
+      "cumulative": 7
+    },
+    {
+      "date": "2026-07-29",
+      "daily": 6,
+      "cumulative": 12
+    },
+    {
+      "date": "2026-07-30",
+      "daily": 7,
+      "cumulative": 17
+    },
+    {
+      "date": "2026-07-31",
+      "daily": 6,
+      "cumulative": 20
+    },
+    {
+      "date": "2026-08-01",
+      "daily": 6,
+      "cumulative": 24
+    },
+    {
+      "date": "2026-08-02",
+      "daily": 10,
+      "cumulative": 31
+    },
+    {
+      "date": "2026-08-03",
+      "daily": 14,
+      "cumulative": 40
+    },
+    {
+      "date": "2026-08-04",
+      "daily": 8,
+      "cumulative": 44
+    },
+    {
+      "date": "2026-08-05",
+      "daily": 19,
+      "cumulative": 59
+    },
+    {
+      "date": "2026-08-06",
+      "daily": 20,
+      "cumulative": 73
+    },
+    {
+      "date": "2026-08-07",
+      "daily": 16,
+      "cumulative": 79
+    },
+    {
+      "date": "2026-08-08",
+      "daily": 21,
+      "cumulative": 90
+    },
+    {
+      "date": "2026-08-09",
+      "daily": 46,
+      "cumulative": 118
+    },
+    {
+      "date": "2026-08-10",
+      "daily": 41,
+      "cumulative": 136
+    },
+    {
+      "date": "2026-08-11",
+      "daily": 40,
+      "cumulative": 162
+    },
+    {
+      "date": "2026-08-12",
+      "daily": 75,
+      "cumulative": 204
+    },
+    {
+      "date": "2026-08-13",
+      "daily": 53,
+      "cumulative": 229
+    },
+    {
+      "date": "2026-08-14",
+      "daily": 0,
+      "cumulative": 229
+    }
+  ],
+  "date_series": [
+    {
+      "date": "2026-07-26",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 16.6
+    },
+    {
+      "date": "2026-07-27",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 44.2
+    },
+    {
+      "date": "2026-07-28",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 28
+    },
+    {
+      "date": "2026-07-29",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 60.67
+    },
+    {
+      "date": "2026-07-30",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 57.57
+    },
+    {
+      "date": "2026-07-31",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 54.75
+    },
+    {
+      "date": "2026-08-01",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 52.88
+    },
+    {
+      "date": "2026-08-02",
+      "impressions": 27,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 57.19
+    },
+    {
+      "date": "2026-08-03",
+      "impressions": 32,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 56.59
+    },
+    {
+      "date": "2026-08-04",
+      "impressions": 18,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 49.5
+    },
+    {
+      "date": "2026-08-05",
+      "impressions": 41,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 40.2
+    },
+    {
+      "date": "2026-08-06",
+      "impressions": 47,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 35.83
+    },
+    {
+      "date": "2026-08-07",
+      "impressions": 45,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 36.64
+    },
+    {
+      "date": "2026-08-08",
+      "impressions": 37,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 42.38
+    },
+    {
+      "date": "2026-08-09",
+      "impressions": 150,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 39.53
+    },
+    {
+      "date": "2026-08-10",
+      "impressions": 116,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 36.29
+    },
+    {
+      "date": "2026-08-11",
+      "impressions": 131,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 33.45
+    },
+    {
+      "date": "2026-08-12",
+      "impressions": 221,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 60.11
+    },
+    {
+      "date": "2026-08-13",
+      "impressions": 171,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 63.38
+    }
+  ]
+}

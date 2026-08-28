@@ -1,0 +1,18 @@
+question,reddit_url,intent,target_slug
+How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,https://www.reddit.com/r/kindle/comments/1amggwm/can_i_move_my_epub_files_into_kindle_to_read/,device,epub-to-azw3
+How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,https://www.reddit.com/r/kindle/comments/139r8vl/whats_the_best_format_to_convert_epub_ebooks_to/,device,epub-to-azw3
+How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,https://www.reddit.com/r/kindle/comments/114ieca/is_there_any_way_to_load_epub_files_onto_a_kindle/,device,epub-to-azw3
+Amazon dropped MOBI on Kindle. Should I convert my books to EPUB or AZW3?,https://www.reddit.com/r/Calibre/comments/105vr4y/what_format_do_i_need_to_convert_my_kindle_ebooks/,device,azw3-to-epub
+Amazon dropped MOBI on Kindle. Should I convert my books to EPUB or AZW3?,https://www.reddit.com/r/kindle/comments/8qi32b/converting_epub_files_mobi_or_azw3/,device,azw3-to-epub
+Amazon dropped MOBI on Kindle. Should I convert my books to EPUB or AZW3?,https://www.reddit.com/r/kindle/comments/yh1ucx/between_azw_mobi_and_epub_which_is_the_best_and/,device,azw3-to-epub
+How can I convert EPUB to PDF on Linux command line using a simple tool?,https://www.reddit.com/r/Ubuntu/comments/nqj3gn/epub_to_pdf_converter_software/,device,epub-to-pdf
+How do I extract text from an EPUB or MOBI book to upload into NotebookLM?,https://www.reddit.com/r/notebooklm/comments/1g46z8b/how_is_everyone_getting_the_ebooks_necessary_to/,ai-feed,epub-to-txt
+How do I extract text from an EPUB or MOBI book to upload into NotebookLM?,https://www.reddit.com/r/notebooklm/comments/1tt08if/i_cannot_longer_upload_epubs_as_a_source/,ai-feed,epub-to-txt
+How do I extract text from an EPUB or MOBI book to upload into NotebookLM?,https://www.reddit.com/r/notebooklm/comments/1pyjurm/i_made_a_tool_that_converts_epub_files_into/,ai-feed,epub-to-txt
+What is the easiest way to convert EPUB to TXT without line break issues?,https://www.reddit.com/r/notebooklm/comments/1pyjurm/i_made_a_tool_that_converts_epub_files_into/,ai-feed,epub-to-txt
+How do I convert a scanned PDF into a reflowable EPUB so text reflows on my phone?,https://www.reddit.com/r/Calibre/comments/18d3btd/how_to_get_reflowable_epub_from_pdf_scanned_ebooks/,layout,pdf-to-epub
+What is the fastest online tool to convert EPUB to MOBI for free without installing Calibre?,https://www.reddit.com/r/kindle/comments/qdcul7/which_tools_to_use_to_convert_epub_to_mobi/,efficiency,epub-to-mobi
+Why does my converted PDF look broken when I change EPUB to PDF?,https://www.reddit.com/r/Calibre/comments/13yhk1b/why_does_my_pdf_look_a_mess_after_converting_from/,troubleshoot,fix-epub-to-pdf-formatting
+Why does my converted PDF look broken when I change EPUB to PDF?,https://www.reddit.com/r/Calibre/comments/zydt1n/converted_pdf_to_epub_formatting_got_all_weird/,troubleshoot,fix-epub-to-pdf-formatting
+What is EPUB / MOBI / AZW3 format?,https://www.reddit.com/r/kindle/comments/1cc9ep9/azw3_vs_epub_whats_the_difference/,troubleshoot,ebook-formats-explained
+EPUB vs PDF which is better?,https://www.reddit.com/r/DataHoarder/comments/lii5qj/pdfs_vs_epubs/,troubleshoot,epub-vs-pdf

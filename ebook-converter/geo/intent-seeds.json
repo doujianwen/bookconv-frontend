@@ -1,0 +1,127 @@
+[
+  {
+    "question": "epub to azw3",
+    "intent": "device",
+    "target_slug": "epub-to-azw3"
+  },
+  {
+    "question": "azw3 to epub",
+    "intent": "device",
+    "target_slug": "azw3-to-epub"
+  },
+  {
+    "question": "azw3 to mobi",
+    "intent": "device",
+    "target_slug": "azw3-to-mobi"
+  },
+  {
+    "question": "epub to pdf",
+    "intent": "device",
+    "target_slug": "epub-to-pdf"
+  },
+  {
+    "question": "epub to txt",
+    "intent": "ai-feed",
+    "target_slug": "epub-to-txt"
+  },
+  {
+    "question": "epub to word",
+    "intent": "ai-feed",
+    "target_slug": "epub-to-word"
+  },
+  {
+    "question": "epub to html",
+    "intent": "ai-feed",
+    "target_slug": "epub-to-html"
+  },
+  {
+    "question": "lit to epub",
+    "intent": "legacy",
+    "target_slug": "lit-to-epub"
+  },
+  {
+    "question": "djvu to pdf",
+    "intent": "legacy",
+    "target_slug": "djvu-to-pdf"
+  },
+  {
+    "question": "fb2 to epub",
+    "intent": "legacy",
+    "target_slug": "fb2-to-epub"
+  },
+  {
+    "question": "rtf to epub",
+    "intent": "legacy",
+    "target_slug": "rtf-to-epub"
+  },
+  {
+    "question": "pdf to epub",
+    "intent": "layout",
+    "target_slug": "pdf-to-epub"
+  },
+  {
+    "question": "docx to epub",
+    "intent": "layout",
+    "target_slug": "docx-to-epub"
+  },
+  {
+    "question": "epub to mobi",
+    "intent": "efficiency",
+    "target_slug": "epub-to-mobi"
+  },
+  {
+    "question": "azw3 to pdf",
+    "intent": "efficiency",
+    "target_slug": "azw3-to-pdf"
+  },
+  {
+    "question": "calibre alternative",
+    "intent": "efficiency",
+    "target_slug": "calibre-alternative"
+  },
+  {
+    "question": "batch ebook converter",
+    "intent": "efficiency",
+    "target_slug": "batch-converter"
+  },
+  {
+    "question": "epub vs azw3",
+    "intent": "troubleshoot",
+    "target_slug": "epub-vs-azw3"
+  },
+  {
+    "question": "fix epub to pdf formatting",
+    "intent": "troubleshoot",
+    "target_slug": "fix-epub-to-pdf-formatting"
+  },
+  {
+    "question": "ebook formats explained",
+    "intent": "troubleshoot",
+    "target_slug": "ebook-formats-explained"
+  },
+  {
+    "question": "epub vs pdf",
+    "intent": "troubleshoot",
+    "target_slug": "epub-vs-pdf"
+  },
+  {
+    "question": "epub file not opening",
+    "intent": "troubleshoot",
+    "target_slug": "epub-file-not-opening"
+  },
+  {
+    "question": "ai ebook converter",
+    "intent": "intercept",
+    "target_slug": "ai-ebook-converter"
+  },
+  {
+    "question": "best ebook converter",
+    "intent": "intercept",
+    "target_slug": "best-ebook-converter"
+  },
+  {
+    "question": "kindle supported formats",
+    "intent": "intercept",
+    "target_slug": "kindle-formats"
+  }
+]

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f2933" font-family="-apple-system, sans-serif">Major Bugs &amp; Root Cause Fixes (6 Selected Cases)</text>
+  
+  <!-- Bug 1: CONTENT_MAP namespace -->
+  <rect x="40" y="50" width="340" height="120" rx="10" fill="white" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="40" y="50" width="340" height="35" rx="10" fill="#fef2f2"/>
+  <rect x="40" y="75" width="340" height="10" fill="#fef2f2"/>
+  <text x="55" y="73" font-size="13" font-weight="bold" fill="#dc2626" font-family="-apple-system, sans-serif">Bug 1: CONTENT_MAP Namespace</text>
+  <text x="55" y="95" font-size="11" fill="#64748b" font-family="monospace">Commit a2676cc</text>
+  
+  <text x="55" y="115" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Symptom:</text>
+  <text x="130" y="115" font-size="11" fill="#455a64" font-family="sans-serif">27 pages used default template instead of custom content</text>
+  
+  <text x="55" y="132" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Root cause:</text>
+  <text x="155" y="132" font-size="11" fill="#455a64" font-family="sans-serif">MAP values are module namespaces, consumer reads flat objects</text>
+  
+  <text x="55" y="149" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Fix:</text>
+  <text x="100" y="149" font-size="11" fill="#16a34a" font-family="monospace">contentData?.content ?? contentData</text>
+  
+  <!-- Bug 2: Ghost soft-404 -->
+  <rect x="420" y="50" width="340" height="120" rx="10" fill="white" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="420" y="50" width="340" height="35" rx="10" fill="#fef2f2"/>
+  <rect x="420" y="75" width="340" height="10" fill="#fef2f2"/>
+  <text x="435" y="73" font-size="13" font-weight="bold" fill="#dc2626" font-family="-apple-system, sans-serif">Bug 2: Ghost Page soft-404</text>
+  <text x="435" y="95" font-size="11" fill="#64748b" font-family="monospace">Commit 1fb4737 (08-04)</text>
+  
+  <text x="435" y="115" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Symptom:</text>
+  <text x="510" y="115" font-size="11" fill="#455a64" font-family="sans-serif">Invalid slug renders 200 + "not supported"</text>
+  
+  <text x="435" y="132" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Root cause:</text>
+  <text x="545" y="132" font-size="11" fill="#455a64" font-family="sans-serif">sitemap from single hyphen key split('-'), typo creates ghost page</text>
+  
+  <text x="435" y="149" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Fix:</text>
+  <text x="480" y="149" font-size="11" fill="#16a34a" font-family="monospace">dynamicParams=false + notFound()</text>
+  
+  <!-- Bug 3: Pro payment chain -->
+  <rect x="40" y="185" width="340" height="140" rx="10" fill="white" stroke="#f97316" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="40" y="185" width="340" height="35" rx="10" fill="#fff7ed"/>
+  <rect x="40" y="210" width="340" height="10" fill="#fff7ed"/>
+  <text x="55" y="208" font-size="13" font-weight="bold" fill="#c2410c" font-family="-apple-system, sans-serif">Bug 3: Pro Payment Chain (2 bugs)</text>
+  <text x="55" y="228" font-size="11" fill="#64748b" font-family="monospace">Commits 0d15c34 + 8deca63</text>
+  
+  <text x="55" y="248" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Bug A:</text>
+  <text x="115" y="248" font-size="11" fill="#455a64" font-family="sans-serif">checkout didn't write custom_data.email → webhook can't link user</text>
+  
+  <text x="55" y="265" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Bug B:</text>
+  <text x="115" y="265" font-size="11" fill="#455a64" font-family="sans-serif">variantId strict string compare: env "v_1947491" ≠ webhook int 1947491</text>
+  
+  <text x="55" y="282" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Result:</text>
+  <text x="115" y="282" font-size="11" fill="#dc2626" font-family="sans-serif">Subscription saved but /batch permanently locked!</text>
+  
+  <text x="55" y="305" font-size="11" font-weight="bold" fill="#16a34a" font-family="sans-serif">Fix:</text>
+  <text x="100" y="305" font-size="11" fill="#16a34a" font-family="monospace">normalizeVariantId() strips "v_" prefix on both sides</text>
+  
+  <!-- Bug 4: Vercel repo mismatch -->
+  <rect x="420" y="185" width="340" height="140" rx="10" fill="white" stroke="#f97316" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="420" y="185" width="340" height="35" rx="10" fill="#fff7ed"/>
+  <rect x="420" y="210" width="340" height="10" fill="#fff7ed"/>
+  <text x="435" y="208" font-size="13" font-weight="bold" fill="#c2410c" font-family="-apple-system, sans-serif">Bug 4: Vercel Repo Mismatch</text>
+  <text x="435" y="228" font-size="11" fill="#64748b" font-family="monospace">Commit a933e7e (08-13)</text>
+  
+  <text x="435" y="248" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Symptom:</text>
+  <text x="510" y="248" font-size="11" fill="#455a64" font-family="sans-serif">Push success but behind=0 false, remote is 7/26 orphan branch</text>
+  
+  <text x="435" y="265" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Triple root cause:</text>
+  <text x="565" y="265" font-size="11" fill="#455a64" font-family="sans-serif">① Windows tracking ref not written ② insteadOf rewrites SSH→HTTPS ③ Vercel linked to old repo</text>
+  
+  <text x="435" y="282" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Fix:</text>
+  <text x="480" y="282" font-size="11" fill="#16a34a" font-family="monospace">backup tag → remove insteadOf → force push via explicit ssh:// → git-sync gate</text>
+  
+  <text x="435" y="305" font-size="10" fill="#dc2626" font-family="sans-serif">Key lesson: NEVER trust behind=0</text>
+  
+  <!-- Bug 5: hreflang leak -->
+  <rect x="40" y="340" width="340" height="100" rx="10" fill="white" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="40" y="340" width="340" height="35" rx="10" fill="#f5f3ff"/>
+  <rect x="40" y="365" width="340" height="10" fill="#f5f3ff"/>
+  <text x="55" y="363" font-size="13" font-weight="bold" fill="#7c3aed" font-family="-apple-system, sans-serif">Bug 5: hreflang/canonical leak</text>
+  <text x="55" y="383" font-size="11" fill="#64748b" font-family="monospace">Commit 08-07</text>
+  
+  <text x="55" y="400" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Symptom:</text>
+  <text x="130" y="400" font-size="11" fill="#455a64" font-family="sans-serif">canonical shows /en/x but /en/* 301s to /x</text>
+  
+  <text x="55" y="418" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Fix:</text>
+  <text x="100" y="418" font-size="11" fill="#16a34a" font-family="monospace">locale === 'es' ? '/es' : ''</text>
+  
+  <!-- Bug 6: RSC payload -->
+  <rect x="420" y="340" width="340" height="100" rx="10" fill="white" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="420" y="340" width="340" height="35" rx="10" fill="#f5f3ff"/>
+  <rect x="420" y="365" width="340" height="10" fill="#f5f3ff"/>
+  <text x="435" y="363" font-size="13" font-weight="bold" fill="#7c3aed" font-family="-apple-system, sans-serif">Bug 6: RSC flight payload pollutes grep</text>
+  <text x="435" y="383" font-size="11" fill="#64748b" font-family="monospace">Commit 08-08</text>
+  
+  <text x="435" y="400" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Symptom:</text>
+  <text x="510" y="400" font-size="11" fill="#455a64" font-family="sans-serif">curl | grep matches ≠ actual rendered content</text>
+  
+  <text x="435" y="418" font-size="11" font-weight="bold" fill="#1f2933" font-family="sans-serif">Fix:</text>
+  <text x="480" y="418" font-size="11" fill="#16a34a" font-family="monospace">Strip &lt;script&gt; blocks before validation</text>
+  
+  <!-- Bottom: cross-project lessons -->
+  <rect x="40" y="455" width="720" height="50" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="400" y="475" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2933" font-family="sans-serif">Cross-Project Lessons from These 6 Bugs</text>
+  <text x="400" y="493" text-anchor="middle" font-size="10" fill="#64748b" font-family="sans-serif">Consumer/data shape mismatch · Single-source truth enforcement · Strict type/ID normalization · Hard verification over trust · DOM validation requires stripping script payloads</text>
+</svg>

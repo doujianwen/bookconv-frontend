@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" font-family="sans-serif">
+<rect width="940" height="440" fill="#ffffff"/>
+<text x="20" y="28" font-size="18" font-weight="bold" fill="#1e293b">Bing AI Citations 增长趋势 (2026/8/8 – 8/25)</text>
+<text x="20" y="48" font-size="12" fill="#64748b">8/25 爆发至 147 citations（+242%），23 个页面被 AI 引用</text>
+<line x1="70" y1="380" x2="880" y2="380" stroke="#f1f5f9" stroke-width="1"/>
+<text x="62" y="384" font-size="10" fill="#94a3b8" text-anchor="end">0</text>
+<line x1="70" y1="305" x2="880" y2="305" stroke="#f1f5f9" stroke-width="1"/>
+<text x="62" y="309" font-size="10" fill="#94a3b8" text-anchor="end">40</text>
+<line x1="70" y1="230" x2="880" y2="230" stroke="#f1f5f9" stroke-width="1"/>
+<text x="62" y="234" font-size="10" fill="#94a3b8" text-anchor="end">80</text>
+<line x1="70" y1="155" x2="880" y2="155" stroke="#f1f5f9" stroke-width="1"/>
+<text x="62" y="159" font-size="10" fill="#94a3b8" text-anchor="end">120</text>
+<line x1="70" y1="80" x2="880" y2="80" stroke="#f1f5f9" stroke-width="1"/>
+<text x="62" y="84" font-size="10" fill="#94a3b8" text-anchor="end">160</text>
+<line x1="70" y1="380" x2="880" y2="380" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="70" y1="60" x2="70" y2="380" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="70.0" y="372.5" width="36" height="7.5" rx="3" fill="#93c5fd"/>
+<text x="88.0" y="367.5" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">4</text>
+<text x="88.0" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 88.0 396)">8/8</text>
+<rect x="114.4" y="378.1" width="36" height="1.9" rx="3" fill="#93c5fd"/>
+<text x="132.4" y="373.1" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">1</text>
+<text x="132.4" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 132.4 396)">8/9</text>
+<rect x="158.7" y="380.0" width="36" height="0.0" rx="3" fill="#93c5fd"/>
+<text x="176.7" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 176.7 396)">8/10</text>
+<rect x="203.1" y="355.6" width="36" height="24.4" rx="3" fill="#93c5fd"/>
+<text x="221.1" y="350.6" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">13</text>
+<text x="221.1" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 221.1 396)">8/11</text>
+<rect x="247.4" y="378.1" width="36" height="1.9" rx="3" fill="#93c5fd"/>
+<text x="265.4" y="373.1" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">1</text>
+<text x="265.4" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 265.4 396)">8/12</text>
+<rect x="291.8" y="380.0" width="36" height="0.0" rx="3" fill="#93c5fd"/>
+<text x="309.8" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 309.8 396)">8/13</text>
+<rect x="336.1" y="380.0" width="36" height="0.0" rx="3" fill="#93c5fd"/>
+<text x="354.1" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 354.1 396)">8/14</text>
+<rect x="380.5" y="368.8" width="36" height="11.2" rx="3" fill="#93c5fd"/>
+<text x="398.5" y="363.8" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">6</text>
+<text x="398.5" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 398.5 396)">8/15</text>
+<rect x="424.8" y="344.4" width="36" height="35.6" rx="3" fill="#93c5fd"/>
+<text x="442.8" y="339.4" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">19</text>
+<text x="442.8" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 442.8 396)">8/16</text>
+<rect x="469.2" y="308.8" width="36" height="71.2" rx="3" fill="#3b82f6"/>
+<text x="487.2" y="303.8" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">38</text>
+<text x="487.2" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 487.2 396)">8/17</text>
+<rect x="513.5" y="321.9" width="36" height="58.1" rx="3" fill="#3b82f6"/>
+<text x="531.5" y="316.9" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">31</text>
+<text x="531.5" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 531.5 396)">8/18</text>
+<rect x="557.9" y="327.5" width="36" height="52.5" rx="3" fill="#93c5fd"/>
+<text x="575.9" y="322.5" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">28</text>
+<text x="575.9" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 575.9 396)">8/19</text>
+<rect x="602.2" y="308.8" width="36" height="71.2" rx="3" fill="#3b82f6"/>
+<text x="620.2" y="303.8" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">38</text>
+<text x="620.2" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 620.2 396)">8/20</text>
+<rect x="646.6" y="361.2" width="36" height="18.8" rx="3" fill="#93c5fd"/>
+<text x="664.6" y="356.2" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">10</text>
+<text x="664.6" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 664.6 396)">8/21</text>
+<rect x="690.9" y="348.1" width="36" height="31.9" rx="3" fill="#93c5fd"/>
+<text x="708.9" y="343.1" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">17</text>
+<text x="708.9" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 708.9 396)">8/22</text>
+<rect x="735.3" y="299.4" width="36" height="80.6" rx="3" fill="#3b82f6"/>
+<text x="753.3" y="294.4" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">43</text>
+<text x="753.3" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 753.3 396)">8/23</text>
+<rect x="779.6" y="308.8" width="36" height="71.2" rx="3" fill="#3b82f6"/>
+<text x="797.6" y="303.8" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">38</text>
+<text x="797.6" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 797.6 396)">8/24</text>
+<rect x="824.0" y="104.4" width="36" height="275.6" rx="3" fill="#10b981"/>
+<text x="842.0" y="99.4" font-size="10" fill="#475569" text-anchor="middle" font-weight="bold">147</text>
+<text x="842.0" y="396" font-size="9" fill="#94a3b8" text-anchor="end" transform="rotate(-45 842.0 396)">8/25</text>
+<text x="842.0" y="72" font-size="11" fill="#059669" text-anchor="middle" font-weight="bold">峰值 147</text>
+</svg>
