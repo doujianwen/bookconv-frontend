@@ -1,0 +1,34 @@
+name: IndexNow ping on deploy
+
+# Auto-notify Bing / Yahoo / DuckDuckGo / Yandex whenever main is deployed.
+# Without this, new pages are only discovered by sitemap polling (slow crawl).
+#
+# The key file public/<KEY>.txt is already deployed and served at the site root;
+# scripts/submit-indexnow.mjs reads the LIVE sitemap and POSTs every URL to
+# api.indexnow.org. We wait ~150s for the Vercel build to finish so the live
+# sitemap already contains the new content.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Wait for Vercel deploy to finish
+        run: sleep 150
+
+      - name: Ping IndexNow with live sitemap
+        env:
+          SITE_URL: https://www.bookconv.com
+          # Optional override; the script falls back to the committed key.
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node scripts/submit-indexnow.mjs

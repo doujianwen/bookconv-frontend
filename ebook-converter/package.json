@@ -14,6 +14,7 @@
     "start-with-worker": "node -e \"const q = require('./dist/lib/queue'); q.startWorker().then(() => console.log('Worker started')).catch(e => console.error('Worker failed:', e.message)) & npm start\"",
     "submit-indexnow": "node scripts/submit-indexnow.mjs",
     "verify:sync": "node scripts/git-sync-check.mjs",
+    "verify:tracking": "node scripts/source-tracking-check.mjs",
     "check:blog": "node scripts/publish-gate.mjs"
   },
   "dependencies": {
