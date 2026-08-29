@@ -1,0 +1,44 @@
+# 纠错审查（PR 门禁）
+
+# 自动检查：tsc + eslint + 静态纠错规则
+# Agent 级深度审查：在 PR 评论区评论 /audit 触发
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ebook-converter/src/**'
+      - '*.ps1'
+      - 'scripts/audit.sh'
+      - '.github/workflows/audit.yml'
+
+jobs:
+  gate:
+    name: CI Gate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ebook-converter
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ebook-converter/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript 编译检查
+        run: npx tsc --noEmit
+
+      - name: ESLint 严格检查
+        run: npx eslint --max-warnings=0 src/
+
+      - name: 轻量纠错审查
+        run: bash ../../scripts/audit.sh
+        env:
+          CI: true

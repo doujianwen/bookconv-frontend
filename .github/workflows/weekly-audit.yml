@@ -1,0 +1,91 @@
+# 每周纠错审查
+
+on:
+  schedule:
+    # 每周日晚上 9:30 (UTC+8)
+    - cron: '30 13 * * 0'  # UTC 13:30 = Beijing 21:30
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  weekly-audit:
+    name: 每周纠错审查
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ebook-converter
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ebook-converter/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript 编译检查
+        run: npx tsc --noEmit
+
+      - name: ESLint 严格检查
+        run: npx eslint --max-warnings=0 src/
+
+      - name: 轻量纠错审查
+        run: bash ../../scripts/audit.sh 2>&1 | tee audit.log
+
+      - name: 构建飞书卡片
+        if: always()
+        id: card
+        run: |
+          PASS=$(grep -c "✅" audit.log 2>/dev/null || echo 0)
+          FAIL=$(grep -c "❌" audit.log 2>/dev/null || echo 0)
+          WARN=$(grep -c "⚠️" audit.log 2>/dev/null || echo 0)
+          STATUS=$(if [ "$FAIL" -eq 0 ]; then echo "pass"; else echo "fail"; fi)
+          COLOR=$(if [ "$FAIL" -eq 0 ]; then echo "green"; else echo "red"; fi)
+
+          TIMESTAMP=$(date '+%Y-%m-%d %H:%M')
+          RUN_URL="https://github.com/doujianwen/ebook-converter/actions/runs/${{ github.run_id }}"
+
+          cat > feishu_payload.json << PAYLOAD
+          {
+            "msg_type": "interactive",
+            "card": {
+              "header": {
+                "title": {"tag": "plain_text", "content": "📊 每周纠错审查报告"},
+                "template": "${COLOR}"
+              },
+              "elements": [
+                {
+                  "tag": "div",
+                  "text": {
+                    "tag": "lark_md",
+                    "content": "**日期:** ${TIMESTAMP}\n**分支:** main\n**状态:** $(if [ "$STATUS" = "pass" ]; then echo "✅ 通过"; else echo "❌ 失败"; fi)\n\n**通过:** ${PASS} | **失败:** ${FAIL} | **警告:** ${WARN}"
+                  }
+                },
+                {
+                  "tag": "hr"
+                },
+                {
+                  "tag": "div",
+                  "text": {
+                    "tag": "lark_md",
+                    "content": "> 如需 Agent 级深度审查，请在 PR 评论区评论 `/audit`\n> 查看完整日志: [GitHub Actions](https://github.com/doujianwen/ebook-converter/actions/runs/${{ github.run_id }})"
+                  }
+                }
+              ]
+            }
+          }
+          PAYLOAD
+
+          echo "payload=$(cat feishu_payload.json)" >> $GITHUB_OUTPUT
+
+      - name: 推送飞书通知
+        if: always()
+        run: |
+          curl -s -X POST "https://open.feishu.cn/open-apis/bot/v2/hook/422e94ef-2d07-4805-b15c-6ca90850e8d9" \
+            -H "Content-Type: application/json" \
+            -d "@feishu_payload.json" || echo "飞书推送失败"
