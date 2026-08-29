@@ -18,6 +18,69 @@ const BLOG_SLUGS = BLOG_POSTS.filter((p) => !p.noindex).map((p) => p.slug)
 const BLOG_DATES: Record<string, string> = {};
 BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.date; })
 
+// Real last-modified dates for sitemap <lastmod>, derived from each content
+// file's filesystem mtime (NOT git — this repo's history is only 3 days old,
+// so git dates are an artifact of a one-time bulk import and carry zero
+// signal about when content actually changed). Hardcoding them as constants
+// is deliberate: reading mtime at build time would reset every URL to the
+// deploy timestamp on Vercel, recreating the exact "73 URLs share one
+// millisecond" problem this map fixes. When a page's content is edited, its
+// entry here should be bumped to match.
+const CONTENT_DATES: Record<string, string> = {
+  'azw-to-mobi': '2026-08-09',
+  'azw3-to-epub': '2026-08-25',
+  'azw3-to-mobi': '2026-08-25',
+  'azw3-to-pdf': '2026-08-03',
+  'cbr-to-pdf': '2026-08-08',
+  'chm-to-mobi': '2026-08-09',
+  'djvu-to-pdf': '2026-08-08',
+  'doc-to-epub': '2026-08-08',
+  'docx-to-epub': '2026-08-03',
+  'epub-to-azw3': '2026-08-03',
+  'epub-to-doc': '2026-08-24',
+  'epub-to-html': '2026-08-08',
+  'epub-to-jpg': '2026-08-08',
+  'epub-to-mobi': '2026-08-11',
+  'epub-to-pdf': '2026-08-03',
+  'epub-to-png': '2026-08-08',
+  'epub-to-rtf': '2026-08-08',
+  'epub-to-txt': '2026-08-24',
+  'epub-to-word': '2026-08-08',
+  'epub-to-zip': '2026-08-23',
+  'fb2-to-epub': '2026-08-08',
+  'html-to-epub': '2026-08-09',
+  'lit-to-epub': '2026-08-24',
+  'lit-to-mobi': '2026-08-13',
+  'mobi-to-epub': '2026-08-25',
+  'mobi-to-pdf': '2026-08-08',
+  'mobi-to-txt': '2026-08-08',
+  'pdf-to-epub': '2026-08-03',
+  'rtf-to-epub': '2026-08-08',
+  'txt-to-epub': '2026-08-10',
+}
+
+// Compat report pages are English-only; single entry today, grows with
+// COMPAT_MAP. Keyed by slug to match the loop below.
+const COMPAT_DATES: Record<string, string> = {
+  'epub-to-mobi-on-kindle-paperwhite': '2026-08-11',
+}
+
+// Homepage + static (non-data-backed) route pages. Values are the mtime of
+// each route file under src/app/[locale]/<path>/page.tsx (or src/app for the
+// root). These pages have no content data file, so the route file mtime is
+// the best available proxy for "when this page last changed".
+const STATIC_DATES: Record<string, string> = {
+  '/': '2026-08-25',
+  '/pricing': '2026-08-15',
+  '/batch': '2026-08-29',
+  '/blog': '2026-08-07',
+  '/tutorial': '2026-08-08',
+  '/help': '2026-08-15',
+  '/privacy': '2026-08-07',
+  '/terms': '2026-08-07',
+  '/api-docs': '2026-07-28',
+}
+
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -29,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     allUrls.push({
       url: baseUrl + prefix,
-      lastModified: new Date(),
+      lastModified: new Date(STATIC_DATES['/'] || '2026-07-26'),
       changeFrequency: 'weekly' as const,
       priority: 1.0,
     })
@@ -40,20 +103,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: number
       date?: string
     }[] = [
-      { path: '/pricing', frequency: 'monthly', priority: 0.8 },
-      { path: '/batch', frequency: 'monthly', priority: 0.7 },
-      { path: '/blog', frequency: 'weekly', priority: 0.7 },
-      { path: '/tutorial', frequency: 'monthly', priority: 0.5 },
-      { path: '/help', frequency: 'monthly', priority: 0.6 },
-      { path: '/privacy', frequency: 'yearly', priority: 0.3, date: '2026-07-11' },
-      { path: '/terms', frequency: 'yearly', priority: 0.3, date: '2026-07-11' },
+      { path: '/pricing', frequency: 'monthly', priority: 0.8, date: STATIC_DATES['/pricing'] },
+      { path: '/batch', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/batch'] },
+      { path: '/blog', frequency: 'weekly', priority: 0.7, date: STATIC_DATES['/blog'] },
+      { path: '/tutorial', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/tutorial'] },
+      { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
+      { path: '/privacy', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/privacy'] },
+      { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
     ]
 
     for (const page of staticPages) {
       const url = baseUrl + prefix + page.path
       allUrls.push({
         url,
-        lastModified: page.date ? new Date(page.date) : new Date(),
+        lastModified: new Date(page.date || STATIC_DATES[page.path] || '2026-07-26'),
         changeFrequency: page.frequency,
         priority: page.priority,
       })
@@ -62,7 +125,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const key of CONVERSION_PAGES) {
       allUrls.push({
         url: baseUrl + prefix + '/convert/' + key,
-        lastModified: new Date(),
+        lastModified: new Date(CONTENT_DATES[key] || '2026-07-26'),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
       })
@@ -77,7 +140,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const slug of COMPAT_SLUGS) {
         allUrls.push({
           url: baseUrl + '/compat/' + slug,
-          lastModified: new Date(),
+          lastModified: new Date(COMPAT_DATES[slug] || '2026-07-26'),
           changeFrequency: 'monthly' as const,
           priority: 0.6,
         })
