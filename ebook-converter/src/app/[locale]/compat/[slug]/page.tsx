@@ -162,7 +162,7 @@ export default async function CompatPage({
         </Link>
       </section>
 
-      <footer className="mt-10 border-t border-gray-100 pt-4 text-xs text-gray-400">
+      <footer className="mt-10 border-t border-gray-100 pt-4 text-xs text-gray-500">
         Tested at {report.testedAt}. Sample source: {report.sample.source}.
       </footer>
     </main>

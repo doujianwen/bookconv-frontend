@@ -105,7 +105,7 @@ export default async function ConvertIndexPage() {
                 Convert {item.source.toUpperCase()} to {item.target.toUpperCase()}
               </p>
               {item.description && (
-                <p className="mt-2 text-xs text-gray-400 leading-relaxed">{item.description}</p>
+                <p className="mt-2 text-xs text-gray-500 leading-relaxed">{item.description}</p>
               )}
             </Link>
           ))}

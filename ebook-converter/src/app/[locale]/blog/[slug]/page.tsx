@@ -163,7 +163,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </span>
             {post.lastUpdated && post.lastUpdated !== post.date && (
-              <span className="text-xs text-gray-400" title={`Last updated: ${post.lastUpdated}`}>
+              <span className="text-xs text-gray-500" title={`Last updated: ${post.lastUpdated}`}>
                 · Updated {new Date(post.lastUpdated).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               </span>
             )}
@@ -292,7 +292,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           <nav aria-label="More posts" className="mt-12 flex items-stretch justify-between gap-4 border-t pt-6">
             {olderPost ? (
               <Link href={`/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                <span className="text-xs text-gray-400">← Older</span>
+                <span className="text-xs text-gray-500">← Older</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
               </Link>
             ) : (
@@ -300,7 +300,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             )}
             {newerPost ? (
               <Link href={`/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
-                <span className="text-xs text-gray-400">Newer →</span>
+                <span className="text-xs text-gray-500">Newer →</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
               </Link>
             ) : (

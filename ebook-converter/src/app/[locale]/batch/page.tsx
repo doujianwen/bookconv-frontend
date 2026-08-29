@@ -145,7 +145,7 @@ export default async function BatchPage() {
               label={proHasVariant ? "Upgrade to Pro" : "Pro coming soon"}
             />
           </div>
-          <p className="mt-4 text-xs text-gray-400">
+          <p className="mt-4 text-xs text-gray-500">
             Already a member? <Link href={prefix + "/auth"} className="text-blue-600 hover:underline">Sign in</Link> to continue.
           </p>
         </div>

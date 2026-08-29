@@ -42,7 +42,7 @@ export default function Error({
         </p>
 
         {error.digest && (
-          <p className="mb-4 text-xs text-gray-400 font-mono">
+          <p className="mb-4 text-xs text-gray-500 font-mono">
             Error ID: {error.digest}
           </p>
         )}
@@ -54,7 +54,7 @@ export default function Error({
           Try again
         </button>
 
-        <p className="mt-4 text-xs text-gray-400">
+        <p className="mt-4 text-xs text-gray-500">
           Auto-retrying in {countdown}s...
         </p>
       </div>
