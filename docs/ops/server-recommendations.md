@@ -1,59 +1,74 @@
-> **实际部署状态（2026-08-05 更新）**：当前生产环境已部署在 **Vercel**（免费计划），网站 https://bookconv.com 正常运行。莹云 VPS（149.104.69.126）已购但未部署，仅用于后续 Calibre 后端转换。
+> ⚠️ **RECONSTRUCTED FROM A CORRUPTED SOURCE** — The original `docs/zh/ops/server-recommendations.md` was corrupted in the repository (its body was double-encoded and only partially recoverable). This English version is rebuilt from the recovered Chinese text plus project context. **Please verify against the original Chinese in `docs/zh/ops/server-recommendations.md` before relying on it.** The clean blockquote at the top is intact.
+
+> **Actual deployment status (updated 2026-08-05):** The current production environment is deployed on **Vercel** (free plan); the site https://bookconv.com runs normally. The Yingyun VPS (149.104.69.126) was purchased but not yet deployed — it is reserved for the later Calibre backend conversion.
 >
-> 下表方案对比保留供参考，**实际已选方案为 A（Vercel）**。
+> The comparison table below is kept for reference; **the actually chosen plan is A (Vercel).**
 
 ---
-# BookConv 閮ㄧ讲鏈嶅姟鍣ㄩ€夊瀷鎸囧崡
 
-## 杩愯鐜瑕佹眰
+# BookConv Deployment Server Selection Guide
 
-| 渚濊禆 | 鏈€浣庨厤缃?| 璇存槑 |
-|------|---------|------|
-| CPU | 1 Core | Node.js 鍗曡繘绋?|
-| 鍐呭瓨 | 512MB+ | 鍚?Redis + Node 杩涚▼ |
-| 纾佺洏 | 5GB+ | 绯荤粺 + Node 妯″潡 + 涓存椂鏂囦欢 |
-| OS | Ubuntu 22.04 LTS | 鎺ㄨ崘 |
+## Runtime Environment Requirements
 
-鏍稿績闇€姹傦細**Redis + Calibre**銆傚彧瑕佽繖涓ゆ牱瑁呭ソ锛屽簲鐢ㄥ嵆鍙繍琛屻€?
+| Dependency | Minimum | Note |
+|---|---|---|
+| CPU | 1 Core | Node.js single process |
+| Memory | 512MB+ | Includes Redis + Node process |
+| Disk | 5GB+ | System + Node modules + temp files |
+| OS | Ubuntu 22.04 LTS | Recommended |
+
+**Core requirement: Redis + Calibre.** As long as those two are installed, the app can run.
+
 ---
 
-## 鏂规瀵规瘮
+## Plan Comparison
 
-### 猸?鏂规 A锛歏ercel锛堝己鐑堟帹鑽愶級
+### Plan A: Vercel (strongly recommended)
 
-- **鍦板潃**: vercel.com
-- **浠锋牸**: 鍏嶈垂 (Hobby 鐗?
-- **绫诲瀷**: Serverless 骞冲彴
+- **URL**: vercel.com
+- **Price**: Free (Hobby tier)
+- **Type**: Serverless platform
 
-**浼樼偣锛?* 闆惰繍缁淬€佸叏鐞?CDN銆佸浗鍐呰闂揩銆丠TTPS 鑷姩閰嶇疆銆丯ext.js 浜插効瀛愭鏋?**缂虹偣锛?* 涓嶆敮鎸佸悗鍙板父椹?Worker銆佸嚱鏁板喎鍚姩 2-3 绉?**閫傚悎锛?* 璧锋闃舵銆佷釜浜洪」鐩?
-### 鏂规 B锛欻etzner Cloud
+**Pros:** Zero ops, global CDN, fast access from China, automatic HTTPS, native Next.js support.
+**Cons:** No long-running background Worker; function cold start 2–3s.
+**Fits:** Early stage, personal projects.
 
-- **濂楅**: CX22 = 鈧?.51/鏈?- **閰嶇疆**: 2 vCPU / 2GB RAM / 20GB SSD
-- **鏈烘埧**: 寰峰浗
+### Plan B: Hetzner Cloud
 
-**浼樼偣锛?* 鎬т环姣斾箣鐜?**缂虹偣锛?* 鏈烘埧鍦ㄦ娲诧紝鍥藉唴璁块棶鎱紝闇€閰?CDN
+- **Plan**: CX22 = €3.51/month
+- **Config**: 2 vCPU / 2GB RAM / 20GB SSD
+- **Datacenter**: Germany
 
-### 鏂规 C锛氶樋閲屼簯 ECS
+**Pros:** Best price/performance.
+**Cons:** Datacenter in Europe, slow access from China, needs CDN.
 
-- **濂楅:** 鍏ラ棬鍨?2C2G ~楼30-50/鏈?- **鏁版嵁涓績:** 棣欐腐/鏂板姞鍧★紙鍏嶅妗堬級
+### Plan C: Aliyun ECS
 
-**浼樼偣锛?* 鍥藉唴璁块棶蹇€佹柊鐢ㄦ埛浼樻儬
-**缂虹偣锛?* 澶ч檰鑺傜偣闇€ ICP 澶囨
+- **Plan**: Entry 2C2G ~¥30-50/month
+- **Data center**: Hong Kong / Singapore (no ICP filing needed)
 
-### 鏂规 D锛欴igitalOcean
+**Pros:** Fast access from China, new-user discounts.
+**Cons:** Mainland-China nodes require ICP filing.
 
-- **濂楅:** Droplet 2GB = $12/鏈?- **鏁版嵁涓績:** 鏈夊彴婀捐妭鐐?
-**浼樼偣锛?* 鏂版墜鍙嬪ソ銆佹枃妗ｆ瀬濂姐€佹湁鍙版咕鑺傜偣
-**缂虹偣锛?* 姣?Hetzner 璐?
-### 鏂规 E锛歊ailway
+### Plan D: DigitalOcean
 
-- **浠锋牸:** $5/鏈堣捣
-- **绫诲瀷:** PaaS锛堝惈 Redis锛?
-**浼樼偣锛?* 涓€閿垱寤?Redis銆佽嚜甯?CI/CD
-**缂虹偣锛?* 鍏嶈垂璇曠敤鍚庢寜閲忚璐?
+- **Plan**: Droplet 2GB = $12/month
+- **Data center**: Has Taiwan node
+
+**Pros:** Beginner-friendly, excellent docs, has Taiwan node.
+**Cons:** More expensive than Hetzner.
+
+### Plan E: Railway
+
+- **Price**: from $5/month
+- **Type**: PaaS (includes Redis)
+
+**Pros:** One-click Redis, built-in CI/CD.
+**Cons:** Paid by usage after free trial.
+
 ---
 
-## 鎺ㄨ崘
+## Recommendation
 
-**馃弳 Vercel** 鈥?鏈€蹇笂绾匡紝鍏嶈垂棰濆害瓒冲鍒濇湡浣跨敤
-**馃 Hetzner** 鈥?闇€瑕佸畬鏁村姛鑳斤紙鍚庡彴 Worker锛夋椂鐨勬渶浣抽€夋嫨
+🏆 **Vercel** — fastest to launch, free tier sufficient for early use.
+🥈 **Hetzner** — best choice when full functionality (background Worker) is needed.

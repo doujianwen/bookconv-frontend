@@ -1,462 +1,456 @@
-﻿# BookConv 电子书格式转换站 — 新手建站完整指南
+# BookConv Ebook Format Converter — Complete Newcomer Setup Guide
 
-> 从零开始搭建一个专业的在线电子书转换网站，支持 28+ 格式互转
-
----
-
-## 📋 目录
-
-1. [项目概述](#1-项目概述)
-2. [环境准备](#2-环境准备)
-3. [本地开发](#3-本地开发)
-4. [配置指南](#4-配置指南)
-5. [生产部署](#5-生产部署)
-6. [SEO 优化](#6-seo-优化)
-7. [监控维护](#7-监控维护)
-8. [常见问题](#8-常见问题)
+> Build a professional online ebook conversion website from scratch, supporting 28+ format inter-conversions.
 
 ---
 
-## 1. 项目概述
+## 📋 Table of Contents
 
-### 这是什么？
+1. [Project Overview](#1-project-overview)
+2. [Environment Prep](#2-environment-prep)
+3. [Local Development](#3-local-development)
+4. [Configuration Guide](#4-configuration-guide)
+5. [Production Deployment](#5-production-deployment)
+6. [SEO Optimization](#6-seo-optimization)
+7. [Monitoring & Maintenance](#7-monitoring--maintenance)
+8. [FAQ](#8-faq)
 
-BookConv 是一个基于 **Next.js + Calibre** 的在线电子书格式转换平台，支持：
-- 28+ 种格式转换组合
-- 异步队列处理（BullMQ + Redis）
-- 多语言支持（英文、西班牙语）
-- 付费订阅系统（Lemon Squeezy）
-- SEO 友好结构
+---
 
-### 技术栈
+## 1. Project Overview
 
-| 层级 | 技术 | 版本 |
+### What is this?
+
+BookConv is an online ebook format conversion platform based on **Next.js + Calibre**, supporting:
+- 28+ format conversion combinations
+- Async queue processing (BullMQ + Redis)
+- Multi-language support (English, Spanish)
+- Paid subscription system (Lemon Squeezy)
+- SEO-friendly structure
+
+### Tech Stack
+
+| Layer | Technology | Version |
 |------|------|------|
-| 框架 | Next.js | 16.2.10 |
-| 语言 | TypeScript | 5.x |
-| 样式 | Tailwind CSS | 4.x |
-| 转换引擎 | Calibre CLI | 最新版 |
-| 异步队列 | BullMQ + Redis | BullMQ 5.x |
-| 认证 | Supabase | 可选 |
-| 存储 | Cloudflare R2 | 可选 |
-| 支付 | Lemon Squeezy | - |
-| 部署 | Docker / Vercel / VPS | - |
+| Framework | Next.js | 16.2.10 |
+| Language | TypeScript | 5.x |
+| Styling | Tailwind CSS | 4.x |
+| Conversion engine | Calibre CLI | latest |
+| Async queue | BullMQ + Redis | BullMQ 5.x |
+| Auth | Supabase | optional |
+| Storage | Cloudflare R2 | optional |
+| Payments | Lemon Squeezy | - |
+| Deployment | Docker / Vercel / VPS | - |
 
-### 支持的格式（28 种）
+### Supported formats (28 types)
 
-| 类别 | 格式 |
+| Category | Formats |
 |------|------|
 | eBook | EPUB, AZW3, MOBI, LIT, FB2 |
-| 文档 | DOC, DOCX, RTF, TXT, HTML |
+| Document | DOC, DOCX, RTF, TXT, HTML |
 | PDF | PDF |
-| 图像 | JPG, PNG |
-| 漫画 | CBR |
-
-
+| Image | JPG, PNG |
+| Comic | CBR |
 
 ---
 
-## 2. 环境准备
+## 2. Environment Prep
 
-### 系统要求
+### System Requirements
 
-**开发环境：**
+**Development:**
 - Node.js >= 20
-- npm >= 9 或 yarn
+- npm >= 9 or yarn
 - Git
 
-**生产环境（VPS）：**
+**Production (VPS):**
 - Ubuntu 22.04 LTS
 - 2vCPU / 4GB RAM
 - 20GB SSD
 
-**可选服务：**
-- Redis（推荐，用于队列）
-- Cloudflare R2（对象存储）
-- Supabase（用户认证）
+**Optional services:**
+- Redis (recommended, for the queue)
+- Cloudflare R2 (object storage)
+- Supabase (user auth)
 
-### 域名购买建议
+### Domain purchase recommendations
 
-| 服务商 | 价格 | 特点 |
+| Provider | Price | Notes |
 |--------|------|------|
-| Namecheap | ~/年 | 便宜，隐私保护免费 |
-| Cloudflare | ~.12/年 | 透明定价，含 CDN |
-| GoDaddy | ~/年 | 常用但偏贵 |
+| Namecheap | ~$/year | cheap, free privacy protection |
+| Cloudflare | ~$0.12/year | transparent pricing, includes CDN |
+| GoDaddy | ~$/year | common but pricey |
 
-**推荐**：使用 Cloudflare 管理 DNS，配合 Namecheap 购买域名。
+**Recommendation**: use Cloudflare for DNS management, with Namecheap for domain purchase.
 
-### 服务器选择
+### Server selection
 
-| 服务商 | 入门配置 | 月费 | 推荐场景 |
+| Provider | Entry config | Monthly | Recommended for |
 |--------|----------|------|----------|
-| Hetzner | CX22 |  | 性价比首选 |
-| DigitalOcean | Basic |  | 文档完善 |
-| Vultr | 1 vCPU/1GB | .5 | 测试用 |
-| Vercel | Hobby |  | 静态为主 |
+| Hetzner | CX22 |  | best price/performance |
+| DigitalOcean | Basic |  | great docs |
+| Vultr | 1 vCPU/1GB | $3.5 | testing |
+| Vercel | Hobby |  | static-focused |
 
 ---
 
-## 3. 本地开发
+## 3. Local Development
 
-### 步骤 1：克隆仓库
+### Step 1: Clone the repo
 
-\\\ash
+```bash
 git clone https://github.com/your-username/bookconv.git
 cd bookconv/ebook-converter
-\\\
+```
 
-### 步骤 2：安装依赖
+### Step 2: Install dependencies
 
-\\\ash
+```bash
 npm install
-\\\
+```
 
-### 步骤 3：配置环境变量
+### Step 3: Configure environment variables
 
-\\\ash
-# 复制示例文件
+```bash
+# Copy the example file
 cp .env.example .env.local
 
-# 编辑配置
+# Edit config
 nano .env.local
-\\\
+```
 
-**最小化配置（仅开发）：**
+**Minimal config (dev only):**
 
-\\\env
-# 必填
+```env
+# Required
 REDIS_URL=redis://localhost:6379
 UPLOAD_DIR=/tmp/ebook-uploads
 MAX_FILE_SIZE_MB=10
 CALIBRE_PATH=ebook-convert
 
-# 可选 - Cloudflare R2
+# Optional - Cloudflare R2
 # R2_ENDPOINT=https://xxx.r2.cloudflarestorage.com
 # R2_ACCESS_KEY_ID=xxx
 # R2_SECRET_ACCESS_KEY=xxx
 # R2_BUCKET_NAME=ebook-temp
 
-# 可选 - Supabase
+# Optional - Supabase
 # NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 # NEXT_PUBLIC_SUPABASE_ANON_KEY=xxx
 
-# 可选 - Lemon Squeezy
+# Optional - Lemon Squeezy
 # LEMON_SQUEEZY_API_KEY=
 # LEMON_SQUEEZY_STORE_ID=
 # LEMON_SQUEEZY_WEBHOOK_SECRET=
 # LEMON_SQUEEZY_PRO_MONTHLY_VARIANT_ID=
 # LEMON_SQUEEZY_API_MONTHLY_VARIANT_ID=
-\\\
+```
 
-### 步骤 4：启动服务
+### Step 4: Start the service
 
-**方式一：Docker（推荐，自动包含 Redis）**
+**Option A: Docker (recommended, includes Redis automatically)**
 
-\\\ash
+```bash
 docker-compose up -d
-# 访问 http://localhost:3000
-\\\
+# Visit http://localhost:3000
+```
 
-**方式二：本地 Node.js**
+**Option B: Local Node.js**
 
-\\\ash
-# 需要先安装 Redis
+```bash
+# Redis must be installed first
 npm run dev
-# 访问 http://localhost:3000
-\\\
+# Visit http://localhost:3000
+```
 
-### 步骤 5：验证运行
+### Step 5: Verify it's running
 
-\\\ash
-# 健康检查
+```bash
+# Health check
 curl http://localhost:3000/api/health
 
-# 应该返回：
-# {\"status\":\"ok\",\"timestamp\":\"2026-08-02T...\"}
-\\\
-
+# Should return:
+# {"status":"ok","timestamp":"2026-08-02T..."}
+```
 
 ---
 
-## 4. 配置指南
+## 4. Configuration Guide
 
-### 4.1 支付系统配置（Lemon Squeezy）
+### 4.1 Payment system config (Lemon Squeezy)
 
-1. 注册账号：https://lemonsqueezy.com
-2. 创建 Store
-3. 创建产品：
-   - Pro 计划：/月，变体 ID 如 \_1947491\
-   - API 计划：/月，变体 ID 如 \_1947478\
-4. 获取 API Key：Settings → API
-5. 配置 Webhook：Settings → Webhooks → 添加 \https://yourdomain.com/api/payments/webhook\
+1. Sign up: https://lemonsqueezy.com
+2. Create a Store
+3. Create products:
+   - Pro plan: $/month, variant ID like `v_1947491`
+   - API plan: $/month, variant ID like `v_1947478`
+4. Get API Key: Settings → API
+5. Configure Webhook: Settings → Webhooks → add `https://yourdomain.com/api/payments/webhook`
 
-**环境配置：**
+**Env config:**
 
-\\\env
-LEMON_SQUEEZY_API_KEY=你的API密钥
+```env
+LEMON_SQUEEZY_API_KEY=your_api_key
 LEMON_SQUEEZY_STORE_ID=438949
-LEMON_SQUEEZY_WEBHOOK_SECRET=你的Webhook密钥
+LEMON_SQUEEZY_WEBHOOK_SECRET=your_webhook_secret
 LEMON_SQUEEZY_PRO_MONTHLY_VARIANT_ID=v_1947491
 LEMON_SQUEEZY_API_MONTHLY_VARIANT_ID=v_1947478
-\\\
+```
 
-### 4.2 对象存储配置（Cloudflare R2）
+### 4.2 Object storage config (Cloudflare R2)
 
-1. 创建账号：https://cloudflare.com
-2. 创建 R2 存储桶：\ebook-temp\
-3. 创建 API Token：
-   - 权限：Objects Read & Write
-   - 范围：你的 Account ID
-4. 获取 Endpoint：\https://<account-id>.r2.cloudflarestorage.com\
+1. Sign up: https://cloudflare.com
+2. Create R2 bucket: `ebook-temp`
+3. Create API Token:
+   - Permissions: Objects Read & Write
+   - Scope: your Account ID
+4. Get Endpoint: `https://<account-id>.r2.cloudflarestorage.com`
 
-**环境配置：**
+**Env config:**
 
-\\\env
-R2_ENDPOINT=https://你的account-id.r2.cloudflarestorage.com
-R2_ACCESS_KEY_ID=你的access-key
-R2_SECRET_ACCESS_KEY=你的secret-key
+```env
+R2_ENDPOINT=https://your-account-id.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=your_access_key
+R2_SECRET_ACCESS_KEY=your_secret_key
 R2_BUCKET_NAME=ebook-temp
-\\\
+```
 
-### 4.3 用户认证配置（Supabase）
+### 4.3 User auth config (Supabase)
 
-1. 注册：https://supabase.com
-2. 创建新项目
-3. 获取配置：Settings → API
-4. 启用 Email 认证
+1. Sign up: https://supabase.com
+2. Create a new project
+3. Get config: Settings → API
+4. Enable Email auth
 
-**环境配置：**
+**Env config:**
 
-\\\env
-NEXT_PUBLIC_SUPABASE_URL=你的project-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=你的anon-key
-SUPABASE_SERVICE_ROLE_KEY=你的service-role-key
-\\\
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
 
-### 4.4 SEO 基础配置
+### 4.4 Basic SEO config
 
 1. **Google Search Console**
-   - 验证域名：https://search.google.com/search-console
-   - 提交 sitemap：\https://www.bookconv.com/sitemap.xml\
+   - Verify domain: https://search.google.com/search-console
+   - Submit sitemap: `https://www.bookconv.com/sitemap.xml`
 
 2. **Bing Webmaster Tools**
-   - 添加网站：https://www.bing.com/webmasters
-   - 提交 sitemap
+   - Add site: https://www.bing.com/webmasters
+   - Submit sitemap
 
 3. **robots.txt**
-   - 确保 \https://www.bookconv.com/robots.txt\ 可访问
-
+   - Ensure `https://www.bookconv.com/robots.txt` is reachable
 
 ---
 
-## 5. 生产部署
+## 5. Production Deployment
 
-### 方案 A：Docker 一键部署（推荐新手）
+### Plan A: One-click Docker deploy (recommended for newcomers)
 
-**前提条件：** 服务器已安装 Docker
+**Prerequisite:** Docker installed on the server
 
-\\\ash
-# 克隆仓库
+```bash
+# Clone repo
 git clone https://github.com/your-username/bookconv.git
 cd bookconv/ebook-converter
 
-# 配置环境变量
+# Configure env
 cp .env.example .env.production
 nano .env.production
 
-# 启动服务
+# Start service
 docker-compose up -d
 
-# 检查状态
+# Check status
 docker ps
 curl http://localhost:3000/api/health
-\\\
+```
 
-**访问**：\http://你的服务器IP:3000\
+**Access**: `http://your-server-ip:3000`
 
-### 方案 B：VPS + Nginx + PM2（生产推荐）
+### Plan B: VPS + Nginx + PM2 (recommended for production)
 
-#### 步骤 1：服务器初始化
+#### Step 1: Server initialization
 
-\\\ash
-# SSH 登录
+```bash
+# SSH login
 ssh root@your-vps-ip
 
-# 更新系统
+# Update system
 apt update && apt upgrade -y
 
-# 创建用户
+# Create user
 useradd -m -s /bin/bash ebook
 usermod -aG sudo ebook
 su - ebook
-\\\
+```
 
-#### 步骤 2：安装依赖
+#### Step 2: Install dependencies
 
-\\\ash
+```bash
 # Node.js 20
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
 node --version  # v20.x
 
-# Calibre（转换引擎）
+# Calibre (conversion engine)
 apt install -y calibre
 ebook-convert --version
 
-# Docker（可选，用于 Redis）
+# Docker (optional, for Redis)
 curl -fsSL https://get.docker.com | sh
 usermod -aG docker ebook
 newgrp docker
 
 # Git
 apt install -y git
-\\\
+```
 
-#### 步骤 3：部署应用
+#### Step 3: Deploy the app
 
-\\\ash
-# 克隆项目
+```bash
+# Clone project
 git clone https://github.com/your-username/bookconv.git
 cd bookconv/ebook-converter
 
-# 安装依赖
+# Install dependencies
 npm ci --production
 
-# 构建
+# Build
 npm run build
 
-# 配置环境变量
+# Configure env
 cp .env.example .env.production
 nano .env.production
 
-# PM2 启动
+# Start with PM2
 npm install -g pm2
 pm2 start npm --name "bookconv" -- start
 pm2 save
 pm2 startup systemd
-\\\
+```
 
-#### 步骤 4：配置 Nginx
+#### Step 4: Configure Nginx
 
-\\\ash
-# 安装 Nginx
+```bash
+# Install Nginx
 apt install nginx -y
 
-# 创建站点配置
+# Create site config
 nano /etc/nginx/sites-available/bookconv
-\\\
+```
 
-**Nginx 配置：**
+**Nginx config:**
 
-\\\
-ginx
+```nginx
 server {
     listen 80;
     server_name www.bookconv.com bookconv.com;
 
-    # 安全头
+    # Security headers
     add_header X-Frame-Options SAMEORIGIN always;
     add_header X-Content-Type-Options nosniff always;
     add_header X-XSS-Protection "1; mode=block" always;
 
-    # 静态资源缓存
-    location ~* \\.(jpg|jpeg|png|gif|ico|css|js|svg|woff2?)$ {
+    # Static asset caching
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff2?)$ {
         expires 30d;
         add_header Cache-Control "public, immutable";
     }
 
-    # API 代理
+    # API proxy
     location /api/ {
         proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade \;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \System.Management.Automation.Internal.Host.InternalHost;
-        proxy_set_header X-Real-IP \;
-        proxy_set_header X-Forwarded-For \;
-        proxy_set_header X-Forwarded-Proto \;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_read_timeout 120s;
     }
 
-    # 前端代理
+    # Frontend proxy
     location / {
         proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade \;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \System.Management.Automation.Internal.Host.InternalHost;
-        proxy_set_header X-Real-IP \;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
     }
 }
-\\\
+```
 
-**启用站点：**
+**Enable site:**
 
-\\\ash
+```bash
 ln -s /etc/nginx/sites-available/bookconv /etc/nginx/sites-enabled/
 nginx -t
 systemctl reload nginx
-\\\
+```
 
-#### 步骤 5：配置 SSL（Let's Encrypt）
+#### Step 5: Configure SSL (Let's Encrypt)
 
-\\\ash
-# 安装 Certbot
+```bash
+# Install Certbot
 apt install certbot python3-certbot-nginx -y
 
-# 获取证书
+# Get certificate
 certbot --nginx -d www.bookconv.com -d bookconv.com
 
-# 测试自动续期
+# Test auto-renewal
 certbot renew --dry-run
-\\\
+```
 
-### 方案 C：Vercel 部署（最简单）
+### Plan C: Vercel deploy (simplest)
 
-1. 注册：https://vercel.com
-2. 导入 GitHub 仓库
-3. 配置环境变量（Dashboard → Settings → Environment Variables）
-4. 部署
+1. Sign up: https://vercel.com
+2. Import the GitHub repo
+3. Configure env variables (Dashboard → Settings → Environment Variables)
+4. Deploy
 
-**注意**：Vercel Serverless 不支持常驻进程，Queue Worker 需要单独部署或使用 Vercel Cron。
-
+**Note**: Vercel Serverless doesn't support long-lived processes; the Queue Worker needs a separate deploy or use Vercel Cron.
 
 ---
 
-## 6. SEO 优化
+## 6. SEO Optimization
 
-### 6.1 站内 SEO
+### 6.1 On-site SEO
 
-**已实现功能：**
-- ✅ Sitemap 自动生成（\/sitemap.xml\）
+**Implemented features:**
+- ✅ Automatic sitemap (`/sitemap.xml`)
 - ✅ robots.txt
-- ✅ Open Graph 标签
+- ✅ Open Graph tags
 - ✅ Twitter Card
 - ✅ FAQ Schema
 - ✅ Breadcrumb Schema
 - ✅ SoftwareApplication Schema
-- ✅ 多语言支持（en/es）
+- ✅ Multi-language support (en/es)
 
-### 6.2 内容策略
+### 6.2 Content strategy
 
-**博客文章建议：**
+**Blog post suggestions:**
 
-| 类型 | 标题示例 | 关键词 |
+| Type | Title example | Keyword |
 |------|----------|--------|
-| 教程 | \"如何将 EPUB 转换为 MOBI（完整指南）\" | epub to mobi, kindle转换 |
-| 对比 | \"EPUB vs MOBI vs AZW3：格式对比\" | epub mobi azw3 区别 |
-| 工具 | \"2024 年最佳免费电子书转换器\" | free ebook converter |
-| 问题 | \"为什么 Kindle 不支持 EPUB？\" | kindle epub 不支持 |
+| Tutorial | "How to Convert EPUB to MOBI (Complete Guide)" | epub to mobi, kindle conversion |
+| Comparison | "EPUB vs MOBI vs AZW3: Format Comparison" | epub mobi azw3 difference |
+| Tool | "Best Free Ebook Converter 2024" | free ebook converter |
+| Question | "Why Doesn't Kindle Support EPUB?" | kindle epub not supported |
 
-### 6.3 外部提交
+### 6.3 External submissions
 
-**已完成：**
+**Done:**
 - ✅ Google Search Console
 - ✅ Bing Webmaster Tools
 - ✅ Product Hunt
 - ✅ Open Source Handbook
 
-**建议补充：**
+**Suggested additions:**
 - GitHub Awesome Lists
 - Hacker News
 - Reddit (r/ebooks, r/technology)
@@ -464,161 +458,160 @@ certbot renew --dry-run
 
 ---
 
-## 7. 监控维护
+## 7. Monitoring & Maintenance
 
-### 7.1 健康检查
+### 7.1 Health checks
 
-\\\ash
-# 应用健康
+```bash
+# App health
 curl -s https://www.bookconv.com/api/health | jq
 
-# Redis 连接
+# Redis connection
 redis-cli ping
 
-# Calibre 可用
+# Calibre available
 ebook-convert --version
 
-# Docker 容器
+# Docker containers
 docker ps
-\\\
+```
 
-### 7.2 日志查看
+### 7.2 View logs
 
-\\\ash
-# PM2 日志
+```bash
+# PM2 logs
 pm2 logs bookconv
 
-# Docker 日志
+# Docker logs
 docker-compose logs -f app
 
-# Nginx 错误日志
+# Nginx error log
 tail -f /var/log/nginx/error.log
-\\\
+```
 
-### 7.3 定时清理
+### 7.3 Scheduled cleanup
 
-\\\ash
-# 添加 crontab 清理临时文件
+```bash
+# Add crontab to clean temp files
 crontab -e
 
-# 每天凌晨 3 点清理超过 1 天的文件
-0 3 * * * find /tmp/ebook-uploads -type d -mtime +1 -exec rm -rf {} \\;
-\\\
+# Every day at 3am, delete files older than 1 day
+0 3 * * * find /tmp/ebook-uploads -type d -mtime +1 -exec rm -rf {} \;
+```
 
-### 7.4 备份策略
+### 7.4 Backup strategy
 
-\\\ash
-# 配置文件备份
-tar czf config-backup-.tar.gz \\
-  .env.production \\
-  /etc/nginx/sites-available/ \\
+```bash
+# Back up config files
+tar czf config-backup-$(date +%F).tar.gz \
+  .env.production \
+  /etc/nginx/sites-available/ \
   /etc/letsencrypt/
-\\\
+```
 
 ---
 
-## 8. 常见问题
+## 8. FAQ
 
-### Q1：转换失败怎么办？
+### Q1: Conversion failed, what now?
 
-\\\ash
-# 检查 Calibre
+```bash
+# Check Calibre
 which ebook-convert
 
-# 测试转换
+# Test conversion
 ebook-convert test.epub test.pdf
 
-# 检查权限
+# Check permissions
 ls -la /tmp/ebook-uploads/
-\\\
+```
 
-### Q2：Redis 连接失败？
+### Q2: Redis connection failed?
 
-\\\ash
-# 检查 Redis 状态
+```bash
+# Check Redis status
 systemctl status redis
 redis-cli ping
 
-# 重启 Redis
+# Restart Redis
 systemctl restart redis
-\\\
+```
 
-### Q3：内存不足？
+### Q3: Out of memory?
 
-\\\ash
-# 检查内存
+```bash
+# Check memory
 free -h
 
-# 添加 Swap
+# Add swap
 dd if=/dev/zero of=/swapfile bs=1M count=1024
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 echo '/swapfile none swap sw 0 0' >> /etc/fstab
-\\\
+```
 
-### Q4：静态页面 404？
+### Q4: Static page 404?
 
-\\\ash
-# 检查 .next 目录
+```bash
+# Check .next dir
 ls -la .next/
 
-# 重新构建
+# Rebuild
 npm run build
 
-# 检查路由
-npm run build 2>&1 | grep -E \"Route|page\"
-\\\
+# Check routes
+npm run build 2>&1 | grep -E "Route|page"
+```
 
 ---
 
-## 📚 附录
+## 📚 Appendix
 
-### A. 成本估算（VPS 方案）
+### A. Cost estimate (VPS plan)
 
-| 项目 | 月费 | 说明 |
+| Item | Monthly | Notes |
 |------|------|------|
 | Hetzner CX22 |  | 2vCPU/4GB/20GB |
-| 域名 (.com) | .83 | ~/年 |
-| Cloudflare CDN |  | 免费版够用 |
-| R2 存储 |  | ~10GB |
-| **总计** | **~/月** | |
+| Domain (.com) | $0.83 | ~$/year |
+| Cloudflare CDN |  | free tier is enough |
+| R2 storage |  | ~10GB |
+| **Total** | **~$/month** | |
 
-### B. 快速命令参考
+### B. Quick command reference
 
-\\\ash
-# 开发
+```bash
+# Dev
 npm run dev
 
-# 构建
+# Build
 npm run build
 
-# 启动生产
+# Start production
 npm start
 
 # Docker
 docker-compose up -d
 
-# 查看日志
+# View logs
 docker-compose logs -f
 
-# 重启
+# Restart
 pm2 restart bookconv
-\\\
+```
 
-### C. 相关文件
+### C. Related files
 
-| 文件 | 用途 |
+| File | Purpose |
 |------|------|
-| \.env.example\ | 环境变量模板 |
-| \docker-compose.yml\ | Docker 配置 |
-| \Dockerfile\ | 镜像构建 |
-| \
-ext.config.ts\ | Next.js 配置 |
-| \src/lib/payments/service.ts\ | 支付逻辑 |
-| \src/lib/queue.ts\ | 队列逻辑 |
+| `.env.example` | env var template |
+| `docker-compose.yml` | Docker config |
+| `Dockerfile` | image build |
+| `next.config.ts` | Next.js config |
+| `src/lib/payments/service.ts` | payment logic |
+| `src/lib/queue.ts` | queue logic |
 
 ---
 
-*最后更新：2026-08-02*
-*版本：v1.0*
+*Last updated: 2026-08-02*
+*Version: v1.0*

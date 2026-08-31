@@ -1,63 +1,63 @@
-# 每周运营 Checklist
+# Weekly Operations Checklist
 
-## 周一: 数据分析
-- [ ] 查看上周转化漏斗数据 (Plausible/GA)，关注异常波动
-- [ ] 检查各关键词排名变化 (用 Ahrefs/SerpAPI)
-- [ ] 查看服务器健康状态 (CPU/内存/磁盘/R2 用量)
+## Monday: Data Analysis
+- [ ] Review last week's conversion-funnel data (Plausible / GA); watch for abnormal fluctuations
+- [ ] Check keyword ranking changes (use Ahrefs / SerpAPI)
+- [ ] Check server health (CPU / memory / disk / R2 usage)
 
-## 周二: Reddit/社区互动
-- [ ] 在 r/Calibre 回答 3-5 个相关问题
-- [ ] 在 r/kindle 回答 2-3 个相关问题
-- [ ] 在 r/selfpublish 回答 2-3 个相关问题
-- [ ] 在 r/ebooks 回答 2-3 个相关问题
-- [ ] 检查是否有新评论/回复需要回应
+## Tuesday: Reddit / Community Engagement
+- [ ] Answer 3–5 relevant questions in r/Calibre
+- [ ] Answer 2–3 relevant questions in r/kindle
+- [ ] Answer 2–3 relevant questions in r/selfpublish
+- [ ] Answer 2–3 relevant questions in r/ebooks
+- [ ] Check for new comments / replies that need a response
 
-## 周三: 内容创作
-- [ ] 撰写/润色一篇博客或工具页内容
-- [ ] 更新 S/A 级页面的内容深度
-- [ ] 准备下周的 Medium/DEV.to 文章
+## Wednesday: Content Creation
+- [ ] Write / polish one blog or tool-page piece
+- [ ] Deepen S-/A-tier pages
+- [ ] Prepare next week's Medium / DEV.to article
 
-## 周四: 外链拓展
-- [ ] 联系 2-3 个电子书博客/网站
-- [ ] 提交 1-2 个新工具目录
-- [ ] 回复 Quora 问题 5-10 个
-- [ ] 更新 GitHub 仓库
+## Thursday: Backlink Outreach
+- [ ] Contact 2–3 ebook blogs / websites
+- [ ] Submit 1–2 new tool directories
+- [ ] Answer 5–10 Quora questions
+- [ ] Update the GitHub repository
 
-## 周五: 复盘规划
-- [ ] 梳理本周用户反馈
-- [ ] 规划下周优化项
-- [ ] 检查转化率漏斗，找出瓶颈
-- [ ] 更新外链追踪表格
-
----
-
-## 每月复盘
-
-### 第1周: 内容规划
-- [ ] 确定本月重点内容主题
-- [ ] 规划 S/A 级页面建设进度
-- [ ] 确定外链拓展目标
-
-### 第2-3周: 执行
-- [ ] 按计划执行内容创作
-- [ ] 执行外链拓展
-- [ ] 监控 SERP 排名变化
-
-### 第4周: 复盘
-- [ ] 统计本月外链获取情况
-- [ ] 分析各渠道 ROI
-- [ ] 调整下月策略
-- [ ] 更新收入预测
+## Friday: Review & Planning
+- [ ] Organize this week's user feedback
+- [ ] Plan next week's optimization items
+- [ ] Inspect the conversion-funnel bottleneck
+- [ ] Update the backlink tracking sheet
 
 ---
 
-## 外链追踪表格
+## Monthly Review
 
-| 日期 | 渠道 | 动作 | 目标URL | 状态 | 备注 |
-|------|------|------|---------|------|------|
-| W1D1 | Product Hunt | 提交 Coming Soon | ph.com/... | 待审核 | |
-| W1D3 | AlternativeTo | 提交产品 | alternative.to/... | 已提交 | |
-| W1D5 | GitHub | 创建仓库 | github.com/... | 已完成 | |
-| W2D1 | GSC | 提交 sitemap | search.google.com/... | 已完成 | |
-| W2D3 | Medium | 发布文章 | medium.com/@... | 已发布 | |
+### Week 1: Content Planning
+- [ ] Lock this month's key content themes
+- [ ] Plan S-/A-tier page build progress
+- [ ] Set backlink-outreach goals
+
+### Weeks 2–3: Execution
+- [ ] Execute content creation per plan
+- [ ] Execute backlink outreach
+- [ ] Monitor SERP ranking changes
+
+### Week 4: Review
+- [ ] Tally this month's backlink acquisitions
+- [ ] Analyze each channel's ROI
+- [ ] Adjust next month's strategy
+- [ ] Update revenue forecast
+
+---
+
+## Backlink Tracking Sheet
+
+| Date | Channel | Action | Target URL | Status | Notes |
+|------|---------|--------|------------|--------|-------|
+| W1D1 | Product Hunt | Submit Coming Soon | ph.com/... | Pending review | |
+| W1D3 | AlternativeTo | Submit product | alternative.to/... | Submitted | |
+| W1D5 | GitHub | Create repo | github.com/... | Done | |
+| W2D1 | GSC | Submit sitemap | search.google.com/... | Done | |
+| W2D3 | Medium | Publish article | medium.com/@... | Published | |
 | | | | | | |

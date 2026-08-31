@@ -1,65 +1,55 @@
-# 项目文档中心
+# Project Documentation Center
 
-本目录是 BookConv 项目的统一文档中心，按用途分为三个子目录。**2026-08-10 起 `ebook-converter/docs/` 已全部并入本目录**，全项目仅此一个 docs。
+This directory is the unified documentation center for the BookConv project, organized by purpose into subdirectories. **As of 2026-08-10, `ebook-converter/docs/` was fully merged into this directory** — this is the only docs root in the project.
 
-## 目录结构
+> **Language / 语言**: This `README.md` and the docs under `docs/` are the **English-primary** set. The complete **Chinese** archive lives in [`docs/zh/`](./zh/README.md). New docs should default to English; the `/zh/` tree is the preserved full-Chinese history.
+
+## Directory Structure
 
 ```
 docs/
-├── README.md              # 本文件：统一入口与索引
-├── ops/                    # 外链 / SEO 运营作战中心
-├── tech/                   # 技术文档与新人培训
-├── content/                # 博客 / 指南内容生产规范
-└── submissions/            # ⚠️ 外链提交记录（含账号等敏感信息，已 gitignore，不纳入版本控制）
+├── README.md                 # This file: unified English-primary entry & index
+├── content-standards.md      # Content production standards (blog / guide / convert)
+├── tech/                    # Technical docs & new-contributor onboarding (English)
+├── ops/                     # Backlink / SEO operations war room (English)
+└── zh/                      # Full Chinese archive (preserved history)
 ```
 
-## `ops/` — 外链 / SEO 运营
+> **Note on `content/`:** An earlier index referenced a `docs/content/` folder with `.mdx` content guides (e.g. `background-workers.mdx`, `sitemap-seo-guide.mdx`). **Those files are not present in the repository** — the content-production standards now live in [`content-standards.md`](./content-standards.md). The `content/` directory should be created once those guides are written.
 
-| 文件 | 用途 |
-|------|------|
-| `外链推广完整方案_20260804.md` / `外链推广整合方案_20260804.md` | 外链推广总方案 |
-| `竞品外链分析与推广计划.md` / `_part1.md` | 竞品外链分析与推广计划 |
-| `外链资源完整清单.md` | 外链资源站点清单 |
-| `submit_copies.md` / `提交文案.md` | 提交流程与文案模板 |
-| `email_templates.md` | 外联邮件模板 |
-| `ops-scheduling.md` | 运营排期 |
-| `phase1_week1.md` / `phase1_week1b.md` / `phase1_week2-4.md` / `phase2_week5-12.md` / `phase3_week13-20.md` | 分阶段执行计划 |
-| `server-recommendations.md` | 服务器 / 基础设施建议 |
-| `weekly_checklist.md` | 周度检查清单 |
-| `codex-multica-sync.md` | Multica 同步脚本说明 |
-| `write_plan.js` | 写作计划辅助脚本 |
-| `外链提交报告_20260809.md` | 外链策略与本周执行计划（2026-08-10 自 ebook-converter/docs 并入） |
-| `审计-SERP竞品分析方法论-2026-08-09.md` | SERP 竞品分析方法论（2026-08-10 并入） |
+## `content-standards.md` — Content Production Standards
 
-## `tech/` — 技术文档与新人培训
+| File | Purpose |
+|------|---------|
+| [`content-standards.md`](./content-standards.md) | Unified standard for blog / guide / conversion-page production; onboarding reference for new contributors (architecture, writing, internal links, SEO/GEO, i18n, quality gate) |
 
-| 文件 | 用途 |
-|------|------|
-| `新人培训-Google-Cloud与GSC授权.md` | GSC / Google Cloud 授权上手 |
-| `新人部署上手指南-GitHub到Vercel.md` | GitHub → Vercel 部署流程 |
-| `新人指导-内链优化规则.md` | 内链优化规范 |
-| `weekly-guide-loop.md` | 周度指南生产循环 SOP |
-| `weekly-guide-loop-2026-08-10.md` | 周度指南生产循环 SOP（双轨版，2026-08-10 并入） |
-| `upstash-setup-guide.md` | Upstash / Redis 部署指南（2026-08-10 并入） |
-| `新人指导-SERP竞品分析与页面优化方法论.md` | SERP 竞品分析新人指导（2026-08-10 并入） |
-| `getting-started.md` | 新人入门总览（原 `guides/`） |
+## `tech/` — Technical Docs & Onboarding (English)
 
-## `content/` — 内容生产规范
+| File | Purpose |
+|------|---------|
+| [`tech/getting-started.md`](./tech/getting-started.md) | New-contributor onboarding overview |
+| [`tech/deploy-github-to-vercel.md`](./tech/deploy-github-to-vercel.md) | GitHub → Vercel deployment flow |
+| [`tech/internal-linking-rules.md`](./tech/internal-linking-rules.md) | Internal-linking optimization rules |
+| [`tech/weekly-guide-loop.md`](./tech/weekly-guide-loop.md) | Weekly guide-production loop SOP |
+| [`tech/weekly-guide-loop-2026-08-10.md`](./tech/weekly-guide-loop-2026-08-10.md) | Weekly guide-production loop SOP (dual-track, merged 2026-08-10) |
+| [`tech/upstash-setup-guide.md`](./tech/upstash-setup-guide.md) | Upstash / Redis setup guide |
+| [`tech/serp-competitor-analysis.md`](./tech/serp-competitor-analysis.md) | SERP competitor analysis & page-optimization methodology |
 
-博客 / 指南写作规范（原 `ebook-converter/docs/blog-guides/`）：
+## `ops/` — Backlink / SEO Operations (English)
 
-- `background-workers.mdx` — 后台任务写作指南
-- `download-troubleshooting.mdx` — 下载排障指南
-- `env-variables-setup.mdx` — 环境变量配置指南
-- `epub-to-mobi-guide.mdx` — EPUB→MOBI 指南
-- `pdf-to-epub-guide.mdx` — PDF→EPUB 指南
-- `sitemap-seo-guide.mdx` — sitemap / SEO 指南
-- `webhook-integration.mdx` — Webhook 集成指南
+| File | Purpose |
+|------|---------|
+| [`ops/weekly_checklist.md`](./ops/weekly_checklist.md) | Weekly operations checklist (Mon–Fri + monthly) |
+| [`ops/backlink-tools-index.md`](./ops/backlink-tools-index.md) | Backlink tooling index — maps the 92 `scripts/` + backlink docs |
+| [`ops/ops-scheduling.md`](./ops/ops-scheduling.md) | Operations-audit scheduling plan (crontab / GitHub Actions SSH) — ⚠️ reconstructed from a corrupted source, verify against `zh/` |
+| [`ops/server-recommendations.md`](./ops/server-recommendations.md) | Deployment server selection guide (Vercel / Hetzner / Aliyun / DO / Railway) — ⚠️ reconstructed from a corrupted source, verify against `zh/` |
 
-内容策略方法论（新人必读）：
+> The remaining internal ops docs (promotion plans, competitor recon, submission copies, email templates, phased plans, archived backlink drafts) are kept in Chinese only under [`docs/zh/ops/`](./zh/ops/). They are operational records not yet translated.
 
-- `一页吃整簇策略.md` — 关键词簇合并策略（同意图变体合并成页，含判断标准 + 实战验证）
+## `zh/` — Full Chinese Archive
 
-## 安全说明
+[`docs/zh/README.md`](./zh/README.md) is the complete Chinese documentation center (original README + `content-standards.md` + `tech/` + `ops/`). It is preserved as the authoritative Chinese history and will be kept in sync with structural changes.
 
-`submissions/` 包含外链提交记录（JSON + 截图），其中可能含有账号、提交凭证等敏感信息。**该目录已加入 `.gitignore`，不纳入版本控制**，本地保留仅供运营参考。请勿手动 `git add` 此目录。
+## Security Note
+
+`submissions/` (referenced in the original index) holds backlink-submission records (JSON + screenshots) that may contain accounts and submission credentials. **That directory is in `.gitignore` and is not version-controlled** — kept locally for ops reference only. Do not manually `git add` it.

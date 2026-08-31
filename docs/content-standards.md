@@ -1,127 +1,127 @@
-# bookconv.com 内容生成规范与标准
+# bookconv.com Content Generation Standards
 
-> 汇总自实战与既有文档，作为内容生产（博客 / 指南 / 转换页）的统一规范与新人上手依据。
-> 最后更新：2026-08-09 | 维护：与 `英文博客写作指南.md`、`内部链接审计报告-2026-08-08.md`、`scripts/seo-critic.mjs` 同步。
+> Consolidated from real-world practice and existing docs as the unified standard for content production (blog / guides / conversion pages) and the onboarding reference for new contributors.
+> Last updated: 2026-08-09 | Maintained in sync with `英文博客写作指南.md`, `内部链接审计报告-2026-08-08.md`, and `scripts/seo-critic.mjs`.
 
-## 权威来源
+## Authoritative Sources
 
-| 主题 | 来源 |
+| Topic | Source |
 |---|---|
-| 写作 / SEO / GEO / De-AI | `英文博客写作指南.md`（v1.0） |
-| 内链规则 v1（16 条） | `内部链接审计报告-2026-08-08.md` + `src/lib/internal-links.ts` |
-| 提交门禁 | `scripts/seo-critic.mjs` + `scripts/code-critic.mjs` |
-| 渲染能力 | `src/data/blog/types.ts`（博客）/ `src/app/[locale]/convert/[slug]/ToolPageClient.tsx`（转换页） |
+| Writing / SEO / GEO / De-AI | `英文博客写作指南.md` (v1.0) |
+| Internal-link rules v1 (16 rules) | `内部链接审计报告-2026-08-08.md` + `src/lib/internal-links.ts` |
+| Submission gate | `scripts/seo-critic.mjs` + `scripts/code-critic.mjs` |
+| Rendering capabilities | `src/data/blog/types.ts` (blog) / `src/app/[locale]/convert/[slug]/ToolPageClient.tsx` (conversion pages) |
 
 ---
 
-## 一、内容体系架构（单一数据源）
+## 1. Content System Architecture (Single Source of Truth)
 
-三套同构子系统，列表 / sitemap / RSS 全部自动派生，**新增内容只在一处登记**：
+Three isomorphic subsystems. Lists / sitemap / RSS are all auto-derived. **Register new content in exactly one place:**
 
-| 子系统 | 数据目录 | 注册入口 | 详情页 | 现状规模 |
+| Subsystem | Data directory | Registration entry | Detail page | Current size |
 |---|---|---|---|---|
-| 博客 Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 36 |
-| 指南 Guide | `src/data/guides/*.ts` | `all[]` | `[locale]/guide/[slug]` | 21 |
-| 转换页 Convert | `src/data/content/*.ts` | `CONVERSION_MAP` | `[locale]/convert/[slug]` | 30 |
+| Blog | `src/data/blog/*.ts` | `posts[]` | `[locale]/blog/[slug]` | 36 |
+| Guide | `src/data/guides/*.ts` | `all[]` | `[locale]/guide/[slug]` | 21 |
+| Convert | `src/data/content/*.ts` | `CONVERSION_MAP` | `[locale]/convert/[slug]` | 30 |
 
-- 全局导航在根 `src/app/layout.tsx`（Home / Pricing / **Convert** / **Guide** / Blog + LocaleSwitcher / LoginButton）；首页也须有 `/blog`、`/guide` 入口。
-- 规模快照（2026-08-09）：36 博客 + 21 指南 + 30 转换 = 87 内容页。
+- Global nav lives in root `src/app/layout.tsx` (Home / Pricing / **Convert** / **Guide** / Blog + LocaleSwitcher / LoginButton); the home page must also expose `/blog` and `/guide` entries.
+- Scale snapshot (2026-08-09): 36 blog + 21 guide + 30 convert = 87 content pages.
 
-## 二、内容策略基线
+## 2. Content Strategy Baseline
 
-- **一页一词长尾，小词先行**；建新页前**先验后端真能转**（防软 404 幽灵页）。
-- **一页吃整簇**（同意图关键词合并成页）：对比 / 选择 / 疑问类变体（X vs Y / X or Y / does X work）**合并到最强词页面**，禁止为每个变体各建一页（内容同质化 + 权重分散）。详见 `docs/content/一页吃整簇策略.md`（含判断标准与实战验证）。
-- 缺口词合计展示很小时**不铺新页**，优先深化已收录页 + 外链（位置 60–80 是域名权威问题，页面优化天花板约 30–40，上首页靠外链）。
+- **One page = one long-tail keyword, start with small keywords**; before building a new page, **verify the backend can actually convert** (prevent soft-404 ghost pages).
+- **One page absorbs a whole cluster** (merge same-intent keyword variants into a single page): comparison / choice / question variants (X vs Y / X or Y / does X work) **merge into the strongest keyword's page**. Do NOT build a separate page per variant (content duplication + authority dilution). See `docs/content/一页吃整簇策略.md` for criteria and validation.
+- When a gap keyword's combined impressions are very small, **do not spin up a new page** — prioritize deepening already-indexed pages + backlinks (positions 60–80 are a domain-authority problem; on-page optimization ceiling is ~30–40; reaching the first page depends on backlinks).
 
-## 三、写作规范（正文）
+## 3. Writing Standards (Body)
 
-- **全英文**（硬约束）；正文约定**不使用反引号**（保持纯散文，强调用 `**加粗**`）。
-- **内链用真实 slug**，绝不手写死链。
-- 每篇**唯一 H1**，H1→H2→H3 不跳级。
-- **Key Takeaways** 必备（3–6 条可抽取要点，GEO 友好）。
-- **FAQ 用结构化 `faqs` 字段**（`BlogFaq` 类型）→ 自动发射 `FAQPage` JSON-LD；**正文 `sections` 勿放散文 FAQ 段**。
-- **渲染器能力**（已核验）：博客与转换页**均支持** 加粗 / 斜体 / 内联代码 / 链接 / H2–H3 / 列表 / **表格**；**均不支持围栏代码块**。
-- **可引用性（GEO）**：具体数字 + 命名来源（研究 / 组织 / 专家）+ 日期；实体要具名（如 "ISBN""FDA""Calibre"）。
-- **De-AI 化**（发布前必过）：删 `leverage / utilize / delve / landscape / realm / facilitate / robust / comprehensive / cutting-edge / game-changer / navigate` 及 "in today's world""it is important to note" 等套话；句式 / 段落长短交错；加缩略、破折号、反问；读出来像人话。
+- **All English** (hard constraint); body convention is to **avoid backticks** (keep pure prose; use `**bold**` for emphasis).
+- **Use real slugs for internal links** — never hand-write dead URLs.
+- Exactly **one H1 per page**; H1 → H2 → H3 without skipping levels.
+- **Key Takeaways required** (3–6 extractable bullets, GEO-friendly).
+- **FAQ uses the structured `faqs` field** (`BlogFaq` type) → auto-emits `FAQPage` JSON-LD; **do NOT put prose FAQ sections in body `sections`**.
+- **Renderer capabilities (verified)**: both blog and conversion pages support **bold / italic / inline-code / links / H2–H3 / lists / tables**; **neither supports fenced code blocks**.
+- **Citability (GEO)**: concrete numbers + named sources (research / organization / expert) + dates; name entities explicitly (e.g. "ISBN", "FDA", "Calibre").
+- **De-AI** (must pass before publish): remove `leverage / utilize / delve / landscape / realm / facilitate / robust / comprehensive / cutting-edge / game-changer / navigate` and filler like "in today's world" / "it is important to note"; vary sentence and paragraph length; add abbreviations, dashes, rhetorical questions; read it aloud — it should sound human.
 
-## 四、内链规范（必须走 helper，禁止手写 URL）
+## 4. Internal-Link Standards (must use helper, never hand-write URL)
 
-全部内链经 `src/lib/internal-links.ts` 的 helper，保证 slug 真实、相关性打分、防稀释：
+All internal links go through helpers in `src/lib/internal-links.ts` to guarantee real slugs, relevance scoring, and dilution control:
 
-| 场景 | 调用 |
+| Scenario | Call |
 |---|---|
-| 博客互链 | `getRelatedPosts(slug, 3)` |
-| 转换页 → 博客 | `getRelatedBlogPostsForConversion(src, tgt, 3)` |
-| 转换页 → 指南 | `getRelatedGuidesForConversion(src, tgt, 3)` |
-| 博客 → 指南 | `getRelatedGuidesForBlogPost(slug, 3)` |
-| 指南 → 博客 | `getRelatedBlogPostsForGuide(formats, tags, 3)` |
-| 指南互链 | `getRelatedGuides(slug, 5)`（限 Top5，防 R15 稀释） |
+| Blog ↔ blog | `getRelatedPosts(slug, 3)` |
+| Convert → blog | `getRelatedBlogPostsForConversion(src, tgt, 3)` |
+| Convert → guide | `getRelatedGuidesForConversion(src, tgt, 3)` |
+| Blog → guide | `getRelatedGuidesForBlogPost(slug, 3)` |
+| Guide → blog | `getRelatedBlogPostsForGuide(formats, tags, 3)` |
+| Guide ↔ guide | `getRelatedGuides(slug, 5)` (top 5 only, prevent R15 dilution) |
 
-- **三角闭环**：博客 ↔ 指南 ↔ 转换 互链；dev / infra 帖（`sitemap-seo-guide` 等）不进"相关指南"。
-- 锚文本 0 条通用词（R6 达标）。
+- **Triangular loop**: blog ↔ guide ↔ convert interlink; dev/infra posts (e.g. `sitemap-seo-guide`) do not enter "related guides".
+- Anchor text has zero generic words (R6 compliant).
 
-## 五、SEO / 技术规范
+## 5. SEO / Technical Standards
 
-- 规范域名 `www.bookconv.com`；GSC 用网域属性 `sc-domain:bookconv.com`。
-- **canonical**：`locale === 'es' ? '/es' : ''`，**禁** `${'/' + locale}`；只由页级 `generateMetadata` 输出，根 layout 不写。
-- **标题模板**自动追 `| BookConv`；per-page title **不自带后缀**；改完 `curl` 验 `<title>`。
-- **localePrefix as-needed**：英文无前缀，西语 `/es`；中间件把 `/en/*` 301 回无前缀 → **hreflang / canonical / alternates 绝不硬编码 `/en`**（历史事故）。
-- 首页 = `[locale]/page.tsx`，**无**根 `src/app/page.tsx`；`src/app/**` 路由目录**禁放 `.mdx`**（500）。
-- sitemap 自动派生；`public/llms.txt` 手写 → 每次新增做「sitemap / llms.txt / 列表页」**三数一致**校验。
+- Canonical domain `www.bookconv.com`; GSC uses the domain property `sc-domain:bookconv.com`.
+- **canonical**: `locale === 'es' ? '/es' : ''`, **never** `${'/' + locale}`; emitted only by per-page `generateMetadata`, not by root layout.
+- **Title template** auto-appends `| BookConv`; per-page title **does not carry its own suffix**; after changes, `curl` to verify `<title>`.
+- **localePrefix as-needed**: English has no prefix, Spanish is `/es`; middleware 301-redirects `/en/*` to no-prefix → **hreflang / canonical / alternates must NEVER hardcode `/en`** (historical incident).
+- Home = `[locale]/page.tsx`, **no** root `src/app/page.tsx`; **do NOT place `.mdx` files under `src/app/**`** (500 error).
+- sitemap auto-derived; `public/llms.txt` is hand-written → after every addition run the **three-number consistency check** (sitemap / llms.txt / list pages).
 
-## 六、GEO 规范
+## 6. GEO Standards
 
-- `public/llms.txt` **全量**：博客数 == 注册博文数；转换数 == `CONVERSION_MAP`；指南数 == `getAllGuides()`。
-- `robots.txt` 放行 `GPTBot / ClaudeBot / CCBot` 等 AI 爬虫。
-- 博文 `faqs` 发 `FAQPage` JSON-LD；实体结构化数据补 `Organization.areaServed / availableLanguage` 与 `WebSite.inLanguage`。
-- Key Takeaways + FAQ 为**必含块**（GEO 抽取核心）。
+- `public/llms.txt` **in full**: blog count == registered blog count; convert count == `CONVERSION_MAP`; guide count == `getAllGuides()`.
+- `robots.txt` allows AI crawlers `GPTBot / ClaudeBot / CCBot`, etc.
+- Blog `faqs` emit `FAQPage` JSON-LD; add structured data for `Organization.areaServed / availableLanguage` and `WebSite.inLanguage`.
+- Key Takeaways + FAQ are **required blocks** (core GEO extraction targets).
 
-## 七、注册与同步铁律
+## 7. Registration & Sync Rules
 
-- 新增指南三步：写数据 → `index.ts` 注册 → `public/llms.txt` 的 Guides 条数须等于 `getAllGuides()`。
-- 新增博客 / 转换同理走 `index.ts`，且 `llms.txt` 同步；`seo-critic.mjs` 会拦"注册未收敛 / llms.txt 失同步"。
+- New guide, three steps: write data → register in `index.ts` → the Guides count in `public/llms.txt` must equal `getAllGuides()`.
+- New blog / convert follows the same `index.ts` path, and `llms.txt` stays in sync; `seo-critic.mjs` blocks "registration not converged / llms.txt out of sync".
 
-## 八、i18n 规范
+## 8. i18n Standards
 
-- 双语走 **next-intl v4**：server 用 `getTranslations`、client 用 `useTranslations`；`messages/en.json` 与 `es.json` **同步加同名键**（缺译 seo-critic 报 warn）。
-- 博客西语用 `BlogPostLocalized.es` 字段；UI 文案一律走 messages，不硬编码。
+- Bilingual via **next-intl v4**: server uses `getTranslations`, client uses `useTranslations`; `messages/en.json` and `es.json` **add same-named keys in sync** (missing translation → seo-critic warns).
+- Blog Spanish uses the `BlogPostLocalized.es` field; all UI copy goes through messages, never hardcoded.
 
-## 九、CTA URL 铁律
+## 9. CTA URL Rule
 
-- 写 **`/convert/{src}-to-{tgt}`**（带 `to`），**不是** `CONVERSION_MAP` 键 `{src}-{tgt}`；漏 `to` → 500。
+- Write **`/convert/{src}-to-{tgt}`** (with `to`), **not** the `CONVERSION_MAP` key `{src}-{tgt}`; missing `to` → 500.
 
-## 十、质量门禁（提交前必跑）
+## 10. Quality Gate (run before submit)
 
-- `node scripts/seo-critic.mjs`：**退出码 1 = 门禁失败**。查：博文 / 指南注册收敛、llms.txt 同步、内部死链、ES 键对齐、hreflang 误指 `/en`。
-- `node scripts/code-critic.mjs`：dup-block / stray-root / app 目录 `.mdx`(CRITICAL) / 杂散脚本。
-- `tsc --noEmit` 0 错 + `next build --webpack`（Windows 必须 `--webpack`；遇 safe-delete shim 拦删用 `NODE_OPTIONS="--use-system-ca" npx next build --webpack`）。
-- 部署后 `curl` 验关键页（含 `<title>`、canonical）。
+- `node scripts/seo-critic.mjs`: **exit code 1 = gate failure**. Checks: blog/guide registration convergence, llms.txt sync, internal dead links, ES key alignment, hreflang wrongly pointing to `/en`.
+- `node scripts/code-critic.mjs`: dup-block / stray-root / `.mdx` in app dir (CRITICAL) / stray scripts.
+- `tsc --noEmit` 0 errors + `next build --webpack` (Windows requires `--webpack`; if the safe-delete shim blocks deletion use `NODE_OPTIONS="--use-system-ca" npx next build --webpack`).
+- After deploy, `curl` to verify key pages (including `<title>`, canonical).
 
-## 十一、已踩坑 / 禁区
+## 11. Known Pitfalls / No-Go Zones
 
-- 幽灵页 soft-404（已从 `CONVERSION_MAP` 派生 + `dynamicParams=false` + `notFound()` 修）；`/api/health` 碰 Redis 超时属已知噪声。
-- 死配置 `next-sitemap.config.js`（无依赖无 postbuild，sitemap 由 `sitemap.ts` 驱动，可清）。
-- 文件大小文案须对齐 **10 / 50 / 100**（free 10 / Pro 50 / API 100），不得与后端实际限额（`MAX_FILE_SIZE=10MB`）矛盾的未证实宣称。
-- **Next.js 有 breaking changes**（AGENTS.md）：写码前先读 `node_modules/next/dist/docs/`。
+- Ghost-page soft-404 (fixed via `CONVERSION_MAP` derivation + `dynamicParams=false` + `notFound()`); `/api/health` hitting Redis timeout is known noise.
+- Dead config `next-sitemap.config.js` (no dependency, no postbuild; sitemap driven by `sitemap.ts`, can be cleaned up).
+- File-size copy must align to **10 / 50 / 100** (free 10 / Pro 50 / API 100); do not make unverified claims that contradict the real backend limit (`MAX_FILE_SIZE=10MB`).
+- **Next.js has breaking changes** (AGENTS.md): read `node_modules/next/dist/docs/` before coding.
 
 ---
 
-## 附：新人自检清单
+## Appendix: New-Contributor Self-Check List
 
-**写之前**
-- [ ] 关键词 / 意图 / 竞品已确认；后端确能转（转换页）
-- [ ] 已规划内链（blog ↔ guide ↔ convert 三角）与 `faqs`（FAQPage JSON-LD）
-- [ ] 已规划 Key Takeaways 与 5–7 条 FAQ
+**Before writing**
+- [ ] Keyword / intent / competitors confirmed; backend can actually convert (conversion pages)
+- [ ] Internal-link plan drafted (blog ↔ guide ↔ convert triangle) and `faqs` (FAQPage JSON-LD)
+- [ ] Key Takeaways and 5–7 FAQs planned
 
-**写之中**
-- [ ] 全英文、无反引号；唯一 H1、不跳级
-- [ ] 内链走 `internal-links.ts` helper（不手写 URL）
-- [ ] CTA 用 `/convert/{src}-to-{tgt}`
-- [ ] De-AI 化：删套话、长短交错、像人话
+**While writing**
+- [ ] All English, no backticks; single H1, no skipped levels
+- [ ] Internal links via `internal-links.ts` helper (no hand-written URLs)
+- [ ] CTA uses `/convert/{src}-to-{tgt}`
+- [ ] De-AI: remove filler, vary length, sound human
 
-**发布之前**
-- [ ] 数据注册进 `index.ts`；`llms.txt` 三数一致
-- [ ] `messages/en.json` 与 `es.json` 同键（如涉 UI 文案）
-- [ ] `node scripts/seo-critic.mjs` 退出码 0；`node scripts/code-critic.mjs` 无 CRITICAL
-- [ ] `tsc --noEmit` + `next build --webpack` 通过
-- [ ] 部署后 `curl` 验 `<title>` / canonical / 关键断言
+**Before publishing**
+- [ ] Data registered in `index.ts`; `llms.txt` three-number consistency holds
+- [ ] `messages/en.json` and `es.json` share keys (if UI copy involved)
+- [ ] `node scripts/seo-critic.mjs` exit code 0; `node scripts/code-critic.mjs` no CRITICAL
+- [ ] `tsc --noEmit` + `next build --webpack` pass
+- [ ] After deploy, `curl` verifies `<title>` / canonical / key assertions

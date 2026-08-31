@@ -1,156 +1,156 @@
-# Upstash Redis 接入清单
+# Upstash Redis Integration Checklist
 
-> 用途：让「付费 → Pro」链路在 Vercel 上真正生效。
-> 关联提交：`0d15c34`（修复 Pro 三处断裂 + `/batch` 门禁）。
-> 本文是部署运维文档，不涉及 GEO/SEO 七段采样流程。
+> Purpose: Make the "pay → Pro" flow actually work on Vercel.
+> Related commit: `0d15c34` (fixes three Pro-link breakages + the `/batch` gate).
+> This is a deployment/ops doc; it does not cover the GEO/SEO seven-stage sampling flow.
 
 ---
 
-## 0. 为什么需要这份清单
+## 0. Why this checklist exists
 
-Pro 链路修复后，代码已具备完整闭环：
+After the Pro-link fix, the code has a complete closed loop:
 
 ```
 UpgradeButton ──email──▶ checkout/route.ts ──custom_data.email──▶ Lemon Squeezy
                                                           │
-                                              webhook/route.ts（付款成功回传）
+                                              webhook/route.ts (payment success callback)
                                                           │ resolveUserEmail(custom_data.email)
                                                           ▼
                                           saveSubscription(email) → Redis: sub:{email}
                                                           │
-                                           用户访问 /batch（服务端组件）
+                                            user visits /batch (server component)
                                                           ▼
-                                  getSession().email → getPlanByEmail(email) → 读 Redis: sub:{email}
+                                  getSession().email → getPlanByEmail(email) → read Redis: sub:{email}
                                                           │
-                                                  Pro → 显示上传器 / 否则 → 升级引导
+                                                  Pro → show uploader / else → upgrade prompt
 ```
 
-**关键前提**：`src/lib/redis.ts` 读取环境变量 `REDIS_URL`。
+**Key prerequisite**: `src/lib/redis.ts` reads the `REDIS_URL` environment variable.
 
-- 不设 `REDIS_URL` → `getRedisClient()` 返回 `null` → 订阅写不进、读不到。
-- 代码对所有 Redis 失败做了优雅降级（try/catch + 日志），**不会崩**，但结果是：
-  - webhook 收到付款也存不住；
-  - `/batch` 门禁对非 Pro 用户"关闭"（即所有人都走升级引导，不会误放）——这是**安全默认**。
-- 设好 `REDIS_URL` 且可达 → 上述闭环才真正打通。
+- No `REDIS_URL` → `getRedisClient()` returns `null` → subscriptions can't be written or read.
+- The code gracefully degrades on all Redis failures (try/catch + logging), so it **won't crash**, but the result is:
+  - Webhook receives payment but can't persist it;
+  - The `/batch` gate "closes" for non-Pro users (everyone sees the upgrade prompt, nothing leaks) — this is the **safe default**.
+- Set `REDIS_URL` and make it reachable → the closed loop above is actually connected.
 
-**目标**：在 Vercel 配置一个可达的 `REDIS_URL`（Upstash 的 `rediss://` 地址），让付费状态可持久化、门禁可正确放行。
+**Goal**: Configure a reachable `REDIS_URL` (Upstash's `rediss://` endpoint) in Vercel so paid status persists and the gate opens correctly.
 
 ---
 
-## 1. 前置依赖
+## 1. Prerequisites
 
-| 项 | 要求 |
+| Item | Requirement |
 |---|---|
-| Upstash 账号 | 免费层即可（有 Redis 协议额度） |
-| Vercel 项目 | `bookconv` 已部署，能访问 Project Settings → Environment Variables |
-| Lemon Squeezy | 已配置（checkout/webhook 已就绪，本清单不改 LS 侧） |
-| 本地验证 | 可选：本地 `export REDIS_URL=...` 后 `node -e` 测连通 |
+| Upstash account | Free tier is enough (has a Redis-protocol quota) |
+| Vercel project | `bookconv` deployed, able to access Project Settings → Environment Variables |
+| Lemon Squeezy | Already configured (checkout/webhook ready; this checklist does not change the LS side) |
+| Local verification | Optional: `export REDIS_URL=...` locally then `node -e` to test connectivity |
 
 ---
 
-## 2. 步骤
+## 2. Steps
 
-### 步骤 1 —— 注册 / 登录 Upstash
-- 打开 https://upstash.com ，用 GitHub 或邮箱注册。
-- 进入控制台 **Home → Redis**。
+### Step 1 — Register / log in to Upstash
+- Open https://upstash.com and sign up with GitHub or email.
+- Go to the console **Home → Redis**.
 
-### 步骤 2 —— 创建 Redis 数据库
-- 点 **Create database**。
-- 填名（如 `bookconv-prod`）。
-- **Region**：选离用户近、且与 Vercel 部署区域一致（建议 `us-east-1` / `aws-us-east-1`，与 Vercel 默认同区，延迟最低）。
-- **Type**：选 **Regional**（标准，免费层默认）。
-- **TLS**：保持开启（Upstash 默认）。我们代码只认 `rediss://`，**不要选明文端口**。
-- 创建。
+### Step 2 — Create a Redis database
+- Click **Create database**.
+- Name it (e.g. `bookconv-prod`).
+- **Region**: pick one close to your users and matching the Vercel deploy region (recommend `us-east-1` / `aws-us-east-1`, same as Vercel's default for lowest latency).
+- **Type**: choose **Regional** (standard, the free-tier default).
+- **TLS**: keep enabled (Upstash default). Our code only accepts `rediss://` — **do not choose the plaintext port**.
+- Create.
 
-### 步骤 3 —— 复制 `rediss://` 端点
-- 数据库详情页 **REST API / Redis Connect** 区域，找到 **`redis-cli` / Endpoint** 字段。
-- 形如：`rediss://default:xxxx@computed-xxxxx.upstash.io:6380`
-- 复制**完整字符串**（含 `rediss://`、用户名、密码、主机、端口）。
-- ⚠️ 这是带密码的凭据，等同生产密钥——不要提交进仓库、不要贴进公开渠道。
+### Step 3 — Copy the `rediss://` endpoint
+- On the database detail page, in the **REST API / Redis Connect** area, find the **`redis-cli` / Endpoint** field.
+- It looks like: `rediss://default:xxxx@computed-xxxxx.upstash.io:6380`
+- Copy the **full string** (including `rediss://`, username, password, host, port).
+- ⚠️ This is a password-bearing credential, equivalent to a production secret — do not commit it to the repo or paste it into public channels.
 
-### 步骤 4 —— 在 Vercel 配置环境变量
-- Vercel 控制台 → `bookconv` 项目 → **Settings → Environment Variables**。
-- 新增：
-  - **Key**：`REDIS_URL`（严格大写，代码只读这个名）
-  - **Value**：步骤 3 复制的 `rediss://...` 字符串
-  - **Environments**：勾选 **Production**（务必）；建议同时勾 **Preview**（预览部署也能验），**Development** 可选（本地 dev 不设也能跑，会走降级）。
-- Save。
+### Step 4 — Configure the environment variable in Vercel
+- Vercel console → `bookconv` project → **Settings → Environment Variables**.
+- Add new:
+  - **Key**: `REDIS_URL` (strict uppercase — the code only reads this name)
+  - **Value**: the `rediss://...` string copied in Step 3
+  - **Environments**: check **Production** (required); also recommend **Preview** (so preview deploys can be verified); **Development** is optional (local dev runs fine without it via degradation).
+- Save.
 
-### 步骤 5 —— 触发重新部署
-- 改环境变量后 Vercel 不会自动重读旧实例。**Redeploy**：
-  - 进入 **Deployments** → 最近一次 Production → **Redeploy**；
-  - 或 `git commit --allow-empty -m "chore: redeploy for REDIS_URL"` 推一次（更稳，确保新构建拿到变量）。
-- 等构建完成（约 1–2 分钟）。
+### Step 5 — Trigger a redeploy
+- After changing an environment variable, Vercel does not automatically re-read old instances. **Redeploy**:
+  - Go to **Deployments** → most recent Production → **Redeploy**;
+  - or push an empty commit: `git commit --allow-empty -m "chore: redeploy for REDIS_URL"` (more reliable — ensures the new build picks up the variable).
+- Wait for the build to finish (~1–2 min).
 
-### 步骤 6 —— 验证（见第 3 节）
+### Step 6 — Verify (see Section 3)
 
 ---
 
-## 3. 验证清单
+## 3. Verification checklist
 
-按从低到高逐层验证，任一层失败即停、不要跳过。
+Verify layer by layer, lowest to highest. Stop at any failed layer — do not skip.
 
-- [ ] **3.1 变量已注入**
-  - Vercel 环境变量列表里 `REDIS_URL` 存在且值以 `rediss://` 开头。
-  - 本地可用 `vercel env pull` 拉取后 `echo $REDIS_URL` 核对。
+- [ ] **3.1 Variable injected**
+  - `REDIS_URL` exists in the Vercel env list and its value starts with `rediss://`.
+  - Locally you can `vercel env pull` then `echo $REDIS_URL` to confirm.
 
-- [ ] **3.2 连通性**
-  - 本地：`export REDIS_URL=...` 后跑
+- [ ] **3.2 Connectivity**
+  - Local: after `export REDIS_URL=...`, run
     ```bash
-    node -e "const {getRedisClient}=require('./src/lib/redis.ts'); /* 仅示意，需用 ts 运行时 */"
+    node -e "const {getRedisClient}=require('./src/lib/redis.ts'); /* illustrative only, needs a ts runtime */"
     ```
-  - 更简单：用 Upstash 控制台 **Redis CLI** 直接 `PING`，返回 `PONG` 即通。
-  - 部署后：访问 `/api/health`（若已接 `isRedisHealthy`），观察日志是否还有 Redis 超时。
+  - Simpler: use the Upstash console **Redis CLI** and directly `PING`; a `PONG` response means it's reachable.
+  - After deploy: hit `/api/health` (if `isRedisHealthy` is wired) and watch logs for Redis timeouts.
 
-- [ ] **3.3 写入 → 读取闭环（核心）**
-  - 手动写一条测试键，确认和代码同前缀：
+- [ ] **3.3 Write → read loop (core)**
+  - Manually write a test key, confirming the same prefix the code uses:
     ```
     SET sub:test@example.com '{"status":"pro","variantId":"123","endsAt":null}'
     ```
-  - 调用 `getPlanByEmail('test@example.com')` 应能解析出 `pro`。
-  - 验证完 `DEL sub:test@example.com` 清理。
+  - `getPlanByEmail('test@example.com')` should resolve to `pro`.
+  - After verifying, clean up with `DEL sub:test@example.com`.
 
-- [ ] **3.4 Webhook 真链路（E2E）**
-  - 用真实 LS 测试订阅事件（Sandbox / Test mode）触发 `subscription_created`。
-  - 查 Redis：`GET sub:{下单邮箱小写}` 应存在且 `status=pro`。
-  - 若 webhook 日志出现 `Subscription event has no resolvable email; skipping` → 说明 checkout 没把 email 带过去（回查 `UpgradeButton` 是否拿到会话邮箱 / `checkout/route.ts` 的 `custom_data`）。
+- [ ] **3.4 Webhook real flow (E2E)**
+  - Trigger `subscription_created` with a real LS test subscription event (Sandbox / Test mode).
+  - Check Redis: `GET sub:{lowercased order email}` should exist with `status=pro`.
+  - If the webhook log shows `Subscription event has no resolvable email; skipping` → the checkout didn't pass the email (check whether `UpgradeButton` got the session email / the `custom_data` in `checkout/route.ts`).
 
-- [ ] **3.5 门禁放行**
-  - 用该邮箱登录（/api/auth/me 返回 email）→ 访问 `/batch`。
-  - 预期：看到批量上传器（非升级引导）。
-  - 非 Pro / 未登录访问 `/batch` → 预期：看到升级引导卡（Lock 图标 + Upgrade to Pro）。
+- [ ] **3.5 Gate opens**
+  - Log in with that email (`/api/auth/me` returns email) → visit `/batch`.
+  - Expected: see the batch uploader (not the upgrade prompt).
+  - Non-Pro / logged-out visit to `/batch` → Expected: see the upgrade card (Lock icon + Upgrade to Pro).
 
-- [ ] **3.6 部署后冒烟**
-  - `curl -s https://www.bookconv.com/batch | grep -o "Batch conversion is a Pro feature"` 应命中（非 Pro 默认态）。
-
----
-
-## 4. 安全 / 降级说明
-
-- **不设 `REDIS_URL`**：安全默认——`/batch` 对所有人显示升级引导，不会误放行付费功能；webhook 静默跳过（仅日志 warn）。
-- **设了但短时不可达**：webhook 写失败有日志，用户本次订阅状态可能丢失，需重跑 webhook 或手动 `SET sub:...` 补救。
-- **密钥管理**：`REDIS_URL` 含密码，只存 Vercel 环境变量，勿进 git、勿进 `llms.txt`、勿进任何公开文档。
-- **轮换**：Upstash 控制台可 Reset 密码，换后同步更新 Vercel `REDIS_URL` 并重部署。
+- [ ] **3.6 Post-deploy smoke**
+  - `curl -s https://www.bookconv.com/batch | grep -o "Batch conversion is a Pro feature"` should hit (the non-Pro default state).
 
 ---
 
-## 5. 已知坑 / 注意
+## 4. Security / degradation notes
 
-1. **端口必须 TLS**：代码 `redisUrl.startsWith('rediss://')` 才加 `tls` 配置；若给 `redis://`（明文）会连不上或证书错误。Upstash 默认给的即是 `rediss://`，直接用即可。
-2. **区域就近**：Upstash 与 Vercel 不同区会增加冷启动延迟；Upstash 免费层单区域，选与 Vercel 同区最优。
-3. **免费额度**：Upstash 免费层有每日请求/存储上限，Pro 链路读写量极低（仅订阅事件 + 每次 `/batch` 访问），通常够用；若超量会限流，表现为偶发降级。
-4. **内存用户表残留风险（不在本清单范围）**：`src/lib/auth/storage.ts` 用户表仍是内存 `Map`，Vercel 上不跨请求存活 → 登录/注册在冷实例可能失败。JWT 会话本身跨请求（只验签名不查库），所以"注册一次 → cookie 维持"能跑通 Pro；但重登/多实例会踩。彻底修复需换 Supabase/Postgres，属更大重构（待办 #4）。
-5. **`/api/health` 碰 Redis**：旧实现有 Redis 超时告警，属已知；设好 Upstash 后该告警应消失。
+- **No `REDIS_URL`**: safe default — `/batch` shows the upgrade prompt to everyone, paid features won't leak; the webhook silently skips (logs a warning only).
+- **Set but briefly unreachable**: webhook write failure is logged, the user's subscription status may be lost this time, requiring a webhook re-run or manual `SET sub:...` to recover.
+- **Secret management**: `REDIS_URL` contains a password — only store it in Vercel env vars, never in git, `llms.txt`, or any public doc.
+- **Rotation**: Upstash console can Reset the password; after rotating, sync the updated Vercel `REDIS_URL` and redeploy.
 
 ---
 
-## 6. 完成判定
+## 5. Known pitfalls / notes
 
-以下条件全满足，即视为接入成功：
+1. **Port must be TLS**: the code only adds `tls` config when `redisUrl.startsWith('rediss://')`; giving `redis://` (plaintext) will fail to connect or throw certificate errors. Upstash's default is already `rediss://` — just use it.
+2. **Region proximity**: Upstash in a different region than Vercel adds cold-start latency; Upstash free tier is single-region, so pick the same region as Vercel for best results.
+3. **Free quota**: Upstash free tier has daily request/storage limits. The Pro flow's read/write volume is very low (only subscription events + each `/batch` visit), so it's usually fine; exceeding it causes throttling, which surfaces as occasional degradation.
+4. **In-memory user-table residue risk (out of scope here)**: `src/lib/auth/storage.ts` user table is still an in-memory `Map`, which does not survive across requests on Vercel → login/register may fail on cold instances. JWT sessions themselves survive across requests (only signature is verified, no DB lookup), so "register once → cookie persists" can still drive Pro; but re-login / multi-instance will hit this. A full fix requires switching to Supabase/Postgres, a larger refactor (todo #4).
+5. **`/api/health` touches Redis**: the old implementation had Redis timeout alerts — a known issue; after setting up Upstash, that alert should disappear.
 
-- [ ] Vercel `REDIS_URL` = `rediss://...` 已设且重部署生效
-- [ ] 一次真实（或测试模式）订阅后，Redis 出现 `sub:{email}` 且 `status=pro`
-- [ ] 登录该邮箱访问 `/batch` 显示上传器
-- [ ] 非 Pro 访问 `/batch` 显示升级引导
+---
 
-完成后建议补一条记录到 `.workbuddy/memory/2026-08-09.md`，并将待办 #5 标记关闭。
+## 6. Completion criteria
+
+All of the following must be true to consider integration successful:
+
+- [ ] Vercel `REDIS_URL` = `rediss://...` is set and the redeploy took effect
+- [ ] After one real (or test-mode) subscription, Redis shows `sub:{email}` with `status=pro`
+- [ ] Logging in with that email and visiting `/batch` shows the uploader
+- [ ] Non-Pro visits to `/batch` show the upgrade prompt
+
+After completion, add a note to `.workbuddy/memory/2026-08-09.md` and close todo #5.
