@@ -37,6 +37,8 @@ docs/
 
 ## `ops/` — Backlink / SEO Operations (English)
 
+### Core operations
+
 | File | Purpose |
 |------|---------|
 | [`ops/weekly_checklist.md`](./ops/weekly_checklist.md) | Weekly operations checklist (Mon–Fri + monthly) |
@@ -44,7 +46,32 @@ docs/
 | [`ops/ops-scheduling.md`](./ops/ops-scheduling.md) | Operations-audit scheduling plan (crontab / GitHub Actions SSH) — ⚠️ reconstructed from a corrupted source, verify against `zh/` |
 | [`ops/server-recommendations.md`](./ops/server-recommendations.md) | Deployment server selection guide (Vercel / Hetzner / Aliyun / DO / Railway) — ⚠️ reconstructed from a corrupted source, verify against `zh/` |
 
-> The remaining internal ops docs (promotion plans, competitor recon, submission copies, email templates, phased plans, archived backlink drafts) are kept in Chinese only under [`docs/zh/ops/`](./zh/ops/). They are operational records not yet translated.
+### Promotion plans (phased)
+
+| File | Purpose |
+|------|---------|
+| [`ops/phase1-week1.md`](./ops/phase1-week1.md) | Phase 1 cold-start backlinks — Week 1 (Product Hunt / AlternativeTo / GitHub) |
+| [`ops/phase1-week1b.md`](./ops/phase1-week1b.md) | Phase 1 — Week 1 cont. (Reddit) + Week 2 (GSC/Bing, Medium, directories) |
+| [`ops/phase1-week2-4.md`](./ops/phase1-week2-4.md) | Phase 1 — Week 2-4 (KD=0 tool pages, HN, IndieHackers, DEV.to) |
+| [`ops/phase2-week5-12.md`](./ops/phase2-week5-12.md) | Phase 2 content backlinks — Week 5-12 |
+| [`ops/phase3-week13-20.md`](./ops/phase3-week13-20.md) | Phase 3 scaled backlinks — Week 13-20 |
+
+### Competitor backlink recon
+
+| File | Purpose |
+|------|---------|
+| [`ops/competitor-backlink-recon-checklist.md`](./ops/competitor-backlink-recon-checklist.md) | Checklist for reconning competitor backlinks via Ahrefs free checker |
+| [`ops/competitor-backlink-opportunities-20260812.md`](./ops/competitor-backlink-opportunities-20260812.md) | Extracted reusable backlink opportunities (Ahrefs top backlinks, 2026-08-12) |
+
+### Submission copy & outreach templates
+
+| File | Purpose |
+|------|---------|
+| [`ops/submit_copies.md`](./ops/submit_copies.md) | Submission copy for 30+ platforms (Product Hunt, Medium, DEV.to, FreeCodeCamp, Quora, LinkedIn, YouTube, etc.) |
+| [`ops/email_templates.md`](./ops/email_templates.md) | Outreach email / Reddit / HN / Medium templates |
+| [`ops/codex-multica-sync.md`](./ops/codex-multica-sync.md) | Codex–Multica sync script usage (zero-dependency status sync) |
+
+> All of the above are English translations of the Chinese originals preserved in [`docs/zh/ops/`](./zh/ops/). The `_archived_backlink/` subfolder (Chinese) holds archived backlink drafts.
 
 ## `zh/` — Full Chinese Archive
 
