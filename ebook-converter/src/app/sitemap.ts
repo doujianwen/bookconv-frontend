@@ -16,7 +16,7 @@ const BLOG_POSTS = getAllPosts()
 // don't waste crawl budget; they stay reachable via internal links.
 const BLOG_SLUGS = BLOG_POSTS.filter((p) => !p.noindex).map((p) => p.slug)
 const BLOG_DATES: Record<string, string> = {};
-BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.date; })
+BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.lastUpdated || p.date; })
 
 // Real last-modified dates for sitemap <lastmod>, derived from each content
 // file's filesystem mtime (NOT git — this repo's history is only 3 days old,

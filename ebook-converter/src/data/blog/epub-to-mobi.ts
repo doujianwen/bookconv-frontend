@@ -1,6 +1,7 @@
 export const slug = "epub-to-mobi";
-export const title = "How to Convert Epub to Mobi Free Online in 2024";
+export const title = "How to Convert EPUB to MOBI Free Online";
 export const date = "2026-08-26";
+export const lastUpdated = "2026-09-04";
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "KINDLE", "EBOOK CONVERSION", "FREE CONVERTER", "BOOK FORMAT", "DIGITAL READING"];
 

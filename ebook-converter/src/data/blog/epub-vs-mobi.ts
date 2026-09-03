@@ -1,6 +1,7 @@
 export const slug = `epub-vs-mobi`;
 export const title = `EPUB vs MOBI: Which Ebook Format Should You Actually Use?`;
 export const date = `2026-08-09`;
+export const lastUpdated = `2026-09-04`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Ebook Formats", "Kindle", "BookConv", "Calibre"];
 
@@ -72,7 +73,20 @@ So "EPUB or MOBI for my Kindle" really means "EPUB for every current Kindle, MOB
 - **MOBI to EPUB** — to free a book from a legacy device and read it anywhere. [Convert MOBI to EPUB](/convert/mobi-to-epub) restores proper reflow and a working table of contents.
 - **EPUB to TXT** — if you only need the words, no layout. [Convert EPUB to TXT](/convert/epub-to-txt) strips the book down to clean plain text.
 
-Neither conversion needs desktop software for a handful of books. Keep your EPUB master, and you can feed any reader from one file.`
+      Neither conversion needs desktop software for a handful of books. Keep your EPUB master, and you can feed any reader from one file.`
+    },
+    {
+      heading: `Related Format Guides`,
+      body: `This page is the hub for the EPUB vs MOBI decision. For the surrounding format questions, these guides go deeper:
+
+- **[AZW3 vs MOBI](/blog/azw3-vs-mobi)** — how Amazon's modern Kindle format compares to the legacy one.
+- **[Convert MOBI to EPUB](/convert/mobi-to-epub)** — free a legacy book to read on any device.
+- **[EPUB to MOBI guide](/blog/epub-to-mobi-guide)** — the step-by-step conversion for old Kindles.
+- **[AZW3, EPUB & MOBI for Kindle and Kobo](/blog/azw3-epub-mobi-kindle)** — the device-by-device compatibility matrix.
+- **[Kindle, Kobo, AZW3, EPUB, MOBI](/blog/kindle-epub-azw3-mobi)** — the full format landscape in one place.
+- **[Kindle Formats guide](/guide/kindle-formats)** — which format each Kindle model wants.
+
+If you are moving books between stores, also see [MOBI to Kobo](/blog/mobi-to-kobo) and [Ebook Formats Explained](/blog/ebook-formats-explained).`
     },
     {
       heading: `Key Takeaways`,

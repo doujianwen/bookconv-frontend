@@ -1,11 +1,12 @@
 export const slug = "azw3-epub-mobi-kindle-compatibility";
 export const title = "AZW3, EPUB & MOBI: Best Kindle & Kobo Formats";
 export const date = `2026-08-24`;
+export const lastUpdated = `2026-09-04`;
 export const author = "BookConv Team";
 export const tags = ["Kindle", "Kobo", "AZW3", "EPUB", "MOBI", "Ebook Converter", "Calibre", "Digital Publishing"];
 
 export const content = {
-  intro: `Choosing the right eBook format is the single most critical step in self-publishing or digital distribution. If you are reading on a Kindle Paperwhite, you need AZW3 for the best experience; if you use a Kobo Clara or Nook, EPUB is the gold standard. Many authors and readers still struggle with the transition from the legacy MOBI format, which Amazon has largely deprecated in favor of more feature-rich containers. At BookConv, we see countless creators losing formatting fidelity by uploading uncompressed files to conversion tools. This guide explains exactly which formats your device supports, why AZW3 beats MOBI for Kindle users, and how to convert your manuscripts for free without ruining typography, footnotes, or metadata.`,
+  intro: `Choosing the right eBook format is the single most critical step in self-publishing or digital distribution. If you are reading on a Kindle Paperwhite, you need AZW3 for the best experience; if you use a Kobo Clara or Nook, EPUB is the gold standard. Many authors and readers still struggle with the transition from the legacy MOBI format, which Amazon has largely deprecated in favor of more feature-rich containers. At BookConv, we see countless creators losing formatting fidelity by uploading uncompressed files to conversion tools. This guide explains exactly which formats your device supports, why AZW3 beats MOBI for Kindle users, and how to convert your manuscripts for free without ruining typography, footnotes, or metadata. For the direct EPUB vs MOBI decision, see our [full comparison guide](/blog/epub-vs-mobi).`,
   sections: [
     {
       heading: `Kindle vs. Kobo: Understanding Format Compatibility`,

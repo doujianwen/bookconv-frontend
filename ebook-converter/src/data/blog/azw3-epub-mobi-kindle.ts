@@ -1,11 +1,12 @@
 export const slug = "azw3-epub-mobi-kindle";
 export const title = "Kindle vs Kobo: Best eBook Formats (AZW3, EPUB, MOBI)";
 export const date = "2026-08-27";
+export const lastUpdated = "2026-09-04";
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "KINDLE", "PDF", "CONVERT", "AZW3", "KOBO"];
 
 export const content = {
-  "intro": "If you are an avid reader or self-published author, the biggest hurdle is often format compatibility. The short answer is: **Kindle users should use AZW3**, while **Kobo and other e-readers prefer EPUB**. MOBI is outdated for new devices. Use tools like [bookconv.com](/convert) or Calibre to convert your files instantly.",
+  "intro": "If you are an avid reader or self-published author, the biggest hurdle is often format compatibility. The short answer is: **Kindle users should use AZW3**, while **Kobo and other e-readers prefer EPUB**. MOBI is outdated for new devices. Use tools like [bookconv.com](/convert) or Calibre to convert your files instantly. For the head-to-head of the two formats themselves, see our [EPUB vs MOBI comparison](/blog/epub-vs-mobi).",
   "sections": [
     {
       "heading": "Kindle vs. Kobo: Understanding Format Compatibility",

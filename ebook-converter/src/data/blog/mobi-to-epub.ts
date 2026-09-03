@@ -1,11 +1,12 @@
 export const slug = `mobi-to-epub`;
 export const title = `How to Convert MOBI to EPUB (And Why You'd Want To)`;
 export const date = `2026-08-02`;
+export const lastUpdated = `2026-09-04`;
 export const author = "BookConv Team";
 export const tags = ["MOBI", "EPUB", "Kindle", "Kobo", "BookConv", "conversion", "guide"];
 
 export const content = {
-  intro: `Sitting on a pile of old .mobi files that only open on a Kindle? MOBI is Amazon's legacy format, and most non-Kindle readers — Kobo, Apple Books, Google Play Books — won't touch it. Converting MOBI to EPUB frees your books to read anywhere, because EPUB is the open standard nearly every device supports. This guide covers the quick conversion and what actually moves across.`,
+  intro: `Sitting on a pile of old .mobi files that only open on a Kindle? MOBI is Amazon's legacy format, and most non-Kindle readers — Kobo, Apple Books, Google Play Books — won't touch it. Converting MOBI to EPUB frees your books to read anywhere, because EPUB is the open standard nearly every device supports. This guide covers the quick conversion and what actually moves across. New to the format question? Our [EPUB vs MOBI explainer](/blog/epub-vs-mobi) covers which to keep as your master file.`,
   sections: [
     {
       heading: `Why Move MOBI to EPUB`,
