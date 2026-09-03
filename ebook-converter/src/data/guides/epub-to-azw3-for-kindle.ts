@@ -5,6 +5,7 @@ export const slug = 'epub-to-azw3-for-kindle'
 export const title = 'EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting'
 export const problem = 'You have an EPUB and a Kindle, and emailing it gives you a broken layout. AZW3 is the format that keeps your styling intact. Here is how to convert EPUB to AZW3 the right way.'
 export const date = '2026-08-02'
+export const updatedAt = '2026-09-04'
 export const tags = ['epub', 'azw3', 'kindle', 'formatting', 'ebook conversion']
 export const formats = { source: 'epub', target: 'azw3' }
 export const keyTakeaways = [

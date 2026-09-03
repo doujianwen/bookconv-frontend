@@ -41,7 +41,7 @@ const CONTENT_DATES: Record<string, string> = {
   'epub-to-html': '2026-08-08',
   'epub-to-jpg': '2026-08-08',
   'epub-to-mobi': '2026-08-11',
-  'epub-to-pdf': '2026-08-03',
+  'epub-to-pdf': '2026-09-04',
   'epub-to-png': '2026-08-08',
   'epub-to-rtf': '2026-08-08',
   'epub-to-txt': '2026-08-24',
@@ -159,7 +159,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const g of getAllGuides()) {
       allUrls.push({
         url: baseUrl + prefix + '/guide/' + g.slug,
-        lastModified: new Date(g.date || '2026-08-02'),
+        lastModified: new Date(g.updatedAt || g.date || '2026-08-02'),
         changeFrequency: 'yearly' as const,
         priority: 0.6,
       })

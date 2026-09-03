@@ -5,6 +5,7 @@ export const slug = 'kindle-formats'
 export const title = 'Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To'
 export const problem = 'AZW3, KFX, MOBI, EPUB — Kindle’s format soup confuses everyone. Here’s what each means, the safest format to convert to today, and how BookConv converts free in your browser with no software to install.'
 export const date = '2026-08-07'
+export const updatedAt = '2026-09-04'
 export const tags = ['kindle formats', 'azw3', 'kfx', 'mobi', 'send to kindle']
 export const keyTakeaways = [
   'Amazon’s Send to Kindle accepts EPUB and AZW3 and converts them for your device.',
