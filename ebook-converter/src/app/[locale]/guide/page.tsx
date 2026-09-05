@@ -1,21 +1,26 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { getAllGuides } from "@/data/guides"
+import { buildAlternates } from "@/lib/seo/alternates"
 
-export const metadata: Metadata = {
-  title: "Guides",
-  description: "Troubleshooting and how-to guides for ebook format conversion: fix broken layouts, keep images, and choose the right tool for the job.",
-  alternates: {
-    canonical: "https://www.bookconv.com/guide",
-    languages: { en: '/guide', es: '/es/guide', 'x-default': '/guide' },
-  },
-  openGraph: {
-    title: "Guides | BookConv",
-    description: "Practical fixes and how-tos for ebook conversion problems.",
-    url: "https://www.bookconv.com/guide",
-    siteName: "BookConv",
-    type: "website",
-  },
+export function generateMetadata(): Metadata {
+  const { canonical, languages } = buildAlternates({
+    locale: 'en',
+    slugPath: '/guide',
+    pageType: 'list',
+  })
+  return {
+    title: "Guides",
+    description: "Troubleshooting and how-to guides for ebook format conversion: fix broken layouts, keep images, and choose the right tool for the job.",
+    alternates: { canonical, languages },
+    openGraph: {
+      title: "Guides | BookConv",
+      description: "Practical fixes and how-tos for ebook conversion problems.",
+      url: canonical,
+      siteName: "BookConv",
+      type: "website",
+    },
+  }
 }
 
 export default function GuidesIndex() {

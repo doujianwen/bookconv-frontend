@@ -3,6 +3,7 @@ import Link from "next/link"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
+import { buildAlternates } from "@/lib/seo/alternates"
 
 interface ConvertIndexProps {
   params: Promise<{ locale: string }>
@@ -15,22 +16,23 @@ export async function generateMetadata({ params }: ConvertIndexProps): Promise<M
   const title = "All Ebook Format Conversions"
   const description =
     "Browse every ebook format conversion BookConv supports — EPUB, AZW3, MOBI, PDF, and more. Pick a pair and convert free in your browser, no install."
-  const url = `${BASE_URL}${locale === "es" ? "/es" : ""}/convert`
+  const { canonical, languages } = buildAlternates({
+    locale,
+    slugPath: '/convert',
+    pageType: 'list',
+  })
   return {
     title,
     description,
     keywords: ["ebook converter", "convert ebook", "epub", "azw3", "mobi", "pdf", "calibre", "free"],
-    alternates: {
-      canonical: url,
-      languages: { en: "/convert", es: "/es/convert", "x-default": "/convert" },
-    },
+    alternates: { canonical, languages },
     openGraph: {
       title,
       description,
       type: "website",
-      url,
+      url: canonical,
       siteName: "BookConv",
-      locale: locale === "es" ? "es_ES" : "en_US",
+      locale: locale === 'es' ? 'es_ES' : 'en_US',
     },
     twitter: { card: "summary_large_image", title, description },
   }

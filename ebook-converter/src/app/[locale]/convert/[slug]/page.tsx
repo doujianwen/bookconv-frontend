@@ -14,6 +14,7 @@ import dynamic from "next/dynamic"
 import { CONTENT_MAP } from "@/data/content"
 import { generateFAQSchema, generateBreadcrumbSchema, generateConversionPageSchema } from "@/lib/seo/schema"
 import { getRelatedBlogPostsForConversion, getRelatedGuidesForConversion } from "@/lib/internal-links"
+import { buildAlternates } from "@/lib/seo/alternates"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
 
@@ -47,6 +48,18 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const subtitle = isEs ? contentData.es!.content.hero.subtitle : (contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`)
   const description = isEs ? contentData.es!.metaDescription : (contentData?.metaDescription || subtitle)
 
+  // 3 convert pages have real Spanish translations (epub-to-doc, epub-to-txt, lit-to-epub).
+  // Only those pages emit a full en↔es language pair; all others emit en+x-default only.
+  // (isEs currently checks both locale+data, so flip to `contentData?.es` for the helper.)
+  const hasEsVersion = !!contentData?.es
+
+  const { canonical, languages } = buildAlternates({
+    locale,
+    slugPath: `/convert/${slug}`,
+    pageType: 'leaf',
+    hasEsVersion,
+  })
+
   return {
     title,
     description,
@@ -59,19 +72,12 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       `online ${source} to ${target} converter`,
       "ebook converter", "calibre", "free",
     ],
-    alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/convert/${slug}`,
-      languages: {
-        en: `/convert/${slug}`,
-        es: `/es/convert/${slug}`,
-        'x-default': `/convert/${slug}`,
-      },
-    },
+    alternates: { canonical, languages },
     openGraph: {
       title,
       description,
       type: "website",
-      url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/convert/${slug}`,
+      url: canonical,
       siteName: "BookConv",
       images: [
         {

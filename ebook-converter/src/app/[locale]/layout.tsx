@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage } from '@/i18n/utils'
+import { buildAlternates } from '@/lib/seo/alternates'
 
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'es' }]
@@ -14,15 +15,13 @@ export async function generateMetadata(): Promise<Metadata> {
   // root layout's path-blind canonical would otherwise point at `/` for
   // every page under [locale].
   const locale = await getLocale()
+  const { canonical, languages } = buildAlternates({
+    locale,
+    slugPath: '/',
+    pageType: 'home',
+  })
   return {
-    alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
-      languages: {
-        en: '/',
-        es: '/es',
-        'x-default': '/',
-      },
-    },
+    alternates: { canonical, languages },
   }
 }
 

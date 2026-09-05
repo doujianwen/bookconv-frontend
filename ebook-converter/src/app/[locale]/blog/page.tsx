@@ -4,22 +4,26 @@ import { BookOpen, Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { getAllPosts } from "@/data/blog"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"
+import { buildAlternates } from "@/lib/seo/alternates"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const messages = await getMessage(locale);
   const t = (key: string) => resolvePath(messages, key) || key;
 
+  const { canonical, languages } = buildAlternates({
+    locale,
+    slugPath: '/blog',
+    pageType: 'list',
+  });
+
   return {
     title: t('blog.title'),
     description: t('seo.defaultDescription') || 'Expert guides on ebook conversion.',
-    alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog`,
-      languages: { en: '/blog', es: '/es/blog', 'x-default': '/blog' },
-    },
+    alternates: { canonical, languages },
     openGraph: {
       title: t('blog.title') + " | BookConv",
-      url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/blog`,
+      url: canonical,
       type: "website",
     },
     twitter: {

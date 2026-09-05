@@ -5,6 +5,7 @@ import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
 import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
+import { buildAlternates } from "@/lib/seo/alternates"
 
 interface BlogPostData {
   slug: string
@@ -55,19 +56,24 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
   const description = displayContent.intro || displayTitle
   const canonical = `${baseUrl}${isEs ? "/es" : ""}/blog/${slug}`
 
+  // 5 blog posts have real Spanish translations. Only those emit en↔es pair;
+  // the other 54 emit en+x-default only. Note: `post.es` is data-level truth,
+  // not locale-dependent — we need it even when viewing the en locale.
+  const hasEsVersion = !!post.es
+
+  const { languages } = buildAlternates({
+    locale,
+    slugPath: `/blog/${slug}`,
+    pageType: 'leaf',
+    hasEsVersion,
+  })
+
   return {
     // No brand suffix: the global title template appends "| BookConv".
     title: displayTitle,
     description,
     keywords: [...post.tags, "ebook converter", "calibre", "epub"],
-    alternates: {
-      canonical,
-      languages: {
-        en: `${baseUrl}/blog/${slug}`,
-        es: `${baseUrl}/es/blog/${slug}`,
-        "x-default": `${baseUrl}/blog/${slug}`,
-      },
-    },
+    alternates: { canonical, languages },
     openGraph: {
       title: displayTitle,
       description,

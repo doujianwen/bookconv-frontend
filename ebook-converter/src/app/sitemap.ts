@@ -59,6 +59,19 @@ const CONTENT_DATES: Record<string, string> = {
   'txt-to-epub': '2026-08-10',
 }
 
+// Sitemap P3-C rule (2026-09-05): Do NOT output /es/* for convert or guide.
+// Those routes serve English body with <lang="es"> which is a spam signal.
+// Only 6 blog posts have real Spanish translations; emit /es/* for those.
+// Converting from data files would add build-time dependencies — hardcode.
+const ESP_BLOG_SLUGS: readonly string[] = [
+  'azw3-vs-mobi',
+  'can-kindle-read-azw3',
+  'ebook-formats-explained',
+  'epub-to-mobi-guide',
+  'mobi-to-epub',
+  'why-convert-lit-to-epub',
+]
+
 // Compat report pages are English-only; single entry today, grows with
 // COMPAT_MAP. Keyed by slug to match the loop below.
 const COMPAT_DATES: Record<string, string> = {
@@ -154,6 +167,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'yearly' as const,
         priority: 0.6,
       })
+    }
+
+    // Sitemap P3-C rule (2026-09-05): /es/* for convert and guide would emit
+    // pseudo-Spanish pages that Google has already identified as spam signals.
+    // Only emit /es/blog/* for the 6 real Spanish blog posts.
+    if (locale === 'es') {
+      for (const slug of ESP_BLOG_SLUGS) {
+        if (!BLOG_SLUGS.includes(slug)) continue
+        allUrls.push({
+          url: baseUrl + '/es/blog/' + slug,
+          lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
+          changeFrequency: 'yearly' as const,
+          priority: 0.6,
+        })
+      }
     }
 
     for (const g of getAllGuides()) {

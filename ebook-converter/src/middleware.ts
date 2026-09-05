@@ -81,10 +81,23 @@ export async function middleware(request: NextRequest) {
       const response = NextResponse.redirect(url, { status: 301 });
       return applySecurityHeaders(request, response);
     }
-    // /es/* → serve Spanish directly
-    const response = NextResponse.next();
-    response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-    return applySecurityHeaders(request, response);
+    // /es/* → P3-C rule (2026-09-05): only allow /es/blog/{slug} for the 6
+    // real Spanish blog posts. Everything else under /es/ (convert, guide,
+    // other blogs) is a pseudo-Spanish spam signal → return 404.
+    if (pathname.startsWith('/es/blog/')) {
+      const slug = pathname.replace('/es/blog/', '');
+      // Validate slug is one of the 6 real Spanish blog posts
+      const ESP_BLOG_SLUGS = ['azw3-vs-mobi', 'can-kindle-read-azw3', 'ebook-formats-explained', 'epub-to-mobi-guide', 'mobi-to-epub', 'why-convert-lit-to-epub'];
+      if (ESP_BLOG_SLUGS.includes(slug)) {
+        const response = NextResponse.next();
+        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+        return applySecurityHeaders(request, response);
+      }
+      // Slug not in whitelist → 404
+      return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
+    }
+    // All other /es/* paths → 404 (convert, guide, blog without es version)
+    return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
   }
 
   // Case 2: path has NO locale prefix
