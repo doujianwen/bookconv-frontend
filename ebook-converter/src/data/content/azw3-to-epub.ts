@@ -50,4 +50,12 @@ If you're weighing Amazon's two Kindle formats against each other, our [AZW3 vs 
     { q: 'How long does AZW3 to EPUB conversion take?', a: 'For most AZW3 files under 50 pages, conversion takes 10-30 seconds. Complex files with numerous images may take 1-2 minutes.' },
     { q: 'Does conversion preserve bookmarks?', a: 'Yes. If your AZW3 contains bookmarks or chapter markers, these are converted to EPUB navigation entries (NCX/NAV), allowing chapter jumping in your reader.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

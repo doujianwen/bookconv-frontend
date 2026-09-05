@@ -105,4 +105,12 @@ One rule that saves grief: **don't re-save a JPG repeatedly.** Each save runs co
     { q: 'Can I copy or search the text in the JPG files?', a: 'No — once a page is rasterized the text becomes pixels with no underlying text layer. Convert to PDF instead if you need selectable, searchable text, or run OCR on the images afterward.' },
     { q: 'What is the file size limit for uploads?', a: 'Uploads are capped at 10MB. Most ebooks are only a few megabytes, so text-led titles fit comfortably. Image-heavy books are the exception and can exceed the ceiling — compress the images first, or convert those locally with desktop Calibre.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

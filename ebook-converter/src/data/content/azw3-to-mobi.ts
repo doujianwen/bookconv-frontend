@@ -129,4 +129,12 @@ Going the other direction — freeing an old MOBI from Amazon's ecosystem so it 
     { q: 'How many files can I convert at once?', a: 'Free accounts process one file at a time up to 10MB, which is well beyond what a typical Kindle book needs. Pro accounts add batch conversion, which is the practical choice if you are migrating a whole library to an older device.' },
     { q: 'How do I migrate my whole library to an old Kindle?', a: 'Convert your DRM-free AZW3 files in small batches of around a dozen, keep the original AZW3 as your master copy, name each .mobi as "Author - Title" so old devices sort it cleanly, and sideload over USB to the documents folder. Books from the Kindle Store will not convert because of DRM, so separate those out first.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

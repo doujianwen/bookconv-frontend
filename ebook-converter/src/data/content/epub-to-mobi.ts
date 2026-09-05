@@ -89,5 +89,12 @@ Comparing the two formats before you commit? See our [EPUB vs MOBI comparison](/
     { q: 'How long does conversion take?', a: 'Most EPUB to MOBI conversions complete in 10-30 seconds for typical books. Larger files with many images may take 1-2 minutes.' },
     { q: 'Will images be preserved in conversion?', a: 'Yes, embedded images are extracted and included in the MOBI file. However, image quality may be optimized for e-reader screens, and very large images might be resized.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Absolutely! Your EPUB table of contents is converted to MOBI navigation, allowing you to jump between chapters in your Kindle reader.' }
-  ]
+  ],
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

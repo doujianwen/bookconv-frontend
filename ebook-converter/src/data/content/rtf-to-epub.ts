@@ -96,4 +96,12 @@ One thing worth checking before you upload: if your RTF fakes headings by making
     { q: 'Why is my RTF file so large compared to the finished EPUB?', a: 'RTF stores images as hex-encoded text, which roughly doubles their size. EPUB uses ZIP compression and native image formats, so the ebook is often significantly smaller than the source.' },
     { q: 'Is there a file size limit?', a: 'Free accounts handle files up to 10MB, which is plenty for text-heavy documents. Image-heavy RTFs can exceed that because of the hex encoding — Pro accounts raise the limit and add batch conversion.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

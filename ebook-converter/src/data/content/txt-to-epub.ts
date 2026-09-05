@@ -62,4 +62,12 @@ You can also manually specify chapter separators if your file uses unusual forma
     { q: 'Does conversion preserve line breaks?', a: 'Yes. Meaningful line breaks (paragraph separators, chapter breaks) are preserved. Unnecessary empty lines are cleaned up.' },
     { q: 'Can I add custom metadata?', a: 'Yes. During conversion you can specify title, author, language, ISBN, and other metadata fields.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

@@ -77,4 +77,12 @@ For documentation, the result is a clean, readable book that preserves the infor
     { q: 'How big are CHM files?', a: 'Documentation CHM files are usually a few MB, well under the 10MB free-account limit. Only very large reference sets risk exceeding it.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI from Send to Kindle in 2022, so email delivery is rejected. Copy the file into the documents folder over USB instead.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

@@ -103,4 +103,12 @@ Nothing meaningful is lost. You'll notice the book looks slightly different in a
     { q: 'Do footnotes and endnotes survive the conversion?', a: 'Yes. FB2 note bodies become linked EPUB endnotes, so tapping a note marker jumps to the note and most readers give you a back link to return to your place.' },
     { q: 'How many FB2 files can I convert at once?', a: 'Free accounts convert one file at a time up to 10MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

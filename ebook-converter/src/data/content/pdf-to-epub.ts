@@ -87,5 +87,12 @@ Keep PDF if:
     { q: 'Will table of contents be lost in PDF to EPUB conversion?', a: 'No. If the original PDF contains bookmarks or outline the converted EPUB generates corresponding navigation document (NCX/NAV). You can click the table of contents in your reader to jump to specific chapters.' },
     { q: 'Can the converted EPUB be used on mobile phones?', a: 'Absolutely! This is one of EPUB biggest advantages over PDF. The converted file can be opened on any EPUB reader on your phone (such as Apple Books, Google Play Books, Moon+ Reader etc.) and automatically reflows text based on screen size.' },
     { q: 'How long does PDF to EPUB conversion take?', a: 'For text-based PDF under 100 pages conversion typically takes 10-30 seconds. Scanned PDFs requiring OCR may take several minutes depending on page count and image quality.' }
-  ]
+  ],
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

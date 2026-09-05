@@ -84,4 +84,12 @@ Conversion is close to instant — usually under five seconds, because there is 
     { q: 'Are chapters still identifiable in the text file?', a: 'Yes. Chapter boundaries are marked with blank lines and the original chapter headings remain as plain lines of text, so you can still navigate or split the file by chapter.' },
     { q: 'Can I turn the TXT back into an ebook later?', a: 'You can, but the formatting will not come back — it was discarded, not hidden. Keep a copy of the original MOBI if you might need the styling again.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

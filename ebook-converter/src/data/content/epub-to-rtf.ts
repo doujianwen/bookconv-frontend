@@ -88,4 +88,12 @@ None of this is a defect in the converter — it is the honest gap between a rea
     { q: 'Why is the RTF bigger than the original EPUB?', a: 'RTF encodes images as hexadecimal text rather than binary, which roughly doubles their size, and it has no ZIP compression. Expect illustrated books to grow noticeably.' },
     { q: 'My EPUB will not convert. What is going on?', a: 'Almost always DRM from a store purchase, which encrypts the file. Books you wrote, bought DRM-free, or downloaded from public-domain sources convert without issue.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

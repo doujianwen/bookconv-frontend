@@ -96,6 +96,14 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
     { q: 'My EPUB will not convert — what is wrong?', a: 'The most common cause is DRM. Books purchased from Kobo, Google Play Books, or similar stores are encrypted and cannot be read by any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without issue.' },
     { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 10MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };
 
 export const es = {

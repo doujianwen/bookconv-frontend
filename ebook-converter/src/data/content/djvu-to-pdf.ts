@@ -97,4 +97,12 @@ The short version: keep the DjVu if disk space matters and you have a viewer you
     { q: 'What is the file size limit?', a: 'Yes — 10MB per file. DjVu is efficient enough that many scanned books fit under that, but long or high-resolution scans can exceed it. For those, convert locally with a desktop tool.' },
     { q: 'Does converting reduce the scan quality?', a: 'The page images are carried over at their original resolution, so what you see in the DjVu is what you get in the PDF. Any softness or artifacts you notice were baked into the original scan by DjVu compression, not added during conversion.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

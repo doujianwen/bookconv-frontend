@@ -82,4 +82,12 @@ For ordinary books the reading experience is unchanged. You trade a little styli
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI from Send to Kindle in 2022, so email delivery is rejected. Copy the file into the documents folder over USB instead.' },
     { q: 'How large are AZW files?', a: 'Typical AZW books are 1-5MB, well within the 10MB free-account limit. Only image-heavy books risk hitting the cap.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

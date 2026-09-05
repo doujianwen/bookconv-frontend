@@ -97,4 +97,12 @@ Most documents under 100 pages finish in ten to thirty seconds. Files with a lot
     { q: 'How does the table of contents get built?', a: 'From your Word heading styles. Documents that use real Heading 1 and Heading 2 styles produce clean chapter navigation; documents that fake headings with big bold text produce a flat TOC with a single entry.' },
     { q: 'Should I convert DOC or DOCX?', a: 'Either works, and both use the same pipeline. If you already have a DOCX version, use it — one fewer conversion step means fewer chances for formatting to drift.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

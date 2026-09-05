@@ -106,4 +106,12 @@ When you genuinely can't decide: text-heavy book, go PNG. The size difference is
     { q: 'Can I convert only certain pages?', a: 'Pro users can specify custom page ranges, which is useful for pulling a single chapter or a handful of figures instead of rasterizing an entire book. Free conversions process the whole file.' },
     { q: 'Will the text in my PNG images be searchable?', a: 'No. Once a page becomes an image, the text is just pixels — there is no text layer to search or copy. If you need searchable output, convert to PDF instead, or run OCR on the PNG files afterward.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

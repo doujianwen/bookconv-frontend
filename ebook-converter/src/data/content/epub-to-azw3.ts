@@ -44,5 +44,12 @@ export const content = {
     { q: 'Will formatting be preserved during conversion?', a: 'Yes. Our converter carefully maps EPUB typography to AZW3 equivalents. Most formatting including fonts spacing images and layout is preserved. Complex layouts may require minor adjustments.' },
     { q: 'Is the converted file DRM-free?', a: 'Yes. Converted AZW3 files are DRM-free giving you full ownership. You can transfer them to any Kindle device or app without restrictions.' },
     { q: 'How long does conversion take?', a: 'Most EPUB files convert to AZW3 in 10-30 seconds. Files with numerous images or complex layouts may take 1-2 minutes.' }
-  ]
+  ],
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

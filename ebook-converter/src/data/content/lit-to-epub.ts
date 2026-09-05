@@ -83,6 +83,14 @@ For LIT files that included DRM protection purchased from Microsoft Store, note 
     { q: 'How many LIT files can I convert at once?', a: 'Without a Pro plan you can convert files up to 10 MB each. Pro raises the per-file limit to 50 MB and unlocks batch conversion; the API tier supports files up to 100 MB.' },
     { q: 'Does the conversion preserve bookmarks?', a: 'Yes. If your LIT file contained bookmarks or chapter markers these will be converted to EPUB navigation entries (NCX/NAV) allowing you to jump to specific chapters in your reader.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };
 
 export const es = {

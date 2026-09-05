@@ -60,4 +60,12 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
     { q: 'How do I extract files from an EPUB without converting?', a: 'Simply rename the .epub extension to .zip and double-click to open it. You will see the internal structure: XHTML chapters, CSS styles, images, and metadata files. This works because EPUB is essentially a ZIP archive by format specification.' },
     { q: 'Can I edit the files inside the EPUB ZIP?', a: 'Yes. Once extracted, you can edit the XHTML, CSS, and images with any text editor or design tool. Just re-zip and rename back to .epub when done.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

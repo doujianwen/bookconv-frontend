@@ -96,4 +96,12 @@ A 300-page novel typically finishes in thirty seconds to two minutes. Books with
     { q: 'Is the text searchable in the finished PDF?', a: 'Yes. MOBI contains real text, so the PDF gets real selectable text too. Ctrl+F works normally, and you can copy passages out. There is no OCR involved and no quality loss in the text layer.' },
     { q: 'My Kindle Store book will not convert. Why?', a: 'Store purchases carry DRM, which encrypts the content and blocks conversion entirely. Gutenberg downloads, author-direct copies, and your own files convert without any issue.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

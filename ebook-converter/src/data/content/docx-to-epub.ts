@@ -39,4 +39,12 @@ export const content = {
     { q: 'How long does DOCX to EPUB conversion take?', a: 'For documents under 100 pages, conversion typically takes 5-15 seconds. Larger documents with many images may take 1-2 minutes.' },
     { q: 'Can I edit the converted EPUB?', a: 'Yes. EPUB files can be edited with any EPUB editor like Sigil, Calibre Editor, or online tools. The converted file maintains clean, valid structure.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

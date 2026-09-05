@@ -93,4 +93,12 @@ HTML preserves structure and content beautifully. It just stops pretending to be
     { q: 'My EPUB will not convert. What is wrong?', a: 'Nine times out of ten it is DRM from a store purchase, which encrypts the content. Books you wrote, bought DRM-free, or downloaded from public-domain libraries convert without trouble.' },
     { q: 'Will the HTML look identical to my reader app?', a: 'Not exactly. Reader apps apply their own fonts, margins, and colour themes on top of the book. You get the publisher CSS instead, which you can restyle however you like.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

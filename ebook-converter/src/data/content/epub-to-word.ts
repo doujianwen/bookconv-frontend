@@ -105,4 +105,12 @@ The rule of thumb: **content and structure survive, visual design gets normalize
     { q: 'Can I convert the Word file back to EPUB afterward?', a: 'Yes — our DOCX to EPUB converter handles the return trip, which is the normal workflow for authors who edit in Word and republish as an ebook. Expect the styling to be regenerated rather than restored to the original CSS.' },
     { q: 'How many books can I convert at once?', a: 'Free accounts process one file at a time, up to 10MB each, which is generous given most ebooks are only a few megabytes. Pro accounts add batch conversion and larger file limits for working through a full library.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

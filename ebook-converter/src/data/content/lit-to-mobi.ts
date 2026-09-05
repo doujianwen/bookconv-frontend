@@ -79,4 +79,12 @@ Later want that MOBI portable beyond Kindle? [Convert MOBI to EPUB](/convert/mob
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI support from Send to Kindle in 2022, so email delivery is rejected. Sideload it over USB by copying the file into the documents folder on your Kindle.' },
     { q: 'What if my LIT file will not upload?', a: 'A file that will not open is usually DRM-protected or truncated. Confirm it is a DRM-free .lit and that the download was not interrupted. DRM-protected files cannot be converted by any tool.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

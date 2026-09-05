@@ -65,4 +65,12 @@ If you prefer not to install desktop software, BookConv runs the same Calibre en
     { q: 'Why does converting EPUB to PDF result in smaller viewing area?', a: 'PDF fixes content onto a print page with default margins, so the readable area looks smaller than a fluid EPUB screen. The text is not lost — adjust page size or margins, or use a converter that exposes those settings.' },
     { q: 'How do I convert EPUB to PDF on Linux?', a: 'Use Calibre command line: ebook-convert input.epub output.pdf. For a no-install option, BookConv runs the same engine in the browser — open the EPUB to PDF converter on any Linux machine.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

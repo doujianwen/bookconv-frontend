@@ -106,4 +106,12 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
     { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

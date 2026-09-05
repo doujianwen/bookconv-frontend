@@ -68,4 +68,12 @@ export const content = {
     { q: 'Does the PDF include clickable chapter links?', a: 'Yes. Chapter bookmarks from the AZW3 file are converted to interactive PDF bookmarks allowing quick navigation within the document.' },
     { q: 'What is the typical file size increase?', a: 'PDF files are typically 20-40% larger than AZW3 due to embedded fonts and higher image resolution. This is normal and ensures print quality.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };

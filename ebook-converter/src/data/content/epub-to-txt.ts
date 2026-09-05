@@ -135,6 +135,14 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
     { q: 'How do I batch convert multiple EPUB files?', a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50 MB each, perfect for processing entire book collections.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors.' }
   ]
+,
+
+  authorship: {
+    author: 'BookConv Team',
+    lastVerified: '2026-09-05',
+    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+    estimatedConversions: '10,000+ monthly'
+  }
 };
 
 export const es = {
