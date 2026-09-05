@@ -76,6 +76,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} dir='ltr'>
       <head>
+        {/* Preconnect to external domains to reduce connection latency */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://github.com" />
+        <link rel="preconnect" href="https://www.reddit.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="sitemap" href="/sitemap.xml" />
         <link rel="preload" as="image" href="/og-image.svg" type="image/svg+xml" />
         <link rel='icon' href='/favicon.ico' sizes='48x48' />
