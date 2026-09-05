@@ -125,54 +125,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
     ]
 
-    for (const page of staticPages) {
-      const url = baseUrl + prefix + page.path
-      allUrls.push({
-        url,
-        lastModified: new Date(page.date || STATIC_DATES[page.path] || '2026-07-26'),
-        changeFrequency: page.frequency,
-        priority: page.priority,
-      })
-    }
-
-    for (const key of CONVERSION_PAGES) {
-      allUrls.push({
-        url: baseUrl + prefix + '/convert/' + key,
-        lastModified: new Date(CONTENT_DATES[key] || '2026-07-26'),
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
-      })
-    }
-
-    // Compat report pages are English-only (V1 scope, decision #1). Derive
-    // directly from COMPAT_MAP — the single source of truth, same pattern as
-    // CONTENT_MAP. Adding a new report = one new entry in COMPAT_MAP, no
-    // hand-written URL, no slug-derivation bug.
-    if (locale === 'en') {
-      const COMPAT_SLUGS = Object.keys(COMPAT_MAP)
-      for (const slug of COMPAT_SLUGS) {
-        allUrls.push({
-          url: baseUrl + '/compat/' + slug,
-          lastModified: new Date(COMPAT_DATES[slug] || '2026-07-26'),
-          changeFrequency: 'monthly' as const,
-          priority: 0.6,
-        })
-      }
-    }
-
-    for (const slug of BLOG_SLUGS) {
-      allUrls.push({
-        url: baseUrl + prefix + '/blog/' + slug,
-        lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
-        changeFrequency: 'yearly' as const,
-        priority: 0.6,
-      })
-    }
-
     // Sitemap P3-C rule (2026-09-05): /es/* for convert and guide would emit
     // pseudo-Spanish pages that Google has already identified as spam signals.
     // Only emit /es/blog/* for the 6 real Spanish blog posts.
     if (locale === 'es') {
+      // English-only list pages + only 6 real Spanish blog posts
+      // (convert/guide lists have no /es/ version; they're English-only routes)
+      const staticPagesEs: { path: string; frequency: 'monthly' | 'weekly' | 'yearly'; priority: number; date?: string }[] = [
+        { path: '/pricing', frequency: 'monthly', priority: 0.8, date: STATIC_DATES['/pricing'] },
+        { path: '/batch', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/batch'] },
+        { path: '/blog', frequency: 'weekly', priority: 0.7, date: STATIC_DATES['/blog'] },
+        { path: '/tutorial', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/tutorial'] },
+        { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
+        { path: '/privacy', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/privacy'] },
+        { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
+      ]
+      for (const page of staticPagesEs) {
+        const url = baseUrl + prefix + page.path
+        allUrls.push({
+          url,
+          lastModified: new Date(page.date || STATIC_DATES[page.path] || '2026-07-26'),
+          changeFrequency: page.frequency,
+          priority: page.priority,
+        })
+      }
+      // Only 6 real Spanish blog posts
       for (const slug of ESP_BLOG_SLUGS) {
         if (!BLOG_SLUGS.includes(slug)) continue
         allUrls.push({
@@ -182,15 +159,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.6,
         })
       }
-    }
-
-    for (const g of getAllGuides()) {
-      allUrls.push({
-        url: baseUrl + prefix + '/guide/' + g.slug,
-        lastModified: new Date(g.updatedAt || g.date || '2026-08-02'),
-        changeFrequency: 'yearly' as const,
-        priority: 0.6,
-      })
+      // No /es/convert/* or /es/guide/* — those are pseudo-Spanish spam signals
+    } else {
+      // English locale: full sitemap (all pages, no /es/ prefix)
+      for (const page of staticPages) {
+        const url = baseUrl + prefix + page.path
+        allUrls.push({
+          url,
+          lastModified: new Date(page.date || STATIC_DATES[page.path] || '2026-07-26'),
+          changeFrequency: page.frequency,
+          priority: page.priority,
+        })
+      }
+      for (const key of CONVERSION_PAGES) {
+        allUrls.push({
+          url: baseUrl + prefix + '/convert/' + key,
+          lastModified: new Date(CONTENT_DATES[key] || '2026-07-26'),
+          changeFrequency: 'monthly' as const,
+          priority: 0.8,
+        })
+      }
+      for (const slug of BLOG_SLUGS) {
+        allUrls.push({
+          url: baseUrl + prefix + '/blog/' + slug,
+          lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
+          changeFrequency: 'yearly' as const,
+          priority: 0.6,
+        })
+      }
+      for (const g of getAllGuides()) {
+        allUrls.push({
+          url: baseUrl + prefix + '/guide/' + g.slug,
+          lastModified: new Date(g.updatedAt || g.date || '2026-08-02'),
+          changeFrequency: 'yearly' as const,
+          priority: 0.6,
+        })
+      }
     }
   }
 
