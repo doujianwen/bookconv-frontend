@@ -12,6 +12,31 @@ export const content = {
 
   sections: [
     {
+      heading: 'About EPUB Format',
+      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size — perfect for phones, tablets, and e-ink readers alike.
+
+**Key Specifications:**
+- **Developer**: IDPF / W3C
+- **Initial Release**: 2007
+- **Latest Version**: 3.3 (2023-05)
+- **Type**: Reflowable
+- **Open Standard**: Yes — managed by W3C Publishing Working Group
+
+**Primary Use Cases:**
+- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
+- Web-based reading platforms and digital libraries
+- Academic and publishing industry standard
+
+**Known Limitations:**
+- Not natively supported by older Kindle devices (pre-2022)
+- Complex fixed-layouts may not render consistently
+- Interactive features require EPUB 3 support
+
+**Official Resources:**
+- [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
+- [IDPF Official Site](https://idpf.org/)`
+    },
+    {
       heading: 'What is MOBI Format?',
       body: `MOBI (Mobipocket) is one of the earliest ebook formats supported by Amazon Kindle devices, and a free online EPUB to MOBI converter remains the fastest way to get a modern EPUB onto one of those older readers. While modern Kindles prefer AZW3 or EPUB formats, many older Kindle models (pre-2012) still rely on MOBI for file compatibility.
 

@@ -12,6 +12,31 @@ export const content = {
 
   sections: [
     {
+      heading: 'About EPUB Format',
+      body: `EPUB (Electronic Publication) is the international standard for ebooks, maintained by the W3C. Currently at version 3.3 (2023), EPUB is a reflowable format based on XHTML/CSS — meaning text automatically adapts to any screen size, from phone to tablet to e-ink reader.
+
+**Key Specifications:**
+- **Developer**: IDPF / W3C
+- **Initial Release**: 2007
+- **Latest Version**: 3.3 (2023-05)
+- **Type**: Reflowable
+- **Open Standard**: Yes — managed by W3C Publishing Working Group
+
+**Primary Use Cases:**
+- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
+- Web-based reading platforms and digital libraries
+- Academic and publishing industry standard
+
+**Known Limitations:**
+- Not natively supported by older Kindle devices (pre-2022)
+- Complex fixed-layouts may not render consistently
+- Interactive features require EPUB 3 support
+
+**Official Resources:**
+- [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
+- [IDPF Official Site](https://idpf.org/)`
+    },
+    {
       heading: 'How to Convert MOBI to EPUB Online',
       body: `Converting a MOBI file to EPUB takes seconds with the tool above — no software to install, no account to create, and no watermark on your book. Here is the whole flow:
 
