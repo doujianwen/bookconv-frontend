@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t('pricing.title'),
     description: t('seo.defaultDescription') || 'Start converting ebooks for free.',
     alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/pricing`,
-      languages: { en: '/pricing', es: '/es/pricing', 'x-default': '/pricing' },
+      canonical: `https://www.bookconv.com/pricing`,
+      languages: { en: '/pricing', 'x-default': '/pricing' },
     },
     openGraph: {
       title: t('pricing.title') + " | BookConv",

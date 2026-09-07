@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: '了解 EPUB、PDF、MOBI、AZW3、TXT、DOCX 等主流电子书格式的优缺点和适用场景。',
   alternates: {
     canonical: 'https://www.bookconv.com/formats',
-    languages: { en: '/formats', es: '/es/formats', 'x-default': '/formats' },
+    languages: { en: '/formats', 'x-default': '/formats' },
   },
 }
 

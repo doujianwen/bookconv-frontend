@@ -13,7 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       canonical: `https://www.bookconv.com${prefix}/tutorial`,
       languages: {
         en: '/tutorial',
-        es: '/es/tutorial',
         'x-default': '/tutorial',
       },
     },

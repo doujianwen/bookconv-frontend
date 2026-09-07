@@ -53,6 +53,7 @@ import * as post58 from "./layout-typesetting-pdf-epub";
 import * as post59 from "./lit-format-conversion-and";
 import * as post60 from "./selection-intercept-converter";
 import * as post61 from "./sync-ebooks-reading-groups";
+import * as post62 from "./harry-potter-digital-books-multiple-devices";
 
 // Keep the English versions (English body). The Chinese versions
 // (ebook-formats-explained / why-convert-lit-to-epub, Chinese body) were deleted per request.
@@ -71,7 +72,7 @@ import * as post61 from "./sync-ebooks-reading-groups";
 //   template literals. Remaining 8 new articles are functional.
 // 2026-08-28: Added sync-ebooks-reading-groups (post61) — 深化 "多设备同步" 主题，乘 Bing AI 高 Share
 //   机会词 "ebook syncing virtual reading groups" (42.86%) 与 "romance books sync" (45%)。
-const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61] as BlogPostMeta[];
+const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

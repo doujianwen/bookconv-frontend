@@ -11,8 +11,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t('help.metaTitle'),
     description: t('help.metaDescription'),
     alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/help`,
-      languages: { en: '/help', es: '/es/help', 'x-default': '/help' },
+      canonical: `https://www.bookconv.com/help`,
+      languages: { en: '/help', 'x-default': '/help' },
     },
     openGraph: {
       title: t('help.metaTitle') + ' | BookConv',

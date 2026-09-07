@@ -7,10 +7,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Terms of Service",
     alternates: {
-      canonical: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/terms`,
-      languages: { en: '/terms', es: '/es/terms', 'x-default': '/terms' },
+      canonical: `https://www.bookconv.com/terms`,
+      languages: { en: '/terms', 'x-default': '/terms' },
     },
-    openGraph: { url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/terms`, type: "website" },
+    openGraph: { url: `https://www.bookconv.com/terms`, type: "website" },
   };
 }
 

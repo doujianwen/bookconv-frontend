@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     alternates: {
       canonical: `https://www.bookconv.com${prefix}/batch`,
-      languages: { en: "/batch", es: "/es/batch", "x-default": "/batch" },
+      languages: { en: "/batch", "x-default": "/batch" },
     },
     openGraph: {
       title: title + " | BookConv",
