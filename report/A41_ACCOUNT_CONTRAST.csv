@@ -1,0 +1,11 @@
+time_point,account,anchor,n,hv_hits,observed_surfacing_rate_under_run_conditions,candidate_set_size_mean,stability,level
+T1,A,AN1,3,0,0.0,8.67,stable_out,cell
+T1,A,AN2,3,0,0.0,7.33,stable_out,cell
+T2,A,AN1,3,0,0.0,9.0,stable_out,cell
+T2,A,AN2,3,0,0.0,6.0,stable_out,cell
+T3,A,AN1,2,0,0.0,8.0,stable_out,cell
+T3,A,AN2,1,0,0.0,8.0,stable_out,cell
+T1,A,POOLED,6,0,0.0,8.0,stable_out,pooled
+T2,A,POOLED,6,0,0.0,7.5,stable_out,pooled
+T3,A,POOLED,3,0,0.0,8.0,stable_out,pooled
+,,JUDGMENT,,,,,Mixed — insufficient structure,judgment

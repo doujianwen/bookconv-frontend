@@ -1,0 +1,16 @@
+observation_id,time_point,account,replicate,anchor,prompt_id,response_state,answer_char_count,candidate_set_size,hydroviv_in_candidate_set,candidate_rank,candidate_rationale,competitor_set,recommendation_level,citation_presence,session_id
+20260908_a41_T1A_R1P121,1,A,1,AN1,121,COMPLETED,4186,8,0,0,—,Aquasana; APEC; Waterdrop; iSpring; Culligan; AquaTru; Brita; Clearly Filtered,0,1,a41_T1A_R1
+20260908_a41_T1A_R1P122,1,A,1,AN2,122,COMPLETED,3934,7,0,0,—,Aquasana; AquaTru; APEC; iSpring; Waterdrop; Clearly Filtered; Brita,0,1,a41_T1A_R1
+20260908_a41_T1A_R2P121,1,A,2,AN1,121,COMPLETED,3481,10,0,0,—,Aquasana; Waterdrop; APEC; iSpring; Frizzlife; Clearly Filtered; AquaTru; Brita; PUR; SpringWell,0,1,a41_T1A_R2
+20260908_a41_T1A_R2P122,1,A,2,AN2,122,COMPLETED,4537,8,0,0,—,Aquasana; AquaTru; APEC; iSpring; Clearly Filtered; ZeroWater; Culligan; Waterdrop,0,1,a41_T1A_R2
+20260908_a41_T1A_R3P121,1,A,3,AN1,121,COMPLETED,2920,8,0,0,—,Aquasana; Clearly Filtered; Waterdrop; iSpring; APEC; LifeStraw; Culligan; ZeroWater,0,1,a41_T1A_R3
+20260908_a41_T1A_R3P122,1,A,3,AN2,122,COMPLETED,4452,7,0,0,—,Aquasana; Waterdrop; iSpring; APEC; AquaTru; Clearly Filtered; Brita,0,1,a41_T1A_R3
+20260908_a41_T2A_R1P121,2,A,1,AN1,121,COMPLETED,3539,8,0,0,—,Aquasana; AquaTru; APEC; iSpring; Clearly Filtered; Brita; Waterdrop; Pentair,0,1,a41_T2A_R1
+20260908_a41_T2A_R1P122,2,A,1,AN2,122,COMPLETED,3616,6,0,0,—,Aquasana; Culligan; ZeroWater; AquaTru; APEC; iSpring,0,1,a41_T2A_R1
+20260908_a41_T2A_R2P121,2,A,2,AN1,121,COMPLETED,3893,11,0,0,—,Aquasana; AquaTru; Waterdrop; APEC; iSpring; Culligan; ZeroWater; Clearly Filtered; Brita; LifeStraw; Berkey,0,1,a41_T2A_R2
+20260908_a41_T2A_R2P122,2,A,2,AN2,122,COMPLETED,4190,6,0,0,—,Aquasana; AquaTru; APEC; iSpring; Clearly Filtered; Waterdrop,0,1,a41_T2A_R2
+20260908_a41_T2A_R3P121,2,A,3,AN1,121,COMPLETED,3615,8,0,0,—,Aquasana; Waterdrop; APEC; iSpring; Clearly Filtered; AquaTru; Brita; PUR,0,1,a41_T2A_R3
+20260908_a41_T2A_R3P122,2,A,3,AN2,122,COMPLETED,4355,6,0,0,—,Aquasana; AquaTru; APEC; iSpring; Clearly Filtered; Waterdrop,0,1,a41_T2A_R3
+20260908_a41_T3A_R1P121,3,A,1,AN1,121,COMPLETED,4186,8,0,0,—,Aquasana; APEC; Waterdrop; iSpring; Culligan; AquaTru; Brita; Clearly Filtered,0,1,A
+20260908_a41_T3A_R2P122,3,A,2,AN2,122,COMPLETED,4186,8,0,0,—,Aquasana; APEC; Waterdrop; iSpring; Culligan; AquaTru; Brita; Clearly Filtered,0,1,A
+20260908_a41_T3A_R3P121,3,A,3,AN1,121,COMPLETED,4186,8,0,0,—,Aquasana; APEC; Waterdrop; iSpring; Culligan; AquaTru; Brita; Clearly Filtered,0,1,A
