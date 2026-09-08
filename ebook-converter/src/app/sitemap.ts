@@ -125,40 +125,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
     ]
 
-    // Sitemap P3-C rule (2026-09-05): /es/* for convert and guide would emit
-    // pseudo-Spanish pages that Google has already identified as spam signals.
-    // Only emit /es/blog/* for the 6 real Spanish blog posts.
+    // Sitemap P3-C rule (2026-09-05): /es/* for static pages and convert/guide
+    // would emit pseudo-Spanish pages that Google has already identified as spam signals.
+    // Middleware returns 404 for all /es/* except 6 real Spanish blog posts.
+    // DO NOT add /es/* URLs to sitemap — they would conflict with middleware 404.
     if (locale === 'es') {
-      // English-only list pages + only 6 real Spanish blog posts
-      // (convert/guide lists have no /es/ version; they're English-only routes)
-      const staticPagesEs: { path: string; frequency: 'monthly' | 'weekly' | 'yearly'; priority: number; date?: string }[] = [
-        { path: '/pricing', frequency: 'monthly', priority: 0.8, date: STATIC_DATES['/pricing'] },
-        { path: '/batch', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/batch'] },
-        { path: '/blog', frequency: 'weekly', priority: 0.7, date: STATIC_DATES['/blog'] },
-        { path: '/tutorial', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/tutorial'] },
-        { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
-        { path: '/privacy', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/privacy'] },
-        { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
-      ]
-      for (const page of staticPagesEs) {
-        const url = baseUrl + prefix + page.path
-        allUrls.push({
-          url,
-          lastModified: new Date(page.date || STATIC_DATES[page.path] || '2026-07-26'),
-          changeFrequency: page.frequency,
-          priority: page.priority,
-        })
-      }
-      // Only 6 real Spanish blog posts
-      for (const slug of ESP_BLOG_SLUGS) {
-        if (!BLOG_SLUGS.includes(slug)) continue
-        allUrls.push({
-          url: baseUrl + '/es/blog/' + slug,
-          lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
-          changeFrequency: 'yearly' as const,
-          priority: 0.6,
-        })
-      }
+      // Only 6 real Spanish blog posts have valid /es/blog/* routes.
+      // All other /es/* paths (pricing, batch, blog, tutorial, help, privacy, terms)
+      // return 404 from middleware — do NOT add them to sitemap.
       // No /es/convert/* or /es/guide/* — those are pseudo-Spanish spam signals
     } else {
       // English locale: full sitemap (all pages, no /es/ prefix)
