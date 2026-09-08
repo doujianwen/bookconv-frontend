@@ -11,6 +11,33 @@ export const content = {
 
   sections: [
     {
+      heading: 'About PDF Format',
+      body: `PDF (Portable Document Format) is a fixed-layout format developed by Adobe Systems in 1993. Unlike EPUB's reflowable design, PDF locks content into precise positions — pixels, fonts, and images stay exactly where placed.
+
+**Key Specifications:**
+- **Developer**: Adobe Systems
+- **Initial Release**: 1993
+- **Latest Version**: PDF 2.0 (ISO 32000-2:2020)
+- **Type**: Fixed-layout
+- **Open Standard**: Yes — ISO 32000 standard maintained by ISO/TC 176
+
+**Primary Use Cases:**
+- Print-ready documents and professional publishing
+- Legal contracts, invoices, and formal records
+- Academic papers requiring precise formatting
+- Archival documents (PDF/A standard)
+
+**Known Limitations:**
+- Not reflowable — poor mobile reading experience
+- Large file sizes for text-heavy content
+- Limited accessibility for screen readers
+- Complex layouts may not convert cleanly to EPUB
+
+**Official Resources:**
+- [ISO 32000 PDF Specification](https://www.iso.org/standard/75837.html)
+- [Adobe PDF Reference](https://www.adobe.com/devnet/pdf.html)`
+    },
+    {
       heading: 'Why PDF Is Not Suitable for E-Reading',
       body: `PDF (Portable Document Format) was designed to be print-friendly — ensuring documents look exactly the same on any device. This is perfect for contracts, invoices, academic papers, and other formal scenarios. But for daily reading, it is a disaster.
 

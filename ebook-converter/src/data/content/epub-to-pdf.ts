@@ -11,6 +11,31 @@ export const content = {
 
   sections: [
     {
+      heading: 'About EPUB Format',
+      body: `EPUB (Electronic Publication) is a reflowable ebook format maintained by the W3C Publishing Group. It was originally developed by the International Digital Publishing Forum (IDPF) in 2007 and later adopted as an open standard.
+
+**Key Specifications:**
+- **Developer**: W3C Publishing Group (originally IDPF)
+- **Initial Release**: 2007
+- **Latest Version**: EPUB 3.3 (2023)
+- **Type**: Reflowable
+- **Open Standard**: Yes — W3C Recommendation
+
+**Primary Use Cases:**
+- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
+- Web-based reading platforms and digital libraries
+- Academic and publishing industry standard
+
+**Known Limitations:**
+- Not natively supported by older Kindle devices (pre-2022)
+- Complex fixed-layouts may not render consistently
+- Interactive features require EPUB 3 support
+
+**Official Resources:**
+- [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
+- [IDPF Official Site](https://idpf.org/)`
+    },
+    {
       heading: 'When Do You Need to Convert EPUB to PDF?',
       body: 'EPUB is known for its reflowable layout — perfect for screen reading. But some scenarios require fixed-layout PDF: Print Output — PDF ensures print results match screen display without layout chaos. Academic Citation — Academic papers and book excerpts need precise page numbers; PDF fixed layout naturally supports this. Formal Document Sharing — Contracts, reports, presentation materials in formal scenarios; PDF is the safest sharing format. Archive Preservation — PDF/A is an international standard for long-term archival, more suitable for permanent storage than EPUB.'
     },
