@@ -12,6 +12,58 @@ export const content = {
 
   sections: [
     {
+      heading: 'About EPUB Format',
+      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size — perfect for phones, tablets, and e-ink readers alike.
+
+**Key Specifications:**
+- **Developer**: IDPF / W3C
+- **Initial Release**: 2007
+- **Latest Version**: 3.3 (2023-05)
+- **Type**: Reflowable
+- **Open Standard**: Yes — managed by W3C Publishing Working Group
+
+**Primary Use Cases:**
+- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
+- Web-based reading platforms and digital libraries
+- Academic and publishing industry standard
+
+**Known Limitations:**
+- Not natively supported by older Kindle devices (pre-2022)
+- Complex fixed-layouts may not render consistently
+- Interactive features require EPUB 3 support
+
+**Official Resources:**
+- [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
+- [IDPF Official Site](https://idpf.org/)`
+    },
+    {
+      heading: 'About TXT Format',
+      body: `TXT (plain text) is the simplest digital text format, with no markup, styling, or structural overhead. It has been the universal text exchange format since the early days of computing.
+
+**Key Specifications:**
+- **Developer**: De facto standard — no single owner
+- **Initial Release**: 1960s (teletype era)
+- **Encoding**: UTF-8 (modern standard), ASCII (legacy)
+- **Type**: Text-only, no structure
+- **Open Standard**: Yes — RFC 3629 defines UTF-8
+
+**Primary Use Cases:**
+- AI and NLP pipeline input (clean text for analysis)
+- Translation memory and CAT tools
+- Legacy system compatibility
+- Code repositories and documentation
+- Accessibility-first content delivery
+
+**Known Limitations:**
+- No formatting, images, or multimedia
+- No metadata (title, author, TOC) without manual insertion
+- Encoding ambiguity across systems (UTF-8 vs. legacy codepages)
+- No navigation or structure beyond line breaks
+
+**Official Resources:**
+- [RFC 3629 — UTF-8 Standard](https://tools.ietf.org/html/rfc3629)`
+    },
+    {
       heading: 'When Do You Need EPUB to TXT Conversion?',
       body: `While EPUB is ideal for rich ebook reading, there are specific scenarios where plain text (TXT) is the preferred format:
 
