@@ -88,3 +88,5 @@ batch-verify.zip
 # Excel tracking sheets (large binary, not source)
 *.xlsx
 *.xls
+gsc-service-account.json
+gsc-service-account.json
