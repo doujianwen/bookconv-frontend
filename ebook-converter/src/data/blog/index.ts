@@ -56,6 +56,7 @@ import * as post61 from "./sync-ebooks-reading-groups";
 import * as post62 from "./harry-potter-digital-books-multiple-devices";
 import * as post63 from "./lord-of-the-rings-ebooks-multiple-devices";
 import * as post64 from "./chronicles-of-narnia-ebooks-multiple-devices";
+import * as post1 from "./epub-to-azw3";
 
 // Keep the English versions (English body). The Chinese versions
 // (ebook-formats-explained / why-convert-lit-to-epub, Chinese body) were deleted per request.
@@ -68,13 +69,15 @@ import * as post64 from "./chronicles-of-narnia-ebooks-multiple-devices";
 //   azw3-vs-mobi (near-identical "mobi vs azw3 for kindle" intent). 301 in BLOG_REDIRECTS.
 // 2026-08-11: epub-to-azw3 archived to ../_archived/ — R4 cannibalization vs
 //   guide/epub-to-azw3-for-kindle (near-identical "EPUB to AZW3" how-to intent). 301 in BLOG_REDIRECTS.
+// 2026-09-10: epub-to-azw3 RESTORED — guide page failed to承接 (20.4% rate, 0 impressions recent).
+//   Decision: integrate guide into /convert/epub-to-azw3, restore blog as independent tutorial.
 // 2026-08-26: Batch published 12 GEO articles (kindle-epub-azw3-mobi, ebook-troubleshooting, etc.)
 // 2026-08-27: Fixed 7 articles with double-brace escaping; removed 4 broken files (azw3-epub-mobi-kindle,
 //   layout-typesetting-pdf-epub, lit-format-conversion-and, selection-intercept-converter) due to truncated
 //   template literals. Remaining 8 new articles are functional.
 // 2026-08-28: Added sync-ebooks-reading-groups (post61) — 深化 "多设备同步" 主题，乘 Bing AI 高 Share
 //   机会词 "ebook syncing virtual reading groups" (42.86%) 与 "romance books sync" (45%)。
-const posts: BlogPostMeta[] = [post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64] as BlogPostMeta[];
+const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

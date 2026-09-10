@@ -60,6 +60,14 @@ export const content = {
     {
       heading: 'Common Use Cases',
       body: 'Kindle Enthusiasts: Convert your EPUB library to AZW3 for the best reading experience on your Kindle device. Privacy-Conscious Users: Avoid uploading sensitive documents to Amazon cloud by converting locally. Format Migration: Transitioning from EPUB-based reading apps to Kindle? AZW3 is the bridge.'
+    },
+    {
+      heading: 'Learn More About EPUB to AZW3',
+      body: `Want to understand the format differences or troubleshoot common issues? Check out our detailed guides:
+
+- [**EPUB to AZW3 Tutorial**](/blog/epub-to-azw3) — Step-by-step instructions for converting EPUB to AZW3 using BookConv or Calibre
+- [**AZW3 vs MOBI Comparison**](/blog/azw3-vs-mobi) — Which Kindle format is right for your books?
+- [**Kindle Formats Explained**](/guide/kindle-formats) — Complete guide to Amazon ebook formats`
     }
   ],
 
