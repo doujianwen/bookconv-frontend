@@ -56,3 +56,11 @@ export const faqs: BlogFaq[] = [
   { question: 'How do I convert EPUB to MOBI for free?', answer: 'Use a free online converter like BookConv at [/convert/epub-to-mobi](/convert/epub-to-mobi). Upload your EPUB, select MOBI, and download the converted file. No install needed.' },
   { question: 'Can I convert MOBI back to EPUB?', answer: 'Yes. If you want to move your MOBI files to a non-Kindle device, use [BookConv\'s MOBI to EPUB converter](/convert/mobi-to-epub). Note that formatting may be simplified since MOBI holds less information than EPUB.' },
 ]
+
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}

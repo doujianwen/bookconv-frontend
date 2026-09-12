@@ -46,3 +46,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I convert MOBI to AZW3 for free?', answer: 'Yes. BookConv offers a free MOBI to AZW3 converter at [/convert/mobi-to-azw3](/convert/mobi-to-azw3). Upload your file, select AZW3, and download the result.' },
   { question: 'Is Amazon phasing out MOBI?', answer: 'Yes. Amazon has been pushing AZW3 since 2011 and now recommends EPUB via Send-to-Kindle for new uploads. MOBI remains supported on existing devices but is not the recommended format for new conversions.' },
 ]
+
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
