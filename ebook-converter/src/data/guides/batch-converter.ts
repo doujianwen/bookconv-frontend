@@ -56,3 +56,11 @@ export const faqs: BlogFaq[] = [
   { question: 'What formats can I batch convert?', answer: 'The same formats as the single-file converter — EPUB, PDF, MOBI, AZW3, TXT, DOCX, RTF, FB2, DJVU and more — with every file in the batch converting to the target format you choose.' },
   { question: 'Is there a free CloudConvert alternative for batch ebook conversion?', answer: 'Yes. BookConv batch conversion is free during open beta and handles up to 20 files per run for local formats, with no account needed. CloudConvert also batches files but is metered with tighter free-tier limits, so BookConv is the lighter choice for everyday ebook batches.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

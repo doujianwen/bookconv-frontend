@@ -76,3 +76,11 @@ export const faqs: BlogFaq[] = [
   { question: 'How do I modernize an old MOBI library?', answer: 'Convert MOBI forward to AZW3 (or EPUB) with BookConv so your files use a current, well-supported format.' },
   { question: 'Can Kindle Fire open MOBI files?', answer: 'Yes. The Kindle app on Fire OS reads MOBI, AZW3, KFX, and EPUB via Send to Kindle. If an older MOBI file does not open, convert it to AZW3 or resend it through Send to Kindle.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

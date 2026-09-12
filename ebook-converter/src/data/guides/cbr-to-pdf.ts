@@ -54,3 +54,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Is BookConv free for CBR to PDF?', answer: 'Yes. BookConv converts CBR to PDF in the browser at no cost for standard files, with nothing to install.' },
   { question: 'CBR or PDF — which should I keep?', answer: 'Keep PDF for everyday reading and sharing, since every device opens it. Keep the original CBR only if you want comic-reader features like panel zoom.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

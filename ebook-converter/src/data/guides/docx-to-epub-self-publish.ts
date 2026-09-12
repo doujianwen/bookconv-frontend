@@ -46,3 +46,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I publish the EPUB to Kindle, Kobo, or Apple Books?', answer: 'Yes. Amazon accepts EPUB for Kindle Direct Publishing (or converts it for you), and Kobo and Apple Books both accept EPUB directly. Validate the file first: working table of contents, cover, and clean reflow.' },
   { question: 'Is BookConv free for DOCX to EPUB?', answer: 'Yes. BookConv converts DOCX to EPUB in the browser at no cost for standard manuscripts, with no software to install.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

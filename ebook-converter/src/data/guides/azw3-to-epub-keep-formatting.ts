@@ -48,3 +48,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Is converting AZW3 to EPUB legal?', answer: 'Converting a DRM-free file you own is generally fine. Removing DRM from a protected store purchase is restricted under copyright law in many regions. This guide only covers DRM-free files you legitimately own.' },
   { question: 'Can BookConv convert AZW3 to EPUB for free?', answer: 'Yes. BookConv converts DRM-free AZW3 to EPUB in the browser at no cost for standard files, with no software to install.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

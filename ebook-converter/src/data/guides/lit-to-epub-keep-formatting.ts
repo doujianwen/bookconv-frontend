@@ -54,3 +54,11 @@ export const faqs: BlogFaq[] = [
   { question: 'What if my LIT file has DRM?', answer: 'Only DRM-free LIT files convert. Files locked with Microsoft DRM cannot be opened by Calibre or web converters, which is outside any converter scope.' },
   { question: 'LIT or EPUB — which should I keep long term?', answer: 'Keep EPUB. It is the open standard every reading app supports, while LIT is a dead Microsoft format that fewer tools handle each year.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

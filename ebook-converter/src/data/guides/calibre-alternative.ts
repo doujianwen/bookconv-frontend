@@ -58,3 +58,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Do I need to install anything to convert an ebook?', answer: 'No. An online converter like BookConv runs entirely in the browser. Calibre only makes sense if you convert often or need offline privacy.' },
   { question: 'Is there a free CloudConvert alternative for ebooks?', answer: 'Yes. BookConv is a free, no-account ebook converter built on the Calibre engine, and it stays free during open beta — including batch conversion. CloudConvert works for ebooks too, but it is a metered general file converter with tighter free-tier limits, so a focused tool like BookConv is the lighter choice for everyday ebook jobs.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

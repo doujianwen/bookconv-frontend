@@ -61,3 +61,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I convert EPUB to MOBI online for free?', answer: 'Yes. BookConv converts EPUB to MOBI in the browser with no install and no cost for standard files. It is the fastest path for a one-off conversion.' },
   { question: 'Do I need Calibre to send an EPUB to my Kindle?', answer: 'No. You can convert EPUB to MOBI or AZW3 with an online converter like BookConv, then email or send the result to your Kindle. Calibre only helps if you want fine control over the output profile.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

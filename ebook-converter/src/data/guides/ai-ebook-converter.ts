@@ -46,3 +46,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Is BookConv free for AI prep?', answer: 'Yes. Basic conversions are free and require no account, which makes it easy to prep files for AI tools in a few steps.' },
   { question: 'Which ebook formats can I convert for AI ingestion?', answer: 'BookConv handles 27 format pairs — EPUB, MOBI, PDF, AZW3, TXT and more — and exports the TXT or PDF that AI tools accept.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

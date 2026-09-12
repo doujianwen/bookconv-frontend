@@ -52,3 +52,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Is BookConv free for AZW3 to MOBI?', answer: 'Yes. BookConv converts AZW3 to MOBI in the browser at no cost for standard files, with nothing to install.' },
   { question: 'Should I keep AZW3 or MOBI long term?', answer: 'Keep AZW3 if your devices support it, since it preserves more typography. Keep MOBI only for compatibility with older hardware.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

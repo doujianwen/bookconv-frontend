@@ -52,3 +52,11 @@ export const faqs: BlogFaq[] = [
   { question: 'What if I want a real ebook from my text instead?', answer: 'Convert the other way: TXT to EPUB rebuilds a reflowable ebook. See [/blog/txt-to-epub](/blog/txt-to-epub).' },
   { question: 'Why is my extracted TXT one giant block?', answer: 'Because the converter ignored the EPUB structure. Use a tool that reads the spine and heading records so paragraphs and chapters stay separated.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

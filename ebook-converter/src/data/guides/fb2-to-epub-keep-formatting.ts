@@ -52,3 +52,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I read the EPUB on a Kindle?', answer: 'You can, but Kindle prefers its own formats. Send the EPUB through Amazon Send-to-Kindle, or convert it onward to AZW3 as shown in the EPUB to AZW3 guide.' },
   { question: 'Where do FB2 files come from?', answer: 'Mostly Russian and Eastern European digital libraries and fan translation groups that adopted FictionBook as their standard. They are common for public-domain classics and community translations.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

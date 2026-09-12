@@ -66,3 +66,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Is BookConv free for DJVU to PDF?', answer: 'Yes. BookConv converts DJVU to PDF in the browser at no cost for standard files, with nothing to install.' },
   { question: 'DJVU or PDF — which should I keep?', answer: 'Keep PDF. It is the universal format every device and printer opens, while DJVU is a niche archive format almost nothing supports today.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

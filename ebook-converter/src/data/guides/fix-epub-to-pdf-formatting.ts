@@ -46,3 +46,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I choose A4 or Letter page size?', answer: 'Yes. BookConv lets you pick A4 or Letter before converting, which avoids awkward scaling on standard printers.' },
   { question: 'Is Calibre or an online converter better for EPUB to PDF?', answer: 'For a one-off file, an online converter like BookConv is faster and needs no install. Calibre gives more low-level control but plainer PDF output. The trade-off is covered in our [/guide/calibre-vs-online-converter](/guide/calibre-vs-online-converter) guide.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+

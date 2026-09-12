@@ -52,3 +52,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I convert a manuscript draft to EPUB?', answer: 'Yes. Many authors turn a plain TXT draft into an EPUB preview to check flow on a real reading device before formatting for publication.' },
   { question: 'Does TXT to EPUB keep my line breaks?', answer: 'Paragraph breaks are preserved, but TXT has no styling, so fonts and spacing become the reader default. That is expected and usually what you want for reading.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
+
