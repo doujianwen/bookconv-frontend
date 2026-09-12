@@ -56,6 +56,7 @@ import * as post61 from "./sync-ebooks-reading-groups";
 import * as post62 from "./harry-potter-digital-books-multiple-devices";
 import * as post63 from "./lord-of-the-rings-ebooks-multiple-devices";
 import * as post64 from "./chronicles-of-narnia-ebooks-multiple-devices";
+import * as post65 from "./twilight-ebooks-multiple-devices";
 import * as post1 from "./epub-to-azw3";
 
 // Keep the English versions (English body). The Chinese versions
@@ -77,7 +78,9 @@ import * as post1 from "./epub-to-azw3";
 //   template literals. Remaining 8 new articles are functional.
 // 2026-08-28: Added sync-ebooks-reading-groups (post61) — 深化 "多设备同步" 主题，乘 Bing AI 高 Share
 //   机会词 "ebook syncing virtual reading groups" (42.86%) 与 "romance books sync" (45%)。
-const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64] as BlogPostMeta[];
+// 2026-09-12: Added twilight-ebooks-multiple-devices (post65) — Phase 2 IP expansion:
+//   Twilight vampire saga multi-device guide, targeting "Twilight ebooks Kindle Kobo" queries.
+const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64, post65] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
