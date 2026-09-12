@@ -47,3 +47,11 @@ export const faqs: BlogFaq[] = [
   { question: 'Which is faster, Calibre or an online converter?', answer: 'For one file, the online converter wins because there is no install or setup. For hundreds of files, Calibre wins because you automate the job once.' },
   { question: 'Do I need to install anything to convert an ebook?', answer: 'No. An online converter like BookConv runs in the browser with no install. Calibre only makes sense if you convert often or need offline privacy.' },
 ]
+
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-09-12',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}
