@@ -18,9 +18,11 @@ import * as aiEbookConverter from './ai-ebook-converter'
 import * as batchConverter from './batch-converter'
 import * as kindleFormats from './kindle-formats'
 import * as bestEbookConverter from './best-ebook-converter'
+import * as epubVsMobi from './epub-vs-mobi'
+import * as azw3VsMobi from './azw3-vs-mobi'
 import type { GuideMeta } from './types'
 
-const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter] as unknown as GuideMeta[]
+const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter, epubVsMobi, azw3VsMobi] as unknown as GuideMeta[]
 
 const GUIDE_MAP: Record<string, GuideMeta> = {}
 for (const g of all) GUIDE_MAP[g.slug] = g
