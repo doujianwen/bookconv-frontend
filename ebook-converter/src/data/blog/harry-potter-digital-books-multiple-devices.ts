@@ -29,8 +29,16 @@ export const content = {
       body: 'A well-organized Harry Potter library makes rereading effortless.\n\n**Step 1: Gather all seven books in EPUB**\nStart with your highest-quality source.\n\n**Step 2: Create device-specific copies**\nUsing BookConv or Calibre, create variants for each device.\n\n**Step 3: Set up syncing**\n- Kindle: Use Send to Kindle or USB transfer\n- Kobo: Sync via Kobo Desktop or USB\n- Apple Books: Store EPUBs in iCloud\n- Android: Upload to Google Play Books\n\n**Step 4: Maintain your library**\nKeep a master folder with all formats.'
     },
     {
+      heading: 'Harry Potter Edition Comparison',
+      body: 'Not all Harry Potter ebooks are created equal. Here is a quick comparison of the most common editions you will find online.\n\n**Penguin Random House EPUB**\nThe official publisher edition with professional typesetting. This is the gold standard for Harry Potter ebooks -- clean formatting, proper footnotes, and embedded index.\n\n**Scholastic Audiobook Transcripts**\nSome fans create EPUBs from audiobook transcripts. These are convenient for simultaneous reading and listening, but may lack proper formatting.\n\n**Fan-made Editions**\nCommunity-created editions often include bonus content like maps, character guides, and chapter summaries. Check our [ebook format guide](/blog/ebook-formats-explained) to understand which formats preserve these extras best.\n\n**Project Gutenberg Editions**\nSome early editions are available on Project Gutenberg in the public domain. These are text-only but reliable for basic conversion to any format.'
+    },
+    {
+      heading: 'Advanced Tips for Harry Potter Fans',
+      body: 'Once your Harry Potter library is set up across devices, these advanced tips will help you get the most out of your magical reading experience.\n\n**Create themed bookshelves**\nOrganize your books into virtual shelves like "Hogwarts Years", "Triwizard Tournament", or "Battle of Hogwarts". This makes it easy to find exactly which book you want based on your mood or reread preference.\n\n**Use bookmarks and highlights**\nMost e-readers let you bookmark pages, highlight passages, and add notes. Use these features to track your favorite quotes, mark plot-critical moments, or note character development that deserves rereading. Goodreads integration lets you share highlights with other fans.\n\n**Sync with friends**\nJoin online Harry Potter reading communities where fans discuss theories, share interpretations, and recommend the best editions. Our [reading group guide](/blog/sync-ebooks-reading-groups) explains how to coordinate reading schedules across devices and share annotations.\n\n**Backup your collection**\nStore your Harry Potter ebooks in multiple locations -- cloud storage, external drives, and at least two devices. Losing your digital library would be as devastating as losing your physical copies, and backups ensure you never have to start over.'
+    },
+    {
       heading: 'Common Problems and Solutions',
-      body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Regenerate using BookConv.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads.\n\n**Problem: Kobo cannot open AZW3 file**\nConvert back to EPUB using BookConv.'
+      body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled. Harry Potter has complex footnotes, chapter headers, and embedded images that need careful handling.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Convert each book separately using BookConv. Our [guide to fixing EPUB to PDF formatting](/guide/fix-epub-to-pdf-formatting) may also help with layout issues.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms.\n\n**Problem: Kobo cannot open AZW3 file**\nConvert back to EPUB using BookConv.\n\n**Problem: Lost bookmarks after device change**\nBookmarks are stored locally on most e-readers. When switching devices, manually note your page or use a tracking app to maintain your place across platforms.'
     }
   ]
 };
@@ -63,5 +71,13 @@ export const faqs = [
   {
     question: 'Can I sync my Harry Potter reading progress across Kindle and Kobo?',
     answer: 'No, reading progress only syncs within the same ecosystem. There is no cross-platform progress sync.'
+  },
+  {
+    question: 'How do I organize my Harry Potter ebook collection?',
+    answer: 'Use tags like "to-read", "currently-reading", and "completed" to track your progress through the seven books. Add metadata like series order and cover art for better navigation.'
+  },
+  {
+    question: 'What should I do if I lose my reading progress after switching devices?',
+    answer: 'Reading progress is stored locally on most e-readers. When switching devices, manually note your page or use a tracking app like Goodreads to maintain your place across platforms.'
   }
 ];
