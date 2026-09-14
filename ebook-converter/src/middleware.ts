@@ -95,7 +95,22 @@ export async function middleware(request: NextRequest) {
       // Slug not in whitelist → 404
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
-    // All other /es/* paths → 404 (convert, guide, blog without es version)
+    // /es/convert/* — only the 3 content pages with genuine, complete Spanish
+    // translations (epub-to-doc, epub-to-txt, lit-to-epub) get a real /es route.
+    // Their body is rendered in Spanish by the [locale] convert page; previously
+    // middleware 404'd them, leaving the es URLs dead (a leftover of the
+    // over-broad P3-C "pseudo-Spanish" wipe, 2026-09-14 red-team).
+    if (pathname.startsWith('/es/convert/')) {
+      const slug = pathname.replace('/es/convert/', '');
+      const ESP_CONVERT_SLUGS = ['epub-to-doc', 'epub-to-txt', 'lit-to-epub'];
+      if (ESP_CONVERT_SLUGS.includes(slug)) {
+        const response = NextResponse.next();
+        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+        return applySecurityHeaders(request, response);
+      }
+      return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
+    }
+    // All other /es/* paths → 404 (guide, static, blog without es version)
     return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
   }
 

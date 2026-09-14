@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 }
 
 export default async function ToolPage({ params }: ToolPageProps) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const [source, target] = slug.split("-to-")
   const keyword = KEYWORDS.find(
     (k) =>
@@ -108,12 +108,19 @@ export default async function ToolPage({ params }: ToolPageProps) {
   )
   const conversion = getConversion(source, target)
   const contentData = CONTENT_MAP[slug]
+  const isEs = locale === 'es' && !!contentData?.es
   // CONTENT_MAP values are the raw module namespace ({ slug, title, ...,
   // content: { hero, sections, faq } }). The client component and the schema
   // generator expect the FLAT content shape ({ hero, sections, faq }), so
   // unwrap here — otherwise every custom section/FAQ silently falls back to
   // the generic template (this bug affected all 27 convert pages).
-  const content = contentData?.content ?? contentData
+  // When locale is es AND the page has a real Spanish translation, pass the
+  // es content (hero+sections+faq) so the client renders Spanish body — not
+  // just Spanish metadata over an English body (the old spam-signal bug).
+  const content =
+    isEs && contentData?.es?.content
+      ? contentData.es.content
+      : (contentData?.content ?? contentData)
 
   if (!keyword || !conversion) {
     notFound()

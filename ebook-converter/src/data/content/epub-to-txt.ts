@@ -204,6 +204,160 @@ export const es = {
     hero: {
       title: 'EPUB a TXT — Extrae Texto Puro de Archivos EPUB',
       subtitle: 'Conversor gratuito de EPUB a TXT. Sin registro necesario — extrae texto plano limpio y legible para análisis, traducción o accesibilidad en segundos.'
-    }
+    },
+    sections: [
+      {
+        heading: 'Acerca del formato EPUB',
+        body: `EPUB (Publicación Electrónica) es un estándar abierto de libros electrónicos mantenido por la W3C, actualmente en la versión 3.3 (publicada en 2023-05). Es un formato redimensionable basado en XHTML/CSS, lo que significa que el texto se ajusta automáticamente al tamaño de pantalla: perfecto para teléfonos, tabletas y lectores de tinta electrónica por igual.
+
+**Especificaciones clave:**
+- **Desarrollador**: IDPF / W3C
+- **Lanzamiento inicial**: 2007
+- **Última versión**: 3.3 (2023-05)
+- **Tipo**: Redimensionable
+- **Estándar abierto**: Sí — gestionado por el Grupo de Trabajo de Publicación de la W3C
+
+**Casos de uso principales:**
+- Formato de libro electrónico universal para Apple Books, Google Play Books, Kobo, Nook
+- Plataformas de lectura basadas en web y bibliotecas digitales
+- Estándar de la industria académica y editorial
+
+**Limitaciones conocidas:**
+- No es compatible de forma nativa con los Kindle antiguos (previos a 2022)
+- Los diseños fijos complejos pueden no renderizarse de forma consistente
+- Las funciones interactivas requieren soporte EPUB 3
+
+**Recursos oficiales:**
+- [Especificación W3C EPUB 3.3](https://www.w3.org/publishing/epub3/)
+- [Sitio oficial de IDPF](https://idpf.org/)`
+      },
+      {
+        heading: 'Acerca del formato TXT',
+        body: `TXT (texto plano) es el formato de texto digital más simple, sin marcado, estilo ni sobrecarga estructural. Ha sido el formato universal de intercambio de texto desde los inicios de la computación.
+
+**Especificaciones clave:**
+- **Desarrollador**: estándar de facto — sin un único propietario
+- **Lanzamiento inicial**: años 60 (era de la teletipia)
+- **Codificación**: UTF-8 (estándar moderno), ASCII (legacy)
+- **Tipo**: solo texto, sin estructura
+- **Estándar abierto**: Sí — RFC 3629 define UTF-8
+
+**Casos de uso principales:**
+- Entrada para pipelines de IA y NLP (texto limpio para análisis)
+- Memoria de traducción y herramientas CAT
+- Compatibilidad con sistemas legacy
+- Repositorios de código y documentación
+- Entrega de contenido centrada en accesibilidad
+
+**Limitaciones conocidas:**
+- Sin formato, imágenes ni multimedia
+- Sin metadatos (título, autor, índice) sin inserción manual
+- Ambigüedad de codificación entre sistemas (UTF-8 vs. páginas de códigos legacy)
+- Sin navegación ni estructura más allá de los saltos de línea
+
+**Recursos oficiales:**
+- [RFC 3629 — Estándar UTF-8](https://tools.ietf.org/html/rfc3629)`
+      },
+      {
+        heading: '¿Cuándo necesitas convertir EPUB a TXT?',
+        body: `Mientras que EPUB es ideal para la lectura rica de libros electrónicos, hay escenarios específicos donde el texto plano (TXT) es el formato preferido:
+
+**1. Análisis de texto y procesamiento NLP**
+Investigadores y científicos de datos a menudo necesitan texto limpio para procesamiento de lenguaje natural, análisis de sentimiento, estadísticas de frecuencia de palabras o entrenamiento de aprendizaje automático. TXT elimina las etiquetas XML y la interferencia de CSS.
+
+**2. Accesibilidad y lectores de pantalla**
+El texto plano funciona a la perfección con lectores de pantalla y tecnologías de asistencia. Es el formato más compatible para usuarios con discapacidad visual o que usan herramientas básicas de texto a voz.
+
+**3. Flujos de traducción**
+Los traductores profesionales a menudo prefieren los archivos TXT porque pueden gestionar el contenido fácilmente en herramientas de memoria de traducción sin lidiar con lenguajes de marcado.
+
+**4. Lectura sin retroiluminación**
+Los Kindle antiguos y los dispositivos básicos de tinta electrónica leen archivos TXT perfectamente. Para novelas simples sin imágenes, TXT ofrece el tamaño de archivo más ligero posible.
+
+**5. Minería de contenido y resumen**
+Alimenta tus libros directamente a herramientas de resumen de IA, extractores de citas o plataformas de análisis de contenido que requieren texto limpio como entrada.`
+      },
+      {
+        heading: 'Nuestro proceso inteligente de extracción de texto',
+        body: `No solo eliminamos etiquetas HTML, sino que realizamos una extracción inteligente para preservar la legibilidad:
+
+**Eliminación inteligente de etiquetas:**
+- Elimina el marcado XHTML preservando la estructura de párrafos
+- Mantiene los saltos de capítulo con separadores claros
+- Conserva el espacio en blanco significativo para la legibilidad
+- Preserva caracteres Unicode, incluidos chino, japonés, coreano, cirílico y emojis
+
+**Preservación de estructura:**
+- Los encabezados de capítulo permanecen claramente marcados
+- Las listas mantienen su formato de viñetas o numeración
+- Las citas se preservan con marcadores de sangría adecuados
+- Las notas al pie y finales se convierten en referencias en línea
+
+**Extracción de metadatos:**
+- Título, autor y descripción del libro añadidos a la cabecera del archivo
+- La tabla de contenidos se lista como comentarios al inicio del archivo
+- ISBN e información de publicación preservados cuando están disponibles
+
+**Control de calidad:**
+- Se eliminan los saltos de línea redundantes
+- Los caracteres especiales se codifican correctamente
+- La codificación por defecto es UTF-8 para máxima compatibilidad`
+      },
+      {
+        heading: 'Instantáneo y privado: la ventaja del JavaScript puro',
+        body: `A diferencia de las conversiones que esperan en una cola de Calibre en un servidor remoto, EPUB a TXT en BookConv se ejecuta en un **motor JavaScript puro**, el mismo que impulsa tu navegador. Eso cambia la experiencia de tres formas prácticas.
+
+**Sin cola, sin espera**
+No hay un trabajo del lado del servidor que programar, así que la conversión comienza en el momento en que subes el archivo. Una novela típica termina en segundos en lugar de minutos, y nunca quedas detrás del lote de otra persona.
+
+**Tu texto permanece privado**
+El texto plano se extrae y devuelve sin enviar tu libro a un servicio de conversión separado. Los archivos se mueven por HTTPS cifrado y se eliminan automáticamente en una hora, así nada queda después.
+
+**Predecible y ligero**
+Sin un motor pesado en el camino, el resultado es consistente en archivos de cualquier longitud. Poemas, ensayos y novelas completas toman el mismo camino rápido.
+
+Si tu fuente es una biblioteca de Kindle en lugar de EPUB, la misma extracción limpia está disponible desde MOBI a través de la herramienta MOBI a TXT.`
+      },
+      {
+        heading: 'Qué se pierde en la conversión de EPUB a TXT',
+        body: `Comprender las limitaciones te ayuda a elegir el formato correcto:
+
+**No se preserva:**
+- ✗ Las imágenes e ilustraciones quedan inaccesibles
+- ✗ Los hipervínculos se convierten en URLs sin capacidad de clic
+- ✗ El formato rico (colores, fuentes, tamaños) se elimina
+- ✗ Los elementos interactivos (vídeos, audio) se eliminan
+- ✗ Los diseños complejos (multicolumna, tablas) se linearizan
+
+**Todavía se preserva:**
+- ✓ Todo el contenido de texto y los párrafos
+- ✓ Estructura básica (encabezados, listas, citas)
+- ✓ Organización de capítulos y marcadores de navegación
+- ✓ Metadatos (título, autor, índice) como comentarios
+- ✓ Caracteres Unicode y símbolos especiales
+
+**Cuándo conservar EPUB en su lugar:**
+- Libros de cocina con imágenes y recetas
+- Libros de arte, colecciones de fotografía
+- Libros infantiles ilustrados
+- Manuales técnicos con diagramas
+- Cualquier libro donde importe la presentación visual
+
+**Cuándo TXT es ideal:**
+- Novelas y ficción
+- Ensayos y no ficción
+- Libros de negocios y autoayuda
+- Artículos académicos (versiones solo texto)
+- Cualquier contenido para procesamiento de IA o traducción`
+      }
+    ],
+    faq: [
+      { q: '¿Se preservará la estructura de párrafos y capítulos?', a: 'Sí. Aunque se eliminan todas las etiquetas HTML, la separación de párrafos se mantiene mediante líneas en blanco, y la estructura de capítulos se preserva usando marcadores y encabezados de capítulo claros.' },
+      { q: '¿Cómo se manejan las imágenes y gráficos?', a: 'El formato de texto puro no puede contener imágenes. Si el EPUB original contiene imágenes, intentamos extraer las descripciones de texto alternativo (alt) e insertarlas como notas en el texto cuando es posible.' },
+      { q: '¿Se puede usar el texto convertido directamente para análisis de IA?', a: 'Absolutamente. El texto de salida ha eliminado todos los marcadores de formato y el espacio en blanco extra. Es texto plano estándar que se puede alimentar directamente a cualquier herramienta NLP, resumidor de IA o plataforma de análisis de texto.' },
+      { q: '¿Qué codificación usa el TXT de salida?', a: 'Por defecto es UTF-8, compatible con contenido multilingüe en chino, inglés, japonés, coreano, ruso y otros. Otras codificaciones (GBK, BIG5) se pueden especificar durante la conversión si es necesario.' },
+      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos pueden convertir hasta 5 archivos por hora. Los usuarios Pro disfrutan de conversión por lotes ilimitada con archivos de hasta 50 MB cada uno, perfecto para procesar colecciones completas de libros.' },
+      { q: '¿Conserva la conversión la tabla de contenidos?', a: 'Sí. La TOC se añade como una sección de comentarios al inicio del archivo TXT, listando todos los capítulos y referencias de página para una navegación fácil en editores de texto.' }
+    ]
   }
 };

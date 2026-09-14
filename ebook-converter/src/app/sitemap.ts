@@ -145,6 +145,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.6,
         })
       }
+      // 3 content (convert) pages have complete, human-grade Spanish translations
+      // (hero + sections + faq). Middleware now allows /es/convert/{slug} for these
+      // and the [locale] convert page renders the Spanish body. Emit their URLs too.
+      const ESP_CONVERT_SLUGS = ['epub-to-doc', 'epub-to-txt', 'lit-to-epub'];
+      for (const slug of ESP_CONVERT_SLUGS) {
+        allUrls.push({
+          url: baseUrl + prefix + '/convert/' + slug,
+          lastModified: new Date(CONTENT_DATES[slug] || '2026-07-26'),
+          changeFrequency: 'monthly' as const,
+          priority: 0.8,
+        })
+      }
     } else {
       // English locale: full sitemap (all pages, no /es/ prefix)
       for (const page of staticPages) {

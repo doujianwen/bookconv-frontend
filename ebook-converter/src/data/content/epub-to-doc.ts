@@ -113,6 +113,91 @@ export const es = {
     hero: {
       title: 'EPUB a DOC — Convierte Ebooks a Word Legado',
       subtitle: 'Conversor gratuito de EPUB a DOC. Sin registro — convierte ebooks al formato legacy Word 97-2003 para máxima compatibilidad.'
-    }
+    },
+    sections: [
+      {
+        heading: '¿Qué es el formato EPUB?',
+        body: `EPUB es el estándar abierto para libros electrónicos, y por dentro es menos misterioso de lo que se cree. Descomprime un archivo .epub y encontrarás páginas HTML, hojas de estilo CSS, imágenes y un manifiesto XML que describe el orden de lectura. Es un sitio web diminuto dentro de un archivo ZIP.
+
+Ese diseño le da a EPUB su rasgo definitorio: **texto redimensionable**. No hay páginas fijas. La aplicación de lectura decide dónde se rompen las líneas según el tamaño de tu pantalla y la configuración de fuente. Aumenta el tamaño del texto en tu teléfono y el libro se reorganiza a su alrededor.
+
+- **Estándar abierto** — mantenido por la W3C, ningún proveedor lo controla en exclusiva
+- **Redimensionable** — se adapta a cualquier pantalla y tamaño de fuente
+- **Estructurado** — capítulos, encabezados y navegación son semánticos, no suposiciones visuales
+- **Universalmente compatible** — Apple Books, Kobo, Google Play Books y ahora Kindle
+
+El inconveniente: EPUB está hecho para leer, no para editar. No puedes abrirlo en Word, hacer seguimiento de cambios ni entregárselo a un colega que vive en Office. Ahí es donde entra la conversión.`
+      },
+      {
+        heading: '¿Qué es el formato DOC?',
+        body: `DOC es el formato de archivo binario que Microsoft Word usó desde principios de los 90 hasta Word 2003. Es una estructura de documento compuesto propietaria: esencialmente un minisistema de archivos dentro de un solo archivo, que contiene flujos de texto, tablas de formato y objetos incrustados.
+
+Word 2007 lo reemplazó con DOCX, un formato basado en XML empaquetado en un ZIP. DOCX es más pequeño, más resistente a la corrupción y mucho más fácil de leer para otros programas. Microsoft considera DOC legacy desde hace casi dos décadas.
+
+Entonces, ¿por qué alguien todavía lo necesita?
+
+- **Sistemas empresariales bloqueados** — algunas plataformas de gestión documental, portales de envío gubernamentales y herramientas de flujo de trabajo internas se construyeron cuando DOC era actual y nunca se actualizaron
+- **Software antiguo** — una PC de laboratorio con Word 2000, una terminal embebida, un viejo sistema de plantillas de un bufete
+- **Requisitos explícitos** — en ocasiones una guía de envío dice literalmente "formato Word 97-2003"
+
+Sé claro sobre los compromisos. Los archivos DOC suelen ser **más grandes** que DOCX, más propensos a la corrupción y compatibles con menos funciones. Word moderno todavía los abre, pero te avisa sobre el modo de compatibilidad.
+
+Si nadie exige DOC específicamente, usa nuestro conversor de EPUB a DOCX. En serio. DOC solo tiene sentido cuando algo externo te obliga.`
+      },
+      {
+        heading: 'Cómo convertir EPUB a DOC',
+        body: `**1. Sube tu EPUB.** Arrastra y suelta, o haz clic para explorar. Las cuentas gratuitas manejan archivos de hasta 10 MB, lo que cubre prácticamente cualquier libro de texto electrónico, ya que incluso una novela de 900 páginas rara vez supera los 5 MB. Solo los libros con muchas ilustraciones se acercan al límite.
+
+**2. La conversión se ejecuta automáticamente.** Se analiza la estructura HTML del EPUB, los capítulos se fusionan en un flujo de documento único, las etiquetas de encabezado se convierten en estilos de encabezado de Word y las imágenes se incrustan. La mayoría de los libros terminan en menos de 30 segundos.
+
+**3. Descarga y abre.** El archivo .doc se abre en Word, LibreOffice Writer, WPS Office, Google Docs (por carga) y Pages.
+
+Una advertencia importante antes de subir: **los archivos con DRM no se convertirán.** Si compraste el libro en Kobo, Google Play Books u otra tienda con DRM de Adobe, el archivo está cifrado y ningún conversor puede leerlo. Obtendrás un error. Los libros de Project Gutenberg, Standard Ebooks, StoryBundle, la mayoría de los autores independientes y todo lo que hayas creado tú se convertirán sin problema.
+
+También vale la pena decirlo en voz alta: convertir un libro que no te pertenece, para redistribuirlo, no es algo que un conversor de formato haga legal. Convierte tus propias cosas.`
+      },
+      {
+        heading: '¿Cuándo necesitas esta conversión?',
+        body: `**Enviar a un sistema que no acepta nada más.** Algunos portales de envío de revistas, sistemas de solicitud de subvenciones e intranets corporativas tienen listas blancas de tipos de archivo escritas hace años. Si el botón de carga rechaza .docx, DOC es tu respuesta.
+
+**Editar un manuscrito.** Escribiste un libro, lo exportaste a EPUB y ahora un editor quiere anotarlo. El control de cambios de Word sigue siendo la herramienta de revisión predeterminada de la industria editorial, y algunos editores usan instalaciones muy antiguas.
+
+**Trabajo de traducción.** Los traductores trabajan abrumadoramente en Word: herramientas CAT, glosarios y gestores de terminología se conectan a él. Algunas de esas herramientas tienen mejor soporte para DOC que para DOCX.
+
+**Extraer texto para investigación.** Sacar citas largas de un libro electrónico para un artículo es mucho más fácil una vez que el contenido está en un procesador de texto donde puedes buscar, copiar y reformatear libremente.
+
+**Reutilizar tu propio contenido.** Convertir un libro electrónico autoeditado en un diseño impreso, un folleto de curso o una serie de artículos suele empezar por pasar el texto a un documento editable.
+
+**Flujos de accesibilidad.** Algunas configuraciones de lectores de pantalla y texto a voz en entornos institucionales manejan documentos de Word con más fiabilidad que EPUB.`
+      },
+      {
+        heading: 'Qué obtienes — y qué no puede hacer DOC',
+        body: `Esto es lo que sobrevive a la conversión limpiamente:
+
+- **Todo el texto** — estructura de párrafos intacta, nada se pierde
+- **Jerarquía de encabezados** — h1/h2/h3 se convierten en Encabezado 1/2/3 de Word, así funciona el panel de navegación
+- **Negrita, cursiva, subrayado** — el formato básico de caracteres se conserva
+- **Listas** — las listas con viñetas y numeradas siguen siendo listas
+- **Imágenes** — incrustadas y colocadas en línea
+- **Metadatos básicos** — título y autor quedan en las propiedades del documento
+
+Y esto es lo que se simplifica, porque DOC simplemente no puede representarlo:
+
+- **Fuentes personalizadas** — EPUB puede incrustar tipografías; DOC sustituye fuentes del sistema
+- **Diseño CSS** — diseños multicolumna, espaciado preciso y estilos decorativos se aplanan
+- **Elementos interactivos** — los enlaces de notas al pie internas y las notas emergentes se convierten en texto sin formato
+- **Tablas complejas** — las tablas anidadas o con estilo CSS pierden su formato fino
+- **Gráficos SVG** — los gráficos vectoriales pueden no transferirse
+
+Nada de esto es una limitación del conversor. DOC es un formato de 1993 al que se le pide que represente un formato de documento de 2011. Simplemente algunas cosas no se mapean. Si el estilo te importa, convierte a DOCX en su lugar: maneja considerablemente más.`
+      }
+    ],
+    faq: [
+      { q: '¿Cuál es la diferencia entre DOC y DOCX?', a: 'DOC es el formato binario que Word usó hasta 2003; DOCX es el formato basado en XML introducido en Word 2007. DOCX produce archivos más pequeños, resiste mejor la corrupción y admite muchas más funciones de formato; elige DOC solo cuando un sistema específico lo requiera.' },
+      { q: '¿Puedo editar el archivo DOC convertido?', a: 'Sí, totalmente. Se abre y edita en Microsoft Word, LibreOffice Writer, WPS Office, Google Docs y Apple Pages, aunque Word moderno mostrará un aviso de modo de compatibilidad.' },
+      { q: '¿Sobreviven las imágenes a la conversión?', a: 'Las imágenes raster estándar como JPG y PNG se extraen y se incrustan en el documento. Los gráficos vectoriales SVG y las imágenes posicionadas con CSS pueden simplificarse o reposicionarse, ya que DOC no tiene un modelo de diseño equivalente.' },
+      { q: 'Mi EPUB no se convierte, ¿qué pasa?', a: 'La causa más común es el DRM. Los libros comprados en Kobo, Google Play Books o tiendas similares están cifrados y ningún conversor puede leerlos, mientras que los archivos sin DRM de Project Gutenberg, autores independientes o tus propias exportaciones se convierten sin problema.' },
+      { q: '¿Cuántos libros puedo convertir a la vez?', a: 'Las cuentas gratuitas manejan un archivo a la vez, de hasta 10 MB cada uno, más que suficiente para libros de texto, que rara vez superan unos pocos megabytes. Las cuentas Pro añaden conversión por lotes y límites de archivo mayores para procesar una biblioteca completa.' }
+    ]
   }
 };
