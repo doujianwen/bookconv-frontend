@@ -125,15 +125,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
     ]
 
-    // Sitemap P3-C rule (2026-09-05): /es/* for static pages and convert/guide
-    // would emit pseudo-Spanish pages that Google has already identified as spam signals.
-    // Middleware returns 404 for all /es/* except 6 real Spanish blog posts.
-    // DO NOT add /es/* URLs to sitemap — they would conflict with middleware 404.
+    // /es/* sitemap policy (revised 2026-09-14, supersedes P3-C):
+    // The "pseudo-Spanish spam" diagnosis was over-broad — it only checked a
+    // few static /es pages that 404 and then wiped ALL /es URLs. In reality the
+    // 6 blog posts below have genuine, human-grade Spanish (body + meta +
+    // hreflang), confirmed live at /es/blog/azw3-vs-mobi (200, lang="es").
+    // Those 6 URLs MUST be in the sitemap; middleware already allows them.
+    // The 3 content pages (epub-to-doc/epub-to-txt/lit-to-epub) DO have es
+    // metadata but their client-rendered body is still English — adding them
+    // now would re-create the exact spam signal. They are restored in the
+    // [locale] rendering fix (see routing task), not here.
     if (locale === 'es') {
-      // Only 6 real Spanish blog posts have valid /es/blog/* routes.
-      // All other /es/* paths (pricing, batch, blog, tutorial, help, privacy, terms)
-      // return 404 from middleware — do NOT add them to sitemap.
-      // No /es/convert/* or /es/guide/* — those are pseudo-Spanish spam signals
+      // Only the 6 real Spanish blog posts emit /es/blog/* URLs.
+      for (const slug of ESP_BLOG_SLUGS) {
+        allUrls.push({
+          url: baseUrl + prefix + '/blog/' + slug,
+          lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
+          changeFrequency: 'yearly' as const,
+          priority: 0.6,
+        })
+      }
     } else {
       // English locale: full sitemap (all pages, no /es/ prefix)
       for (const page of staticPages) {
