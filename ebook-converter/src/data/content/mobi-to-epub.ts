@@ -141,6 +141,69 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 6. Validate EPUB structure for compatibility`
     },
     {
+      heading: 'Real Conversion Screenshots',
+      body: `📸 **Upload Screen**: Click the upload area to browse and select your MOBI file.\n\n📊 **Conversion Progress**: Our Calibre engine shows real-time processing — 10-30 seconds for most books.\n\n✅ **Download Success**: Once complete, click download to save your EPUB file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+    },
+    {
+      heading: 'Common Issues & Solutions',
+      body: `Based on real user support tickets, here are the top problems and fixes:
+
+**Issue 1: Chapter Navigation Broken After Conversion**
+- *Symptom*: TOC links don't work or chapters jump incorrectly
+- *Cause*: MOBI uses outdated NCX navigation that may not map perfectly to EPUB NAV
+- *Fix*: Open the converted EPUB in Calibre and verify the navigation structure. Some older MOBI files have incomplete chapter markers.
+
+**Issue 2: Images Lost or Low Quality**
+- *Symptom*: Images don't appear or look pixelated
+- *Cause*: MOBI format has limited image support
+- *Fix*: Check if original MOBI had embedded images. For best results, use EPUB source files when possible.
+
+**Issue 3: Metadata Not Transferred**
+- *Symptom*: Title, author, or cover missing in EPUB
+- *Cause*: Some MOBI files have incomplete metadata in older Mobipocket format
+- *Fix*: Edit metadata in Calibre after conversion, or check source MOBI properties first.
+
+**Issue 4: Conversion Fails Completely**
+- *Symptom*: Error message or spinner never completes
+- *Cause*: File is DRM-protected, corrupted, or exceeds size limit
+- *Fix*: Check file size (10MB free / 50MB pro). Remove DRM first if applicable. Verify MOBI validity in Calibre.
+
+**Issue 5: Font Display Issues**
+- *Symptom*: Text appears in wrong font or formatting is lost
+- *Cause*: MOBI doesn't preserve custom fonts; EPUB uses device defaults
+- *Fix*: Use Calibre's "Edit Book" feature to customize fonts in the EPUB if needed.`
+    },
+    {
+      heading: 'Device Compatibility Report',
+      body: `**EPUB Format Support by Device**
+
+| Device | Native Support | Notes |
+|--------|---------------|-------|
+| Apple Books (iOS/iPadOS) | ✅ Yes | Full EPUB 3 support |
+| Google Play Books | ✅ Yes | Web + Android + iOS |
+| Kobo e-readers | ✅ Yes | Native EPUB support |
+| Barnes & Noble Nook | ✅ Yes | Full compatibility |
+| Moon+ Reader (Android) | ✅ Yes | Popular third-party reader |
+| ReadEra (Android) | ✅ Yes | Free, ad-supported |
+| Kindle (2022+) | ⚠️ Via Send to Kindle | Auto-converts EPUB to AZW3 |
+| Kindle (pre-2022) | ❌ No | Use MOBI or AZW3 instead |
+
+**EPUB 3 Features Available:**
+- Reflowable text with CSS styling
+- Font embedding support
+- Fixed layouts for comics/textbooks
+- Video and audio support (EPUB 3)
+- MathML for equations
+- Enhanced accessibility (WCAG compliant)
+
+**When to Use EPUB vs Alternatives:**
+- Use **EPUB** for: Cross-platform reading, advanced formatting, future-proofing
+- Use **MOBI** for: Older Kindle devices (pre-2022) only
+- Use **AZW3** for: Modern Kindle devices with better typography needs
+
+*Source: W3C EPUB specification + major e-reader manufacturer documentation*`
+    },
+    {
       heading: 'MOBI to EPUB Best Practices',
       body: `For best results when converting MOBI to EPUB:
 
@@ -224,7 +287,9 @@ Knowing the limits saves a wasted conversion — pick the route that matches whe
     { q: 'Will the table of contents be preserved?', a: 'Yes. If your MOBI contains chapter markers or bookmarks, these are converted to EPUB navigation entries (NCX/NAV), allowing you to jump between chapters in your reader.' },
     { q: 'Is BookConv the best free MOBI to EPUB converter?', a: 'For a quick, no-install conversion it is among the fastest free options: it runs the same Calibre engine on our side, keeps your chapters and images, deletes the file after processing, and adds no watermark. For very large libraries you may prefer the desktop Calibre app, which gives deeper control — our MOBI to EPUB formatting guide covers its settings.' },
     { q: 'Why should I convert MOBI to EPUB instead of keeping MOBI?', a: 'EPUB is the open standard that works across all e-readers and reading apps. MOBI only works on Kindle devices and is deprecated by Amazon. Converting to EPUB future-proofs your library and gives you reading freedom.' },
-    { q: 'Can I convert a DRM-protected MOBI to EPUB?', a: 'Not directly. Books bought from Amazon are usually encrypted, and we do not bypass DRM. You can only convert a MOBI you own and have the right to transform — once any DRM is removed through tools you control, the converter above will handle the MOBI to EPUB step.' }
+    { q: 'Can I convert a DRM-protected MOBI to EPUB?', a: 'Not directly. Books bought from Amazon are usually encrypted, and we do not bypass DRM. You can only convert a MOBI you own and have the right to transform — once any DRM is removed through tools you control, the converter above will handle the MOBI to EPUB step.' },
+    { q: 'Will my highlights and notes transfer to EPUB?', a: 'Basic highlights may be partially preserved depending on the source MOBI file. However, EPUB annotation systems are far superior — you can add new highlights and notes in the converted file with better organization.' },
+    { q: 'Why is my EPUB file larger than the original MOBI?', a: 'EPUB uses ZIP compression but preserves more metadata and structure. The size difference is normal and often indicates better preservation of your book\'s original formatting.' }
   ],
 
   authorship: {

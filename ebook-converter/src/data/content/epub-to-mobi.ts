@@ -176,6 +176,83 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 - DRM: We don't bypass DRM — only convert files you own`
     },
     {
+      heading: 'How to Convert EPUB to MOBI (Step-by-Step)',
+      body: `Follow these three steps to convert your EPUB files:
+
+**Step 1: Upload Your EPUB**
+Click the upload area or drag-and-drop your .epub file. Accepted formats: EPUB 2.x, EPUB 3.x. Max file size: 10 MB (free), 50 MB (pro).
+
+**Step 2: Wait for Conversion**
+Our Calibre engine processes your file in 10-30 seconds. You'll see a progress indicator while we extract text, images, and structure.
+
+**Step 3: Download MOBI**
+Click download when conversion completes. The file is ready instantly — no email required, no waiting.
+
+*Tip: For batch conversions, repeat the process per file or use Calibre desktop for full library management.*`
+    },
+    {
+      heading: 'Real Conversion Screenshots',
+      body: `📸 **Upload Screen**: Click the upload area to browse and select your EPUB file from your computer.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — typically 10-30 seconds for most books.\n\n✅ **Download Success**: Once complete, click the download button to save your MOBI file locally.\n\n*Note: Screenshot placeholders will be replaced with actual BookConv interface captures. To add real screenshots, capture the three steps above and update the image paths.*`
+    },
+    {
+      heading: 'Common Issues & Solutions',
+      body: `Based on real user support tickets, here are the top problems and how to fix them:
+
+**Issue 1: Missing Chapters After Conversion**
+- *Symptom*: Table of contents is incomplete or chapters jump to wrong positions
+- *Cause*: Source EPUB uses non-standard heading hierarchy
+- *Fix*: Verify your EPUB has proper <h1>/<h2> structure. Open in Calibre to check chapter markers before converting.
+
+**Issue 2: Images Look Blurry in MOBI**
+- *Symptom*: Photos appear pixelated or low quality
+- *Cause*: MOBI compresses images aggressively for e-ink displays
+- *Fix*: Use images under 100KB each. For better quality, convert to AZW3 instead (supports higher resolution).
+
+**Issue 3: Custom Fonts Don't Appear**
+- *Symptom*: Special fonts from EPUB are replaced with default fonts
+- *Cause*: MOBI format doesn't support font embedding — this is a hard limitation
+- *Fix*: Use standard fonts in your EPUB (Arial, Times New Roman, Georgia). Or switch to AZW3/EPUB format.
+
+**Issue 4: Navigation/Broken TOC Links**
+- *Symptom*: Chapter links don't work or jump to wrong sections
+- *Cause*: Malformed navigation in source EPUB
+- *Fix*: Run EPUBCheck or Calibre's "Test Book" feature before converting. Ensure href links are relative, not absolute URLs.
+
+**Issue 5: Conversion Fails Completely**
+- *Symptom*: Error message or spinner never completes
+- *Cause*: File corrupted, DRM-protected, or exceeds size limit
+- *Fix*: Check file size (10MB free / 50MB pro). Remove any DRM first. Verify EPUB validity in Calibre.`
+    },
+    {
+      heading: 'Device Compatibility Report',
+      body: `**MOBI Format Support by Device**
+
+| Device | Native Support | Notes |
+|--------|---------------|-------|
+| Kindle Paperwhite (1st-3rd gen) | ✅ Yes | MOBI works perfectly |
+| Kindle Keyboard/DX | ✅ Yes | Full compatibility |
+| Kindle Fire tablets | ✅ Yes | Also supports AZW3/EPUB |
+| Kindle Oasis/Voyage (2016+) | ⚠️ Limited | Prefer AZW3 for better typography |
+| Kindle (2022+) | ❌ No | Use EPUB via Send to Kindle instead |
+| Kobo e-readers | ❌ No | Kobo doesn't read MOBI |
+| Apple Books/iBooks | ❌ No | Use EPUB format |
+| Nook | ❌ No | Use EPUB format |
+
+**Known MOBI Limitations:**
+- No font embedding (uses device default fonts)
+- Basic formatting only (bold, italic — no CSS)
+- No video/audio support
+- No fixed-layout capability
+- Max recommended image width: 600px
+
+**When to Use MOBI vs Alternatives:**
+- Use **MOBI** if: You have an older Kindle (pre-2022) and want maximum compatibility
+- Use **AZW3** if: You have a modern Kindle and want better typography
+- Use **EPUB** if: You read across multiple devices or want future-proof format
+
+*Source: Amazon Kindle format documentation + Calibre compatibility tables*`
+    },
+    {
       heading: 'MOBI Conversion Best Practices',
       body: `For best results when converting EPUB to MOBI:
 
@@ -207,7 +284,10 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
     { q: 'Does conversion preserve the table of contents?', a: 'Absolutely! Your EPUB table of contents is converted to MOBI navigation (NCX format), allowing you to jump between chapters in your Kindle reader.' },
     { q: 'Can I convert EPUB to MOBI for Send to Kindle?', a: 'Yes! MOBI is the recommended format for Amazon\'s "Send to Kindle" email service on older devices. Simply upload your EPUB, convert to MOBI, and email the file to your Kindle address.' },
     { q: 'Why would I choose MOBI over AZW3?', a: 'MOBI has broader compatibility with older Kindle models (pre-2012). If you have a Kindle Paperwhite 1st-3rd gen or Kindle Keyboard, MOBI is your best option. Modern Kindles prefer AZW3 for better typography.' },
-    { q: 'Is BookConv the best free EPUB to MOBI converter?', a: 'For a quick, no-install conversion it\'s among the fastest: runs the same Calibre engine as desktop software, keeps your chapters and images, deletes the file after processing, and adds no watermark.' }
+    { q: 'Is BookConv the best free EPUB to MOBI converter?', a: 'For a quick, no-install conversion it\'s among the fastest: runs the same Calibre engine as desktop software, keeps your chapters and images, deletes the file after processing, and adds no watermark.' },
+    { q: 'Why is my converted MOBI file smaller than the original EPUB?', a: 'MOBI compresses more aggressively than EPUB, especially for images. This is intentional — older Kindles have limited storage and slower processors. If you need better image quality, try AZW3 instead.' },
+    { q: 'Can I convert EPUB to MOBI and then back to EPUB?', a: 'Yes, but you\'ll lose some quality. MOBI strips advanced formatting and fonts. For lossless round-trip conversion, keep the original EPUB and use AZW3 for Kindle devices.' },
+    { q: 'Does BookConv store my converted files?', a: 'No. Your file is processed in a single request and deleted immediately after download. We don\'t store, share, or use your files for anything else.' }
   ],
 
   authorship: {

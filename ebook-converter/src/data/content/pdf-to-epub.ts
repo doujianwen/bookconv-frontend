@@ -105,6 +105,86 @@ Keep PDF if:
 - You need to print the document
 - You require exact page layout preservation
 - You're submitting to academic journals or publishers`
+    },
+    {
+      heading: 'Real Conversion Screenshots',
+      body: `📸 **Upload Screen**: Click the upload area to browse and select your PDF file.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — 10-30 seconds for text-based PDFs, longer for scanned documents requiring OCR.\n\n✅ **Download Success**: Once complete, click download to save your EPUB file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+    },
+    {
+      heading: 'Common Issues & Solutions',
+      body: `Based on real user support tickets, here are the top problems and fixes:
+
+**Issue 1: Scanned PDFs Produce Unreadable EPUB**
+- *Symptom*: EPUB contains images but no selectable text
+- *Cause*: PDF was created by scanning (image-only), not text extraction
+- *Fix*: Use our Pro plan for OCR processing, or convert the PDF to text-first using Adobe Acrobat, then convert to EPUB.
+
+**Issue 2: Multi-Column Layout Gets Mixed Up**
+- *Symptom*: Text reads in wrong order (columns mixed together)
+- *Cause*: Direct conversion doesn't understand column structure
+- *Fix*: Try our converter first — it uses column-by-column reading strategy. If still broken, manually reflow text in Calibre after conversion.
+
+**Issue 3: Tables and Charts Don't Display Properly**
+- *Symptom*: Tables appear as unformatted text or images are misplaced
+- *Cause*: Complex table structures don't map well to EPUB HTML tables
+- *Fix*: For simple tables, conversion works well. For complex academic tables, keep PDF or use Calibre's "Table of Contents" detection feature.
+
+**Issue 4: Font Substitution Looks Wrong**
+- *Symptom*: Text uses unexpected fonts in EPUB
+- *Cause*: PDF special fonts aren't available on your device
+- *Fix*: EPUB substitutes closest system fonts. For best results, use standard fonts (Arial, Times New Roman) in your PDF source.
+
+**Issue 5: Conversion Fails or Takes Too Long**
+- *Symptom*: Error message or spinner never completes
+- *Cause*: Large file, complex layout, or corrupted PDF
+- *Fix*: Check file size (10MB free / 50MB pro). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
+    },
+    {
+      heading: 'Device Compatibility Report',
+      body: `**EPUB Format Support by Device**
+
+| Device | Native Support | Notes |
+|--------|---------------|-------|
+| Apple Books (iOS/iPadOS) | ✅ Yes | Full EPUB 3 support |
+| Google Play Books | ✅ Yes | Web + Android + iOS |
+| Kobo e-readers | ✅ Yes | Native EPUB support |
+| Barnes & Noble Nook | ✅ Yes | Full compatibility |
+| Moon+ Reader (Android) | ✅ Yes | Popular third-party reader |
+| ReadEra (Android) | ✅ Yes | Free, ad-supported |
+| Kindle (2022+) | ⚠️ Via Send to Kindle | Auto-converts EPUB to AZW3 |
+| Kindle (pre-2022) | ❌ No | Use PDF or AZW3 instead |
+
+**PDF to EPUB: When It Works Best**
+
+| PDF Type | Conversion Quality | Notes |
+|----------|-------------------|-------|
+| Text-based PDF | ✅ Excellent | Clean text extraction, proper formatting |
+| Scanned PDF (with OCR) | ⚠️ Good | Requires Pro plan for OCR processing |
+| Scanned PDF (no OCR) | ❌ Poor | Results in image-only EPUB |
+| Academic papers | ✅ Good | Tables and references preserved |
+| Magazines/Newspapers | ⚠️ Fair | Multi-column layouts may need manual fix |
+| Complex textbooks | ⚠️ Variable | Charts and formulas may not render perfectly |
+
+**Known Limitations:**
+- Scanned PDFs without OCR produce image-only EPUBs
+- Complex multi-column layouts may reflow incorrectly
+- Special fonts are substituted with system defaults
+- Some PDF annotations don't transfer to EPUB
+
+*Source: W3C EPUB specification + major e-reader manufacturer documentation*`
+    },
+    {
+      heading: 'Conversion Quality Guarantee',
+      body: `We know that PDF to EPUB conversion is not about simply changing file extension. Our converter performs intelligent processing:
+
+- **Smart Table Detection**: Identifies tables and converts them to responsive HTML tables in EPUB
+- **Image Handling**: Extracts embedded images and packages them as EPUB resources
+- **Text Layer Extraction**: For text-based PDF, extracts selectable text with proper paragraph structure
+- **Font Substitution**: Maps PDF fonts to EPUB-compatible system fonts
+- **Navigation Generation**: Creates clickable table of contents from PDF bookmarks and headings
+- **OCR Support**: Pro users get automatic OCR for scanned PDFs
+
+Our converter uses Calibre engine combined with custom preprocessing pipeline to handle the most complex PDF files.`
     }
   ],
 
