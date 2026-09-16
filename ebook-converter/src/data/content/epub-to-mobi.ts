@@ -104,9 +104,7 @@ Comparing the two formats before you commit? See our [EPUB vs MOBI comparison](/
 - Use **EPUB** for universal compatibility across all platforms
 - Use **MOBI** only if you have an older Kindle device
 - Use **AZW3** for the best experience on modern Kindle devices`
-    }
-  ],
-
+    },
     {
       heading: 'EPUB vs MOBI Format Comparison',
       body: `| Feature | EPUB 3.3 | MOBI (Mobipocket) |
