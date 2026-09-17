@@ -61,13 +61,35 @@ function evaluate(snap) {
     !/epub:type/.test(azw3.html),
   ]);
 
+  // Duplicate-section regression (fixed in 49096ba). A repeated <h2> is an
+  // on-page duplication signal -- the exact "templated batch" pattern that
+  // drew the spam update in the first place.
+  for (const [path, snapKey] of [
+    ['epub-to-azw3', '/convert/epub-to-azw3'],
+    ['epub-to-pdf', '/convert/epub-to-pdf'],
+    ['pdf-to-epub', '/convert/pdf-to-epub'],
+  ]) {
+    const list = h2s(snap[snapKey].html);
+    const dupes = [...new Set(list.filter((t, i) => list.indexOf(t) !== i))];
+    results.push([
+      `${path}: no duplicated <h2> (${dupes.length ? 'found: ' + dupes.join(' | ') : 'clean'})`,
+      dupes.length === 0,
+    ]);
+  }
+
   const blog = snap['/blog/azw3-to-mobi'];
   results.push(['azw3-to-mobi blog 200', blog.status === 200]);
 
   return results;
 }
 
-const PATHS = ['/convert/epub-to-mobi', '/convert/epub-to-azw3', '/blog/azw3-to-mobi'];
+const PATHS = [
+  '/convert/epub-to-mobi',
+  '/convert/epub-to-azw3',
+  '/convert/epub-to-pdf',
+  '/convert/pdf-to-epub',
+  '/blog/azw3-to-mobi',
+];
 const deadline = Date.now() + MAX_WAIT * 1000;
 
 let attempt = 0;
