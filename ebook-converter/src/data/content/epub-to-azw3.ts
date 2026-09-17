@@ -44,10 +44,6 @@ export const content = {
       body: 'AZW3, also known as Kindle Format 8 (KF8), was introduced by Amazon in 2011 as the successor to the aging MOBI format. It brings significant improvements: CSS3 Support — Full cascading stylesheet support for precise typography control. Font Embedding — Embed custom fonts for consistent rendering across devices. Enhanced Layout — Support for complex layouts including columns, tables, and footnotes. Better Image Handling — Higher quality image rendering and positioning. Improved Navigation — Structured table of contents with hierarchical chapter links. AZW3 is the default format for Kindle Paperwhite, Kindle Oasis, Kindle Voyage, and other modern Kindle devices released after 2012.'
     },
     {
-      heading: 'Conversion Quality Guarantee',
-      body: 'Our converter uses Calibre AZW3 output engine with extensive validation: Typography Preservation — Fonts, spacing, and layout are carefully mapped to AZW3 equivalents. Image Optimization — Images are compressed and formatted for optimal Kindle display. Navigation Structure — Chapter hierarchy and bookmarks are preserved in AZW3 native format. Metadata Transfer — Title, author, publisher, ISBN, and cover image are all transferred. DRM-Free Output — Converted files are DRM-free, giving you full ownership and flexibility. The conversion process has been validated through tens of thousands of successful conversions, ensuring formatting accuracy and reading comfort.'
-    },
-    {
       heading: 'EPUB vs AZW3: When to Use Which?',
       body: `| Feature | EPUB | AZW3 |
 |---------|------|------|
@@ -95,7 +91,7 @@ export const content = {
 **Issue 4: Table of Contents Broken**
 - *Symptom*: TOC links don't work or chapters jump incorrectly
 - *Cause*: Malformed navigation in source EPUB
-- *Fix*: Verify EPUB has proper <nav epub:type="toc"> element. Run EPUBCheck before converting.
+- *Fix*: Verify EPUB declares its table of contents with a nav element marked as the TOC. Run EPUBCheck before converting.
 
 **Issue 5: Conversion Takes Too Long**
 - *Symptom*: Processing hangs or takes minutes

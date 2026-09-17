@@ -79,18 +79,6 @@ PDF may use special fonts that need to be replaced with generic fonts in EPUB. W
 | Best For | Printing, Submission | Reading, Learning |`
     },
     {
-      heading: 'Conversion Quality Guarantee',
-      body: `We know that PDF to EPUB conversion is not about simply changing file extension. Our converter performs intelligent processing:
-
-- **Smart Table Detection**: Identifies tables and converts them to responsive HTML tables in EPUB
-- **Image Handling**: Extracts embedded images and packages them as EPUB resources
-- **Text Layer Extraction**: For text-based PDF, extracts selectable text with proper paragraph structure
-- **Font Substitution**: Maps PDF fonts to EPUB-compatible system fonts
-- **Navigation Generation**: Creates clickable table of contents from PDF bookmarks and headings
-
-Our converter uses Calibre engine combined with custom preprocessing pipeline to handle the most complex PDF files.`
-    },
-    {
       heading: 'When Should You Convert PDF to EPUB?',
       body: `Convert PDF to EPUB when:
 

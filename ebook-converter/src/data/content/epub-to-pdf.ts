@@ -58,10 +58,6 @@ export const content = {
 If unsure, download both formats — we provide simultaneous download option.`
     },
     {
-      heading: 'Conversion Quality Guarantee',
-      body: 'Our converter performs intelligent processing: Automatic Pagination — Smart break points avoid cutting paragraphs or images. Font Embedding — All fonts embedded in PDF for consistent rendering. Image Optimization — Maintain original quality while optimizing for print. Navigation Generation — Create clickable bookmarks from EPUB table of contents. Metadata Preservation — Title, author, ISBN written to PDF metadata. Calibre engine has been validated through thousands of successful conversions.'
-    },
-    {
       heading: 'Common Scenarios',
       body: `Convert EPUB to PDF when you need to: Print a book chapter for offline reading. Submit documents to academic journals or publishers. Share formatted content with colleagues who prefer PDF. Create presentation slides from book excerpts. Archive important books in PDF/A format for long-term preservation.
 
