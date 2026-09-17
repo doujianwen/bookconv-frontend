@@ -31,7 +31,7 @@ export function generateDefaultFAQs(source: string, target: string): FAQ[] {
   return [
     {
       question: `Is ${source.toUpperCase()} to ${target.toUpperCase()} conversion free?`,
-      answer: `Yes! Our ${source.toUpperCase()} to ${target.toUpperCase()} converter is completely free to use. No registration required, no watermarks, no hidden fees. Convert up to 5 files per hour for free.`,
+      answer: `Yes! Our ${source.toUpperCase()} to ${target.toUpperCase()} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 10 MB limit per file.`,
     },
     {
       question: `Will I lose formatting when converting from ${source.toUpperCase()} to ${target.toUpperCase()}?`,
@@ -39,7 +39,7 @@ export function generateDefaultFAQs(source: string, target: string): FAQ[] {
     },
     {
       question: "What is the file size limit?",
-      answer: "Free users can convert files up to 10 MB. Pro users enjoy up to 50 MB per file and unlimited conversions.",
+      answer: "Every plan accepts files up to 10 MB. Pro adds batch conversion, which lets you process several books in a single upload.",
     },
     {
       question: "Can I batch convert multiple files?",

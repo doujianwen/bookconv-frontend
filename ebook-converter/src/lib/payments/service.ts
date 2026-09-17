@@ -11,6 +11,21 @@ export interface PlanConfig {
   features: string[];
 }
 
+// NOTE ON PLAN FEATURES (2026-09-17):
+// These strings are the commercial offer -- they render on /pricing and are the
+// basis on which someone pays. Only list a benefit that the code actually
+// enforces. Verified against the implementation:
+//   file size    convert-handler.ts uses one flat MAX_FILE_SIZE_MB (10 in
+//                production), with no plan branch and no user argument.
+//   rate limit   /api/convert hard-codes the convertApi strategy (20 req/60s
+//                per IP) for every plan alike.
+//   priority     ConversionJobData.priority is declared but never assigned, so
+//                no job is ever prioritised.
+//   batch        genuinely gated by plan on /batch -- the one real Pro benefit.
+// Removed on this date: 'Up to 50MB file size', 'Up to 100MB file size',
+// 'Unlimited conversions', '5 conversions per hour', 'Priority queue'.
+// Do not re-add them until the pipeline reads the plan (see docs/
+// seo-geo-execution-plan-2026-09-17.md, risk R7).
 export const PLANS: PlanConfig[] = [
   {
     id: 'free',
@@ -20,7 +35,6 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'one_time',
     features: [
-      '5 conversions per hour',
       'Up to 10MB file size',
       'All standard formats',
       'No watermark',
@@ -34,12 +48,9 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'month',
     features: [
-      'Unlimited conversions',
-      'Up to 50MB file size',
+      'Batch conversion',
       'All formats + special tools',
       'No watermark',
-      'Batch conversion',
-      'Priority queue',
     ],
   },
   {
@@ -50,12 +61,9 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'month',
     features: [
-      'Unlimited conversions',
-      'Up to 100MB file size',
+      'Batch conversion',
       'All formats + special tools',
       'No watermark',
-      'Batch conversion',
-      'Priority queue',
       'Full API access',
     ],
   },

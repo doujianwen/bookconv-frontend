@@ -41,7 +41,7 @@
              },
     "faq":  {
                 "q1":  "¿Es BookConv gratuito?",
-                "a1":  "¡Sí! BookConv es completamente gratuito sin necesidad de registro. Los usuarios gratuitos obtienen 5 conversiones por hora con archivos de hasta 10 MB.",
+                "a1":  "¡Sí! BookConv es completamente gratuito y no requiere registro. Los archivos están limitados a 10 MB por archivo.",
                 "q2":  "¿Qué formatos soporta BookConv?",
                 "a2":  "BookConv soporta más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y documentos Word.",
                 "q3":  "¿Mis datos están seguros al subir archivos?",
@@ -173,8 +173,8 @@
                                  "title":  "Referencia de Códigos de Error",
                                  "codes":  {
                                                "CONVERSION_FAILED":  "El proceso de conversión falló. Intenta de nuevo o contacta a soporte con los detalles del error.",
-                                               "FILE_TOO_LARGE":  "Tu archivo excede el límite de tamaño. Plan gratuito: 10 MB, Pro: 50 MB, API: 100 MB.",
-                                               "RATE_LIMIT":  "Has alcanzado el límite de 5 conversiones por hora. Espera a que se reinicie la ventana.",
+                                               "FILE_TOO_LARGE":  "Tu archivo excede el límite de 10 MB. Intenta comprimirlo, dividirlo en partes o convertirlo con software de escritorio como Calibre.",
+                                               "RATE_LIMIT":  "Demasiadas solicitudes. El límite es de 20 conversiones por minuto. Espera un momento e inténtalo de nuevo.",
                                                "DRM_PROTECTED":  "El archivo fuente está protegido por DRM. No podemos convertir archivos protegidos.",
                                                "CORRUPT_INPUT":  "El archivo subido está corrupto o es inválido. Por favor verifica el archivo fuente."
                                            }

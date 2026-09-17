@@ -25,7 +25,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "Authorization",
-        "description": "Bearer token for authenticated users (optional). Free users are rate-limited to 20 requests/minute per IP. Pro users get priority processing."
+        "description": "Bearer token for authenticated users (optional). All users are rate-limited to 20 requests/minute per IP."
       }
     },
     "schemas": {

@@ -76,7 +76,7 @@ export default function AuthPage() {
             <p className="mt-2 text-sm text-gray-500">
               {mode === 'login'
                 ? 'Welcome back! Sign in to your account.'
-                : 'Join BookConv for batch conversion and priority processing.'}
+                : 'Join BookConv for batch conversion.'}
             </p>
           </div>
 

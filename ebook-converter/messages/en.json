@@ -41,7 +41,7 @@
              },
     "faq":  {
                 "q1":  "Is BookConv free to use?",
-                "a1":  "Yes! BookConv is completely free to use with no registration required. Free users get 5 conversions per hour with up to 10 MB file size.",
+                "a1":  "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 10 MB per file.",
                 "q2":  "What formats does BookConv support?",
                 "a2":  "BookConv supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents.",
                 "q3":  "Is my data safe when I upload files?",
@@ -173,8 +173,8 @@
                                  "title":  "Error Code Reference",
                                  "codes":  {
                                                "CONVERSION_FAILED":  "The conversion process failed. Try again or contact support with the error details.",
-                                               "FILE_TOO_LARGE":  "Your file exceeds the size limit. Free tier: 10 MB, Pro: 50 MB, API: 100 MB.",
-                                               "RATE_LIMIT":  "You've hit the free tier limit of 5 conversions per hour. Wait for the window to reset.",
+                                               "FILE_TOO_LARGE":  "Your file exceeds the 10 MB size limit. Try compressing it, splitting it into parts, or converting it with desktop software such as Calibre.",
+                                               "RATE_LIMIT":  "Too many requests. The limit is 20 conversions per minute. Wait a moment and try again.",
                                                "DRM_PROTECTED":  "The source file is DRM-protected. We cannot convert protected files.",
                                                "CORRUPT_INPUT":  "The uploaded file is corrupted or invalid. Please check the source file."
                                            }

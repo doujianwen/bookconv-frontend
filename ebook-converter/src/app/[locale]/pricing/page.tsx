@@ -159,10 +159,12 @@ export default async function PricingPage() {
               </tr>
             </thead>
             <tbody className="divide-y">
-              <tr><td className="px-4 py-3">{t('pricing.conversionsPerHour')}</td><td className="px-4 py-3 text-center">5</td><td className="px-4 py-3 text-center font-semibold text-blue-600">{t('pricing.unlimited')}</td></tr>
-              <tr><td className="px-4 py-3">{t('pricing.maxFileSize')}</td><td className="px-4 py-3 text-center">10 MB</td><td className="px-4 py-3 text-center font-semibold text-blue-600">50 MB</td></tr>
+              {/* Only list what the code actually enforces -- see the note above
+                  PLANS in src/lib/payments/service.ts. File size today is 10 MB
+                  on every plan and the rate limiter is per-IP, so neither is a
+                  differentiator; batch conversion is the one real Pro benefit. */}
+              <tr><td className="px-4 py-3">{t('pricing.maxFileSize')}</td><td className="px-4 py-3 text-center">10 MB</td><td className="px-4 py-3 text-center">10 MB</td></tr>
               <tr><td className="px-4 py-3">{t('pricing.batchConversion')}</td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td><td className="px-4 py-3 text-center"><Check className="h-4 w-4 mx-auto text-green-500" /></td></tr>
-              <tr><td className="px-4 py-3">{t('pricing.priorityQueue')}</td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td><td className="px-4 py-3 text-center"><Check className="h-4 w-4 mx-auto text-green-500" /></td></tr>
               <tr><td className="px-4 py-3">{t('pricing.apiAccess')}</td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td><td className="px-4 py-3 text-center"><Check className="h-4 w-4 mx-auto text-green-500" /></td></tr>
             </tbody>
           </table>

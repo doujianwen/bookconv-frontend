@@ -102,13 +102,19 @@ interface ConversionContentLite {
   faq?: Array<{ q: string; a: string }>;
 }
 
+// NOTE: this FAQ list is duplicated verbatim in
+// src/components/tools/FAQSection.tsx (generateDefaultFAQs). The two copies
+// drifted apart once already -- both carried "Free users get 5 conversions per
+// hour" and "Pro users enjoy up to 50 MB", neither of which the pipeline
+// enforces (see risk R7 in docs/seo-geo-execution-plan-2026-09-17.md). Edit
+// both, or better, have this function import the component's generator.
 function defaultFaqsFor(source: string, target: string): FAQItem[] {
   const s = source.toUpperCase();
   const t = target.toUpperCase();
   return [
-    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Convert up to 5 files per hour for free.` },
+    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 10 MB limit per file.` },
     { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${s} and ${t} format capabilities. The result is optimized for readability on your target device.` },
-    { question: 'What is the file size limit?', answer: 'Free users can convert files up to 10 MB. Pro users enjoy up to 50 MB per file and unlimited conversions.' },
+    { question: 'What is the file size limit?', answer: 'Every plan accepts files up to 10 MB. Pro adds batch conversion, which lets you process several books in a single upload.' },
     { question: 'Can I batch convert multiple files?', answer: 'Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.' },
   ];
 }
