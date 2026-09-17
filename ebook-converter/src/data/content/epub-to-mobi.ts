@@ -199,7 +199,7 @@ Click download when conversion completes. The file is ready instantly — no ema
 **Issue 1: Missing Chapters After Conversion**
 - *Symptom*: Table of contents is incomplete or chapters jump to wrong positions
 - *Cause*: Source EPUB uses non-standard heading hierarchy
-- *Fix*: Verify your EPUB has proper <h1>/<h2> structure. Open in Calibre to check chapter markers before converting.
+- *Fix*: Verify your EPUB has a proper heading hierarchy (h1 and h2 levels). Open in Calibre to check chapter markers before converting.
 
 **Issue 2: Images Look Blurry in MOBI**
 - *Symptom*: Photos appear pixelated or low quality
