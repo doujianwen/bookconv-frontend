@@ -77,7 +77,7 @@ If you prefer not to install desktop software, BookConv runs the same Calibre en
     },
     {
       heading: 'How to Convert EPUB to PDF: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Open the converter and drag your .epub file into the upload area, or click it to browse your folders. No account, email, or sign-up is required.
+      body: `**Step 1 — Upload your EPUB.** Open the converter and drag your .epub file into the upload area, or click it to browse your folders. No account, email, or sign-up is required. Uploads are capped at 10 MB on the free tier and 50 MB on a Pro account — worth a glance if your book is image-heavy, because a PDF of an illustrated title is usually larger than the EPUB it came from.
 
 **Step 2 — Wait for processing.** The Calibre engine renders your book and shows live status. Most EPUB files under 100 pages finish in 15-45 seconds; image-heavy books can take 1-3 minutes.
 
