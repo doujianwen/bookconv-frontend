@@ -241,7 +241,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | R4 | `scripts/d3-tier2-batch1.mjs` 等批量脚本未入库且机制危险（追加式插入） | 🔴 高 | 待处理 | 建议改写为幂等、定点更新后再入库，否则是下一次事故的种子 |
 | R5 | 20 个 convert 页无 `metaDescription`，SERP 描述裸奔 | 🟡 中 | 待执行 | 见 B3-4 |
 | R6 | `bf10c69` 在 `/convert/epub-to-mobi` 引入近重复章节（`…(Step-by-Step)` 与 `…: Step by Step` 并存） | 🔴 高 | ✅ 已解决并线上验证 | 已删除较旧的 `(Step-by-Step)` 章节（commit `4b1bef3`）。线上实测 `<h2>` 由 20 → **19**，"How to Convert" 标题剩 **1** 个。附带收益：被删章节含 10MB/50MB 文件大小声明，与 §4 纪律冲突。审计脚本已升级为归一化比对（`7312100`） |
-| R7 | 🆕🔴 **Pro 套餐在售，但其核心权益未实现**：定价页与 `PLANS` 承诺 Pro（$5/月）"Up to 50MB"、API（$20/月）"Up to 100MB"，**而转换管线对所有用户固定 10MB** | 🔴 高 | **待用户决策** | 见下方"R7 详情"。涉及真实收款与对外承诺，不宜由单一会话擅自改动文案或实现 |
+| R7 | 🆕🔴 **Pro 套餐在售，但其核心权益未实现**：定价页与 `PLANS` 承诺 Pro（$5/月）"Up to 50MB"、API（$20/月）"Up to 100MB"，**而转换管线对所有用户固定 10MB** | 🔴 高 | 🟡 **方案 C 已执行**（要约层已收口）；博客/转换页 43 处待批量 pass | 见下方"R7 详情"。已修正 8 个文件；剩余 18 个内容文件需单独 pass |
 
 ---
 
@@ -272,6 +272,45 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | A. 兑现承诺 | 把 plan 贯穿到转换链路：`getPlanByEmail()` → 映射到上限 → 传给 `convertAndStream()`，前端按套餐取限 | 真实功能开发，涉及支付相邻代码；且公开转换页目前不要求登录，需先定义"未登录用户算哪一档" |
 | B. 修正对外口径 | 从 `PLANS`、定价页、`FAQSection` 及约 12 篇博客、4 个转换页移除 50MB/100MB 表述，改为"10MB，更大文件请用桌面版" | 文案改动面大，且会**撤掉付费卖点**；与并行写入者 1 小时前刚"恢复文件大小事实"的方向相反 |
 | C. 先收口最暴露面 | 只处理定价页与 `PLANS`（法律意义上的"要约"），博客/转换页留待批量一致性 pass | 折中；仍需先定 A 还是 B 的方向 |
+
+### R7 执行记录：方案 C（用户 2026-09-17 22:13 选定）
+
+**范围**：收口"要约层"——凡构成对外承诺的表面，全部改为只写代码真正兑现的东西。长文内容（博客/转换页正文）留待单独 pass。
+
+**判定依据（先验证再改文案）**
+
+| 声明 | 结论 | 依据 |
+|------|------|------|
+| Free `Up to 10MB` | ✅ 真 | `.env.production` 中 `MAX_FILE_SIZE_MB=10` |
+| Pro `Up to 50MB` / API `Up to 100MB` | ❌ 假 | `convert-handler.ts:16` 单一固定上限，无套餐分支 |
+| Free `5 conversions per hour` | ❌ 假 | 实为 `convertApi` 20 req/60s/IP；**低估了 240 倍** |
+| Pro/API `Unlimited conversions` | ❌ 假 | 限流按 IP，与套餐无关 |
+| Pro/API `Priority queue` | ❌ 假 | `ConversionJobData.priority` 声明后**全库无任何赋值点** |
+| Pro/API `Batch conversion` | ✅ 真 | `/batch` 有 `isPro` 门槛 |
+| `No watermark` | ✅ 真 | 全库无 watermark 逻辑，从不加水印 |
+| API `Full API access` | ⚠️ 未证实 | `api-docs/openapi.json` 存在，但**全库无 ApiKeyAuth 校验点**（仅 `health` 用 `x-api-key` 自用）。暂保留，需再核 |
+
+**已改（commit `f97e5f6`，8 个文件）**
+
+1. `src/lib/payments/service.ts` — `PLANS` 三档 features 只留真声明，并**加注释记录删除项与原因**，防止再被"restore"
+2. `src/app/[locale]/pricing/page.tsx` — 删掉 conversions-per-hour 与 priority 两行；文件大小两列都写 10 MB，不再暗示 Pro 有提升
+3. `src/app/api-docs/openapi.json` — `ApiKeyAuth` 描述去掉 "Pro users get priority processing"
+4. `messages/en.json` + `es.json` — `faq.a1`、`FILE_TOO_LARGE`、`RATE_LIMIT`。**`FILE_TOO_LARGE` 最要紧**：它是用户被拦下、正要决定付费时读到的那句话，而它把人指向 50 MB
+5. `src/components/tools/FAQSection.tsx` + `src/lib/seo/schema.ts` — 两份**重复**的默认 FAQ 生成器（已各自漂移）。`schema.ts` 现加指针注释指向其孪生副本
+6. `src/app/auth/page.tsx` — 注册页去掉 "priority processing"
+
+**刻意未做**
+
+- **43 处、18 个内容文件**（`src/data/blog/*`、`src/data/content/*`）仍含同类套餐承诺，需单独 pass。注意：这些文件里另有大量 `50MB` 是**第三方事实**（如 "Kindle 拒收 >50MB"），不是本站承诺，改动时须逐条区分，不能盲replace。
+- **未 bump sitemap `lastmod`**。理由：spam update 恢复期对 30 个程序化页做批量 lastmod 攀升，本身就是风险动作；而本次改动的目的是**对外口径正确**（用户可见），不依赖 Google 立刻重抓。若后续确认 FAQPage 富媒体摘要需刷新，再单独评估。
+
+**重大发现（方法论，已写入长期记忆）**
+
+旧记忆把该现象记成"pricing 写 50MB、实际硬编码 10MB → **新文案不提文件大小**"，给出的是**文案侧规避**。规避动作压住了新增文案，**却完全没碰根因**——定价页是真正收钱的那一页、法律意义上的要约，它不属于"新文案"范围。
+
+> **教训**：发现"声明 ≠ 实现"时，先按法律权重排序（要约 > 宣传 > 科普 > 文档），再决定改声明还是改实现。只改低权重面会制造"已处理"的假象。
+
+**并行发现**：`openapi.json` 自身早已与实现脱节——它正确写明 "20 requests/minute per IP"，却同时承诺 "Pro users get priority processing"。**这两句自相矛盾，正是该缺口长期存活的机制**：文档比代码更早承认真相，但没人对照。
 
 ---
 
