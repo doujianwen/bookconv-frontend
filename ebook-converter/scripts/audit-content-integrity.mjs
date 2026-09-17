@@ -72,12 +72,35 @@ for (const { dir, kind } of targets) {
       continue;
     }
 
-    // 2. duplicate headings inside one record
+    // 2. duplicate headings inside one record.
+    //
+    // Compare NORMALISED forms, not raw strings. A batch that adds a section
+    // without checking for an existing equivalent tends to differ only in
+    // punctuation or capitalisation -- e.g. both of these shipped on the same
+    // page during the 2026-09 pass:
+    //   "How to Convert EPUB to MOBI (Step-by-Step)"
+    //   "How to Convert EPUB to MOBI: Step by Step"
+    // Raw equality sees two distinct headings; the reader sees one page with
+    // the same section twice, which is the duplication signal we are removing.
     const headings = [...src.matchAll(/heading:\s*['`]([^'`]+)['`]/g)].map((m) => m[1]);
-    const dupes = [...new Set(headings.filter((h, i) => headings.indexOf(h) !== i))];
-    if (dupes.length) {
-      warnings++;
-      console.log(`WARN   ${rel}  ->  duplicate heading(s): ${dupes.join(' | ')}`);
+    const normalise = (h) => h.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    const seen = new Map();
+    for (const h of headings) {
+      const key = normalise(h);
+      if (!key) continue;
+      if (!seen.has(key)) seen.set(key, []);
+      seen.get(key).push(h);
+    }
+    for (const [, variants] of seen) {
+      if (variants.length > 1) {
+        warnings++;
+        const distinct = [...new Set(variants)];
+        console.log(
+          `WARN   ${rel}  ->  duplicate heading x${variants.length}` +
+            (distinct.length > 1 ? ` (differ only in punctuation/case)` : '') +
+            `: ${distinct.join('  //  ')}`
+        );
+      }
     }
 
     // 3. duplicate import bindings (the d2a405c regression)
