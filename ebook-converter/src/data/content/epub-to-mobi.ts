@@ -174,21 +174,6 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 - DRM: We don't bypass DRM — only convert files you own`
     },
     {
-      heading: 'How to Convert EPUB to MOBI (Step-by-Step)',
-      body: `Follow these three steps to convert your EPUB files:
-
-**Step 1: Upload Your EPUB**
-Click the upload area or drag-and-drop your .epub file. Accepted formats: EPUB 2.x, EPUB 3.x. Max file size: 10 MB (free), 50 MB (pro).
-
-**Step 2: Wait for Conversion**
-Our Calibre engine processes your file in 10-30 seconds. You'll see a progress indicator while we extract text, images, and structure.
-
-**Step 3: Download MOBI**
-Click download when conversion completes. The file is ready instantly — no email required, no waiting.
-
-*Tip: For batch conversions, repeat the process per file or use Calibre desktop for full library management.*`
-    },
-    {
       heading: 'How to Convert EPUB to MOBI: Step by Step',
       body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first.
 
