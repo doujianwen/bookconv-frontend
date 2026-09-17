@@ -33,7 +33,6 @@ const SKIP = new Set([
   'index.ts', // registry
   'types.ts', // type declarations
   'rss.ts', // feed builder
-  'shared-modules.ts', // shared section fragments
   'shared.ts', // shared helpers
 ]);
 

@@ -175,7 +175,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
     },
     {
       heading: 'How to Convert EPUB to MOBI: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first.
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first. Free conversions accept files up to 10 MB; a Pro account raises the limit to 50 MB.
 
 **Step 2 — Wait for processing.** The Calibre engine rebuilds the book into the classic MOBI container and shows live status. Most novels finish in 10-30 seconds; illustrated books take longer because every image is re-encoded.
 
