@@ -240,7 +240,38 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | R3 | `shared-modules.ts` 是孤儿文件，无人 import | 🟡 中 | 待决策 | 二选一：删除，或正式接入并复用 |
 | R4 | `scripts/d3-tier2-batch1.mjs` 等批量脚本未入库且机制危险（追加式插入） | 🔴 高 | 待处理 | 建议改写为幂等、定点更新后再入库，否则是下一次事故的种子 |
 | R5 | 20 个 convert 页无 `metaDescription`，SERP 描述裸奔 | 🟡 中 | 待执行 | 见 B3-4 |
-| R6 | 🆕 **`bf10c69` 在 `/convert/epub-to-mobi` 引入近重复章节**：`How to Convert EPUB to MOBI (Step-by-Step)` 与 `How to Convert EPUB to MOBI: Step by Step` 并存，同一页出现两个语义相同的"转换步骤"章节。**已提交已 push，尚未上线**（线上实测当前仍只有 1 个） | 🔴 高 | **待决策** | **建议改法**：删除较旧的 `(Step-by-Step)` 章节，保留信息更完整的新版（新版含界面说明与设备建议）。这正是 spam update 命中的重复模式，不宜上线。审计脚本已能捕获该类（已升级为归一化比对） |
+| R6 | `bf10c69` 在 `/convert/epub-to-mobi` 引入近重复章节（`…(Step-by-Step)` 与 `…: Step by Step` 并存） | 🔴 高 | ✅ 已解决并线上验证 | 已删除较旧的 `(Step-by-Step)` 章节（commit `4b1bef3`）。线上实测 `<h2>` 由 20 → **19**，"How to Convert" 标题剩 **1** 个。附带收益：被删章节含 10MB/50MB 文件大小声明，与 §4 纪律冲突。审计脚本已升级为归一化比对（`7312100`） |
+| R7 | 🆕🔴 **Pro 套餐在售，但其核心权益未实现**：定价页与 `PLANS` 承诺 Pro（$5/月）"Up to 50MB"、API（$20/月）"Up to 100MB"，**而转换管线对所有用户固定 10MB** | 🔴 高 | **待用户决策** | 见下方"R7 详情"。涉及真实收款与对外承诺，不宜由单一会话擅自改动文案或实现 |
+
+---
+
+### R7 详情：在售的 Pro 权益没有对应实现
+
+**结论**：BookConv 正在以 $5/月（Pro）和 $20/月（API）售卖"更大文件上限"，但转换管线对所有身份一律 10MB。付费用户上传 30MB 的 EPUB 会被拒，错误信息是 `File too large. Max 10MB`。
+
+**证据链（全部为代码/线上实测，非推断）**
+
+| # | 环节 | 位置 | 实测事实 |
+|---|------|------|---------|
+| 1 | 对外承诺 | `src/lib/payments/service.ts:14-62` | Free `Up to 10MB` / Pro `Up to 50MB` / API `Up to 100MB` |
+| 2 | 承诺已上线 | `https://www.bookconv.com/pricing` | 200，渲染出 "Up to 50MB file size"、"Up to 100MB file size"，且页面存在购买入口 |
+| 3 | 套餐可购买 | `.env.production` | `LEMON_SQUEEZY_PRO_MONTHLY_VARIANT_ID` 与 `..._API_...` 均已配置 → `proHasVariant = true`，升级按钮不会因未配置而禁用 |
+| 4 | 身份可解析 | `src/lib/subscription.ts:77-87` | `getPlanByEmail()` 能正确返回 `'free' \| 'pro' \| 'api'` —— 系统**知道**用户买了什么 |
+| 5 | 🔴 管线不读身份 | `src/lib/convert-handler.ts:16` | `const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB \|\| "10", 10) * 1024 * 1024` —— 单一固定上限，**无任何套餐分支**；`convertAndStream()` 的签名里根本没有用户/套餐参数 |
+| 6 | 入口不解析身份 | `src/app/api/convert/route.ts` | 仅按 IP 限流（`convertApi` 20 req/60s），全程不解析登录用户，因此即使想分套餐也拿不到输入 |
+| 7 | 前端同样写死 | `src/components/tools/FileDropZone.tsx:40` | `const MAX_FILE_SIZE_MB = 10`（无 env、无套餐） |
+
+**同类未兑现项**：`PLANS` 里的 "5 conversions per hour"（Free）/"Unlimited"（Pro、API）也是未实现的 —— 限流是 IP 维度的 20 req/60s，对所有套餐一致。即套餐卡片上的**量级类承诺整体处于"声明 ≠ 代码"状态**。
+
+**为何此前没被发现**：MEMORY §4 把该现象记成"pricing 写 50MB 实际硬编码 10MB"并给出**文案侧规避**（"新文案不提文件大小"）。规避动作压住了新增文案，但没有触及根因——**定价页本身**（真正收钱的那一页）仍在承诺 50MB，而它不在"新文案"范围内。
+
+**处置选项（需决策，不擅自执行）**
+
+| 方案 | 动作 | 代价 |
+|------|------|------|
+| A. 兑现承诺 | 把 plan 贯穿到转换链路：`getPlanByEmail()` → 映射到上限 → 传给 `convertAndStream()`，前端按套餐取限 | 真实功能开发，涉及支付相邻代码；且公开转换页目前不要求登录，需先定义"未登录用户算哪一档" |
+| B. 修正对外口径 | 从 `PLANS`、定价页、`FAQSection` 及约 12 篇博客、4 个转换页移除 50MB/100MB 表述，改为"10MB，更大文件请用桌面版" | 文案改动面大，且会**撤掉付费卖点**；与并行写入者 1 小时前刚"恢复文件大小事实"的方向相反 |
+| C. 先收口最暴露面 | 只处理定价页与 `PLANS`（法律意义上的"要约"），博客/转换页留待批量一致性 pass | 折中；仍需先定 A 还是 B 的方向 |
 
 ---
 
@@ -253,6 +284,8 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-17 21:38 | 移除 3 页重复的 `Conversion Quality Guarantee` 章节（并行进程提交） | 49096ba |
 | 2026-09-17 21:45 | 修复裸 HTML 标签泄漏；新增 2 个诊断脚本；发现 20 页缺 metaDescription | 060a806 |
 | 2026-09-17 21:45 | 本规划文档改版：新增 B1a/B1b、风险登记、门禁脚本 | — |
+| 2026-09-17 21:53 | 移除 `/convert/epub-to-mobi` 近重复章节（R6）；并行进程删除孤儿文件（R3） | 4b1bef3 / 16cacfc |
+| 2026-09-17 22:5x | **R6 线上验证通过**（h2 20→19，How-to 标题 1 个）；**新增 R7**：Pro/API 文件上限与限流承诺未在代码实现，涉真实收款 | — |
 
 ---
 
