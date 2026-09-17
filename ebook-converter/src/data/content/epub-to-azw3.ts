@@ -66,8 +66,14 @@ export const content = {
 - [**Kindle Formats Explained**](/guide/kindle-formats) — Complete guide to Amazon ebook formats`
     },
     {
-      heading: 'Real Conversion Screenshots',
-      body: `📸 **Upload Screen**: Click the upload area to browse and select your EPUB file.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — 10-30 seconds for most books.\n\n✅ **Download Success**: Once complete, click download to save your AZW3 file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+      heading: 'How to Convert EPUB to AZW3: Step by Step',
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or sign-up is needed.
+
+**Step 2 — Wait for processing.** The Calibre AZW3 output engine maps your styles, fonts, and images onto Kindle Format 8 and shows live status. Most books finish in 10-30 seconds; books with custom fonts take a little longer because the fonts are embedded.
+
+**Step 3 — Download the AZW3.** Click Download, then transfer the file to your Kindle over USB or email it to your Kindle address. Converted files are purged from our servers on a short rolling window.
+
+**What the interface looks like:** one upload area, a live progress indicator, and one download button — there are no device-model menus to choose from. The output targets modern Kindle firmware (KF8), which covers Paperwhite, Oasis, Voyage, and later models; if you own a pre-2012 Kindle, convert to MOBI instead.`
     },
     {
       heading: 'Common Issues & Solutions',

@@ -141,8 +141,14 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 6. Validate EPUB structure for compatibility`
     },
     {
-      heading: 'Real Conversion Screenshots',
-      body: `📸 **Upload Screen**: Click the upload area to browse and select your MOBI file.\n\n📊 **Conversion Progress**: Our Calibre engine shows real-time processing — 10-30 seconds for most books.\n\n✅ **Download Success**: Once complete, click download to save your EPUB file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+      heading: 'How to Convert MOBI to EPUB: Step by Step',
+      body: `**Step 1 — Upload your MOBI.** Drag the .mobi (or .prc) file into the upload area, or click to browse. One thing to check first: if the file came from the Kindle store it may carry Amazon DRM, which blocks conversion entirely — files you sideloaded yourself are normally DRM-free.
+
+**Step 2 — Wait for processing.** The Calibre engine unpacks the MOBI container and rebuilds it as a standard EPUB, showing live status. Most text books finish in 10-30 seconds.
+
+**Step 3 — Download the EPUB.** Click Download to save the file, then open it in any EPUB reader — Apple Books, Google Play Books, Kobo, or Calibre. Converted files are purged from our servers on a short rolling window.
+
+**What the interface looks like:** one upload area, a live progress indicator, and one download button. If the MOBI carries DRM, the job fails at step 2 with a clear error rather than producing a broken file — you will never be handed a silently corrupted EPUB.`
     },
     {
       heading: 'Common Issues & Solutions',

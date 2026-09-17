@@ -189,8 +189,14 @@ Click download when conversion completes. The file is ready instantly — no ema
 *Tip: For batch conversions, repeat the process per file or use Calibre desktop for full library management.*`
     },
     {
-      heading: 'Real Conversion Screenshots',
-      body: `📸 **Upload Screen**: Click the upload area to browse and select your EPUB file from your computer.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — typically 10-30 seconds for most books.\n\n✅ **Download Success**: Once complete, click the download button to save your MOBI file locally.\n\n*Note: Screenshot placeholders will be replaced with actual BookConv interface captures. To add real screenshots, capture the three steps above and update the image paths.*`
+      heading: 'How to Convert EPUB to MOBI: Step by Step',
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first.
+
+**Step 2 — Wait for processing.** The Calibre engine rebuilds the book into the classic MOBI container and shows live status. Most novels finish in 10-30 seconds; illustrated books take longer because every image is re-encoded.
+
+**Step 3 — Download the MOBI.** Click Download to save the file, then copy it to your Kindle's documents folder over USB, or email it to your Kindle address. Converted files are purged from our servers on a short rolling window.
+
+**What the interface looks like:** one upload area, a live progress indicator, and one download button — no format toggles or quality sliders to guess at. MOBI output is tuned for older Kindle firmware by default, so if your device is a 2012-or-earlier model you can use the file straight away without further conversion.`
     },
     {
       heading: 'Common Issues & Solutions',

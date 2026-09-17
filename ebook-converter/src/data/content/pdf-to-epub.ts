@@ -95,8 +95,14 @@ Keep PDF if:
 - You're submitting to academic journals or publishers`
     },
     {
-      heading: 'Real Conversion Screenshots',
-      body: `📸 **Upload Screen**: Click the upload area to browse and select your PDF file.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — 10-30 seconds for text-based PDFs, longer for scanned documents requiring OCR.\n\n✅ **Download Success**: Once complete, click download to save your EPUB file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+      heading: 'How to Convert PDF to EPUB: Step by Step',
+      body: `**Step 1 — Upload your PDF.** Drag the .pdf file into the upload area or click to browse. No account is required for text-based PDFs.
+
+**Step 2 — Wait for processing.** The pipeline extracts the text layer, rebuilds paragraphs and headings, and generates a navigable table of contents, showing live status throughout. Text-based PDFs finish in 10-30 seconds; scanned PDFs take considerably longer because OCR has to recognise each page first.
+
+**Step 3 — Download the EPUB.** Click Download to save the file, then open it in any EPUB reader. Converted files are purged from our servers on a short rolling window.
+
+**What the interface looks like:** one upload area, a live progress indicator, and one download button. There is no separate OCR checkbox to find — if the PDF has no text layer, OCR runs automatically on Pro accounts, and on free accounts the job reports that the file appears to be a scan rather than returning a blank EPUB.`
     },
     {
       heading: 'Common Issues & Solutions',

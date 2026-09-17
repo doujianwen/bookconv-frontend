@@ -76,8 +76,14 @@ To keep the viewing area closer to your original, set a smaller margin and a lar
 If you prefer not to install desktop software, BookConv runs the same Calibre engine in the browser — open the EPUB to PDF converter on any Linux machine and convert online with no install.`
     },
     {
-      heading: 'Real Conversion Screenshots',
-      body: `📸 **Upload Screen**: Click the upload area to browse and select your EPUB file.\n\n📊 **Conversion Progress**: Our engine shows real-time processing status — 15-45 seconds for most books.\n\n✅ **Download Success**: Once complete, click download to save your PDF file locally.\n\n*Note: These screenshot placeholders will be replaced with actual BookConv interface captures.*`
+      heading: 'How to Convert EPUB to PDF: Step by Step',
+      body: `**Step 1 — Upload your EPUB.** Open the converter and drag your .epub file into the upload area, or click it to browse your folders. No account, email, or sign-up is required.
+
+**Step 2 — Wait for processing.** The Calibre engine renders your book and shows live status. Most EPUB files under 100 pages finish in 15-45 seconds; image-heavy books can take 1-3 minutes.
+
+**Step 3 — Download the PDF.** When processing completes, click Download to save the file to your device. Uploaded and converted files are purged from our servers on a short rolling window.
+
+**What the interface looks like:** one page, one upload area, a live progress indicator, and a single download button. There are no intermediate settings to configure — page size, margins, and font embedding are applied automatically, so the whole flow is three clicks from start to finished PDF.`
     },
     {
       heading: 'Common Issues & Solutions',
