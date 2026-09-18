@@ -125,6 +125,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
       { path: '/privacy', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/privacy'] },
       { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
+      // GEO P0 (2026-09-18): About = brand entity page (E-E-A-T baseline),
+      // compare page = captures "best alternative to calibre" intent.
+      // English-only by design — no /es/ variant (P3-C spam-signal rule).
+      { path: '/about', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/about'] },
+      { path: '/compare/bookconv-vs-calibre', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/compare/bookconv-vs-calibre'] },
     ]
 
     // /es/* sitemap policy (revised 2026-09-14, supersedes P3-C):
