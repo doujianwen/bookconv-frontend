@@ -92,6 +92,8 @@ const STATIC_DATES: Record<string, string> = {
   '/privacy': '2026-08-07',
   '/terms': '2026-08-07',
   '/api-docs': '2026-07-28',
+  '/about': '2026-09-18',
+  '/compare/bookconv-vs-calibre': '2026-09-18',
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com'

@@ -196,6 +196,8 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             Every {sourceDisplay} to {targetDisplay} conversion runs on the Calibre engine — the industry-standard open-source ebook library trusted by readers and tools worldwide. Calibre preserves fonts, chapter structure, and metadata far more faithfully than converters that rebuild files from scratch.
           </p>
         </div>
+        {/* Trust proofs above the fold — P0: surface privacy/quality promise at top for GEO */}
+        <TrustBar />
         <div className="space-y-4">
           <FileDropZone
             onFileSelect={handleFileSelect}
@@ -249,9 +251,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
             </section>
           )}
         </div>
-        {/* Trust proofs above the fold (P1: surface privacy/quality promise at top) */}
-        <TrustBar />
-        {/* Batch conversion Pro guide */}
+        {/* FAQ with Schema */}
         <BatchConversionGuide sourceFormat={source} targetFormat={target} />
         {/* Custom content sections */}
         {contentData?.sections ?
