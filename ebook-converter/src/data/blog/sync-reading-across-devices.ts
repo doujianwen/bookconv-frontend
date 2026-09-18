@@ -1,12 +1,12 @@
 export const slug = `sync-reading-across-devices`;
-export const title = `How to Sync Reading Progress Across Kindle, Kobo, and Apple Books`;
+export const title = `How to Transfer Ebooks Between Devices & Sync Reading Progress (2026)`;
 export const date = `2026-08-15`;
-export const lastUpdated = `2026-08-27`;
+export const lastUpdated = `2026-09-18`;
 export const author = `BookConv Team`;
-export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `Ebook`];
+export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `Ebook`, `Transfer Ebooks`, `Reading Progress`];
 
 export const content = {
-  intro: `Reading across multiple devices is convenient until your progress stops syncing. This guide explains how Kindle, Kobo, and Apple Books each handle sync, which format to choose, and how BookConv's free, browser-based converter helps you prep files for seamless cross-device reading — no software to install.`,
+  intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.`,
   sections: [
     {
       heading: `Why Sync Fails Between Devices`,
@@ -26,12 +26,16 @@ export const content = {
     },
     {
       heading: `Common Pitfalls to Avoid`,
-      body: `**DRM-protected purchases.** Books bought from Kindle Store, Kobo Store, or Apple Books often carry DRM that prevents conversion or transfer. Look for DRM-free editions or public domain alternatives.\n\n**Assuming renaming works.** Changing a file extension from .epub to .mobi doesn't convert the format — readers will reject the mismatch.\n\n**Ignoring format compatibility.** Not all EPUB features work on all devices. Simplified EPUBs (no custom fonts, minimal CSS) have the broadest compatibility.`
+      body: `**DRM-protected purchases.** Books bought from Kindle Store, Kobo Store, or Apple Books often carry DRM that prevents conversion or transfer. Look for DRM-free editions or public domain alternatives.\n\n**Assuming renaming works.** Changing a file extension from .epub to .mobi doesn't convert the format — readers will reject the mismatch.\n\n**Ignoring format compatibility.** Not all EPUB features work on all devices. Simplified EPUBs (no custom fonts, minimal CSS) have the broadest compatibility.\n\n**Related:** See our [Kindle formats guide](/guide/kindle-formats) for device-specific format recommendations, or check [Can my Kindle read AZW3?](/blog/can-kindle-read-azw3) for a device compatibility table.`
     }
   ]
 };
 
 export const faqs = [
+  {
+    question: `How do I transfer ebooks between devices?`,
+    answer: `The easiest way is to convert your ebook to EPUB (the universal format) using BookConv, then share it via USB, email (Send to Kindle), or cloud storage like Google Drive. Each device reads EPUB natively or through its reader app.`
+  },
   {
     question: `Can I read Kindle books on my Kobo?`,
     answer: `Only if they're DRM-free. Amazon purchases are protected and won't open on Kobo. Convert DRM-free Kindle books to EPUB using BookConv, then transfer to your Kobo.`
@@ -55,5 +59,9 @@ export const faqs = [
   {
     question: `Does BookConv help with multi-device reading?`,
     answer: `Yes. Convert your books to the optimal format for each device: EPUB for Kobo/Apple Books, AZW3 for Kindle, PDF for universal compatibility. Our [format comparison guides](/blog/epub-vs-mobi) help you choose.`
+  },
+  {
+    question: `How to sync ebooks for virtual book clubs?`,
+    answer: `For reading groups, use Google Play Books — one member uploads the EPUB and everyone accesses it from their own account. See our [reading groups sync guide](/blog/sync-ebooks-reading-groups) for details.`
   }
 ];
