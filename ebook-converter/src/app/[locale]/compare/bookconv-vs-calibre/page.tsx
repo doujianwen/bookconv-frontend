@@ -41,10 +41,37 @@ const COMPARISON_FEATURES = [
   { feature: "Library Management", bookconv: "No - single file", calibre: "Full library management", winner: "calibre" },
 ]
 
+// Single source of truth: the same Q/A text drives both the visible FAQ
+// block and the FAQPage JSON-LD. Divergence between rendered copy and
+// schema is a GSC structured-data mismatch, so never hardcode either side.
+const FAQ_ITEMS = [
+  {
+    q: "Is BookConv free to use?",
+    a: "Yes! BookConv is completely free for personal use. We offer a Pro plan for batch processing and higher file size limits.",
+  },
+  {
+    q: "Can I use BookConv on my phone?",
+    a: "Absolutely! BookConv works in any modern browser on any device — phone, tablet, or computer. No app download required.",
+  },
+  {
+    q: "Should I use Calibre or BookConv?",
+    a: "It depends on your needs. For quick conversions, use BookConv. For batch processing, use Calibre. Many users use both!",
+  },
+] as const
+
 export default async function ComparePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: "BookConv vs Calibre: Which eBook Converter is Right for You?", description: "A detailed comparison of BookConv and Calibre.", author: { "@type": "Organization", name: "BookConv" } }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: FAQ_ITEMS.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }) }} />
       <main className="mx-auto max-w-4xl px-4 py-12">
         <section className="mb-12 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">BookConv vs Calibre</h1>
@@ -156,18 +183,12 @@ export default async function ComparePage() {
         <section className="mb-12 mt-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Is BookConv free to use?</summary>
-              <p className="mt-2 text-sm text-gray-600">Yes! BookConv is completely free for personal use. We offer a Pro plan for batch processing and higher file size limits.</p>
-            </details>
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Can I use BookConv on my phone?</summary>
-              <p className="mt-2 text-sm text-gray-600">Absolutely! BookConv works in any modern browser on any device — phone, tablet, or computer. No app download required.</p>
-            </details>
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Should I use Calibre or BookConv?</summary>
-              <p className="mt-2 text-sm text-gray-600">It depends on your needs. For quick conversions, use BookConv. For batch processing, use Calibre. Many users use both!</p>
-            </details>
+            {FAQ_ITEMS.map((f) => (
+              <details key={f.q} className="rounded-xl border border-gray-200 bg-white p-4">
+                <summary className="cursor-pointer font-medium text-gray-900">{f.q}</summary>
+                <p className="mt-2 text-sm text-gray-600">{f.a}</p>
+              </details>
+            ))}
           </div>
         </section>
       </main>
