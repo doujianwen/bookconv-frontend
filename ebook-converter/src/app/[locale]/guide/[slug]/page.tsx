@@ -23,23 +23,26 @@ const GUIDES: Record<string, GuideData> = {}
 for (const g of getAllGuides()) GUIDES[g.slug] = g as unknown as GuideData
 
 interface GuideSlugProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }
 
 export async function generateStaticParams() {
-  return Object.keys(GUIDES).map((slug) => ({ slug }))
+  return ['en', 'es'].flatMap((locale) =>
+    Object.keys(GUIDES).map((slug) => ({ locale, slug }))
+  )
 }
 
 export async function generateMetadata({ params }: GuideSlugProps): Promise<Metadata> {
-  const { slug } = await params
+  const { slug, locale } = await params
   const g = GUIDES[slug]
   if (!g) return {}
 
   const baseUrl = "https://www.bookconv.com"
   const description = g.problem || g.content.intro || g.title
+  const isEs = locale === 'es'
 
   const { canonical, languages } = buildAlternates({
-    locale: 'en',
+    locale: locale,
     slugPath: `/guide/${g.slug}`,
     pageType: 'leaf',
   })
@@ -68,13 +71,14 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
 }
 
 export default async function GuidePage({ params }: GuideSlugProps) {
-  const { slug } = await params
+  const { slug, locale } = await params
   const g = GUIDES[slug]
 
   if (!g) notFound()
 
   const baseUrl = "https://www.bookconv.com"
-  const guideUrl = `${baseUrl}/guide/${g.slug}`
+  const isEs = locale === 'es'
+  const guideUrl = `${baseUrl}${isEs ? '/es' : ''}/guide/${g.slug}`
   const others = getRelatedGuides(slug, 5)
   const relatedBlogPostsForGuide = getRelatedBlogPostsForGuide(g.formats, g.tags, 3)
 
