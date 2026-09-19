@@ -91,3 +91,7 @@ batch-verify.zip
 gsc-service-account.json
 gsc-service-account.json
 gsc-service-account.json
+
+# 分析文档不入库（项目约定）——bookconv-frontend 为 public，本目录含经营数据
+# 已于 2026-09-19 用 `git rm -r --cached` 移出跟踪；文件仍保留在工作目录
+/数据分析/
