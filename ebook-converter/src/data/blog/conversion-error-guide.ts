@@ -9,7 +9,7 @@ export const content = {
   sections: [
     {
       heading: `When Conversion Fails Before It Starts`,
-      body: `The upload endpoint rejects your file immediately. This is usually one of three things:\n\n**File too large.** Free tier: 10 MB. Pro: 50 MB. API: 100 MB. If your file exceeds the limit, the error names the cap and you won't waste time waiting for a job that was never going to run.\n\n**DRM-protected.** Books purchased from Kindle, Kobo, or Google Play often carry DRM. We reject them on upload because we don't strip protection. Look for a DRM-free edition of the same title.\n\n**Corrupted or truncated.** A half-downloaded EPUB or PDF that ends mid-file gets refused. Open the source file in your normal reader. If it fails there, no converter will repair it.`
+      body: `The upload endpoint rejects your file immediately. This is usually one of three things:\n\n**File too large.** The cap is 10 MB per file on every plan. If your file exceeds the limit, the error names the cap and you won't waste time waiting for a job that was never going to run.\n\n**DRM-protected.** Books purchased from Kindle, Kobo, or Google Play often carry DRM. We reject them on upload because we don't strip protection. Look for a DRM-free edition of the same title.\n\n**Corrupted or truncated.** A half-downloaded EPUB or PDF that ends mid-file gets refused. Open the source file in your normal reader. If it fails there, no converter will repair it.`
     },
     {
       heading: `When Conversion Starts but Doesn't Finish`,
@@ -21,7 +21,7 @@ export const content = {
     },
     {
       heading: `Rate Limits and Quotas`,
-      body: `Free users get 5 conversions per hour. This is a soft limit designed to prevent abuse on shared infrastructure.\n\nIf you see a rate-limit error, wait 60 minutes for the window to reset, or upgrade to Pro for unlimited hourly conversions.\n\nOn campus or office Wi-Fi, someone else on the same connection may have used part of your quota. Switch networks or wait.`
+      body: `Free users get 20 conversion requests per minute per IP. This is a soft limit designed to prevent abuse on shared infrastructure.\n\nIf you see a rate-limit error, wait 60 seconds for the window to reset.\n\nOn campus or office Wi-Fi, someone else on the same connection may have used part of your quota. Switch networks or wait.`
     },
     {
       heading: `When Nothing Works: What to Send Us`,
@@ -41,7 +41,7 @@ export const faqs = [
   },
   {
     question: `I got "FILE_TOO_LARGE". How do I reduce the file size?`,
-    answer: `Free tier accepts files up to 10 MB. To reduce size, remove unnecessary images, compress the EPUB, or upgrade to Pro (50 MB) or API (100 MB).`
+    answer: `Free tier accepts files up to 10 MB. To reduce size, remove unnecessary images, compress the EPUB.`
   },
   {
     question: `Can I convert a book I bought from Amazon or Kobo?`,
@@ -53,7 +53,7 @@ export const faqs = [
   },
   {
     question: `I keep hitting the rate limit. What's my quota?`,
-    answer: `Free users get 5 conversions per hour with no account. The counter resets every 60 minutes. Pro and API plans have unlimited hourly conversions.`
+    answer: `Free users get 20 conversion requests per minute per IP with no account. The window resets every 60 seconds.`
   },
   {
     question: `How do I report a bug or request a feature?`,

@@ -15,7 +15,9 @@
     "submit-indexnow": "node scripts/submit-indexnow.mjs",
     "verify:sync": "node scripts/git-sync-check.mjs",
     "verify:tracking": "node scripts/source-tracking-check.mjs",
-    "check:blog": "node scripts/publish-gate.mjs"
+    "check:blog": "node scripts/publish-gate.mjs",
+    "audit:content": "node scripts/audit-content-integrity.mjs",
+    "audit:claims": "node scripts/audit-plan-claims.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

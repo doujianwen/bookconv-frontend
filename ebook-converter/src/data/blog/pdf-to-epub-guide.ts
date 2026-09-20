@@ -15,7 +15,7 @@ export const content = {
 2. Look at the metadata preview. It shows what BookConv could read out of the file, which is your first hint about whether the PDF has a real text layer or not.
 3. Convert, watch the progress bar, and download the EPUB.
 
-It runs on a server-side Calibre engine, so you get the same conversion logic desktop users get without installing or configuring anything. Free tier is 10 MB per file and 5 conversions per hour with no account. Pro takes files up to 50 MB, and the API up to 100 MB.
+It runs on a server-side Calibre engine, so you get the same conversion logic desktop users get without installing or configuring anything. Free tier is 10 MB per file and 20 conversion requests per minute per IP, with no account. The 10 MB cap applies to every plan.
 
 ### A few practical notes
 
@@ -113,7 +113,7 @@ The honest test is what you plan to do with the file. Reading long-form prose on
     {
       heading: `Key Takeaways`,
       body: `- **Test the text layer first.** If you can't select and copy text, it's a scan — run OCR elsewhere before uploading, because BookConv doesn't do OCR.
-- **BookConv handles text PDFs in the browser.** Upload, convert, download. Free tier is 10 MB per file and 5 conversions per hour, no account, no install.
+- **BookConv handles text PDFs in the browser.** Upload, convert, download. Free tier is 10 MB per file with no account and no install.
 - **Save the file right away.** Download links are temporary and converted files are deleted after a period.
 - **PDF stores position, not structure.** Every converter is guessing at paragraphs and chapters, which is why a novel converts cleanly and a textbook doesn't.
 - **Some PDFs shouldn't be converted.** Comics, sheet music, forms, and reference documents lose their meaning the moment text reflows.`
@@ -132,7 +132,7 @@ export const faqs = [
   },
   {
     question: `What's the file size limit?`,
-    answer: `10 MB per file on the free tier, 50 MB on Pro, and 100 MB through the API. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.`,
+    answer: `10 MB per file, on every plan. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.`,
   },
   {
     question: `Can I convert a password-protected PDF?`,

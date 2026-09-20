@@ -96,7 +96,7 @@ Keep PDF if:
     },
     {
       heading: 'How to Convert PDF to EPUB: Step by Step',
-      body: `**Step 1 — Upload your PDF.** Drag the .pdf file into the upload area or click to browse. No account is required for text-based PDFs. The cap is 10 MB on the free tier and 50 MB with Pro — scanned documents are by far the most likely to hit it, since a full-page scan is many times larger than the text it yields.
+      body: `**Step 1 — Upload your PDF.** Drag the .pdf file into the upload area or click to browse. No account is required for text-based PDFs. The cap is 10 MB on every plan — scanned documents are by far the most likely to hit it, since a full-page scan is many times larger than the text it yields.
 
 **Step 2 — Wait for processing.** The pipeline extracts the text layer, rebuilds paragraphs and headings, and generates a navigable table of contents, showing live status throughout. Text-based PDFs finish in 10-30 seconds; scanned PDFs take considerably longer because OCR has to recognise each page first.
 
@@ -131,7 +131,7 @@ Keep PDF if:
 **Issue 5: Conversion Fails or Takes Too Long**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: Large file, complex layout, or corrupted PDF
-- *Fix*: Check file size (10MB free / 50MB pro). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
+- *Fix*: Check file size (10 MB limit). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
     },
     {
       heading: 'Device Compatibility Report',

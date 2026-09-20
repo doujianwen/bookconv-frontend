@@ -48,7 +48,7 @@ export const content = {
     },
     {
       heading: "How to Convert Your Files Efficiently",
-      body: `Manual conversion using desktop software like Calibre is an option, but it requires installation and technical know-how. For users who want a fast, browser-based solution, online converters offer a streamlined path. Tools like [BookConv](/convert) allow you to upload your legacy files and output them into your desired format without installing anything.
+      body: `Manual conversion using desktop software like Calibre is an option, but it requires installation and technical know-how. For users who want a fast, browser-based solution, online converters offer a streamlined path. Tools like [BookConv](/convert) allow you to upload your legacy files and output them into your desired format without installing anything. For a deeper comparison of FB2 versus EPUB for Russian-language archives, see [FB2 vs EPUB](/blog/fb2-vs-epub). And if you need to handle scanned or image-based documents, our [scanned PDF to EPUB with OCR guide](/blog/scanned-pdf-to-epub-ocr) covers that workflow.
 
       Here is a practical checklist for converting your library:
 

@@ -39,13 +39,13 @@ Large or slow files hand off to a background worker queue, and the download butt
       heading: `When the File Is Rejected Before Conversion Starts`,
       body: `Some uploads never make it to the conversion stage at all. That's deliberate, and the error message names the rule you hit.
 
-**It's over the size limit.** The free tier accepts **10 MB per file**. Pro raises that to **50 MB**, and the API plan to **100 MB**. Oversized uploads are refused immediately with the limit stated, so you never sit through a job that was never going to run. Fixes in order of effort: compress the images, split the book into parts, or move up a tier.
+**It's over the size limit.** The cap is **10 MB per file** on every plan. Oversized uploads are refused immediately with the limit stated, so you never sit through a job that was never going to run. Fixes in order of effort: compress the images or split the book into parts.
 
 **It's DRM-protected.** Purchases from Kindle, Kobo, and Google Play usually carry DRM, and those files are rejected on upload. We don't strip protection, so there's no workaround here — you'd need a DRM-free edition of the same title. Public-domain sources like [Project Gutenberg](https://www.gutenberg.org/) convert without any of this drama.
 
 **The source is corrupt or truncated.** A half-downloaded EPUB or a PDF that ends mid-file gets refused too. Open the original in whatever reader you normally use. If it fails there, the damage travels with the file and no converter will repair it.
 
-**You've hit the rate limit.** Free usage allows **5 conversions per hour** with no account needed. On shared office, campus, or library Wi-Fi, someone else on the same connection can eat part of that quota. Wait for the window to roll over, or switch networks.
+**You've hit the rate limit.** Free usage allows **20 conversion requests per minute per IP** with no account needed. On shared office, campus, or library Wi-Fi, someone else on the same connection can eat part of that quota. Wait 60 seconds for the window to roll over, or switch networks.
 
 One habit worth building: read the metadata preview before you confirm. It shows the title and author BookConv pulled out of the file, which is the fastest way to spot a source that isn't what you thought it was.`
     },
@@ -83,7 +83,7 @@ That's source quality, not a download failure. Messy markup carries straight thr
       heading: `Key Takeaways`,
       body: `- **Browser first** — silent blocking and interfering extensions cause more failed downloads than our servers ever do.
 - **Links are temporary** — converted files are deleted after a while, so save the result as soon as it appears and re-convert if you miss the window.
-- **Limits are upfront** — 10 MB free, 50 MB on Pro, 100 MB on API, with rejections at upload instead of halfway through.
+- **Limits are upfront** — 10 MB per file on every plan, with rejections at upload instead of halfway through.
 - **DRM stops at the door** — protected files are refused on upload, and there's no workaround on our end.
 - **Wrong device, not bad file** — most unopenable books just need converting to the format the reader supports.`
     }
@@ -105,7 +105,7 @@ export const faqs = [
   },
   {
     question: `My file was rejected before the conversion even started. Why?`,
-    answer: `Almost always the size cap. The free tier stops at 10 MB per file and names the limit in the error. Compress the images, split the book, or upgrade to Pro for 50 MB. The API plan allows 100 MB.`,
+    answer: `Almost always the size cap. The cap is 10 MB per file on every plan and the error names it. Compress the images or split the book.`,
   },
   {
     question: `Can I convert a book I bought from Amazon or Kobo?`,
@@ -113,7 +113,7 @@ export const faqs = [
   },
   {
     question: `I got a message about too many conversions.`,
-    answer: `Free usage allows 5 conversions per hour without an account. Wait for the hour to roll over, or upgrade if you convert in volume. On shared Wi-Fi, other people on the same connection may have used part of that quota.`,
+    answer: `Free usage allows 20 conversion requests per minute per IP without an account. Wait 60 seconds for the window to roll over. On shared Wi-Fi, other people on the same connection may have used part of that quota.`,
   },
   {
     question: `Nothing here worked. What should I send support?`,

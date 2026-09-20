@@ -169,13 +169,13 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 
 **Technical Details:**
 - Engine: Calibre 7.x MOBI output plugin
-- Max file size: 10MB (free) / 50MB (pro)
+- Max file size: 10MB
 - Conversion time: 10-30 seconds for typical books
 - DRM: We don't bypass DRM — only convert files you own`
     },
     {
       heading: 'How to Convert EPUB to MOBI: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first. Free conversions accept files up to 10 MB; a Pro account raises the limit to 50 MB.
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first. Conversions accept files up to 10 MB, on every plan.
 
 **Step 2 — Wait for processing.** The Calibre engine rebuilds the book into the classic MOBI container and shows live status. Most novels finish in 10-30 seconds; illustrated books take longer because every image is re-encoded.
 
@@ -210,7 +210,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 **Issue 5: Conversion Fails Completely**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: File corrupted, DRM-protected, or exceeds size limit
-- *Fix*: Check file size (10MB free / 50MB pro). Remove any DRM first. Verify EPUB validity in Calibre.`
+- *Fix*: Check file size (10 MB limit). Remove any DRM first. Verify EPUB validity in Calibre.`
     },
     {
       heading: 'Device Compatibility Report',
@@ -285,7 +285,7 @@ For more on choosing between online and desktop tools, see our [Calibre vs Onlin
   faq: [
     { q: 'Will my EPUB convert perfectly to MOBI?', a: 'Most EPUB files convert successfully. Text content, basic formatting, and chapter structure are preserved. However, complex layouts and custom fonts may be simplified due to MOBI format limitations.' },
     { q: 'Can I read MOBI files on my Kindle?', a: 'Yes! MOBI is natively supported by all Kindle devices, especially older models (pre-2012). If you have a modern Kindle (2022+), consider using AZW3 or EPUB for better features.' },
-    { q: 'Is there a file size limit?', a: 'Free users can convert files up to 10 MB. Pro users enjoy support for files up to 50 MB, perfect for large illustrated books and comprehensive collections.' },
+    { q: 'Is there a file size limit?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
     { q: 'How long does conversion take?', a: 'Most EPUB to MOBI conversions complete in 10-30 seconds for typical books. Larger files with many images may take 1-2 minutes depending on complexity.' },
     { q: 'Will images be preserved in conversion?', a: 'Yes, embedded images are extracted and included in the MOBI file. However, image quality may be optimized for e-reader screens, and very large images might be resized.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Absolutely! Your EPUB table of contents is converted to MOBI navigation (NCX format), allowing you to jump between chapters in your Kindle reader.' },

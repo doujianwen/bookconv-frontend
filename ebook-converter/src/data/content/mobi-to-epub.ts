@@ -128,7 +128,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 
 **Technical Details:**
 - Engine: Calibre 7.x EPUB output plugin
-- Max file size: 10MB (free) / 50MB (pro)
+- Max file size: 10MB
 - Conversion time: 10-30 seconds for typical books
 - DRM: We don't bypass DRM — only convert files you own
 
@@ -172,7 +172,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 **Issue 4: Conversion Fails Completely**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: File is DRM-protected, corrupted, or exceeds size limit
-- *Fix*: Check file size (10MB free / 50MB pro). Remove DRM first if applicable. Verify MOBI validity in Calibre.
+- *Fix*: Check file size (10 MB limit). Remove DRM first if applicable. Verify MOBI validity in Calibre.
 
 **Issue 5: Font Display Issues**
 - *Symptom*: Text appears in wrong font or formatting is lost
@@ -289,7 +289,7 @@ Knowing the limits saves a wasted conversion — pick the route that matches whe
     { q: 'Can I read the converted EPUB on my Kindle?', a: 'Modern Kindles (2022+) can receive EPUB files via Send to Kindle service and automatically convert them. Older Kindles may need Calibre to convert EPUB back to AZW3/MOBI.' },
     { q: 'Does conversion preserve highlights and notes?', a: 'Basic highlights may be partially preserved depending on the source MOBI file. However, EPUB annotation systems are far superior, and you can add new highlights and notes in the converted file.' },
     { q: 'How long does MOBI to EPUB conversion take?', a: 'Most MOBI files under 200 pages convert in 10-30 seconds. Larger files with many images may take 1-2 minutes depending on complexity.' },
-    { q: 'Is there a limit to file size?', a: 'Free users can convert files up to 10 MB. Pro users enjoy support for files up to 50 MB, perfect for large illustrated books and comprehensive collections.' },
+    { q: 'Is there a limit to file size?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
     { q: 'Will the table of contents be preserved?', a: 'Yes. If your MOBI contains chapter markers or bookmarks, these are converted to EPUB navigation entries (NCX/NAV), allowing you to jump between chapters in your reader.' },
     { q: 'Is BookConv the best free MOBI to EPUB converter?', a: 'For a quick, no-install conversion it is among the fastest free options: it runs the same Calibre engine on our side, keeps your chapters and images, deletes the file after processing, and adds no watermark. For very large libraries you may prefer the desktop Calibre app, which gives deeper control — our MOBI to EPUB formatting guide covers its settings.' },
     { q: 'Why should I convert MOBI to EPUB instead of keeping MOBI?', a: 'EPUB is the open standard that works across all e-readers and reading apps. MOBI only works on Kindle devices and is deprecated by Amazon. Converting to EPUB future-proofs your library and gives you reading freedom.' },

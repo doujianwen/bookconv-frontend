@@ -28,7 +28,12 @@ export const content = {
     },
     {
       heading: `Popular Reading Group Guides`,
-      body: `Whether your group is diving into fantasy sagas or contemporary fiction, these guides cover format strategies for popular series:\n\n**Fantasy & Sci-Fi:**\n- [Harry Potter Digital Books: Multi-Device Reading Guide](/blog/harry-potter-digital-books-multiple-devices)\n- [Lord of the Rings Ebooks: Read Across Kindle, Kobo, and More](/blog/lord-of-the-rings-ebooks-multiple-devices)\n- [Chronicles of Narnia Ebooks: Complete Series Multi-Device Guide](/blog/chronicles-of-narnia-ebooks-multiple-devices)\n- [Twilight Ebooks: Read the Saga Across Devices](/blog/twilight-ebooks-multiple-devices)\n\n**Cross-Device Sync:**\n- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](/blog/sync-reading-across-devices)\n- [How to Sync Ebooks for Book Clubs and Reading Groups](/blog/sync-ebooks-reading-groups)\n\n**Format Reference:**\n- [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](/guide/kindle-formats)`
+      body: `Whether your group is diving into fantasy sagas or contemporary fiction, these guides cover format strategies for popular series:\n\n**Fantasy & Sci-Fi:**\n- [Harry Potter Digital Books: Multi-Device Reading Guide](/blog/harry-potter-digital-books-multiple-devices)\n- [Lord of the Rings Ebooks: Read Across Kindle, Kobo, and More](/blog/lord-of-the-rings-ebooks-multiple-devices)\n- [Chronicles of Narnia Ebooks: Complete Series Multi-Device Guide](/blog/chronicles-of-narnia-ebooks-multiple-devices)\n- [Twilight Ebooks: Read the Saga Across Devices](/blog/twilight-ebooks-multiple-devices)\n\n**Cross-Device Sync:**\n- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](/blog/sync-reading-across-devices)\n- [How to Sync Ebooks for Book Clubs and Reading Groups](/blog/sync-ebooks-reading-groups)\n\n**Format Reference:**\n- [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](/guide/kindle-formats)
+
+**Legacy & Niche Formats:**
+- [FB2 vs EPUB](/blog/fb2-vs-epub) for Russian-language library formats
+- [Legacy LIT, DJVU & FB2 converter guide](/blog/legacy-lit-djvu-fb2-converter) for archive recovery
+- [Kobo to EPUB setup](/blog/kobo-to-epub) for Kobo-native groups``
     },
     {
       heading: `Best Reader Apps for Book Clubs`,

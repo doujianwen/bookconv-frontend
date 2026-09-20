@@ -93,7 +93,7 @@ By following these tips, you can maximize the quality of your converted document
 3.  **High-Quality Output**: Our engine is optimized to preserve text flow and basic formatting, ensuring a professional-looking result.
 4.  **No Registration Required**: Get straight to converting without creating an account or providing an email address.
 
-BookConv is built by developers who understand the frustration of proprietary file formats. Our mission is to give you the freedom to access and use your digital content however you need. Whether you are converting a single chapter or an entire novel, we provide the speed and reliability you need.`
+BookConv is built by developers who understand the frustration of proprietary file formats. Our mission is to give you the freedom to access and use your digital content however you need. Whether you are converting a single chapter or an entire novel, we provide the speed and reliability you need. For quality verification after conversion, see our [check converted file quality guide](/blog/check-converted-file-quality). If you need to extract plain text instead of Word, try our [EPUB to TXT guide](/blog/epub-to-text). And for broader format comparisons, [EPUB vs MOBI vs AZW3](/blog/epub-vs-mobi) covers the device ecosystem.`
     }
   ]
 };

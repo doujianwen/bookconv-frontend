@@ -5,7 +5,7 @@ export const author = `BookConv Team`;
 export const tags = [`Large File`, `Troubleshooting`, `BookConv`, `Ebook`, `Pro`];
 
 export const content = {
-  intro: `The free tier accepts files up to 10 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink them for free, and when upgrading to Pro makes sense.`,
+  intro: `The free tier accepts files up to 10 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink or split them so they fit, and what Pro actually adds when you are converting in volume.`,
   sections: [
     {
       heading: `Why Your Ebook Is Over 10 MB`,
@@ -21,11 +21,11 @@ export const content = {
     },
     {
       heading: `When to Upgrade to Pro`,
-      body: `Pro raises the file size limit from 10 MB to 50 MB and removes hourly conversion limits. Consider upgrading if:\n\n**You convert large files regularly.** If 10 MB blocks you more than once a week, Pro pays for itself in time saved.\n\n**You need batch conversion.** Pro allows multiple files in one upload, which matters when processing entire libraries.\n\n**You're a publisher or author.** Managing multiple format outputs for a single manuscript is faster with bulk uploads and priority queueing.\n\n**You don't want to invest time in compression.** If shrinking files feels like extra work, the 50 MB limit removes that friction.`
+      body: `Pro does not raise the file size cap — 10 MB applies to every plan, Pro included. What Pro adds is batch conversion: several files in one upload instead of one at a time. Consider upgrading if:\n\n**You convert large files regularly.** If compression and upload is a routine, batching it removes the repetitive part.\n\n**You need batch conversion.** Pro allows multiple files in one upload, which matters when processing entire libraries.\n\n**You're a publisher or author.** Managing several format outputs for one manuscript is faster with bulk uploads.\n\n**You convert the same book into several formats.** Batch upload handles the repetition in one pass.`
     },
     {
       heading: `Quick Decision Checklist`,
-      body: `- **Under 10 MB?** Upload directly. No action needed.\n- **10–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file or upgrade to Pro.\n- **Converting regularly?** Pro likely saves more time than compression effort.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
+      body: `- **Under 10 MB?** Upload directly. No action needed.\n- **10–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 10 MB.\n- **Converting many files?** Pro takes several in one upload rather than one at a time.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
     }
   ]
 };
@@ -33,7 +33,7 @@ export const content = {
 export const faqs = [
   {
     question: `What's the file size limit on the free tier?`,
-    answer: `Free users can upload files up to 10 MB per conversion. Pro raises this to 50 MB, and the API plan allows up to 100 MB.`
+    answer: `10 MB per conversion, on every plan including Pro.`
   },
   {
     question: `How do I shrink an EPUB file before uploading?`,
@@ -44,12 +44,12 @@ export const faqs = [
     answer: `Yes. Most reading apps can combine multiple EPUB files into one library view. Calibre's free desktop tool can also split books by chapter markers automatically.`
   },
   {
-    question: `Is 50 MB enough for most ebooks?`,
-    answer: `Most text-only ebooks are under 2 MB. Even illustrated books are usually under 20 MB after compression. 50 MB covers nearly all standard publications, including scanned PDFs at moderate DPI.`
+    question: `Is 10 MB enough for most ebooks?`,
+    answer: `Most text-only ebooks are under 2 MB, so they upload with no preparation at all. Illustrated books and scanned PDFs routinely exceed 10 MB and need compression or splitting first.`
   },
   {
     question: `Does Pro let me convert files faster?`,
-    answer: `Pro includes priority queueing, which means your conversions run before free-tier jobs. On busy days, this can cut wait time significantly.`
+    answer: `No. Pro adds batch conversion — several files in one upload — but jobs are not prioritised by plan; every conversion goes through the same queue.`
   },
   {
     question: `Can I convert a scanned PDF to EPUB without losing quality?`,

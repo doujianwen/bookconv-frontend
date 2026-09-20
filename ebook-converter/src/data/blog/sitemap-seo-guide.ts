@@ -92,7 +92,7 @@ The pages themselves still have to earn their place. A conversion page that only
 - **Generated from live data**, so shipping a new format pair or a new article adds its URL automatically on the next deploy.
 - **Submit once in Search Console** and let Google re-fetch on its own — resubmitting after every build accomplishes nothing.
 - **Keep robots.txt consistent** with the sitemap, and name the sitemap inside robots.txt so crawlers beyond Google find it.
-- **Use honest metadata.** Real last-modified dates and differentiated priorities carry signal; identical values everywhere carry none.`
+- **Keep robots.txt consistent** with the sitemap, and name the sitemap inside robots.txt so crawlers beyond Google find it.\n- **Use honest metadata.** Real last-modified dates and differentiated priorities carry signal; identical values everywhere carry none.` For deeper technical SEO guidance on internal linking structure, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting).`
     }
   ]
 };

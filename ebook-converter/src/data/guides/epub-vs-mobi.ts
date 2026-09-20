@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'epub-vs-mobi'
 export const title = 'EPUB vs MOBI: Which Ebook Format Is Right for Your Device?'
@@ -44,7 +43,7 @@ The catch: **Kindle does not natively read EPUB** on most models released before
     },
     {
       heading: 'Should you bother converting at all?',
-      body: `Not always. If you already have an EPUB and your device reads EPUB natively (Kobo, Apple Books, etc.), leave it as EPUB. Converting only adds risk — each conversion can degrade images, lose fonts, or mishandle chapter structure.\n\nConvert only when your device requires a different format. For Kindle users, that means converting EPUB to AZW3 (or MOBI for very old devices). For everyone else, stick with EPUB and avoid the extra step.`,
+      body: `Not always. If you already have an EPUB and your device reads EPUB natively (Kobo, Apple Books, etc.), leave it as EPUB. Converting only adds risk — each conversion can degrade images, lose fonts, or mishandle chapter structure.\n\nConvert only when your device requires a different format. For Kindle users, that means converting EPUB to AZW3 (or MOBI for very old devices). For everyone else, stick with EPUB and avoid the extra step. For device-specific setup tips on Kobo and other non-Kindle readers, see [Read EPUB on Any Device](/blog/read-epub-on-any-device). And if you have FB2 or Lit files in your library, [FB2 vs EPUB](/blog/fb2-vs-epub) and [Lit format conversion guide](/blog/lit-format-conversion-and) explain those ecosystems.`,
     },
   ],
 }
@@ -55,6 +54,7 @@ export const faqs: BlogFaq[] = [
   { question: 'Do I need to convert my EPUB if I have a Kobo?', answer: 'No. Kobo e-readers natively support EPUB. Converting would only risk degrading the file. Keep your EPUB and load it directly onto your Kobo.' },
   { question: 'How do I convert EPUB to MOBI for free?', answer: 'Use a free online converter like BookConv at [/convert/epub-to-mobi](/convert/epub-to-mobi). Upload your EPUB, select MOBI, and download the converted file. No install needed.' },
   { question: 'Can I convert MOBI back to EPUB?', answer: 'Yes. If you want to move your MOBI files to a non-Kindle device, use [BookConv\'s MOBI to EPUB converter](/convert/mobi-to-epub). Note that formatting may be simplified since MOBI holds less information than EPUB.' },
+  { question: 'What about other formats like FB2 or Lit?', answer: 'FB2 is common in Russian ebook libraries — see [FB2 vs EPUB](/blog/fb2-vs-epub). Lit files are legacy Microsoft formats; our [Lit format conversion guide](/blog/lit-format-conversion-and) covers how to bring them into EPUB.' },
 ]
 
 // E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)

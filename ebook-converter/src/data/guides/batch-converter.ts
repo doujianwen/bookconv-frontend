@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'batch-converter'
 export const title = 'Batch Ebook Converter: Convert Many Files with BookConv (and When to Use Calibre)'
@@ -44,7 +43,7 @@ export const content = {
 | Offline | No (server-side) | Yes, fully offline | No (server-side) |
 | Best for | The everyday pile | Recurring bulk and privacy | Mixed-format work beyond ebooks |
 
-For most people, BookConv batch covers the pile of files you actually have today, and Calibre covers the warehouse of hundreds. CloudConvert is worth a look when your batch also includes non-ebook formats.`,
+For most people, BookConv batch covers the pile of files you actually have today, and Calibre covers the warehouse of hundreds. CloudConvert is worth a look when your batch also includes non-ebook formats. For a deeper look at Calibre-based workflows, see our [Calibre free batch conversion guide](/blog/calibre-free-batch).`,
     },
   ],
 }

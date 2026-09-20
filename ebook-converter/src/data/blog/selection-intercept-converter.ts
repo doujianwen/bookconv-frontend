@@ -24,8 +24,8 @@ export const content = {
 
 export const faqs = [
   {
-    "question": "Is BookConv free for unlimited conversions?",
-    "answer": "Yes. BookConv offers free online conversion with no daily limits for standard file sizes. Premium tiers exist only for bulk API access or team workflows."
+    "question": "Is BookConv free to use?",
+    "answer": "Yes. BookConv needs no account and imposes no daily cap; the convert endpoint is rate-limited to 20 requests per minute per IP. Paid plans exist for batch conversion and API access."
   },
   {
     "question": "Can I convert DRM-protected books?",

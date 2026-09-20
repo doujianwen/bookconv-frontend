@@ -36,7 +36,7 @@ So the realistic answer is: every currently supported Kindle reads AZW3 fully, a
 
 If you're stuck with one of those devices and styling matters, convert to MOBI instead: [convert AZW3 to MOBI](/convert/azw3-to-mobi). MOBI is the lowest-common-denominator target those readers handle most cleanly over USB. For the broader decision between the two, see [MOBI or AZW3 for Kindle](/blog/azw3-vs-mobi).
 
-If your library is full of old MOBI files you want to modernize, [convert MOBI to EPUB](/convert/mobi-to-epub) so they work across all your devices — not just Kindle.`
+If your library is full of old MOBI files you want to modernize, [convert MOBI to EPUB](/convert/mobi-to-epub) so they work across all your devices — not just Kindle. For the reverse direction — downgrading AZW3 to MOBI for very old hardware — see [AZW3 to MOBI guide](/blog/azw3-to-mobi). And if you're comparing format choices beyond Kindle, [EPUB vs MOBI](/blog/epub-vs-mobi) walks through the trade-offs.`
     },
     {
       heading: `How to Get AZW3 Onto Your Kindle`,

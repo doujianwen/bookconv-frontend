@@ -65,6 +65,29 @@ jobs:
       - name: Run code critic (fails on CRITICAL findings)
         run: cd ebook-converter && node scripts/code-critic.mjs
 
+  plan-claims:
+    name: Plan Claims Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # Fails if content copy re-advertises plan benefits the pipeline does not
+      # implement (file sizes above 10 MB, per-plan rate limits, priority
+      # queueing). The values were removed twice, and "restored" twice by a
+      # session that believed they were real. A text edit cannot stop that;
+      # this job can.
+      - name: Run plan claims audit (fails on false plan claims)
+        run: cd ebook-converter && node scripts/audit-plan-claims.mjs
+
+      - name: Run content integrity audit (fails on structural defects)
+        run: cd ebook-converter && node scripts/audit-content-integrity.mjs
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest

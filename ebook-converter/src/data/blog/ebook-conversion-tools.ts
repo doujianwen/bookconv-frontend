@@ -70,7 +70,7 @@ If you attempt to convert a complex cookbook using a free online converter or ba
       body: `Even with the best tools, conversion errors can occur. Here are some common issues and how to resolve them:
 
 *   **Lost Images**: Often caused by broken image paths in the source document. Ensure all images are embedded, not linked, before converting.
-*   **Broken Table of Contents**: If your TOC is not linked to proper heading styles (H1, H2) in the source, the converter cannot generate a clickable chapter list. Always use structured headings in your manuscript.
+*   **Broken Table of Contents**: If your TOC is not linked to proper heading styles (H1, H2) in the source, the converter cannot generate a clickable chapter list. Always use structured headings in your manuscript. For detailed troubleshooting steps, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting).
 *   **Weird Font Substitution**: E-readers use system fonts. If your source uses a rare custom font, it may fall back to a default sans-serif. Use web-safe fonts or embed fonts if the platform allows (EPUB 3 supports this).
 *   **Pagination Errors**: Fixed-layout books may not paginate correctly on different devices. Test on multiple screen sizes to ensure content isn't cut off.`
     }

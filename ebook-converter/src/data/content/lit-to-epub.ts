@@ -80,7 +80,7 @@ For LIT files that included DRM protection purchased from Microsoft Store, note 
     { q: 'Will LIT file conversion lose content?', a: 'No. The LIT to EPUB conversion fully preserves text paragraphs images chapter structure and basic formatting. While LIT did support some bold styling the converted EPUB will maintain all text content with even better readability.' },
     { q: 'Can the converted EPUB be read on Kindle?', a: 'Yes. Although Kindle natively supports AZW3/MOBI formats modern Kindle apps support receiving EPUB files via email which are then automatically converted to Kindle format. You can also use Calibre to convert EPUB to AZW3 in one click.' },
     { q: 'My LIT file has DRM what should I do?', a: 'If your LIT file still has DRM protection it must be removed before conversion. This usually requires original purchase credentials or license information. Contact our support for assistance with licensed files.' },
-    { q: 'How many LIT files can I convert at once?', a: 'Without a Pro plan you can convert files up to 10 MB each. Pro raises the per-file limit to 50 MB and unlocks batch conversion; the API tier supports files up to 100 MB.' },
+    { q: 'How many LIT files can I convert at once?', a: 'Files are capped at 10 MB each on every plan. Batch conversion is a Pro feature — several files in one upload instead of one at a time.' },
     { q: 'Does the conversion preserve bookmarks?', a: 'Yes. If your LIT file contained bookmarks or chapter markers these will be converted to EPUB navigation entries (NCX/NAV) allowing you to jump to specific chapters in your reader.' }
   ]
 ,
@@ -170,7 +170,7 @@ Para archivos LIT que incluían protección DRM comprada en Microsoft Store, ten
       { q: '¿Perderá contenido la conversión de LIT?', a: 'No. La conversión de LIT a EPUB preserva completamente los párrafos de texto, imágenes, estructura de capítulos y formato básico. Aunque LIT admitía algo de estilo en negrita, el EPUB convertido mantendrá todo el contenido de texto con aún mejor legibilidad.' },
       { q: '¿Se puede leer el EPUB convertido en Kindle?', a: 'Sí. Aunque Kindle admite de forma nativa los formatos AZW3/MOBI, las aplicaciones Kindle modernas admiten recibir archivos EPUB por correo, que luego se convierten automáticamente al formato Kindle. También puedes usar Calibre para convertir EPUB a AZW3 con un clic.' },
       { q: 'Mi archivo LIT tiene DRM, ¿qué debo hacer?', a: 'Si tu archivo LIT todavía tiene protección DRM, debe eliminarse antes de la conversión. Esto normalmente requiere credenciales de compra originales o información de licencia. Contacta a nuestro soporte para ayuda con archivos con licencia.' },
-      { q: '¿Cuántos archivos LIT puedo convertir a la vez?', a: 'Sin un plan Pro puedes convertir archivos de hasta 10 MB cada uno. Pro eleva el límite por archivo a 50 MB y desbloquea la conversión por lotes; el nivel API admite archivos de hasta 100 MB.' },
+      { q: '¿Cuántos archivos LIT puedo convertir a la vez?', a: 'Cada archivo está limitado a 10 MB en todos los planes. La conversión por lotes es una función Pro: varios archivos en una sola subida en vez de uno a uno.' },
       { q: '¿Conserva la conversión los marcadores?', a: 'Sí. Si tu archivo LIT contenía marcadores o marcadores de capítulo, estos se convertirán en entradas de navegación EPUB (NCX/NAV) que te permiten saltar a capítulos específicos en tu lector.' }
     ]
   }

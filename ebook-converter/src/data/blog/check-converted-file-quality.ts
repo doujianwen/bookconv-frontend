@@ -13,7 +13,7 @@ export const content = {
     },
     {
       heading: `Step 2: Open in Your Target Reader`,
-      body: `The most important test: does the file open and render correctly in the device or app you'll actually use?\n\n**Check these basics:**\n- The book opens without error messages\n- The table of contents is present and clickable\n- Pages turn smoothly without freezing\n- Text is selectable (not an image-only PDF)\n\nIf it doesn't open, the format may not match your reader. Check our format compatibility guide: [EPUB vs MOBI vs AZW3](/blog/epub-vs-mobi).`
+      body: `The most important test: does the file open and render correctly in the device or app you'll actually use?\n\n**Check these basics:**\n- The book opens without error messages\n- The table of contents is present and clickable\n- Pages turn smoothly without freezing\n- Text is selectable (not an image-only PDF)\n\nIf it doesn't open, the format may not match your reader. Check our format compatibility guide: [EPUB vs MOBI vs AZW3](/blog/epub-vs-mobi). For device-specific advice on reading on Kobo, Apple Books, or Android, see [Read EPUB on Any Device](/blog/read-epub-on-any-device).`
     },
     {
       heading: `Step 3: Inspect Content Completeness`,

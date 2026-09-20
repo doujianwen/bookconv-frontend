@@ -21,5 +21,5 @@ export const faqs = [
   { question: `Will my images be preserved in the Word document?`, answer: `Most images are preserved, but complex layouts with overlaid text may need manual adjustment. BookConv does its best to maintain image quality and position during conversion.` },
   { question: `Can I edit the converted Word document?`, answer: `Yes, that is the main purpose of converting to Word format. You can edit text, add comments, track changes, and modify formatting just like any other Word document.` },
   { question: `Does the conversion preserve hyperlinks?`, answer: `Hyperlinks are generally preserved in the conversion process. However, some complex link structures or JavaScript-based links may not carry over perfectly.` },
-  { question: `What is the maximum file size for conversion?`, answer: `BookConv supports files up to 10MB on the free tier and up to 50MB for Pro users. This should accommodate most ebooks and documents.` }
+  { question: `What is the maximum file size for conversion?`, answer: `BookConv accepts files up to 10 MB, on every plan. That covers most text-based ebooks and documents.` }
 ];

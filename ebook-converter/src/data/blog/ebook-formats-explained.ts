@@ -94,11 +94,11 @@ Upload the file, pick the target format, watch the progress bar, download the re
 
 **What the free tier gives you:**
 - Up to **10 MB per file**, which covers nearly every text-only novel
-- **5 conversions per hour**, with no account and no sign-up
+- **20 conversion requests per minute**, with no account and no sign-up
 - A **metadata preview** before you commit, so you can check the title and author were read correctly
 - A **live progress bar** — heavy files hand off to a background worker queue instead of stalling your tab
 
-**When you need more room:** Pro raises the ceiling to **50 MB per file**, and the API plan goes to **100 MB**. That's the range where illustrated books, scanned PDFs, and bulk jobs live.
+**When you need more room:** every plan stops at **10 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
 
 Two things worth knowing before you upload. **DRM-protected files are rejected on upload** — we don't strip protection, so there's nothing to work around. And **download links are temporary**: converted files are deleted after a while, so save the result when it's ready instead of bookmarking the page.
 
@@ -143,7 +143,7 @@ export const faqs = [
   },
   {
     question: `My book is bigger than 10 MB. What now?`,
-    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images, split the book, or move to Pro for 50 MB per file. The API plan allows 100 MB.`,
+    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images or split the book — the 10 MB cap applies to every plan.`,
   },
   {
     question: `What about DRM-protected purchases?`,
@@ -251,11 +251,11 @@ Sube el archivo, elige el formato destino, mira la barra de progreso, descarga e
 
 **Qué da la capa gratuita:**
 - Hasta **10 MB por archivo**, lo que cubre casi todas las novelas solo de texto
-- **5 conversiones por hora**, sin cuenta ni registro
+- **20 solicitudes de conversión por minuto**, sin cuenta ni registro
 - Una **vista previa de metadatos** antes de comprometerte, así compruebas que el título y el autor se leyeron bien
 - Una **barra de progreso en vivo** — los archivos pesados pasan a una cola de trabajadores en segundo plano en vez de bloquear tu pestaña
 
-**Cuando necesitas más espacio:** Pro sube el techo a **50 MB por archivo**, y el plan API va a **100 MB**. Ahí viven los libros ilustrados, los PDF escaneados y los trabajos por lotes.
+**Cuando necesitas más espacio:** todos los planes se detienen en **10 MB por archivo**, así que los libros ilustrados y los PDF escaneados necesitan compresión o división, no un plan mayor.
 
 Dos cosas que vale la pena saber antes de subir. **Los archivos con DRM se rechazan al subir** — no quitamos protección, así que no hay nada que rodear. Y **los enlaces de descarga son temporales**: los archivos convertidos se borran tras un rato, así que guarda el resultado cuando esté listo en vez de guardar la página en marcadores.
 
@@ -299,7 +299,7 @@ Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, edita
     },
     {
       question: `¿Mi libro es mayor de 10 MB. Qué ahora?`,
-      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes, divide el libro o pasa a Pro para 50 MB por archivo. El plan API permite 100 MB.`,
+      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes o divide el libro: el tope de 10 MB se aplica a todos los planes.`,
     },
     {
       question: `¿Y las compras con DRM?`,

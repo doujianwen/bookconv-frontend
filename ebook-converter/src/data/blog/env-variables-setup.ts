@@ -32,7 +32,7 @@ Only one variable is genuinely load-bearing: **REDIS_URL**. Storage, auth, payme
 
 **UPLOAD_DIR** is the local directory where each conversion gets a scratch folder. It defaults to /tmp/ebook-uploads. The process needs write access, and on ephemeral filesystems /tmp may be wiped between deploys — fine for in-flight jobs, not for anything you expect to persist.
 
-**MAX_FILE_SIZE_MB** caps upload size, defaulting to 10. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv the free tier allows 10 MB, Pro allows 50 MB, and the API tier allows 100 MB; self-hosting, those ceilings come from this variable and your rate-limit settings.
+**MAX_FILE_SIZE_MB** caps upload size, defaulting to 10. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv every plan allows 10 MB; self-hosting, that ceiling comes from this variable.
 
 **CALIBRE_PATH** points at the ebook-convert binary. The Docker image installs Calibre, so you rarely need to change this — but on a bare-metal host with a non-standard install, set the absolute path here.
 
@@ -77,7 +77,7 @@ Any variable whose name starts with **NEXT_PUBLIC_** is inlined into the JavaScr
       heading: `Rate limits, CORS, and keeping an eye on things`,
       body: `Once the basics run, these decide how BookConv behaves under load and how much you can see when it misbehaves.
 
-Rate limiting is per-IP and Redis-backed. **CONVERT_RATE_LIMIT_MAX** caps conversion requests per IP per window, **ANONYMOUS_RATE_LIMIT_MAX** covers general anonymous traffic, and **RATE_LIMIT_WINDOW_MS** sets the window length. On the hosted service these enforce the free tier's 5 conversions per hour; self-hosting, they're yours to tune.
+Rate limiting is per-IP and Redis-backed. **CONVERT_RATE_LIMIT_MAX** caps conversion requests per IP per window, **ANONYMOUS_RATE_LIMIT_MAX** covers general anonymous traffic, and **RATE_LIMIT_WINDOW_MS** sets the window length. On the hosted service the convert endpoint is limited to 20 requests per minute per IP, covering every plan alike; self-hosting, they're yours to tune.
 
 **RATE_LIMIT_SKIP_ON_REDIS_DOWN** is the interesting one. Set to true, requests are allowed through when Redis is unavailable — availability over enforcement. Set to false, they're rejected — enforcement over availability. Pick based on whether you'd rather be briefly abusable or briefly offline.
 

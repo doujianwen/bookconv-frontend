@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'ai-ebook-converter'
 export const title = 'AI Ebook Converter: Preparing Ebooks for NotebookLM, ChatGPT & More'
@@ -34,7 +33,7 @@ export const content = {
     },
     {
       heading: 'Choosing a converter for AI workflows',
-      body: `Pick by output quality, not by the "AI" label:\n\n- Need **clean text for RAG/NotebookLM** → TXT output, watch for layout noise.\n- Need **layout preserved** → PDF.\n- Want **no account, instant** → BookConv.\n\nThe "AI" in your workflow is the assistant you feed the file to — not the converter. For tool comparison across formats, see [Best Ebook Converter in 2026](/guide/best-ebook-converter). To understand which output format your Kindle expects, read [Kindle Formats Explained](/guide/kindle-formats).`,
+      body: `Pick by output quality, not by the "AI" label:\n\n- Need **clean text for RAG/NotebookLM** → TXT output, watch for layout noise.\n- Need **layout preserved** → PDF.\n- Want **no account, instant** → BookConv.\n\nThe "AI" in your workflow is the assistant you feed the file to — not the converter. For tool comparison across formats, see [Best Ebook Converter in 2026](/guide/best-ebook-converter). To understand which output format your Kindle expects, read [Kindle Formats Explained](/guide/kindle-formats). For a step-by-step workflow on importing AI-generated content from NotebookLM and ChatGPT into ebook format, see our [AI feeding guide](/blog/ai-feeding-notebooklm-chatgpt).`,
     },
   ],
 }

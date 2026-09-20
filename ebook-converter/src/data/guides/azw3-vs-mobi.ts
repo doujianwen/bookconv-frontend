@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'azw3-vs-mobi'
 export const title = 'AZW3 vs MOBI: Which Kindle Format Should You Use?'
@@ -18,7 +17,7 @@ export const content = {
   sections: [
     {
       heading: 'Quick comparison',
-      body: `| Feature | AZW3 | MOBI |\n|---|---|---|\n| Also known as | Kindle Format 8 (KF8) | Mobipocket |\n| Introduced | 2011 | ~2000 |\n| Embedded fonts | ✅ Yes | ❌ No |\n| CSS styling | ✅ Full | ❌ Minimal |\n| Images | ✅ Preserved | ⚠️ Often downgraded |\n| Chapter structure | ✅ Good | ⚠️ Depends on source |\n| Device support | Kindles 2011+ | Kindles ~2007–2015 |\n| Amazon preference | ✅ Recommended | ⚠️ Legacy only |\n\n**Bottom line:** AZW3 is the better format whenever your device supports it.`,
+      body: `| Feature | AZW3 | MOBI |\n|---|---|---|\n| Also known as | Kindle Format 8 (KF8) | Mobipocket |\n| Introduced | 2011 | ~2000 |\n| Embedded fonts | ✅ Yes | ❌ No |\n| CSS styling | ✅ Full | ❌ Minimal |\n| Images | ✅ Preserved | ⚠️ Often downgraded |\n| Chapter structure | ✅ Good | ⚠️ Depends on source |\n| Device support | Kindles 2011+ | Kindles ~2007–2015 |\n| Amazon preference | ✅ Recommended | ⚠️ Legacy only |\n\n**Bottom line:** AZW3 is the better format whenever your device supports it. For a detailed comparison including FB2 and Lit ecosystem notes, see [FB2 vs EPUB](/blog/fb2-vs-epub) and [Lit format conversion guide](/blog/lit-format-conversion-and). And if you need help diagnosing conversion issues after switching formats, our [ebook troubleshooting guide](/blog/ebook-troubleshooting) covers the most common headaches.`,
     },
     {
       heading: 'What is AZW3?',
@@ -34,7 +33,7 @@ export const content = {
     },
     {
       heading: 'How to convert EPUB to AZW3 or MOBI',
-      body: `Both conversions are free and run in your browser with [BookConv](https://www.bookconv.com):\n\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — recommended for all Kindles from 2016+\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — only for very old Kindles\n- **MOBI → AZW3**: [/convert/mobi-to-azw3](/convert/mobi-to-azw3) — upgrade your legacy files\n- **AZW3 → MOBI**: [/convert/azw3-to-mobi](/convert/azw3-to-mobi) — downgrade for older devices\n\nFiles are deleted within one hour. No software installation required.`,
+      body: `Both conversions are free and run in your browser with [BookConv](https://www.bookconv.com):\n\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — recommended for all Kindles from 2016+\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — only for very old Kindles\n- **MOBI → AZW3**: [/convert/mobi-to-azw3](/convert/mobi-to-azw3) — upgrade your legacy files\n- **AZW3 → MOBI**: [/convert/azw3-to-mobi](/convert/azw3-to-mobi) — downgrade for older devices\n\nFiles are deleted within one hour. No software installation required.\n\nFor a detailed comparison of these formats, see our [AZW3 vs MOBI guide](/blog/azw3-vs-mobi). If you need to convert from other sources like EPUB, check our [EPUB to AZW3 conversion guide](/blog/epub-to-azw3). Other format pairs worth knowing: [FB2 to EPUB keep formatting](/guide/fb2-to-epub-keep-formatting), [Lit to EPUB keep formatting](/guide/lit-to-epub-keep-formatting), and [Cbr to PDF guide](/guide/cbr-to-pdf) for comic archives.`,
     },
   ],
 }

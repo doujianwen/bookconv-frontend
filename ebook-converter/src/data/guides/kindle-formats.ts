@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'kindle-formats'
 export const title = 'What Format Does Kindle Use? AZW3, KFX, MOBI & EPUB Explained'
@@ -60,7 +59,10 @@ One caveat: older MOBI files built with non-standard tools sometimes fail to ope
 - **Can my Kindle read AZW3?** — model-by-model compatibility table. [/blog/can-kindle-read-azw3](/blog/can-kindle-read-azw3)
 - **Your ebook will not open on Kindle?** — five common causes and fixes. [/blog/why-ebook-wont-open-kindle](/blog/why-ebook-wont-open-kindle)
 - **EPUB to AZW3 step-by-step** — convert without losing formatting. [/guide/epub-to-azw3-for-kindle](/guide/epub-to-azw3-for-kindle)
-- **Moving from Kindle to Kobo?** — why EPUB is the right target. [/blog/mobi-to-kobo](/blog/mobi-to-kobo)`,
+- **Moving from Kindle to Kobo?** — why EPUB is the right target. [/blog/mobi-to-kobo](/blog/mobi-to-kobo)
+- **Upgrading AZW3 to MOBI for old devices** — compatibility guide. [/blog/azw3-to-mobi](/blog/azw3-to-mobi)
+- **FB2 and Lit format reference** — non-Amazon library formats explained. [/blog/fb2-vs-epub](/blog/fb2-vs-epub) and [/blog/lit-format-conversion-and](/blog/lit-format-conversion-and)
+- **Troubleshooting non-Kindle readers** — Kobo, Apple Books, and Android tips. [/blog/kobo-to-epub](/blog/kobo-to-epub) and [/blog/read-epub-on-any-device](/blog/read-epub-on-any-device)`,
     },
     {
       heading: 'Start converting now',

@@ -84,7 +84,7 @@ If you are choosing between a desktop tool and an online converter, see [/guide/
 | **No registration** | ✅ Yes | ❌ Requires account | ❌ Requires account | ❌ Requires account |
 | **Auto-delete files** | ✅ 1 hour | ⚠️ Varies | ❌ 24 hours | ❌ 2 hours |
 | **Calibre engine** | ✅ Yes | ⚠️ Proprietary | ⚠️ Proprietary | ⚠️ Proprietary |
-| **File size limit (free)** | ✅ 50MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
+| **File size limit (free)** | ✅ 10MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
 | **Batch conversion** | ✅ Pro plan | ✅ Paid | ✅ Paid | ✅ Paid |
 | **Open source backend** | ✅ Calibre | ❌ Closed | ❌ Closed | ❌ Closed |
 

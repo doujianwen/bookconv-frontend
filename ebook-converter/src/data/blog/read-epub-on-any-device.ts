@@ -34,7 +34,7 @@ export const content = {
 - **You are on a Kindle** — Kindles do not read EPUB. Convert to AZW3 with [EPUB to AZW3](/convert/epub-to-azw3) first.
 - **Your only viewer expects PDF** — convert [EPUB to PDF](/convert/epub-to-pdf), accepting that the layout becomes fixed and stops reflowing.
 
-For the format choice itself, [EPUB vs MOBI](/blog/epub-vs-mobi) covers where each reader wins, and the [Kindle Formats guide](/guide/kindle-formats) handles Amazon devices.`
+For the format choice itself, [EPUB vs MOBI](/blog/epub-vs-mobi) covers where each reader wins, and the [Kindle Formats guide](/guide/kindle-formats) handles Amazon devices. Kobo owners should note that EPUB is native on Kobo — see our [Kobo to EPUB guide](/blog/kobo-to-epub) for device setup tips. And if your library includes FB2 files, [FB2 vs EPUB](/blog/fb2-vs-epub) explains how they compare. For troubleshooting conversion issues, our [ebook troubleshooting guide](/blog/ebook-troubleshooting) covers the most common headaches.`
     },
     {
       heading: `Key Takeaways`,

@@ -184,7 +184,7 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
     { q: 'How are images and charts handled?', a: 'Pure text format cannot contain images. If the original EPUB contains images, we attempt to extract alt text descriptions and insert them as notes in the text where possible.' },
     { q: 'Can the converted text be used directly for AI analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text that can be directly fed to any NLP tool, AI summarizer, or text analysis platform.' },
     { q: 'What encoding does the output TXT use?', a: 'Default is UTF-8 supporting Chinese, English, Japanese, Korean, Russian, and other multilingual content. Other encodings (GBK, BIG5) can be specified during conversion if needed.' },
-    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users can convert up to 5 files per hour. Pro users enjoy unlimited batch conversion with files up to 50 MB each, perfect for processing entire book collections.' },
+    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 10 MB.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors.' }
   ]
 ,
@@ -356,7 +356,7 @@ Si tu fuente es una biblioteca de Kindle en lugar de EPUB, la misma extracción 
       { q: '¿Cómo se manejan las imágenes y gráficos?', a: 'El formato de texto puro no puede contener imágenes. Si el EPUB original contiene imágenes, intentamos extraer las descripciones de texto alternativo (alt) e insertarlas como notas en el texto cuando es posible.' },
       { q: '¿Se puede usar el texto convertido directamente para análisis de IA?', a: 'Absolutamente. El texto de salida ha eliminado todos los marcadores de formato y el espacio en blanco extra. Es texto plano estándar que se puede alimentar directamente a cualquier herramienta NLP, resumidor de IA o plataforma de análisis de texto.' },
       { q: '¿Qué codificación usa el TXT de salida?', a: 'Por defecto es UTF-8, compatible con contenido multilingüe en chino, inglés, japonés, coreano, ruso y otros. Otras codificaciones (GBK, BIG5) se pueden especificar durante la conversión si es necesario.' },
-      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos pueden convertir hasta 5 archivos por hora. Los usuarios Pro disfrutan de conversión por lotes ilimitada con archivos de hasta 50 MB cada uno, perfecto para procesar colecciones completas de libros.' },
+      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos convierten de uno en uno. La conversión por lotes es una función Pro y admite hasta 20 archivos en una sola subida para formatos locales como EPUB a TXT; cada archivo está limitado a 10 MB.' },
       { q: '¿Conserva la conversión la tabla de contenidos?', a: 'Sí. La TOC se añade como una sección de comentarios al inicio del archivo TXT, listando todos los capítulos y referencias de página para una navegación fácil en editores de texto.' }
     ]
   }
