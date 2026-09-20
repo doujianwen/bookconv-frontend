@@ -28,8 +28,45 @@ import * as epub_to_zip from './epub-to-zip';
 import * as lit_to_mobi from './lit-to-mobi';
 import * as azw_to_mobi from './azw-to-mobi';
 import * as chm_to_mobi from './chm-to-mobi';
+import * as mobi_to_azw3 from './mobi-to-azw3';
 
-export const CONTENT_MAP: Record<string, any> = {
+/**
+ * The body of a conversion page: exactly the pieces the renderer and the
+ * JSON-LD generator read. `authorship` and any future keys ride along as
+ * extra properties — nothing here is closed.
+ */
+export interface ConversionContentBody {
+  hero?: { title?: string; subtitle?: string };
+  sections?: Array<{ heading: string; body: string }>;
+  faq?: Array<{ q: string; a: string }>;
+}
+
+/**
+ * A convert-page content module (`src/data/content/<src>-to-<tgt>.ts`).
+ * All 30 modules export exactly this set of names — verified before typing:
+ * slug / title / level / wordCount / content, plus optional metaDescription
+ * and `es`. Extending the body keeps the module namespace itself assignable
+ * wherever a body is expected (the `?? contentData` fallback in
+ * convert/[slug]/page.tsx depends on that).
+ */
+export interface ConversionContentModule extends ConversionContentBody {
+  slug: string;
+  title: string;
+  metaDescription?: string;
+  level: string;
+  wordCount: number;
+  content: ConversionContentBody;
+  /** The three translated pages (epub-to-doc, epub-to-txt, lit-to-epub). */
+  es?: ConversionContentBody & {
+    title?: string;
+    metaDescription?: string;
+    content: ConversionContentBody & {
+      hero: { title?: string; subtitle: string };
+    };
+  };
+}
+
+export const CONTENT_MAP: Record<string, ConversionContentModule> = {
   'epub-to-azw3': epub_to_azw3,
   'azw3-to-epub': azw3_to_epub,
   'epub-to-rtf': epub_to_rtf,
@@ -60,6 +97,7 @@ export const CONTENT_MAP: Record<string, any> = {
   'lit-to-mobi': lit_to_mobi,
   'azw-to-mobi': azw_to_mobi,
   'chm-to-mobi': chm_to_mobi,
+  'mobi-to-azw3': mobi_to_azw3,
 };
 
 export function getContent(slug: string) {

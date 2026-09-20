@@ -50,6 +50,7 @@ const CONTENT_DATES: Record<string, string> = {
   'html-to-epub': '2026-08-09',
   'lit-to-epub': '2026-08-24',
   'lit-to-mobi': '2026-08-13',
+  'mobi-to-azw3': '2026-09-20',
   'mobi-to-epub': '2026-08-25',
   'mobi-to-pdf': '2026-08-08',
   'mobi-to-txt': '2026-08-08',
