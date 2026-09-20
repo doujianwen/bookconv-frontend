@@ -14,10 +14,12 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // 诊断/临时产物（本次会话生成），不属项目源码
     ".qc/**",
+    // 归档的废弃脚本（含语法错误，不属生产代码）
+    "_archived/**",
   ]),
   // ── 分层：Node CJS 脚本（require 合法）─────────────────────
   {
-    files: ["scripts/**/*.js", "scripts/**/*.cjs"],
+    files: ["scripts/**/*.js", "scripts/**/*.cjs", "scripts/**/*.mjs"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-var-requires": "off",
