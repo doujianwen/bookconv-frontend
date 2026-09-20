@@ -2,7 +2,6 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
-import { COMPAT_MAP } from '@/data/compat'
 
 // Derive every supported conversion URL directly from CONTENT_MAP — the
 // canonical source of truth for /convert/[slug] pages (generateStaticParams
@@ -72,10 +71,48 @@ const ESP_BLOG_SLUGS: readonly string[] = [
   'why-convert-lit-to-epub',
 ]
 
-// Compat report pages are English-only; single entry today, grows with
-// COMPAT_MAP. Keyed by slug to match the loop below.
-const COMPAT_DATES: Record<string, string> = {
-  'epub-to-mobi-on-kindle-paperwhite': '2026-08-11',
+// Spanish guide pages (post-fix 2026-09-19): routes now correctly render
+// English body under /es/guide/* with lang="es". Not translated — English
+// fallback — but URL is valid and hreflang/canonical are correct. Prevents
+// persistent 404s in GSC while guide translations are built.
+const ESP_GUIDE_SLUGS: readonly string[] = [
+  'calibre-vs-online-converter',
+  'best-ebook-converter',
+  'epub-vs-mobi',
+  'azw3-vs-mobi',
+  'kindle-formats',
+  'batch-converter',
+  'ai-ebook-converter',
+  'calibre-alternative',
+  'epub-to-azw3-for-kindle',
+  'epub-to-mobi-keep-formatting',
+  'azw3-to-mobi-keep-formatting',
+]
+
+// Guide last-modified dates for sitemap (mirrors content file dates)
+const GUIDE_DATES: Record<string, string> = {
+  'ai-ebook-converter': '2026-08-07',
+  'azw3-to-epub-keep-formatting': '2026-08-02',
+  'azw3-to-mobi-keep-formatting': '2026-08-03',
+  'azw3-vs-mobi': '2026-09-10',
+  'batch-converter': '2026-08-07',
+  'best-ebook-converter': '2026-08-07',
+  'calibre-alternative': '2026-08-07',
+  'calibre-vs-online-converter': '2026-08-02',
+  'cbr-to-pdf': '2026-08-02',
+  'djvu-to-pdf': '2026-08-02',
+  'docx-to-epub-self-publish': '2026-08-02',
+  'epub-to-azw3-for-kindle': '2026-08-02',
+  'epub-to-mobi-keep-formatting': '2026-08-02',
+  'epub-to-txt-extract': '2026-08-02',
+  'epub-vs-mobi': '2026-09-10',
+  'fb2-to-epub-keep-formatting': '2026-08-03',
+  'fix-epub-to-pdf-formatting': '2026-08-02',
+  'kindle-formats': '2026-08-07',
+  'lit-to-epub-keep-formatting': '2026-08-02',
+  'mobi-to-epub-keep-formatting': '2026-08-02',
+  'pdf-to-epub-keep-formatting': '2026-08-02',
+  'txt-to-epub-build-ebook': '2026-08-03',
 }
 
 // Homepage + static (non-data-backed) route pages. Values are the mtime of
@@ -148,6 +185,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         allUrls.push({
           url: baseUrl + prefix + '/blog/' + slug,
           lastModified: new Date(BLOG_DATES[slug] || '2026-07-12'),
+          changeFrequency: 'yearly' as const,
+          priority: 0.6,
+        })
+      }
+      // Spanish guide pages (post-fix 2026-09-19): routes now correctly render
+      // English body under /es/guide/* with lang="es". Not translated — English
+      // fallback — but URL is valid and hreflang/canonical are correct.
+      for (const slug of ESP_GUIDE_SLUGS) {
+        allUrls.push({
+          url: baseUrl + prefix + '/guide/' + slug,
+          lastModified: new Date(GUIDE_DATES[slug] || '2026-08-02'),
           changeFrequency: 'yearly' as const,
           priority: 0.6,
         })
