@@ -110,7 +110,33 @@ export async function middleware(request: NextRequest) {
       }
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
-    // All other /es/* paths → 404 (guide, static, blog without es version)
+    // /es/guide/* — post-fix 2026-09-19, these routes now render correctly
+    // (generateStaticParams emits both {locale, slug} pairs). English body
+    // serves as fallback under /es/guide/* with lang="es". Whitelist mirrors
+    // ESP_GUIDE_SLUGS in sitemap.ts to prevent persistent 404s in GSC.
+    if (pathname.startsWith('/es/guide/')) {
+      const slug = pathname.replace('/es/guide/', '');
+      const ESP_GUIDE_SLUGS = [
+        'calibre-vs-online-converter',
+        'best-ebook-converter',
+        'epub-vs-mobi',
+        'azw3-vs-mobi',
+        'kindle-formats',
+        'batch-converter',
+        'ai-ebook-converter',
+        'calibre-alternative',
+        'epub-to-azw3-for-kindle',
+        'epub-to-mobi-keep-formatting',
+        'azw3-to-mobi-keep-formatting',
+      ];
+      if (ESP_GUIDE_SLUGS.includes(slug)) {
+        const response = NextResponse.next();
+        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+        return applySecurityHeaders(request, response);
+      }
+      return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
+    }
+    // All other /es/* paths → 404 (static pages, blog without es version)
     return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
   }
 
