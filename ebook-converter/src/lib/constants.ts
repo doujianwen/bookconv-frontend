@@ -34,6 +34,7 @@ export const KEYWORDS: KeywordData[] = [
   { source: 'mobi', target: 'pdf', keyword: 'mobi to pdf converter', kd: 5, searchVolume: 3600, phase: 'P0', status: 'live' },
   { source: 'azw3', target: 'pdf', keyword: 'azw3 to pdf converter', kd: 2, searchVolume: 1900, phase: 'P0', status: 'live' },
   { source: 'azw3', target: 'mobi', keyword: 'azw3 to mobi converter', kd: 0, searchVolume: 2400, phase: 'P0', status: 'live' },
+  { source: 'mobi', target: 'azw3', keyword: 'mobi to azw3 converter', kd: 0, searchVolume: 1800, phase: 'P0', status: 'live' },
   { source: 'fb2', target: 'epub', keyword: 'fb2 to epub converter', kd: 0, searchVolume: 1300, phase: 'P0', status: 'live' },
   { source: 'lit', target: 'epub', keyword: 'lit to epub converter', kd: 0, searchVolume: 1600, phase: 'P0', status: 'live' },
   { source: 'doc', target: 'epub', keyword: 'doc to epub converter', kd: 3, searchVolume: 2400, phase: 'P0', status: 'live' },

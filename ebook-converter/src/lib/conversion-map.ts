@@ -36,6 +36,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "rtf-epub":   { tool: "calibre", description: "RTF to EPUB" },
   "epub-png":   { tool: "calibre+imagemagick", description: "EPUB to PNG Images (via PDF)" },
   "azw3-mobi":  { tool: "calibre", description: "AZW3 to MOBI (Legacy Kindle)" },
+  "mobi-azw3":  { tool: "calibre", description: "MOBI to AZW3 (Kindle Format 8)" },
   "mobi-txt":   { tool: "calibre", description: "MOBI to TXT (Plain Text)" },
   "epub-docx":  { tool: "calibre", description: "EPUB to Word (DOCX)" },
   "docx-epub":  { tool: "calibre", description: "DOCX to EPUB" },
