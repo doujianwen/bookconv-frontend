@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'docx-to-epub-self-publish'
 export const title = 'DOCX to EPUB: Turn Your Word Manuscript into a Real Ebook'
@@ -34,7 +33,7 @@ export const content = {
     },
     {
       heading: 'Validate before you publish',
-      body: `Before uploading to a store, open the EPUB in a reader and check three things: the **table of contents** lists every chapter, the **cover** displays, and the text **reflows** cleanly on a phone. If any of those fail, the issue is almost always in the source DOCX, not the converter. A format overview is in [/blog/ebook-formats-explained](/blog/ebook-formats-explained).`,
+      body: `Before uploading to a store, open the EPUB in a reader and check three things: the **table of contents** lists every chapter, the **cover** displays, and the text **reflows** cleanly on a phone. If any of those fail, the issue is almost always in the source DOCX, not the converter. A format overview is in [/blog/ebook-formats-explained](/blog/ebook-formats-explained). For a full quality checklist before publishing, see [check converted file quality guide](/blog/check-converted-file-quality).`,
     },
   ],
 }

@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'txt-to-epub-build-ebook'
 export const title = 'TXT to EPUB: Turn a Plain Text File into a Real Ebook with a TOC'
@@ -36,7 +35,7 @@ Without these, you simply get a scrollable TXT with a different extension.`,
     },
     {
       heading: 'Convert with Calibre (more control)',
-      body: `Calibre opens TXT and converts to EPUB with structure detection. Open the file, pick **Convert books → EPUB**, then use **Structure detection** to map your chapter markers (for example lines starting with Chapter) to headings. For a broader comparison of tools, see [/guide/calibre-vs-online-converter](/guide/calibre-vs-online-converter).`,
+      body: `Calibre opens TXT and converts to EPUB with structure detection. Open the file, pick **Convert books → EPUB**, then use **Structure detection** to map your chapter markers (for example lines starting with Chapter) to headings. For a broader comparison of tools, see [/guide/calibre-vs-online-converter](/guide/calibre-vs-online-converter). And if you need to understand format trade-offs for your device, [EPUB vs MOBI vs AZW3](/blog/epub-vs-mobi) covers the landscape.`,
     },
     {
       heading: 'Check the result before you trust it',

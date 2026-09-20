@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'azw3-to-epub-keep-formatting'
 export const title = 'AZW3 to EPUB: Remove Kindle Lock-in and Read Anywhere'
@@ -36,7 +35,7 @@ Going the other direction? [Convert MOBI to EPUB](/convert/mobi-to-epub) to free
     },
     {
       heading: 'Convert with Calibre',
-      body: `Calibre handles AZW3 to EPUB on your desktop and keeps everything local. Add the book, pick **Convert books → EPUB**, and review the **Structure detection** settings so chapter breaks map correctly. For help choosing formats and understanding the landscape, see [/blog/ebook-formats-explained](/blog/ebook-formats-explained).`,
+      body: `Calibre handles AZW3 to EPUB on your desktop and keeps everything local. Add the book, pick **Convert books → EPUB**, and review the **Structure detection** settings so chapter breaks map correctly. For help choosing formats and understanding the landscape, see [/blog/ebook-formats-explained](/blog/ebook-formats-explained). For device-specific format advice, also check [Kindle Formats Explained](/guide/kindle-formats) and [AZW3 vs MOBI](/blog/azw3-vs-mobi).`,
     },
   ],
 }

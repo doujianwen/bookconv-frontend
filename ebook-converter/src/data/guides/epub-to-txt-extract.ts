@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'epub-to-txt-extract'
 export const title = 'EPUB to TXT: Extract Plain Text Without Losing Your Chapter Order'
@@ -28,7 +27,7 @@ export const content = {
 - **Paragraphs merge** into one wall of text when line breaks are dropped.
 - **Reading order scrambles** when the converter processes the EPUB spine out of sequence.
 
-Your original EPUB is untouched; the converter just lost the structure on the way out.`,
+Your original EPUB is untouched; the converter just lost the structure on the way out. For the reverse workflow — building an EPUB from clean text — see [/blog/txt-to-epub](/blog/txt-to-epub). And if you need to understand why format choice matters for your device, [EPUB vs MOBI vs AZW3](/blog/epub-vs-mobi) covers the trade-offs.`,
     },
     {
       heading: 'Extract with BookConv (fastest)',
