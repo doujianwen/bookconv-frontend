@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     ".qc/**",
     // 归档的废弃脚本（含语法错误，不属生产代码）
     "_archived/**",
+    // 会话临时脚本（.cjs 定点替换/探针，CJS + require 属预期）；已随 .gitignore 排除
+    "_wb_tmp/**",
   ]),
   // ── 分层：Node CJS 脚本（require 合法）─────────────────────
   {

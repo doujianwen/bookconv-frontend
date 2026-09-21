@@ -96,3 +96,4 @@ gsc-service-account.json
 # 已于 2026-09-19 用 `git rm -r --cached` 移出跟踪；文件仍保留在工作目录
 /数据分析/
 _archived/
+_wb_tmp/

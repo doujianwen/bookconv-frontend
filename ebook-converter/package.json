@@ -17,7 +17,8 @@
     "verify:tracking": "node scripts/source-tracking-check.mjs",
     "check:blog": "node scripts/publish-gate.mjs",
     "audit:content": "node scripts/audit-content-integrity.mjs",
-    "audit:claims": "node scripts/audit-plan-claims.mjs"
+    "audit:claims": "node scripts/audit-plan-claims.mjs",
+    "audit:syntax": "node scripts/syntax-sweep.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

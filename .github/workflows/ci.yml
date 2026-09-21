@@ -29,6 +29,13 @@ jobs:
       - name: Install dependencies
         run: cd ebook-converter && npm ci
 
+      # A parse error anywhere fails `next build`, and a failed Vercel build is
+      # silent: the previous deployment keeps serving, so the site looks healthy
+      # while every push is dead (measured: 14 hours, 2026-09-21). core content
+      # gates only parse src/data/**; this step parses the whole tree.
+      - name: TypeScript parse sweep (whole tree)
+        run: cd ebook-converter && node scripts/syntax-sweep.mjs
+
       - name: Run ESLint
         run: cd ebook-converter && npx eslint . --max-warnings 0
 
