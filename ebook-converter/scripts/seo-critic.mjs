@@ -265,7 +265,19 @@ function checkEnRedirects() {
 function getConversionMapSize() {
   const src = read(join(ROOT, 'src', 'lib', 'conversion-map.ts')) || '';
   const keys = [...src.matchAll(/"([a-z0-9]+-[a-z0-9]+)":/g)].map((m) => m[1]);
-  return { size: keys.length, validConvertSlugs: new Set(keys.map((k) => k.replace('-', '-to-'))), supportedFormats: new Set(keys.flatMap((k) => k.split('-'))) };
+  // A live conversion page is NOT always `key with -to- substituted`. Middleware
+  // 301s a few deduplicated pairs to their canonical page, and the canonical slug
+  // is then the redirect TARGET -- e.g. /convert/epub-to-docx -> /convert/epub-to-word,
+  // where the map key is `epub-docx` (alias word->docx). Linking to the canonical
+  // target is correct; treating the key as the only valid slug flagged live pages
+  // as dead links. Learn the canonical targets from the redirect table.
+  const mw = read(join(ROOT, 'src', 'middleware.ts')) || '';
+  const canonical = [...mw.matchAll(/'\/convert\/([a-z0-9-]+)':\s*'\/convert\/([a-z0-9-]+)'/g)].map((m) => m[2]);
+  return {
+    size: keys.length,
+    validConvertSlugs: new Set([...keys.map((k) => k.replace('-', '-to-')), ...canonical]),
+    supportedFormats: new Set(keys.flatMap((k) => k.split('-'))),
+  };
 }
 
 function main() {

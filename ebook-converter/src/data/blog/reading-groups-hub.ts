@@ -33,7 +33,7 @@ export const content = {
 **Legacy & Niche Formats:**
 - [FB2 vs EPUB](/blog/fb2-vs-epub) for Russian-language library formats
 - [Legacy LIT, DJVU & FB2 converter guide](/blog/legacy-lit-djvu-fb2-converter) for archive recovery
-- [Kobo to EPUB setup](/blog/kobo-to-epub) for Kobo-native groups``
+- [Kobo to EPUB setup](/blog/kobo-to-epub) for Kobo-native groups`
     },
     {
       heading: `Best Reader Apps for Book Clubs`,

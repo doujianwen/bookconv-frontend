@@ -1,6 +1,6 @@
 # BookConv
 
-> Free online ebook format converter supporting 28+ formats (17+ dedicated ebook formats plus documents and images). No registration, no watermarks. Free conversions handle files up to 10 MB (5 files/hour); Pro unlocks up to 50 MB. Powered by the Calibre engine and runs entirely in your browser.
+> Free online ebook format converter supporting 28+ formats (17+ dedicated ebook formats plus documents and images). No registration, no watermarks. Uploads are limited to 10 MB per file and conversions to 20 per minute, on every plan. Powered by the Calibre engine and runs entirely in your browser.
 
 ## Supported Formats
 EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU, JPG, PNG, ZIP
@@ -11,6 +11,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [EPUB to MOBI](https://www.bookconv.com/convert/epub-to-mobi)
 - [MOBI to EPUB](https://www.bookconv.com/convert/mobi-to-epub)
 - [AZW3 to MOBI](https://www.bookconv.com/convert/azw3-to-mobi)
+- [MOBI to AZW3](https://www.bookconv.com/convert/mobi-to-azw3)
 - [MOBI to PDF](https://www.bookconv.com/convert/mobi-to-pdf)
 - [MOBI to TXT](https://www.bookconv.com/convert/mobi-to-txt)
 - [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)

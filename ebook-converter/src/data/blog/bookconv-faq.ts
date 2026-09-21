@@ -33,7 +33,7 @@ export const content = {
 - Conversions run in your browser; uploaded files are encrypted and deleted within 1 hour.
 - Supports EPUB, MOBI, AZW3, PDF, and TXT, plus conversions between them.
 - No software install — works on phone, tablet, and laptop.
-- For one-off conversions on any device, BookConv is a lighter path than installing Calibre.` For help with common issues, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting). And if you need to handle large libraries or rare formats, our [Calibre free batch conversion guide](/blog/calibre-free-batch) covers those scenarios.`
+- For one-off conversions on any device, BookConv is a lighter path than installing Calibre. For help with common issues, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting). And if you need to handle large libraries or rare formats, our [Calibre free batch conversion guide](/blog/calibre-free-batch) covers those scenarios.`
     }
   ]
 };

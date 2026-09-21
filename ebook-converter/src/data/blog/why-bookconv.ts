@@ -33,7 +33,7 @@ export const content = {
 - Files are encrypted in transit and deleted within 1 hour of conversion.
 - The same flow works on laptop, phone, or tablet; convert EPUB to AZW3 for Kindle on the spot.
 - Covers the everyday formats (EPUB, MOBI, AZW3, PDF, TXT).
-- Best for occasional, cross-device conversions; desktop tools still win for huge libraries.` For batch workflows with large libraries, see our [Calibre free batch conversion guide](/blog/calibre-free-batch) and [batch converter guide](/guide/batch-converter). And if you want to verify your converted file quality, check our [check converted file quality guide](/blog/check-converted-file-quality).`
+- Best for occasional, cross-device conversions; desktop tools still win for huge libraries. For batch workflows with large libraries, see our [Calibre free batch conversion guide](/blog/calibre-free-batch) and [batch converter guide](/guide/batch-converter). And if you want to verify your converted file quality, check our [check converted file quality guide](/blog/check-converted-file-quality).`
     }
   ]
 };

@@ -37,6 +37,11 @@
  *
  * Usage:  node scripts/audit-plan-claims.mjs
  * Exit:   0 = clean, 1 = at least one ERROR
+ *
+ * Scope: src/data/**.ts (the content tree) plus public/llms.txt. The content
+ * tree alone was not enough -- llms.txt kept advertising "Pro unlocks up to
+ * 50 MB" for four days after the .ts files were cleaned, because this gate never
+ * looked outside src/data.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -86,33 +91,79 @@ function sentencesOf(line) {
     .filter(Boolean);
 }
 
+/** Violations inside one line, if any. */
+function lineHits(line, rel, lineNo, severity) {
+  if (/^\s*(\/\/|\*)/.test(line)) return [];              // comment
+  if (COMPARISON_ROW.test(line)) return [];                // competitor table
+  if (!CLAIM.test(line)) return [];
+  const out = [];
+  for (const s of sentencesOf(line)) {
+    if (!CLAIM.test(s)) continue;
+    if (THIRD_PARTY.test(s)) continue;
+    if (!TIER.test(s)) continue;
+    out.push({ rel, line: lineNo, severity, text: s.replace(/\s+/g, ' ') });
+  }
+  return out;
+}
+
 function scan(dirs, severity) {
   const hits = [];
+  let filesSeen = 0;
   for (const dir of dirs) {
     const abs = path.join(ROOT, dir);
     if (!fs.existsSync(abs)) continue;
     for (const f of fs.readdirSync(abs)) {
       if (!f.endsWith('.ts')) continue;
+      filesSeen++;
       const rel = `${dir}/${f}`;
-      const lines = fs.readFileSync(path.join(abs, f), 'utf8').split('\n');
-      lines.forEach((line, i) => {
-        if (/^\s*(\/\/|\*)/.test(line)) return;              // comment
-        if (COMPARISON_ROW.test(line)) return;                // competitor table
-        if (!CLAIM.test(line)) return;
-        for (const s of sentencesOf(line)) {
-          if (!CLAIM.test(s)) continue;
-          if (THIRD_PARTY.test(s)) continue;
-          if (!TIER.test(s)) continue;
-          hits.push({ rel, line: i + 1, severity, text: s.replace(/\s+/g, ' ') });
-        }
-      });
+      fs.readFileSync(path.join(abs, f), 'utf8')
+        .split('\n')
+        .forEach((line, i) => hits.push(...lineHits(line, rel, i + 1, severity)));
     }
+  }
+  return { hits, filesSeen };
+}
+
+/**
+ * Non-TS surfaces that reach users and crawlers, carrying the same promises.
+ * public/llms.txt matters most: LLM crawlers read it, so a false plan claim
+ * survives there even once every .ts file is clean -- and it did, for four days
+ * after the content-layer sweep, because this gate only walked src/data/**.ts.
+ */
+const EXTRA_FILES = ['public/llms.txt'];
+
+function scanFiles(rels, severity) {
+  const hits = [];
+  for (const rel of rels) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) {
+      hits.push({ rel, line: 0, severity: 'ERROR', text: `scan target missing: ${rel}` });
+      continue;
+    }
+    fs.readFileSync(abs, 'utf8')
+      .split('\n')
+      .forEach((line, i) => hits.push(...lineHits(line, rel, i + 1, severity)));
   }
   return hits;
 }
 
-const errors = scan(SCAN_DIRS, 'ERROR');
-const warnings = scan(WARN_ONLY_DIRS, 'WARN');
+const main = scan(SCAN_DIRS, 'ERROR');
+const archive = scan(WARN_ONLY_DIRS, 'WARN');
+const extras = scanFiles(EXTRA_FILES, 'ERROR');
+const errors = [...main.hits, ...extras];
+const warnings = archive.hits;
+
+// Guard against a vacuous pass. A scan that reads zero files reports zero
+// findings, which reads identically to a clean tree -- so assert that the
+// fixture was actually found. This bites whenever the script is run from the
+// wrong directory (the repo root is the PARENT of the app, so pathspecs and
+// relative scans silently resolve to nothing).
+if (main.filesSeen === 0) {
+  console.log(`ERROR  scanned 0 files under ${SCAN_DIRS.join(', ')} -- wrong working directory?`);
+  console.log('');
+  console.log(`Run this from the app directory (expected files at ./${SCAN_DIRS[0]}), not the repo root.`);
+  process.exit(1);
+}
 
 for (const h of [...errors, ...warnings]) {
   console.log(`${h.severity.padEnd(6)} ${h.rel}:${h.line}  ->  false plan claim: ${h.text.slice(0, 130)}`);
