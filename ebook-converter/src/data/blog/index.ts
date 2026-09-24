@@ -59,6 +59,8 @@ import * as post64 from "./chronicles-of-narnia-ebooks-multiple-devices";
 import * as post65 from "./twilight-ebooks-multiple-devices";
 import * as post71 from "./marvel-comics-ebooks-multiple-devices";
 import * as post72 from "./best-free-epub-reader";
+import * as post73 from "./best-epub-reader-android";
+import * as post74 from "./best-epub-reader-iphone-ipad";
 import * as post70 from "./reading-groups-hub";
 import * as post1 from "./epub-to-azw3";
 import * as post66 from "./bookconv-vs-calibre";
@@ -87,7 +89,7 @@ import * as post69 from "./azw3-to-mobi";
 //   机会词 "ebook syncing virtual reading groups" (42.86%) 与 "romance books sync" (45%)。
 // 2026-09-18: Added reading-groups-hub (post70) — P1 hub page for virtual reading groups per Bing AI opportunity analysis — Phase 2 IP expansion:
 //   Twilight vampire saga multi-device guide, targeting "Twilight ebooks Kindle Kobo" queries.
-const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64, post65, post70, post66, post67, post68, post69, post71, post72] as BlogPostMeta[];
+const posts: BlogPostMeta[] = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, post14, post15, post16, post18, post19, post20, post22, post23, post24, post25, post26, post27, post29, post30, post31, post32, post33, post34, post35, post36, post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post50, post51, post52, post53, post54, post56, post57, post58, post59, post60, post61, post62, post63, post64, post65, post70, post66, post67, post68, post69, post71, post72, post73, post74] as BlogPostMeta[];
 
 export function getAllPosts(): BlogPostMeta[] {
   return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

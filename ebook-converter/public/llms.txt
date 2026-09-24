@@ -106,6 +106,8 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [Twilight Ebooks: Read the Saga Across Kindle, Kobo, and More](https://www.bookconv.com/blog/twilight-ebooks-multiple-devices)
 - [Marvel Comics & Movies: How to Read Digital Books Across Kindle, Kobo, and More](https://www.bookconv.com/blog/marvel-comics-ebooks-multiple-devices)
 - [Best Free EPUB Reader Apps (2026): Desktop and Mobile](https://www.bookconv.com/blog/best-free-epub-reader)
+- [Best EPUB Reader Apps for Android (2026): ReadEra, Moon+ Reader, and More](https://www.bookconv.com/blog/best-epub-reader-android)
+- [Best EPUB Reader Apps for iPhone and iPad (2026): Apple Books and Beyond](https://www.bookconv.com/blog/best-epub-reader-iphone-ipad)
 
 ## Troubleshooting Guides
 - [Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It](https://www.bookconv.com/guide/fix-epub-to-pdf-formatting)
