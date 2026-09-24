@@ -68,13 +68,15 @@
     expect(faqPage).toBeUndefined();
   });
 
-  it('should include Review entries', () => {
+  it('should not emit fabricated Review entries', () => {
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'pdf');
     const parsed = JSON.parse(json);
     const reviews = parsed['@graph'].filter((g: Record<string, any>) => g['@type'] === 'Review');
-    expect(reviews.length).toBe(2);
-    expect(reviews[0].author.name).toBe('Alex M.');
+    // Fabricated reviews (e.g. the old 'Alex M.' entries) were removed in the
+    // truthfulness/R7 integrity cleanup. The schema must stay review-free
+    // until real user reviews exist.
+    expect(reviews.length).toBe(0);
   });
 
   it('should use correct page URL pattern', () => {

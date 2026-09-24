@@ -10,6 +10,12 @@ const MOBI_FIXTURE = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'val
 const PDF_FIXTURE = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.pdf'));
 const fixtureFor = (src: string) => (src === 'mobi' ? MOBI_FIXTURE : src === 'pdf' ? PDF_FIXTURE : EPUB_FIXTURE);
 
+// processConversion now runs verifyConversion against real output bytes;
+// stub it here (verifier covered by src/lib/conversion-verifier.test.ts).
+jest.mock('@/lib/conversion-verifier', () => ({
+  verifyConversion: jest.fn(async () => ({ pass: true, findings: [] })),
+}));
+
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((_cmd, args, optsOrCb, cb) => {
     const callback = typeof optsOrCb === 'function' ? optsOrCb : cb;

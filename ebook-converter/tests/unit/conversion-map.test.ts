@@ -1,8 +1,8 @@
 import { CONVERSION_MAP, SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES, normalizeFormat, getConversionKey, getConversion } from '@/lib/conversion-map';
 
 describe('CONVERSION_MAP', () => {
-  it('should have exactly 26 conversion paths', () => {
-    expect(Object.keys(CONVERSION_MAP).length).toBe(26);
+  it('should have exactly 31 conversion paths', () => {
+    expect(Object.keys(CONVERSION_MAP).length).toBe(31);
   });
 
   it('should contain all expected conversion keys', () => {

@@ -4,9 +4,17 @@ import fs from 'node:fs';
 
 let _execCalls: { cmd: string; args: string[] }[] = [];
 
-const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+const TEST_UPLOAD_DIR = path.join(os.tmpdir(), `ebook-test-uploads-${process.pid}`);
 // 合法 EPUB 输入（满足 validateInputFile 的 ZIP+container.xml 校验），让转换在离线/mock 环境下通过
 const MINIMAL_FAKE_CONTENT = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.epub'));
+
+// processConversion now runs verifyConversion against real output bytes;
+// these unit tests exercise queue logic with fixture bytes, so stub the
+// verifier here. The verifier itself is covered by
+// src/lib/conversion-verifier.test.ts.
+jest.mock('@/lib/conversion-verifier', () => ({
+  verifyConversion: jest.fn(async () => ({ pass: true, findings: [] })),
+}));
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((_cmd, args, optsOrCb, cb) => {
@@ -52,9 +60,12 @@ describe('processConversion', () => {
     const result = await processConversion(mockJob);
 
     expect(result).toBeDefined();
-    expect(result.outputFilePath).toBeDefined();
+    // Contract: processConversion returns inline base64 payload (not a file path)
+    // so the result route can deliver it after the temp dir is cleaned up.
+    expect(result.base64Data).toBeDefined();
     expect(result.extension).toBe('pdf');
     expect(result.mimeType).toBe('application/pdf');
+    expect(result.fileSize).toBeGreaterThan(0);
     expect(mockJob.updateProgress).toHaveBeenCalled();
   });
 

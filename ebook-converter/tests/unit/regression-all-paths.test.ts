@@ -2,14 +2,15 @@ import { CONVERSION_MAP, SUPPORTED_FORMATS } from '@/lib/conversion-map';
 import { sanitizeError, mapErrorCode } from '@/lib/error-handler';
 
 describe('CONVERSION_MAP Regression', () => {
-  it('should have exactly 26 conversion paths', () => {
-    expect(Object.keys(CONVERSION_MAP).length).toBe(26);
+  it('should have exactly 31 conversion paths', () => {
+    expect(Object.keys(CONVERSION_MAP).length).toBe(31);
   });
 
   it('should have tool type and description for every conversion', () => {
     for (const [, entry] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(entry.tool).toBeDefined();
-      expect(['calibre', 'calibre+imagemagick', 'libreoffice+calibre']).toContain(entry.tool);
+      // 'js' = pure-JS converter (epub-txt), 'passthrough' = zip repack (epub-zip)
+      expect(['calibre', 'calibre+imagemagick', 'libreoffice+calibre', 'js', 'passthrough']).toContain(entry.tool);
       expect(entry.description.length).toBeGreaterThan(0);
     }
   });

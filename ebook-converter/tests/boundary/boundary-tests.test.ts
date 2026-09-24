@@ -4,9 +4,15 @@ import fs from 'node:fs';
 
 let _execCalls: { cmd: string; args: string[] }[] = [];
 
-const TEST_UPLOAD_DIR = path.join(os.tmpdir(), 'ebook-test-uploads');
+const TEST_UPLOAD_DIR = path.join(os.tmpdir(), `ebook-test-uploads-${process.pid}`);
 // 合法 EPUB 输入（满足 validateInputFile 的 ZIP+container.xml 校验），让转换在离线/mock 环境下通过
 const MINIMAL_FAKE_CONTENT = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.epub'));
+
+// processConversion now runs verifyConversion against real output bytes;
+// stub it here (verifier covered by src/lib/conversion-verifier.test.ts).
+jest.mock('@/lib/conversion-verifier', () => ({
+  verifyConversion: jest.fn(async () => ({ pass: true, findings: [] })),
+}));
 
 jest.mock('node:child_process', () => ({
   execFile: jest.fn((cmd, args, optsOrCb, cb) => {
@@ -64,7 +70,8 @@ describe('Boundary: File size limits', () => {
     };
 
     const result = await processConversion(mockJob);
-    expect(result.outputFilePath).toBeDefined();
+    // Contract: inline base64 payload, not outputFilePath (temp dir is cleaned up).
+    expect(result.base64Data).toBeDefined();
   });
 
   it('should handle very small files', async () => {

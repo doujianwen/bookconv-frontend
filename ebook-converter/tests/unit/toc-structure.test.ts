@@ -10,10 +10,12 @@ describe('TOC Preservation: Structural integrity', () => {
   });
 
   it('should use calibre tool for standard conversions', () => {
-    const standardConversions = ['epub-pdf', 'epub-txt', 'epub-azw3', 'pdf-epub'];
+    const standardConversions = ['epub-pdf', 'epub-azw3', 'pdf-epub'];
     for (const key of standardConversions) {
       expect(CONVERSION_MAP[key].tool).toBe('calibre');
     }
+    // epub-txt was deliberately moved to a pure-JS converter (no Calibre needed)
+    expect(CONVERSION_MAP['epub-txt'].tool).toBe('js');
   });
 
   it('should use libreoffice for doc->epub', () => {
