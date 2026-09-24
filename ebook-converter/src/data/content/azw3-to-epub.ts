@@ -1,5 +1,6 @@
 export const slug = 'azw3-to-epub';
 export const title = 'Free AZW3 to EPUB Converter — No Sign-up';
+export const metaDescription = 'Free AZW3 to EPUB converter — unlock Kindle-exclusive books for Kobo, Apple Books, and any e-reader. No sign-up, keeps chapters and cover art intact.';
 export const level = 'A' as const;
 export const wordCount = 2000;
 

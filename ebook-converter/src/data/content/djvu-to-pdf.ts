@@ -1,5 +1,6 @@
 export const slug = 'djvu-to-pdf';
 export const title = 'Free DJVU to PDF Converter — No Sign-up';
+export const metaDescription = 'Free DJVU to PDF converter — turn scanned documents and archives into universally viewable PDFs. No sign-up, preserves page images at original quality.';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

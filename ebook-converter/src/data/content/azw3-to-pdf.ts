@@ -1,5 +1,6 @@
 export const slug = 'azw3-to-pdf';
 export const title = 'Free AZW3 to PDF Converter — No Sign-up';
+export const metaDescription = 'Turn Kindle AZW3 books into print-ready PDFs — free, no sign-up. Perfect for sharing, citation, and printing. Runs in your browser, files stay private.';
 export const level = 'A' as const;
 export const wordCount = 2000;
 

@@ -1,5 +1,6 @@
 export const slug = 'epub-to-azw3';
 export const title = 'Free EPUB to AZW3 Converter — No Sign-up';
+export const metaDescription = 'Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.';
 export const level = 'A' as const;
 export const wordCount = 2200;
 

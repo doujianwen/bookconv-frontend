@@ -1,5 +1,6 @@
 export const slug = 'epub-to-html';
 export const title = 'Free EPUB to HTML Converter — No Sign-up';
+export const metaDescription = 'Extract clean, editable HTML from any EPUB — free converter, no sign-up. Publish, restyle, or paste your e-book content straight into a CMS.';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

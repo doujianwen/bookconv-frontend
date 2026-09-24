@@ -1,5 +1,6 @@
 export const slug = 'epub-to-rtf';
 export const title = 'Free EPUB to RTF Converter — No Sign-up';
+export const metaDescription = 'Convert EPUB to RTF free — no sign-up. Get editable rich-text documents that open in Word, WordPad, LibreOffice, and any word processor.';
 export const level = 'B' as const;
 export const wordCount = 2200;
 

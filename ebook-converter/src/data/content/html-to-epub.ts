@@ -1,5 +1,6 @@
 export const slug = 'html-to-epub';
 export const title = 'Free HTML to EPUB Converter — No Sign-up';
+export const metaDescription = 'Package web pages and saved articles into EPUB — free converter, no sign-up. Read your online reading list offline on any e-reader or phone.';
 export const level = 'A' as const;
 export const wordCount = 2500;
 

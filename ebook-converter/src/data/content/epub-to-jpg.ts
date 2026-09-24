@@ -1,5 +1,6 @@
 export const slug = 'epub-to-jpg';
 export const title = 'Free EPUB to JPG Converter — No Sign-up';
+export const metaDescription = 'Turn EPUB pages into shareable JPG images — free, no sign-up. Great for previews, social posts, and quick visual reference. Runs in your browser.';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

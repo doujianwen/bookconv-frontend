@@ -1,5 +1,6 @@
 export const slug = 'docx-to-epub';
 export const title = 'Free DOCX to EPUB Converter — No Sign-up';
+export const metaDescription = 'Convert Word DOCX to EPUB free — no sign-up. Turn reports, manuscripts, and drafts into reflowable ebooks readable on Kindle, Kobo, and phones.';
 export const level = 'A' as const;
 export const wordCount = 2200;
 

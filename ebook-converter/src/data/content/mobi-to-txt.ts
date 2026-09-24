@@ -1,5 +1,6 @@
 export const slug = 'mobi-to-txt';
 export const title = 'MOBI to TXT Converter';
+export const metaDescription = 'Extract clean plain text from MOBI books — free converter, no sign-up. Output ready for translation, AI analysis, or old e-ink readers. Chapters preserved.';
 export const level = 'B' as const;
 export const wordCount = 2200;
 

@@ -1,5 +1,6 @@
 export const slug = 'cbr-to-pdf';
 export const title = 'Free CBR to PDF Converter — No Sign-up';
+export const metaDescription = 'Convert CBR comic archives to PDF free — no sign-up. Keep full-page artwork and reading order, view or print your comics on any PDF reader.';
 export const level = 'B' as const;
 export const wordCount = 2500;
 

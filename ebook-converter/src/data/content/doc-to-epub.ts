@@ -1,5 +1,6 @@
 export const slug = 'doc-to-epub';
 export const title = 'Free DOC to EPUB Converter — No Sign-up';
+export const metaDescription = 'Bring legacy Word .doc files back to life — free DOC to EPUB converter, no sign-up. Turn old manuscripts into reflowable ebooks for any modern reader.';
 export const level = 'B' as const;
 export const wordCount = 2400;
 

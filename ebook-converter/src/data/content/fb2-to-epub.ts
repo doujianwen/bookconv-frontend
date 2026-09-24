@@ -1,5 +1,6 @@
 export const slug = 'fb2-to-epub';
 export const title = 'Free FB2 to EPUB Converter — No Sign-up';
+export const metaDescription = 'Convert FictionBook FB2 files to EPUB free — no sign-up. Move your FictionBook library to a universal format for Kobo, Kindle, and Apple Books.';
 export const level = 'B' as const;
 export const wordCount = 2500;
 

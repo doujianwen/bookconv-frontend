@@ -1,5 +1,6 @@
 export const slug = 'epub-to-word';
 export const title = 'Free EPUB to Word Converter — No Sign-up';
+export const metaDescription = 'Convert EPUB to editable Word DOCX — free, no sign-up. Keep headings, paragraphs, and lists so you can edit, comment, and track changes in Word.';
 export const level = 'B' as const;
 export const wordCount = 2500;
 

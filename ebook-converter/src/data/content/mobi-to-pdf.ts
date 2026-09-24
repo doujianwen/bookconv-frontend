@@ -1,5 +1,6 @@
 export const slug = 'mobi-to-pdf';
 export const title = 'Free MOBI to PDF Converter — No Sign-up';
+export const metaDescription = 'Turn Kindle MOBI books into fixed-layout PDFs — free, no sign-up. Ideal for printing, citing, and sharing. Runs in your browser, files stay private.';
 export const level = 'B' as const;
 export const wordCount = 2500;
 
