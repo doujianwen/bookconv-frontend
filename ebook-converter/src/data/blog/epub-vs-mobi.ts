@@ -6,7 +6,9 @@ export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Ebook Formats", "Kindle", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `EPUB and MOBI are the two format names most readers recognize, and they could not have come from more different worlds. EPUB is the open standard almost every non-Kindle reader uses; MOBI is Amazon's older format that now mostly lives on legacy Kindles. If you are deciding which to save your books in, or which to convert to, the answer follows straight from where you read. This is the practical comparison, not the spec-sheet version.`,
+  intro: `EPUB and MOBI are the two format names most readers recognize, and they could not have come from more different worlds. EPUB is the open standard almost every non-Kindle reader uses; MOBI is Amazon's older format that now mostly lives on legacy Kindles. If you are deciding which to save your books in, or which to convert to, the answer follows straight from where you read. This is the practical comparison, not the spec-sheet version.
+
+> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `At a Glance`,
@@ -21,6 +23,17 @@ export const content = {
 | Future | Actively developed (EPUB 3) | Frozen; Amazon moved on to AZW3/KF8 |
 
 The pattern is clear: EPUB is the portable, forward-looking choice, and MOBI is the one you keep around only for old Kindle hardware.`
+    },
+    {
+      heading: `EPUB vs MOBI — quick comparison`,
+      body: `| Dimension | EPUB | MOBI |
+|---|---|---|
+| Open standard | Yes (W3C) | No (Amazon legacy) |
+| Device support | Kobo, Apple Books, Google Play Books, most readers | Pre-2015 Kindles only |
+| Conversion difficulty | Easy to AZW3 or MOBI | Limited; loses styling |
+| Recommended scenario | Master library and any non-Kindle reader | Only a vintage Kindle |
+
+Keep EPUB as the source of truth, then convert per device. [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old Kindle, or [Convert MOBI to EPUB →](/convert/mobi-to-epub) to free a legacy book.`
     },
     {
       heading: `What Is EPUB?`,
@@ -94,7 +107,9 @@ If you are moving books between stores, also see [MOBI to Kobo](/blog/mobi-to-ko
 - **MOBI is Amazon's legacy format** for old Kindles; Amazon itself moved on to AZW3.
 - **EPUB keeps formatting and reflow**; MOBI tends to flatten layout and fonts.
 - **Modern Kindles want AZW3**, not MOBI — convert EPUB to AZW3 for them.
-- **Keep EPUB as your master** and convert per device; you only re-process when a reader demands a different format.`
+- **Keep EPUB as your master** and convert per device; you only re-process when a reader demands a different format.
+
+Ready to convert? [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old Kindle, or [Convert MOBI to EPUB →](/convert/mobi-to-epub) to read a legacy book anywhere.`
     }
   ]
 };

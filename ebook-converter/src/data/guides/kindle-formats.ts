@@ -14,11 +14,22 @@ export const keyTakeaways = [
 ]
 export const formats = { source: 'epub', target: 'azw3' }
 export const content = {
-  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.',
+  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.\n\n> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.',
   sections: [
     {
       heading: 'The Kindle format landscape',
       body: `**MOBI:** the old standard. Amazon retired MOBI side-loading, so new uploads in MOBI are no longer the recommended path.\n\n**AZW3:** Amazon’s modern ebook format with better typography and features; widely supported by Kindle devices.\n\n**KFX:** Amazon’s current proprietary format with advanced layout; created by Amazon’s own pipeline, not easily produced by third-party converters.\n\n**EPUB:** the open standard. Send to Kindle now accepts EPUB and converts it for your device.`,
+    },
+    {
+      heading: 'Kindle format comparison table',
+      body: `| Format | Sideload support | Modern features | Third-party readable | BookConv can produce |
+|---|---|---|---|---|
+| AZW3 | Yes (all Kindles) | Yes (CSS, fonts, tables) | No (Kindle only) | Yes |
+| KFX | No (Amazon only) | Yes (advanced layout) | No | No |
+| MOBI | Yes (legacy USB) | No | Partial | Yes (to EPUB or AZW3) |
+| EPUB | Via Send to Kindle | Yes (open standard) | Yes (most readers) | Source format |
+
+For sideloading your own file, AZW3 is the most compatible format BookConv can produce. KFX is Amazon-only, so convert to AZW3 instead.`
     },
     {
       heading: 'What Is AZW3?',

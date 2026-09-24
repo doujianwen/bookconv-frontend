@@ -5,13 +5,26 @@ export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `MOBI vs AZW3 and AZW3 vs MOBI — the answer depends on your Kindle's year. AZW3 wins for any Kindle from 2015 onward; MOBI only matters for pre-2015 hardware. Get the clear pick — plus a one-click, no-install way to convert either direction without losing your formatting.`,
+  intro: `MOBI vs AZW3 and AZW3 vs MOBI — the answer depends on your Kindle's year. AZW3 wins for any Kindle from 2015 onward; MOBI only matters for pre-2015 hardware. Get the clear pick — plus a one-click, no-install way to convert either direction without losing your formatting.
+
+> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `The Short Version`,
       body: `Use **AZW3** for any Kindle made in the last ten years. It renders modern CSS, keeps your embedded fonts, and handles tables and complex layouts. Reach for **MOBI** only when you're feeding a Kindle old enough to predate decent styling, or when you're stuck with software that never learned anything newer.
 
       If you're not sure which device you own, AZW3 is the safe default. It's the format Amazon's own publishing pipeline produces, and it's what Send to Kindle builds behind the scenes.`
+    },
+    {
+      heading: `AZW3 vs MOBI — quick comparison`,
+      body: `| Dimension | AZW3 | MOBI |
+|---|---|---|
+| Amazon support | Active modern format | Retired from Send to Kindle (2022) |
+| Modern features | CSS, embedded fonts, tables | Minimal styling, no embedded fonts |
+| Legacy status | Default for 2015 plus Kindles | Only old hardware |
+| Best use | Any current Kindle | Pre-2015 Kindle over USB |
+
+Pick AZW3 for every Kindle from 2015 onward. [EPUB to AZW3 →](/convert/epub-to-azw3) builds the right file from the open standard most books start as.`
     },
     {
       heading: `AZW3 vs MOBI for Kindle: The 10-Second Decision`,
@@ -129,7 +142,9 @@ If your reading has moved off Kindle entirely, [convert MOBI to EPUB](/convert/m
 - **MOBI is legacy** — limited styling, no embedded fonts, and dropped from Send to Kindle in August 2022.
 - **MOBI only wins on old hardware** — pre-2015 Kindles and a few legacy tools are the sole holdouts.
 - **Converting drops quality one way** — AZW3 to MOBI loses styling, not text; it can't be recovered going back.
-- **One engine does it all** — Calibre powers both BookConv and the desktop app, so the output is the same either way.`
+- **One engine does it all** — Calibre powers both BookConv and the desktop app, so the output is the same either way.
+
+Start from your EPUB master and let [EPUB to AZW3 →](/convert/epub-to-azw3) build the Kindle-ready file.`
     }
   ]
 };

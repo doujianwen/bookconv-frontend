@@ -6,7 +6,9 @@ export const author = `BookConv Team`;
 export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `Ebook`, `Transfer Ebooks`, `Reading Progress`];
 
 export const content = {
-  intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.`,
+  intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.
+
+> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `Why Sync Fails Between Devices`,
@@ -14,7 +16,19 @@ export const content = {
     },
     {
       heading: `Format Strategy for Multi-Device Reading`,
-      body: `**EPUB: The universal format.** EPUB works on Kobo, Apple Books, Google Play Books, and most Android readers. If you read across platforms, EPUB is your best friend.\n\n**MOBI: The legacy Kindle format.** Older Kindles support MOBI, but Amazon recommends AZW3 for newer devices. Neither syncs with non-Kindle platforms.\n\n**AZW3: Amazon's modern format.** Better typography than MOBI, but still locked to Kindle devices and apps.\n\n**PDF: Universal but rigid.** Works everywhere but doesn't reflow on small screens, making it poor for e-ink readers.`
+      body: `**EPUB: The universal format.** EPUB works on Kobo, Apple Books, Google Play Books, and most Android readers. If you read across platforms, EPUB is your best friend.
+
+When your library spans brands, unify the format first: [Unify formats first →](/convert/epub-to-pdf) or convert [EPUB to MOBI](/convert/epub-to-mobi) for an older Kindle.\n\n**MOBI: The legacy Kindle format.** Older Kindles support MOBI, but Amazon recommends AZW3 for newer devices. Neither syncs with non-Kindle platforms.\n\n**AZW3: Amazon's modern format.** Better typography than MOBI, but still locked to Kindle devices and apps.\n\n**PDF: Universal but rigid.** Works everywhere but doesn't reflow on small screens, making it poor for e-ink readers.`
+    },
+    {
+      heading: `Sync method comparison`,
+      body: `| Method | Best for | Tool | When to use |
+|---|---|---|---|
+| Cloud sync | Daily reading across phones and tablets | Google Play Books, Apple Books, Kobo | One ecosystem, automatic progress sync |
+| USB / email transfer | One-off moves to a single device | Send to Kindle, Calibre | Moving a specific book to a Kindle or Kobo |
+| Unify the format first | Mixed library across brands | BookConv | One file that fits Kindle, Kobo, and Apple |
+
+Cloud sync is easiest but locks you to one store. Unifying the format with [EPUB to PDF](/convert/epub-to-pdf) or [EPUB to MOBI](/convert/epub-to-mobi) frees the book from any single ecosystem.`
     },
     {
       heading: `Manual Sync Methods`,

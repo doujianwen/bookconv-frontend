@@ -32,12 +32,29 @@ export const content = {
       body: `On a **Kindle**, the free route is Send to Kindle (email your EPUB; Amazon converts to AZW3). On a **Kobo**, EPUB is native — side-load and read. If a file is in the wrong format for your device, convert it first: [EPUB to AZW3](/convert/epub-to-azw3) for Kindle, or see [EPUB vs MOBI](/blog/epub-vs-mobi) and [MOBI to Kobo](/blog/mobi-to-kobo) for the device calls.`
     },
     {
+      heading: `Quick comparison by device`,
+      body: `| Device | Best free app | Native format | Convert with BookConv |
+|---|---|---|---|
+| iPhone / iPad | Apple Books | EPUB | [EPUB to AZW3](/convert/epub-to-azw3) for Kindle |
+| Android | Google Play Books, ReadEra | EPUB | [EPUB to MOBI](/convert/epub-to-mobi) for old Kindles |
+| Windows | Calibre, SumatraPDF | EPUB, PDF | [EPUB to PDF](/convert/epub-to-pdf) |
+| Mac | Apple Books, Calibre | EPUB | [EPUB to AZW3](/convert/epub-to-azw3) |
+| Kindle | Send to Kindle (free) | AZW3 | [EPUB to AZW3](/convert/epub-to-azw3) |
+| Kobo | Native EPUB reader | EPUB | no conversion needed |
+
+Pick the app by device, then convert only when the file format does not match. BookConv handles that step free in the browser.`
+    },
+    {
       heading: `Key Takeaways`,
-      body: `- **Free and capable** readers exist on every platform — you rarely need to pay.
+      body: `> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.
+
+- **Free and capable** readers exist on every platform — you rarely need to pay.
 - **Apple Books** (iOS/macOS) and **Google Play Books** (Android) are the zero-setup defaults for EPUB.
 - **Calibre** is the free power tool for Windows/Mac library management and conversion.
 - **Kindle needs AZW3** — use Send to Kindle or [EPUB to AZW3](/convert/epub-to-azw3).
-- **Kobo reads EPUB natively** — no conversion for side-loaded files.`
+- **Kobo reads EPUB natively** — no conversion for side-loaded files.
+
+[Convert any format free →](/convert/epub-to-azw3)`
     }
   ]
 };
