@@ -32,8 +32,10 @@ export const content = {
       body: `On a **Kindle**, the free route is Send to Kindle (email your EPUB; Amazon converts to AZW3). On a **Kobo**, EPUB is native — side-load and read. If a file is in the wrong format for your device, convert it first: [EPUB to AZW3](/convert/epub-to-azw3) for Kindle, or see [EPUB vs MOBI](/blog/epub-vs-mobi) and [MOBI to Kobo](/blog/mobi-to-kobo) for the device calls.`
     },
     {
-      heading: `Quick comparison by device`,
-      body: `| Device | Best free app | Native format | Convert with BookConv |
+      heading: `Reading Scenarios`,
+      body: `The best app depends not just on your device but on how you read:\n\n**Library borrowing** — OverDrive/Libby works on all platforms; it requires a library card but gives you free ebooks with proper sync.\n\n**Comics and magazines** — You need fixed-layout support. Apple Books handles comiCS well on iOS; for Android, Moon+ Reader or ReadEra keeps panels intact.\n\n**Academic annotation** — If you highlight, note, and export citations, Calibre (Windows/Mac) or Apple Books (iOS/macOS) give you the deepest annotation tools.\n\n**Offline reading** — All the apps above work fully offline once the file is on the device. The differentiator is whether you want cloud sync across devices or pure local storage.\n\n**AI and text-to-speech** — In 2025-2026, several readers added AI features: built-in text-to-speech (VoiceOver on iOS, select ReadEra and Moon+ Reader on Android), translation overlays, and smart summarization. If you rely on these, check the app's feature list before downloading.
+
+| Device | Best free app | Native format | Convert with BookConv |
 |---|---|---|---|
 | iPhone / iPad | Apple Books | EPUB | [EPUB to AZW3](/convert/epub-to-azw3) for Kindle |
 | Android | Google Play Books, ReadEra | EPUB | [EPUB to MOBI](/convert/epub-to-mobi) for old Kindles |
@@ -41,6 +43,8 @@ export const content = {
 | Mac | Apple Books, Calibre | EPUB | [EPUB to AZW3](/convert/epub-to-azw3) |
 | Kindle | Send to Kindle (free) | AZW3 | [EPUB to AZW3](/convert/epub-to-azw3) |
 | Kobo | Native EPUB reader | EPUB | no conversion needed |
+| Kindle Paperwhite 3+ | Send to Kindle | AZW3 | [EPUB to AZW3](/convert/epub-to-azw3) |
+| Kobo Clara | Native reader | EPUB | no conversion needed |
 
 Pick the app by device, then convert only when the file format does not match. BookConv handles that step free in the browser.`
     },
@@ -53,6 +57,7 @@ Pick the app by device, then convert only when the file format does not match. B
 - **Calibre** is the free power tool for Windows/Mac library management and conversion.
 - **Kindle needs AZW3** — use Send to Kindle or [EPUB to AZW3](/convert/epub-to-azw3).
 - **Kobo reads EPUB natively** — no conversion for side-loaded files.
+- **Reading scenarios matter** — library borrowing, comics, academic annotation, and AI features each have different app requirements. See our [sync reading guide](/blog/sync-reading-across-devices) for multi-device tips.
 
 [Convert any format free →](/convert/epub-to-azw3)`
     }
@@ -83,5 +88,17 @@ export const faqs = [
   {
     question: `Are paid reader apps worth it?`,
     answer: `For most readers, no. The free apps cover EPUB, PDF, sync, and reflow. Paid apps add niche features (advanced annotations, cross-store sync) that casual readers rarely need.`
+  },
+  {
+    question: `Which app is best for library borrowing?`,
+    answer: `OverDrive/Libby is the standard for library ebooks. It works on all platforms and syncs your borrowed books across devices. You just need a library card.`
+  },
+  {
+    question: `Can I read comics and magazines on my reader app?`,
+    answer: `Yes, but you need fixed-layout support. Apple Books handles comics well on iOS; for Android, Moon+ Reader or ReadEra keeps panels intact. Avoid reflowable formats for comics.`
+  },
+  {
+    question: `Do reader apps have AI features in 2026?`,
+    answer: `Several apps now offer AI-powered features: built-in text-to-speech (VoiceOver on iOS, ReadEra and Moon+ Reader on Android), translation overlays, and smart summarization. Check the app store listing for current features.`
   }
 ];

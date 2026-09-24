@@ -17,14 +17,15 @@ export const content = {
     },
     {
       heading: `AZW3 vs MOBI — quick comparison`,
-      body: `| Dimension | AZW3 | MOBI |
-|---|---|---|
-| Amazon support | Active modern format | Retired from Send to Kindle (2022) |
-| Modern features | CSS, embedded fonts, tables | Minimal styling, no embedded fonts |
-| Legacy status | Default for 2015 plus Kindles | Only old hardware |
-| Best use | Any current Kindle | Pre-2015 Kindle over USB |
+      body: `| Dimension | AZW3 | MOBI | KFX |
+|---|---|---|---|
+| Amazon support | Active modern format | Retired from Send to Kindle (2022) | Current Store format |
+| Modern features | CSS, embedded fonts, tables | Minimal styling, no embedded fonts | Enhanced typesetting, compliance |
+| Create yourself | Yes | Yes | No (Amazon-only pipeline) |
+| Legacy status | Default for 2015+ Kindles | Pre-2015 only | Store purchases |
+| Best use | Custom Sideloading & conversion | Old hardware compatibility | N/A (Amazon-generated) |
 
-Pick AZW3 for every Kindle from 2015 onward. [EPUB to AZW3 →](/convert/epub-to-azw3) builds the right file from the open standard most books start as.`
+Pick AZW3 for every Kindle from 2015 onward. [EPUB to AZW3 →](/convert/epub-to-azw3) builds the right file from the open standard most books start as. KFX is Amazon's proprietary format — you can't create it yourself, so AZW3 is your practical target for sideloading.`
     },
     {
       heading: `AZW3 vs MOBI for Kindle: The 10-Second Decision`,

@@ -91,6 +91,9 @@ export const faqs: BlogFaq[] = [
   { question: 'Can Kindle Fire open MOBI files?', answer: 'Yes. The Kindle app on Fire OS reads MOBI, AZW3, KFX, and EPUB via Send to Kindle. If an older MOBI file does not open, convert it to AZW3 or resend it through Send to Kindle.' },
   { question: 'Can I read Kindle books on Kobo?', answer: 'Only if they are DRM-free. Convert protected Kindle books to EPUB using BookConv, then transfer to your Kobo.' },
   { question: 'How to transfer ebooks between Kindle and other devices?', answer: 'Convert Kindle books to EPUB (DRM-free only) using BookConv, then sync via USB, email, or cloud storage. See our multi-device sync guide for details.' },
+  { question: 'What is the difference between AZW3 and KFX?', answer: 'AZW3 (KF8) is the open-to-converters format you can produce yourself. KFX is Amazon\'s even newer proprietary format with enhanced typesetting, used for Store purchases. You cannot create true KFX — convert to AZW3 instead.' },
+  { question: 'Which Kindle models support AZW3?', answer: 'Every Kindle from 2015 onward supports AZW3: Paperwhite 3 and later, Oasis, Voyage, Kindle Scribe, and all current models. Pre-2015 devices may not display AZW3 styling properly.' },
+  { question: 'How do I check what formats my Kindle supports?', answer: 'Go to Settings > Device Options on your Kindle. If you see "Send to Kindle" and "Personal Document Settings," it supports AZW3 and EPUB. For older models, check Amazon\'s official compatibility table.' },
 ]
 // E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
 export const authorship = {

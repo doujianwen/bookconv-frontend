@@ -40,7 +40,21 @@ Cloud sync is easiest but locks you to one store. Unifying the format with [EPUB
     },
     {
       heading: `Common Pitfalls to Avoid`,
-      body: `**DRM-protected purchases.** Books bought from Kindle Store, Kobo Store, or Apple Books often carry DRM that prevents conversion or transfer. Look for DRM-free editions or public domain alternatives.\n\n**Assuming renaming works.** Changing a file extension from .epub to .mobi doesn't convert the format — readers will reject the mismatch.\n\n**Ignoring format compatibility.** Not all EPUB features work on all devices. Simplified EPUBs (no custom fonts, minimal CSS) have the broadest compatibility.\n\n**Related:** See our [Kindle formats guide](/guide/kindle-formats) for device-specific format recommendations, or check [Can my Kindle read AZW3?](/blog/can-kindle-read-azw3) for a device compatibility table.`
+      body: `**DRM-protected purchases.** Books bought from Kindle Store, Kobo Store, or Apple Books often carry DRM that prevents conversion or transfer. Look for DRM-free editions or public domain alternatives.\n\n**Assuming renaming works.** Changing a file extension from .epub to .mobi doesn't convert the format — readers will reject the mismatch.\n\n**Ignoring format compatibility.** Not all EPUB features work on all devices. Simplified EPUBs (no custom fonts, minimal CSS) have the broadest compatibility.\n\n**Related:** See our [Kindle formats guide](/guide/kindle-formats) for device-specific format recommendations, or check [Can my Kindle read AZW3?](/blog/can-kindle-read-azw3) for a device compatibility table.
+
+---
+
+## Troubleshooting Sync Issues
+
+Sync problems usually fall into three categories:
+
+**DRM locks** — If you see "This book cannot be transferred," it's DRM-protected. Only DRM-free books can move between devices.
+
+**Format mismatch** — Your device won't open the file if it's in the wrong format. Convert first using BookConv, then transfer.
+
+**Cloud sync failure** — Check that you're signed into the same account on all devices. For Google Play Books, verify you're using the same Google account. For Apple Books, check iCloud settings.
+
+**Reading progress not syncing** — Progress only syncs within the same ecosystem. Kindle progress doesn't sync to Kobo, and vice versa. Use a third-party tool like BookFusion or Readwise Reader for cross-platform sync.`
     }
   ]
 };
