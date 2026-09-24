@@ -24,9 +24,6 @@ export async function POST(request: NextRequest) {
     const { email, password } = validated.data;
 
     // Rate limit: simple check — allow max 3 registrations per minute per IP
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
-    const cacheKey = `rate:register:${ip}`;
-    const existing = (await request.cookies.get(cacheKey));
     // In-memory rate limit for simplicity (use Redis in production)
     const now = Date.now();
     const windowMs = 60_000; // 1 minute
@@ -62,8 +59,8 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
-    console.error('[auth/register] Error:', error.message);
+  } catch (error) {
+    console.error('[auth/register] Error:', error instanceof Error ? error.message : error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

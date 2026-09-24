@@ -47,7 +47,9 @@ So MOBI is a legacy target. It's still the right one in these cases:
 
 If your Kindle is newer than that and you're sideloading anyway, [convert to AZW3 instead](/convert/epub-to-azw3). AZW3 carries KF8, which means current CSS, embedded fonts, and real tables. MOBI drops most of that.
 
-Still deciding what to standardise your library on? [Ebook formats explained](/blog/ebook-formats-explained) walks through the trade-offs without the marketing.`
+Still deciding between formats? Check our [EPUB vs MOBI comparison](/blog/epub-vs-mobi) for a detailed breakdown. And if you're wondering whether your specific Kindle model supports MOBI, read our [can Kindle read AZW3 guide](/blog/can-kindle-read-azw3).
+
+Still deciding what to standardise your library on? [Ebook formats explained](/blog/ebook-formats-explained) walks through the trade-offs without the marketing. If you work with non-Kindle formats like FB2 or Lit files, [FB2 vs EPUB](/blog/fb2-vs-epub) and [Lit format conversion](/blog/lit-format-conversion-and) cover those ecosystems too.`
     },
     {
       heading: `Send to Kindle Takes EPUB Now — Here's When to Use It Instead`,

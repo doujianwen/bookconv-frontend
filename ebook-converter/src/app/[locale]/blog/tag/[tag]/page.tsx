@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Calendar, Tag } from "lucide-react"
 import { getMessage, resolvePath } from '@/i18n/utils'
-import { getHubTags, getPostsByTagSlug, slugifyTag } from "@/lib/internal-links"
+import { getHubTags, getPostsByTagSlug } from "@/lib/internal-links"
 
 interface TagPageProps {
   params: Promise<{ locale: string; tag: string }>

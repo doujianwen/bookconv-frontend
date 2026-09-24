@@ -1,4 +1,5 @@
 ﻿// Lemon Squeezy payment service -- plan definitions + helpers
+import { createHmac, timingSafeEqual } from 'node:crypto';
 const LS_WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
 
 export interface PlanConfig {
@@ -113,19 +114,20 @@ export function formatPrice(cents: number): string {
 
 export function verifyWebhookSignature(payload: string, signature: string): boolean {
   if (!LS_WEBHOOK_SECRET) return true;
-  const crypto = require('crypto');
-  const hmac = crypto.createHmac('sha256', LS_WEBHOOK_SECRET);
+  const hmac = createHmac('sha256', LS_WEBHOOK_SECRET);
   const digest = hmac.update(payload, 'utf8').digest('hex');
   const sigBuf = Buffer.from(signature || '');
   const digBuf = Buffer.from(digest);
   // timingSafeEqual throws on length mismatch — return false (→ 401) instead of 500.
   if (sigBuf.length !== digBuf.length) return false;
-  return crypto.timingSafeEqual(sigBuf, digBuf);
+  return timingSafeEqual(sigBuf, digBuf);
 }
 
 export type SubscriptionStatus = 'active' | 'past_due' | 'canceled' | 'unpaid';
 
-export function mapSubscriptionStatus(lsStatus: string): SubscriptionStatus {
+// Lemon Squeezy does not guarantee a status on every event; an absent one
+// falls through to 'unpaid' exactly as before.
+export function mapSubscriptionStatus(lsStatus: string | undefined): SubscriptionStatus {
   const statusMap: Record<string, SubscriptionStatus> = {
     active: 'active',
     paused: 'past_due',
@@ -133,5 +135,5 @@ export function mapSubscriptionStatus(lsStatus: string): SubscriptionStatus {
     unpaid: 'unpaid',
     trialing: 'active',
   };
-  return statusMap[lsStatus] || 'unpaid';
+  return (lsStatus ? statusMap[lsStatus] : undefined) || 'unpaid';
 }

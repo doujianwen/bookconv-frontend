@@ -1,5 +1,8 @@
 ﻿// Global mock setup for ioredis and BullMQ
 const mockRedis = {
+  // ioredis exposes connection state as `status`; there is no `connected`
+  // property at runtime, which is why production reads `status`.
+  status: 'ready',
   connected: true,
   connect: () => Promise.resolve(),
   disconnect: () => Promise.resolve(),
@@ -32,8 +35,13 @@ const mockRedis = {
   multi: () => ({ exec: () => Promise.resolve([]) }),
 };
 
+// NOTE: keep this double in sync with src/lib/redis.ts. Production code calls
+// requireRedisClient() wherever a client is mandatory; while this export was
+// missing here, every queue test failed with
+// "requireRedisClient is not a function".
 jest.mock('@/lib/redis', () => ({
   getRedisClient: () => mockRedis,
+  requireRedisClient: () => mockRedis,
   closeRedis: () => Promise.resolve(),
 }));
 
@@ -41,7 +49,10 @@ jest.mock('bullmq', () => {
   const mockQueue = {
     add: () => Promise.resolve({ id: 'job-123', timestamp: Date.now(), attemptsMade: 0 }),
     getJob: () => Promise.resolve(null),
-    trim: () => Promise.resolve(),
+    // BullMQ's Queue has no `trim()` — it has `clean(grace, limit, type)`.
+    // This double advertising `trim` is part of why the dead cleanup call in
+    // src/lib/queue.ts stayed invisible.
+    clean: () => Promise.resolve([]),
   };
   return {
     Queue: jest.fn(() => mockQueue),

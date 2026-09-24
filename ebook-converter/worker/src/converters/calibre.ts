@@ -46,7 +46,7 @@ export async function convertWithCalibre(
   }
 
   try {
-    const { stderr } = await execFileAsync("ebook-convert", args, {
+    await execFileAsync("ebook-convert", args, {
       timeout: 120_000, // 2 minute timeout
       maxBuffer: 10 * 1024 * 1024,
     })

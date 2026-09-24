@@ -74,7 +74,7 @@ function scanDup(path) {
     if (!seen.has(sig)) seen.set(sig, [i + 1]);
     else seen.get(sig).push(i + 1);
   }
-  for (const [sig, locs] of seen) {
+  for (const [, locs] of seen) {
     if (locs.length >= 2) {
       add(
         'WARN',

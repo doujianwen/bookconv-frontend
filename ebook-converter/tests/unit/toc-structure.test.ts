@@ -2,7 +2,7 @@ import { CONVERSION_MAP } from '@/lib/conversion-map';
 
 describe('TOC Preservation: Structural integrity', () => {
   it('should have consistent tool type across all conversions', () => {
-    for (const [key, entry] of Object.entries(CONVERSION_MAP) as [string, any][]) {
+    for (const [, entry] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(entry.tool).toBeDefined();
       expect(entry.description).toBeDefined();
       expect(entry.description.length).toBeGreaterThan(0);

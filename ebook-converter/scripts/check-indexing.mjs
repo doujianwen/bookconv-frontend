@@ -121,7 +121,7 @@ async function main() {
   let creds;
   try {
     creds = JSON.parse(readFileSync(CREDENTIALS_PATH, "utf8"));
-  } catch (e) {
+  } catch {
     console.error(
       `✗ 读不到凭据 ${CREDENTIALS_PATH}\n` +
         `  把服务账号 JSON 放到该路径，或设 GSC_CREDENTIALS 环境变量。`
@@ -135,7 +135,7 @@ async function main() {
       .split("\n")
       .map((l) => l.trim())
       .filter((l) => l && !l.startsWith("#"));
-  } catch (e) {
+  } catch {
     console.error(`✗ 读不到 URL 列表 ${URLS_FILE}`);
     process.exit(1);
   }

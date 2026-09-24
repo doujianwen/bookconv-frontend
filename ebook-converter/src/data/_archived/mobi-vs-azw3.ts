@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'mobi-vs-azw3'
 export const title = 'MOBI vs AZW3: Which Kindle Format Should You Actually Use?'

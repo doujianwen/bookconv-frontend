@@ -6,7 +6,7 @@ import { getPlanById, formatPrice } from '@/lib/payments/service';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { planId, email, metadata } = body;
+    const { planId, email } = body;
 
     if (!planId || !email) {
       return NextResponse.json(
@@ -95,10 +95,10 @@ export async function POST(request: Request) {
         price: formatPrice(plan.priceCents),
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Checkout error:', error);
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
     );
   }

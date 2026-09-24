@@ -369,10 +369,11 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             sourceFormat: item.sourceFormat,
             status: "completed",
           });
-        } catch (err: any) {
+        } catch (err) {
           failed += 1;
-          const msg = err?.message || "Conversion failed";
-          if (err?.code === "CONVERSION_QUOTA_EXCEEDED") {
+          const errObj = err as { message?: string; code?: string } | undefined;
+          const msg = errObj?.message || "Conversion failed";
+          if (errObj?.code === "CONVERSION_QUOTA_EXCEEDED") {
             quotaExhausted = true;
           }
           trackGAEvent("conversion_failed", {

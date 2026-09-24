@@ -50,15 +50,6 @@ export default function LoginButton() {
     setShowMenu(!showMenu);
   };
 
-  const handleMenuAction = async (action: 'logout' | 'signin') => {
-    setShowMenu(false);
-    if (action === 'logout') {
-      await handleLogout();
-    } else {
-      window.location.href = '/auth';
-    }
-  };
-
   if (loading) {
     return <div className="h-10 w-24 animate-pulse rounded-lg bg-gray-200" />;
   }

@@ -4,7 +4,8 @@
 // Supabase was removed; subscription state resolves from Redis only, and
 // there is no server-side session source, so requests are treated as anonymous.
 
-import { getRedisClient } from './redis';
+import { requireRedisClient } from './redis';
+import { errorMessage } from './error-handler';
 
 const REDIS_SUB_KEY = 'sub:';
 
@@ -36,8 +37,9 @@ export async function getCurrentUserId(): Promise<string | null> {
  */
 export async function getUserPlanLevel(userId: string): Promise<PlanLevel> {
   try {
-    const redis = getRedisClient();
-    if (!redis.connected) {
+    const redis = requireRedisClient();
+    // ioredis exposes connection state through `status`, not `connected`.
+    if (redis.status === 'wait') {
       await redis.connect();
     }
     const subJson = await redis.get(REDIS_SUB_KEY + userId);
@@ -50,8 +52,8 @@ export async function getUserPlanLevel(userId: string): Promise<PlanLevel> {
         return 'free';
       }
     }
-  } catch (err: any) {
-    console.error('[auth] Failed to read subscription from Redis:', err.message);
+  } catch (err) {
+    console.error('[auth] Failed to read subscription from Redis:', errorMessage(err));
   }
 
   return 'free';

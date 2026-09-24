@@ -1,7 +1,7 @@
 ﻿/**
  * API route validation tests: POST /api/convert request/response behavior.
  */
-import { describe, it, expect, beforeEach } from '@jest/globals';
+import { describe, it, expect } from '@jest/globals';
 import { SUPPORTED_FORMATS } from '@/lib/conversion-map';
 
 describe('API: Request validation logic', () => {

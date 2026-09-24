@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { BookOpen, Shield, Zap, Globe, Users, GitBranch } from "lucide-react"
+import { BookOpen, Shield, Zap, Globe, GitBranch } from "lucide-react"
 import { getLocale } from "@/i18n/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
 
@@ -87,8 +87,8 @@ export default async function AboutPage() {
           <h2 className="mb-4 text-2xl font-bold text-gray-900">Our Mission</h2>
           <p className="text-gray-700 leading-relaxed">
             BookConv was created to solve a simple problem: <strong>everyone has eBooks in the wrong format</strong>.
-            Whether you're switching from Kindle to Kobo, converting old MOBI files to EPUB, or preparing manuscripts for publication,
-            format compatibility shouldn't be a barrier.
+            Whether you&apos;re switching from Kindle to Kobo, converting old MOBI files to EPUB, or preparing manuscripts for publication,
+            format compatibility shouldn&apos;t be a barrier.
           </p>
           <p className="mt-4 text-gray-700 leading-relaxed">
             We believe eBook conversion should be:
@@ -123,7 +123,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">Lightning Fast</h3>
               <p className="text-sm text-gray-600">
-                Powered by Calibre's optimized conversion engine. Most conversions complete in seconds, not minutes.
+                Powered by Calibre&apos;s optimized conversion engine. Most conversions complete in seconds, not minutes.
               </p>
             </div>
 
@@ -226,8 +226,8 @@ export default async function AboutPage() {
             <details className="rounded-xl border border-gray-200 bg-white p-4">
               <summary className="cursor-pointer font-medium text-gray-900">Do you sell my data?</summary>
               <p className="mt-2 text-sm text-gray-600">
-                Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion.
-                Your privacy is our priority — that's why we don't even require account creation.
+                Absolutely not. We don&apos;t sell user data, and we don&apos;t use your files for any purpose other than conversion.
+                Your privacy is our priority — that&apos;s why we don&apos;t even require account creation.
               </p>
             </details>
 

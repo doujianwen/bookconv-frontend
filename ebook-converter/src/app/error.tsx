@@ -13,8 +13,14 @@ export default function Error({
 }) {
   const [countdown, setCountdown] = useState(30);
 
+  // Logging and the retry countdown are separate concerns. Keeping them in one
+  // effect forced `error` into the countdown's dependency list, which would
+  // restart the timer whenever the error identity changed.
   useEffect(() => {
     console.error('Application error:', error);
+  }, [error]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {

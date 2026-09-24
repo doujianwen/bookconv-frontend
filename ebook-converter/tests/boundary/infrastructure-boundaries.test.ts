@@ -63,6 +63,12 @@ describe('Boundary: Redis connection exports', () => {
     expect(redisModule.closeRedis).toBeDefined();
     expect(typeof redisModule.closeRedis).toBe('function');
   });
+
+  it('should have requireRedisClient function exported', async () => {
+    const redisModule = require('@/lib/redis');
+    expect(redisModule.requireRedisClient).toBeDefined();
+    expect(typeof redisModule.requireRedisClient).toBe('function');
+  });
 });
 
 describe('Boundary: Type definitions', () => {

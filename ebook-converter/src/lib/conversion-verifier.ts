@@ -211,7 +211,6 @@ export async function verifyConversion(
 
   // 攻击 2：把死胡同当成有效路径？—— Calibre 报成功但产出垃圾（文本大量丢失）
   if (inText.length > 200 && outTextExtractable) {
-    const ratio = outText.length / inText.length;
     if (outText.length < inText.length * 0.5) {
       findings.push({
         id: 'content-loss',

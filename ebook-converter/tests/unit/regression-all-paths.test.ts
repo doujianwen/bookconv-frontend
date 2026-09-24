@@ -7,7 +7,7 @@ describe('CONVERSION_MAP Regression', () => {
   });
 
   it('should have tool type and description for every conversion', () => {
-    for (const [key, entry] of Object.entries(CONVERSION_MAP) as [string, any][]) {
+    for (const [, entry] of Object.entries(CONVERSION_MAP) as [string, any][]) {
       expect(entry.tool).toBeDefined();
       expect(['calibre', 'calibre+imagemagick', 'libreoffice+calibre']).toContain(entry.tool);
       expect(entry.description.length).toBeGreaterThan(0);

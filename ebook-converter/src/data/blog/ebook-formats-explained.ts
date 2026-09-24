@@ -84,7 +84,7 @@ Amazon has been retiring it steadily. Send to Kindle stopped accepting MOBI uplo
 - The device handles AZW3 or EPUB, because there's no upside
 - The book has tables, footnotes, or careful typography
 
-Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-epub) turns them into something future readers can actually use, and our [EPUB to MOBI walkthrough](/blog/epub-to-mobi-guide) covers the return trip if you still need it.`
+Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-epub) turns them into something future readers can actually use, and our [EPUB to MOBI walkthrough](/blog/epub-to-mobi-guide) covers the return trip if you still need it. Going the other direction — upgrading AZW3 back to MOBI for ancient Kindles — is covered in [AZW3 to MOBI](/blog/azw3-to-mobi). And if your archive holds FB2 or Lit files instead, [FB2 vs EPUB](/blog/fb2-vs-epub) and the [Lit format conversion guide](/blog/lit-format-conversion-and) explain when those still matter.`
     },
     {
       heading: `Convert Between Formats with BookConv`,
@@ -106,6 +106,8 @@ The routes people take most:
 - [EPUB to AZW3](/convert/epub-to-azw3) for a modern Kindle
 - [MOBI to EPUB](/convert/mobi-to-epub) to rescue an old archive
 - [PDF to EPUB](/convert/pdf-to-epub) when a fixed-layout file needs to reflow
+- [FB2 to EPUB](/convert/fb2-to-epub) for Russian-language archives
+- [Scanned PDF to EPUB with OCR](/blog/scanned-pdf-to-epub-ocr) when your PDF is an image
 
 Desktop Calibre is still worth having if you manage thousands of books, edit metadata in bulk, or need to process files past 100 MB. For one or two books, a browser tab is faster than a library manager.`
     },

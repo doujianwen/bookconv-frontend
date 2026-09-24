@@ -1,8 +1,8 @@
 // src/lib/compat/schema.ts
 //
 // 兼容性实测报告的数据模型。
-// 显式类型、禁止 `any` —— 这是课程第 9 章要讲的 `CONTENT_MAP: Record<string, any>`
-// 反面样板：同样的内容注册模式，这里用具体 interface 锁死形状。
+// 显式类型、禁止 `any` —— 课程第 9 章曾以 `CONTENT_MAP: Record<string, any>`
+// 作反面样板；该处已于 2026-09-19 用具体 interface 锁死形状，这里保持同样纪律。
 
 export type VerdictStatus = "pass" | "warn" | "critical";
 

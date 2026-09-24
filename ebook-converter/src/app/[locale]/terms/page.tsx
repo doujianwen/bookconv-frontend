@@ -3,7 +3,6 @@ import Link from "next/link"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
   return {
     title: "Terms of Service",
     alternates: {
@@ -44,7 +43,7 @@ export default async function TermsPage() {
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Limitation of Liability</h2>
-          <p>BookConv is provided "as is" without warranties. We are not liable for any damages arising from the use of our service.</p>
+          <p>BookConv is provided &quot;as is&quot; without warranties. We are not liable for any damages arising from the use of our service.</p>
         </section>
       </div>
     </main>

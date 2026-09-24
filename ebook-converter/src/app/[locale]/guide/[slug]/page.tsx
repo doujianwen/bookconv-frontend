@@ -37,9 +37,7 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   const g = GUIDES[slug]
   if (!g) return {}
 
-  const baseUrl = "https://www.bookconv.com"
   const description = g.problem || g.content.intro || g.title
-  const isEs = locale === 'es'
 
   const { canonical, languages } = buildAlternates({
     locale: locale,

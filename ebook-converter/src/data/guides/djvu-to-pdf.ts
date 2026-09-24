@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'djvu-to-pdf'
 export const title = 'DJVU to PDF: Convert Scanned Books to a Readable PDF'

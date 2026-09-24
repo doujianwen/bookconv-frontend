@@ -3,7 +3,6 @@ import Link from "next/link"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
   return {
     title: "Privacy Policy",
     alternates: {

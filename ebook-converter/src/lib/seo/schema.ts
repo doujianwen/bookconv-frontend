@@ -20,7 +20,7 @@ export function generateFAQSchema(faqs: FAQItem[], url?: string): string {
       url: url ? url + '#faq-' + (i + 1) : undefined,
     },
   }));
-  const base: Record<string, any> = {
+  const base: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: items,
@@ -77,7 +77,7 @@ interface ArticleSchemaOpts {
 
 export function generateArticleSchema(opts: ArticleSchemaOpts): string {
   const { headline, description, url, image, authorName = 'BookConv Team', datePublished, dateModified, text } = opts;
-  const graph: Record<string, any>[] = [{
+  const graph: Record<string, unknown>[] = [{
     '@type': 'Article',
     headline,
     description,
@@ -220,17 +220,20 @@ const LOCALE_MAP = {
 };
 
 export function getLocale(locale: string) {
-  return (LOCALE_MAP as any)[locale] ?? LOCALE_MAP.en;
+  return LOCALE_MAP[locale as keyof typeof LOCALE_MAP] ?? LOCALE_MAP.en;
 }
 
 export function generateHrefLangTags(baseUrl: string, slugs: string[]): string[] {
   const locales = Object.keys(LOCALE_MAP);
   const tags: string[] = [];
-  for (const slug of slugs) {
-    for (const locale of locales) {
-      tags.push(baseUrl + "/?lang=" + locale);
-    }
-    tags.unshift(`${baseUrl}/?lang=en`);
+  // `slugs` is vestigial: the previous outer loop emitted the SAME locale
+  // alternates once per slug (identical duplicates), since the tag is derived
+  // from baseUrl alone. Referenced explicitly so the dead parameter is
+  // documented rather than silently dropped from this exported signature.
+  void slugs;
+  for (const locale of locales) {
+    tags.push(baseUrl + "/?lang=" + locale);
   }
+  tags.unshift(`${baseUrl}/?lang=en`);
   return tags;
 }

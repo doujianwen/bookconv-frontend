@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { BookOpen, FileText, Image, Globe, FileCode, FileSpreadsheet } from 'lucide-react'
+import { BookOpen, FileText, Globe, FileCode, FileSpreadsheet, type LucideIcon } from 'lucide-react'
 import { FORMAT_DATA } from '@/data/formats'
 import { FORMAT_DISPLAY_NAMES } from '@/lib/conversion-map'
 
-const FORMAT_ICONS: Record<string, any> = {
+const FORMAT_ICONS: Record<string, LucideIcon> = {
   epub: Globe,
   pdf: FileText,
   mobi: BookOpen,

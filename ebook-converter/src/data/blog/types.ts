@@ -179,7 +179,6 @@ export function buildInternalLinks(content: BlogPostContent, currentSlug: string
   allPosts.forEach((post, slug) => {
     if (slug === currentSlug) return;
 
-    const body = post.content.intro + post.content.sections.map(s => s.body).join("");
     const titleWords = post.title.split(/[\s\u3000]+/);
 
     for (const word of titleWords) {

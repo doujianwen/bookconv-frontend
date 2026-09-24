@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'best-ebook-converter'
 export const title = 'Best Ebook Converter in 2026: How to Choose (Not Just a List)'
@@ -30,7 +29,7 @@ export const content = {
     },
     {
       heading: 'A simple decision checklist',
-      body: `**No account, instant, one file** → BookConv.\n\n**Hundreds of files / offline** → Calibre.\n\n**Rare format or API integration** → CloudConvert/Convertio.\n\n**Sensitive manuscript** → Calibre offline (no upload).\n\nFor device-specific format advice, see [Kindle Formats Explained](/guide/kindle-formats). To understand how BookConv compares to Calibre directly, read [Calibre Alternative: Free Online Ebook Converter](/guide/calibre-alternative).`,
+      body: `**No account, instant, one file** → BookConv.\n\n**Hundreds of files / offline** → Calibre.\n\n**Rare format or API integration** → CloudConvert/Convertio.\n\n**Sensitive manuscript** → Calibre offline (no upload).\n\nFor device-specific format advice, see [Kindle Formats Explained](/guide/kindle-formats). To understand how BookConv compares to Calibre directly, read [Calibre Alternative: Free Online Ebook Converter](/guide/calibre-alternative). For batch or offline workflows, our [Calibre free batch conversion guide](/blog/calibre-free-batch) and [Batch converter guide](/guide/batch-converter) show how to scale beyond one-off files.`,
     },
   ],
 }

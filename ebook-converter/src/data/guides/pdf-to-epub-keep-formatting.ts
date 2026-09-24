@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'pdf-to-epub-keep-formatting'
 export const title = 'Convert PDF to EPUB Without Losing Images or Layout'

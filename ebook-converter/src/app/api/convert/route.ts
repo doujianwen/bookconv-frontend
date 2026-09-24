@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
           status: backendRes.status,
           headers,
         });
-      } catch (fwdErr: any) {
-        console.error("POST /api/convert backend forward failed:", fwdErr?.message || fwdErr);
+      } catch (fwdErr) {
+        console.error("POST /api/convert backend forward failed:", fwdErr instanceof Error ? fwdErr.message : fwdErr);
         return NextResponse.json(
           { error: "Conversion service temporarily unavailable. Please try again later." },
           { status: 503, headers: rateHeaders },
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     // --- Local execution (engine-free conversions) ---
     const formData = await request.formData();
     return convertAndStream(formData, rateHeaders);
-  } catch (err: any) {
+  } catch (err) {
     const { sanitizeError, mapErrorCode, getFriendlyMessage } = await import("@/lib/error-handler");
     const message = sanitizeError(err);
     console.error("POST /api/convert error:", message);

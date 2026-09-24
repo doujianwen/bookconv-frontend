@@ -17,7 +17,7 @@ export const content = {
     },
     {
       "heading": "Why AI-Assisted Conversion Matters Now",
-      "body": "Modern converters use AI to detect chapter breaks, normalize typography, and fix broken TOCs during selection. This means less manual editing and higher-quality output. AI also helps intercept formatting errors by predicting how your ebook will render on Kindle, Kobo, or Apple Books. Instead of guessing which format fits your device, let smart conversion select the optimal path automatically."
+      "body": "Modern converters use AI to detect chapter breaks, normalize typography, and fix broken TOCs during selection. This means less manual editing and higher-quality output. AI also helps intercept formatting errors by predicting how your ebook will render on Kindle, Kobo, or Apple Books. Instead of guessing which format fits your device, let smart conversion select the optimal path automatically. For a deeper format comparison, see [EPUB vs MOBI](/blog/epub-vs-mobi). And if you're working with large files or batch jobs, check our [large file conversion guide](/blog/large-file-conversion-guide)."
     }
   ]
 };

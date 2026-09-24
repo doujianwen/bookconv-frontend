@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
-import { getDisplayName, getSlug } from "@/lib/utils"
+import { getDisplayName } from "@/lib/utils"
 
 // Only slugs in generateStaticParams are served; any other /convert/* slug
 // returns a real 404 instead of a soft-404 "Conversion not supported" page.
@@ -12,7 +12,7 @@ export const dynamicParams = false
 // Step 3: Dynamic import for heavy client component — reduces initial bundle
 import dynamic from "next/dynamic"
 import { CONTENT_MAP } from "@/data/content"
-import { generateFAQSchema, generateBreadcrumbSchema, generateConversionPageSchema } from "@/lib/seo/schema"
+import { generateConversionPageSchema } from "@/lib/seo/schema"
 import { getRelatedBlogPostsForConversion, getRelatedGuidesForConversion } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
 
@@ -38,9 +38,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
   const { locale } = await params;
   const { slug } = await params
-  const displayName = getDisplayName(slug)
   const [source, target] = slug.split("-to-")
-  const conversion = getConversion(source, target)
   const contentData = CONTENT_MAP[slug]
   const isEs = locale === 'es' && !!contentData?.es
 

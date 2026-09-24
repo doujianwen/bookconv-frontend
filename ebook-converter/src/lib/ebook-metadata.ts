@@ -1,6 +1,5 @@
 ﻿"use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
 
 export interface EbookMetadata {
   title?: string
@@ -102,7 +101,6 @@ async function readEpubMetadata(file: File): Promise<EbookMetadata> {
   if (!metaPath) throw new Error("container.xml not found")
   
   // Parse container.xml to find OPF path
-  const metaEntryOffset = cdStart
   for (let e = 0; e < cdEntries; e++) {
     const entryOffset = cdStart + e * 46
     const nameLen = view.getUint16(entryOffset + 28, true)
@@ -270,7 +268,6 @@ async function readDocxMetadata(file: File): Promise<EbookMetadata> {
   const meta: EbookMetadata = {}
   
   // DOCX is a ZIP — look for core.xml content
-  const view = new DataView(buffer)
   
   // Find core.xml file in the ZIP
   // Search for "docProps/core.xml" in the central directory entries

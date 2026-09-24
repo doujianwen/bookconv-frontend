@@ -1,12 +1,13 @@
 ﻿// src/lib/queue.ts
 import { Queue, Worker, Job, QueueEvents } from 'bullmq';
-import { getRedisClient } from './redis';
+import { requireRedisClient } from './redis';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync, appendFileSync } from 'node:fs';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import { loggers as log } from './logger';
-import { mapErrorCode, getFriendlyMessage } from './error-handler';
+import { mapErrorCode, getFriendlyMessage, errorMessage } from './error-handler';
 import { verifyConversion } from './conversion-verifier';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
@@ -39,16 +40,33 @@ function appendConversionAuditLog(
   }
 }
 
-let _queue: any = null;
-let _worker: any = null;
-let _queueEvents: any = null;
+/**
+ * BullMQ pins its own `ioredis` to an exact version (5.10.1), so npm cannot
+ * dedupe it against this project's `^5.11.1` and bullmq resolves a *nested*
+ * ioredis copy. `QueueOptions.connection` therefore expects that copy's
+ * instance type — the two ioredis classes are structurally identical but
+ * nominally distinct classes, so TS rejects a direct assignment.
+ *
+ * A single confined cast here is the honest fix: it keeps every other field
+ * precisely typed instead of widening whole objects to `any` (which is what
+ * the previous `let _queue: any` did, hiding the bugs fixed below).
+ */
+function bullConnection(client: ReturnType<typeof requireRedisClient>) {
+  return client as unknown as NonNullable<ConstructorParameters<typeof Queue>[1]>['connection'];
+}
 
 function makeQueue() {
-  const client = getRedisClient();
+  const client = requireRedisClient();
   // Connect eagerly so we fail fast with a clear error
   client.connect().catch(() => {});
-  return new Queue('ebook-conversions', { connection: client });
+  return new Queue<ConversionJobData, ConversionJobResult>('ebook-conversions', {
+    connection: bullConnection(client),
+  });
 }
+
+let _queue: ReturnType<typeof makeQueue> | null = null;
+let _worker: Worker<ConversionJobData, ConversionJobResult> | null = null;
+let _queueEvents: QueueEvents | null = null;
 
 export function getConversionQueue() {
   if (!_queue) _queue = makeQueue();
@@ -71,6 +89,8 @@ export type ConversionJobResult = {
   mimeType: string;
   downloadUrl?: string;
   fileSize?: number;
+  /** Set when the job was created by an authenticated user (ownership checks). */
+  userId?: string;
 };
 
 export type JobStatusResponse = {
@@ -94,9 +114,9 @@ async function cleanupDir(dir: string, maxRetries = 3) {
     try {
       rmSync(dir, { recursive: true, force: true });
       return;
-    } catch (err: any) {
+    } catch (err) {
       if (attempt === maxRetries) {
-        log.storage.error(`Failed to cleanup ${dir} after ${maxRetries} attempts`, { error: err.message });
+        log.storage.error(`Failed to cleanup ${dir} after ${maxRetries} attempts`, { error: errorMessage(err) });
       } else {
         await new Promise(resolve => setTimeout(resolve, 100 * Math.pow(2, attempt - 1)));
       }
@@ -105,20 +125,19 @@ async function cleanupDir(dir: string, maxRetries = 3) {
 }
 
 export async function cleanupOrphanedTempDirs(maxAgeMs = 24*60*60*1000) {
-  const fs = require('node:fs/promises');
   try {
-    const entries = await fs.readdir(UPLOAD_DIR, { withFileTypes: true });
+    const entries = await fsp.readdir(UPLOAD_DIR, { withFileTypes: true });
     for (const entry of entries) {
       if (!entry.isDirectory()) continue;
       const dirPath = path.join(UPLOAD_DIR, entry.name);
-      const stats = await fs.stat(dirPath);
+      const stats = await fsp.stat(dirPath);
       if (Date.now() - stats.mtimeMs > maxAgeMs) {
-        await fs.rm(dirPath, { recursive: true, force: true });
+        await fsp.rm(dirPath, { recursive: true, force: true });
         log.storage.info('Cleaned orphaned temp dir', { dir: dirPath });
       }
     }
-  } catch (err: any) {
-    log.storage.error('Periodic cleanup error', { error: err.message });
+  } catch (err) {
+    log.storage.error('Periodic cleanup error', { error: errorMessage(err) });
   }
 }
 
@@ -142,17 +161,15 @@ function getMimeType(ext: string): string {
 
 /** Validate input file before sending to Calibre. Throws if the file is clearly corrupted. */
 async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
-  const fs = require('node:fs/promises');
-
   try {
-    const stat = await fs.stat(inputPath);
+    const stat = await fsp.stat(inputPath);
     if (stat.size === 0) {
       throw new Error('Empty input file');
     }
 
     if (sourceFormat === 'epub') {
       const buf = Buffer.alloc(4);
-      const fd = await fs.open(inputPath, 'r');
+      const fd = await fsp.open(inputPath, 'r');
       try {
         await fd.read(buf, 0, 4, 0);
         await fd.close();
@@ -172,7 +189,7 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
       }
 
       // More thorough check: verify ZIP central directory exists
-      const data = await fs.readFile(inputPath);
+      const data = await fsp.readFile(inputPath);
       // Find central directory to confirm ZIP structure
       let cdOffset = -1;
       for (let i = data.length - 4; i >= 0; i--) {
@@ -208,7 +225,7 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
     // MOBI/AZW3 detection: header starts with 'BOOK' or 'TEXt'
     // NOTE: fs.readFile ignores {start,end}; read the whole file and compare the first 4 bytes.
     else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
-      const head = await fs.readFile(inputPath);
+      const head = await fsp.readFile(inputPath);
       const sig = head.subarray(0, 4).toString('latin1');
       if (!(sig === 'BOOK' || sig === 'TEXt')) {
         throw new Error('not a valid eBook format');
@@ -216,7 +233,7 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
     }
     // PDF: magic %PDF
     else if (sourceFormat === 'pdf') {
-      const head = await fs.readFile(inputPath);
+      const head = await fsp.readFile(inputPath);
       if (head.subarray(0, 4).toString('latin1') !== '%PDF') {
         throw new Error('not a valid eBook format');
       }
@@ -226,7 +243,7 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
       // docx is ZIP-like, check already
       if (sourceFormat === 'txt' || sourceFormat === 'rtf') {
         const headBuf = Buffer.alloc(64);
-        const fd = await fs.open(inputPath, 'r');
+        const fd = await fsp.open(inputPath, 'r');
         try {
           await fd.read(headBuf, 0, 64, 0);
           const txt = headBuf.toString().trim();
@@ -238,9 +255,9 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         }
       }
     }
-  } catch (err: any) {
+  } catch (err) {
     // Wrap validation errors with category that mapErrorCode can detect
-    const msg = err.message || String(err);
+    const msg = errorMessage(err) || String(err);
     if (!msg.includes('not a valid eBook format') &&
         !msg.includes('corrupt epub') &&
         !msg.includes('Invalid zip file') &&
@@ -336,17 +353,18 @@ async function executeConversion(
 
     await cleanupDir(jobDir);
     return { base64Data, extension: ext, mimeType: getMimeType(ext), fileSize };
-  } catch (err: any) {
+  } catch (err) {
     await cleanupDir(jobDir);
     // If the error doesn't already have a recognized category, enrich it with stderr
-    const msg = err.message || String(err);
+    const msg = errorMessage(err) || String(err);
     // 纠察层否决：保留详尽 verdict 细节，交由 processConversion 映射为 VERIFICATION_FAILED
     if (msg.startsWith('Conversion output failed verification')) {
       throw err;
     }
     if (!msg.includes('not a valid eBook format') && !msg.includes('corrupt') && !msg.includes('Invalid zip') &&
         !msg.includes('Timeout') && !msg.includes('timed out')) {
-      const stderr = err.stderr || '';
+      // execFile rejects with an Error carrying the child process's stderr output
+      const stderr = (err as { stderr?: string }).stderr || '';
       const combined = `${msg}\n${stderr}`;
       const errorCode = mapErrorCode(combined);
       if (errorCode !== 'CONVERSION_FAILED') {
@@ -363,7 +381,9 @@ async function executeConversion(
  * This function should only execute ONE conversion attempt; failures are
  * thrown so BullMQ can retry with exponential backoff.
  */
-export async function processConversion(job: any) {
+export async function processConversion(
+  job: Job<ConversionJobData, ConversionJobResult>,
+): Promise<ConversionJobResult> {
   const { fileBuffer, inputFilePath, sourceFormat, targetFormat, jobId } = job.data;
   const attempt = job.attemptsMade + 1;
   const maxRetryCount = MAX_RETRIES;
@@ -380,7 +400,7 @@ export async function processConversion(job: any) {
     );
     job.updateProgress(100);
     return result;
-  } catch (err: any) {
+  } catch (err) {
     const errMsg = (err instanceof Error ? err.message : 'Unknown conversion error');
     const errorCode = mapErrorCode(errMsg);
     const friendlyMsg = getFriendlyMessage(errorCode);
@@ -390,9 +410,10 @@ export async function processConversion(job: any) {
     log.conversion.error(`Conversion attempt ${attempt}/${maxRetryCount} failed`, {
       jobId, attempt, maxRetries: maxRetryCount, error: friendlyMsg, rawError: errMsg, code: errorCode,
     });
-    const wrapped: any = new Error(friendlyMsg);
-    wrapped.code = errorCode;
-    wrapped.cause = err instanceof Error ? err : new Error(errMsg);
+    const wrapped = Object.assign(new Error(friendlyMsg), {
+      code: errorCode,
+      cause: err instanceof Error ? err : new Error(errMsg),
+    });
     job.updateProgress({ percentage: 10 + (attempt - 1) * 5, attempt, maxRetries: maxRetryCount, error: friendlyMsg });
     throw wrapped; // BullMQ will retry with backoff; real cause retained on `.cause`
   }
@@ -402,8 +423,11 @@ export async function getJobStatus(jobId: string) {
   const queue = getConversionQueue();
   // BullMQ 5.x getJob() uses internal numeric ID, not custom jobId.
   // We need to find the job by scanning or using the numeric ID from Redis.
-  const redis = getRedisClient();
-  if (!redis.connected) {
+  const redis = requireRedisClient();
+  // ioredis exposes connection state through `status`, NOT `connected` — the
+  // latter is undefined at runtime, so `!redis.connected` was always true and
+  // forced a redundant connect() on every poll. 'wait' is lazyConnect's initial state.
+  if (redis.status === 'wait') {
     await redis.connect().catch(() => {});
   }
 
@@ -437,10 +461,19 @@ export async function getJobStatus(jobId: string) {
   const progress = job.progress;
   let progressValue = 0;
   if (typeof progress === 'number') progressValue = progress;
-  else if (progress && typeof progress === 'object' && 'percentage' in progress) progressValue = progress.percentage || 0;
+  else if (progress && typeof progress === 'object' && 'percentage' in progress) {
+    const pct = (progress as { percentage?: unknown }).percentage;
+    progressValue = typeof pct === 'number' ? pct : 0;
+  }
+
+  // BullMQ exposes job state through getState() only — there is no `state`
+  // property on the instance, so the previous `job.state` read always yielded
+  // undefined: every job was reported as 'waiting' (even while actively
+  // converting) and the ETA branch below was dead code.
+  const state = await job.getState();
 
   let eta: number | undefined;
-  if (job.state === 'active' && progressValue > 0 && progressValue < 100) {
+  if (state === 'active' && progressValue > 0 && progressValue < 100) {
     const elapsed = Date.now() - job.timestamp;
     if (elapsed > 100) { // Guard against near-zero elapsed times
       const rate = progressValue / elapsed;
@@ -450,15 +483,17 @@ export async function getJobStatus(jobId: string) {
 
   return {
     jobId,
-    status: job.state || (job.finishedOn ? 'completed' : 'waiting'),
+    status: state === 'unknown' ? (job.finishedOn ? 'completed' : 'waiting') : state,
     progress: progressValue,
     attempt: job.attemptsMade + 1,
     maxRetries: MAX_RETRIES,
     eta,
     error: job.failedReason || undefined,
-    result: job.state === 'completed' || job.finishedOn ? job.returnvalue : undefined,
+    result: state === 'completed' || job.finishedOn ? job.returnvalue : undefined,
     createdAt: job.timestamp,
-    updatedAt: job.updatedAt || job.timestamp,
+    // BullMQ exposes no last-update timestamp on Job; the most recent recorded
+    // lifecycle milestone is the closest honest substitute.
+    updatedAt: job.finishedOn ?? job.processedOn ?? job.timestamp,
   };
 }
 
@@ -499,8 +534,8 @@ export async function startWorker() {
   // Rate limit: max 5 jobs per minute (Calibre is CPU-intensive)
   const RATE_LIMIT_MAX = 5;
   const RATE_LIMIT_DURATION = 60_000; // 1 minute
-  _worker = new Worker('ebook-conversions', processConversion, {
-    connection: getRedisClient(),
+  _worker = new Worker<ConversionJobData, ConversionJobResult>('ebook-conversions', processConversion, {
+    connection: bullConnection(requireRedisClient()),
     concurrency: RATE_LIMIT_MAX,
     limiter: { max: RATE_LIMIT_MAX, duration: RATE_LIMIT_DURATION },
     settings: {
@@ -509,17 +544,23 @@ export async function startWorker() {
       backoffStrategy: (attemptsMade: number) => Math.pow(2, attemptsMade) * 2000,
     },
   });
-  _worker.on('completed', (job: any) => {
-    log.queue.info('Job completed', { jobId: job.id });
-    appendConversionAuditLog(job.id, "succeeded", {
+  _worker.on('completed', (job: Job<ConversionJobData, ConversionJobResult>) => {
+    const jobIdStr = job.id ?? '?';
+    log.queue.info('Job completed', { jobId: jobIdStr });
+    appendConversionAuditLog(jobIdStr, "succeeded", {
       sourceFormat: job.data?.sourceFormat,
       targetFormat: job.data?.targetFormat,
       durationMs: job.finishedOn ? job.finishedOn - job.timestamp : undefined,
     });
-    // Keep jobs for 7 days instead of removing immediately
-    getConversionQueue().trim(1000, false);
+    // Retention: keep completed jobs for 7 days, then drop them.
+    // BullMQ has no `Queue.trim()` — the previous call threw a TypeError on every
+    // successful job, so completed jobs were never trimmed at all. `clean()` is
+    // the real API; it is fire-and-forget so it can never break the worker loop.
+    void getConversionQueue()
+      .clean(7 * 24 * 60 * 60 * 1000, 1000, 'completed')
+      .catch(() => {});
   });
-  _worker.on('failed', async (job: any, err: any) => {
+  _worker.on('failed', async (job: Job<ConversionJobData, ConversionJobResult> | undefined, err: Error) => {
     const jobIdStr = job?.id || '?';
     log.queue.error('Job failed', { jobId: jobIdStr, attempts: job?.attemptsMade, error: err.message });
     appendConversionAuditLog(jobIdStr, "failed", {
@@ -531,19 +572,21 @@ export async function startWorker() {
     // Send alert notification for failed jobs
     await notifyFailedJob(jobIdStr, job?.data, err.message);
   });
-  _worker.on('error', (err: any) => { log.queue.error('Worker error', { error: err.message }); });
+  _worker.on('error', (err: Error) => { log.queue.error('Worker error', { error: err.message }); });
   return _worker;
 }
 
 // Failed job alert notification — sends to Feishu webhook if configured
-async function notifyFailedJob(jobId: string, jobData: any, error: string) {
+async function notifyFailedJob(jobId: string, jobData: ConversionJobData | undefined, error: string) {
   try {
-    const { sourceFormat, targetFormat, userId } = jobData || {};
+    const sourceFormat = jobData?.sourceFormat;
+    const targetFormat = jobData?.targetFormat;
+    const userId = jobData?.userId;
     log.conversion.error(`Conversion job ${jobId} failed`, {
       jobId,
-      sourceFormat: jobData?.sourceFormat,
-      targetFormat: jobData?.targetFormat,
-      userId: jobData?.userId,
+      sourceFormat,
+      targetFormat,
+      userId,
       error,
     });
 
@@ -559,8 +602,8 @@ async function notifyFailedJob(jobId: string, jobData: any, error: string) {
         error,
       }).catch(() => {});
     }
-  } catch (alertErr: any) {
-    log.conversion.error('Failed to send alert notification', { error: alertErr.message });
+  } catch (alertErr) {
+    log.conversion.error('Failed to send alert notification', { error: errorMessage(alertErr) });
   }
 }
 
@@ -626,9 +669,9 @@ async function sendFeishuAlert(payload: FeishuAlertPayload): Promise<void> {
 
 export function startQueueEvents() {
   if (_queueEvents) return _queueEvents;
-  _queueEvents = new QueueEvents('ebook-conversions', { connection: getRedisClient() });
-  _queueEvents.on('completed', (data: any) => log.queue.info('QueueEvent: job completed', { jobId: data.jobId }));
-  _queueEvents.on('failed', (data: any) => log.queue.error('QueueEvent: job failed', { jobId: data.jobId, reason: data.failedReason }));
+  _queueEvents = new QueueEvents('ebook-conversions', { connection: bullConnection(requireRedisClient()) });
+  _queueEvents.on('completed', (data: { jobId: string }) => log.queue.info('QueueEvent: job completed', { jobId: data.jobId }));
+  _queueEvents.on('failed', (data: { jobId: string; failedReason: string }) => log.queue.error('QueueEvent: job failed', { jobId: data.jobId, reason: data.failedReason }));
   return _queueEvents;
 }
 

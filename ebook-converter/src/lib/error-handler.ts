@@ -92,6 +92,20 @@ export function isRetryable(code: ErrorCode): boolean {
   return ERROR_MESSAGES[code]?.retryable ?? true;
 }
 
+/**
+ * Narrow an unknown thrown value to a message string.
+ *
+ * `catch` bindings are `unknown` under `strict`, so `err.message` is not
+ * directly accessible. This is a pure narrowing helper: it performs no
+ * sanitisation, truncation or path stripping (use `sanitizeError` for that),
+ * so call sites keep logging exactly what they logged before.
+ */
+export function errorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === 'string') return err;
+  return String(err);
+}
+
 /** Strip stack traces, internal paths, and technical details from error messages */
 export function sanitizeError(err: unknown): string {
   if (typeof err === "string") {

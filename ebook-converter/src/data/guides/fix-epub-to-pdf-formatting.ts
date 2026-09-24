@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'fix-epub-to-pdf-formatting'
 export const title = 'Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It'

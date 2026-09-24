@@ -10,7 +10,7 @@ export {
 } from './seo/schema';
 
 export interface SchemaData {
-  actors?: any[];
+  actors?: Array<{ '@type'?: string; name?: string }>;
   applicationCategory?: string;
   availability?: string;
   bestRating?: string;
@@ -18,9 +18,9 @@ export interface SchemaData {
   datePublished?: string;
   description?: string;
   featureList?: string[];
-  mainEntityOfPage?: any;
+  mainEntityOfPage?: { '@type'?: string; '@id'?: string };
   name?: string;
-  offers?: any;
+  offers?: { '@type'?: string; price?: number; priceCurrency?: string; availability?: string };
   operatingSystem?: string;
   price?: number;
   priceCurrency?: string;

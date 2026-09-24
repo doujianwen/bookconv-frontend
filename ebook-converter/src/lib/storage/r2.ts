@@ -1,4 +1,5 @@
 import { S3Client } from '@aws-sdk/client-s3';
+import type { Readable } from 'node:stream';
 
 const R2_ENDPOINT = process.env.R2_ENDPOINT;
 const R2_ACCESS_KEY = process.env.R2_ACCESS_KEY_ID;
@@ -35,7 +36,7 @@ export async function downloadFromR2(key: string): Promise<Buffer> {
   const { GetObjectCommand } = await import('@aws-sdk/client-s3');
   const response = await client.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: key }));
   const chunks: Buffer[] = [];
-  for await (const chunk of response.Body as any) {
+  for await (const chunk of response.Body as Readable) {
     chunks.push(Buffer.from(chunk));
   }
   return Buffer.concat(chunks);
@@ -53,7 +54,7 @@ export async function checkR2Health(): Promise<{ healthy: boolean; error?: strin
     const client = getClient();
     await client.send(new (await import("@aws-sdk/client-s3")).HeadBucketCommand({ Bucket: R2_BUCKET }));
     return { healthy: true };
-  } catch (err: any) {
-    return { healthy: false, error: err.message || "Unknown R2 error" };
+  } catch (err) {
+    return { healthy: false, error: err instanceof Error ? err.message : "Unknown R2 error" };
   }
 }

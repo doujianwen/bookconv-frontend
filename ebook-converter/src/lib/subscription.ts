@@ -1,15 +1,17 @@
 ﻿// src/lib/subscription.ts
 // Subscription state management using Redis (fallback when Supabase is not configured).
 
-import { getRedisClient } from './redis';
+import { requireRedisClient } from './redis';
+import { errorMessage } from './error-handler';
 import { getPlanByVariantId } from './payments/service';
 
 const SUBSCRIPTION_TTL_SECONDS = 30 * 24 * 3600; // 30 days
 
 /** Helper: get or create Redis connection */
-async function getRedis(): Promise<any> {
-  const redis = getRedisClient();
-  if (!redis.connected) {
+async function getRedis(): Promise<ReturnType<typeof requireRedisClient>> {
+  const redis = requireRedisClient();
+  // ioredis exposes connection state through `status`, not `connected`.
+  if (redis.status === 'wait') {
     try { await redis.connect(); } catch { /* fall through */ }
   }
   return redis;
@@ -19,7 +21,9 @@ async function getRedis(): Promise<any> {
 export async function saveSubscription(
   userId: string,
   status: string,
-  variantId: string,
+  // Lemon Squeezy does not guarantee variant_id on every event, and the
+  // reader side (getPlanByVariantId) already accepts undefined.
+  variantId: string | undefined,
   endsAt?: number,
 ): Promise<void> {
   try {
@@ -32,15 +36,15 @@ export async function saveSubscription(
       ...(endsAt ? { endsAt } : {}),
     });
     await redis.setex(key, SUBSCRIPTION_TTL_SECONDS, data);
-  } catch (err: any) {
-    console.error('[subscription] Failed to save to Redis:', err.message);
+  } catch (err) {
+    console.error('[subscription] Failed to save to Redis:', errorMessage(err));
   }
 }
 
 /** Get subscription status from Redis */
 export async function getSubscriptionStatus(
   userId: string,
-): Promise<{ status: string; variantId: string; endsAt?: number } | null> {
+): Promise<{ status: string; variantId?: string; endsAt?: number } | null> {
   try {
     const redis = await getRedis();
     const data = await redis.get(`sub:${userId.toLowerCase()}`);
@@ -64,8 +68,8 @@ export async function removeSubscription(userId: string): Promise<void> {
   try {
     const redis = await getRedis();
     await redis.del(`sub:${userId.toLowerCase()}`);
-  } catch (err: any) {
-    console.error('[subscription] Failed to remove from Redis:', err.message);
+  } catch (err) {
+    console.error('[subscription] Failed to remove from Redis:', errorMessage(err));
   }
 }
 
@@ -95,8 +99,8 @@ export async function grantCredits(userId: string, amount: number = 1): Promise<
     const newAmount = current + amount;
     await redis.set(key, String(newAmount));
     return newAmount;
-  } catch (err: any) {
-    console.error('[subscription] Failed to grant credits:', err.message);
+  } catch (err) {
+    console.error('[subscription] Failed to grant credits:', errorMessage(err));
     return 0;
   }
 }

@@ -24,13 +24,13 @@ export async function getLocale() {
  * Resolve a dot-notation path into a nested object value.
  * e.g., resolvePath({ seo: { defaultTitle: "Book" } }, "seo.defaultTitle") => "Book"
  */
-export function resolvePath(obj: Record<string, any>, path: string): string {
+export function resolvePath(obj: Record<string, unknown>, path: string): string {
   if (!obj || !path) return '';
   const parts = path.split('.');
-  let current: any = obj;
+  let current: unknown = obj;
   for (const part of parts) {
-    if (current == null) return '';
-    current = current[part];
+    if (current == null || typeof current !== 'object') return '';
+    current = (current as Record<string, unknown>)[part];
   }
   return typeof current === 'string' ? current : '';
 }

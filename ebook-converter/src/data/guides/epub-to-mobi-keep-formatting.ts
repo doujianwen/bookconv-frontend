@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'epub-to-mobi-keep-formatting'
 export const title = 'EPUB to MOBI: Keep Formatting and Read on Any Kindle (Free)'

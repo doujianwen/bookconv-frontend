@@ -43,7 +43,7 @@ async function ccRequest<T>(
         const text = await res.text().catch(() => res.statusText);
         let msg = text;
         try {
-          msg = (JSON.parse(text) as any)?.message || text;
+          msg = (JSON.parse(text) as { message?: string })?.message || text;
         } catch {
           /* keep raw text */
         }
@@ -65,9 +65,10 @@ async function ccRequest<T>(
       }
 
       return (await res.json()) as T;
-    } catch (err: any) {
+    } catch (err) {
       // 已经是格式化过的 CloudConvert 错误，直接上抛
-      if (typeof err?.message === 'string' && err.message.startsWith('CloudConvert')) throw err;
+      const errMsg = err instanceof Error ? err.message : undefined;
+      if (typeof errMsg === 'string' && errMsg.startsWith('CloudConvert')) throw err;
       if (attempt === retries) throw err;
       await new Promise((r) => setTimeout(r, 1000 * attempt));
     }

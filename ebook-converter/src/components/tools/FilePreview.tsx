@@ -6,9 +6,48 @@ import {
   CheckCircle2, XCircle, Loader2, Download, Info, Calendar, User,
   Building, BookOpen, Languages, Tag, File as FileIcon,
 } from "lucide-react"
-import { cn, formatBytes } from "@/lib/utils"
+import { formatBytes } from "@/lib/utils"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { extractEbookMetadata, estimatePageCount, type EbookMetadata } from "@/lib/ebook-metadata"
+
+/**
+ * Icon for a file extension.
+ *
+ * Declared at module scope, and every branch returns a literal component
+ * reference. Two render-time pitfalls are avoided: the component is no longer
+ * created inside FilePreview (which produced a new component type on each
+ * render, resetting its state), and no component-factory result is assigned to
+ * a local variable during render.
+ */
+function FormatIcon({ format, className }: { format: string; className?: string }) {
+  switch (format.toLowerCase()) {
+    case "epub":
+      return <BookMarked className={className} />
+    case "pdf":
+      return <FileType className={className} />
+    case "mobi":
+    case "azw3":
+    case "azw":
+      return <BookOpen className={className} />
+    case "txt":
+    case "html":
+    case "rtf":
+      return <FileText className={className} />
+    case "doc":
+    case "docx":
+      return <FileSpreadsheet className={className} />
+    case "fb2":
+      return <BookOpen className={className} />
+    case "djvu":
+      return <FileType className={className} />
+    case "jpg":
+    case "jpeg":
+    case "png":
+      return <ImageIcon className={className} />
+    default:
+      return <FileIcon className={className} />
+  }
+}
 
 interface FilePreviewProps {
   file: File
@@ -24,20 +63,24 @@ export function FilePreview({ file, targetFormat, onMetadataExtracted }: FilePre
   const ext = file.name.split(".").pop()?.toLowerCase() || ""
 
   const extract = useCallback(async () => {
+    // Loading/error resets live here rather than in the effect body: calling
+    // setState synchronously inside an effect triggers a cascading render on
+    // every mount. `extract` fires from the timer callback below, so setting
+    // state here is safe.
+    setLoading(true)
+    setError(null)
     try {
       const meta = await extractEbookMetadata(file)
       setMetadata(meta)
       onMetadataExtracted?.(meta)
-    } catch (err: any) {
-      setError(err.message || "Failed to extract metadata")
+    } catch (err) {
+      setError((err instanceof Error ? err.message : "") || "Failed to extract metadata")
     } finally {
       setLoading(false)
     }
   }, [file, onMetadataExtracted])
 
   useEffect(() => {
-    setLoading(true)
-    setError(null)
     // Small delay for visual effect
     const timer = setTimeout(extract, 300)
     return () => clearTimeout(timer)
@@ -46,23 +89,6 @@ export function FilePreview({ file, targetFormat, onMetadataExtracted }: FilePre
   const pageCount = estimatePageCount(file, ext)
   const displayName = FORMAT_DISPLAY_NAMES[ext] || ext.toUpperCase()
   const targetName = FORMAT_DISPLAY_NAMES[targetFormat] || targetFormat.toUpperCase()
-
-  const getFormatIcon = (format: string) => {
-    const lower = format.toLowerCase()
-    switch (lower) {
-      case "epub": return BookMarked
-      case "pdf": return FileType
-      case "mobi": case "azw3": case "azw": return BookOpen
-      case "txt": case "html": case "rtf": return FileText
-      case "doc": case "docx": return FileSpreadsheet
-      case "fb2": return BookOpen
-      case "djvu": return FileType
-      case "jpg": case "jpeg": case "png": return ImageIcon
-      default: return FileIcon
-    }
-  }
-
-  const FormatIcon = getFormatIcon(ext)
 
   if (error) {
     return (
@@ -82,7 +108,7 @@ export function FilePreview({ file, targetFormat, onMetadataExtracted }: FilePre
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50">
-            <FormatIcon className="h-6 w-6 text-blue-600" />
+            <FormatIcon format={ext} className="h-6 w-6 text-blue-600" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-gray-900">{file.name}</p>

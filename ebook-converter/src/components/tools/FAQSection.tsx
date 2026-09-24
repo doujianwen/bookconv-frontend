@@ -9,7 +9,7 @@ interface FAQSectionProps {
   targetFormat: string
 }
 
-export function FAQSection({ faqs, sourceFormat, targetFormat }: FAQSectionProps) {
+export function FAQSection({ faqs }: FAQSectionProps) {
   return (
     <section className="space-y-4">
       <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>

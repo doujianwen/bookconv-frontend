@@ -62,12 +62,13 @@ export async function convertAndStream(
       targetFormat,
       jobId,
     );
-  } catch (convErr: any) {
+  } catch (convErr) {
     // DEBUG: Log the actual error for diagnosis
-    console.error('[DEBUG] Conversion error:', convErr?.message || String(convErr));
+    const convMsg = convErr instanceof Error ? convErr.message : String(convErr);
+    console.error('[DEBUG] Conversion error:', convMsg);
     const errorCode = mapErrorCode(sanitizeError(convErr));
     // Surface raw error only when CC_DEBUG is explicitly enabled (prod-safe)
-    const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convErr?.message || String(convErr) } : {};
+    const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convMsg } : {};
     return NextResponse.json(
       { error: getFriendlyMessage(errorCode), code: errorCode, ...debugRaw },
       { status: 500, headers: rateHeaders },

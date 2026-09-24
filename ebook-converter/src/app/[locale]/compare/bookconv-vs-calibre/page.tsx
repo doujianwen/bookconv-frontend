@@ -163,7 +163,7 @@ export default async function ComparePage() {
           <ol className="mt-4 space-y-2 text-emerald-800">
             <li>1. Use <strong>BookConv</strong> for quick, one-off conversions on any device</li>
             <li>2. Use <strong>Calibre</strong> for batch processing and library management</li>
-            <li>3. Sync between devices using cloud storage or Calibre's content server</li>
+            <li>3. Sync between devices using cloud storage or Calibre&apos;s content server</li>
           </ol>
         </section>
 

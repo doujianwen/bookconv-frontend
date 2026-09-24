@@ -2,7 +2,7 @@
 // Local file storage helpers for ebook conversion results.
 // Used as fallback when Cloudflare R2 is not configured.
 
-import { existsSync, readFileSync, writeFileSync, rmSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, rmSync, mkdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
@@ -28,7 +28,7 @@ export function readFromLocal(key: string): Buffer | null {
   const filePath = path.join(UPLOAD_DIR, 'local-results', key);
   if (!existsSync(filePath)) return null;
 
-  const stats = require('node:fs').statSync(filePath);
+  const stats = statSync(filePath);
   if (stats.size > MAX_LOCAL_FILE_SIZE) {
     console.warn(`Local file ${key} exceeds max size (${stats.size} bytes)`);
     return null;
@@ -63,6 +63,6 @@ export function existsLocal(key: string): boolean {
 export function getLocalFileInfo(key: string): { size: number; path: string } | null {
   const filePath = path.join(UPLOAD_DIR, 'local-results', key);
   if (!existsSync(filePath)) return null;
-  const stats = require('node:fs').statSync(filePath);
+  const stats = statSync(filePath);
   return { size: stats.size, path: filePath };
 }

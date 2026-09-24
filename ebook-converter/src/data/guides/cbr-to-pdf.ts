@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'cbr-to-pdf'
 export const title = 'CBR to PDF: Read Your Comics on Any Device'

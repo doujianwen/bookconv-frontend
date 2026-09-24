@@ -8,8 +8,9 @@ export async function POST(request: NextRequest) {
     const tgt = formData.get("target_format");
     console.log("[TEST] file:", file?.name, "src:", typeof src, src, "tgt:", typeof tgt, tgt);
     return NextResponse.json({ ok: true, fileName: file?.name, source: src, target: tgt });
-  } catch (err: any) {
-    console.error("[TEST] Error:", err?.message, err);
-    return NextResponse.json({ error: err?.message || String(err) }, { status: 500 });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[TEST] Error:", msg, err);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

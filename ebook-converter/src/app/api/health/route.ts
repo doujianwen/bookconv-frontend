@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getRedisClient } from '@/lib/redis';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { sanitizeError } from "@/lib/error-handler";
 
 const execFileAsync = promisify(execFile);
 

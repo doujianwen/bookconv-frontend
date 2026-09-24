@@ -131,7 +131,7 @@ export async function GET(request: NextRequest) {
         ...rateHeaders,
       },
     });
-  } catch (_err: unknown) {
+  } catch {
     log.download.error('Download error', { key });
     return NextResponse.json(
       { error: 'Download failed' },

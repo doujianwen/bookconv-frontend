@@ -29,7 +29,7 @@ function createClient(): IORedis {
   });
 }
 
-export function getRedisClient(): any {
+export function getRedisClient(): IORedis | null {
   if (!isRedisConfigured()) {
     return null; // No Redis configured — caller must handle gracefully
   }
@@ -41,13 +41,30 @@ export function getRedisClient(): any {
 }
 
 /**
+ * Redis client for call paths that cannot proceed without Redis.
+ *
+ * Throws an explicit, greppable error instead of letting the caller fail with
+ * an opaque "Cannot read properties of null". Callers that can degrade (rate
+ * limiting, job-status polling) should keep using `getRedisClient()` and
+ * handle the `null` case themselves.
+ */
+export function requireRedisClient(): IORedis {
+  const client = getRedisClient();
+  if (!client) {
+    throw new Error('REDIS_URL is not configured');
+  }
+  return client;
+}
+
+/**
  * Check if Redis is reachable. Useful for health checks.
  */
 export async function isRedisHealthy(): Promise<boolean> {
   const client = getRedisClient();
   if (!client) return false; // Not configured, treat as not healthy
   try {
-    if (!client.connected) {
+    // ioredis exposes connection state through `status`, not `connected`.
+    if (client.status === 'wait') {
       await client.connect();
     }
     const pong = await client.ping();

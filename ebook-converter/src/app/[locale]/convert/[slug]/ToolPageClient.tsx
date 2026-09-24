@@ -71,7 +71,7 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
   },
 }
 
-export function ToolPageClient({ source, target, keyword, tool, description, contentData, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, contentData, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
@@ -144,20 +144,21 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
           target_format: target,
         })
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
-      } catch (err: any) {
+      } catch (err) {
         // Extract error code and friendly message from response data if available
-        const cause = err.cause as { errorCode?: string; code?: string } | undefined
+        const errObj = err as { cause?: { errorCode?: string; code?: string }; message?: string } | undefined
+        const cause = errObj?.cause
         const rawCode = cause?.errorCode || cause?.code
         const mappedCode = rawCode && !/^(FILE_NOT_FOUND|PERMISSION_DENIED|CONVERSION_TIMEOUT|TOO_MANY_OPEN_FILES|DRM_PROTECTED|CONVERSION_FAILED|INTERNAL_ERROR|CORRUPT_INPUT|MEMORY_LIMIT)$/.test(rawCode)
           ? undefined
           : (rawCode as ErrorCode | undefined)
         setErrorCode(mappedCode)
-        setErrorMessage(err.message || "Conversion failed")
+        setErrorMessage(errObj?.message || "Conversion failed")
         setStatus("error")
         trackGAEvent("conversion_failed", {
           source_format: source,
           target_format: target,
-          error: (err?.message || "unknown").slice(0, 100),
+          error: (errObj?.message || "unknown").slice(0, 100),
         })
       }
     },
@@ -231,7 +232,7 @@ export function ToolPageClient({ source, target, keyword, tool, description, con
           {/* Next steps CTA — lift retention at the conversion-complete moment */}
           {status === "done" && relatedBlogPosts && relatedBlogPosts.length > 0 && (
             <section className="rounded-xl border border-indigo-200 bg-indigo-50 p-6">
-              <h2 className="text-lg font-semibold text-indigo-900">Your {targetDisplay} file is ready — what's next?</h2>
+              <h2 className="text-lg font-semibold text-indigo-900">Your {targetDisplay} file is ready — what&apos;s next?</h2>
               <p className="mt-1 text-sm text-indigo-800">Make the most of your converted file:</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {relatedBlogPosts.slice(0, 2).map((post) => (

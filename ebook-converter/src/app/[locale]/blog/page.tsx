@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from "next"
 import Link from "next/link"
-import { BookOpen, Calendar, Tag } from "lucide-react"
+import { Calendar, Tag } from "lucide-react"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { getAllPosts } from "@/data/blog"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"

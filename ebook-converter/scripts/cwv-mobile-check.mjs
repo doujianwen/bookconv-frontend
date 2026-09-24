@@ -38,7 +38,7 @@ const run = async () => {
             if (e.name === 'first-input') window.__cwv.fid = e.processingStart - e.startTime;
           }
         }).observe({ type: 'first-input', buffered: true });
-      } catch (e) {}
+      } catch {}
     });
     const navStart = Date.now();
     try {

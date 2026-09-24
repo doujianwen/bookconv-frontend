@@ -15,9 +15,10 @@ import { promisify } from 'node:util';
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync, appendFileSync } from 'node:fs';
 import path from 'node:path';
 import { loggers as log } from './logger';
-import { mapErrorCode, getFriendlyMessage } from './error-handler';
 import { verifyConversion } from './conversion-verifier';
 import { convertWithCloudConvert, isCloudConvertConfigured } from './cloudconvert';
+import * as fsp from 'node:fs/promises';
+import { errorMessage } from './error-handler';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -55,9 +56,9 @@ async function cleanupDir(dir: string, maxRetries = 3) {
     try {
       rmSync(dir, { recursive: true, force: true });
       return;
-    } catch (err: any) {
+    } catch (err) {
       if (attempt === maxRetries) {
-        log.storage.error(`Failed to cleanup ${dir} after ${maxRetries} attempts`, { error: err.message });
+        log.storage.error(`Failed to cleanup ${dir} after ${maxRetries} attempts`, { error: err instanceof Error ? err.message : String(err) });
       } else {
         await new Promise(resolve => setTimeout(resolve, 100 * Math.pow(2, attempt - 1)));
       }
@@ -85,17 +86,15 @@ function getMimeType(ext: string): string {
 
 /** Validate input file before sending to Calibre. Throws if the file is clearly corrupted. */
 async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
-  const fs = require('node:fs/promises');
-
   try {
-    const stat = await fs.stat(inputPath);
+    const stat = await fsp.stat(inputPath);
     if (stat.size === 0) {
       throw new Error('Empty input file');
     }
 
     if (sourceFormat === 'epub') {
       const buf = Buffer.alloc(4);
-      const fd = await fs.open(inputPath, 'r');
+      const fd = await fsp.open(inputPath, 'r');
       try {
         await fd.read(buf, 0, 4, 0);
         await fd.close();
@@ -111,7 +110,7 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
       }
 
       // More thorough check: verify ZIP central directory exists
-      const data = await fs.readFile(inputPath);
+      const data = await fsp.readFile(inputPath);
       let cdOffset = -1;
       for (let i = data.length - 4; i >= 0; i--) {
         if (data[i] === 0x50 && data[i + 1] === 0x4b && data[i + 2] === 0x05 && data[i + 3] === 0x06) {
@@ -141,20 +140,20 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         throw new Error('Invalid or missing opf');
       }
     } else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
-      const head = await fs.readFile(inputPath);
+      const head = await fsp.readFile(inputPath);
       const sig = head.subarray(0, 4).toString('latin1');
       if (!(sig === 'BOOK' || sig === 'TEXt')) {
         throw new Error('not a valid eBook format');
       }
     } else if (sourceFormat === 'pdf') {
-      const head = await fs.readFile(inputPath);
+      const head = await fsp.readFile(inputPath);
       if (head.subarray(0, 4).toString('latin1') !== '%PDF') {
         throw new Error('not a valid eBook format');
       }
     } else if (['txt', 'rtf', 'docx'].includes(sourceFormat)) {
       if (sourceFormat === 'txt' || sourceFormat === 'rtf') {
         const headBuf = Buffer.alloc(64);
-        const fd = await fs.open(inputPath, 'r');
+        const fd = await fsp.open(inputPath, 'r');
         try {
           await fd.read(headBuf, 0, 64, 0);
           const txt = headBuf.toString().trim();
@@ -166,8 +165,8 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         }
       }
     }
-  } catch (err: any) {
-    const msg = err.message || String(err);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     if (!msg.includes('not a valid eBook format') &&
         !msg.includes('corrupt epub') &&
         !msg.includes('Invalid zip file') &&
@@ -343,7 +342,7 @@ export async function executeConversion(
       try {
         await execFileAsync(CALIBRE_PATH, ['--version'], { timeout: 5000 });
         calibreAvailable = true;
-      } catch (calibreCheckErr: any) {
+      } catch {
         // Calibre not available on this runtime (e.g., Vercel Serverless)
         log.conversion.warn('Calibre not available, checking CloudConvert fallback', {
           hasCloudConvert: isCloudConvertConfigured(),
@@ -412,19 +411,15 @@ export async function executeConversion(
 
     await cleanupDir(jobDir);
     return { base64Data, extension: ext, mimeType: getMimeType(ext), fileSize };
-  } catch (err: any) {
+  } catch (err) {
     await cleanupDir(jobDir);
-    const msg = err.message || String(err);
+    const msg = errorMessage(err) || String(err);
+    // The verification gate's rejection message is preserved verbatim; every
+    // other error is rethrown untouched so callers can map it to a user-facing
+    // code via mapErrorCode. (This block used to also build `stderr`/`combined`
+    // and an `errorCode` that was never read.)
     if (msg.startsWith('Conversion output failed verification')) {
       throw err;
-    }
-    if (!msg.includes('not a valid eBook format') && !msg.includes('corrupt') && !msg.includes('Invalid zip') &&
-        !msg.includes('Timeout') && !msg.includes('timed out')) {
-      const stderr = err.stderr || '';
-      const combined = `${msg}\n${stderr}`;
-      const errorCode = mapErrorCode(combined);
-      // Always throw friendly message for known error codes
-      throw err; // Keep original error for proper error code mapping
     }
     throw err;
   }
@@ -449,7 +444,7 @@ export async function runConversion(
       sourceFormat, targetFormat, durationMs: Date.now() - start,
     });
     return result;
-  } catch (err: any) {
+  } catch (err) {
     appendConversionAuditLog(jobId, 'failed', {
       sourceFormat, targetFormat,
       error: err instanceof Error ? err.message : String(err),

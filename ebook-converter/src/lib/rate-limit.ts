@@ -1,7 +1,20 @@
 ﻿// src/lib/rate-limit.ts
-import IORedis from 'ioredis';
-import { getRedisClient } from './redis';
+import { requireRedisClient } from './redis';
+import { errorMessage } from './error-handler';
 import { loggers as log } from './logger';
+
+/**
+ * Minimal structural view of the request fields the IP helpers actually read.
+ *
+ * Deliberately narrow instead of `any`: NextRequest (and plain test doubles)
+ * satisfy it structurally, while a typo such as `request.headres` is caught.
+ */
+export interface IpRequestLike {
+  /** Next.js built-in client IP. Removed in newer Next versions; optional. */
+  ip?: string;
+  headers?: { get?(name: string): string | null };
+  socket?: { remoteAddress?: string };
+}
 
 /**
  * Layered rate-limit strategy configuration.
@@ -120,8 +133,12 @@ export async function checkRateLimit(
   const resetAt = now + windowMs;
 
   try {
-    const redis = getRedisClient();
-    if (!redis.connected) {
+    const redis = requireRedisClient();
+    // ioredis exposes connection state through `status`, NOT `connected` — the
+    // latter is undefined at runtime, so `!redis.connected` was always true and
+    // issued a redundant connect() before every command. 'wait' is the
+    // lazyConnect initial state, i.e. the only state that needs a connect().
+    if (redis.status === 'wait') {
       await redis.connect();
     }
 
@@ -135,10 +152,16 @@ export async function checkRateLimit(
       end
       return count
     `;
-    const currentCount = await redis.eval(luaScript, {
-      keys: [key],
-      arguments: [String(Math.ceil(windowMs / 1000))],
-    });
+    // ioredis takes numKeys positionally: eval(script, numKeys, ...keysAndArgs).
+    // The `{ keys, arguments }` object form belongs to node-redis — passed here
+    // it serialised to the literal string "[object Object]", Redis rejected the
+    // command, and every call silently fell through to the in-memory fallback
+    // (per-instance, so the documented per-IP limits were never enforced).
+    const evalReply = await redis.eval(luaScript, 1, key, String(Math.ceil(windowMs / 1000)));
+    const currentCount = Number(evalReply);
+    if (!Number.isFinite(currentCount)) {
+      throw new Error(`Unexpected EVAL reply: ${String(evalReply)}`);
+    }
 
     const remaining = Math.max(0, maxRequests - currentCount);
     const allowed = currentCount <= maxRequests;
@@ -156,8 +179,8 @@ export async function checkRateLimit(
       resetAt,
       ...(retryAfter !== undefined && { retryAfter }),
     };
-  } catch (err: any) {
-    log.rateLimit.error('Redis error, falling back to in-memory limiter', { error: err.message });
+  } catch (err) {
+    log.rateLimit.error('Redis error, falling back to in-memory limiter', { error: errorMessage(err) });
     // Fallback to in-memory rate limiting instead of allowing all requests
     return memCheck(identifier, windowMs, maxRequests);
   }
@@ -199,7 +222,7 @@ function extractFirstIp(headerValue: string | null): string {
  * 3. Socket address (`request.socket.remoteAddress`)
  * 4. ``"unknown"`` as last resort
  */
-function getClientIp(request: any): string {
+function getClientIp(request: IpRequestLike): string {
   // 1. Next.js built-in IP — already resolved by framework
   if (request.ip) {
     return String(request.ip);
@@ -270,7 +293,7 @@ function ipInAnyCidr(ip: string, cidrs: readonly string[]): boolean {
  * Build the rate-limit identifier (IP or user ID) from a NextRequest
  */
 export function getRateLimitIdentifier(
-  request: any,
+  request: IpRequestLike,
   userId?: string
 ): string {
   if (userId) {
@@ -284,7 +307,7 @@ export function getRateLimitIdentifier(
  * Convenience helper: rate-limit using a predefined strategy
  */
 export async function checkRateLimitWithStrategy(
-  request: any,
+  request: IpRequestLike,
   strategyName: keyof typeof RATE_LIMIT_STRATEGIES,
   userId?: string
 ): Promise<RateLimitResult> {

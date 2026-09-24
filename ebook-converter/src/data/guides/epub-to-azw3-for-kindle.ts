@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'epub-to-azw3-for-kindle'
 export const title = 'EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting'

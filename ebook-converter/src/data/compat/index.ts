@@ -1,7 +1,8 @@
 // src/data/compat/index.ts
 //
 // 兼容性报告注册表。镜像 content/index.ts 的"单源数据 + index 注册"模式，
-// 但用显式类型 `Record<string, CompatReport>`（对照 CONTENT_MAP 的 `any` 反面）。
+// 用显式类型 `Record<string, CompatReport>`（曾长期对照 CONTENT_MAP 的 `any` ——
+// CONTENT_MAP 已于 2026-09-19 显式类型化，两处现在都是反面变正面）。
 // 新增报告由 scripts/generate-compat.ts 自动补 import + 条目。
 
 import type { CompatReport } from "@/lib/compat/schema";

@@ -1,6 +1,5 @@
 ﻿"use client"
 
-import { Star } from "lucide-react"
 import { TESTIMONIALS } from "@/data/testimonials"
 import { TestimonialCard } from "./TestimonialCard"
 

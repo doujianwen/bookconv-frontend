@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { Download, FileText, ArrowRight, CheckCircle2 } from "lucide-react"
+import { Download, ArrowRight, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface FileMeta {

@@ -85,7 +85,6 @@ function parseFileInfo(file: File): FileInfo {
 
 export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = true }: FileDropZoneProps) {
   const [isDragging, setIsDragging] = useState(false)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
   const [metadata, setMetadata] = useState<EbookMetadata>({})
   const [metaLoading, setMetaLoading] = useState(false)
@@ -99,8 +98,8 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
     try {
       const meta = await extractEbookMetadata(file)
       setMetadata(meta)
-    } catch (err: any) {
-      setMetaError(err.message || "Failed to extract metadata")
+    } catch (err) {
+      setMetaError(err instanceof Error ? err.message : "Failed to extract metadata")
     } finally {
       setMetaLoading(false)
     }
@@ -109,7 +108,6 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   const handleFile = useCallback((file: File) => {
     const info = parseFileInfo(file)
     setFileInfo(info)
-    setSelectedFile(file)
     extractMetadata(file)
     onFileSelect(file)
   }, [extractMetadata, onFileSelect])
@@ -155,17 +153,10 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
     [handleFile]
   )
 
-  const handleReset = useCallback(() => {
-    setSelectedFile(null)
-    setFileInfo(null)
-    setMetadata({})
-    setMetaError(null)
-  }, [])
-
   const FormatIcon = fileInfo ? getFormatIcon(fileInfo.format) : null
 
   // Metadata fields to display
-  const metaFields = Object.entries(metadata).filter(([_, v]) => v != null && v !== "") as [keyof EbookMetadata, string][]
+  const metaFields = Object.entries(metadata).filter(([, v]) => v != null && v !== "") as [keyof EbookMetadata, string][]
 
   return (
     <div className="space-y-4">

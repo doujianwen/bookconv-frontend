@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Play, X } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Play } from "lucide-react"
 
 interface VideoTutorialProps {
   videoUrl: string
@@ -22,6 +21,7 @@ export function VideoTutorial({ videoUrl, thumbnailUrl, title, description, step
         {!isPlaying ? (
           <div className="flex h-full w-full flex-col items-center justify-center">
             {thumbnailUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element -- thumbnailUrl is never supplied by any caller today, and next/image rejects hosts outside next.config's remotePatterns (only www.bookconv.com). Switch to next/image once a real whitelisted thumbnail source exists.
               <img src={thumbnailUrl} alt={title} className="h-full w-full object-cover opacity-60" />
             ) : (
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900" />

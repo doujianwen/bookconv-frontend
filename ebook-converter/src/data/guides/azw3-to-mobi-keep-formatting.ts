@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'azw3-to-mobi-keep-formatting'
 export const title = 'AZW3 to MOBI: Convert for Older Kindles Without Losing Your Book'

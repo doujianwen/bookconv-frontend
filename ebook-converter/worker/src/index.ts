@@ -1,8 +1,6 @@
 import { Worker, Queue, type Job } from "bullmq"
-import { createWriteStream } from "node:fs"
-import { mkdir, unlink, rename } from "node:fs/promises"
+import { mkdir } from "node:fs/promises"
 import path from "node:path"
-import { pipeline } from "node:stream/promises"
 import {
   convertWithCalibre,
   convertEpubToImages,
@@ -12,11 +10,7 @@ import {
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379"
 const CONVERSION_DIR = process.env.CONVERSION_DIR || "/tmp/conversions"
-const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024
-const CONVERSION_TIMEOUT = parseInt(process.env.CONVERSION_TIMEOUT_SEC || "120", 10) * 1000
-
 const CONCURRENCY = parseInt(process.env.WORKER_CONCURRENCY || "4", 10);
-const RATE_LIMIT = parseInt(process.env.WORKER_RATE_LIMIT || "15", 10);
 
 interface ConversionJob {
   jobId: string

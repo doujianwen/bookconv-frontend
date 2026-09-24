@@ -1,7 +1,23 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
 import { verifyWebhookSignature, mapSubscriptionStatus } from '@/lib/payments/service';
-import { saveSubscription, getSubscriptionStatus, hasProSubscription, removeSubscription, grantCredits } from '@/lib/subscription';
+import { saveSubscription, removeSubscription, grantCredits } from '@/lib/subscription';
 import { loggers as log } from '@/lib/logger';
+
+/**
+ * Lemon Squeezy webhook `data.attributes`. Only the fields this handler
+ * reads are declared; the index signature keeps the payload open-ended.
+ * Naming it once is what lets resolveUserEmail / the handlers drop `any`
+ * without widening the payload that is actually consumed.
+ */
+interface LemonSqueezyAttributes {
+  status?: string;
+  variant_id?: string | number;
+  renews_at?: string | number;
+  customer_id?: string | number;
+  quantity?: number;
+  custom_data?: { email?: string | number };
+  [key: string]: unknown;
+}
 
 /**
  * Lemon Squeezy Webhook Handler
@@ -45,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (error: any) {
+  } catch (error) {
     log.webhook.error('Webhook processing error', { error });
     return NextResponse.json(
       { error: 'Processing failed' },
@@ -62,14 +78,14 @@ export async function POST(request: NextRequest) {
  * if we can't tie the event to an email we must NOT silently key it by
  * Lemon Squeezy's customer_id, or the user will never see their plan.
  */
-function resolveUserEmail(attrs: Record<string, any>): string | null {
+function resolveUserEmail(attrs: LemonSqueezyAttributes): string | null {
   const email = attrs?.custom_data?.email?.toString().trim().toLowerCase();
   return email || null;
 }
 
 async function handleSubscriptionEvent(
   eventType: string,
-  attrs: Record<string, any>,
+  attrs: LemonSqueezyAttributes,
 ): Promise<void> {
   const email = resolveUserEmail(attrs);
   if (!email) {
@@ -87,7 +103,7 @@ async function handleSubscriptionEvent(
   log.webhook.info(`Subscription ${eventType}`, { email, status });
 }
 
-async function handleCancellation(attrs: Record<string, any>): Promise<void> {
+async function handleCancellation(attrs: LemonSqueezyAttributes): Promise<void> {
   const email = resolveUserEmail(attrs);
   if (!email) {
     log.webhook.warn('Cancellation has no resolvable email; skipping', {
@@ -100,7 +116,7 @@ async function handleCancellation(attrs: Record<string, any>): Promise<void> {
   log.webhook.info('Subscription canceled', { email });
 }
 
-async function handleOneTimePurchase(attrs: Record<string, any>): Promise<void> {
+async function handleOneTimePurchase(attrs: LemonSqueezyAttributes): Promise<void> {
   const email = resolveUserEmail(attrs);
   if (!email) {
     log.webhook.warn('One-time purchase has no resolvable email; skipping', {

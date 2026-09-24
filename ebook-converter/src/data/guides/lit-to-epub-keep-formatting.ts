@@ -1,5 +1,4 @@
 import { BlogFaq } from '../blog/types'
-import type { GuideMeta } from './types'
 
 export const slug = 'lit-to-epub-keep-formatting'
 export const title = 'LIT to EPUB: Convert Old Microsoft Reader Books and Keep Your Formatting'
