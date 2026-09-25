@@ -1,12 +1,15 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { Calendar, Tag } from "lucide-react"
 import { getMessage, resolvePath } from '@/i18n/utils'
 import { getHubTags, getPostsByTagSlug } from "@/lib/internal-links"
 
+const PAGE_SIZE = 8
+
 interface TagPageProps {
   params: Promise<{ locale: string; tag: string }>
+  searchParams: Promise<{ page?: string }>
 }
 
 export async function generateStaticParams() {
@@ -23,17 +26,26 @@ function localePrefix(locale: string): string {
   return locale === "en" ? "" : "/" + locale
 }
 
-export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: TagPageProps): Promise<Metadata> {
   const { locale, tag } = await params
+  const { page: pageParam } = await searchParams
+  const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
   const hub = getHubTags().find((h) => h.slug === tag)
   if (!hub) return {}
   const posts = getPostsByTagSlug(tag)
   if (posts.length === 0) return {}
   const label = hub.label
-  const url = `https://www.bookconv.com${localePrefix(locale)}/blog/tag/${tag}`
+  const prefix = localePrefix(locale)
+  const url = `https://www.bookconv.com${prefix}/blog/tag/${tag}`
+
+  const messages = await getMessage(locale)
+
+  const pageTitle = currentPage > 1
+    ? `${label} articles — Page ${currentPage}`
+    : `${label} articles`
 
   return {
-    title: `${label} articles`,
+    title: pageTitle,
     description: `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
     alternates: {
       canonical: url,
@@ -44,32 +56,50 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
       },
     },
     openGraph: {
-      title: `${label} articles | BookConv Blog`,
+      title: `${pageTitle} | BookConv Blog`,
       description: `Expert BookConv guides about ${label}.`,
       type: "website",
       url,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${label} articles | BookConv Blog`,
+      title: `${pageTitle} | BookConv Blog`,
     },
-    // Tag archive pages are thin (auto-generated lists) — exclude from index
-    // so Google spends crawl budget on money pages instead.
     robots: { index: false, follow: true },
   }
 }
 
-export default async function TagPage({ params }: TagPageProps) {
+export default async function TagPage({ params, searchParams }: TagPageProps) {
   const { locale, tag } = await params
+  const { page: pageParam } = await searchParams
   const hub = getHubTags().find((h) => h.slug === tag)
   if (!hub) notFound()
-  const posts = getPostsByTagSlug(tag)
-  if (posts.length === 0) notFound()
+  const allPosts = getPostsByTagSlug(tag)
+  if (allPosts.length === 0) notFound()
 
-  const label = hub.label
   const messages = await getMessage(locale)
   const t = (key: string) => resolvePath(messages, key) || key
   const prefix = localePrefix(locale)
+  const localeCode = locale === "es" ? "es-ES" : "en-US"
+
+  const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
+  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
+
+  if (currentPage > totalPages) {
+    redirect(`${prefix}/blog/tag/${tag}${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
+  }
+
+  const startIdx = (currentPage - 1) * PAGE_SIZE
+  const pagedPosts = allPosts.slice(startIdx, startIdx + PAGE_SIZE)
+
+  const dateFmt = new Intl.DateTimeFormat(localeCode, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+
+  const pagHref = (page: number) =>
+    `${prefix}/blog/tag/${tag}${page > 1 ? `?page=${page}` : ""}`
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
@@ -79,10 +109,10 @@ export default async function TagPage({ params }: TagPageProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: `${label} articles`,
-            description: `All BookConv guides about ${label}.`,
+            name: `${hub.label} articles`,
+            description: `All BookConv guides about ${hub.label}.`,
             url: `https://www.bookconv.com${prefix}/blog/tag/${tag}`,
-            hasPart: posts.map((p) => ({
+            hasPart: pagedPosts.map((p) => ({
               "@type": "BlogPosting",
               headline: p.title,
               url: `https://www.bookconv.com${prefix}/blog/${p.slug}`,
@@ -98,27 +128,28 @@ export default async function TagPage({ params }: TagPageProps) {
           <li>/</li>
           <li><Link href={`${prefix}/blog`} className="hover:text-blue-600">{t("common.blog")}</Link></li>
           <li>/</li>
-          <li aria-current="page" className="font-medium text-gray-900 truncate">{label}</li>
+          <li aria-current="page" className="font-medium text-gray-900 truncate">{hub.label}</li>
         </ol>
       </nav>
 
       <header className="mb-10">
         <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
           <Tag className="h-3 w-3" />
-          {label}
+          {hub.label}
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-          Articles tagged “{label}”
+          Articles tagged "{hub.label}"
         </h1>
         <p className="mt-2 text-sm text-gray-500">
-          {posts.length} {posts.length === 1 ? "article" : "articles"} in this topic.
+          {allPosts.length} {allPosts.length === 1 ? "article" : "articles"} in this topic.
+          {totalPages > 1 && ` — Page ${currentPage} of ${totalPages}`}
         </p>
       </header>
 
       <div className="space-y-8">
-        {posts.map((post) => (
+        {pagedPosts.map((post) => (
           <article key={post.slug} className="border-b pb-8">
-            <Link href={`/blog/${post.slug}`} className="group block">
+            <Link href={`${prefix}/blog/${post.slug}`} className="group block">
               <h2 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                 {post.title}
               </h2>
@@ -128,7 +159,7 @@ export default async function TagPage({ params }: TagPageProps) {
               <div className="mt-3 flex items-center gap-4 text-xs text-gray-500">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-3.5 w-3.5" />
-                  {new Date(post.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
+                  {dateFmt.format(new Date(post.date))}
                 </span>
               </div>
             </Link>
@@ -136,9 +167,43 @@ export default async function TagPage({ params }: TagPageProps) {
         ))}
       </div>
 
+      {totalPages > 1 && (
+        <nav aria-label="Tag pagination" className="mt-10 flex justify-center gap-2 flex-wrap">
+          {currentPage > 1 && (
+            <Link
+              href={pagHref(currentPage - 1)}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-blue-300 transition-colors"
+            >
+              ← {t("blog.previous")}
+            </Link>
+          )}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Link
+              key={page}
+              href={pagHref(page)}
+              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                page === currentPage
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-blue-300"
+              }`}
+            >
+              {page}
+            </Link>
+          ))}
+          {currentPage < totalPages && (
+            <Link
+              href={pagHref(currentPage + 1)}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-blue-300 transition-colors"
+            >
+              {t("blog.next")} →
+            </Link>
+          )}
+        </nav>
+      )}
+
       <div className="mt-12 pt-6 border-t">
-        <Link href={`${prefix}/blog`} className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
-          ← {t("common.blog")}
+        <Link href={`${prefix}/blog`} className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+          ← {t("blog.backToList")}
         </Link>
       </div>
     </main>

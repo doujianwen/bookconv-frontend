@@ -131,6 +131,7 @@ const STATIC_DATES: Record<string, string> = {
   '/terms': '2026-08-07',
   '/api-docs': '2026-07-28',
   '/about': '2026-09-18',
+  '/founder': '2026-09-25',
   '/compare/bookconv-vs-calibre': '2026-09-18',
 }
 
@@ -158,6 +159,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }[] = [
       { path: '/pricing', frequency: 'monthly', priority: 0.8, date: STATIC_DATES['/pricing'] },
       { path: '/batch', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/batch'] },
+      // /blog is English-only — /es/blog is 404'd by P3-C middleware rule
       { path: '/blog', frequency: 'weekly', priority: 0.7, date: STATIC_DATES['/blog'] },
       { path: '/tutorial', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/tutorial'] },
       { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
@@ -167,6 +169,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // compare page = captures "best alternative to calibre" intent.
       // English-only by design — no /es/ variant (P3-C spam-signal rule).
       { path: '/about', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/about'] },
+      // Founder page = E-E-A-T person entity (complements /about Organization entity).
+      // English-only by design — no /es/ variant (consistent with /about policy).
+      { path: '/founder', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/founder'] },
       { path: '/compare/bookconv-vs-calibre', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/compare/bookconv-vs-calibre'] },
     ]
 
