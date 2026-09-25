@@ -170,7 +170,8 @@
         "desc": "Ponte en contacto si necesitas asistencia adicional",
         "links": {
           "email": "Envíanos un Email",
-          "report": "Reportar un Problema"
+          "report": "Reportar un Problema",
+          "x": "Escríbenos en X"
         }
       }
     },

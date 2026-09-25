@@ -170,7 +170,8 @@
         "desc": "Get in touch if you need further assistance",
         "links": {
           "email": "Send us an Email",
-          "report": "Report a Problem"
+          "report": "Report a Problem",
+          "x": "Message us on X"
         }
       }
     },
