@@ -95,6 +95,19 @@ jobs:
       - name: Run content integrity audit (fails on structural defects)
         run: cd ebook-converter && node scripts/audit-content-integrity.mjs
 
+      # GEO compliance: convert pages (7 mandatory elements, 0-7 graded score).
+      # 31/31 PASS is the baseline (9/25 calibration). Any new page missing a
+      # GEO element demotes the rating and blocks deployment.
+      - name: Run GEO audit — convert pages
+        run: cd ebook-converter && node scripts/geo-audit-content.mjs --no-online
+
+      # GEO compliance: guide pages (7 mandatory elements, calibrated to the
+      # guide schema: keyTakeaways + authorship + thin-content guard).
+      # 21/22 PASS is the baseline; 19 thin pages are documented WARNs —
+      # content depth (word count) is the active constraint, not structure.
+      - name: Run GEO audit — guide pages
+        run: cd ebook-converter && node scripts/geo-audit-guide.mjs --no-online
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
