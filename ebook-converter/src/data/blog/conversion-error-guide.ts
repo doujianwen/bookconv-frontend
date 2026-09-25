@@ -57,6 +57,6 @@ export const faqs = [
   },
   {
     question: `How do I report a bug or request a feature?`,
-    answer: `Email hello@bookconv.com with your source/target formats, file size, browser, OS, and the exact error. Or open a GitHub issue at github.com/doujianwen/bookconv-frontend/issues.`
+    answer: `Email hello@bookconv.com with your source/target formats, file size, browser, OS, and the exact error. We read every report and reply as soon as we can.`
   }
 ];

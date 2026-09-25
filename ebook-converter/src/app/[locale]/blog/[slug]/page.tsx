@@ -138,7 +138,6 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               name: "BookConv",
               logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" },
               sameAs: [
-                "https://github.com/doujianwen/bookconv-frontend",
                 "https://www.reddit.com/r/ebooks/comments/1v8ypvd/",
               ],
             },
