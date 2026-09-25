@@ -22,7 +22,8 @@
     "document": "Document",
     "image": "Image",
     "comic": "Comic",
-    "founder": "About"
+    "founder": "Founder",
+    "about": "About"
   },
   "home": {
     "heroTitle": "Free Online Ebook\nFormat Converter",
@@ -108,11 +109,11 @@
     "popularConversions": "Popular Conversions",
     "tryThese": "Try these conversions directly:",
     "publishedOn": "Published on",
-"backToList": "Back to Blog",
-"previous": "Previous",
-"next": "Next",
-"pageOf": "Page {page} of {totalPages}"
-    },
+    "backToList": "Back to Blog",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} of {totalPages}"
+  },
   "nav": {
     "home": "Home",
     "pricing": "Pricing",

@@ -169,7 +169,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
                 <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
                 <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
-                <Link href={locale === 'es' ? '/es/founder' : '/founder'} className='hover:text-blue-600'>{t('common.founder') || 'About'}</Link>
+                <Link href={locale === 'es' ? '/es/about' : '/about'} className='hover:text-blue-600'>{t('common.about') || 'About'}</Link>
+                <Link href={locale === 'es' ? '/es/founder' : '/founder'} className='hover:text-blue-600'>{t('common.founder') || 'Founder'}</Link>
                 <LocaleSwitcher />
                 <LoginButton />
               </nav>

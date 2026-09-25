@@ -22,7 +22,8 @@
     "document": "Documento",
     "image": "Imagen",
     "comic": "Cómic",
-    "founder": "Acerca"
+    "founder": "Fundador",
+    "about": "Acerca de"
   },
   "home": {
     "heroTitle": "Convertidor de Formatos de Ebooks\nOnline Gratuito",
@@ -108,11 +109,11 @@
     "popularConversions": "Conversiones Populares",
     "tryThese": "Prueba estas conversiones directamente:",
     "publishedOn": "Publicado el",
-"backToList": "Volver al Blog",
-"previous": "Anterior",
-"next": "Siguiente",
-"pageOf": "Página {page} de {totalPages}"
-    },
+    "backToList": "Volver al Blog",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "pageOf": "Página {page} de {totalPages}"
+  },
   "nav": {
     "home": "Inicio",
     "pricing": "Precios",
