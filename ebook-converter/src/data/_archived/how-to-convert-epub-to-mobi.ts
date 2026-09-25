@@ -31,7 +31,7 @@ Worth knowing why EPUB is the safer archive format: it's an open standard mainta
 
 **Check for DRM.** Books bought from most stores carry DRM, and no converter can read them. BookConv flags a DRM-protected file rather than producing a scrambled result. Titles from Project Gutenberg, Standard Ebooks and your own exports are DRM-free and convert without complaint.
 
-**Look at the file size.** Free conversions handle files up to 10MB, which covers nearly every text-only novel. Illustrated books — comics, cookbooks, textbooks — run much larger and need a paid plan, where the ceiling rises to 50MB on Pro and 100MB on the API tier.
+**Look at the file size.** Conversions handle files up to 10MB on every plan, which covers nearly every text-only novel. Illustrated books — comics, cookbooks, textbooks — run much larger; split them by chapter or convert them with a desktop tool.
 
 **Fix the metadata now.** The title and author fields inside the EPUB become what your Kindle shows on its home screen. If the file says "Unknown Author", your library will too. Calibre's metadata editor sorts this out in a couple of clicks, and it's far less annoying than renaming books on a six-inch screen later.`
     },
@@ -51,7 +51,7 @@ Click **Convert**. Your file joins a server-side job queue, and the page shows a
 ### Download the result
 When the bar completes, the download button appears. Click it immediately — the generated file is served from a temporary link and is removed from the server once the link expires. If the download doesn't start, the [download troubleshooting guide](/blog/download-troubleshooting) walks through the usual browser blockers.
 
-The free tier gives you five conversions per hour with no account required, which is plenty for a small library migration.`
+The converter requires no account, and the 10MB per-file cap covers most books — plenty for a small library migration.`
     },
     {
       heading: `Step 3: Verify the MOBI Before You Trust It`,
@@ -88,7 +88,7 @@ Both tools use the same conversion engine, so the output quality is identical. T
       body: `- **Legacy only** — convert to MOBI for pre-2012 Kindles you sideload to; otherwise AZW3 or EPUB is the better target
 - **Prep pays** — a clean, DRM-free EPUB with correct metadata converts cleanly on the first attempt
 - **BookConv is the fastest path** — upload, click Convert, download; the Calibre engine runs server-side with nothing to install
-- **Watch the limits** — 10MB free, 50MB Pro, 100MB API; five conversions per hour on the free tier
+- **Watch the limits** — 10MB per file on all plans; split larger books before converting
 - **Verify every file** — table of contents, chapter breaks, images and special characters, before deleting the original
 - **Save promptly** — download links expire and converted files are deleted from the server afterwards`
     }
@@ -114,7 +114,7 @@ export const faqs = [
   },
   {
     question: `What's the biggest EPUB I can convert for free?`,
-    answer: `10MB, which covers virtually every novel. Pro handles up to 50MB and the API plan up to 100MB, which is where illustrated books and textbooks usually land.`,
+    answer: `10MB on every plan, which covers virtually every novel. Illustrated books and textbooks often exceed it, so split them by chapter first.`,
   },
   {
     question: `MOBI or AZW3 for my Kindle?`,
@@ -159,7 +159,7 @@ Vale la pena saber por qué EPUB es el formato de archivo más seguro: es un est
 
 **Comprueba si tiene DRM.** Los libros comprados en la mayoría de las tiendas llevan DRM, y ningún conversor puede leerlos. BookConv marca un archivo protegido con DRM en lugar de producir un resultado ilegible. Los títulos de Project Gutenberg, Standard Ebooks y tus propias exportaciones no tienen DRM y convierten sin problemas.
 
-**Mira el tamaño del archivo.** Las conversiones gratuitas manejan archivos de hasta 10 MB, lo que cubre casi todas las novelas solo texto. Los libros ilustrados —cómics, recetarios, libros de texto— son mucho más grandes y necesitan un plan de pago, donde el límite sube a 50 MB en Pro y 100 MB en el nivel de API.
+**Mira el tamaño del archivo.** Las conversiones manejan archivos de hasta 10 MB en todos los planes, lo que cubre casi todas las novelas solo texto. Los libros ilustrados —cómics, recetarios, libros de texto— son mucho más grandes; divídelos por capítulos o conviértelos con una herramienta de escritorio.
 
 **Arregla los metadatos ahora.** Los campos de título y autor dentro del EPUB se convierten en lo que tu Kindle muestra en su pantalla de inicio. Si el archivo dice "Autor desconocido", tu biblioteca también. El editor de metadatos de Calibre lo soluciona en un par de clics, y es mucho menos molesto que renombrar libros en una pantalla de quince centímetros más tarde.`,
       },
@@ -179,7 +179,7 @@ Haz clic en **Convertir**. Tu archivo entra en una cola de trabajos del lado del
 ### Descarga el resultado
 Cuando la barra se completa, aparece el botón de descarga. Haz clic de inmediato: el archivo generado se sirve desde un enlace temporal y se elimina del servidor cuando el enlace caduca. Si la descarga no empieza, la [guía de solución de problemas de descarga](/blog/download-troubleshooting) repasa los bloqueos habituales del navegador.
 
-El nivel gratuito te da cinco conversiones por hora sin necesidad de cuenta, más que suficiente para migrar una pequeña biblioteca.`,
+El convertidor no requiere cuenta, y el límite de 10 MB por archivo cubre la mayoría de los libros — más que suficiente para migrar una pequeña biblioteca.`,
       },
       {
         heading: `Paso 3: Verifica el MOBI antes de confiar en él`,
@@ -216,7 +216,7 @@ Ambas herramientas usan el mismo motor de conversión, así que la calidad de sa
         body: `- **Solo legado** — convierte a MOBI para Kindle previos a 2012 a los que cargas por USB; si no, AZW3 o EPUB son el objetivo mejor
 - **La preparación paga** — un EPUB limpio, sin DRM y con metadatos correctos convierte limpio al primer intento
 - **BookConv es el camino más rápido** — sube, haz clic en Convertir, descarga; el motor de Calibre corre en el servidor sin nada que instalar
-- **Ojo con los límites** — 10 MB gratis, 50 MB Pro, 100 MB API; cinco conversiones por hora en el nivel gratuito
+- **Ojo con los límites** — 10 MB por archivo en todos los planes; divide los libros más grandes antes de convertir
 - **Verifica cada archivo** — tabla de contenidos, saltos de capítulo, imágenes y caracteres especiales, antes de borrar el original
 - **Descarga pronto** — los enlaces de descarga caducan y los archivos convertidos se eliminan del servidor después`,
       },
@@ -241,7 +241,7 @@ Ambas herramientas usan el mismo motor de conversión, así que la calidad de sa
     },
     {
       question: `¿Cuál es el EPUB más grande que puedo convertir gratis?`,
-      answer: `10 MB, lo que cubre prácticamente cualquier novela. Pro llega hasta 50 MB y el plan API hasta 100 MB, que es donde suelen caer los libros ilustrados y los libros de texto.`,
+      answer: `10 MB en todos los planes, lo que cubre prácticamente cualquier novela. Los libros ilustrados y los libros de texto suelen superarlo, así que divídelos por capítulos primero.`,
     },
     {
       question: `¿MOBI o AZW3 para mi Kindle?`,
