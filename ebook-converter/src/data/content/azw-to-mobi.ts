@@ -2,7 +2,7 @@ export const slug = 'azw-to-mobi';
 export const title = 'Free AZW to MOBI Converter — No Sign-up';
 export const metaDescription = 'Make old Amazon AZW files readable on any Kindle — free AZW to MOBI converter, no sign-up. Fast, private, DRM-free files only.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 584;
 
 export const content = {
   hero: {
@@ -71,6 +71,43 @@ If your file came directly from the Kindle Store, it is DRM-protected and will n
 - **Fixed layouts** — reflow into standard text
 
 For ordinary books the reading experience is unchanged. You trade a little styling for the guarantee that the file opens on any Kindle you own.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your AZW',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really AZW** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
+    },
+
+    {
+      heading: 'Troubleshooting: When the File Will Not Open',
+      body: `Most conversions are clean, but a few patterns show up often enough to recognize in advance.
+
+- **Pages out of order** — usually a source file with a broken reading-order manifest; re-export from the original.
+- **Blank pages** — often a scanned image the converter could not decode; check the source.
+- **Garbled text** — a character-encoding mismatch in the original; the content is there but needs a re-save as UTF-8.
+- **Missing images** — media the source stored outside the main container; not every file bundles everything.
+
+None of these mean the tool failed. They mean the source had an issue the converter did its best to interpret.`
     }
   ],
 

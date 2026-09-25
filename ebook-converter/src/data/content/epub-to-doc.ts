@@ -2,7 +2,7 @@ export const slug = 'epub-to-doc';
 export const title = 'Free EPUB to DOC Converter — Extract Text for Legacy Word 97-2003';
 export const metaDescription = 'Free EPUB to DOC converter. Extract text and formatting from any EPUB into legacy Word 97-2003 .doc format — no sign-up, works with enterprise systems that require old DOC files.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 820;
 
 export const content = {
   hero: {
@@ -86,6 +86,48 @@ And here's what gets simplified, because DOC simply can't represent it:
 - **SVG graphics** — vector images may not carry through
 
 None of this is a converter limitation. DOC is a format from 1993 being asked to represent a document format from 2011. Some things just don't map. If the styling matters to you, convert to DOCX instead — it handles considerably more.`
+    },
+    {
+      heading: 'EPUB vs DOC: Format Comparison',
+      body: `Choosing between keeping the EPUB and producing a DOC comes down to what the receiving end expects. Here is the side-by-side:
+
+| Feature | EPUB | DOC (Word 97-2003) |
+|---------|------|---------------------|
+| Primary use | Reading on any device | Editing in legacy Office systems |
+| Reflowable text | Yes — adapts to screen | No — fixed page canvas |
+| File integrity | Open standard, corruption-resistant | Binary, more prone to corruption |
+| File size | Small (ZIP-compressed) | Larger, often 2-3x EPUB |
+| Modern tooling | Native in Calibre, Sigil, most apps | Opens only in compatibility mode |
+| Best for | Personal reading, distribution | Journal portals, old intranets, editors on legacy Word |
+
+**Bottom line:** keep EPUB for reading and sharing, and only generate DOC when an external system literally will not accept anything newer. For almost every other case, our EPUB to DOCX tool is the better destination.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you download the .doc, run through these checks so you are not surprised later:
+
+| Check item | Expected result | How to verify |
+|-----------|-----------------|---------------|
+| Text flow | Continuous, no dropped paragraphs | Open in Word, scroll the whole document |
+| Heading styles | h1/h2/h3 became Word Heading 1/2/3 | Open the Navigation pane in Word |
+| Images | Embedded and visible inline | Zoom to 200% on illustrated pages |
+| Encoding | Accents and symbols correct | Search for a known special character |
+| Metadata | Title and author in document properties | File > Info in Word |
+| DRM status | Source was DRM-free | Converter would have errored otherwise |
+
+**Known limitations:** custom fonts become system substitutes, CSS multi-column layouts flatten, and SVG graphics may not carry through. None of these are conversion errors — they are the ceiling of the 1993 DOC format itself.`
+    },
+    {
+      heading: 'Tips for the Cleanest Conversion',
+      body: `A few habits make the result noticeably better.
+
+**Start from a clean EPUB.** If the source came from a messy export, fix it before converting — garbage in, garbage out applies to format conversion too.
+
+**Flatten expectations on styling.** DOC cannot hold the rich CSS layout an EPUB might describe. If pixel-perfect styling matters, DOCX or PDF is the right target, not DOC.
+
+**Verify in the actual destination.** The system that demanded DOC is the only real test. Open the file in the target portal or the colleague's old Word install, not just your modern copy, before you declare victory.
+
+**Keep a master copy.** Save the original EPUB (or a DOCX) as your editable master. DOC is a dead-end format for further editing, so you do not want it to be the only version you have.`
     }
   ],
 
@@ -94,7 +136,9 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
     { q: 'Can I edit the converted DOC file?', a: 'Yes, fully. It opens and edits in Microsoft Word, LibreOffice Writer, WPS Office, Google Docs, and Apple Pages, though modern Word will show a compatibility-mode notice.' },
     { q: 'Will images survive the conversion?', a: 'Standard raster images like JPG and PNG are extracted and embedded in the document. SVG vector graphics and images positioned with CSS may be simplified or repositioned since DOC has no equivalent layout model.' },
     { q: 'My EPUB will not convert — what is wrong?', a: 'The most common cause is DRM. Books purchased from Kobo, Google Play Books, or similar stores are encrypted and cannot be read by any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without issue.' },
-    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 10MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' }
+    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 10MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' },
+    { q: 'Why did my table or sidebar come out wrong?', a: 'DOC has no layout engine for CSS-positioned sidebars or nested tables, so they flatten into a single text flow. If precise layout matters, convert to DOCX or PDF instead, where those structures survive.' },
+    { q: 'Should I convert to DOC or DOCX?', a: 'Almost always DOCX. It is smaller, more resilient, and holds far more formatting. Choose DOC only when a submission portal, grant system, or legacy Word install explicitly rejects DOCX — that is the one situation where the older format earns its keep.' }
   ]
 ,
 

@@ -1,7 +1,7 @@
 # Convert 页面 GEO 标准化改造方案 v2.0
 
 **创建日期**: 2026-09-24  
-**背景**: 对抗式审计发现 convert 页面 GEO 合规率仅 22.6%（7/31 PASS）  
+**背景**: 对抗式审计发现 convert 页面 GEO 合规率仅 22.6%（7/31 PASS，旧 2000 词阈值）；2026-09-25 阈值校准后回升至 **12/31 PASS**，剩余 10 FAIL 为薄模板长尾对（详见 §2.4）  
 **根因**: 博客写作指南（`英文博客写作指南.md`）未覆盖 convert 页面 schema，且 `correction-guards.blog.mjs` 仅检查 blog 内容，convert 页面完全无 GEO 门禁
 
 ---
@@ -60,11 +60,12 @@ Convert Schema: SoftwareApplication + HowTo + FAQPage + BreadcrumbList
 | 7 | **Quality Checklist** | "Quality|Checklist" | ≥150词 | 提升权威性 |
 | 8 | FAQ | "FAQ|Frequently Asked" | ≥6条 | 配合 FAQPage Schema |
 
-**质量标准**:
-- 总字数 ≥ 2000 词
+**质量标准**（阈值校准见 §2.4，2026-09-25）:
+- 英文正文词数 ≥ 1000（满分）/ ≥ 600（合格底线）；旧「2000 词」阈值实测不可达，已废止
 - Headings 数量 ≥ 8 个
 - FAQ 数量 ≥ 6 条
-- GEO 评分 ≥ 5.0（满分 7）
+- 必备章节：When to Use / How to Convert / Format Comparison / Quality Checklist（缺一则扣分）
+- GEO 评分 ≥ 5.0（满分 7）→ PASS；3.0–4.9 → WARN；<3.0 → FAIL
 
 ### 2.3 标准模板（Markdown 格式）
 
@@ -73,7 +74,7 @@ export const slug = 'epub-to-pdf';
 export const title = 'Free EPUB to PDF Converter — No Sign-up';
 export const metaDescription = 'Convert EPUB to PDF free — no sign-up...';
 export const level = 'A' as const;
-export const wordCount = 2000;
+export const wordCount = 1000;  // 填写真实英文正文词数（审计口径），不再是旧 2000 阈值
 
 export const content = {
   hero: {
@@ -170,6 +171,65 @@ export const content = {
   }
 };
 ```
+
+---
+
+## 二之四、阈值校准（2026-09-25，红队审计后修正）
+
+### 2.4.1 校准背景
+
+原标准设定「总字数 ≥ 2000 词」为达标线。但实测 31 个页面**英文正文词数分布**显示：**没有任何页面达到 2000 词，最高仅 1287 词（mobi-to-epub）**。2000 词阈值不可达，导致审计把所有页面误判为 FAIL，完全失去区分度，门禁形同虚设。
+
+### 2.4.2 实测分布（英文正文，EN-only，剥离 es 镜像）
+
+| 分层 | 词数区间 | 代表页面 | 说明 |
+|------|---------|---------|------|
+| 深内容页（已改造） | 800–1300 | epub-to-mobi, mobi-to-epub, epub-to-pdf | 集中在 epub/pdf/mobi 互转核心对 |
+| 中段页（Phase 2 改造后） | 530–820 | azw3-to-pdf, cbr-to-pdf, epub-to-doc, lit-to-epub | 已达 PASS，词数偏下限 |
+| 薄模板页（未改造） | < 500 | azw/rtf/doc/chm 等长尾对 | 系统性缺失 4 个必备章节 |
+
+**结论**：以 **1000 词 = 深内容满分线**、**600 词 = 合格底线** 符合真实分布，且能在「达标 / 合格 / 不合格」三档间有效区分。
+
+### 2.4.3 校准后阈值（脚本常量，见 `scripts/geo-audit-content.mjs`）
+
+| 常量 | 值 | 含义 | 触发条件（得分） |
+|------|-----|------|----------------|
+| `TARGET_WORD_COUNT` | 1000 | 深内容满分线 | ≥1000 → 字数项 **+1** |
+| `WARN_WORD_COUNT` | 600 | 合格底线 | 600–999 → 字数项 **+0.5**；<600 → **+0** |
+| `MIN_HEADINGS` | 8 | 章节结构完整（仅 EN） | ≥8 → **+1** |
+| `MIN_FAQ` | 6 | FAQPage Schema 支撑 | ≥6 → **+1**；3.6–5 → **+0.5** |
+| `hasWhen` | — | 含 "When" 章节 | 命中 → **+1** |
+| `hasHowTo` | — | 含 "How to / Step by Step" | 命中 → **+1** |
+| `hasComparison` | — | 含 "Comparison / vs" | 命中 → **+1** |
+| `hasQuality` | — | 含 "Quality / Checklist" | 命中 → **+1** |
+
+### 2.4.4 评分与触发（0–7 分）
+
+```
+总分 = 字数(0/0.5/1) + FAQ(0/0.5/1) + When(0/1) + HowTo(0/1) + Comparison(0/1) + Quality(0/1) + Headings(0/1)
+
+PASS（绿，可发布）    : score ≥ 5.0
+WARN（黄，阻断部署）  : 3.0 ≤ score < 5.0   → exit code 1
+FAIL（红，阻断部署）  : score < 3.0         → exit code 1
+```
+
+> 注：WARN/FAIL 均使 `geo-audit-content.mjs` 以 exit 1 退出，作为 CI / 发布门禁。这与博客门禁（`correction-guards.blog.mjs`）策略一致——"狼来了"问题通过**达标率随时间提升**解决，而非放宽阈值。
+
+### 2.4.5 各场景合理数值范围
+
+| 场景 | 推荐词数 | 推荐 Headings | 推荐 FAQ | 说明 |
+|------|---------|--------------|---------|------|
+| 高 Citation 核心对（epub/pdf/mobi） | 900–1300 | 10–13 | 7–14 | 已达标，维持 |
+| Phase 2 改造页（azw3/pdf/doc/lit/zip/html/cbr） | 530–820 | 8 | 6–7 | 已达 PASS；词数偏下限可后续扩充至 800+ |
+| 薄模板长尾对（azw/rtf/doc/chm/rtf） | 目标 ≥600 | 目标 ≥8 | 目标 ≥6 | 当前 FAIL，需补齐 When/HowTo/Comparison/Quality 四章 |
+| ES 翻译镜像 | 不计入 | 不计入 | 不计入 | 审计仅统计 EN 正文，ES 为翻译镜像，避免双重计数虚高 |
+
+### 2.4.6 关键修正（红队审计发现，必须写进门禁防回归）
+
+1. **ES 双重计数**：旧审计把 `export const es = {...}` 翻译镜像计入英文指标，虚高分数 → 已加 `enOnly()` 在 `indexOf('export const es =')` 处截断。
+2. **单引号正文漏计**：旧正则 `/body:\s*\`([^\`]+)\`/g` 仅匹配反引号模板串；5 个文件用单引号 `body:'...'`（azw3-to-epub, epub-to-azw3, epub-to-zip, txt-to-epub, docx-to-epub）被整段漏计（docx-to-epub 显示 0 词）→ 已补单引号正则 `/body:\s*'((?:[^'\\]|\\.)*)'\s*}/g`。
+3. **2000 词不可达**：见 §2.4.2 → 已下调至 1000/600（§2.4.3）。
+4. **对比表缺表头**：`lit-to-epub`、`azw3-to-pdf` 原对比表首行为 `|---------|------|-----|`（分隔线误作首行），无列名 → 已重写为 `| Feature | X | Y |` 规范表头。
 
 ---
 

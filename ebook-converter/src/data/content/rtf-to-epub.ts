@@ -2,7 +2,7 @@ export const slug = 'rtf-to-epub';
 export const title = 'Free RTF to EPUB Converter — No Sign-up';
 export const metaDescription = 'Convert RTF manuscripts to EPUB free — no sign-up. Turn rich-text reports and drafts into polished ebooks for Kindle, Kobo, and Apple Books.';
 export const level = 'B' as const;
-export const wordCount = 2300;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -87,6 +87,43 @@ Most documents finish in ten to thirty seconds. Long manuscripts with many image
 - **Complex multi-column layouts** collapse to a single column.
 
 One thing worth checking before you upload: if your RTF fakes headings by making text big and bold instead of applying a real heading style, the converter has nothing to build a table of contents from. Five minutes fixing styles produces a noticeably better ebook.`
+    },
+    {
+      heading: 'RTF vs EPUB: Format Comparison',
+      body: `Use this table to decide which fits the job:
+
+| Feature | RTF | EPUB |
+|---------|-----|------|
+| Purpose | Editing | Reading |
+| Reflow | No (page-like) | Yes |
+| Device support | Word, LibreOffice | All readers |
+| File size | Larger (hex images) | Smaller (compressed) |
+| Best for | Documents | ebooks |
+
+Keep RTF for editing and printing. Convert to EPUB for reading on screens or distribution.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **Table of contents works** — built from your heading styles, fully clickable
+- **Headings present** — real headings became chapter entries, not big bold text
+- **Images unpacked** — embedded pictures are now EPUB resources
+- **Lists and tables survive** — including nested list levels
+- **Metadata correct** — title and author show in your library
+
+If the TOC is flat, apply proper Heading 1 and Heading 2 styles in your RTF and reconvert.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your RTF',
+      body: `A few checks sharpen the result:
+
+- **Use real heading styles** — fake headings (big bold text) give the converter nothing to build a TOC from
+- **Check the size** — RTF stores images as hex, so illustrated files can exceed the 10MB limit; Pro raises it
+- **Remove page furniture** — headers, footers, and manual page breaks have no meaning in a reflowable ebook
+- **Flatten columns** — multi-column layouts collapse to one column on purpose
+
+The converter reads RTF control words, extracts images, and builds a standards-compliant EPUB 3.`
     }
   ],
 
@@ -95,7 +132,8 @@ One thing worth checking before you upload: if your RTF fakes headings by making
     { q: 'Will my formatting survive the conversion?', a: 'Basic formatting — bold, italic, underline, headings, lists, tables — comes through intact. Page-specific things like headers, footers, and manual page breaks are dropped, because reflowable ebooks have no fixed pages.' },
     { q: 'Do embedded images make it into the EPUB?', a: 'Yes. Images stored inside the RTF are decoded and repackaged as EPUB resources. They move into the text flow rather than keeping exact page positions.' },
     { q: 'Why is my RTF file so large compared to the finished EPUB?', a: 'RTF stores images as hex-encoded text, which roughly doubles their size. EPUB uses ZIP compression and native image formats, so the ebook is often significantly smaller than the source.' },
-    { q: 'Is there a file size limit?', a: 'Free accounts handle files up to 10MB, which is plenty for text-heavy documents. Image-heavy RTFs can exceed that because of the hex encoding — Pro accounts raise the limit and add batch conversion.' }
+    { q: 'Is there a file size limit?', a: 'Free accounts handle files up to 10MB, which is plenty for text-heavy documents. Image-heavy RTFs can exceed that because of the hex encoding — Pro accounts raise the limit and add batch conversion.' },
+    { q: 'Will my document look identical after conversion?', a: 'Structurally yes — headings, lists, tables, and images all come through. Visually it adopts your reader app typography instead of the RTF page layout, which is expected for a reflowable ebook.' }
   ]
 ,
 

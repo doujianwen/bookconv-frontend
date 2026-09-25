@@ -2,7 +2,7 @@ export const slug = 'epub-to-png';
 export const title = 'Free EPUB to PNG Converter — No Sign-up';
 export const metaDescription = 'Render EPUB pages as crisp PNG images — free converter, no sign-up. Full-detail page captures for previews, archives, and design work. No watermark.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 754;
 
 export const content = {
   hero: {
@@ -97,6 +97,43 @@ Also: **DRM-protected EPUBs won't convert.** Files from Kobo, Google Play Books,
 **Pick JPG** if the book is photo-heavy, if you're uploading to social platforms that re-compress anyway, or if total file size actually matters to you.
 
 When you genuinely can't decide: text-heavy book, go PNG. The size difference is real but manageable, and text that's crisp beats text that's *almost* crisp.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your EPUB',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
+    },
+
+    {
+      heading: 'Troubleshooting: When Images Look Wrong',
+      body: `Most conversions are clean, but a few patterns show up often enough to recognize in advance.
+
+- **Pages out of order** — usually a source file with a broken reading-order manifest; re-export from the original.
+- **Blank pages** — often a scanned image the converter could not decode; check the source.
+- **Garbled text** — a character-encoding mismatch in the original; the content is there but needs a re-save as UTF-8.
+- **Missing images** — media the source stored outside the main container; not every file bundles everything.
+
+None of these mean the tool failed. They mean the source had an issue the converter did its best to interpret.`
     }
   ],
 
@@ -105,7 +142,8 @@ When you genuinely can't decide: text-heavy book, go PNG. The size difference is
     { q: 'How large are the converted PNG files?', a: 'A plain text page at 300 DPI typically lands between 200 and 600 KB, while pages with illustrations or complex layouts can reach 1-3 MB each. A full 300-page book usually totals somewhere around 100-200 MB.' },
     { q: 'Why does my page count not match the printed book?', a: 'EPUB has no fixed pages — text reflows based on screen and font size, so page boundaries are generated during conversion rather than inherited. The resulting count depends on the layout settings used and will not match a specific print edition.' },
     { q: 'Can I convert only certain pages?', a: 'Pro users can specify custom page ranges, which is useful for pulling a single chapter or a handful of figures instead of rasterizing an entire book. Free conversions process the whole file.' },
-    { q: 'Will the text in my PNG images be searchable?', a: 'No. Once a page becomes an image, the text is just pixels — there is no text layer to search or copy. If you need searchable output, convert to PDF instead, or run OCR on the PNG files afterward.' }
+    { q: 'Will the text in my PNG images be searchable?', a: 'No. Once a page becomes an image, the text is just pixels — there is no text layer to search or copy. If you need searchable output, convert to PDF instead, or run OCR on the PNG files afterward.' },
+    { q: 'Can I convert only some pages to PNG?', a: 'Pro users can specify a custom page range to extract just the pages they need, useful for a single chart or excerpt. Free conversions rasterize the entire book into a numbered ZIP of PNG files.' },
   ]
 ,
 

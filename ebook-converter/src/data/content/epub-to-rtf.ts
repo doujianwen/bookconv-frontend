@@ -2,7 +2,7 @@ export const slug = 'epub-to-rtf';
 export const title = 'Free EPUB to RTF Converter — No Sign-up';
 export const metaDescription = 'Convert EPUB to RTF free — no sign-up. Get editable rich-text documents that open in Word, WordPad, LibreOffice, and any word processor.';
 export const level = 'B' as const;
-export const wordCount = 2200;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -79,6 +79,43 @@ Most books convert in fifteen to forty seconds. Longer or image-heavy titles tak
 - **File size grows.** RTF stores images as hex text, so a 3MB illustrated EPUB can easily become a 6MB or larger RTF.
 
 None of this is a defect in the converter — it is the honest gap between a reading format and a 40-year-old document format.`
+    },
+    {
+      heading: 'EPUB vs RTF: Format Comparison',
+      body: `Use this table to pick the right output:
+
+| Feature | EPUB | RTF |
+|---------|------|------|
+| Purpose | Reading | Editing |
+| Reflow | Yes | No (page-like) |
+| Best reader | Any e-reader | Word, LibreOffice |
+| Track changes | No | Yes |
+| File size | Smaller | Larger (no ZIP) |
+
+Keep EPUB for reading. Convert to RTF when you need an editable document for an editor or legacy system.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **Text editable** — open the .rtf in Word or LibreOffice and start editing
+- **Headings present** — chapter titles became real headings, not big bold text
+- **Images embedded** — pictures came through (positioning may be simplified)
+- **Lists and tables** — bullets, numbers, and simple tables survived
+- **Encoding clean** — accented and non-Latin text displays correctly
+
+If a table looks flattened, that is expected — RTF handles basic tables but loses complex layout.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your EPUB',
+      body: `A few checks save a redo:
+
+- **Remove DRM first** — encrypted EPUBs cannot be read by the converter
+- **Verify the spine** — a correct reading order converts to a clean single document; a broken manifest may scramble chapter sequence
+- **Expect styling loss** — custom fonts and colour themes have no RTF equivalent; you get clean plain formatting
+- **Plan for size** — RTF stores images as text and has no compression, so illustrated books grow noticeably
+
+The converter merges the XHTML chapters into one flowing RTF document.`
     }
   ],
 
@@ -87,7 +124,8 @@ None of this is a defect in the converter — it is the honest gap between a rea
     { q: 'Are images preserved?', a: 'Yes, images are embedded in the RTF. Exact positioning and text wrapping get simplified, so illustrations sit in the text flow rather than in precise page locations.' },
     { q: 'Should I convert to RTF or DOCX?', a: 'Choose DOCX if you need track changes, comments, or modern Word features. Choose RTF when compatibility matters most — older software, institutional systems, or mixed Mac and Windows teams.' },
     { q: 'Why is the RTF bigger than the original EPUB?', a: 'RTF encodes images as hexadecimal text rather than binary, which roughly doubles their size, and it has no ZIP compression. Expect illustrated books to grow noticeably.' },
-    { q: 'My EPUB will not convert. What is going on?', a: 'Almost always DRM from a store purchase, which encrypts the file. Books you wrote, bought DRM-free, or downloaded from public-domain sources convert without issue.' }
+    { q: 'My EPUB will not convert. What is going on?', a: 'Almost always DRM from a store purchase, which encrypts the file. Books you wrote, bought DRM-free, or downloaded from public-domain sources convert without issue.' },
+    { q: 'Is RTF or DOCX the better output?', a: 'Choose DOCX if you need track changes, comments, or modern Word features. Choose RTF when maximum compatibility matters — older software, institutional submission systems, or mixed Mac and Windows teams.' }
   ]
 ,
 

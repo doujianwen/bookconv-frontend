@@ -227,10 +227,10 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
     { q: 'How are images and charts handled?', a: 'Pure text format cannot contain images. If the original EPUB contains images, we attempt to extract alt text descriptions and insert them as notes in the text where possible. However, visual content is not preserved in the final TXT file.' },
     { q: 'Can the converted text be used directly for AI analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text that can be directly fed to any NLP tool, AI summarizer, or text analysis platform without additional preprocessing.' },
     { q: 'What encoding does the output TXT use?', a: 'Default is UTF-8 supporting Chinese, English, Japanese, Korean, Russian, and other multilingual content. Other encodings (GBK, BIG5) can be specified during conversion if needed for legacy system compatibility.' },
-    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 10 MB. Pro users also get priority processing and larger file size limits.' },
+    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 10 MB on all plans.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors. This preserves the structural hierarchy of your book.' },
     { q: 'Can I convert EPUB to TXT on mobile devices?', a: 'Yes. Our converter runs entirely in your browser using pure JavaScript, so it works on iOS, Android, and any device with a modern web browser. No app installation required.' },
-    { q: 'Is there a file size limit for EPUB files?', a: 'Free users can convert EPUB files up to 10 MB. For larger files, consider splitting your book into smaller chapters or upgrading to our Pro plan which supports files up to 50 MB.' }
+    { q: 'Is there a file size limit for EPUB files?', a: 'Free users can convert EPUB files up to 10 MB. For larger files, consider splitting your book into smaller chapters or converting chapter by chapter.' }
   ]
 ,
 

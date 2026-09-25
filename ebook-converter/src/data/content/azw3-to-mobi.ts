@@ -2,7 +2,7 @@ export const slug = 'azw3-to-mobi';
 export const title = 'AZW3 to MOBI: Free Downgrade for Old Kindles (pre-2015)';
 export const metaDescription = 'Need AZW3 on a 2007–2014 Kindle? Convert AZW3 to MOBI free, no sign-up — keeps your text intact, runs in seconds. For legacy Kindle hardware only.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 939;
 
 export const content = {
   hero: {
@@ -118,6 +118,47 @@ The goal is not to make MOBI look good — it is to make a 2009 Kindle useful ag
 And expect the file to get **bigger**, not smaller. MOBI's older compression is less efficient, so the same book typically gains 20-40% in size. Counterintuitive for a "downgrade," but that's what happens when you swap a modern container for a twenty-year-old one.
 
 Going the other direction — freeing an old MOBI from Amazon's ecosystem so it reads on every device? [Convert MOBI to EPUB](/convert/mobi-to-epub) instead.`
+    },
+
+    {
+      heading: 'AZW3 vs MOBI: Format Comparison',
+      body: `You are choosing between a rich modern format and a bare-minimum legacy one. The table makes the trade obvious.
+
+| Feature | AZW3 | MOBI |
+|---------|------|------|
+| Embedded fonts | Yes | No |
+| CSS styling | Full subset | Minimal |
+| Fixed layout | Supported | No |
+| File size | Smaller (modern) | Larger (old) |
+| Device support | 2011 and later Kindles | Every Kindle ever |
+| Best for | Reading on modern devices | Legacy hardware only |
+
+If your Kindle predates late 2011, MOBI is your only option. For anything newer, AZW3 reads better and takes less space. This conversion exists for the older hardware, not because MOBI is superior.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your AZW3',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really AZW3** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
   ],
 

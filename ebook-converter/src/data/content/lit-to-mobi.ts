@@ -2,7 +2,7 @@ export const slug = 'lit-to-mobi';
 export const title = 'Free LIT to MOBI Converter — No Sign-up';
 export const metaDescription = 'Turn discontinued Microsoft Reader (LIT) books into Kindle-readable MOBI — free LIT to MOBI converter, no sign-up. Fast, private, DRM-free files only.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 595;
 
 export const content = {
   hero: {
@@ -68,6 +68,46 @@ If your LIT files are already DRM-free and you just want to read them, convertin
 For a standard novel or document, the result reads exactly as intended on a Kindle.
 
 Later want that MOBI portable beyond Kindle? [Convert MOBI to EPUB](/convert/mobi-to-epub) frees it for any reader.`
+    },
+
+    {
+      heading: 'LIT vs MOBI: Format Comparison',
+      body: `LIT and MOBI are close cousins — both descend from early HTML ebook containers. The practical differences:
+
+| Feature | LIT | MOBI |
+|---------|-----|------|
+| Origin | Microsoft Reader | Mobipocket and Kindle |
+| Kindle support | None | Every Kindle |
+| DRM | Often Microsoft-locked | DRM-free only here |
+| Styling | Basic HTML | Smaller HTML subset |
+| Best for | Dead-format archives | Kindle reading |
+
+Because LIT is already HTML under the hood, conversion to MOBI is smooth and keeps your text and chapters intact. The main catch is DRM: locked LIT files cannot be converted by any tool.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your LIT',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really LIT** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
   ],
 

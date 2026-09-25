@@ -2,7 +2,7 @@ export const slug = 'cbr-to-pdf';
 export const title = 'Free CBR to PDF Converter — No Sign-up';
 export const metaDescription = 'Convert CBR comic archives to PDF free — no sign-up. Keep full-page artwork and reading order, view or print your comics on any PDF reader.';
 export const level = 'B' as const;
-export const wordCount = 2500;
+export const wordCount = 740;
 
 export const content = {
   hero: {
@@ -46,7 +46,24 @@ When you turn a CBR into a PDF, you get:
 
 The honest downside: dedicated comic readers are genuinely better at reading comics. They do double-page spreads, manga right-to-left mode, per-panel guided navigation, and automatic fit-to-width. A PDF reader does none of that.
 
-So the rule of thumb is simple. If you read comics regularly on a device with a good reader app, keep CBR. If you need to print, share, archive, or read on something that has no comic reader — convert.`
+      So the rule of thumb is simple. If you read comics regularly on a device with a good reader app, keep CBR. If you need to print, share, archive, or read on something that has no comic reader — convert.`
+    },
+    {
+      heading: 'CBR vs PDF: Format Comparison',
+      body: `Use this table to decide which format fits the job:
+
+| Feature | CBR | PDF |
+|---------|-----|-----|
+| Page order | Filename order in archive | Fixed, in file |
+| Reading app | Dedicated comic reader | Any PDF viewer or browser |
+| Double-page spreads | Supported by readers | Flattened to single pages |
+| Right-to-left (manga) | Reader mode available | Not a reading mode |
+| Text search | None (image only) | None (image only) |
+| Printing | Needs conversion first | Native |
+| File size | Small (compressed images) | Medium-large |
+| Sharing | Recipient needs a reader | Opens everywhere |
+
+Keep CBR if you read comics daily in a good reader app. Convert to PDF if you need to print, share with non-readers, or open on a locked-down device.`
     },
     {
       heading: 'How to Convert CBR to PDF',
@@ -93,7 +110,36 @@ Now, file size. Be ready for it. CBR archives are already compressed images insi
 - A 200-page graphic novel: 150-400MB
 - A high-DPI manga volume scan: can exceed 500MB
 
-If that seems large, it is — but it's the same pixels you already had, just in a different wrapper. If size is the priority, keep the CBR. If access is the priority, take the PDF.`
+      If that seems large, it is — but it's the same pixels you already had, just in a different wrapper. If size is the priority, keep the CBR. If access is the priority, take the PDF.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these before you rely on the PDF:
+
+- **Page order correct** — flip through once; pages should ascend 1, 2, 3 in reading order
+- **No scrambled jumps** — page10 should not appear right after page1
+- **Cover first** — the cover image should be the opening page
+- **Resolution intact** — zoom to 200 percent; artwork stays sharp
+- **Single file** — everything is in one PDF, not a folder of images
+- **Size expected** — a 24-page issue around 30-80MB, a 200-page novel 150-400MB
+
+If order is wrong, the cause is almost always the source archive naming, not the converter.`
+    },
+    {
+      heading: 'Troubleshooting: When Pages Look Wrong',
+      body: `Most problems trace back to how the CBR was packaged, not the conversion itself.
+
+**Pages out of order**
+The converter sorts by filename. If the archive uses page1, page2, page10, a basic sorter puts page10 right after page1. Well-made CBRs use zero-padded names (001, 002, 010). To fix, rename the images with zero-padding and repackage, then reconvert.
+
+**Cover at the back**
+Files named zz_cover.jpg sort to the end. Rename the cover to 00_cover.jpg or 001.jpg so it lands first.
+
+**PDF too large to upload or email**
+The pixels are the same as your source, just wrapped differently. If size matters more than access, keep the CBR. Otherwise, compress the page images first, or split a long graphic novel into volumes.
+
+**Blurry pages**
+This means the source scans were low resolution to begin with. Conversion cannot add detail that was never there. Use a higher-resolution source if you have one.`
     }
   ],
 
@@ -102,7 +148,9 @@ If that seems large, it is — but it's the same pixels you already had, just in
     { q: 'How large will my PDF be?', a: 'Expect roughly the same size as your source archive plus some overhead — a 24-page issue typically lands at 30-80MB, and a 200-page graphic novel can run 150-400MB. PDF cannot compress already-compressed comic scans much further.' },
     { q: 'Will my pages come out in the right order?', a: 'Pages are sorted by their filenames inside the archive, which works correctly for the vast majority of CBR files since most use zero-padded numbering. If a comic was packed with names like page1, page2, page10, the sorting may place page10 too early.' },
     { q: 'Can I search the dialogue in the converted PDF?', a: 'No. CBR pages are images with no text layer, so speech bubbles are just pixels and stay that way in the PDF. Making them searchable would require running OCR separately, and comic lettering fonts give OCR engines a hard time.' },
-    { q: 'Is there a file size limit?', a: 'Yes — 10MB per file. Comics hit that ceiling more often than any other format, since scanned pages are large. Slim or lower-resolution issues usually fit; full graphic novels and high-resolution manga volumes generally do not. For those, compress the images beforehand or convert locally with desktop Calibre.' }
+    { q: 'Is there a file size limit?', a: 'Yes — 10MB per file. Comics hit that ceiling more often than any other format, since scanned pages are large. Slim or lower-resolution issues usually fit; full graphic novels and high-resolution manga volumes generally do not. For those, compress the images beforehand or convert locally with desktop Calibre.' },
+    { q: 'Can I convert CBR to PDF on my phone?', a: 'Yes. The converter runs in any modern mobile browser. Comics are image-heavy though, so large files may hit the 10MB limit on a mobile connection before the upload finishes.' },
+    { q: 'Will the PDF keep double-page spreads and manga right-to-left order?', a: 'No. A PDF flattens each archive page into its own sheet in filename order. Double-page spreads become two separate pages, and right-to-left reading order is not preserved as a reading mode — the pages are simply ordered by their filenames. Dedicated comic readers handle those cases far better.' }
   ]
 ,
 

@@ -2,7 +2,7 @@ export const slug = 'doc-to-epub';
 export const title = 'Free DOC to EPUB Converter — No Sign-up';
 export const metaDescription = 'Bring legacy Word .doc files back to life — free DOC to EPUB converter, no sign-up. Turn old manuscripts into reflowable ebooks for any modern reader.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -88,6 +88,45 @@ Most documents under 100 pages finish in ten to thirty seconds. Files with a lot
 **What comes through reliably:** paragraph structure, bold and italic, headings, lists, tables, embedded images, footnotes, and document metadata like title and author.
 
 **What gets simplified:** exotic fonts (mapped to available equivalents), text boxes and floating shapes (moved into the flow), precise image positioning, and anything that depended on a fixed page size.`
+    },
+    {
+      heading: 'DOC vs EPUB: Format Comparison',
+      body: `Use this table to decide which format fits the job:
+
+| Feature | DOC | EPUB |
+|---------|-----|------|
+| Type | Binary document | Open ebook (ZIP + HTML) |
+| Reflow | No (fixed page) | Yes |
+| Device support | Word only | All readers |
+| File size | Larger | Smaller (compressed) |
+| Future-proof | Proprietary | W3C open standard |
+| Best for | Printing | Reading on screens |
+
+Keep DOC if you must keep editing in Word and printing. Convert to EPUB when the goal is reading or wide distribution.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these on the EPUB:
+
+- **Table of contents works** — tapping a chapter title navigates correctly
+- **Headings styled** — your Word Heading 1 and Heading 2 styles became real chapters
+- **Images present** — embedded pictures survived the conversion
+- **Footnotes intact** — notes are linked and tappable
+- **Metadata correct** — title and author show in your library
+
+If the TOC is flat or missing, apply proper heading styles in Word and reconvert.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your DOC',
+      body: `A few minutes of prep sharply improves the result:
+
+- **Apply real heading styles** rather than big bold text, so the converter can build a table of contents
+- **Remove headers, footers, and manual page breaks** — they have no meaning in a reflowable ebook
+- **Flatten multi-column layouts** into one column on purpose
+- **Strip any password** — encrypted DOC files cannot be read
+- **Save a backup** of the original before converting
+
+The converter handles the rest, including recovering documents Word itself refuses to open.`
     }
   ],
 
@@ -96,7 +135,8 @@ Most documents under 100 pages finish in ten to thirty seconds. Files with a lot
     { q: 'Will my formatting be preserved?', a: 'Headings, bold, italic, lists, tables, footnotes, and images all come through. Page-bound elements like headers, footers, and manual page breaks are dropped, because a reflowable ebook has no fixed pages to attach them to.' },
     { q: 'Does it work with password-protected documents?', a: 'No. You need to remove the password in Word or LibreOffice first — the converter cannot read encrypted content.' },
     { q: 'How does the table of contents get built?', a: 'From your Word heading styles. Documents that use real Heading 1 and Heading 2 styles produce clean chapter navigation; documents that fake headings with big bold text produce a flat TOC with a single entry.' },
-    { q: 'Should I convert DOC or DOCX?', a: 'Either works, and both use the same pipeline. If you already have a DOCX version, use it — one fewer conversion step means fewer chances for formatting to drift.' }
+    { q: 'Should I convert DOC or DOCX?', a: 'Either works, and both use the same pipeline. If you already have a DOCX version, use it — one fewer conversion step means fewer chances for formatting to drift.' },
+    { q: 'Can I convert a password-protected DOC file?', a: 'No. Encrypted DOC files cannot be read by the converter. Remove the password in Word or LibreOffice before uploading. Once unprotected, the file converts like any other.' }
   ]
 ,
 

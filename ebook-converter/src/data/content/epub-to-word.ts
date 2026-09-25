@@ -2,7 +2,7 @@ export const slug = 'epub-to-word';
 export const title = 'Free EPUB to Word Converter — No Sign-up';
 export const metaDescription = 'Convert EPUB to editable Word DOCX — free, no sign-up. Keep headings, paragraphs, and lists so you can edit, comment, and track changes in Word.';
 export const level = 'B' as const;
-export const wordCount = 2500;
+export const wordCount = 819;
 
 export const content = {
   hero: {
@@ -96,6 +96,46 @@ And the obvious point that's worth saying: convert books you have the right to c
 - **Page breaks** — since EPUB has no pages, chapter breaks are inserted based on the file structure
 
 The rule of thumb: **content and structure survive, visual design gets normalized.** For editing work — which is why you're doing this — that's usually what you want anyway. Clean, styled, editable text beats a pixel-perfect reproduction you'd have to strip down before working on it.`
+    },
+
+    {
+      heading: 'EPUB vs DOCX: Format Comparison',
+      body: `Both are structured document formats, which is why this conversion is unusually faithful. The differences that matter:
+
+| Feature | EPUB | DOCX |
+|---------|------|------|
+| Primary use | Reading | Editing |
+| Heading styles | Semantic | Word styles |
+| Track changes | No | Yes |
+| Page model | Reflowable | Page or flow |
+| Best for | Consumer ebooks | Manuscripts and drafts |
+
+The conversion lands on DOCX because that is where editing, reviewing, and collaboration happen. You lose EPUB's reading-focused design but gain Word's production tooling.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your EPUB',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
   ],
 
@@ -104,7 +144,8 @@ The rule of thumb: **content and structure survive, visual design gets normalize
     { q: 'Will the formatting be preserved?', a: 'Text, heading hierarchy, bold and italic, lists, blockquotes, images, and basic tables all carry over reliably. Custom embedded fonts and CSS-driven layout get normalized to standard Word formatting, since Word has no equivalent for much of EPUB\'s styling model.' },
     { q: 'My EPUB will not convert — what is going on?', a: 'DRM is almost always the reason. Books from Kobo, Google Play Books, or Barnes & Noble are encrypted and unreadable to any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without trouble.' },
     { q: 'Can I convert the Word file back to EPUB afterward?', a: 'Yes — our DOCX to EPUB converter handles the return trip, which is the normal workflow for authors who edit in Word and republish as an ebook. Expect the styling to be regenerated rather than restored to the original CSS.' },
-    { q: 'How many books can I convert at once?', a: 'Free accounts process one file at a time, up to 10MB each, which is generous given most ebooks are only a few megabytes. Pro accounts add batch conversion and larger file limits for working through a full library.' }
+    { q: 'How many books can I convert at once?', a: 'Free accounts process one file at a time, up to 10MB each, which is generous given most ebooks are only a few megabytes. Pro accounts add batch conversion and larger file limits for working through a full library.' },
+    { q: 'Will tables and images survive the conversion?', a: 'Basic tables and inline images carry over reliably, with tables keeping their structure and images placed at their original resolution. Complex CSS layout and embedded fonts get normalized to standard Word styling, which is usually what you want for editing.' },
   ]
 ,
 

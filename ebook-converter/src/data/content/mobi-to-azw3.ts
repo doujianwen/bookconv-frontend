@@ -2,7 +2,7 @@ export const slug = 'mobi-to-azw3';
 export const title = 'MOBI to AZW3: Free Upgrade to Kindle Format 8';
 export const metaDescription = 'Upgrade your old MOBI ebooks to AZW3 (Kindle Format 8) for better fonts, CSS styling, and smaller files. Free, no sign-up, runs in your browser.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 699;
 
 export const content = {
   hero: {
@@ -30,6 +30,46 @@ export const content = {
     {
       heading: 'What You Gain in the Upgrade',
       body: `Going MOBI → AZW3 is an upgrade, and some things will improve noticeably.\n\n**New capabilities:**\n\n- **Embedded fonts** — your chosen typeface renders exactly as intended\n- **CSS styling** — drop caps, styled quotes, colored highlights, custom margins\n- **Better images** — higher resolution, proper scaling, vector graphics support\n- **Smaller files** — tighter compression means faster downloads and less storage\n- **Refined typography** — hyphenation, kerning, and ligatures improve readability\n- **Proper table of contents** — nested chapters display correctly in the Kindle navigation pane\n\n**Unchanged:**\n\n- **The actual text** — every word survives, nothing gets truncated or lost\n- **Chapter structure** — navigation works correctly in both formats\n- **Basic emphasis** — bold and italic render the same\n- **Metadata** — title and author carry over seamlessly\n\nAnd expect the file to get **smaller**, not larger. AZW3's modern compression is significantly more efficient than MOBI's twenty-year-old algorithm. A 5MB MOBI might become a 3MB AZW3 with the same content — and look better doing it.\n\nUpgrading the other way — freeing a modern AZW3 so it reads on your old Kindle? [Convert AZW3 to MOBI](/convert/azw3-to-mobi) instead.`
+    },
+
+    {
+      heading: 'MOBI vs AZW3: Format Comparison',
+      body: `This is an upgrade, not a side-grade. MOBI is the outdated container; AZW3 is the modern one Amazon ships today.
+
+| Feature | MOBI | AZW3 |
+|---------|------|------|
+| Embedded fonts | No | Yes |
+| CSS styling | Minimal | Full subset |
+| File size | Larger | Smaller |
+| Device support | Every Kindle | 2011 and later Kindles |
+| Best for | Pre-2011 hardware | Modern reading |
+
+Unless your device predates late 2011, AZW3 is strictly better: sharper typography, smaller files, and proper styling. Convert to AZW3 to modernize a legacy library; convert the other way only for old Kindle hardware.`
+    },
+
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+
+- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
+- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
+- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
+- **Images came through** — covers and diagrams are present, not blank.
+- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
+- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+
+Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+    },
+
+    {
+      heading: 'Before You Convert: Check Your MOBI',
+      body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
+
+- **The file is really MOBI** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
+- **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
+- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+
+If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
   ],
 

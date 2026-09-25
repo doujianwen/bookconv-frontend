@@ -2,7 +2,7 @@ export const slug = 'mobi-to-pdf';
 export const title = 'Free MOBI to PDF Converter — No Sign-up';
 export const metaDescription = 'Turn Kindle MOBI books into fixed-layout PDFs — free, no sign-up. Ideal for printing, citing, and sharing. Runs in your browser, files stay private.';
 export const level = 'B' as const;
-export const wordCount = 2500;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -87,6 +87,43 @@ A 300-page novel typically finishes in thirty seconds to two minutes. Books with
 - **Small file size.** PDFs are usually larger than the MOBI they came from. A typical 300-page novel lands somewhere around 3 to 8MB; heavily illustrated books go higher.
 
 **One thing that stops the conversion entirely:** DRM. Books purchased from the Kindle Store are encrypted, and encrypted files cannot be read or converted. DRM-free MOBI files work without any trouble.`
+    },
+    {
+      heading: 'MOBI vs PDF: Format Comparison',
+      body: `Use this table to decide which format fits the job:
+
+| Feature | MOBI | PDF |
+|---------|------|------|
+| Layout | Reflowable | Fixed |
+| Print | No | Yes |
+| Page numbers | No | Yes |
+| Device support | Kindle only | Everything |
+| File size | Smaller | Larger |
+
+Keep MOBI for Kindle reading. Convert to PDF when you need to print, cite, or share outside the Kindle world.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **Page numbers present** — each page carries a stable number for citation
+- **Bookmarks intact** — chapter navigation points became PDF bookmarks
+- **Text selectable** — Ctrl+F finds words; no OCR needed
+- **Images sharp** — illustrations render at full resolution
+- **Margins sane** — no text cut off at the edges
+
+If the file will not convert, it is almost certainly a DRM-protected Kindle Store purchase.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your MOBI',
+      body: `A couple of checks avoid a dead end:
+
+- **Confirm it is DRM-free** — Kindle Store purchases are encrypted and cannot be opened; Gutenberg downloads, author-direct copies, and your own files work
+- **Note the size** — a 300-page novel is usually 300KB to 2MB, well under the 10MB limit; heavily illustrated titles can exceed it
+- **Pick a page size** — A4 or Letter is fixed at render time, so decide before converting
+- **Expect larger output** — PDFs run 3 to 8MB for a typical novel, larger for illustrated books
+
+The converter unpacks the MOBI and rebuilds it as fixed pages with embedded fonts.`
     }
   ],
 
@@ -95,7 +132,8 @@ A 300-page novel typically finishes in thirty seconds to two minutes. Books with
     { q: 'Can I edit the PDF afterwards?', a: 'Not easily — PDF is an output format, not an editing format. If you need editable text, convert MOBI to DOCX instead. Editing a PDF properly requires software like Adobe Acrobat.' },
     { q: 'How big will the PDF be?', a: 'A typical 300-page novel produces roughly 3 to 8MB. Books with many illustrations or photographs can be considerably larger, since images are rendered at print resolution rather than screen resolution.' },
     { q: 'Is the text searchable in the finished PDF?', a: 'Yes. MOBI contains real text, so the PDF gets real selectable text too. Ctrl+F works normally, and you can copy passages out. There is no OCR involved and no quality loss in the text layer.' },
-    { q: 'My Kindle Store book will not convert. Why?', a: 'Store purchases carry DRM, which encrypts the content and blocks conversion entirely. Gutenberg downloads, author-direct copies, and your own files convert without any issue.' }
+    { q: 'My Kindle Store book will not convert. Why?', a: 'Store purchases carry DRM, which encrypts the content and blocks conversion entirely. Gutenberg downloads, author-direct copies, and your own files convert without any issue.' },
+    { q: 'Will the PDF keep my Kindle highlights?', a: 'No. Highlights and notes are stored in your Amazon account, not inside the MOBI file. They are not part of the converted PDF. Export them separately from your Kindle library if you need them.' }
   ]
 ,
 

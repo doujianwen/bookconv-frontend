@@ -2,7 +2,7 @@ export const slug = 'lit-to-epub';
 export const title = 'Free LIT to EPUB Converter — Rescue Old Microsoft Reader Books';
 export const metaDescription = 'Free LIT to EPUB converter — rescue your old Microsoft Reader .LIT files in seconds, no sign-up. Convert to universal EPUB readable on Kindle, Kobo, Apple Books, and any e-reader.';
 export const level = 'S' as const;
-export const wordCount = 3200;
+export const wordCount = 720;
 
 export const content = {
   hero: {
@@ -64,24 +64,70 @@ For LIT files that included DRM protection purchased from Microsoft Store, note 
     },
     {
       heading: 'LIT vs EPUB Comparison',
-      body: `|---------|-----|------|
-| Layout Type | Fixed (Fixed Layout) | Reflowable (Dynamic) |
-| Font Adjustment | ❌ No | ✅ Yes |
-| Night Mode | ❌ Difficult | ✅ Native Support |
-| Full Text Search | ❌ Limited | ✅ Native Support |
-| Annotations | ❌ Limited | ✅ Native Support |
-| Cross-Device Sync | ❌ No | ✅ Supported |
-| File Size | Small (compressed) | Small (ZIP compressed) |
-| Best For | Printing, Submission | Reading, Learning |`
+      body: `| Feature | LIT | EPUB |
+|---------|-----|------|
+| Layout type | Fixed (Fixed Layout) | Reflowable (Dynamic) |
+| Font adjustment | No | Yes |
+| Night mode | Difficult | Native support |
+| Full-text search | Limited | Native support |
+| Annotations | Limited | Native support |
+| Cross-device sync | No | Supported |
+| File size | Small (compressed) | Small (ZIP compressed) |
+| Best for | Printing, submission | Reading, learning |
+
+The pattern is clear: LIT was built for one device and one era, while EPUB is built for every device and the next decade. Converting is less a format swap than a rescue mission for content trapped in abandoned software.`
+    },
+    {
+      heading: 'When Do You Need to Convert LIT to EPUB?',
+      body: `You need this conversion the moment the original Microsoft Reader is no longer an option. The most common triggers:
+
+**A device changed.** You switched from an old Windows phone or Pocket PC to an iPhone, Android tablet, or Kindle, and the LIT file simply will not open anywhere else.
+
+**A collection surfaced.** Inherited books, old purchases, or professional references that sat on a shelf for years are now unreadable because nothing current runs LIT.
+
+**A migration project.** Libraries, archives, or estates digitizing legacy ebook holdings need EPUB because every modern cataloging and reading system speaks it.
+
+**DRM recovery.** Files bought from the Microsoft Store often carry DRM. Once that store closed, the only path to keep reading was to strip the DRM (with proof of purchase) and move to EPUB.
+
+If the file already opens fine in a LIT reader and you have no plan to change devices, there is no rush. But the day that reader breaks, this conversion is your fallback.`
+    },
+    {
+      heading: 'How to Convert LIT to EPUB: Step by Step',
+      body: `The process is short — most of the work is preparing the source.
+
+**Step 1 — Locate the .lit file.** Find it on your drive. If it came from the Microsoft Reader, it may be inside the program's book folder rather than your Documents.
+
+**Step 2 — Check for DRM.** If the file was a purchased title, you will need the original Microsoft account credentials to release the DRM before any converter can read it. DRM-free files from personal exports skip this step.
+
+**Step 3 — Upload and convert.** Drop the .lit into the converter above. Our Calibre-based engine parses the internal HTML, rebuilds the chapter structure, and writes EPUB 3 metadata in seconds for a typical novel.
+
+**Step 4 — Download and verify.** Open the EPUB in any reader. Confirm the table of contents populated, the cover image is present, and chapter order is correct before you archive the original.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Before you delete the original LIT, verify the rescue actually worked:
+
+| Check item | Expected result | How to verify |
+|-----------|-----------------|---------------|
+| Table of contents | Chapters listed and clickable | Open the navigation pane in your reader |
+| Cover image | Present on the book | Check the library thumbnail |
+| Chapter order | Sequential, no scrambling | Skim the first and last chapters |
+| Metadata | Title and author correct | View book details in the reader |
+| Special characters | Accents and symbols intact | Search for a known character |
+| Annotations | Bookmarks carried over | Jump to a saved bookmark |
+
+**Known limitations:** interactive elements and embedded multimedia from the original LIT rarely survive, and heavy custom styling is simplified to EPUB-safe CSS. The text and structure, however, come through cleanly.`
     }
   ],
 
   faq: [
-    { q: 'Will LIT file conversion lose content?', a: 'No. The LIT to EPUB conversion fully preserves text paragraphs images chapter structure and basic formatting. While LIT did support some bold styling the converted EPUB will maintain all text content with even better readability.' },
-    { q: 'Can the converted EPUB be read on Kindle?', a: 'Yes. Although Kindle natively supports AZW3/MOBI formats modern Kindle apps support receiving EPUB files via email which are then automatically converted to Kindle format. You can also use Calibre to convert EPUB to AZW3 in one click.' },
-    { q: 'My LIT file has DRM what should I do?', a: 'If your LIT file still has DRM protection it must be removed before conversion. This usually requires original purchase credentials or license information. Contact our support for assistance with licensed files.' },
+    { q: 'Will LIT file conversion lose content?', a: 'No. The LIT to EPUB conversion fully preserves text, paragraphs, images, chapter structure, and basic formatting. While LIT did support some bold styling, the converted EPUB maintains all text content with even better readability.' },
+    { q: 'Can the converted EPUB be read on Kindle?', a: 'Yes. Although Kindle natively supports AZW3/MOBI, modern Kindle apps support receiving EPUB files via email, which are then automatically converted to Kindle format. You can also use Calibre to convert EPUB to AZW3 in one click.' },
+    { q: 'My LIT file has DRM — what should I do?', a: 'If your LIT file still has DRM protection, it must be removed before conversion. This usually requires original purchase credentials or license information. Contact our support for assistance with licensed files.' },
     { q: 'How many LIT files can I convert at once?', a: 'Files are capped at 10 MB each on every plan. Batch conversion is a Pro feature — several files in one upload instead of one at a time.' },
-    { q: 'Does the conversion preserve bookmarks?', a: 'Yes. If your LIT file contained bookmarks or chapter markers these will be converted to EPUB navigation entries (NCX/NAV) allowing you to jump to specific chapters in your reader.' }
+    { q: 'Does the conversion preserve bookmarks?', a: 'Yes. If your LIT file contained bookmarks or chapter markers, these are converted to EPUB navigation entries (NCX/NAV) allowing you to jump to specific chapters in your reader.' },
+    { q: 'Why does the comparison say LIT has no night mode?', a: 'Microsoft Reader predated system-wide dark mode and most LIT reading happened on LCD screens with no comfort lighting. EPUB, by contrast, inherits whatever night mode or warmth control the modern reader app provides.' },
+    { q: 'Is the converted EPUB future-proof?', a: 'Far more than LIT. EPUB 3 is an open standard maintained by the W3C with broad industry support, whereas LIT development stopped in 2011. A properly built EPUB will open on reading software for the foreseeable future.' }
   ]
 ,
 

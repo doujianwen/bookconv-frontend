@@ -2,7 +2,7 @@ export const slug = 'epub-to-html';
 export const title = 'Free EPUB to HTML Converter — No Sign-up';
 export const metaDescription = 'Extract clean, editable HTML from any EPUB — free converter, no sign-up. Publish, restyle, or paste your e-book content straight into a CMS.';
 export const level = 'B' as const;
-export const wordCount = 2400;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -84,6 +84,43 @@ Most novels finish in ten to twenty seconds. A heavily illustrated art book or a
 - **Embedded fonts** are often dropped or swapped for web-safe stacks, because font licences rarely transfer to web use.
 
 HTML preserves structure and content beautifully. It just stops pretending to be a book.`
+    },
+    {
+      heading: 'EPUB vs HTML: Format Comparison',
+      body: `Use this table to decide which fits the job:
+
+| Feature | EPUB | HTML |
+|---------|------|------|
+| Package | Single .epub file | Folder of files |
+| Opens in | Reader apps, Send to Kindle | Any browser |
+| Best for | Reading a book | Publishing, editing, CMS |
+| SEO | Not crawlable | Crawlable |
+| Editing | Needs EPUB tool | Any text editor |
+
+Keep EPUB for reading. Convert to HTML when you need to publish, restyle, or make the content findable.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **index.html opens** — double-click it and the book loads in your browser offline
+- **Images resolve** — the images/ folder sits next to index.html and pictures display
+- **Chapters split** — each chapter is its own HTML file in correct order
+- **Headings preserved** — chapter titles became real H1/H2 tags
+- **Cross-links work** — internal references point at the new filenames
+
+If images show as broken, check that you unzipped the whole download folder together, not just index.html.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your EPUB',
+      body: `A little prep avoids surprises:
+
+- **Remove DRM first** — store-bought, encrypted EPUBs cannot be read by the converter
+- **Check the spine** — a well-built EPUB with a correct reading order converts cleanly; a hand-edited one with a broken manifest may list chapters out of order
+- **Note your fonts** — embedded fonts are often swapped for web-safe stacks, so the HTML may look plainer than your reader app
+- **Decide single vs multi-file** — the export splits per chapter; concatenate the files if you need one document
+
+The converter reads the OPF spine to get true chapter order, not the alphabetical folder listing.`
     }
   ],
 
@@ -92,7 +129,8 @@ HTML preserves structure and content beautifully. It just stops pretending to be
     { q: 'Are images preserved during conversion?', a: 'Yes. Every embedded image is written to an images/ folder and referenced by relative path, so the whole folder stays portable. Cover art is included too.' },
     { q: 'Why does it split the book into multiple HTML files?', a: 'Because that is how the EPUB stores it internally, and one file per chapter is far easier to edit or publish individually. If you want a single document, concatenate the files in a text editor.' },
     { q: 'My EPUB will not convert. What is wrong?', a: 'Nine times out of ten it is DRM from a store purchase, which encrypts the content. Books you wrote, bought DRM-free, or downloaded from public-domain libraries convert without trouble.' },
-    { q: 'Will the HTML look identical to my reader app?', a: 'Not exactly. Reader apps apply their own fonts, margins, and colour themes on top of the book. You get the publisher CSS instead, which you can restyle however you like.' }
+    { q: 'Will the HTML look identical to my reader app?', a: 'Not exactly. Reader apps apply their own fonts, margins, and colour themes on top of the book. You get the publisher CSS instead, which you can restyle however you like.' },
+    { q: 'Why does the download come as a ZIP?', a: 'Because HTML is a folder, not a single file. The ZIP bundles index.html, one HTML file per chapter, and the images/ directory so the whole thing stays portable. Unzip it before opening.' }
   ]
 ,
 

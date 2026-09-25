@@ -2,7 +2,7 @@ export const slug = 'txt-to-epub';
 export const title = 'Free TXT to EPUB Converter — No Sign-up';
 export const metaDescription = 'Turn plain TXT files into structured EPUB — free converter, no sign-up. Auto chapter breaks, table of contents, and metadata included. Read anywhere.';
 export const level = 'A' as const;
-export const wordCount = 2000;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -43,7 +43,30 @@ You can also manually specify chapter separators if your file uses unusual forma
 - **Font Optimization**: Applies default ebook typography settings for optimal reading experience`
     },
     {
-      heading: 'What Gets Enhanced',
+      heading: 'When to Convert TXT to EPUB',
+      body: `Convert rather than keep plain text when:
+
+- **You want to actually read it** — a 500,000-word novel in a text editor has no navigation, no night mode, no adjustable font
+- **You are publishing or sharing** — recipients expect an ebook they can open in Apple Books or on a Kindle, not a raw file
+- **You need a table of contents** — the converter detects chapter markers and builds clickable navigation
+- **You want it future-proof** — EPUB carries metadata and structure; TXT is just characters
+
+Keep TXT only for piping into scripts, AI tools, or translation engines where raw text is what you want.`
+    },
+    {
+      heading: 'How to Convert TXT to EPUB: Step by Step',
+      body: `Three steps, nothing to install:
+
+**Step 1 — Upload your TXT.** Drag it in or click to browse. Free accounts handle files up to 10MB; we have tested multi-million-word files that convert normally.
+
+**Step 2 — Let the engine structure it.** The converter detects chapter separators (common patterns like "Chapter X" or "---"), applies smart paragraph detection, and auto-detects encoding such as UTF-8, GBK, or ISO-8859-1.
+
+**Step 3 — Download the EPUB.** It arrives with a clickable table of contents, metadata, and clean typography.
+
+If your file uses unusual separators, you can specify them manually for more accurate chapter breaks.`
+    },
+    {
+      heading: 'TXT vs EPUB: What Gets Enhanced',
       body: `| Feature | TXT | EPUB |
 |---------|-----|------|
 | Navigation | None | Clickable TOC |
@@ -61,7 +84,8 @@ You can also manually specify chapter separators if your file uses unusual forma
     { q: 'Will converted file be much larger?', a: 'EPUB is essentially a ZIP package containing metadata and navigation info. Compared to TXT, it usually increases only 5-10% in size — completely acceptable.' },
     { q: 'How many words of TXT file are supported?', a: 'Theoretically unlimited. We have tested 5-million-word TXT files that convert normally.' },
     { q: 'Does conversion preserve line breaks?', a: 'Yes. Meaningful line breaks (paragraph separators, chapter breaks) are preserved. Unnecessary empty lines are cleaned up.' },
-    { q: 'Can I add custom metadata?', a: 'Yes. During conversion you can specify title, author, language, ISBN, and other metadata fields.' }
+    { q: 'Can I add custom metadata?', a: 'Yes. During conversion you can specify title, author, language, ISBN, and other metadata fields.' },
+    { q: 'Will my chapter markers be detected automatically?', a: 'Yes. The converter recognizes common patterns such as "Chapter X" or "---" separator lines and builds a clickable table of contents. If your file uses unusual formatting, you can specify the separator manually for more accurate breaks.' }
   ]
 ,
 

@@ -2,7 +2,7 @@ export const slug = 'epub-to-zip';
 export const title = 'Free EPUB to ZIP Converter — Extract XHTML, CSS & Images in Seconds';
 export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS, images and fonts from any e-book. No sign-up, no re-encoding, byte-exact copy, your file stays private.';
 export const level = 'A' as const;
-export const wordCount = 2050;
+export const wordCount = 530;
 
 export const content = {
   hero: {
@@ -46,6 +46,34 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
     {
       heading: 'What to Do After Extracting',
       body: `Once you have the ZIP, open it with any archive tool and look for: OEBPS/ or EPUB/ — the folder holding chapter .xhtml files. images/ — cover and inline illustrations. style/ — the CSS that controls typography. META-INF/container.xml and content.opf — the manifest and metadata. Edit what you need, then re-zip and (if required) rename back to .epub to rebuild a valid e-book. Want a readable book instead of raw files? See our [AZW3 vs MOBI comparison](/blog/azw3-vs-mobi) to pick the right Kindle format.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `Because this is a byte-exact copy, the "conversion" either worked perfectly or the file was already broken. There is little in between. Verify with this short list:
+
+| Check item | Expected result | How to verify |
+|-----------|-----------------|---------------|
+| File opens | Archive viewer shows folders, not an error | Double-click in 7-Zip, Finder, or File Explorer |
+| Internal structure | OEBPS/ or EPUB/ holds .xhtml files | Browse the extracted tree |
+| Images present | cover and inline art appear | Open the images/ folder |
+| Metadata intact | content.opf and container.xml exist | Check META-INF/ |
+| Size matches | ZIP is within a few bytes of the EPUB | Compare file sizes |
+
+**Known limitations:** none on the content side — text, images, and metadata are untouched. The only real risk is starting from a corrupted EPUB, in which case the ZIP simply contains the same corruption. The converter cannot repair a broken source; it only repackages it.`
+    },
+    {
+      heading: 'Troubleshooting: When the ZIP Looks Wrong',
+      body: `A few things look like errors but are not.
+
+**The ZIP opens to a bunch of .xhtml files, not a book.** That is correct — an EPUB is those files. You are now looking at the book's internals, which is exactly what you wanted for editing or asset reuse.
+
+**My reader app will not open the .zip.** Expected. E-readers want .epub, not .zip. The ZIP is for extracting and editing, not reading. Rename back to .epub (or re-zip and rename) to read it again.
+
+**Images appear as separate files, not in the story.** Also correct. In EPUB, images live in their own folder and are referenced by the XHTML. That separation is the format, not a bug.
+
+**The archive is bigger than I expected.** A ZIP of an EPUB is usually a touch larger because ZIP adds its own bookkeeping on top of EPUB's ZIP container. The content bytes are identical.
+
+If the ZIP will not open at all, the source EPUB was likely truncated during download — re-fetch the original and convert again.`
     }
   ],
 

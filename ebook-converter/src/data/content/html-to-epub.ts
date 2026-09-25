@@ -2,7 +2,7 @@ export const slug = 'html-to-epub';
 export const title = 'Free HTML to EPUB Converter — No Sign-up';
 export const metaDescription = 'Package web pages and saved articles into EPUB — free converter, no sign-up. Read your online reading list offline on any e-reader or phone.';
 export const level = 'A' as const;
-export const wordCount = 2500;
+export const wordCount = 760;
 
 export const content = {
   hero: {
@@ -96,6 +96,35 @@ Typical conversions finish in five to fifteen seconds. Image-heavy pages can tak
 - **Web fonts** may be swapped for reader defaults depending on licensing.
 
 One practical tip: if your HTML uses styled div elements instead of real heading tags, the converter has nothing to build a table of contents from. Proper headings make a dramatically better ebook.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your HTML',
+      body: `Ten minutes of prep turns a rough conversion into a book you are proud to send someone.
+
+**Use real heading tags.** h1, h2, h3 are what become the table of contents. If your page fakes headings with styled div or span elements, the converter cannot see them and you get a flat, single-entry TOC.
+
+**Inline your critical CSS.** The converter rewrites styles into EPUB-safe form, but deeply nested or external stylesheets may lose nuance. Simpler markup converts more predictably.
+
+**Make images absolute or embedded.** Linked images from https:// URLs are fetched during conversion; if the original site is gone, those images will not make it into the book. Save them locally first if the page is at risk.
+
+**Strip the chrome.** Navigation bars, sidebars, comment sections, and share buttons are not part of the reading experience. Delete them from the HTML before converting, or they become clutter in the ebook.
+
+**Set a title and author.** If the document head carries a title element and author meta, the converter picks them up automatically. Otherwise you will be editing metadata by hand afterward.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm the ebook is actually good before you send it to a reader:
+
+| Check item | Expected result | How to verify |
+|-----------|-----------------|---------------|
+| Table of contents | One entry per real heading | Open the TOC / navigation pane |
+| Images | All present and offline | Flip through, toggle airplane mode |
+| Reading position | Saved between sessions | Close and reopen mid-chapter |
+| Fonts | Adjustable in the reader | Increase text size |
+| No leftover UI | No nav bars or ads | Skim the first and last pages |
+| Metadata | Title and author correct | View book info |
+
+**Known limitations:** JavaScript, embedded video and audio, and fixed-position CSS layouts do not survive the move into a reflowable reading format. If your source depends on any of those, keep it as HTML or accept that they flatten into static content.`
     }
   ],
 

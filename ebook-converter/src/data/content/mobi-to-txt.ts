@@ -2,7 +2,7 @@ export const slug = 'mobi-to-txt';
 export const title = 'MOBI to TXT Converter';
 export const metaDescription = 'Extract clean plain text from MOBI books — free converter, no sign-up. Output ready for translation, AI analysis, or old e-ink readers. Chapters preserved.';
 export const level = 'B' as const;
-export const wordCount = 2200;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -75,6 +75,42 @@ Conversion is close to instant — usually under five seconds, because there is 
 - **Footnotes lose their anchors** and typically end up inline or clustered at the end of a section.
 
 **What you do keep:** every word, in the right order, in UTF-8, with paragraph structure and chapter separation preserved. Title and author are written as a short header at the top of the file so you can tell your archives apart.`
+    },
+    {
+      heading: 'MOBI vs TXT: Format Comparison',
+      body: `Use this table to decide which fits the job:
+
+| Feature | MOBI | TXT |
+|---------|------|------|
+| Content | Formatted ebook | Plain text only |
+| Images | Yes | No |
+| Styling | Yes | None |
+| Portability | Reader apps | Every editor, ever |
+| Best for | Reading | Analysis, AI, archive |
+
+Keep MOBI for reading. Convert to TXT when you need the raw words for tools or long-term storage.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **Chapters separated** — blank lines mark chapter breaks, headings remain as plain lines
+- **Encoding correct** — accented and non-Latin text displays properly in UTF-8
+- **Paragraphs intact** — text is not one wall of prose
+- **Header present** — title and author appear at the top so files are identifiable
+
+If the text looks like one block, the source MOBI likely had no chapter markers; the converter can only split what the file provides.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your MOBI',
+      body: `A couple of checks avoid waste:
+
+- **Confirm it is DRM-free** — Kindle Store purchases are encrypted and cannot be read; Gutenberg, author-direct, and your own files work
+- **Expect image loss** — if illustrations matter, convert to EPUB instead and keep the pictures
+- **Check the size** — MOBI files are small, so the 10MB limit is rarely a concern
+- **Keep the original** — TXT discards formatting permanently; you cannot get it back from the text file
+
+The converter decompresses the MOBI, strips HTML tags, and rebuilds clean paragraphs.`
     }
   ],
 
@@ -83,7 +119,8 @@ Conversion is close to instant — usually under five seconds, because there is 
     { q: 'What character encoding does the output use?', a: 'UTF-8, so Chinese, Japanese, Korean, Cyrillic, Arabic, and accented European text all come through correctly. Curly quotes and em dashes are preserved rather than mangled into question marks.' },
     { q: 'My Kindle book will not convert. Why?', a: 'Books bought from the Kindle Store carry DRM, which encrypts the content and blocks any conversion. DRM-free MOBI files — Gutenberg downloads, author-direct copies, your own exports — work fine.' },
     { q: 'Are chapters still identifiable in the text file?', a: 'Yes. Chapter boundaries are marked with blank lines and the original chapter headings remain as plain lines of text, so you can still navigate or split the file by chapter.' },
-    { q: 'Can I turn the TXT back into an ebook later?', a: 'You can, but the formatting will not come back — it was discarded, not hidden. Keep a copy of the original MOBI if you might need the styling again.' }
+    { q: 'Can I turn the TXT back into an ebook later?', a: 'You can, but the formatting will not come back — it was discarded, not hidden. Keep a copy of the original MOBI if you might need the styling again.' },
+    { q: 'Will the TXT keep my Kindle highlights?', a: 'No. Highlights live in your Amazon account, not in the MOBI file, so they are not part of the output. If you need marked passages, export your highlights from the Kindle app separately before converting.' }
   ]
 ,
 

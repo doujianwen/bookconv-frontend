@@ -2,7 +2,7 @@ export const slug = 'fb2-to-epub';
 export const title = 'Free FB2 to EPUB Converter — No Sign-up';
 export const metaDescription = 'Convert FictionBook FB2 files to EPUB free — no sign-up. Move your FictionBook library to a universal format for Kobo, Kindle, and Apple Books.';
 export const level = 'B' as const;
-export const wordCount = 2500;
+export const wordCount = 750;
 
 export const content = {
   hero: {
@@ -94,6 +94,43 @@ If a conversion does fail, the usual cause is malformed XML — some older FB2 f
 - **Exotic genre tags** — FB2's genre taxonomy is far more granular than EPUB's subject field, so some detail flattens
 
 Nothing meaningful is lost. You'll notice the book looks slightly different in a new reader app — but that's the reader's default typography, not the conversion.`
+    },
+    {
+      heading: 'FB2 vs EPUB: Format Comparison',
+      body: `Use this table to decide which format fits the job:
+
+| Feature | FB2 | EPUB |
+|---------|-----|------|
+| Structure | Single XML file | ZIP of HTML + CSS |
+| Device support | FBReader, CoolReader | All readers |
+| Retail publishing | Not accepted | Accepted everywhere |
+| Accessibility | Basic | EPUB 3 ARIA |
+| Future-proof | Small community | W3C backed |
+
+Keep FB2 inside its native ecosystem. Convert to EPUB to read on mainstream devices or publish.`
+    },
+    {
+      heading: 'Conversion Quality Checklist',
+      body: `After download, confirm these:
+
+- **Chapters navigate** — FB2 sections became tappable EPUB chapters
+- **Table of contents works** — built from section titles, fully clickable
+- **Images decoded** — base64 illustrations are now real image files
+- **Metadata mapped** — series name, number, genre, and author appear correctly
+- **Footnotes linked** — notes are tappable endnotes
+
+If conversion fails, the usual cause is malformed XML in an old scanned FB2. Open it in an FB2 editor and re-save, then retry.`
+    },
+    {
+      heading: 'Before You Convert: Prepare Your FB2',
+      body: `FB2 is unusually clean to convert, but a couple of checks help:
+
+- **Confirm it is valid XML** — unescaped characters or unclosed tags break strict parsers
+- **Check embedded images** — base64 blobs decode into real files; very large scans can push past the 10MB limit
+- **Note series metadata** — FB2 stores series name and number; make sure they are filled in so they map to EPUB correctly
+- **Expect epigraphs to shift** — EPUB has no dedicated epigraph element, so they become styled blockquotes
+
+Unlike most formats, FB2 files are essentially never DRM-protected, so you will not hit a rights wall.`
     }
   ],
 
@@ -102,7 +139,8 @@ Nothing meaningful is lost. You'll notice the book looks slightly different in a
     { q: 'Will my converted book work on a Kindle?', a: 'Yes. Amazon\'s Send to Kindle service accepts EPUB files directly now, so you can email the converted file to your Kindle address and it will appear on the device. Kindle has never supported FB2 natively, which is exactly why this conversion is needed.' },
     { q: 'Are FB2 files ever DRM-protected?', a: 'Essentially never. The FB2 specification includes no encryption or DRM mechanism, which is part of why it stayed popular among readers who dislike locked files, so conversions rarely fail for rights reasons.' },
     { q: 'Do footnotes and endnotes survive the conversion?', a: 'Yes. FB2 note bodies become linked EPUB endnotes, so tapping a note marker jumps to the note and most readers give you a back link to return to your place.' },
-    { q: 'How many FB2 files can I convert at once?', a: 'Free accounts convert one file at a time up to 10MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.' }
+    { q: 'How many FB2 files can I convert at once?', a: 'Free accounts convert one file at a time up to 10MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.' },
+    { q: 'My FB2 conversion failed with an XML error. What now?', a: 'Older FB2 files from scanning projects sometimes have unescaped characters or unclosed tags. Open the file in a dedicated FB2 editor or a strict XML validator, fix the error, save it, and reconvert. The content is almost always recoverable.' }
   ]
 ,
 
