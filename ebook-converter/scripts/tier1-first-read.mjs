@@ -13,27 +13,33 @@
  *   node scripts/tier1-first-read.mjs [--help]
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ── 配置 ──────────────────────────────────────────────────────────
-const BASE = process.env.BASE_DIR || 'E:/一人公司/电子书格式转换站/ebook-converter';
+const BASE = process.env.BASE_DIR || path.resolve(__dirname, '../');
 const DATA_DIR = path.join(BASE, '数据分析');
 const BING_DIR = path.join(BASE, 'bookconv_data_asset/bing');
 
 // Tier-1 五页（9/17 改造，基线 9/15）
 const TIER1_PAGES = [
-  { slug: 'mobi-to-epub',         baseImp: 76,  basePos: 66.2, note: '最高基线' },
-  { slug: 'epub-to-azw3',         baseImp: 71,  basePos: 60.6, note: '次高基线' },
-  { slug: 'pdf-to-epub',          baseImp: 9,   basePos: 49.4, note: '位置最好' },
-  { slug: 'epub-to-mobi',         baseImp: 8,   basePos: 58.5, note: '偏低' },
-  { slug: 'epub-to-pdf',          baseImp: 0,   basePos: null, note: '⚠️ 零曝光' },
+  { slug: 'mobi-to-epub',         baseImp: 1,   basePos: 6,    note: '最高基线' },
+  { slug: 'epub-to-azw3',         baseImp: 0,   basePos: null,  note: '次高基线' },
+  { slug: 'pdf-to-epub',          baseImp: 0,   basePos: null,  note: '位置最好' },
+  { slug: 'epub-to-mobi',         baseImp: 2,   basePos: 24.5,  note: '偏低' },
+  { slug: 'epub-to-pdf',          baseImp: 0,   basePos: null,  note: '⚠️ 零曝光' },
 ];
 
 // ── 工具函数 ──────────────────────────────────────────────────────
 function readCSV(filePath) {
   if (!fs.existsSync(filePath)) return null;
-  const content = fs.readFileSync(filePath, 'utf8');
+  let content = fs.readFileSync(filePath, 'utf8');
+  // 移除 BOM
+  if (content.charCodeAt(0) === 0xFEFF) content = content.slice(1);
   const lines = content.split('\n').filter(Boolean);
   if (lines.length < 2) return null;
   const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
@@ -50,10 +56,13 @@ function readJSON(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function findFile(dir, pattern) {
+function findLatestFile(dir, pattern) {
   if (!fs.existsSync(dir)) return null;
-  const files = fs.readdirSync(dir);
-  return files.find(f => f.includes(pattern));
+  const files = fs.readdirSync(dir).filter(f => f.includes(pattern));
+  if (files.length === 0) return null;
+  // 按修改时间排序，取最新的
+  files.sort((a, b) => fs.statSync(path.join(dir, b)).mtime - fs.statSync(path.join(dir, a)).mtime);
+  return files[0];
 }
 
 // ── 数据采集 ──────────────────────────────────────────────────────
@@ -66,8 +75,8 @@ function collectData() {
     tier1Readings: []
   };
 
-  // 1. GSC page report（最近 7 天窗口）
-  const gscFile = findFile(DATA_DIR, 'GSC_API_page_');
+  // 1. GSC page report（最新）
+  const gscFile = findLatestFile(DATA_DIR, 'GSC_API_page_');
   if (gscFile) {
     const gscData = readJSON(path.join(DATA_DIR, gscFile));
     if (gscData && gscData.rows) {
@@ -81,7 +90,7 @@ function collectData() {
   }
 
   // 2. Bing PageTrafficReport（最新）
-  const bingPageFile = findFile(BING_DIR, 'PageTrafficReport');
+  const bingPageFile = findLatestFile(BING_DIR, 'PageTrafficReport');
   if (bingPageFile) {
     const bingData = readCSV(path.join(BING_DIR, bingPageFile));
     if (bingData) {
@@ -93,7 +102,7 @@ function collectData() {
   }
 
   // 3. Bing AIPageStatsReport（最新）
-  const bingAIFile = findFile(BING_DIR, 'AIPageStatsReport');
+  const bingAIFile = findLatestFile(BING_DIR, 'AIPageStatsReport');
   if (bingAIFile) {
     const bingData = readCSV(path.join(BING_DIR, bingAIFile));
     if (bingData) {
@@ -115,12 +124,12 @@ function collectData() {
     // GSC 数据
     if (result.gsc) {
       const gscRow = result.gsc.rows.find(r =>
-        r.keys && r.keys[0] && r.keys[0].includes(`/convert/${page.slug}`)
+        r.urls && r.urls.some(u => u.includes(`/convert/${page.slug}`))
       );
       if (gscRow) {
         reading.gsc = {
-          impressions: gscRow.impressions,
-          position: parseFloat(gscRow.position),
+          impressions: parseInt(gscRow.impressions) || 0,
+          position: parseFloat(gscRow.position) || null,
           window: `${result.gsc.startDate} ~ ${result.gsc.endDate}`
         };
       } else {
@@ -135,9 +144,9 @@ function collectData() {
       );
       if (bingRow) {
         reading.bing = {
-          impressions: parseInt(bingRow['印象数']),
-          clicks: parseInt(bingRow['点击次数']),
-          position: parseFloat(bingRow['平均排名'])
+          impressions: parseInt(bingRow['印象数']) || 0,
+          clicks: parseInt(bingRow['点击次数']) || 0,
+          position: parseFloat(bingRow['平均排名']) || null
         };
       } else {
         reading.bing = { impressions: 0, clicks: 0, position: null, notFound: true };
@@ -149,11 +158,7 @@ function collectData() {
       const aiRow = result.bingAIPageStats.rows.find(r =>
         r['页面'] && r['页面'].includes(`/convert/${page.slug}`)
       );
-      if (aiRow) {
-        reading.aiCitations = parseInt(aiRow['Citations']);
-      } else {
-        reading.aiCitations = 0;
-      }
+      reading.aiCitations = aiRow ? parseInt(aiRow['Citations']) || 0 : 0;
     }
 
     // 变化率（vs 基线）
@@ -221,7 +226,7 @@ function main() {
   const args = process.argv.slice(2);
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`Usage: node ${path.basename(process.argv[1])} [--help]
-    
+
 Tier-1 首次读数采集脚本
 数据源:
   - GSC page report (API, 最近 7 天)
