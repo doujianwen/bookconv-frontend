@@ -203,6 +203,43 @@ export default async function AboutPage() {
           </Link>
         </section>
 
+        {/* Social & Contact */}
+        <section className="mb-12 rounded-2xl border border-gray-200 bg-white p-8">
+          <h2 className="mb-4 text-2xl font-bold text-gray-900">Get in Touch</h2>
+          <p className="mb-4 text-gray-700 leading-relaxed">
+            Questions, feedback, or feature requests? Reach out through any channel — we read everything.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="mailto:hello@bookconv.com"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+            >
+              <span aria-hidden="true">✉️</span>
+              hello@bookconv.com
+            </a>
+            <a
+              href="https://x.com/GinoTou2024"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow BookConv on X (Twitter)"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+            >
+              <span aria-hidden="true">𝕏</span>
+              @GinoTou2024
+            </a>
+            <a
+              href="https://www.reddit.com/r/ebooks/comments/1v8ypvd/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="BookConv on Reddit"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+            >
+              <span aria-hidden="true">✳</span>
+              Reddit
+            </a>
+          </div>
+        </section>
+
         {/* FAQ Section */}
         <section className="mb-12 mt-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>

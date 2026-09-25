@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.',
       images: ['https://www.bookconv.com/og-image.svg'],
-      creator: '@bookconv',
+      creator: '@GinoTou2024',
     },
     robots: {
       index: true,
@@ -127,8 +127,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
                   logo: 'https://www.bookconv.com/icon.svg',
                   sameAs: [
-                    'https://github.com/doujianwen/bookconv-frontend',
                     'https://www.reddit.com/r/ebooks/comments/1v8ypvd/',
+                    'https://x.com/GinoTou2024',
                   ],
                   areaServed: 'Worldwide',
                   availableLanguage: ['en', 'es'],
@@ -170,6 +170,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
                 <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
                 <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
+                <Link href={locale === 'es' ? '/es/founder' : '/founder'} className='hover:text-blue-600'>{t('common.founder') || 'About'}</Link>
                 <LocaleSwitcher />
                 <LoginButton />
               </nav>
@@ -189,9 +190,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-gray-700'>{t('common.help') || 'Help'}</Link>
                 <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>
-              <p className='text-xs text-gray-500'>
-                <a href='mailto:hello@bookconv.com' className='hover:text-gray-700'>{t('common.contact') || 'Contact'}: hello@bookconv.com</a>
-              </p>
+              <div className='flex flex-wrap justify-center gap-4 text-xs'>
+                <a href='mailto:hello@bookconv.com' className='flex items-center gap-1 text-gray-500 hover:text-gray-700' aria-label={t('common.contact') || 'Contact'}>
+                  <span>{t('common.contact') || 'Contact'}: hello@bookconv.com</span>
+                </a>
+                <a href='https://x.com/GinoTou2024' target='_blank' rel='noopener noreferrer' className='flex items-center gap-1 text-gray-500 hover:text-gray-700' aria-label='X (Twitter)'>
+                  <span aria-hidden='true'>𝕏</span>
+                  <span>@GinoTou2024</span>
+                </a>
+              </div>
               <p className='text-xs text-gray-500'>{new Date().getFullYear()} {t('common.siteName') || 'BookConv'}. {t('common.allRightsReserved') || 'All rights reserved.'}</p>
             </div>
           </footer>

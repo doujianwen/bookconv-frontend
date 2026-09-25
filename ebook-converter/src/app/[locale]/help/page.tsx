@@ -64,6 +64,7 @@ const sections: HelpSection[] = [
     links: [
       { labelKey: 'help.sections.contacts.links.email', href: 'mailto:hello@bookconv.com' },
       { labelKey: 'help.sections.contacts.links.report', href: 'https://github.com/doujianwen/bookconv-frontend/issues' },
+      { labelKey: 'help.sections.contacts.links.x', href: 'https://x.com/GinoTou2024' },
     ],
   },
 ]
