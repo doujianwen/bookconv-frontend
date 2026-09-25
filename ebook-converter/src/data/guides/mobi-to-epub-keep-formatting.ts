@@ -92,6 +92,54 @@ The root cause is almost always the source file, not the converter. A MOBI that 
 
 Most personal MOBI libraries convert faithfully with no repair. The steps above exist for the styled, typeset, or metadata-heavy books where fidelity actually matters.`,
     },
+    {
+      heading: 'Calibre CLI: batch conversion command examples',
+      body: `For advanced users who need to convert many files at once, Calibre's command-line interface is very powerful.
+
+Basic command to convert a single MOBI to EPUB:
+\`\`\`bash
+ebook-convert input.mobi output.epub
+\`\`\`
+
+Batch convert all MOBI files in a folder:
+\`\`\`bash
+for f in *.mobi; do
+  ebook-convert "$f" "\${f%.mobi}.epub"
+done
+\`\`\`
+
+With custom settings (preserve cover, detect chapters):
+\`\`\`bash
+ebook-convert input.mobi output.epub \\\n  --read-metadata-from-mobi \\\n  --add-cover \\\n  --chapter "//h:h1" \\\n  --chapter-no-split //h:h2
+\`\`\`
+
+To inspect metadata without converting:
+\`\`\`bash
+ebook-meta input.mobi
+\`\`\`
+
+These commands work on Linux, macOS, and Windows (with Calibre installed). For a visual guide to Calibre's interface, see our [Calibre installation guide](/guide/calibre-installation).`,
+    },
+    {
+      heading: 'MOBI metadata inspection before conversion',
+      body: `Before converting, it helps to check what metadata your MOBI contains. This tells you what will survive the conversion:\n\n**Check with Calibre:**\nRight-click the book → "View metadata" → "Get info from file"\n\n**Check with CLI:**\n\`\`\`bash\nebook-meta input.mobi\n\`\`\`\n\nLook for:\n- **Title** — should be present\n- **Author** — usually survives\n- **Cover** — check if embedded\n- **Series** — may be folded into title\n- **Language** — important for correct dictionary lookups\n\nIf metadata looks incomplete in the source, you can edit it before conversion. Calibre's "Edit metadata" dialog lets you fix these before running the conversion.\n\nFor books with complex series orders or unusual naming, spending 2 minutes on metadata cleanup now saves time fixing the EPUB later.`,
+    },
+    {
+      heading: 'Preserving series and metadata in EPUB',
+      body: `One common complaint after MOBI to EPUB conversion is that series information gets lost or mangled. Here's how to handle it:\n\n**Why it happens:**\nMOBI stores series in a proprietary field. EPUB uses Dublin Core metadata, which Calibre must map. Sometimes the mapping is imperfect.\n\n**How to fix it:**\n1. Convert the MOBI to EPUB using BookConv or Calibre\n2. Open the resulting EPUB in Calibre\n3. Right-click → "Edit metadata" → "Set metadata for one book"\n4. In the "Series" tab, enter the correct series name and number\n5. Click "Apply" to save changes\n\n**Pro tip:** If you have a large series to convert, use Calibre's batch metadata editor to update all books at once rather than editing each one individually.\n\nFor detailed instructions on metadata management, see our [Calibre metadata guide](/blog/calibre-metadata-tips).`,
+    },
+    {
+      heading: 'When manual repair is actually needed',
+      body: `Most MOBI to EPUB conversions work fine out of the box. But certain book types need extra attention:\n\n**Typeset fiction with custom fonts:**\nMOBI often strips embedded fonts. The EPUB may have no custom typefaces. Fix: Re-embed fonts in the EPUB using Calibre's "Edit book" feature.\n\n**Textbooks and technical books:**\nThese often have complex tables, code blocks, and formulas. Check the converted EPUB carefully — some layouts may not survive perfectly.\n\n**Illustrated books and graphic novels:**\nImages should survive, but compression settings may change quality. Compare the original and converted versions side by side.\n\n**Books with complex CSS styling:**\nIf the original MOBI had custom styles (drop caps, special quotes, footnotes), check that they appear correctly in the EPUB.\n\n**Self-published books with custom formatting:**\nThese are often the most problematic because the formatting may not follow standard conventions. Preview carefully before discarding the original MOBI.`,
+    },
+    {
+      heading: "Fix: text doesn't reflow properly",
+      body: `If the EPUB text doesn't flow naturally on different screen sizes, the issue is usually with the source MOBI's structure:\n\n**Possible causes:**\n- The MOBI uses fixed-width fonts instead of scalable ones\n- Manual line breaks are inserted where they shouldn't be\n- Headings are formatted as bold paragraphs instead of actual H1/H2 tags\n\n**How to fix:**\n1. Open the EPUB in Calibre's "Edit book" tool\n2. Go to the "Structure" tab and check heading detection\n3. In the "Look and feel" tab, ensure "Use automatic line breaks" is enabled\n4. Search for newline pairs patterns that might be manual line breaks and remove them\n\n**Prevention tip:** When creating or acquiring new MOBI files, prefer ones that use proper semantic markup rather than presentation markup. This makes future conversions much cleaner.`,
+    },
+    {
+      heading: 'Related guides and resources',
+      body: `For more help with ebook conversion:\n\n- **[EPUB to MOBI guide](/guide/epub-to-mobi-keep-formatting)** — The reverse conversion for Kindle users\n- **[Calibre vs Online Converter](/guide/calibre-vs-online-converter)** — When to use which tool\n- **[Best free eBook formats](/blog/best-ebook-formats)** — Complete format comparison\n- **[MOBI format explained](/blog/mobi-format-explained)** — Deep dive into the format\n\nAnd for troubleshooting:\n- **[Why won't my ebook open?](/blog/why-ebook-wont-open-kindle)** — Common file issues\n- **[How to fix broken EPUBs](/guide/fix-epub-corruption)** — Recovery techniques`,
+    },
   ],
 }
 export const faqs: BlogFaq[] = [
