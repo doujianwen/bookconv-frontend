@@ -17,18 +17,19 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve, basename } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
+const GIT_ROOT = resolve(__dirname, '../..'); // 电子书格式转换站/（git root，父目录）
+const PROJ_ROOT = resolve(__dirname, '..');   // ebook-converter/（项目根）
 
 // 计算本次发布变更的博文 slug（staged + 工作区未提交），仅这些进 BLOCK 范围
 function changedBlogSlugs() {
   const SKIP = new Set(['index', 'types', 'rss']);
   const run = (args) => {
-    const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+    const r = spawnSync('git', args, { cwd: GIT_ROOT, encoding: 'utf8' });
     return r.status === 0 ? (r.stdout || '').split('\n').map((s) => s.trim()).filter(Boolean) : [];
   };
   const files = new Set([
-    ...run(['diff', '--name-only', '--cached', 'HEAD', '--', 'src/data/blog']),
-    ...run(['diff', '--name-only', 'HEAD', '--', 'src/data/blog']),
+    ...run(['diff', '--name-only', '--cached', 'HEAD', '--', 'ebook-converter/src/data/blog']),
+    ...run(['diff', '--name-only', 'HEAD', '--', 'ebook-converter/src/data/blog']),
   ]);
   const slugs = new Set();
   for (const f of files) {
@@ -58,7 +59,7 @@ for (const layer of layers) {
   const env = { ...process.env, NODE_OPTIONS: '', CODEBUDDY_SESSION_ID: '' };
   if (layer.scoped && changedSlugs.length) env.GATE_SLUGS = changedSlugs.join(',');
   const r = spawnSync(process.execPath, [resolve(__dirname, layer.cmd)], {
-    cwd: ROOT,
+    cwd: PROJ_ROOT,
     stdio: 'inherit',
     env,
   });
