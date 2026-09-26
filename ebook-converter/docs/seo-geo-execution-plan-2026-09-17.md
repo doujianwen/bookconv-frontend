@@ -1,8 +1,9 @@
 # BookConv SEO/GEO 执行规划文档
 
 **制定日期**: 2026-09-17
-**最近更新**: 2026-09-26 10:35
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行；Batch 4（审计整改逐日推进）自 2026-09-26 起逐日执行；**Batch 4 Day 1 已完成（llms.txt 死链归零，0 DEAD / 123 链接）**；**Batch 4 Day 2 已完成（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，且两 slug 彻底移出 sitemap——index.ts 取消注册 + llms.txt 删 2 链接，301 保留，门禁 0 error，已 commit b50732d/5ad0dcb 未 push）**
+**最近更新**: 2026-09-26 21:00（新增 §九：代码摸底衍生的增量待办 D1–D6）
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）
+**⚠️ 排期职能已移交**：本文件的排期以 `docs/待执行计划-v2-2026-09-26.md` 为准，本文件保留作历史与变更记录。
 **负责人**: 鉴源·出海专家辅助执行
 
 ---
@@ -328,6 +329,8 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-26 09:50 | **Batch 4 Day 1 完成**：全量校验 llms.txt 123 链接，修正 1 处真死链 `/convert/epub-to-docx`→`/convert/epub-to-word`（middleware:14 为 301 跳转源）；**更正 C1 错误前提**——`/blog/azw3-epub-mobi-kindle` 实为活页（v2 审计「8/27 已删」与代码不符）；门禁 audit-content-integrity + find-duplicate-headings 均 0 error | 未 push（待人工复核） |
 | 2026-09-26 10:10 | **Batch 4 Day 2 完成（B1）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 2 条 301（`/blog/epub-to-docx`、`/blog/epub-to-word-docx` → `/blog/epub-to-word`）；门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | b50732d（未 push，待人工复核） |
 | 2026-09-26 10:35 | **B1 彻底完成（应人工要求）**：将 2 个近重 slug 彻底移出 sitemap——`src/data/blog/index.ts` 取消 `post44`(epub-to-docx)/`post53`(epub-to-word-docx) 注册；`public/llms.txt` 删除 2 条对应链接；**保留** `middleware.ts` 2 条 301（旧 URL 仍 301→规范页）。门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | 5ad0dcb（未 push） |
+| 2026-09-26 10:53 | **Kelriva 待办同步（K 系列入排期）**：P0 三项已完成（SSR 计数器 `85f1a56` 已 push 并线上断言 PASS；batch/pricing diff 一致；首页 FAQPage 确认已存在）；剩余 P1/P2 拆为 K1–K7 分散 Day 3–Day 9（每日 1 项）；记录防御性否决 3 项（屏蔽 guide 页 / Wikipedia 外链 / 无真实数据上 AggregateRating） | — |
+| 2026-09-26 21:00 | **新增 §九 D 系列（代码摸底衍生）**：D1 归档 `next-sitemap.config.js`→`_archived/dead-config/`（可逆）、D2 修正两份 README 失真描述（加可信度声明 + 定点修正 队列/Supabase/28→31/孤儿端点/仓库名/GitHub 链接），D3–D6 登记待执行；门禁 0 error。**同时修正一处认知错误**：队列系刻意废弃（8/4 实测 Vercel 100% 504），非待接线；已写入 MEMORY.md 防止重提 | 未 commit |
 
 ---
 
@@ -358,6 +361,23 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | Day 13 | 2026-10-08 | B 近重🟡 | B10 Sync/读书组簇（`sync-reading-across-devices`/`sync-ebooks-reading-groups`/`reading-groups-hub`） | 3 | 🟡 | 仅 1 篇读书组主题 | ⏳ |
 | Day 14+ | 2026-10-09 起 | A 差异化 | 31 个 convert 薄模板页，按 Tier 分层每日 ≤3 页差异化（Tier-2/3 按主题簇）；含 A2 metaDescription 复检、A3 图片、A4 `/convert/epub-to-pdf` 索引核查 | 3/天 | 🔴 | 单页原创独特点 ≥3；与同簇文本重复率 <30%；`audit:geo-content` PASS | ⏳ |
 
+### Kelriva 衍生待办（K 系列，2026-09-26 同步）
+
+> 来源：`数据分析/Kelriva-AI-Visibility-分析报告-2026-09-26.md` §六（红队审计修订版）+ `数据分析/Kelriva报告-红队审计与修订-2026-09-26.md`。
+> 排期原则：**每日 1 项、分散一周（Day 3–Day 9）**，避免一次性大改触发 spam 质量信号；K 项与 B 批次同日并行时，站内页面改动合计仍 ≤3 页。P0 三项（SSR 计数器 `85f1a56` 已上线、batch/pricing diff、FAQPage 确认已存在）**已完成**，不重复排期。
+
+| 项 | 目标日 | 内容 | 类型 | 触及页面 | 验收 / 备注 | 状态 |
+|----|--------|------|------|---------|------------|------|
+| K1 | 2026-09-28（Day 3） | 两项用户决策收口：① 150,000 计数器对外口径确认（展示目标值 vs 实测累计，需数据来源）；② `/pricing` 对比表 "API Access: Pro ✓" 是否改为"仅 API 套餐"（与 `PLANS.pro.features` 不一致） | 决策（0 代码） | 0 页 | 用户拍板后如有改动按 1 行定点更新 | ⏳ |
+| K2 | 2026-09-29（Day 4） | `/about` 页强化品牌实体区分：明确 BookConv vs 同名/近名产品（Kelriva 实测 Gemini 混淆 "BookReverb"、"BookConvert"），补充 sameAs（@GinoTou2024）与实体信号 | 站内 | 1 页 | 实体归一要素齐备；`audit:syntax` PASS | ⏳ |
+| K3 | 2026-09-30（Day 5） | 第三方评论体系启动：注册 Trustpilot（优先）或 G2，建立邀请评价流程 | 站外 | 0 页 | 账号开通；首页暂不挂评分（等真实数据） | ⏳ |
+| K4 | 2026-10-01（Day 6） | 外联 howtoconvert.co：请求更新引用语，强调在线工具特性（免费+无需注册+Calibre 引擎）；邮件草稿经用户审阅后发送 | 站外 | 0 页 | 草稿交付→人工发送；不作对外承诺 | ⏳ |
+| K5 | 2026-10-02（Day 7） | 外联 publishingxpress.com：提交对比角度（免费即时 vs 人工服务），获取被引用机会 | 站外 | 0 页 | 同 K4 纪律 | ⏳ |
+| K6 | 2026-10-03（Day 8） | 首页 "Featured in"/评价位结构准备：等 K3 产出真实评分后挂载；先做 schema.org/Review/AggregateRating 的合规占位方案（无真实数据不启用） | 站内 | ≤1 页 | 无真实评分不上线 AggregateRating（防虚假结构化数据惩罚） | ⏳ |
+| K7 | 2026-10-04（Day 9） | P2 跟踪机制建立：① 月度 Kelriva 重测日程（下月同日）；② 扩展词库计划（Bing 高引用词选 10 个商业意图词，CRₚ+Wilson 区间口径）——25 词 Perplexity 批量测已在其他会话进行，此处仅登记口径引用 | 流程 | 0 页 | 重测日期写入日历；口径与 `GEO跨平台统计分析方法论.md` 一致 | ⏳ |
+
+> ⛔ 防御性否决（不执行项， Kelriva 原建议）：❌ 屏蔽 `/guide/best-ebook-converter`（唯一无品牌引用来源）；❌ Wikipedia 主动外链（COI 高风险）；❌ 无真实数据时上线 AggregateRating。
+
 ### 执行纪律（沿用 §五，自动化强制执行）
 
 - ✅ 每批次 ≤3 个页面改动
@@ -370,5 +390,39 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 
 ---
 
-**文档版本**: v2.2
-**下次更新**: 2026-09-28（Batch 4 Day 3 推进前；⚠️ 本次 b50732d+5ad0dcb 待人工 push 后生效）
+## 九、增量待办 D 系列（2026-09-26 代码摸底衍生）
+
+> 来源：本次全量代码摸底（`src/` 250 文件 + 部署/配置核查），非既有审计清单。
+> 原则：**文档类与死代码类改动零 SEO 风险，可立即做；内容类改动沿用 §五纪律（≤3 页/日）**。
+> ⚠️ 注意 D5 的方向：**队列是刻意废弃，不是待接线**。2026-08-04 实测 BullMQ 在 Vercel serverless 上 100% 504，
+> 已决策改为请求内同步转换，且该教训已作为对外内容资产输出。**正确动作是删除死代码，不是接回来。**
+
+| ID | 项 | 依据 | 风险 | 触及 | 状态 |
+|----|----|------|------|------|------|
+| D1 | 删除 `next-sitemap.config.js`（未被 git 跟踪的死配置，占位域名） | `git ls-files` 未跟踪 + 全仓无引用 + package.json 无依赖 | 🟢 | 0 页 | ✅ **已完成（用户 2026-09-26 21:35 拍板：直接删除）**：先归档后按决策删除，`find` 全仓已无残留。留证于此：该文件自始未被 git 跟踪（`git ls-files --error-unmatch` 报错），且被 `.gitignore:29` 的 `*.js` 规则忽略，故**远端本就不存在副本**，删除不产生历史丢失 |
+| D2 | 修正 `PROJECT_README.md` / `README.md` 与代码不符的描述 | 对比 `conversion-map.ts`(31 对)、`auth.ts`(Supabase 已移除)、`convert-handler.ts`(同步) | 🟢 | 0 页 | ✅ **已完成**：加顶部可信度声明 + 定点修正（队列/Supabase/28→31/孤儿端点/仓库名） |
+| D3 | 补 guide 正文：22 篇中 **14 篇 <100 词** | `geo-audit-guide.mjs` 实测（21 PASS / 1 WARN，但自承 14 篇低于阈值） | 🟡 | 22 页 | ⏳ 待执行（≤3 页/日） |
+| D4 | `/es/guide/*` 语言错配：11 个页面为英文兜底（`<lang="es">` 包英文正文） | `src/app/sitemap.ts:75-91` + i18n 摸底：内容层西语仅 9 页 | 🟡 | 11 页 | ⏳ **待重新论证**：⚠️ 经审计修正——原拟「删除这些页面」会**自造 11 个 404**。`sitemap.ts` 注释明示它们是「URL is valid and hreflang/canonical are correct」，为防 GSC 持续 404 而保留。**正确动作是补西语译文，不是删页**。另：勿与已证伪的「/es 致断崖」论点混淆（§1.4） |
+| D5 | 清理异步架构死代码：`lib/queue.ts`(28KB)、`worker/`、`api/convert/[jobId]/*` | 全仓无 `.add()` 调用 | 🟡 | 0 页 | ⏳ 待执行（**删除**，非接线）。⚠️ 经审计修正风险等级（原标 🟢 偏低）：`queue.ts` 被 `tests/unit/queue.test.ts`(5 处)、`tests/boundary/*`(2 处) 等 require，且 `package.json:14` `start-with-worker` 引用 `./dist/lib/queue`。**删除须同步处理测试与脚本**，否则 `npm test` 直接失败 |
+| D6 | `.gitignore:29` 的 `*.js` 规则致 `scripts/*.js` 静默不入库 | 实测 `geo-audit.js`/`geo-audit-v2.js` 未被跟踪，仅 2 个 js 被 `!` 放行 | 🟡 | 0 页 | ⏳ 待决策（当前影响小：二者已被 `.mjs` 取代，但机制有隐患） |
+
+**⚠️ D1/D2 验收方式更正（红队审计指出「假门禁」）**
+
+`audit-content-integrity.mjs` 与 `find-duplicate-headings.mjs` 只扫描 `src/data/content` 与 `src/data/blog` 下的 `.ts`，
+**不读任何 `.md`**。本次改动全部落在 `.md` 与未跟踪配置上，因此这两个脚本跑出 0 error **不构成验收证据**（覆盖率 0）。
+这正是本项目已知的**头号失败模式**：脚本静默假成功。
+
+D1/D2 的**真实验收**应为：
+1. `git ls-files --error-unmatch next-sitemap.config.js` → 报错（确认从未跟踪）→ 归档后 `ls` 不命中 ✅
+2. 全仓 `grep -rn "next-sitemap"` → 无引用 ✅
+3. 逐条核对 README 新写入的数字与代码实测一致（31 转换对 / 18 格式 / sitemap 150 / src 246 / tests-unit 10）✅
+4. `npx jest` 全量通过（确认未破坏测试；临时探针文件已删除）— **待执行**
+5. Markdown 表格结构无 CR 截断（实测 CR 数 1 → 0）✅
+
+> 后续凡"改文档/配置"类任务，禁止引用这两个脚本作为门禁。
+
+---
+
+**文档版本**: v2.4（D 系列并入；D1/D2 已完成）
+**下次更新**: 2026-09-28（Batch 4 Day 3 + K1 推进前）
+**状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
