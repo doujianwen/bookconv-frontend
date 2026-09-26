@@ -2,7 +2,7 @@
 
 **制定日期**: 2026-09-17
 **最近更新**: 2026-09-26 21:00（新增 §九：代码摸底衍生的增量待办 D1–D6）
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）
 **⚠️ 排期职能已移交**：本文件的排期以 `docs/待执行计划-v2-2026-09-26.md` 为准，本文件保留作历史与变更记录。
 **负责人**: 鉴源·出海专家辅助执行
 
@@ -331,6 +331,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-26 10:35 | **B1 彻底完成（应人工要求）**：将 2 个近重 slug 彻底移出 sitemap——`src/data/blog/index.ts` 取消 `post44`(epub-to-docx)/`post53`(epub-to-word-docx) 注册；`public/llms.txt` 删除 2 条对应链接；**保留** `middleware.ts` 2 条 301（旧 URL 仍 301→规范页）。门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | 5ad0dcb（未 push） |
 | 2026-09-26 10:53 | **Kelriva 待办同步（K 系列入排期）**：P0 三项已完成（SSR 计数器 `85f1a56` 已 push 并线上断言 PASS；batch/pricing diff 一致；首页 FAQPage 确认已存在）；剩余 P1/P2 拆为 K1–K7 分散 Day 3–Day 9（每日 1 项）；记录防御性否决 3 项（屏蔽 guide 页 / Wikipedia 外链 / 无真实数据上 AggregateRating） | — |
 | 2026-09-26 21:00 | **新增 §九 D 系列（代码摸底衍生）**：D1 归档 `next-sitemap.config.js`→`_archived/dead-config/`（可逆）、D2 修正两份 README 失真描述（加可信度声明 + 定点修正 队列/Supabase/28→31/孤儿端点/仓库名/GitHub 链接），D3–D6 登记待执行；门禁 0 error。**同时修正一处认知错误**：队列系刻意废弃（8/4 实测 Vercel 100% 504），非待接线；已写入 MEMORY.md 防止重提 | 未 commit |
+| 2026-09-27 07:10 | **Batch 4 Day 3 完成（B2）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 1 条 301（`/blog/epub-to-various-other` → `/blog/epub-converter`，规范页；两 slug 同标题「Epub to Various Other Formats: The Ultimate Guide」近重）。两 slug 仍保留注册（仅做 301，未移出 sitemap / 未改 llms.txt，与 Day 3 排期「1 个 301」一致；若后续要彻底去重可仿 B1 移出 sitemap）。门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | 84a69b5（未 push） |
 
 ---
 
@@ -348,7 +349,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 |----|---------|------|--------------|---------|------|-----------|------|
 | Day 1 | 2026-09-26 | C 资产保全 | **前提修正**：C1 目标 `/blog/azw3-epub-mobi-kindle` 经核验为**活页**（blog/index.ts:51 仍注册、文件存在），非死链→不删除（原 v2 审计「8/27 已删」与代码实际状态矛盾，已更正）；C2 `/blog/epub-to-txt` 确不存在→跳过。全量扫描 123 条链接，发现**唯一直链** `/convert/epub-to-docx`（middleware.ts:14 为 →`/convert/epub-to-word` 的 301 跳转源），已改为指向 canonical `/convert/epub-to-word` | 0 页面（仅 llms.txt 1 行 URL 修正） | 🟢 | llms.txt 链接 123 条全数有对应注册 slug（0 DEAD，复验通过） | ✅ |
 | Day 2 | 2026-09-27 | B 近重🔴 | B1 EPUB→Word/DOCX 三 blog（`epub-to-word`/`epub-to-docx`/`epub-to-word-docx`）301 至 `epub-to-word` | 3 blog（2 个 301） | 🔴 | 仅 1 规范 slug 可索引；`BLOG_REDIRECTS` 加 2 条；**两近重 slug 彻底移出 sitemap（index.ts 取消注册 + llms.txt 删 2 链接，301 保留）** | ✅ |
-| Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ⏳ |
+| Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ✅ |
 | Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ⏳ |
 | Day 5 | 2026-09-30 | B 近重🔴 | B11b 剩余 2 篇差异化（补各 IP 专属分步/设备/坑） | 2 blog | 🔴 | 单页原创独特点 ≥3 | ⏳ |
 | Day 6 | 2026-10-01 | B 近重🟡 | B3 EPUB→Text：确认规范 slug `epub-to-text`，llms.txt 无失效链接 | 0–1 | 🟡 | llms.txt 无不存在链接 | ⏳ |
@@ -424,5 +425,5 @@ D1/D2 的**真实验收**应为：
 ---
 
 **文档版本**: v2.4（D 系列并入；D1/D2 已完成）
-**下次更新**: 2026-09-28（Batch 4 Day 3 + K1 推进前）
+**下次更新**: 2026-09-29（Batch 4 Day 4 + K2 推进前）
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
