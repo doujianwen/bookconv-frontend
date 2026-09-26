@@ -1,0 +1,320 @@
+{
+  "traditional": {
+    "clicks": 22,
+    "impressions": 734,
+    "ctr": 3.0,
+    "days": 48,
+    "snapshot_date": "2026-09-13"
+  },
+  "ai": {
+    "citations": 3311,
+    "days_active": 32,
+    "total_days": 47,
+    "daily_avg": 70.4,
+    "cited_pages_peak": 25,
+    "cited_pages_total": 41
+  },
+  "top_queries": [
+    {
+      "query": "djvu to pdf",
+      "cites": 250,
+      "share": "3.97%"
+    },
+    {
+      "query": "ebook reader app",
+      "cites": 84,
+      "share": "12.59%"
+    },
+    {
+      "query": "transfer ebooks between devices",
+      "cites": 74,
+      "share": "46.54%"
+    },
+    {
+      "query": "mobi to epub",
+      "cites": 70,
+      "share": "10.31%"
+    },
+    {
+      "query": "convert mobi to epub",
+      "cites": 67,
+      "share": "20.06%"
+    },
+    {
+      "query": "convert epub to azw3",
+      "cites": 60,
+      "share": "28.30%"
+    },
+    {
+      "query": "what format does kindle use",
+      "cites": 45,
+      "share": "39.13%"
+    },
+    {
+      "query": "free reader apps platforms discover new content resources",
+      "cites": 41,
+      "share": "25.62%"
+    },
+    {
+      "query": "epub to mobi converter free",
+      "cites": 38,
+      "share": "9.77%"
+    },
+    {
+      "query": "best free epub reader",
+      "cites": 37,
+      "share": "14.80%"
+    },
+    {
+      "query": "Harry Potter digital books multiple devices",
+      "cites": 36,
+      "share": "50.00%"
+    },
+    {
+      "query": "Kindle AZW vs MOBI formats explained",
+      "cites": 34,
+      "share": "65.38%"
+    },
+    {
+      "query": "convertir a mobi",
+      "cites": 32,
+      "share": "28.32%"
+    },
+    {
+      "query": "ebook syncing services for virtual reading groups",
+      "cites": 31,
+      "share": "32.29%"
+    },
+    {
+      "query": "ebook apps sync reading progress across devices",
+      "cites": 31,
+      "share": "40.26%"
+    }
+  ],
+  "top_pages": [
+    {
+      "page": "https://www.bookconv.com/blog/best-ebook-reader-apps",
+      "cites": 749
+    },
+    {
+      "page": "https://www.bookconv.com/blog/sync-reading-across-devices",
+      "cites": 384
+    },
+    {
+      "page": "https://www.bookconv.com/guide/djvu-to-pdf",
+      "cites": 220
+    },
+    {
+      "page": "https://www.bookconv.com/blog/sync-ebooks-reading-groups",
+      "cites": 176
+    },
+    {
+      "page": "https://www.bookconv.com/guide/kindle-formats",
+      "cites": 140
+    },
+    {
+      "page": "https://www.bookconv.com/guide/mobi-to-epub-keep-formatting",
+      "cites": 119
+    },
+    {
+      "page": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "cites": 100
+    },
+    {
+      "page": "https://www.bookconv.com/blog/mobi-to-kobo",
+      "cites": 92
+    },
+    {
+      "page": "https://www.bookconv.com/blog/epub-vs-mobi",
+      "cites": 85
+    },
+    {
+      "page": "https://www.bookconv.com/blog/epub3-vs-epub2",
+      "cites": 84
+    },
+    {
+      "page": "https://www.bookconv.com/guide/epub-to-azw3-for-kindle",
+      "cites": 84
+    },
+    {
+      "page": "https://www.bookconv.com/blog/azw3-vs-mobi",
+      "cites": 78
+    },
+    {
+      "page": "https://www.bookconv.com/",
+      "cites": 68
+    },
+    {
+      "page": "https://www.bookconv.com/guide/epub-to-mobi-keep-formatting",
+      "cites": 60
+    },
+    {
+      "page": "https://www.bookconv.com/guide/docx-to-epub-self-publish",
+      "cites": 52
+    }
+  ],
+  "countries": [
+    {
+      "country": "us",
+      "impressions": 299,
+      "clicks": 8
+    },
+    {
+      "country": "ww",
+      "impressions": 247,
+      "clicks": 5
+    },
+    {
+      "country": "gb",
+      "impressions": 56,
+      "clicks": 4
+    },
+    {
+      "country": "es",
+      "impressions": 41,
+      "clicks": 1
+    },
+    {
+      "country": "ca",
+      "impressions": 35,
+      "clicks": 1
+    },
+    {
+      "country": "cn",
+      "impressions": 18,
+      "clicks": 2
+    },
+    {
+      "country": "fr",
+      "impressions": 12,
+      "clicks": 0
+    },
+    {
+      "country": "jp",
+      "impressions": 9,
+      "clicks": 0
+    },
+    {
+      "country": "de",
+      "impressions": 7,
+      "clicks": 1
+    },
+    {
+      "country": "br",
+      "impressions": 6,
+      "clicks": 0
+    },
+    {
+      "country": "it",
+      "impressions": 4,
+      "clicks": 0
+    }
+  ],
+  "page_traffic": [
+    {
+      "page": "https://www.bookconv.com/",
+      "impressions": 70,
+      "clicks": 5
+    },
+    {
+      "page": "https://www.bookconv.com/guide/kindle-formats",
+      "impressions": 70,
+      "clicks": 1
+    },
+    {
+      "page": "https://www.bookconv.com/blog/kindle-epub-azw3-mobi",
+      "impressions": 49,
+      "clicks": 1
+    },
+    {
+      "page": "https://www.bookconv.com/es",
+      "impressions": 32,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/blog/kobo-to-epub",
+      "impressions": 29,
+      "clicks": 1
+    },
+    {
+      "page": "https://www.bookconv.com/blog/can-kindle-read-azw3",
+      "impressions": 22,
+      "clicks": 2
+    },
+    {
+      "page": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle-compatibility",
+      "impressions": 21,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/blog/ebook-formats-explained",
+      "impressions": 21,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "impressions": 17,
+      "clicks": 1
+    },
+    {
+      "page": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle",
+      "impressions": 15,
+      "clicks": 2
+    },
+    {
+      "page": "https://www.bookconv.com/blog/sync-reading-across-devices",
+      "impressions": 15,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/es/blog/ebook-formats-explained",
+      "impressions": 11,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/mobi-vs-azw3",
+      "impressions": 11,
+      "clicks": 1
+    },
+    {
+      "page": "https://www.bookconv.com/blog/epub3-vs-epub2",
+      "impressions": 11,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/fix-epub-to-pdf-formatting",
+      "impressions": 10,
+      "clicks": 2
+    },
+    {
+      "page": "https://www.bookconv.com/es/blog/azw3-vs-mobi",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/txt-to-epub-build-ebook",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/calibre-alternative",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/docx-to-epub-self-publish",
+      "impressions": 7,
+      "clicks": 0
+    },
+    {
+      "page": "https://www.bookconv.com/guide/mobi-to-epub-keep-formatting",
+      "impressions": 7,
+      "clicks": 0
+    }
+  ],
+  "ip_content": {
+    "hp_query_cites": 36,
+    "twilight_status": "not_in_top",
+    "pages_in_top": 0
+  }
+}
