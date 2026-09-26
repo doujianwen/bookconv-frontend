@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { User, BookOpen, Brain, TrendingUp } from "lucide-react"
+import { User, BookOpen, Brain, TrendingUp, Zap } from "lucide-react"
 import { getLocale } from "@/i18n/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
 
@@ -176,6 +176,23 @@ export default async function FounderPage() {
           <p className="mt-4 text-gray-700 leading-relaxed">
             What I share here comes from actual building, testing, measuring, and learning — not theory.
           </p>
+        </section>
+
+        {/* Free Converter CTA — funnel person-page traffic into the conversion tool */}
+        <section className="rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 text-center">
+          <h2 className="mb-4 text-2xl font-bold text-white">
+            Try BookConv — the Free eBook Converter
+          </h2>
+          <p className="mb-6 text-emerald-100">
+            The product behind this research. Convert EPUB, MOBI, AZW3, PDF, DOCX and more in seconds — no registration, files deleted within 1 hour.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-base font-semibold text-emerald-600 transition-colors hover:bg-emerald-50"
+          >
+            Start Converting Free
+            <Zap className="h-4 w-4" />
+          </Link>
         </section>
 
         {/* CTA Section */}

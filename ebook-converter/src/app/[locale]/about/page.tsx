@@ -188,17 +188,17 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section — funnel person-page traffic into the free converter */}
         <section className="rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center">
-          <h2 className="mb-4 text-2xl font-bold text-white">Ready to Convert Your eBooks?</h2>
+          <h2 className="mb-4 text-2xl font-bold text-white">Ready to Convert Your eBooks — Free?</h2>
           <p className="mb-6 text-blue-100">
-            Join thousands of readers who trust BookConv for their format conversion needs.
+            Use the free BookConv converter: 28+ formats, no registration, files auto-deleted within 1 hour.
           </p>
           <Link
-            href="/convert/epub-to-mobi"
+            href="/"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-base font-semibold text-blue-600 transition-colors hover:bg-blue-50"
           >
-            Start Converting Now
+            Try the Free Converter
             <Zap className="h-4 w-4" />
           </Link>
         </section>
