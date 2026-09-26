@@ -25,6 +25,9 @@ const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/mobi-or-azw3-for-kindle': '/blog/azw3-vs-mobi',
   '/blog/mobi-vs-azw3': '/blog/azw3-vs-mobi',
   '/guide/mobi-vs-azw3': '/blog/azw3-vs-mobi',
+  // B1 (Batch 4 Day 2): EPUB→Word/DOCX near-duplicate blogs → canonical /blog/epub-to-word
+  '/blog/epub-to-docx': '/blog/epub-to-word',
+  '/blog/epub-to-word-docx': '/blog/epub-to-word',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
