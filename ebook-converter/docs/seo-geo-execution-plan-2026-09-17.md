@@ -1,8 +1,8 @@
 # BookConv SEO/GEO 执行规划文档
 
 **制定日期**: 2026-09-17
-**最近更新**: 2026-09-17 21:45
-**执行状态**: Batch 1a / 1b 已完成并线上验证；Batch 1c（Title + 内链）待执行
+**最近更新**: 2026-09-26 09:50
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行；Batch 4（审计整改逐日推进）自 2026-09-26 起逐日执行；**Batch 4 Day 1 已完成（llms.txt 死链归零，0 DEAD / 123 链接）**
 **负责人**: 鉴源·出海专家辅助执行
 
 ---
@@ -325,8 +325,48 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-17 21:45 | 本规划文档改版：新增 B1a/B1b、风险登记、门禁脚本 | — |
 | 2026-09-17 21:53 | 移除 `/convert/epub-to-mobi` 近重复章节（R6）；并行进程删除孤儿文件（R3） | 4b1bef3 / 16cacfc |
 | 2026-09-17 22:5x | **R6 线上验证通过**（h2 20→19，How-to 标题 1 个）；**新增 R7**：Pro/API 文件上限与限流承诺未在代码实现，涉真实收款 | — |
+| 2026-09-26 09:50 | **Batch 4 Day 1 完成**：全量校验 llms.txt 123 链接，修正 1 处真死链 `/convert/epub-to-docx`→`/convert/epub-to-word`（middleware:14 为 301 跳转源）；**更正 C1 错误前提**——`/blog/azw3-epub-mobi-kindle` 实为活页（v2 审计「8/27 已删」与代码不符）；门禁 audit-content-integrity + find-duplicate-headings 均 0 error | 未 push（待人工复核） |
 
 ---
 
-**文档版本**: v2.0
-**下次更新**: 2026-09-18（B1c 执行前）
+---
+
+## 八、Batch 4 — 审计整改逐日推进（2026-09-26 起）
+
+> 来源：经红队审计修订的合规核查 `docs/bookconv-google-ai-guide-audit-final-v2.md` 第三部分「整改清单」（A/B/C/D）。
+> 目标：把优先级近重簇与死链修复**逐日、小批量**推进，避免一次性大改触发 Google spam 质量信号（呼应执行纪律 §五「每次提交 ≤3 页 / 间隔 ≥24h」）。
+> 执行方式：**每日自动化推进 1 个批次**（编辑 + 门禁 + commit，**不自动 push**；push 由人工复核后执行）。详细问题表现/风险/动作/验收见 v2 审计文档。
+
+### 优先级与逐日排期
+
+| 日 | 目标日期 | 批次 | 项（v2 编号） | 触及页面 | 风险 | 门禁 / 验收 | 状态 |
+|----|---------|------|--------------|---------|------|-----------|------|
+| Day 1 | 2026-09-26 | C 资产保全 | **前提修正**：C1 目标 `/blog/azw3-epub-mobi-kindle` 经核验为**活页**（blog/index.ts:51 仍注册、文件存在），非死链→不删除（原 v2 审计「8/27 已删」与代码实际状态矛盾，已更正）；C2 `/blog/epub-to-txt` 确不存在→跳过。全量扫描 123 条链接，发现**唯一直链** `/convert/epub-to-docx`（middleware.ts:14 为 →`/convert/epub-to-word` 的 301 跳转源），已改为指向 canonical `/convert/epub-to-word` | 0 页面（仅 llms.txt 1 行 URL 修正） | 🟢 | llms.txt 链接 123 条全数有对应注册 slug（0 DEAD，复验通过） | ✅ |
+| Day 2 | 2026-09-27 | B 近重🔴 | B1 EPUB→Word/DOCX 三 blog（`epub-to-word`/`epub-to-docx`/`epub-to-word-docx`）301 至 `epub-to-word` | 3 blog（2 个 301） | 🔴 | 仅 1 规范 slug 可索引；`BLOG_REDIRECTS` 加 2 条 | ⏳ |
+| Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ⏳ |
+| Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ⏳ |
+| Day 5 | 2026-09-30 | B 近重🔴 | B11b 剩余 2 篇差异化（补各 IP 专属分步/设备/坑） | 2 blog | 🔴 | 单页原创独特点 ≥3 | ⏳ |
+| Day 6 | 2026-10-01 | B 近重🟡 | B3 EPUB→Text：确认规范 slug `epub-to-text`，llms.txt 无失效链接 | 0–1 | 🟡 | llms.txt 无不存在链接 | ⏳ |
+| Day 7 | 2026-10-02 | B 近重🟡 | B4 EPUB→MOBI 三页（`epub-to-mobi`/`epub-to-mobi-guide`/`guide/epub-to-mobi-keep-formatting`）分工 | 3 | 🟡 | 意图不重叠 | ⏳ |
+| Day 8 | 2026-10-03 | B 近重🟡 | B5 EPUB vs MOBI（`blog/epub-vs-mobi`/`guide/epub-vs-mobi`）标题错开 | 2 | 🟡 | 两页标题不完全一致 | ⏳ |
+| Day 9 | 2026-10-04 | B 近重🟡 | B6 AZW3 vs MOBI 跨层同标题（`blog/azw3-vs-mobi`/`guide/azw3-vs-mobi`） | 2 | 🟡 | 同标题跨层消除 | ⏳ |
+| Day 10 | 2026-10-05 | B 近重🟡 | B7 Kindle 簇（`kindle-epub-azw3-mobi`/`azw3-epub-mobi-kindle-compatibility` + 死链已清）收敛 | 2–3 | 🟡 | 簇内 ≤2 篇 | ⏳ |
+| Day 11 | 2026-10-06 | B 近重🟡 | B8 Batch 簇（`batch-converter`/`calibre-free-batch`/`guide/batch-converter`）分工 | 3 | 🟡 | 意图清晰分离 | ⏳ |
+| Day 12 | 2026-10-07 | B 近重🟡 | B9 Calibre 簇（`bookconv-vs-calibre`/`guide/calibre-vs-online-converter`/`guide/calibre-alternative`） | 3 | 🟡 | 簇内 ≤2 篇 | ⏳ |
+| Day 13 | 2026-10-08 | B 近重🟡 | B10 Sync/读书组簇（`sync-reading-across-devices`/`sync-ebooks-reading-groups`/`reading-groups-hub`） | 3 | 🟡 | 仅 1 篇读书组主题 | ⏳ |
+| Day 14+ | 2026-10-09 起 | A 差异化 | 31 个 convert 薄模板页，按 Tier 分层每日 ≤3 页差异化（Tier-2/3 按主题簇）；含 A2 metaDescription 复检、A3 图片、A4 `/convert/epub-to-pdf` 索引核查 | 3/天 | 🔴 | 单页原创独特点 ≥3；与同簇文本重复率 <30%；`audit:geo-content` PASS | ⏳ |
+
+### 执行纪律（沿用 §五，自动化强制执行）
+
+- ✅ 每批次 ≤3 个页面改动
+- ✅ 每日仅推进 1 个批次（不一次性全部完成）
+- ✅ 每次改动后必跑门禁：`node scripts/audit-content-integrity.mjs` + `node scripts/find-duplicate-headings.mjs` + `npm run build`（0 error 才 commit）
+- ✅ **不自动 push**：commit 后报告，人工复核再 push（push = 公开发布，且需防部署冻结）
+- ✅ 重定向走既有 `BLOG_REDIRECTS`（`src/middleware.ts:22`），不新造机制
+- ✅ 正文禁尖括号标签；批量脚本只替换/定点更新
+- 🆕 门禁增补：CI 校验 `public/llms.txt` 每条链接均有对应注册 slug（防 C1/C2 类死链回归）
+
+---
+
+**文档版本**: v2.2
+**下次更新**: 2026-09-27（Batch 4 Day 2 推进前）

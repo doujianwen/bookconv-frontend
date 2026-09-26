@@ -16,7 +16,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [MOBI to TXT](https://www.bookconv.com/convert/mobi-to-txt)
 - [EPUB to PDF](https://www.bookconv.com/convert/epub-to-pdf)
 - [EPUB to DOC](https://www.bookconv.com/convert/epub-to-doc)
-- [EPUB to DOCX](https://www.bookconv.com/convert/epub-to-docx)
+- [EPUB to DOCX](https://www.bookconv.com/convert/epub-to-word)
 - [EPUB to RTF](https://www.bookconv.com/convert/epub-to-rtf)
 - [EPUB to TXT](https://www.bookconv.com/convert/epub-to-txt)
 - [EPUB to HTML](https://www.bookconv.com/convert/epub-to-html)
