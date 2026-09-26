@@ -1,5 +1,11 @@
 # X（Twitter）发布文案 · 做站实战
 
+> 🔴 **【2026-09-26 数字校正】** 本文件下方 P1–P6 与 Thread 范本中的「15 formats, 26 pairs」「87 内容页」是 **8/10 口径，已过时**，复用前必须替换为当前实测值：
+> - 格式/转换对：**18 formats / 31 pairs**（`src/lib/conversion-map.ts`，2026-09-26 实测）
+> - 页面规模：convert **31** · formats **17** · guide **22** · blog **66**（65 入 sitemap）
+> - 账号：**@GinoTou2024**（非 @bookconv）
+> 权威来源：`社媒/X账户设置.md`（账户字段）+ `社媒/每日社媒草稿/` 最新草稿。
+
 > 平台调性：钩子先行、短句、emoji 节制、hashtag 1–3 个（精准 > 堆砌）、build-in-public 真实感。
 > **⚠️ X 免费用户单帖 280 字符硬限制**（含空格/换行/hashtag）。每条 Post 和 Thread 每条都必须 ≤280 字符。Thread 是一连串推文，每条独立计字符。Premium 用户可忽略此限制。此约束优先级最高——先砍字数再谈内容。
 > 全部用英文（X/Reddit 以英文技术受众为主，与 bookconv.com 海外目标市场一致）。需要中文版可另出。

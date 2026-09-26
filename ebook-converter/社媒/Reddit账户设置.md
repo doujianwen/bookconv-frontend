@@ -2,6 +2,7 @@
 
 > 用途：你拿去在 Reddit 用户设置里填。英文（r/SideProject / r/SEO / r/webdev / r/IndieHackers 均为英文社区）。
 > 与 `Reddit文案.md`（发帖内容）配套：那份管"发什么、怎么发"，这份管"账号资料"。
+> **【2026-09-26 修订】** 格式数 **15 formats / 26 pairs → 18 formats / 31 pairs**（实测 `src/lib/conversion-map.ts` = 31 转换对、涉及 18 种格式标识）。⚠️ Username 一栏为占位建议，**实际账号名待用户确认后回填**。
 
 ## 一、核心字段
 
@@ -15,7 +16,7 @@
 
 ## 二、About（个人页简介）
 
-Maker of BookConv — a free, privacy-first ebook converter (15 formats, 26 pairs, Calibre). Solo dev. Posting: 500s, SEO soft-404s, daily GSC. Not pitching — ask me anything Calibre/serverless/SEO.
+Maker of BookConv — a free, privacy-first ebook converter (18 formats, 31 pairs, Calibre). Solo dev. Posting: 500s, SEO soft-404s, daily GSC. Not pitching — ask me anything Calibre/serverless/SEO.
 
 > 字符数：196 / 200（已按要求压缩，原版超 200）。零链接、零 hashtag 不变。
 
@@ -29,7 +30,7 @@ Maker of BookConv — a free, privacy-first ebook converter (15 formats, 26 pair
 
 ## 四、跨平台一致项（与 X 共用）
 
-- 品牌名 **BookConv**、域名 **www.bookconv.com**、一句话定位同 X 文档（Free ebook format converter · 15 formats / 26 pairs · Calibre-powered · privacy-first · solo-built）。
+- 品牌名 **BookConv**、域名 **www.bookconv.com**、一句话定位同 X 文档（Free ebook format converter · 18 formats / 31 pairs · Calibre-powered · privacy-first · solo-built）。
 - Reddit 不发 hashtag；X 用 #buildinpublic 等。
 
 ## 五、发布前 checklist

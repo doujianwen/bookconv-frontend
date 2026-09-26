@@ -1,5 +1,10 @@
 # Reddit 发布文案 · 做站实战
 
+> 🔴 **【2026-09-26 数字校正】** 本文件下方四个 sub 范本中的「15 formats, 26 pairs」「87 内容页」「3 weeks」是 **8/10 口径，已过时**，复用前必须替换为当前实测值：
+> - 格式/转换对：**18 formats / 31 pairs**（`src/lib/conversion-map.ts`，2026-09-26 实测）
+> - 页面规模：convert **31** · formats **17** · guide **22** · blog **66**（65 入 sitemap）
+> 权威来源：`社媒/Reddit账户设置.md`（账户字段）+ `社媒/每日社媒草稿/` 最新草稿。
+
 > 平台调性：价值先行、长篇、诚实数字、分享"我学到的"、链接克制（Reddit 反自我推销极严）。
 > 全部英文（r/SideProject、r/SEO、r/webdev、r/IndieHackers 均为英文社区）。
 > 发布纪律见文末「Reddit 反自我推销须知」——**正文不塞链接、不出现裸域名，链接放评论或个人页**。
