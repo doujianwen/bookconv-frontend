@@ -28,6 +28,9 @@ const BLOG_REDIRECTS: Record<string, string> = {
   // B1 (Batch 4 Day 2): EPUB→Word/DOCX near-duplicate blogs → canonical /blog/epub-to-word
   '/blog/epub-to-docx': '/blog/epub-to-word',
   '/blog/epub-to-word-docx': '/blog/epub-to-word',
+  // B2 (Batch 4 Day 3): EPUB→Various near-duplicate blogs (identical title "Epub to
+  // Various Other Formats: The Ultimate Guide") → canonical /blog/epub-converter
+  '/blog/epub-to-various-other': '/blog/epub-converter',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
@@ -139,6 +142,17 @@ export async function middleware(request: NextRequest) {
       }
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
+    // /es/admin/* — internal operations workbench. It is a private tool, not
+    // indexable content, so serving it under the /es prefix creates no
+    // pseudo-Spanish spam signal. It is excluded from sitemap.ts and carries
+    // robots noindex,nofollow. Allowed here because the P3-C whitelist below
+    // would otherwise 404 the entire Spanish-prefixed workbench.
+    if (pathname === '/es/admin' || pathname.startsWith('/es/admin/')) {
+      const response = NextResponse.next();
+      response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+      return applySecurityHeaders(request, response);
+    }
+
     // All other /es/* paths → 404 (static pages, blog without es version)
     return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
   }
