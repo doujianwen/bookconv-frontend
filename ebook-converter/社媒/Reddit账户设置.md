@@ -2,13 +2,14 @@
 
 > 用途：你拿去在 Reddit 用户设置里填。英文（r/SideProject / r/SEO / r/webdev / r/IndieHackers 均为英文社区）。
 > 与 `Reddit文案.md`（发帖内容）配套：那份管"发什么、怎么发"，这份管"账号资料"。
-> **【2026-09-26 修订】** 格式数 **15 formats / 26 pairs → 18 formats / 31 pairs**（实测 `src/lib/conversion-map.ts` = 31 转换对、涉及 18 种格式标识）。⚠️ Username 一栏为占位建议，**实际账号名待用户确认后回填**。
+> **【2026-09-26 修订】** ① 格式数 **15 formats / 26 pairs → 18 formats / 31 pairs**（实测 `src/lib/conversion-map.ts` = 31 转换对、涉及 18 种格式标识）；② Username 已回填真实账号 **u/hongjiandou**（2026-09-26 用户提供）。
 
 ## 一、核心字段
 
 | 字段 | 内容 |
 |---|---|
-| Username | bookconv_hq（若被占：david_bookconv / bookconv_builds）|
+| Username | **u/hongjiandou**（已定，2026-09-26 用户提供）|
+| 个人页 URL | https://www.reddit.com/user/hongjiandou |
 | Display name | BookConv |
 | About（个人页简介） | 见下方二 |
 | Profile URL / Website | https://www.bookconv.com |
