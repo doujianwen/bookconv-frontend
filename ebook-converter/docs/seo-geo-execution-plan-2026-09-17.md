@@ -1,8 +1,8 @@
 # BookConv SEO/GEO 执行规划文档
 
 **制定日期**: 2026-09-17
-**最近更新**: 2026-09-26 09:50
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行；Batch 4（审计整改逐日推进）自 2026-09-26 起逐日执行；**Batch 4 Day 1 已完成（llms.txt 死链归零，0 DEAD / 123 链接）**
+**最近更新**: 2026-09-26 10:35
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行；Batch 4（审计整改逐日推进）自 2026-09-26 起逐日执行；**Batch 4 Day 1 已完成（llms.txt 死链归零，0 DEAD / 123 链接）**；**Batch 4 Day 2 已完成（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，且两 slug 彻底移出 sitemap——index.ts 取消注册 + llms.txt 删 2 链接，301 保留，门禁 0 error，已 commit b50732d/5ad0dcb 未 push）**
 **负责人**: 鉴源·出海专家辅助执行
 
 ---
@@ -326,6 +326,8 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-17 21:53 | 移除 `/convert/epub-to-mobi` 近重复章节（R6）；并行进程删除孤儿文件（R3） | 4b1bef3 / 16cacfc |
 | 2026-09-17 22:5x | **R6 线上验证通过**（h2 20→19，How-to 标题 1 个）；**新增 R7**：Pro/API 文件上限与限流承诺未在代码实现，涉真实收款 | — |
 | 2026-09-26 09:50 | **Batch 4 Day 1 完成**：全量校验 llms.txt 123 链接，修正 1 处真死链 `/convert/epub-to-docx`→`/convert/epub-to-word`（middleware:14 为 301 跳转源）；**更正 C1 错误前提**——`/blog/azw3-epub-mobi-kindle` 实为活页（v2 审计「8/27 已删」与代码不符）；门禁 audit-content-integrity + find-duplicate-headings 均 0 error | 未 push（待人工复核） |
+| 2026-09-26 10:10 | **Batch 4 Day 2 完成（B1）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 2 条 301（`/blog/epub-to-docx`、`/blog/epub-to-word-docx` → `/blog/epub-to-word`）；门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | b50732d（未 push，待人工复核） |
+| 2026-09-26 10:35 | **B1 彻底完成（应人工要求）**：将 2 个近重 slug 彻底移出 sitemap——`src/data/blog/index.ts` 取消 `post44`(epub-to-docx)/`post53`(epub-to-word-docx) 注册；`public/llms.txt` 删除 2 条对应链接；**保留** `middleware.ts` 2 条 301（旧 URL 仍 301→规范页）。门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error | 5ad0dcb（未 push） |
 
 ---
 
@@ -342,7 +344,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 日 | 目标日期 | 批次 | 项（v2 编号） | 触及页面 | 风险 | 门禁 / 验收 | 状态 |
 |----|---------|------|--------------|---------|------|-----------|------|
 | Day 1 | 2026-09-26 | C 资产保全 | **前提修正**：C1 目标 `/blog/azw3-epub-mobi-kindle` 经核验为**活页**（blog/index.ts:51 仍注册、文件存在），非死链→不删除（原 v2 审计「8/27 已删」与代码实际状态矛盾，已更正）；C2 `/blog/epub-to-txt` 确不存在→跳过。全量扫描 123 条链接，发现**唯一直链** `/convert/epub-to-docx`（middleware.ts:14 为 →`/convert/epub-to-word` 的 301 跳转源），已改为指向 canonical `/convert/epub-to-word` | 0 页面（仅 llms.txt 1 行 URL 修正） | 🟢 | llms.txt 链接 123 条全数有对应注册 slug（0 DEAD，复验通过） | ✅ |
-| Day 2 | 2026-09-27 | B 近重🔴 | B1 EPUB→Word/DOCX 三 blog（`epub-to-word`/`epub-to-docx`/`epub-to-word-docx`）301 至 `epub-to-word` | 3 blog（2 个 301） | 🔴 | 仅 1 规范 slug 可索引；`BLOG_REDIRECTS` 加 2 条 | ⏳ |
+| Day 2 | 2026-09-27 | B 近重🔴 | B1 EPUB→Word/DOCX 三 blog（`epub-to-word`/`epub-to-docx`/`epub-to-word-docx`）301 至 `epub-to-word` | 3 blog（2 个 301） | 🔴 | 仅 1 规范 slug 可索引；`BLOG_REDIRECTS` 加 2 条；**两近重 slug 彻底移出 sitemap（index.ts 取消注册 + llms.txt 删 2 链接，301 保留）** | ✅ |
 | Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ⏳ |
 | Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ⏳ |
 | Day 5 | 2026-09-30 | B 近重🔴 | B11b 剩余 2 篇差异化（补各 IP 专属分步/设备/坑） | 2 blog | 🔴 | 单页原创独特点 ≥3 | ⏳ |
@@ -369,4 +371,4 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 ---
 
 **文档版本**: v2.2
-**下次更新**: 2026-09-27（Batch 4 Day 2 推进前）
+**下次更新**: 2026-09-28（Batch 4 Day 3 推进前；⚠️ 本次 b50732d+5ad0dcb 待人工 push 后生效）
