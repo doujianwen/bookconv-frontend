@@ -133,6 +133,12 @@ hermes cron status                                                  # 查 gatewa
 - 🔴 **仓库根是父目录 `E:\一人公司\电子书格式转换站`，不是 `ebook-converter/`**。staging 必须显式限定 `ebook-converter/...` + `HERMES.md`，否则会把父目录未跟踪 junk（`.codex/`、`_archived/`、`Multica_*.md`、`docs/content/*.mdx`、根 `package.json`/`next.config.ts` 副本）一并提交。
 - 提交前 `git status --porcelain | grep -v '^A'` 复核，确认无意外文件混入。
 - 本仓 `npm run build`（next build）仍被沙箱 safe-delete 拦截 → 用 `tsc --noEmit` + dev 路由探测验收，不卡 build。
+- 🔴 **`git commit` 与 `git push` 不要写在同一条 `&&` 链里**（2026-09-27 两次实测）：
+  带多个 `-m` 的 commit **会真的创建提交，但返回非 0 退出码**，于是 `&&` 后的 push 被静默跳过，
+  输出里还会出现误导性的 `no changes added to commit`（看着像失败，其实提交已建好）。
+  → 正确做法：**commit 单独跑 → push 单独跑** → 最后用
+  `git rev-list --left-right --count origin/main...main` 验证是否为 `0	0`。
+  **以实测计数为准，不要信命令输出的文字**（本项目已两次被输出文字误导）。
 
 ---
 
