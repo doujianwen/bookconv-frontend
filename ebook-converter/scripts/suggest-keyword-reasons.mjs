@@ -77,8 +77,28 @@ async function main() {
     'utf8',
   );
 
+  // Diagnostics: when the result is ZERO the report must say WHY, otherwise it
+  // is indistinguishable from a broken run. This is the difference between
+  // "no evidence-backed candidates today" and "the generator silently failed".
+  const comparable = series.bing.keywords.filter((k) => k.delta !== null);
+  const movers = comparable.filter((k) => Math.abs(k.delta) >= threshold);
+  const compWithRank = [
+    ...new Set((competitor?.matrix ?? []).filter((r) => r.latestRank !== null).map((r) => r.query)),
+  ];
+  const overlap = movers.map((k) => k.query).filter((q) => compWithRank.includes(q));
+  const diag = {
+    threshold,
+    totalKeywords: series.bing.keywords.length,
+    comparable: comparable.length,
+    moversAtThreshold: movers.length,
+    movers: movers.map((k) => ({ query: k.query, delta: k.delta })),
+    competitorQueriesWithRank: compWithRank,
+    overlap,
+    algoWindows: algoDoc.updates?.length ?? 0,
+  };
+
   const date = (series.d0 || new Date().toISOString().slice(0, 10));
-  const md = renderReport(doc);
+  const md = renderReport(doc, diag);
   const mdPath = join(ROOT, '数据分析', `keyword-reason-candidates-${date}.md`);
   mkdirSync(dirname(mdPath), { recursive: true });
   writeFileSync(mdPath, md, 'utf8');
@@ -90,7 +110,7 @@ async function main() {
   console.log(`  确认某条：node scripts/confirm-keyword-reason.mjs "<query>" <itemIndex>`);
 }
 
-function renderReport(doc) {
+function renderReport(doc, diag) {
   const lines = [];
   lines.push(`# 关键词排名变动 · 候选原因报告`);
   lines.push('');
@@ -100,8 +120,48 @@ function renderReport(doc) {
   lines.push('> 请你逐条核对证据后，用 `confirm-keyword-reason.mjs` 把认可的晋升为正式原因；');
   lines.push('> 不认可的丢弃即可，绝不自动写入真相文件 `keyword-reasons.json`。');
   lines.push('');
+
+  // ---------------------------------------------------------------- diagnostics
+  lines.push(`## 诊断（为什么是这个结果）`);
+  lines.push('');
+  lines.push('| 项 | 值 |');
+  lines.push('|---|---|');
+  lines.push(`| Bing 唯一关键词 | ${diag.totalKeywords} |`);
+  lines.push(`| 可比（≥2 观测点） | ${diag.comparable} |`);
+  lines.push(`| 达标变动词（|Δ|≥${diag.threshold}） | ${diag.moversAtThreshold} |`);
+  lines.push(`| 竞品有真实排名的词 | ${diag.competitorQueriesWithRank.length} |`);
+  lines.push(`| **达标词 ∩ 竞品有排名词** | **${diag.overlap.length}** |`);
+  lines.push(`| 已配置算法更新窗口 | ${diag.algoWindows} |`);
+  lines.push('');
+  if (diag.movers.length > 0) {
+    lines.push(`达标变动词：`);
+    lines.push('');
+    for (const m of diag.movers) {
+      lines.push(`- \`${m.query}\` Δ=${m.delta}`);
+    }
+    lines.push('');
+  }
+  if (diag.competitorQueriesWithRank.length > 0) {
+    lines.push(`竞品有真实排名的词：${diag.competitorQueriesWithRank.map((q) => `\`${q}\``).join('、')}`);
+    lines.push('');
+  }
+  if (diag.overlap.length === 0 && diag.moversAtThreshold > 0 && diag.competitorQueriesWithRank.length > 0) {
+    lines.push(
+      `> 🔴 **结论：这两个集合不相交** —— 达标的变动词没有一个落在竞品监测列表里，` +
+        `所以无论把阈值降到多少都不会产生候选。这是**监控配置问题，不是工具故障**。`,
+    );
+    lines.push('>');
+    lines.push('> 修法：把实际会动的词加进 `data/competitor-config.json` 的 `keywords`，');
+    lines.push('> 再跑 `npm run fetch:competitor && npm run build:competitor`，候选才会出现。');
+    lines.push('');
+  }
+  if (diag.overlap.length === 0 && diag.moversAtThreshold === 0) {
+    lines.push('> 本期没有达到阈值的排名变动，属正常，无需处理。');
+    lines.push('');
+  }
+
   if (doc.candidates.length === 0) {
-    lines.push('本期没有达到阈值、且能关联到证据源的排名变动。无需处理。');
+    lines.push('本期**没有可生成候选**的排名变动（原因见上方诊断）。');
     return lines.join('\n') + '\n';
   }
   for (const c of doc.candidates) {
