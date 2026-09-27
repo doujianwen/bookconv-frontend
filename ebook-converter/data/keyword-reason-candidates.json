@@ -5,7 +5,7 @@
     "每条候选是 HYPOTHESIS（相关≠因果），需人确认后才写入 data/keyword-reasons.json（真相文件）。",
     "晋升：node scripts/confirm-keyword-reason.mjs \"<query>\" <itemIndex>"
   ],
-  "generatedAt": "2026-09-27T05:06:19.311Z",
+  "generatedAt": "2026-09-27T05:18:45.666Z",
   "d0": "2026-09-27",
   "threshold": 3,
   "candidates": []
