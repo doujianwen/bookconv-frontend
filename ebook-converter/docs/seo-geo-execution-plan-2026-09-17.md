@@ -332,6 +332,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-26 10:53 | **Kelriva 待办同步（K 系列入排期）**：P0 三项已完成（SSR 计数器 `85f1a56` 已 push 并线上断言 PASS；batch/pricing diff 一致；首页 FAQPage 确认已存在）；剩余 P1/P2 拆为 K1–K7 分散 Day 3–Day 9（每日 1 项）；记录防御性否决 3 项（屏蔽 guide 页 / Wikipedia 外链 / 无真实数据上 AggregateRating） | — |
 | 2026-09-26 21:00 | **新增 §九 D 系列（代码摸底衍生）**：D1 归档 `next-sitemap.config.js`→`_archived/dead-config/`（可逆）、D2 修正两份 README 失真描述（加可信度声明 + 定点修正 队列/Supabase/28→31/孤儿端点/仓库名/GitHub 链接），D3–D6 登记待执行；门禁 0 error。**同时修正一处认知错误**：队列系刻意废弃（8/4 实测 Vercel 100% 504），非待接线；已写入 MEMORY.md 防止重提 | 未 commit |
 | 2026-09-27 12:25 | **新增 §十 M13 系列（GEO 三平台长尾采集 v4）**：基于 v4 严谨口径（强推荐仅 1/25），拆分为 M13-1~M13-14 按日排期（09-29~10-15 P0/P1 + 10-16 起 P2）；M10 修正为 v4 口径；M11/M12 标记历史追溯，实际以 M13 为准。版本 v2.5→v2.6。 | 待 commit |
+| 2026-09-28 07:00 | **Batch 4 Day 3 K1 完成（决策收口）**：① 移除 150,000 假计数器——`CONVERSION_COUNTER_TARGET`（无真实数据源）被展示为"ebooks converted — and counting / successfully"，删首页徽章 + `/convert` 页 `SocialProofBanner`（已删组件文件）；② `/pricing` 对比表 Pro「API Access」由 ✓ 改 ✗，对齐 `PLANS.pro.features`（仅 API 套餐含 API 访问）。commit `79f3d3e`，**未 push**；门禁 content-integrity 0/0 + dup-headings 0 + syntax-sweep 299 文件 0 失败 + `next build --webpack` exit 0。 | 待人工复核 push |
 
 ---
 
@@ -369,7 +370,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 
 | 项 | 目标日 | 内容 | 类型 | 触及页面 | 验收 / 备注 | 状态 |
 |----|--------|------|------|---------|------------|------|
-| K1 | 2026-09-28（Day 3） | 两项用户决策收口：① 150,000 计数器对外口径确认（展示目标值 vs 实测累计，需数据来源）；② `/pricing` 对比表 "API Access: Pro ✓" 是否改为"仅 API 套餐"（与 `PLANS.pro.features` 不一致） | 决策（0 代码） | 0 页 | 用户拍板后如有改动按 1 行定点更新 | ⏳ |
+| K1 | 2026-09-28（Day 3） | 两项用户决策收口：① 150,000 计数器对外口径确认（展示目标值 vs 实测累计，需数据来源）；② `/pricing` 对比表 "API Access: Pro ✓" 是否改为"仅 API 套餐"（与 `PLANS.pro.features` 不一致） | 决策（0 代码） | 0 页 | 用户拍板后如有改动按 1 行定点更新 | ✅ |
 | K2 | 2026-09-29（Day 4） | `/about` 页强化品牌实体区分：明确 BookConv vs 同名/近名产品（Kelriva 实测 Gemini 混淆 "BookReverb"、"BookConvert"），补充 sameAs（@GinoTou2024）与实体信号 | 站内 | 1 页 | 实体归一要素齐备；`audit:syntax` PASS | ⏳ |
 | K3 | 2026-09-30（Day 5） | 第三方评论体系启动：注册 Trustpilot（优先）或 G2，建立邀请评价流程 | 站外 | 0 页 | 账号开通；首页暂不挂评分（等真实数据） | ⏳ |
 | K4 | 2026-10-01（Day 6） | 外联 howtoconvert.co：请求更新引用语，强调在线工具特性（免费+无需注册+Calibre 引擎）；邮件草稿经用户审阅后发送 | 站外 | 0 页 | 草稿交付→人工发送；不作对外承诺 | ⏳ |
