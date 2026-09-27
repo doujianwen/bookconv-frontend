@@ -4,6 +4,8 @@
     "竞品 SERP 采集配置。改这个文件就能换盯哪些竞品、哪些词，零代码改动。",
     "competitors：要盯的竞品域名（换成你真正的对手；convertio/onlineconvert/zamzar/freeconvert/anyconv 是默认占位）。",
     "keywords：要监控排名的目标词（我们的词；可扩到几十个，越多抓取越慢/越费 API 额度）。",
+    "⚠️ 收录原则（2026-09-27）：优先盯「真正会动的词」。若监测词与实际变动词不相交，候选原因永远为 0（变动词∩监测词=0）。",
+    "   2026-09-27 补入 5 个实测变动词（Δ 来自 keyword-series.json）：is azw3 compatible with kindle(-7)、ebook converter online(+4)、mobi vs azw3(-2)、epub to zip(-2)、can i use calibre online without installing(+2)。",
     "抓取：node scripts/fetch-competitor-serp.mjs  （需要 SERPAPI_KEY 或 BING_WEB_SEARCH_KEY 环境变量）",
     "合并：node scripts/build-competitor-series.mjs  →  data/competitor-series.json",
     "面板：/admin/competitors"
@@ -27,6 +29,11 @@
     "pdf to mobi",
     "kindle converter",
     "free ebook converter",
-    "calibre online"
+    "calibre online",
+    "is azw3 compatible with kindle",
+    "ebook converter online",
+    "mobi vs azw3",
+    "epub to zip",
+    "can i use calibre online without installing"
   ]
 }

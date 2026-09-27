@@ -159,6 +159,46 @@ describe('buildCandidates', () => {
     expect(items[0].text).toContain('Convertio');
   });
 
+  it('reports "no monitored-competitor pressure" when rivals are all outside Top-100', () => {
+    const doc = buildCandidates({
+      keywords: [kw('is azw3 compatible with kindle', -7, 12, 5)],
+      competitorMatrix: [
+        comp('is azw3 compatible with kindle', 'Convertio', 'convertio.co', null, null, 'no-data'),
+        comp('is azw3 compatible with kindle', 'Zamzar', 'zamzar.com', null, null, 'no-data'),
+      ],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(1);
+    const it = doc.candidates[0].items[0];
+    expect(it.type).toBe('no-competitor');
+    expect(it.confidence).toBe('medium');
+    // It must NOT claim "no competitor caused it" — only that monitored ones are absent.
+    expect(it.text).toContain('均未进入 Top-100');
+  });
+
+  it('stays silent when rivals are present but there is no baseline (no false "newly entered")', () => {
+    // With one snapshot a ranked rival has trend='new' + prevRank=null. Claiming it
+    // "newly entered the Top-100" would be a false statement about a first
+    // observation, so this must produce ZERO cause candidates.
+    const doc = buildCandidates({
+      keywords: [kw('ebook converter online', 4, 6, 10)],
+      competitorMatrix: [comp('ebook converter online', 'Convertio', 'convertio.co', 3, null, 'new')],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(0);
+  });
+
+  it('stays silent about competitors for a query that is not tracked at all', () => {
+    // Not monitored != no pressure. Reporting "no competitor" here would be a
+    // false statement, so there must be zero candidate items.
+    const doc = buildCandidates({
+      keywords: [kw('untracked query', -5, 9, 4)],
+      competitorMatrix: [],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(0);
+  });
+
   it('flags an algorithm-update window as a medium-confidence hypothesis', () => {
     const updates: AlgoUpdateLike[] = [
       { id: 'u1', name: 'Core Update', start: '2026-09-20', end: '2026-09-30' },

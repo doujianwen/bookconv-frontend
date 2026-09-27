@@ -6,7 +6,7 @@
     "Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。",
     "rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）。"
   ],
-  "generatedAt": "2026-09-27T04:45:54.605Z",
+  "generatedAt": "2026-09-27T05:29:48.836Z",
   "d0": "2026-09-27",
   "config": {
     "competitors": [
@@ -43,7 +43,12 @@
       "pdf to mobi",
       "kindle converter",
       "free ebook converter",
-      "calibre online"
+      "calibre online",
+      "is azw3 compatible with kindle",
+      "ebook converter online",
+      "mobi vs azw3",
+      "epub to zip",
+      "can i use calibre online without installing"
     ]
   },
   "snapshots": 1,
@@ -707,15 +712,290 @@
       "trend": "no-data",
       "latestDate": "2026-09-27",
       "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "is azw3 compatible with kindle",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "is azw3 compatible with kindle",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "is azw3 compatible with kindle",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "is azw3 compatible with kindle",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "is azw3 compatible with kindle",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "ebook converter online",
+      "latestRank": 3,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "ebook converter online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "ebook converter online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "ebook converter online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "ebook converter online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "mobi vs azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "mobi vs azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "mobi vs azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "mobi vs azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "mobi vs azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "epub to zip",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "epub to zip",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "epub to zip",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "epub to zip",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "epub to zip",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "can i use calibre online without installing",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "can i use calibre online without installing",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "can i use calibre online without installing",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "can i use calibre online without installing",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "can i use calibre online without installing",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
     }
   ],
   "totals": {
     "snapshots": 1,
-    "pairs": 60,
+    "pairs": 85,
     "up": 0,
     "down": 0,
-    "new": 5,
+    "new": 6,
     "gone": 0,
-    "noData": 55
+    "noData": 79
   }
 }

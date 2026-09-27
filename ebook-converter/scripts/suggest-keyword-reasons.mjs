@@ -86,6 +86,16 @@ async function main() {
     ...new Set((competitor?.matrix ?? []).filter((r) => r.latestRank !== null).map((r) => r.query)),
   ];
   const overlap = movers.map((k) => k.query).filter((q) => compWithRank.includes(q));
+  // Positional context: rivals we CAN see right now. This is explicitly NOT a
+  // cause candidate — with one snapshot there is no baseline, so we can only
+  // report where they stand, never that they "newly entered" or "improved".
+  const positional = movers
+    .map((m) => {
+      const rivals = (competitor?.matrix ?? []).filter((r) => r.query === m.query && r.latestRank !== null);
+      return { query: m.query, delta: m.delta, ours: m.latest?.impressionPosition ?? null, rivals: rivals.map((r) => `${r.name} #${r.latestRank}`) };
+    })
+    .filter((p) => p.rivals.length > 0);
+
   const diag = {
     threshold,
     totalKeywords: series.bing.keywords.length,
@@ -95,6 +105,7 @@ async function main() {
     competitorQueriesWithRank: compWithRank,
     overlap,
     algoWindows: algoDoc.updates?.length ?? 0,
+    positional,
   };
 
   const date = (series.d0 || new Date().toISOString().slice(0, 10));
@@ -157,6 +168,19 @@ function renderReport(doc, diag) {
   }
   if (diag.overlap.length === 0 && diag.moversAtThreshold === 0) {
     lines.push('> 本期没有达到阈值的排名变动，属正常，无需处理。');
+    lines.push('');
+  }
+  if (diag.positional.length > 0) {
+    lines.push(`### 竞品位置提示（**仅供参考，不是变化原因**）`);
+    lines.push('');
+    lines.push('> 只有单次快照时无法判断竞品「是否上升」——只能看到它们当前站在哪。');
+    lines.push('> 因此这些**不生成因果候选**，仅作人工判断的背景信息。');
+    lines.push('');
+    lines.push('| 变动词 | 你方 Δ | 你方当前 | 已监测竞品当前位置 |');
+    lines.push('|---|---|---|---|');
+    for (const p of diag.positional) {
+      lines.push(`| \`${p.query}\` | ${p.delta} | ${p.ours ?? '—'} | ${p.rivals.join('、')} |`);
+    }
     lines.push('');
   }
 

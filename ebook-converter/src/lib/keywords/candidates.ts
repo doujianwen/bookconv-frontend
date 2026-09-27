@@ -20,7 +20,7 @@
 // This module is imported by a CLIENT component (KeywordPanel), so it must
 // stay free of node:fs — the disk read lives in ./loader.ts.
 
-export type CandidateType = 'competitor' | 'algorithm';
+export type CandidateType = 'competitor' | 'algorithm' | 'no-competitor';
 export type Confidence = 'high' | 'medium' | 'low';
 
 export interface CandidateItem {
@@ -122,31 +122,47 @@ export function buildCandidates(opts: {
     const latestDate = k.latest?.date ?? null;
     const dropped = k.delta < 0; // delta = prevPos − latestPos; <0 ⇒ latest is worse
 
-    // 1) Competitor pressure
+    // 1) Competitor evidence — only claim anything when this query is actually
+    //    monitored. "Not tracked" must never be reported as "no pressure";
+    //    those are completely different statements.
     const comps = competitorsByQuery.get(k.query) ?? [];
-    const pressuring = comps.filter((c) => {
-      if (c.latestRank === null) return false;
-      if (c.trend === 'new') return true;
-      if (c.prevRank !== null && c.latestRank < c.prevRank) return true;
-      return false;
-    });
-    if (pressuring.length > 0) {
-      const list = pressuring
-        .map((c) => {
-          const move =
-            c.prevRank !== null ? `#${c.prevRank}→#${c.latestRank}` : `新进入 Top100 #${c.latestRank}`;
-          return `${c.name}（${c.domain}）${move}`;
-        })
+    const direction = dropped ? '本词你方排名下降' : '本词你方排名上升';
+    // A rival only evidences "pressure" when we MEASURED it improve.
+    // With a single snapshot every ranked rival carries trend='new' and prevRank=null;
+    // calling that "newly entered Top-100" would be a false statement — it just means
+    // this is our first observation. Absence of a baseline cannot support a claim
+    // about movement, so such rivals produce NO cause candidate (honest silence).
+    const improving = comps.filter(
+      (c) => c.latestRank !== null && c.prevRank !== null && c.latestRank < c.prevRank,
+    );
+
+    if (improving.length > 0) {
+      const list = improving
+        .map((c) => `${c.name}（${c.domain}）#${c.prevRank}→#${c.latestRank} 上升`)
         .join('；');
-      const direction = dropped ? '本词你方排名下降' : '本词你方排名上升';
       items.push({
         type: 'competitor',
         confidence: 'high',
         text:
           `「${k.query}」${direction}（${prevPos ?? '?'}→${latestPos ?? '?'}），同期竞品 ${list}。` +
-          `数据表明竞品在此词的可见度提升，可能与你方排名变动相关（相关≠因果）。` +
+          `实测到竞品在此词排名上升，可能与你方排名变动相关（相关≠因果）。` +
           `建议核对：竞品该页的 schema/FAQ 覆盖、内容新鲜度、外链增长，以及你方对应页面近期是否改动。`,
-        evidence: `competitor-series.json 中该 query 的竞品最新排名优于前一期；你方 Δ=${k.delta}。`,
+        evidence: `competitor-series.json 中该 query 的竞品 latestRank 优于 prevRank（确有上升，非首次观测）；你方 Δ=${k.delta}。`,
+        source: 'competitor-series.json',
+        relatedNotCausal: true,
+      });
+    } else if (comps.length > 0 && comps.every((c) => c.latestRank === null)) {
+      // We looked and none of the monitored rivals is in the Top-100. That is
+      // itself evidence: it narrows the cause AWAY from these rivals — but it
+      // does not rule out rivals we are not tracking, nor non-competitor causes.
+      items.push({
+        type: 'no-competitor',
+        confidence: 'medium',
+        text:
+          `「${k.query}」${direction}（${prevPos ?? '?'}→${latestPos ?? '?'}），但已监测的 ${comps.length} 个竞品在本词**均未进入 Top-100**。` +
+          `未见已监测竞品的挤压；不排除未监测竞品、算法更新、季节性或自身页面改动所致。` +
+          `建议人工核对 SERP 实际结果，以及该词对应页面近期是否改动。`,
+        evidence: `competitor-series.json 中该 query 的 ${comps.length} 个竞品 latestRank 全为 null（Top-100 外）；你方 Δ=${k.delta}。`,
         source: 'competitor-series.json',
         relatedNotCausal: true,
       });
