@@ -5,15 +5,13 @@ import { useState, useMemo } from "react"
 import {
   ArrowRight, Zap, Shield, Globe, Search,
   BookOpen, FileText, Image, Newspaper,
-  Sparkles, ChevronRight, Star,
+  Sparkles, ChevronRight,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { KEYWORDS } from "@/lib/constants"
 import { getSlug } from "@/lib/utils"
 import { FORMAT_DISPLAY_NAMES, getConversion } from "@/lib/conversion-map"
 import { TestimonialsSection } from "@/components/tools/TestimonialsSection"
-import { AnimatedCounter } from "@/components/tools/AnimatedCounter"
-import { CONVERSION_COUNTER_TARGET } from "@/data/testimonials"
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   eBook: BookOpen,
@@ -243,13 +241,6 @@ export default function HomePage() {
       {/* Social Proof & Testimonials */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-4xl px-4 text-center mb-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-sm text-blue-700 mb-4">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <span className="font-medium">
-              <AnimatedCounter target={CONVERSION_COUNTER_TARGET} />
-            </span>
-            <span>ebooks converted — and counting</span>
-          </div>
           <p className="text-sm text-gray-600">Join thousands of satisfied users who trust BookConv for their ebook conversion needs.</p>
         </div>
       </section>

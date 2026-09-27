@@ -44,5 +44,3 @@ export const TESTIMONIALS: Testimonial[] = [
     text: "Finally a converter that doesn't try to sell me anything upfront. Clean UI, fast conversions, and it even preserves my custom CSS styles. Highly recommended.",
   },
 ]
-
-export const CONVERSION_COUNTER_TARGET = 150000

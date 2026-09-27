@@ -12,7 +12,6 @@ import { extractApiError } from "@/lib/api-error"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { SECURITY_FAQ } from "@/lib/seo/securityFaq"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
-import { SocialProofBanner } from "@/components/tools/SocialProofBanner"
 import { TrustBar } from "@/components/tools/TrustBar"
 import { TestimonialCard } from "@/components/tools/TestimonialCard"
 import { TESTIMONIALS } from "@/data/testimonials"
@@ -399,7 +398,6 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         {/* Social Proof -- Testimonials */}
         <section className="mt-12 rounded-xl border bg-gray-50 p-6">
           <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">Trusted by thousands of readers worldwide</h3>
-          <SocialProofBanner />
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.slice(0, 3).map((t, i) => (
               <TestimonialCard key={i} name={t.name} role={t.role} rating={t.rating} text={t.text} />
