@@ -16,7 +16,8 @@ node_modules/
 
 # IDE
 .vscode/
-.idea/
+.idea
+.workbuddy-ai//
 
 # OS
 .DS_Store
@@ -82,8 +83,21 @@ test-results/
 batch-verify.zip
 
 # Pure-correction-agent gate reports (generated, not source) — 仅顶层 data/，勿误伤 src/data 内容系统
+#
+# ⚠️ 不能用 `/data/`（忽略整个目录）——那样后续的 `!/data/xxx` 反选**不生效**：
+#    目录本身被排除时，git 根本不会进入它去找可反选的文件。
+#    所以这里逐类忽略生成物，而不是忽略目录。
 /data/critic_layer_*.json
-/data/
+/data/*.json
+# …但 SEO/GEO 作战台的数据文件是**唯一真相源**，必须入库（丢了 = 整个作战台消失）
+!/data/seo-geo-board.json
+# …关键词变化原因（data/keyword-reasons.json）是人工沉淀，丢了难重建，也入库
+!/data/keyword-reasons.json
+# …竞品采集配置（data/competitor-config.json）是人工维护的监控清单，入库
+!/data/competitor-config.json
+# …竞品排名序列（data/competitor-series.json）是 fetch+build 的产物，但它是
+#   表③的实际数据，push 后要随仓库走，故也入库（原始 /数据分析/ 快照仍忽略）
+!/data/competitor-series.json
 
 # Excel tracking sheets (large binary, not source)
 *.xlsx
@@ -97,3 +111,10 @@ gsc-service-account.json
 /数据分析/
 _archived/
 _wb_tmp/
+
+# 工作台单文件生成物（由 npm run build:workbench 产出，含经营数据快照，不入库）
+.wb-build/
+/workbench.html
+
+# 每日垃圾清理备份（cleanup-daily-junk 移动到此，可恢复，不入库）
+.trash/

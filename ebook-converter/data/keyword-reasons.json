@@ -1,0 +1,12 @@
+{
+  "$schema": "keyword-reasons/v1",
+  "_readme": [
+    "按 query 记录「为什么排名涨/跌」的人工分析层。数据本身只给 Δ，不解释原因。",
+    "每天跑完 npm run fetch:bing && npm run build:keywords 后，对变动词补一条：",
+    "  node scripts/add-keyword-reason.mjs \"<query>\" \"<YYYY-MM-DD>\" \"<原因>\"",
+    "原因举例：算法更新 / 竞品 X 新页上线 / 我方页面改版 / 季节性波动 / 外链增长。",
+    "面板与 keyword-rank-latest.csv 的「原因」列取每个 query 最新一条（按 date 倒序）。",
+    "本文件是人工沉淀，已纳入 git（!/data/keyword-reasons.json），丢了很难重建。"
+  ],
+  "entries": []
+}

@@ -1,0 +1,721 @@
+{
+  "$schema": "competitor-series/v1",
+  "_readme": [
+    "本文件由 scripts/build-competitor-series.mjs 生成，不要手改。",
+    "matrix 每行 = 一个竞品域名在某目标词上的最新排名 + 上期 + Δ。",
+    "Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。",
+    "rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）。"
+  ],
+  "generatedAt": "2026-09-27T04:45:54.605Z",
+  "d0": "2026-09-27",
+  "config": {
+    "competitors": [
+      {
+        "domain": "convertio.co",
+        "name": "Convertio"
+      },
+      {
+        "domain": "onlineconvert.com",
+        "name": "OnlineConvert"
+      },
+      {
+        "domain": "zamzar.com",
+        "name": "Zamzar"
+      },
+      {
+        "domain": "freeconvert.com",
+        "name": "FreeConvert"
+      },
+      {
+        "domain": "anyconv.com",
+        "name": "AnyConv"
+      }
+    ],
+    "keywords": [
+      "ebook converter",
+      "online ebook converter",
+      "convert epub to mobi",
+      "epub to pdf",
+      "mobi to epub",
+      "convert pdf to epub",
+      "txt to epub",
+      "epub to azw3",
+      "pdf to mobi",
+      "kindle converter",
+      "free ebook converter",
+      "calibre online"
+    ]
+  },
+  "snapshots": 1,
+  "matrix": [
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "ebook converter",
+      "latestRank": 3,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "online ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "online ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "online ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "online ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "online ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "convert epub to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "convert epub to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "convert epub to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "convert epub to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "convert epub to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "epub to pdf",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "epub to pdf",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "epub to pdf",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "epub to pdf",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "epub to pdf",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "mobi to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "mobi to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "mobi to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "mobi to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "mobi to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "convert pdf to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "convert pdf to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "convert pdf to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "convert pdf to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "convert pdf to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "txt to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "txt to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "txt to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "txt to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "txt to epub",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "epub to azw3",
+      "latestRank": 2,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "epub to azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "epub to azw3",
+      "latestRank": 7,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "epub to azw3",
+      "latestRank": 3,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "epub to azw3",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "pdf to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "pdf to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "pdf to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "pdf to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "pdf to mobi",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "kindle converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "kindle converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "kindle converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "kindle converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "kindle converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "free ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "free ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "free ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "free ebook converter",
+      "latestRank": 2,
+      "prevRank": null,
+      "delta": null,
+      "trend": "new",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "free ebook converter",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "query": "calibre online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "onlineconvert.com",
+      "name": "OnlineConvert",
+      "query": "calibre online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "query": "calibre online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "query": "calibre online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    },
+    {
+      "domain": "anyconv.com",
+      "name": "AnyConv",
+      "query": "calibre online",
+      "latestRank": null,
+      "prevRank": null,
+      "delta": null,
+      "trend": "no-data",
+      "latestDate": "2026-09-27",
+      "prevDate": null
+    }
+  ],
+  "totals": {
+    "snapshots": 1,
+    "pairs": 60,
+    "up": 0,
+    "down": 0,
+    "new": 5,
+    "gone": 0,
+    "noData": 55
+  }
+}

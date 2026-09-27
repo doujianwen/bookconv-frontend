@@ -2,6 +2,18 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/data/blog'
 import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
+import { SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
+import { COMPAT_MAP } from '@/data/compat'
+
+// M3-2 decision (2026-09-27, per SEO/GEO V2.0 拆解表): admit /formats/* and
+// /compat/* to the sitemap. Both carry independent information increment —
+// format pages have distinct per-format pros/cons/useCases prose; the compat
+// page is a machine-verified conversion-test report (not a thin template).
+// Neither is "pure template", so both are admitted. Emitted en-only to avoid
+// the /es pseudo-Spanish spam signal (P3-C rule). Previously count was 0
+// because sitemap.ts never emitted them.
+const FORMAT_LASTMOD = '2026-08-25'
+const COMPAT_LASTMOD = '2026-08-20'
 
 // Derive every supported conversion URL directly from CONTENT_MAP — the
 // canonical source of truth for /convert/[slug] pages (generateStaticParams
@@ -251,6 +263,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           lastModified: new Date(g.updatedAt || g.date || '2026-08-02'),
           changeFrequency: 'yearly' as const,
           priority: 0.6,
+        })
+      }
+      // M3-2: /formats/* (17 pages, distinct prose) — en-only
+      for (const format of SUPPORTED_FORMAT_SLUGS) {
+        allUrls.push({
+          url: baseUrl + prefix + '/formats/' + format,
+          lastModified: new Date(FORMAT_LASTMOD),
+          changeFrequency: 'monthly' as const,
+          priority: 0.5,
+        })
+      }
+      // M3-2: /compat/* (machine-verified reports) — en-only
+      for (const slug of Object.keys(COMPAT_MAP)) {
+        allUrls.push({
+          url: baseUrl + prefix + '/compat/' + slug,
+          lastModified: new Date(COMPAT_LASTMOD),
+          changeFrequency: 'yearly' as const,
+          priority: 0.5,
         })
       }
     }

@@ -1,0 +1,73 @@
+// src/lib/keywords/loader.ts
+// Server-only: reads data/keyword-series.json from disk.
+//
+// Kept apart from ./series.ts because that module is imported by client
+// components, and pulling node:fs into a client bundle breaks the build.
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+import {
+  KEYWORD_SERIES_PATH,
+  type KeywordSeriesData,
+  type KeywordReason,
+} from './series';
+import {
+  COMPETITOR_SERIES_PATH,
+  type CompetitorSeriesData,
+  type CompetitorConfig,
+} from './competitor';
+
+/**
+ * Read the generated series. Returns null when the file has not been built yet
+ * — a fresh clone has no 数据分析/ snapshots, so this is an expected state and the
+ * UI should explain how to produce it rather than crash.
+ */
+export function loadKeywordSeries(root: string = process.cwd()): KeywordSeriesData | null {
+  const fp = join(root, KEYWORD_SERIES_PATH);
+  if (!existsSync(fp)) return null;
+  try {
+    return JSON.parse(readFileSync(fp, 'utf8')) as KeywordSeriesData;
+  } catch {
+    return null;
+  }
+}
+
+const REASONS_PATH = 'data/keyword-reasons.json';
+
+/**
+ * Read the human-entered change-reasons. Unlike the series this is curated by
+ * hand, so an empty/missing file is fine — return [] rather than null so the
+ * panel can always join on it without special-casing.
+ */
+export function loadKeywordReasons(root: string = process.cwd()): KeywordReason[] {
+  const fp = join(root, REASONS_PATH);
+  if (!existsSync(fp)) return [];
+  try {
+    const parsed = JSON.parse(readFileSync(fp, 'utf8')) as { entries?: KeywordReason[] };
+    return Array.isArray(parsed.entries) ? parsed.entries : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Read the stitched competitor rank series. Null when not built yet. */
+export function loadCompetitorSeries(root: string = process.cwd()): CompetitorSeriesData | null {
+  const fp = join(root, COMPETITOR_SERIES_PATH);
+  if (!existsSync(fp)) return null;
+  try {
+    return JSON.parse(readFileSync(fp, 'utf8')) as CompetitorSeriesData;
+  } catch {
+    return null;
+  }
+}
+
+/** Read the competitor tracking config (always present in git). */
+export function loadCompetitorConfig(root: string = process.cwd()): CompetitorConfig | null {
+  const fp = join(root, 'data', 'competitor-config.json');
+  if (!existsSync(fp)) return null;
+  try {
+    return JSON.parse(readFileSync(fp, 'utf8')) as CompetitorConfig;
+  } catch {
+    return null;
+  }
+}
+

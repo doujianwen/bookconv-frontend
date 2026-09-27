@@ -1,0 +1,32 @@
+{
+  "$schema": "competitor-config/v1",
+  "_readme": [
+    "竞品 SERP 采集配置。改这个文件就能换盯哪些竞品、哪些词，零代码改动。",
+    "competitors：要盯的竞品域名（换成你真正的对手；convertio/onlineconvert/zamzar/freeconvert/anyconv 是默认占位）。",
+    "keywords：要监控排名的目标词（我们的词；可扩到几十个，越多抓取越慢/越费 API 额度）。",
+    "抓取：node scripts/fetch-competitor-serp.mjs  （需要 SERPAPI_KEY 或 BING_WEB_SEARCH_KEY 环境变量）",
+    "合并：node scripts/build-competitor-series.mjs  →  data/competitor-series.json",
+    "面板：/admin/competitors"
+  ],
+  "competitors": [
+    { "domain": "convertio.co", "name": "Convertio" },
+    { "domain": "onlineconvert.com", "name": "OnlineConvert" },
+    { "domain": "zamzar.com", "name": "Zamzar" },
+    { "domain": "freeconvert.com", "name": "FreeConvert" },
+    { "domain": "anyconv.com", "name": "AnyConv" }
+  ],
+  "keywords": [
+    "ebook converter",
+    "online ebook converter",
+    "convert epub to mobi",
+    "epub to pdf",
+    "mobi to epub",
+    "convert pdf to epub",
+    "txt to epub",
+    "epub to azw3",
+    "pdf to mobi",
+    "kindle converter",
+    "free ebook converter",
+    "calibre online"
+  ]
+}

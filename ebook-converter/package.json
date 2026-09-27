@@ -20,7 +20,14 @@
     "audit:claims": "node scripts/audit-plan-claims.mjs",
     "audit:syntax": "node scripts/syntax-sweep.mjs",
     "audit:geo-content": "node scripts/geo-audit-content.mjs --no-online",
-    "audit:geo-guide": "node scripts/geo-audit-guide.mjs --no-online"
+    "audit:geo-guide": "node scripts/geo-audit-guide.mjs --no-online",
+    "audit:workbench": "node scripts/audit-workbench-honesty.mjs",
+    "build:workbench": "node scripts/build-workbench-html.mjs",
+    "fetch:bing": "node scripts/fetch-bing-webmaster.mjs",
+    "fetch:gsc": "node scripts/fetch-gsc-webmaster.mjs",
+    "build:keywords": "node scripts/build-keyword-series.mjs",
+    "fetch:competitor": "node scripts/fetch-competitor-serp.mjs",
+    "build:competitor": "node scripts/build-competitor-series.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",
