@@ -6,6 +6,7 @@ import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
 import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 
 interface BlogPostData {
   slug: string
@@ -325,11 +326,30 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
   )
 }
 
-function extractSourceTarget(title: string): { source?: string; target?: string } {
-  const patterns = [/(\w+)\s+to\s+(\w+)/i, /(\w+)\s+vs\s+(\w+)/i]
-  for (const pattern of patterns) {
-    const match = title.match(pattern)
-    if (match) return { source: match[1], target: match[2] }
+// Only accept source/target pairs that are real Calibre format tokens.
+// Prevents the greedy first-match bug where "How to Convert PDF to EPUB"
+// was parsed as source="How", target="Convert" and linked to a dead route.
+const FORMAT_TOKENS = new Set<string>(
+  Object.keys(CONVERSION_MAP).flatMap((k) => k.split("-"))
+)
+
+function firstFormatPair(title: string, sep: "to" | "vs"): { source?: string; target?: string } {
+  const re = sep === "to" ? /(\w+)\s+to\s+(\w+)/gi : /(\w+)\s+vs\s+(\w+)/gi
+  let m: RegExpExecArray | null
+  while ((m = re.exec(title))) {
+    const s = normalizeFormat(m[1])
+    const t = normalizeFormat(m[2])
+    if (FORMAT_TOKENS.has(s) && FORMAT_TOKENS.has(t)) {
+      return { source: s, target: t }
+    }
   }
+  return {}
+}
+
+function extractSourceTarget(title: string): { source?: string; target?: string } {
+  const fromTo = firstFormatPair(title, "to")
+  if (fromTo.source && fromTo.target) return fromTo
+  const fromVs = firstFormatPair(title, "vs")
+  if (fromVs.source && fromVs.target) return fromVs
   return {}
 }
