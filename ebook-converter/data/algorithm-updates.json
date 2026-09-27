@@ -1,0 +1,10 @@
+{
+  "$schema": "algorithm-updates/v1",
+  "_readme": [
+    "Google 已知排名更新窗口（人工维护）。scripts/suggest-keyword-reasons.mjs 把它作为「候选原因」的一个证据源。",
+    "只填你确认的官方更新（来源：https://developers.google.com/search/updates ），不要猜测或编造日期。",
+    "每条：{ id, name, start, end, note? }。空数组 = 不生成算法类候选（默认值，安全）。",
+    "这个文件是人工维护的监控清单，已纳入 git（!/data/algorithm-updates.json）。"
+  ],
+  "updates": []
+}

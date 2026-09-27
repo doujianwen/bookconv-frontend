@@ -1,0 +1,12 @@
+{
+  "$schema": "keyword-reason-candidates/v1",
+  "_readme": [
+    "证据驱动的「为什么排名变动」候选原因。由 scripts/suggest-keyword-reasons.mjs 生成，不要手改。",
+    "每条候选是 HYPOTHESIS（相关≠因果），需人确认后才写入 data/keyword-reasons.json（真相文件）。",
+    "晋升：node scripts/confirm-keyword-reason.mjs \"<query>\" <itemIndex>"
+  ],
+  "generatedAt": "2026-09-27T05:06:19.311Z",
+  "d0": "2026-09-27",
+  "threshold": 3,
+  "candidates": []
+}

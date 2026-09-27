@@ -15,6 +15,10 @@ import {
   type SortDir,
   type SortKey,
 } from '@/lib/keywords/series';
+import {
+  latestCandidateByQuery,
+  type CandidateEntry,
+} from '@/lib/keywords/candidates';
 import { Callout, Card, Chip, Stat } from '@/components/board/primitives';
 
 type View = 'all' | 'moving' | 'top20' | 'single';
@@ -65,7 +69,7 @@ function DeltaCell({ k }: { k: KeywordRow }) {
   );
 }
 
-function Row({ k, reason }: { k: KeywordRow; reason?: KeywordReason }) {
+function Row({ k, reason, candidate }: { k: KeywordRow; reason?: KeywordReason; candidate?: CandidateEntry }) {
   const moving = isMoving(k);
   return (
     <tr
@@ -101,6 +105,13 @@ function Row({ k, reason }: { k: KeywordRow; reason?: KeywordReason }) {
       <td className="px-3 py-2 text-xs text-gray-600 dark:text-gray-300">
         {reason ? (
           <span title={`${reason.date} 记录`}>{reason.reason}</span>
+        ) : candidate && candidate.items.length > 0 ? (
+          <span
+            className="rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:ring-amber-500/30"
+            title={candidate.items.map((it, i) => `候选${i}·${it.confidence}置信：${it.text}`).join('\n\n')}
+          >
+            候选 {candidate.items.length} 条（待确认）
+          </span>
         ) : (
           <span className="text-gray-300 dark:text-gray-600">—</span>
         )}
@@ -112,9 +123,11 @@ function Row({ k, reason }: { k: KeywordRow; reason?: KeywordReason }) {
 export function KeywordPanel({
   data,
   reasons = [],
+  candidates = [],
 }: {
   data: KeywordSeriesData;
   reasons?: KeywordReason[];
+  candidates?: CandidateEntry[];
 }) {
   const [view, setView] = React.useState<View>('moving');
   const [sortKey, setSortKey] = React.useState<SortKey>('delta');
@@ -124,6 +137,7 @@ export function KeywordPanel({
   const bing = data.bing;
   const gsc = data.gsc;
   const reasonMap = React.useMemo(() => latestReasonByQuery(reasons), [reasons]);
+  const candidateMap = React.useMemo(() => latestCandidateByQuery(candidates), [candidates]);
 
   const rows = React.useMemo(() => {
     if (!bing) return [];
@@ -248,7 +262,9 @@ export function KeywordPanel({
                     </td>
                   </tr>
                 ) : (
-                  rows.slice(0, 300).map((k) => <Row key={k.query} k={k} reason={reasonMap.get(k.query)} />)
+                  rows.slice(0, 300).map((k) => (
+                    <Row key={k.query} k={k} reason={reasonMap.get(k.query)} candidate={candidateMap.get(k.query)} />
+                  ))
                 )}
               </tbody>
             </table>
@@ -329,8 +345,12 @@ export function KeywordPanel({
           （注意：该目录未纳入版本控制）
         </p>
         <p className="mt-1">
-          已记录 <span className="font-semibold text-gray-500 dark:text-gray-400">{reasons.length}</span> 条变化原因 ·
-          补原因：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/add-keyword-reason.mjs "&lt;词&gt;" "&lt;日期&gt;" "&lt;原因&gt;"</code>
+          已确认 <span className="font-semibold text-gray-500 dark:text-gray-400">{reasons.length}</span> 条变化原因 ·
+          <span className="font-semibold text-gray-500 dark:text-gray-400">{candidates.length}</span> 个词有候选原因（待确认）
+        </p>
+        <p className="mt-1">
+          生成候选：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/suggest-keyword-reasons.mjs</code> ·
+          确认晋升：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/confirm-keyword-reason.mjs "&lt;词&gt;" &lt;index&gt;</code>
         </p>
       </footer>
     </div>

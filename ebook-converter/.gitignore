@@ -98,6 +98,11 @@ batch-verify.zip
 # …竞品排名序列（data/competitor-series.json）是 fetch+build 的产物，但它是
 #   表③的实际数据，push 后要随仓库走，故也入库（原始 /数据分析/ 快照仍忽略）
 !/data/competitor-series.json
+# …候选原因（data/keyword-reason-candidates.json）是 suggest 脚本产物，但它是
+#   表②候选层的数据，push 后要随仓库走，故也入库（原始 数据分析/ 报告仍忽略）
+!/data/keyword-reason-candidates.json
+# …算法更新窗口（data/algorithm-updates.json）是人工维护的监控清单，入库
+!/data/algorithm-updates.json
 
 # Excel tracking sheets (large binary, not source)
 *.xlsx

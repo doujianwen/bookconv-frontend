@@ -133,3 +133,37 @@ hermes cron status                                                  # 查 gatewa
 - 🔴 **仓库根是父目录 `E:\一人公司\电子书格式转换站`，不是 `ebook-converter/`**。staging 必须显式限定 `ebook-converter/...` + `HERMES.md`，否则会把父目录未跟踪 junk（`.codex/`、`_archived/`、`Multica_*.md`、`docs/content/*.mdx`、根 `package.json`/`next.config.ts` 副本）一并提交。
 - 提交前 `git status --porcelain | grep -v '^A'` 复核，确认无意外文件混入。
 - 本仓 `npm run build`（next build）仍被沙箱 safe-delete 拦截 → 用 `tsc --noEmit` + dev 路由探测验收，不卡 build。
+
+---
+
+## 表②原因层半自动化：自动化只呈递证据，不宣布结论（2026-09-27 第十轮）
+
+### 为什么「原因」不能让 LLM 自由生成
+- 排名数据只有 Δ（**是什么**），没有因果（**为什么**）。原因需外部事实：算法更新 / 竞品动作 / 自己的页面改动 / 季节性。
+- LLM 自由编 = 产出**听起来合理但未证实的猜测**并当事实存储，正是「别把猜测当事实」的反面。
+- 折中且正确的做法：**系统生成「证据驱动的候选假设」，人确认后才进真相文件**。
+
+### 落地形态（可复用的三层结构）
+| 层 | 文件 | 性质 |
+|---|---|---|
+| 观测 | `data/keyword-series.json` | 事实（Δ/日期） |
+| **候选** | `data/keyword-reason-candidates.json` | 假设（相关≠因果，带 evidence + confidence + source） |
+| **确认** | `data/keyword-reasons.json` | 人工认定的真相 |
+
+- 候选 → 确认**唯一**路径 = `scripts/confirm-keyword-reason.mjs`，脚本绝不自动晋升。
+- 纯逻辑放 `src/lib/keywords/candidates.ts`（`buildCandidates()` 纯函数、单测覆盖），CLI 只做 IO；
+  `.mjs` 用 `@swc/core` 转译后 import，与 `build-workbench-html.mjs` 同款做法。
+- 证据源只有两种，都标 `relatedNotCausal:true`：竞品压力（high）／算法窗口（medium）。
+
+### 🔴 工具返回 0 结果时，先诊断原因，再交付
+本次生成 0 个候选，**是真实结果不是 bug**。排查顺序（务必照做，别直接当成失败或强行造数据）：
+1. 统计达标词数量与 Δ 分布（480 词仅 27 可比，|Δ|≥3 仅 2 词）
+2. 看证据源与达标词**是否相交**（竞品有真实排名仅 3 词，与 2 个达标词**零重合**）
+3. 确认降阈值是否也无解（22 个变动词无一在竞品监测列表 → 无解）
+→ 结论是**配置问题**（我方变动词与竞品监测词不相交），不是工具缺陷。
+→ 教训：**0 结果先解释「为什么」，再决定是改配置还是改代码**；绝不为凑数降低证据标准。
+
+### ❌ 不要把「文档更新日志」当「算法排名更新」数据源
+`developers.google.com/search/updates` 是**文档/政策更新日志，不是排名更新**，
+2026-08/09 无排名更新窗口（唯一真实排名更新是 2026-02 Discover Core Update，无关且无结束日期）。
+→ `algorithm-updates.json` 保持空数组。**拿不到可靠日期就留空，绝不编造**。

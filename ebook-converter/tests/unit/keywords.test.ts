@@ -7,7 +7,8 @@
 //   - loader: the generated data/keyword-series.json is the ONLY thing the
 //     /admin/keywords panel renders, so its shape must not drift silently.
 import { isMoving, sortRows, latestReasonByQuery, type KeywordRow, type KeywordReason, type SortKey, type SortDir } from '@/lib/keywords/series';
-import { loadKeywordSeries, loadKeywordReasons } from '@/lib/keywords/loader';
+import { loadKeywordSeries, loadKeywordReasons, loadKeywordReasonCandidates } from '@/lib/keywords/loader';
+import { buildCandidates, latestCandidateByQuery, pickCandidate, type SeriesKeywordLike, type CompetitorRowLike, type AlgoUpdateLike } from '@/lib/keywords/candidates';
 
 function row(query: string, over: Partial<KeywordRow> = {}): KeywordRow {
   return {
@@ -119,5 +120,106 @@ describe('loadKeywordReasons', () => {
   it('returns an array (never null) even when curated by hand', () => {
     const r = loadKeywordReasons();
     expect(Array.isArray(r)).toBe(true);
+  });
+});
+
+describe('loadKeywordReasonCandidates', () => {
+  it('returns an array (never null) when not generated yet', () => {
+    const c = loadKeywordReasonCandidates();
+    expect(Array.isArray(c)).toBe(true);
+  });
+});
+
+describe('buildCandidates', () => {
+  const kw = (query: string, delta: number | null, latestPos: number, prevPos: number): SeriesKeywordLike => ({
+    query,
+    delta,
+    latest: { impressionPosition: latestPos, date: '2026-09-27' },
+    previous: { impressionPosition: prevPos, date: '2026-09-20' },
+  });
+  const comp = (query: string, name: string, domain: string, latestRank: number | null, prevRank: number | null, trend: string | null): CompetitorRowLike => ({
+    domain, name, query, latestRank, prevRank, delta: null, trend, latestDate: '2026-09-27',
+  });
+
+  it('flags competitor pressure as a high-confidence hypothesis (related != causal)', () => {
+    const doc = buildCandidates({
+      keywords: [kw('epub to azw3', -3, 10, 7)],
+      competitorMatrix: [
+        comp('epub to azw3', 'Convertio', 'convertio.co', 2, 5, 'up'),
+        comp('epub to azw3', 'FreeConvert', 'freeconvert.com', 3, null, 'new'),
+      ],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(1);
+    const items = doc.candidates[0].items;
+    expect(items).toHaveLength(1);
+    expect(items[0].type).toBe('competitor');
+    expect(items[0].confidence).toBe('high');
+    expect(items[0].relatedNotCausal).toBe(true);
+    expect(items[0].text).toContain('Convertio');
+  });
+
+  it('flags an algorithm-update window as a medium-confidence hypothesis', () => {
+    const updates: AlgoUpdateLike[] = [
+      { id: 'u1', name: 'Core Update', start: '2026-09-20', end: '2026-09-30' },
+    ];
+    const doc = buildCandidates({
+      keywords: [kw('some query', 4, 3, 7)],
+      competitorMatrix: [],
+      algoUpdates: updates,
+    });
+    expect(doc.candidates).toHaveLength(1);
+    const it = doc.candidates[0].items[0];
+    expect(it.type).toBe('algorithm');
+    expect(it.confidence).toBe('medium');
+    expect(it.relatedNotCausal).toBe(true);
+  });
+
+  it('ignores movements below the threshold', () => {
+    const doc = buildCandidates({
+      keywords: [kw('small move', 2, 8, 10)],
+      competitorMatrix: [comp('small move', 'X', 'x.com', 1, 9, 'up')],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(0);
+  });
+
+  it('skips keywords with no baseline (delta null)', () => {
+    const doc = buildCandidates({
+      keywords: [kw('single point', null, 5, 5)],
+      competitorMatrix: [],
+      algoUpdates: [],
+    });
+    expect(doc.candidates).toHaveLength(0);
+  });
+
+  it('respects a custom threshold', () => {
+    const doc = buildCandidates({
+      keywords: [kw('move', 2, 8, 10)],
+      competitorMatrix: [comp('move', 'X', 'x.com', 1, 9, 'up')],
+      algoUpdates: [],
+      threshold: 1,
+    });
+    expect(doc.candidates).toHaveLength(1);
+  });
+});
+
+describe('latestCandidateByQuery / pickCandidate', () => {
+  const doc = buildCandidates({
+    keywords: [{ query: 'a', delta: -5, latest: { impressionPosition: 9, date: '2026-09-27' }, previous: { impressionPosition: 4, date: '2026-09-20' } }],
+    competitorMatrix: [{ domain: 'c.co', name: 'Comp', query: 'a', latestRank: 1, prevRank: 8, delta: null, trend: 'up', latestDate: '2026-09-27' }],
+    algoUpdates: [{ id: 'u', name: 'U', start: '2026-09-01', end: '2026-09-30' }],
+  });
+
+  it('maps each query to its candidate entry', () => {
+    const m = latestCandidateByQuery(doc.candidates);
+    expect(m.get('a')?.items.length).toBe(2);
+  });
+
+  it('picks a candidate item by query + index', () => {
+    expect(pickCandidate(doc, 'a', 0)?.type).toBe('competitor');
+    expect(pickCandidate(doc, 'a', 1)?.type).toBe('algorithm');
+    expect(pickCandidate(doc, 'a', 9)).toBeNull();
+    expect(pickCandidate(doc, 'missing', 0)).toBeNull();
   });
 });

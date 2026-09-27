@@ -196,6 +196,17 @@ npm run build:keywords  # 合并成可比序列 → data/keyword-series.json
 - 面板「关键词排名」多一列「原因」（取每个词最新一条）；`keyword-rank-latest.csv` 多了 `Reasons` 列（`build:keywords` 自动并回）。
 - 诚实边界：原因是**人工判断**（算法更新 / 对手动作 / 页面改动 / 季节性），系统不会自动编造。
 
+### 候选原因生成器（半自动，证据驱动，不编造）
+纯 LLM 自由编原因 = 把猜测当事实。正确做法：**系统只生成「证据驱动的候选假设」，人确认后才进真相文件**。
+
+- 生成候选：`node scripts/suggest-keyword-reasons.mjs [--threshold N]`（默认 |Δ|≥3）
+  - 读 `data/keyword-series.json`（bing 排名序列）+ `data/competitor-series.json`（表③竞品）+ `data/algorithm-updates.json`（人工维护的算法窗口）
+  - 两个证据源：① **竞品压力**——同词有竞品排名上升 / 新进 Top100，属高质量数据信号（high 置信）；② **算法窗口**——变动日落在已知更新窗口内，属相关性提示（medium 置信，明确标注相关≠因果）
+  - 产出：`data/keyword-reason-candidates.json`（入库）+ `数据分析/keyword-reason-candidates-<date>.md`（可读报告，gitignored）
+- 晋升为正式原因（**唯一**写入 `keyword-reasons.json` 的路径）：`node scripts/confirm-keyword-reason.mjs "<词>" <itemIndex>`
+- 面板表现：原因列有「原因」则显示已确认文本；否则若有关联候选，显示琥珀色「候选 N 条（待确认）」徽标（hover 看完整假设），与已确认原因**视觉区分、数据隔离**。
+- 核心纪律：候选文件与真相文件分离；`buildCandidates()` 是纯函数（位于 `src/lib/keywords/candidates.ts`，单测覆盖），CLI 只负责 IO，绝不在脚本里把猜测写进真相文件。
+
 ### 竞品关键词面板（脚手架已建，待 SERP key 填充）
 > 入口：`/admin/competitors` · 配置：`data/competitor-config.json`（盯哪些竞品域名 / 哪些目标词，都能改）
 > 这个面板把表 ③（竞品关键词变化）补上 —— 此前项目完全没有关键词级竞品时序
