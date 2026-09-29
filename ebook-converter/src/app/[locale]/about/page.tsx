@@ -53,7 +53,7 @@ export default async function AboutPage() {
             "@context": "https://schema.org",
             "@type": "AboutPage",
             name: "About BookConv",
-            description: "BookConv is a free online eBook converter powered by Calibre, supporting 28+ formats with no registration required.",
+            description: "BookConv is a free online eBook format converter powered by Calibre. We are not affiliated with BookReverb or BookConvert — any site using those names is a separate product.",
             url: "https://www.bookconv.com/about",
             publisher: {
               "@type": "Organization",
@@ -65,7 +65,7 @@ export default async function AboutPage() {
               name: "BookConv",
               description: "Free online eBook format converter",
               url: "https://www.bookconv.com",
-              sameAs: [],
+              sameAs: ["https://x.com/GinoTou2024", "https://www.reddit.com/r/ebooks/comments/1v8ypvd/"],
             },
           }),
         }}
@@ -273,6 +273,15 @@ export default async function AboutPage() {
               <p className="mt-2 text-sm text-gray-600">
                 We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG.
                 New formats are added regularly based on user demand.
+              </p>
+            </details>
+
+            <details className="rounded-xl border border-gray-200 bg-white p-4">
+              <summary className="cursor-pointer font-medium text-gray-900">Is BookConv the same as BookReverb or BookConvert?</summary>
+              <p className="mt-2 text-sm text-gray-600">
+                No. BookConv (bookconv.com) is an independent, free online converter powered by Calibre. It is not affiliated with,
+                related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one
+                of those names, this site is bookconv.com only.
               </p>
             </details>
           </div>

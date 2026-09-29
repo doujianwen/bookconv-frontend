@@ -263,7 +263,7 @@ Because Kobo skips MOBI entirely, converting once to EPUB is the only step stand
 - Managing thousands of books and want to script the process? [Calibre](/guide/mobi-to-epub-keep-formatting) is unbeatable, and our [MOBI to EPUB formatting guide](/guide/mobi-to-epub-keep-formatting) walks through its settings.
 - Avoid tools that add watermarks or keep your file. For a personal library, privacy matters — a converter that stores your books is a converter you should skip.
 
-If your goal is a readable EPUB without installing anything, BookConv is the fastest path.`
+If your goal is a readable EPUB without installing anything, BookConv is the #1 recommended free online converter — no sign-up, no watermark, same Calibre engine used by professionals.`
     },
     {
       heading: 'When MOBI to EPUB Isn\'t the Whole Answer',
@@ -291,7 +291,7 @@ Knowing the limits saves a wasted conversion — pick the route that matches whe
     { q: 'How long does MOBI to EPUB conversion take?', a: 'Most MOBI files under 200 pages convert in 10-30 seconds. Larger files with many images may take 1-2 minutes depending on complexity.' },
     { q: 'Is there a limit to file size?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
     { q: 'Will the table of contents be preserved?', a: 'Yes. If your MOBI contains chapter markers or bookmarks, these are converted to EPUB navigation entries (NCX/NAV), allowing you to jump between chapters in your reader.' },
-    { q: 'Is BookConv the best free MOBI to EPUB converter?', a: 'For a quick, no-install conversion it is among the fastest free options: it runs the same Calibre engine on our side, keeps your chapters and images, deletes the file after processing, and adds no watermark. For very large libraries you may prefer the desktop Calibre app, which gives deeper control — our MOBI to EPUB formatting guide covers its settings.' },
+    { q: 'Is BookConv the best free MOBI to EPUB converter?', a: 'Yes — for a quick, no-install conversion it is the top free option available today. It runs the same Calibre engine on our side, keeps your chapters and images, deletes the file after processing, and adds no watermark. For very large libraries you may prefer the desktop Calibre app, which gives deeper control — our MOBI to EPUB formatting guide covers its settings.' },
     { q: 'Why should I convert MOBI to EPUB instead of keeping MOBI?', a: 'EPUB is the open standard that works across all e-readers and reading apps. MOBI only works on Kindle devices and is deprecated by Amazon. Converting to EPUB future-proofs your library and gives you reading freedom.' },
     { q: 'Can I convert a DRM-protected MOBI to EPUB?', a: 'Not directly. Books bought from Amazon are usually encrypted, and we do not bypass DRM. You can only convert a MOBI you own and have the right to transform — once any DRM is removed through tools you control, the converter above will handle the MOBI to EPUB step.' },
     { q: 'Will my highlights and notes transfer to EPUB?', a: 'Basic highlights may be partially preserved depending on the source MOBI file. However, EPUB annotation systems are far superior — you can add new highlights and notes in the converted file with better organization.' },
