@@ -31,6 +31,17 @@ const BLOG_REDIRECTS: Record<string, string> = {
   // B2 (Batch 4 Day 3): EPUB→Various near-duplicate blogs (identical title "Epub to
   // Various Other Formats: The Ultimate Guide") → canonical /blog/epub-converter
   '/blog/epub-to-various-other': '/blog/epub-converter',
+  // B11a (Batch 4 Day 4): 3 zero-traffic IP blog pages → canonical general page
+  // "Read ebooks on any device". Traffic evidence (Bing PageTrafficReport 09-26):
+  //   harry-potter = 8 impressions / 55.4% Citation Share → KEEP as is (Day 5 diff)
+  //   chronicles-of-narnia = 4 impressions → KEEP as is (Day 5 diff)
+  //   lord-of-the-rings / twilight / marvel-comics = 0 impressions → 301 to
+  //   generic "read on any device" parent-intent page, not to another IP page
+  //   (to avoid cross-IP soft-404). All three slugs remain registered in
+  //   blog/index.ts for now; will be removed after differentiation on Day 5.
+  '/blog/lord-of-the-rings-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
+  '/blog/twilight-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
+  '/blog/marvel-comics-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
