@@ -2,7 +2,7 @@
 
 **制定日期**: 2026-09-17
 **最近更新**: 2026-09-27（新增 §十：双渠道分析衍生待办 M1–M8；hermes 执行副本同步 `hermes-context/`）
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）；**Day 4 已完成**（B11a：lord-of-the-rings/twilight/marvel-comics 3 个零曝光 IP 页 301 → /blog/read-epub-on-any-device，commit `1fef1fe`，**未 push**）
 **⚠️ 排期职能**：本文件即为待执行计划权威源（含 §八 Batch 4 / §九 D 系列 / §十 M 系列）；`docs/待执行计划-v2`、`docs/待执行计划-v3` 为历史同步副本，新项只在此维护。（2026-09-27 更正）
 **负责人**: 鉴源·出海专家辅助执行
 
@@ -333,6 +333,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-26 21:00 | **新增 §九 D 系列（代码摸底衍生）**：D1 归档 `next-sitemap.config.js`→`_archived/dead-config/`（可逆）、D2 修正两份 README 失真描述（加可信度声明 + 定点修正 队列/Supabase/28→31/孤儿端点/仓库名/GitHub 链接），D3–D6 登记待执行；门禁 0 error。**同时修正一处认知错误**：队列系刻意废弃（8/4 实测 Vercel 100% 504），非待接线；已写入 MEMORY.md 防止重提 | 未 commit |
 | 2026-09-27 12:25 | **新增 §十 M13 系列（GEO 三平台长尾采集 v4）**：基于 v4 严谨口径（强推荐仅 1/25），拆分为 M13-1~M13-14 按日排期（09-29~10-15 P0/P1 + 10-16 起 P2）；M10 修正为 v4 口径；M11/M12 标记历史追溯，实际以 M13 为准。版本 v2.5→v2.6。 | 待 commit |
 | 2026-09-28 07:00 | **Batch 4 Day 3 K1 完成（决策收口）**：① 移除 150,000 假计数器——`CONVERSION_COUNTER_TARGET`（无真实数据源）被展示为"ebooks converted — and counting / successfully"，删首页徽章 + `/convert` 页 `SocialProofBanner`（已删组件文件）；② `/pricing` 对比表 Pro「API Access」由 ✓ 改 ✗，对齐 `PLANS.pro.features`（仅 API 套餐含 API 访问）。commit `79f3d3e`，**未 push**；门禁 content-integrity 0/0 + dup-headings 0 + syntax-sweep 299 文件 0 失败 + `next build --webpack` exit 0。 | 待人工复核 push |
+| 2026-09-29 11:30 | **Batch 4 Day 4 完成（B11a）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 3 条 301（`/blog/lord-of-the-rings-ebooks-multiple-devices`、`/blog/twilight-ebooks-multiple-devices`、`/blog/marvel-comics-ebooks-multiple-devices` → `/blog/read-epub-on-any-device`，通用承接页避免跨 IP soft-404）；门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error；Bing PageTrafficReport（09-26）确认 3 页零曝光，harry-potter（Citation Share 55.4%）与 chronicles-of-narnia 保留待 Day 5 差异化 | 1fef1fe（未 push） |
 
 ---
 
@@ -351,7 +352,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | Day 1 | 2026-09-26 | C 资产保全 | **前提修正**：C1 目标 `/blog/azw3-epub-mobi-kindle` 经核验为**活页**（blog/index.ts:51 仍注册、文件存在），非死链→不删除（原 v2 审计「8/27 已删」与代码实际状态矛盾，已更正）；C2 `/blog/epub-to-txt` 确不存在→跳过。全量扫描 123 条链接，发现**唯一直链** `/convert/epub-to-docx`（middleware.ts:14 为 →`/convert/epub-to-word` 的 301 跳转源），已改为指向 canonical `/convert/epub-to-word` | 0 页面（仅 llms.txt 1 行 URL 修正） | 🟢 | llms.txt 链接 123 条全数有对应注册 slug（0 DEAD，复验通过） | ✅ |
 | Day 2 | 2026-09-27 | B 近重🔴 | B1 EPUB→Word/DOCX 三 blog（`epub-to-word`/`epub-to-docx`/`epub-to-word-docx`）301 至 `epub-to-word` | 3 blog（2 个 301） | 🔴 | 仅 1 规范 slug 可索引；`BLOG_REDIRECTS` 加 2 条；**两近重 slug 彻底移出 sitemap（index.ts 取消注册 + llms.txt 删 2 链接，301 保留）** | ✅ |
 | Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ✅ |
-| Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ⏳ |
+| Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ✅ |
 | Day 5 | 2026-09-30 | B 近重🔴 | B11b 剩余 2 篇差异化（补各 IP 专属分步/设备/坑） | 2 blog | 🔴 | 单页原创独特点 ≥3 | ⏳ |
 | Day 6 | 2026-10-01 | B 近重🟡 | B3 EPUB→Text：确认规范 slug `epub-to-text`，llms.txt 无失效链接 | 0–1 | 🟡 | llms.txt 无不存在链接 | ⏳ |
 | Day 7 | 2026-10-02 | B 近重🟡 | B4 EPUB→MOBI 三页（`epub-to-mobi`/`epub-to-mobi-guide`/`guide/epub-to-mobi-keep-formatting`）分工 | 3 | 🟡 | 意图不重叠 | ⏳ |
@@ -510,8 +511,8 @@ D1/D2 的**真实验收**应为：
 
 ---
 
-**文档版本**: v2.6（并入 §十 M13 GEO 长尾系列；hermes 执行）
-**下次更新**: 2026-09-29（Batch 4 Day 4 + M13-1 推进前）
+**文档版本**: v2.7（并入 §十 M13 GEO 长尾系列 + B11a 收口；hermes 执行）
+**下次更新**: 2026-09-30（Batch 4 Day 5 B11b 剩余 2 篇差异化）
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
 
 ---
