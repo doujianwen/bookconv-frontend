@@ -169,6 +169,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 
 **Technical Details:**
 - Engine: Calibre 7.x MOBI output plugin
+- Supported conversions: 31 format pairs across the platform
 - Max file size: 10MB
 - Conversion time: 10-30 seconds for typical books
 - DRM: We don't bypass DRM — only convert files you own`
