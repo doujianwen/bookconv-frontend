@@ -2,7 +2,7 @@
 
 **制定日期**: 2026-09-17
 **最近更新**: 2026-09-27（新增 §十：双渠道分析衍生待办 M1–M8；hermes 执行副本同步 `hermes-context/`）
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）；**Day 4 已完成**（B11a：lord-of-the-rings/twilight/marvel-comics 3 个零曝光 IP 页 301 → /blog/read-epub-on-any-device，commit `1fef1fe`，**未 push**）
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）；**Day 4 已完成**（B11a：lord-of-the-rings/twilight/marvel-comics 3 个零曝光 IP 页 301 → /blog/read-epub-on-any-device，commit `1fef1fe`，**未 push**）；**K2 + M13-1 已完成**（K2: /about sameAs + BookReverb/BookConvert 消歧，commit 5925248；M13-1: /convert/mobi-to-epub 复现 P31 强推荐语序，未 push）
 **⚠️ 排期职能**：本文件即为待执行计划权威源（含 §八 Batch 4 / §九 D 系列 / §十 M 系列）；`docs/待执行计划-v2`、`docs/待执行计划-v3` 为历史同步副本，新项只在此维护。（2026-09-27 更正）
 **负责人**: 鉴源·出海专家辅助执行
 
@@ -334,6 +334,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-27 12:25 | **新增 §十 M13 系列（GEO 三平台长尾采集 v4）**：基于 v4 严谨口径（强推荐仅 1/25），拆分为 M13-1~M13-14 按日排期（09-29~10-15 P0/P1 + 10-16 起 P2）；M10 修正为 v4 口径；M11/M12 标记历史追溯，实际以 M13 为准。版本 v2.5→v2.6。 | 待 commit |
 | 2026-09-28 07:00 | **Batch 4 Day 3 K1 完成（决策收口）**：① 移除 150,000 假计数器——`CONVERSION_COUNTER_TARGET`（无真实数据源）被展示为"ebooks converted — and counting / successfully"，删首页徽章 + `/convert` 页 `SocialProofBanner`（已删组件文件）；② `/pricing` 对比表 Pro「API Access」由 ✓ 改 ✗，对齐 `PLANS.pro.features`（仅 API 套餐含 API 访问）。commit `79f3d3e`，**未 push**；门禁 content-integrity 0/0 + dup-headings 0 + syntax-sweep 299 文件 0 失败 + `next build --webpack` exit 0。 | 待人工复核 push |
 | 2026-09-29 11:30 | **Batch 4 Day 4 完成（B11a）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 3 条 301（`/blog/lord-of-the-rings-ebooks-multiple-devices`、`/blog/twilight-ebooks-multiple-devices`、`/blog/marvel-comics-ebooks-multiple-devices` → `/blog/read-epub-on-any-device`，通用承接页避免跨 IP soft-404）；门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error；Bing PageTrafficReport（09-26）确认 3 页零曝光，harry-potter（Citation Share 55.4%）与 chronicles-of-narnia 保留待 Day 5 差异化 | 1fef1fe（未 push） |
+| 2026-09-29 12:21 | **K2 + M13-1 完成（Batch 4 Day 4）**：K2 = /about JSON-LD sameAs（@GinoTou2024 + Reddit）+ BookConv vs BookReverb/BookConvert 消歧文案（FAQ + description）；M13-1 = /convert/mobi-to-epub 强推荐措辞（hedging 改 #1 确定性推荐），复现 P31 Bing AI 成功模式；commit 5925248，未 push | 5925248（未 push） |
 
 ---
 
@@ -372,7 +373,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 项 | 目标日 | 内容 | 类型 | 触及页面 | 验收 / 备注 | 状态 |
 |----|--------|------|------|---------|------------|------|
 | K1 | 2026-09-28（Day 3） | 两项用户决策收口：① 150,000 计数器对外口径确认（展示目标值 vs 实测累计，需数据来源）；② `/pricing` 对比表 "API Access: Pro ✓" 是否改为"仅 API 套餐"（与 `PLANS.pro.features` 不一致） | 决策（0 代码） | 0 页 | 用户拍板后如有改动按 1 行定点更新 | ✅ |
-| K2 | 2026-09-29（Day 4） | `/about` 页强化品牌实体区分：明确 BookConv vs 同名/近名产品（Kelriva 实测 Gemini 混淆 "BookReverb"、"BookConvert"），补充 sameAs（@GinoTou2024）与实体信号 | 站内 | 1 页 | 实体归一要素齐备；`audit:syntax` PASS | ⏳ |
+| K2 | 2026-09-29（Day 4） | `/about` 页强化品牌实体区分：明确 BookConv vs 同名/近名产品（Kelriva 实测 Gemini 混淆 "BookReverb"、"BookConvert"），补充 sameAs（@GinoTou2024）与实体信号 | 站内 | 1 页 | 实体归一要素齐备；`audit:syntax` PASS | ✅ |
 | K3 | 2026-09-30（Day 5） | 第三方评论体系启动：注册 Trustpilot（优先）或 G2，建立邀请评价流程 | 站外 | 0 页 | 账号开通；首页暂不挂评分（等真实数据） | ⏳ |
 | K4 | 2026-10-01（Day 6） | 外联 howtoconvert.co：请求更新引用语，强调在线工具特性（免费+无需注册+Calibre 引擎）；邮件草稿经用户审阅后发送 | 站外 | 0 页 | 草稿交付→人工发送；不作对外承诺 | ⏳ |
 | K5 | 2026-10-02（Day 7） | 外联 publishingxpress.com：提交对比角度（免费即时 vs 人工服务），获取被引用机会 | 站外 | 0 页 | 同 K4 纪律 | ⏳ |
@@ -471,7 +472,7 @@ D1/D2 的**真实验收**应为：
 
 | ID | 目标日期 | 动作 | 触及页面 | 预期效果 |
 |----|---------|------|---------|---------|
-| **M13-1** | 09-29（Day 4，与 B11a 并行） | `/convert/mobi-to-epub` 强化推荐语序（"probably the easiest choice" → 更明确的 #1 推荐） | 1 页 | 复现 P31 成功模式 |
+| **M13-1** | 09-29（Day 4，与 B11a 并行） | `/convert/mobi-to-epub` 强化推荐语序（hedging → #1 确定性推荐） | 1 页 | ✅ 复现 P31 成功模式 |
 | **M13-2** | 09-30（Day 5，与 B11b 并行） | 给 3 个高流量 convert 页（p29/p30/p33）补事实密度句式："Free, no signup, no watermark, uses Calibre engine, 10MB limit" | 3 页 | 扩展 P31 成功要素 |
 | **M13-3** | 10-01（Day 6，与 K4 外联并行） | 给剩余 4 个 convert 页（p48/p49/p50 + 任意 1 个）补事实密度句式 | 4 页 | 完成 7 个转换类全补 |
 | **M13-4** | 10-02（Day 7，与 K5 外联并行） | 新建 `/guide/how-to-read-epub-on-kindle`（解决 p27/p28/p32 Kindle 兼容痛点） | 1 页（新） | 抢占操作指南类空白 |
@@ -511,7 +512,7 @@ D1/D2 的**真实验收**应为：
 
 ---
 
-**文档版本**: v2.7（并入 §十 M13 GEO 长尾系列 + B11a 收口；hermes 执行）
+**文档版本**: v2.8（并入 §十 M13 GEO 长尾系列 + B11a 收口；hermes 执行）
 **下次更新**: 2026-09-30（Batch 4 Day 5 B11b 剩余 2 篇差异化）
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
 
