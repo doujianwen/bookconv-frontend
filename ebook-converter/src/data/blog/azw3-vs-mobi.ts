@@ -13,7 +13,7 @@ export const content = {
       heading: `The Short Version`,
       body: `Use **AZW3** for any Kindle made in the last ten years. It renders modern CSS, keeps your embedded fonts, and handles tables and complex layouts. Reach for **MOBI** only when you're feeding a Kindle old enough to predate decent styling, or when you're stuck with software that never learned anything newer.
 
-      If you're not sure which device you own, AZW3 is the safe default. It's the format Amazon's own publishing pipeline produces, and it's what Send to Kindle builds behind the scenes.`
+      If you're not sure which device you own, AZW3 is the safe default. It's the format Amazon's own publishing pipeline produces, and it's what Send to Kindle builds behind the scenes. The route covers both directions, including [AZW to MOBI](/convert/azw-to-mobi) for hardware that stops short of AZW3.`
     },
     {
       heading: `AZW3 vs MOBI — quick comparison`,

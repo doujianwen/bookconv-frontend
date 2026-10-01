@@ -27,7 +27,7 @@ The solution was elegantly boring. RTF stores everything as plain ASCII with con
 
 **What it never learned to do:** reflow. RTF assumes a page. It has no idea what a phone screen is, no adjustable typography, no night mode, no navigation. Microsoft froze development in 2008 and stopped publishing the specification entirely.
 
-The format is not dead — it is just finished. It still shows up in legal templates, government forms, older Scrivener exports, and any archive built before DOCX took over.`
+The format is not dead — it is just finished. It still shows up in legal templates, government forms, older Scrivener exports, and any archive built before DOCX took over. Sending the text back the other way is just as direct with [EPUB to RTF](/convert/epub-to-rtf).`
     },
     {
       heading: 'What is EPUB Format?',

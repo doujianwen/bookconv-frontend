@@ -24,7 +24,7 @@ What EPUB layers on top of plain HTML:
 - **A manifest and spine** that define the real reading order
 - **A navigation document** (NAV in EPUB 3, NCX in EPUB 2) that builds the table of contents
 - **Metadata** — title, author, language, publisher, ISBN
-- **Optional DRM**, which is the one thing that stops a conversion cold`
+- **Optional DRM**, which is the one thing that stops a conversion cold  Packing those chapters back into a readable book is a single step away with [HTML to EPUB](/convert/html-to-epub).`
     },
     {
       heading: 'What is HTML Format?',

@@ -34,7 +34,7 @@ export const content = {
 
 **Official Resources:**
 - [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
-- [IDPF Official Site](https://idpf.org/)`
+- [IDPF Official Site](https://idpf.org/)  If plain text is not the target, the same EPUB can leave as a browsable page through [EPUB to HTML](/convert/epub-to-html).`
     },
     {
       heading: 'About TXT Format',

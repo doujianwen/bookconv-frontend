@@ -24,7 +24,7 @@ The whole design assumes reading, not editing. Text reflows to fit the screen, t
 - Highlights, notes, and full-text search
 - Working across Apple Books, Kobo, Nook, Google Play Books, and Kindle via Send to Kindle
 
-**Things it is not built for:** track changes, comments, redlining, or handing a chapter to an editor who lives inside Word. That is where RTF comes in.`
+**Things it is not built for:** track changes, comments, redlining, or handing a chapter to an editor who lives inside Word. That is where RTF comes in. The return trip, [RTF to EPUB](/convert/rtf-to-epub), rebuilds the same text as a ready-to-read ebook.`
     },
     {
       heading: 'What is RTF Format?',

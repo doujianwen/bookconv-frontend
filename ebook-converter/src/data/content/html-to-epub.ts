@@ -24,7 +24,7 @@ It is brilliant for the web and mildly awful for long reading. A browser tab has
 - Exported documentation from a static site generator
 - Output from a writing tool like Scrivener, Pandoc, or Google Docs
 
-All of those can become an ebook. The cleaner your markup, the better the result — but you do not need perfect HTML to get something readable.`
+All of those can become an ebook. The cleaner your markup, the better the result — but you do not need perfect HTML to get something readable. When the chapters only have to open in a browser, skip the ebook step and use [EPUB to HTML](/convert/epub-to-html) instead.`
     },
     {
       heading: 'What is EPUB Format?',

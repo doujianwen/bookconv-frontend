@@ -24,7 +24,8 @@ export const content = {
       heading: 'Quick Start: Convert Now',
       body: `The fastest path to AZW3 is our online converter. Upload your EPUB, choose **AZW3** as the output format, and download. The converter embeds your cover, preserves chapter structure, and maintains typography — all in the browser.
 
-Start converting: [/convert/epub-to-azw3](/convert/epub-to-azw3)`,
+Start converting: [/convert/epub-to-azw3](/convert/epub-to-azw3)  If the device predates AZW3 and needs the older format, land on [AZW to MOBI](/convert/azw-to-mobi) instead.
+ A print-ready copy of the same file is one click away with [AZW3 to PDF](/convert/azw3-to-pdf).`,
     },
     {
       heading: 'Learn the Details',

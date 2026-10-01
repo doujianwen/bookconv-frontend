@@ -17,7 +17,7 @@ export const content = {
   sections: [
     {
       heading: 'When you actually need EPUB to TXT',
-      body: `**TXT** is the simplest file format: pure characters, no styling. You reach for it when you need the words, not the layout — quoting in a document, running text through another processor, or making a book searchable. It is not a replacement for EPUB as a reading format; it is a side output. The reverse workflow, building a real ebook from text, is in [/blog/txt-to-epub](/blog/txt-to-epub).`,
+      body: `**TXT** is the simplest file format: pure characters, no styling. You reach for it when you need the words, not the layout — quoting in a document, running text through another processor, or making a book searchable. It is not a replacement for EPUB as a reading format; it is a side output. The reverse workflow, building a real ebook from text, is in [/blog/txt-to-epub](/blog/txt-to-epub). When the markup itself is what you want, the same file converts to a single page with [EPUB to HTML](/convert/epub-to-html).`,
     },
     {
       heading: 'What goes wrong in a bad EPUB to TXT export',

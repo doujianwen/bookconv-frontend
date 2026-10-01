@@ -21,7 +21,7 @@ So a LIT file today is a book you own and can't open. It isn't corrupted or dele
 - Reader-specific extras like ClearType rendering that don't exist elsewhere
 - Windows-only playback through software you can't legitimately install today
 
-Before you plan anything, check whether your files came from a store. Purchased LIT books often carry DRM, and that changes what's possible.`
+Before you plan anything, check whether your files came from a store. Purchased LIT books often carry DRM, and that changes what's possible. If a legacy Kindle still has to open the file, run the result on to [LIT to MOBI](/convert/lit-to-mobi).`
     },
     {
       heading: `What You Gain by Moving to EPUB`,

@@ -22,7 +22,7 @@ In 2011, Microsoft officially stopped supporting the LIT format and discontinued
 - **No reflowable text**: Fixed layout that does not adapt to different screen sizes
 - **Small File Size**: Efficient compression but limited features
 
-EPUB has become the universal standard for ebooks, supported by Apple Books, Google Play Books, Kobo, Amazon Kindle (via conversion), and virtually all modern reading platforms. Converting LIT to EPUB is not just a format change — it is a migration to the future of digital reading.`
+EPUB has become the universal standard for ebooks, supported by Apple Books, Google Play Books, Kobo, Amazon Kindle (via conversion), and virtually all modern reading platforms. Converting LIT to EPUB is not just a format change — it is a migration to the future of digital reading. On hardware that refuses EPUB entirely, carry the file on to [LIT to MOBI](/convert/lit-to-mobi) after the EPUB step.`
     },
     {
       heading: 'Why You Need to Convert LIT to EPUB',

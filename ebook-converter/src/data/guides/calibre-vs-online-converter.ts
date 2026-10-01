@@ -34,7 +34,10 @@ export const content = {
       heading: 'The verdict by use case',
       body: `**Use an online converter when:** it is a one-off file, you are on a device without Calibre, or you just want the result now.\n\n**Use Calibre when:** you convert constantly, need device-specific output, or the file is private enough that uploading it is a non-starter.\n\nMost people land somewhere in between — Calibre installed but rarely opened, and a bookmark for a fast online converter for everything else.
 
-For a single quick conversion, try [MOBI to EPUB](/convert/mobi-to-epub), [EPUB to AZW3](/convert/epub-to-azw3), or any of the other converters on BookConv — no install needed.`,
+For a single quick conversion, try [MOBI to EPUB](/convert/mobi-to-epub), [EPUB to AZW3](/convert/epub-to-azw3), or any of the other converters on BookConv — no install needed.For a single quick conversion, try [MOBI to EPUB](/convert/mobi-to-epub), [EPUB to AZW3](/convert/epub-to-azw3), or any of the other converters on BookConv — no install needed.
+
+For scanned or image-heavy sources, [DjVu to PDF](/convert/djvu-to-pdf) and [CBR to PDF](/convert/cbr-to-pdf) rebuild a book from its page images.
+If you want those pages on their own rather than inside a PDF, [EPUB to JPG](/convert/epub-to-jpg) and [EPUB to PNG](/convert/epub-to-png) export them one by one.`,
     },
   ],
 }

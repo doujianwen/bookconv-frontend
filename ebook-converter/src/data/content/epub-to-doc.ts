@@ -22,7 +22,7 @@ That design gives EPUB its defining trait: **reflowable text**. There are no fix
 - **Structured** — chapters, headings, and navigation are semantic, not visual guesses
 - **Universally supported** — Apple Books, Kobo, Google Play Books, and now Kindle
 
-The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in.`
+The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in. The same pipeline runs the other direction too: an old Word file becomes a reflowable book with [DOC to EPUB](/convert/doc-to-epub).`
     },
     {
       heading: 'What is DOC Format?',
