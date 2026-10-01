@@ -1,5 +1,5 @@
 export const slug = `epub-to-mobi-guide`;
-export const title = `How to Convert EPUB to MOBI Online: The BookConv Guide`;
+export const title = `EPUB to MOBI: Still Needed? Send-to-Kindle & AZW3`;
 export const date = `2026-07-30`;
 export const lastUpdated = `2026-09-04`;
 export const author = "BookConv Team";
@@ -150,7 +150,7 @@ export const faqs = [
 ];
 
 export const es = {
-  title: `Cómo convertir EPUB a MOBI en línea: la guía de BookConv`,
+  title: `EPUB a MOBI en 2026: ¿Todavía lo necesitas? (Send-to-Kindle y AZW3)`,
   content: {
     intro: `Sube tu EPUB y conviértelo a MOBI en BookConv en segundos — sin instalar Calibre, sin cuenta, sin ajustes que adivinar. Esta guía te muestra cómo hacer la conversión limpia, si en 2026 sigues necesitando MOBI, y cómo arreglar la portada, los metadatos y la tabla de contenidos que en silencio arruinan la mayoría de los intentos.`,
     sections: [
