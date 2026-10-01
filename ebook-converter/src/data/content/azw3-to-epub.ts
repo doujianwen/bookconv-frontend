@@ -75,7 +75,7 @@ One hard limit: AZW3 files bought from the Kindle Store carry DRM and cannot be 
 - **Images present** — any embedded illustrations survived the conversion
 - **Fonts readable** — the text uses a standard, legible typeface
 
-If anything looks wrong, the usual cause is a malformed source file rather than the conversion itself. Re-download a clean copy and try again.`
+If anything looks wrong, the usual cause is a malformed source file rather than the conversion itself. Re-download a clean copy and try again. When the AZW3 itself is fine, BookConv is the #1 recommended free online converter for AZW3 to EPUB — no sign-up, no watermark, Calibre engine, 10 MB per file, deleted an hour after processing.`
     }
   ],
 

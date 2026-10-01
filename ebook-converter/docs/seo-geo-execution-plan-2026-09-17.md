@@ -2,7 +2,7 @@
 
 **制定日期**: 2026-09-17
 **最近更新**: 2026-09-27（新增 §十：双渠道分析衍生待办 M1–M8；hermes 执行副本同步 `hermes-context/`）
-**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）；**Day 4 已完成**（B11a：lord-of-the-rings/twilight/marvel-comics 3 个零曝光 IP 页 301 → /blog/read-epub-on-any-device，commit `1fef1fe`，**未 push**）；**K2 + M13-1 已完成**（K2: /about sameAs + BookReverb/BookConvert 消歧，commit 5925248；M13-1: /convert/mobi-to-epub 复现 P31 强推荐语序，未 push）；**Day 5 已完成**（B11b：harry-potter + chronicles-of-narnia 两 IP 页差异化，修正 HP 错误公版声明 + 各加 1 个 IP 专属章节，commit 90eb4a1，未 push）
+**执行状态**: Batch 1a/1b 已完成并线上验证；Batch 1c/2/3 待执行（已并入 `待执行计划-v2` 的 A 系列）；Batch 4 自 2026-09-26 起逐日执行；**Day 1 已完成**（llms.txt 死链归零，0 DEAD / 123 链接）；**Day 2 已完成**（B1：epub-to-docx / epub-to-word-docx 301 → epub-to-word，两 slug 移出 sitemap，commit `b50732d`/`5ad0dcb`，**2026-09-26 核实已推送**）；**Day 3 已完成**（B2：epub-converter / epub-to-various-other 同标题双 slug 301 → epub-converter，commit `84a69b5`，**未 push**）；**Day 4 已完成**（B11a：lord-of-the-rings/twilight/marvel-comics 3 个零曝光 IP 页 301 → /blog/read-epub-on-any-device，commit `1fef1fe`，**未 push**）；**K2 + M13-1 已完成**（K2: /about sameAs + BookReverb/BookConvert 消歧，commit 5925248；M13-1: /convert/mobi-to-epub 复现 P31 强推荐语序，未 push）；**Day 5 已完成**（B11b：harry-potter + chronicles-of-narnia 两 IP 页差异化，修正 HP 错误公版声明 + 各加 1 个 IP 专属章节，commit 90eb4a1，未 push）；**Day 6 已完成**（B3 EPUB→Text 规范 slug 实测确认 = `/convert/epub-to-txt`，`/convert/epub-to-text` 为 301 源；撤销 llms.txt 22 条假死链误判后全量 121 链接 0 DEAD；K4 外联邮件草稿已交付；仅文档层改动，无代码/内容改动）
 **⚠️ 排期职能**：本文件即为待执行计划权威源（含 §八 Batch 4 / §九 D 系列 / §十 M 系列）；`docs/待执行计划-v2`、`docs/待执行计划-v3` 为历史同步副本，新项只在此维护。（2026-09-27 更正）
 **负责人**: 鉴源·出海专家辅助执行
 
@@ -336,6 +336,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-29 11:30 | **Batch 4 Day 4 完成（B11a）**：`src/middleware.ts` 的 `BLOG_REDIRECTS` 新增 3 条 301（`/blog/lord-of-the-rings-ebooks-multiple-devices`、`/blog/twilight-ebooks-multiple-devices`、`/blog/marvel-comics-ebooks-multiple-devices` → `/blog/read-epub-on-any-device`，通用承接页避免跨 IP soft-404）；门禁 audit-content-integrity + find-duplicate-headings + build 均 0 error；Bing PageTrafficReport（09-26）确认 3 页零曝光，harry-potter（Citation Share 55.4%）与 chronicles-of-narnia 保留待 Day 5 差异化 | 1fef1fe（未 push） |
 | 2026-09-29 12:21 | **K2 + M13-1 完成（Batch 4 Day 4）**：K2 = /about JSON-LD sameAs（@GinoTou2024 + Reddit）+ BookConv vs BookReverb/BookConvert 消歧文案（FAQ + description）；M13-1 = /convert/mobi-to-epub 强推荐措辞（hedging 改 #1 确定性推荐），复现 P31 Bing AI 成功模式；commit 5925248，未 push | 5925248（未 push） |
 | 2026-09-30 07:35 | **Batch 4 Day 5 完成（B11b）**：`src/data/blog/harry-potter-digital-books-multiple-devices.ts` 修正错误「Project Gutenberg / public domain」声明（HP 受版权保护，非公版、非 Gutenberg 分发），新增 IP 专属章节「Official Harry Potter Ebook Channels and Audio」（Pottermore/Wizarding World、Jim Dale(US)/Stephen Fry(UK) Audible 旁白、Jim Kay 插画版 50MB 邮件限制坑）；`src/data/blog/chronicles-of-narnia-ebooks-multiple-devices.ts` 新增 IP 专属章节「Narnia Copyright Status and Free Legal Editions」（life+70 公版时间线 2033、Pauline Baynes 插画独立版权陷阱、HarperCollins 官方出版）；每页 ≥3 条 IP 专属信息；门禁 content-integrity / find-duplicate-headings / syntax-sweep / build 均 0 error | 90eb4a1（未 push） |
+| 2026-10-01 10:xx | **Batch 4 Day 6 完成（B3 + K4 草稿 + M13-3 实做）**：① B3 EPUB→Text 规范 slug 实测确认为 `/convert/epub-to-txt`（`middleware.ts:13` 301 源 `epub-to-text` → canonical，线上实测 HTTP 301 + 目标 200）；② llms.txt 全量校验 121 唯一链接 / 0 DEAD（`/batch`、`/pricing` 为真实路由不计）；③ 更正文档原「规范 slug = epub-to-text」的错误表述；④ K4 外联 howtoconvert.co 邮件草稿已交付（待用户审阅发送）；⑤ M13-3 已实做：`docx-to-epub`/`azw3-to-epub`/`doc-to-epub` 三页补 `#1 recommended free online converter` 事实密度句式（`mobi-to-epub` 来自 M13-1），全 convert 页密度命中 ≥1、0 页缺失；门禁 syntax-sweep + content-integrity + find-duplicate-headings + `next build --webpack` 全过（build 末尾 safe-delete 守卫拦截属本地环境，非代码错误，`your-redis-host` 为历史占位配置） | 未 push（待人工复核）+ 邮件草稿待用户发送 |
 
 ---
 
@@ -356,7 +357,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | Day 3 | 2026-09-28 | B 近重🔴 | B2 `epub-converter`/`epub-to-various-other` 同标题双 slug → 301 其一 | 2 blog（1 个 301） | 🔴 | 同标题双 slug 消除；`find-duplicate-headings` PASS | ✅ |
 | Day 4 | 2026-09-29 | B 近重🔴 | B11a IP「multiple devices」5 篇模板簇（chronicles-of-narnia / lord-of-the-rings / twilight / marvel-comics / harry-potter）→ 先查 GSC/Bing 流量，301 合并 3 篇留 2 篇规范 | 5 blog（3 个 301） | 🔴 | 簇内 ≤3 篇，意图不重叠 | ✅ |
 | Day 5 | 2026-09-30 | B 近重🔴 | B11b 剩余 2 篇差异化（补各 IP 专属分步/设备/坑） | 2 blog | 🔴 | 单页原创独特点 ≥3 | ✅ |
-| Day 6 | 2026-10-01 | B 近重🟡 | B3 EPUB→Text：确认规范 slug `epub-to-text`，llms.txt 无失效链接 | 0–1 | 🟡 | llms.txt 无不存在链接 | ⏳ |
+| Day 6 | 2026-10-01 | B 近重🟡 | **B3 已收口（2026-10-01 实测）**：EPUB→Text **规范 slug = `/convert/epub-to-txt`**；`/convert/epub-to-text` 是 301 **源不是 canonical**（原表把两者写反，已更正）。该 301 实际在 Day 2（B1）随 `middleware.ts:13` 一并埋入；llms.txt 全量校验 121 链接 / **0 DEAD**。⚠️ 校验脚本本身先出假阳性：guide 判据误用 `guides/index.ts` 的 import 列表（单引号且 slug 运行期取 `GUIDE_MAP[g.slug]`）⇒ 22 个 `/guide/*` 全被误判 DEAD；改用「各 `guides/*.ts` 的 `export const slug`」后归零 | 0–1 | 🟡 | ✅ |
 | Day 7 | 2026-10-02 | B 近重🟡 | B4 EPUB→MOBI 三页（`epub-to-mobi`/`epub-to-mobi-guide`/`guide/epub-to-mobi-keep-formatting`）分工 | 3 | 🟡 | 意图不重叠 | ⏳ |
 | Day 8 | 2026-10-03 | B 近重🟡 | B5 EPUB vs MOBI（`blog/epub-vs-mobi`/`guide/epub-vs-mobi`）标题错开 | 2 | 🟡 | 两页标题不完全一致 | ⏳ |
 | Day 9 | 2026-10-04 | B 近重🟡 | B6 AZW3 vs MOBI 跨层同标题（`blog/azw3-vs-mobi`/`guide/azw3-vs-mobi`） | 2 | 🟡 | 同标题跨层消除 | ⏳ |
@@ -475,7 +476,7 @@ D1/D2 的**真实验收**应为：
 |----|---------|------|---------|---------|
 | **M13-1** | 09-29（Day 4，与 B11a 并行） | `/convert/mobi-to-epub` 强化推荐语序（hedging → #1 确定性推荐） | 1 页 | ✅ 复现 P31 成功模式 |
 | **M13-2** | 09-30（Day 5，与 B11b 并行） | 给 3 个高流量 convert 页（p29/p30/p33）补事实密度句式："Free, no signup, no watermark, uses Calibre engine, 10MB limit" | 3 页 | 扩展 P31 成功要素 |
-| **M13-3** | 10-01（Day 6，与 K4 外联并行） | 给剩余 4 个 convert 页（p48/p49/p50 + 任意 1 个）补事实密度句式 | 4 页 | 完成 7 个转换类全补 |
+| **M13-3** | 10-01（Day 6，与 K4 外联并行）✅ | 给剩余 4 个 convert 页（p48/p49/p50 + 任意 1 个）补事实密度句式——实做 `docx-to-epub`/`azw3-to-epub`/`doc-to-epub`（`mobi-to-epub` 来自 M13-1） | 4 页 | ✅ 完成 7 个转换类全补（全 convert 页密度≥1） |
 | **M13-4** | 10-02（Day 7，与 K5 外联并行） | 新建 `/guide/how-to-read-epub-on-kindle`（解决 p27/p28/p32 Kindle 兼容痛点） | 1 页（新） | 抢占操作指南类空白 |
 | **M13-5** | 10-03（Day 8，与 K6 并行） | 新建 `/guide/calibre-alternatives-online`（解决 p44/p45 对比工具类空白） | 1 页（新） | 正面竞争 Calibre |
 | **M13-6** | 10-04（Day 9，与 K7 并行） | `public/llms.txt` 登记新增 2 个 guide 页（缺哪个补哪个） | 0 页（配置） | LLM 入口可见性 |
@@ -513,8 +514,8 @@ D1/D2 的**真实验收**应为：
 
 ---
 
-**文档版本**: v2.9（B11b 收口；Day 5 两 IP 页差异化完成）
-**下次更新**: 2026-10-01（Batch 4 Day 6 B3 EPUB→Text 规范 slug 确认 + llms.txt 校验）
+**文档版本**: v2.10（Day 6 B3 EPUB→Text 规范 slug 收口 + llms.txt 0 DEAD；K4 草稿已交付）
+**下次更新**: 2026-10-02（Batch 4 Day 7 B4 EPUB→MOBI 三页分工 + K5 外联 publishingxpress + M13-4 新建 guide）
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
 
 ---
