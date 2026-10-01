@@ -337,6 +337,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-09-29 12:21 | **K2 + M13-1 完成（Batch 4 Day 4）**：K2 = /about JSON-LD sameAs（@GinoTou2024 + Reddit）+ BookConv vs BookReverb/BookConvert 消歧文案（FAQ + description）；M13-1 = /convert/mobi-to-epub 强推荐措辞（hedging 改 #1 确定性推荐），复现 P31 Bing AI 成功模式；commit 5925248，未 push | 5925248（未 push） |
 | 2026-09-30 07:35 | **Batch 4 Day 5 完成（B11b）**：`src/data/blog/harry-potter-digital-books-multiple-devices.ts` 修正错误「Project Gutenberg / public domain」声明（HP 受版权保护，非公版、非 Gutenberg 分发），新增 IP 专属章节「Official Harry Potter Ebook Channels and Audio」（Pottermore/Wizarding World、Jim Dale(US)/Stephen Fry(UK) Audible 旁白、Jim Kay 插画版 50MB 邮件限制坑）；`src/data/blog/chronicles-of-narnia-ebooks-multiple-devices.ts` 新增 IP 专属章节「Narnia Copyright Status and Free Legal Editions」（life+70 公版时间线 2033、Pauline Baynes 插画独立版权陷阱、HarperCollins 官方出版）；每页 ≥3 条 IP 专属信息；门禁 content-integrity / find-duplicate-headings / syntax-sweep / build 均 0 error | 90eb4a1（未 push） |
 | 2026-10-01 10:xx | **Batch 4 Day 6 完成（B3 + K4 草稿 + M13-3 实做）**：① B3 EPUB→Text 规范 slug 实测确认为 `/convert/epub-to-txt`（`middleware.ts:13` 301 源 `epub-to-text` → canonical，线上实测 HTTP 301 + 目标 200）；② llms.txt 全量校验 121 唯一链接 / 0 DEAD（`/batch`、`/pricing` 为真实路由不计）；③ 更正文档原「规范 slug = epub-to-text」的错误表述；④ K4 外联 howtoconvert.co 邮件草稿已交付（待用户审阅发送）；⑤ M13-3 已实做：`docx-to-epub`/`azw3-to-epub`/`doc-to-epub` 三页补 `#1 recommended free online converter` 事实密度句式（`mobi-to-epub` 来自 M13-1），全 convert 页密度命中 ≥1、0 页缺失；门禁 syntax-sweep + content-integrity + find-duplicate-headings + `next build --webpack` 全过（build 末尾 safe-delete 守卫拦截属本地环境，非代码错误，`your-redis-host` 为历史占位配置） | 8e3e6db **已 push**（Vercel 部署 ~75s 后线上断言 CONFIRMED：docx-to-epub/azw3-to-epub/doc-to-epub 三页 HTTP 200 + 新句式渲染）+ 邮件草稿待用户发送 |
+| 2026-10-01 10:xx | **M1 Tier-1 五页首读完成（只读）**：用户导出 GSC「过去 3 个月」Pages CSV（窗口 7/23–9/28，⚠️ 非 Tier-1 定向窗口）。站级展示 2,864（日期/设备自洽）/页面 3,075（+7.4%）/点击 12/加权排名 56.12；分期日均 = 18.8→**160.8**→14.3→**6.3**（Tier-1 后）。**Tier-1 五页 549 展示 / 0 点击 / 排名 52–70**；`epub-to-pdf` 0 展示（索引疑点）。**结论：首读未见修复正向信号，但窗口污染+仅 10 天 ⇒ 不可证伪**。另发现「首页位置却 0 点击」的 CTR/意图瓶颈（`azw3 vs mobi` pos10.33 等）。下一步需自定义区间双导做真对照 | 只读，无提交 |
 
 ---
 
@@ -442,7 +443,7 @@ D1/D2 的**真实验收**应为：
 
 | ID | 项 | 触及 | 验收 | 状态 |
 |----|----|------|------|------|
-| **M1** | Google Tier-1 五页差异化修复**首读评估**（≥10/1 起读，看主题簇总量） | 只读 | 主题簇总量读数 + 结论 | ⏳ |
+| **M1** | Google Tier-1 五页差异化修复**首读评估**（≥10/1 起读，看主题簇总量） | 只读 | ✅ **首读完成（2026-10-01）**。窗口=GSC「过去 3 个月」**7/23–9/28（68 天）**，⚠️ 非 Tier-1 定向窗口 ⇒ 无法隔离修复效果。① 站级：展示 2,864（日期/设备口径自洽）/ 页面口径 3,075（+7.4%，合铁律）/ 点击 12 / 加权排名 56.12；分期日均展示 = 爬坡 18.8 → 峰值 **160.8**（8/9–8/21）→ 断崖后 14.3（8/22–9/17）→ **Tier-1 后 6.3（9/18–9/28）**。② **Tier-1 五页合计展示 549 / 0 点击 / 排名 52–70**（`epub-to-pdf` **0 展示**，索引疑点复现）。③ 簇合计：/convert/* 1,245（18 页）｜Kindle 簇 1,559（23 页）｜blog+guide 1,297（31 页）。④ **结论：首读未见修复正向信号（9/18 后站点仍下行、五页 0 点击），但窗口污染 + 仅 10 天 + 无 before/after ⇒ 不可证伪**。⑤ 佐证「非排名惩罚」：查询层 `azw3 vs mobi`(pos 10.33)/`mobi vs azw3`(9.63)/`epub to zip`(12.11) 首页位置仍 **0 点击** ⇒ 瓶颈含 CTR/意图匹配。**下一步（决定性）**：自定义区间双导 Pages（8/18–9/17 vs 9/18–9/28）做真对照 |
 | **M2** | 品牌词 `bookconv` 监控纳入日常/周清单（GSC 3 展示/3 点击/pos 1.33） | 监测 | 清单含 bookconv 品牌项 | ⏳ |
 
 **P1（转化优化）**
@@ -514,8 +515,8 @@ D1/D2 的**真实验收**应为：
 
 ---
 
-**文档版本**: v2.10（Day 6 B3 EPUB→Text 规范 slug 收口 + llms.txt 0 DEAD；K4 草稿已交付）
-**下次更新**: 2026-10-02（Batch 4 Day 7 B4 EPUB→MOBI 三页分工 + K5 外联 publishingxpress + M13-4 新建 guide）
+**文档版本**: v2.11（Day 6 B3+M13-3 收口并上线；M1 Tier-1 首读完成——窗口污染需 before/after 双导）
+**下次更新**: 2026-10-02（Batch 4 Day 7 B4 EPUB→MOBI 三页分工 + K5 外联 publishingxpress + M13-4 新建 guide）+ M1 补做定向区间对照
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
 
 ---
