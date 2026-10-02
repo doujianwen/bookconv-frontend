@@ -1,7 +1,7 @@
 import { BlogFaq } from '../blog/types'
 
 export const slug = 'epub-vs-mobi'
-export const title = 'EPUB vs MOBI: Which Ebook Format Is Right for Your Device?'
+export const title = 'EPUB vs MOBI: Device Compatibility Guide'
 export const problem = 'EPUB and MOBI both hold ebooks, but they serve different purposes. One is the modern open standard; the other is the legacy Kindle format. Here is how they compare and which one your device actually needs.'
 export const date = '2026-09-10'
 export const updatedAt = '2026-09-10'
