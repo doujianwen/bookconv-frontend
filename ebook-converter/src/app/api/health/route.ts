@@ -67,7 +67,15 @@ async function checkDiskSpace(): Promise<{ ok: boolean; totalMb?: number; freeMb
     const dir = process.env.UPLOAD_DIR || '/tmp';
     const { execFile: ef2 } = await import('node:child_process');
     const execAsync2 = promisify(ef2);
-    const { stdout } = await execAsync2('df', ['-kP', dir]);
+    let stdout: string;
+    try {
+      ({ stdout } = await execAsync2('df', ['-kP', dir]));
+    } catch {
+      // 上传目录可能尚未创建（Serverless 冷启动首次调用），df 对不存在的路径
+      // 会报错。回退探测 /tmp —— 与 UPLOAD_DIR 默认值同属一个文件系统，剩余
+      // 空间等价（VPS 自定义挂载卷场景下仍优先返回真实挂载点数据）。
+      ({ stdout } = await execAsync2('df', ['-kP', '/tmp']));
+    }
     const lines = stdout.trim().split('\n');
     const dataLine = lines[lines.length - 1].trim().split(/\s+/);
     // -P 格式固定 6 列，Available 是第 4 列（index 3）
