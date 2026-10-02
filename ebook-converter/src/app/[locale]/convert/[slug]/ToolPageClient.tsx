@@ -18,6 +18,7 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
+import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
@@ -210,6 +211,12 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
             errorMessage={errorMessage}
             errorCode={errorCode}
           />
+          {status === "error" && (
+            <FeedbackWidget
+              variant="inline"
+              context={{ sourceFormat: source, targetFormat: target, errorCode }}
+            />
+          )}
           {status === "done" && downloadUrl && originalFileName && (
             <BeforeAfterComparison
               beforeFile={{

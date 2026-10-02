@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessage } from '@/i18n/utils'
 import { buildAlternates } from '@/lib/seo/alternates'
+import { FeedbackWidget } from '@/components/tools/FeedbackWidget'
 
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'es' }]
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
+      <FeedbackWidget />
     </NextIntlClientProvider>
   )
 }

@@ -53,6 +53,8 @@ export const RATE_LIMIT_STRATEGIES = {
   health: { windowMs: 1_000, maxRequests: 999_999 },
   /** Download API: 50 requests per IP per 3600s */
   downloadApi: { windowMs: 3600_000, maxRequests: 50 },
+  /** Feedback API: 5 requests per IP per 10min (anti-abuse, honeypot-backed) */
+  feedback: { windowMs: 600_000, maxRequests: 5 },
 } as const;
 
 const REDIS_KEY_PREFIX = "ratelimit:";

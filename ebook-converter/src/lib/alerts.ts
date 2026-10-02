@@ -100,3 +100,79 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
     });
   }
 }
+
+/**
+ * 发送用户反馈到飞书（复用 FEISHU_WEBHOOK_URL 通道）。
+ *
+ * 与转换失败告警共用同一 webhook，但用蓝色卡片区分；每条反馈独立发送
+ * （不做同类节流——反馈是用户主动提交、量级低，由路由层每 IP 限流兜底）。
+ * 未配置 webhook 时静默跳过；所有异常内部消化，绝不拖垮反馈主流程。
+ */
+export interface UserFeedbackPayload {
+  message: string;
+  email?: string;
+  sourceFormat?: string;
+  targetFormat?: string;
+  errorCode?: string;
+  path?: string;
+}
+
+export async function notifyUserFeedback(payload: UserFeedbackPayload): Promise<void> {
+  try {
+    const webhookUrl = process.env.FEISHU_WEBHOOK_URL;
+    if (!webhookUrl) return;
+
+    const contextLines = [
+      payload.sourceFormat && payload.targetFormat
+        ? `**Format:** ${payload.sourceFormat} → ${payload.targetFormat}`
+        : null,
+      payload.errorCode ? `**Error code:** ${payload.errorCode}` : null,
+      payload.path ? `**Page:** ${payload.path}` : null,
+      payload.email ? `**Reply-to:** ${payload.email}` : null,
+      `**Time:** ${new Date().toISOString()}`,
+    ].filter((line): line is string => Boolean(line));
+
+    const body = [
+      '**Message:**',
+      (payload.message || '(empty)').slice(0, 1000),
+      '',
+      ...contextLines,
+    ].join('\n');
+
+    const msg = JSON.stringify({
+      msg_type: 'interactive',
+      card: {
+        config: { wide_screen_mode: true },
+        header: {
+          title: { tag: 'plain_text', content: '💬 User Feedback' },
+          template: 'blue' as const,
+        },
+        elements: [
+          { tag: 'div', text: { tag: 'lark_md', content: body } },
+          {
+            tag: 'note',
+            elements: [
+              { tag: 'plain_text', content: 'Sent from feedback widget (src/lib/alerts.ts)' },
+            ],
+          },
+        ],
+      },
+    });
+
+    await Promise.race([
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: msg,
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('feishu feedback timeout')), 3000),
+      ),
+    ]);
+    log.conversion.info('User feedback alert sent');
+  } catch (err) {
+    log.conversion.warn('Failed to send user feedback alert', {
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+}
