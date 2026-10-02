@@ -108,17 +108,60 @@ async function checkQueueStuckJobs(): Promise<{ ok: boolean; stuckCount?: number
   });
 }
 
+/**
+ * 飞书告警通道配置检查（不参与 overall status——通知是可选项，未配置不应让站点报 degraded）。
+ * 2026-10-02：反馈卡片与转换失败告警「静默空转」的根因之一即通道未配置/被拒，
+ * 这里把配置状态暴露出来，便于从线上直接判定。
+ */
+function checkFeishu(): { ok: boolean; configured: boolean; keywordConfigured: boolean } {
+  const configured = Boolean(process.env.FEISHU_WEBHOOK_URL);
+  return {
+    ok: configured,
+    configured,
+    keywordConfigured: Boolean(process.env.FEISHU_WEBHOOK_KEYWORD),
+  };
+}
+
+/**
+ * Postgres 连通性检查（不参与 overall status——DB 未配置时 auth 退回内存存储，站点仍可用）。
+ * 用于判定线上 DATABASE_URL 是否可达（反馈落库 / 趋势看板依赖它）。
+ */
+async function checkDatabase(): Promise<{ ok: boolean; error?: string }> {
+  return safeCheck(async () => {
+    const url = process.env.DATABASE_URL;
+    if (!url) return { ok: false, error: "DATABASE_URL not configured" };
+    const { Pool } = await import("pg");
+    const pool = new Pool({
+      connectionString: url,
+      max: 1,
+      ssl: /supabase|neon|render|amazonaws/i.test(url)
+        ? { rejectUnauthorized: false }
+        : undefined,
+      connectionTimeoutMillis: 5000,
+    });
+    try {
+      await pool.query("SELECT 1");
+      return { ok: true };
+    } finally {
+      await pool.end().catch(() => {});
+    }
+  });
+}
+
 export async function GET(req: NextRequest) {
   const verbose = req.nextUrl.searchParams.get('verbose') === 'true';
   const apiKey = req.headers.get('x-api-key') || '';
   const allowed = apiKey === (process.env.VERIFICATION_API_KEY || '');
 
-  const [redisResult, calibreResult, diskResult, queueResult] = await Promise.all([
-    checkRedis(),
-    checkCalibre(),
-    checkDiskSpace(),
-    checkQueueStuckJobs(),
-  ]);
+  const [redisResult, calibreResult, diskResult, queueResult, feishuResult, dbResult] =
+    await Promise.all([
+      checkRedis(),
+      checkCalibre(),
+      checkDiskSpace(),
+      checkQueueStuckJobs(),
+      Promise.resolve(checkFeishu()),
+      checkDatabase(),
+    ]);
 
   // 转换能力 = Calibre 本地可用 或 CloudConvert 兜底已配置。
   // Vercel Serverless 无 Calibre 二进制是已知常态（走 CloudConvert），此前把
@@ -134,6 +177,12 @@ export async function GET(req: NextRequest) {
     redis: { ok: redisResult.ok },
     calibre: { ok: calibreResult.ok },
     disk: { ok: diskResult.ok },
+    feishu: {
+      ok: feishuResult.ok,
+      configured: feishuResult.configured,
+      keywordConfigured: feishuResult.keywordConfigured,
+    },
+    database: { ok: dbResult.ok },
     conversionBackend: {
       active: calibreResult.ok ? 'calibre' : cloudConvertConfigured ? 'cloudconvert' : 'none',
       cloudConvertConfigured,
@@ -162,6 +211,10 @@ export async function GET(req: NextRequest) {
 
   if ('stuckCount' in queueResult) {
     (checks.queue as Record<string, unknown>) = { stuckJobs: queueResult.stuckCount };
+  }
+
+  if (dbResult.error && (verbose || !allowed)) {
+    (checks.database as Record<string, unknown>).error = dbResult.error;
   }
 
   // Production non-verbose: minimal response
