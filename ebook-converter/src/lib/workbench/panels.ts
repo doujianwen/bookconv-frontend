@@ -134,6 +134,15 @@ export const PANELS: PanelMeta[] = [
     snapshotDate: '2026-09-27',
     href: '/admin/notifications',
   },
+  {
+    key: 'feedback',
+    labelZh: '用户反馈',
+    labelEn: 'User Feedback',
+    icon: 'MessageSquare',
+    group: 'Governance',
+    source: 'remote',
+    href: '/admin/feedback',
+  },
 ];
 
 export const PANEL_GROUPS: PanelMeta['group'][] = [

@@ -12,6 +12,7 @@
 // `live` while doing zero I/O.
 import type { PanelPayload, WorkbenchProvider } from './types';
 import { collectRepoFacts, parseDifferentiation, runScript, type RepoFacts } from './facts';
+import { getFeedbackStats, isFeedbackStoreConfigured } from '../feedback/store';
 
 /** Real request time. Never a literal. */
 function nowIso(): string {
@@ -557,6 +558,143 @@ export const repoProvider: WorkbenchProvider = {
       'static-snapshot',
       '2026-09-27',
       'static'
+    );
+  },
+
+  /**
+   * 用户反馈面板。数据源 = Postgres 表 user_feedback（由 POST /api/feedback 写入）。
+   * 与其它面板不同，这里读的是**真实用户输入**而非仓库事实，因此 sourceKind
+   * 标为 remote。若存储不可用，明确返回 unknown 而不是 0 ——「没有数据」与
+   * 「数据源未接」是两件事，混淆它们正是本工作台要消灭的失败模式。
+   */
+  async getFeedback(): Promise<PanelPayload> {
+    const stats = await getFeedbackStats(30);
+
+    if (stats === null) {
+      return stamp(
+        {
+          metrics: [
+            { label: 'Total feedback', value: 'unknown', trend: 'flat', hint: 'store not connected' },
+            { label: 'Last 7 days', value: 'unknown', trend: 'flat' },
+            { label: 'Last 30 days', value: 'unknown', trend: 'flat' },
+            { label: 'Feishu delivered', value: 'unknown', trend: 'flat' },
+          ],
+          pills: [
+            {
+              label: 'Feedback store',
+              level: 'critical',
+              detail: isFeedbackStoreConfigured()
+                ? 'DATABASE_URL is set but the query failed - see /api/health'
+                : 'DATABASE_URL not configured - feedback reaches Feishu only, nothing is persisted',
+            },
+          ],
+          notes: [
+            'No data source. Feedback may reach Feishu, but nothing is stored, so no trend can be computed.',
+            'Set DATABASE_URL to enable persistence. To make delivery land, also set FEISHU_WEBHOOK_URL and (if the bot enforces one) FEISHU_WEBHOOK_KEYWORD or FEISHU_WEBHOOK_SECRET.',
+          ],
+        },
+        'postgres:user_feedback',
+        new Date().toISOString(),
+        'remote'
+      );
+    }
+
+    const deliveredPct =
+      stats.total > 0 ? Math.round((stats.deliveredCount / stats.total) * 100) : 0;
+
+    return stamp(
+      {
+        metrics: [
+          { label: 'Total feedback', value: String(stats.total), trend: 'flat' },
+          { label: 'Last 7 days', value: String(stats.last7), trend: stats.last7 > 0 ? 'up' : 'flat' },
+          { label: 'Last 30 days', value: String(stats.last30), trend: 'flat' },
+          {
+            label: 'Feishu delivered',
+            value: `${stats.deliveredCount} / ${stats.total} (${deliveredPct}%)`,
+            trend: deliveredPct >= 90 ? 'up' : 'down',
+            goodDirection: 'up',
+            hint: 'a low percentage means the webhook is rejecting cards (keyword / signature security)',
+          },
+        ],
+        pills: [
+          { label: 'Feedback store', level: 'healthy', detail: 'postgres user_feedback reachable' },
+          {
+            label: 'Feishu delivery',
+            level: deliveredPct >= 90 ? 'healthy' : 'critical',
+            detail:
+              deliveredPct >= 90
+                ? 'cards accepted by the webhook'
+                : 'partial or zero delivery - check the bot security setting',
+          },
+        ],
+        tables: [
+          {
+            title: '每日反馈量（最近 14 天，倒序）',
+            columns: [
+              { key: 'date', label: 'Date' },
+              { key: 'count', label: 'Count', align: 'right', width: '90px' },
+            ],
+            rows: stats.daily
+              .slice(-14)
+              .reverse()
+              .map((d) => ({ id: `d-${d.date}`, cells: { date: d.date, count: d.count } })),
+            emptyMessage: '暂无数据',
+          },
+          {
+            title: '按错误码分布',
+            columns: [
+              { key: 'label', label: 'Error code' },
+              { key: 'count', label: 'Count', align: 'right', width: '90px' },
+            ],
+            rows: stats.byErrorCode.map((b, i) => ({
+              id: `e-${i}`,
+              cells: { label: b.label, count: b.count },
+            })),
+            emptyMessage: '暂无数据',
+          },
+          {
+            title: '按格式对分布',
+            columns: [
+              { key: 'label', label: 'Format pair' },
+              { key: 'count', label: 'Count', align: 'right', width: '90px' },
+            ],
+            rows: stats.byFormatPair.map((b, i) => ({
+              id: `f-${i}`,
+              cells: { label: b.label, count: b.count },
+            })),
+            emptyMessage: '暂无数据',
+          },
+          {
+            title: '最近反馈（最多 50 条）',
+            columns: [
+              { key: 'at', label: 'Time', width: '150px' },
+              { key: 'message', label: 'Message' },
+              { key: 'pair', label: 'Format', width: '130px' },
+              { key: 'code', label: 'Error', width: '130px' },
+              { key: 'sent', label: 'Sent', width: '90px', asPill: true },
+            ],
+            rows: stats.recent.map((r) => ({
+              id: r.id,
+              cells: {
+                at: r.createdAt.slice(0, 16).replace('T', ' '),
+                message: r.message.replace(/\s+/g, ' ').slice(0, 180),
+                pair: r.sourceFormat && r.targetFormat ? `${r.sourceFormat} → ${r.targetFormat}` : '—',
+                code: r.errorCode || '—',
+                sent: r.delivered ? 'healthy' : 'critical',
+              },
+            })),
+            emptyMessage: '暂无反馈',
+          },
+        ],
+        notes: [
+          'Source: postgres table user_feedback, written by POST /api/feedback next to the Feishu card.',
+          'Delivery % is derived from the Feishu webhook response code (0 = accepted). A low % points at the bot security setting, not at the user.',
+          'Privacy: only metadata is stored - never file contents or filenames.',
+        ],
+      },
+      'postgres:user_feedback',
+      new Date().toISOString(),
+      'remote'
     );
   },
 };

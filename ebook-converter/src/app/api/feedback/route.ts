@@ -13,6 +13,7 @@ import {
   RATE_LIMIT_STRATEGIES,
 } from '@/lib/rate-limit';
 import { notifyUserFeedback } from '@/lib/alerts';
+import { insertFeedback } from '@/lib/feedback/store';
 
 export const maxDuration = 10;
 
@@ -67,13 +68,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true }, { status: 200, headers: rateHeaders });
     }
 
-    await notifyUserFeedback({
+    const delivered = await notifyUserFeedback({
       message: data.message,
       email: data.email || undefined,
       sourceFormat: data.sourceFormat || undefined,
       targetFormat: data.targetFormat || undefined,
       errorCode: data.errorCode || undefined,
       path: data.path || undefined,
+    });
+
+    // 落库：即便飞书投递失败也记录（delivered 标记区分送达与否）。
+    // 存储层故障绝不影响用户可见结果（insertFeedback 内部消化异常）。
+    await insertFeedback({
+      message: data.message,
+      email: data.email || null,
+      sourceFormat: data.sourceFormat || null,
+      targetFormat: data.targetFormat || null,
+      errorCode: data.errorCode || null,
+      pagePath: data.path || null,
+      delivered,
     });
 
     return NextResponse.json({ ok: true }, { status: 200, headers: rateHeaders });

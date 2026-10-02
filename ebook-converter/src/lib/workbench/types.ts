@@ -21,7 +21,8 @@ export type PanelKey =
   | 'extensions'
   | 'users'
   | 'security'
-  | 'notifications';
+  | 'notifications'
+  | 'feedback';
 
 export type HealthLevel = 'healthy' | 'warning' | 'critical' | 'unknown';
 
@@ -171,6 +172,7 @@ export interface WorkbenchProvider {
   getUsers(): Promise<PanelPayload>;
   getSecurity(): Promise<PanelPayload>;
   getNotifications(): Promise<PanelPayload>;
+  getFeedback(): Promise<PanelPayload>;
 }
 
 export type ProviderGetterName = Exclude<keyof WorkbenchProvider, 'id' | 'label'>;
@@ -201,4 +203,5 @@ export const PANEL_TO_GETTER: Record<ProviderPanelKey, ProviderGetterName> = {
   users: 'getUsers',
   security: 'getSecurity',
   notifications: 'getNotifications',
+  feedback: 'getFeedback',
 };
