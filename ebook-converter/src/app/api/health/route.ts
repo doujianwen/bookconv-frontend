@@ -1,6 +1,7 @@
 // src/app/api/health/route.ts — Enhanced health check with Redis, Calibre, disk space.
 import { NextRequest, NextResponse } from 'next/server';
 import { getRedisClient } from '@/lib/redis';
+import { isCloudConvertConfigured } from '@/lib/cloudconvert';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
@@ -47,27 +48,34 @@ async function checkCalibre(): Promise<{ ok: boolean; version?: string; error?: 
 async function checkDiskSpace(): Promise<{ ok: boolean; totalMb?: number; freeMb?: number; error?: string }> {
   return safeCheck(async () => {
     // Use `df` on Linux/Mac or PowerShell/WMIC on Windows
-    const command = process.platform === 'win32'
-      ? 'wmic_logicaldisk get Size,FreeSpace /format:list'
-      : 'df -k "' + (process.env.UPLOAD_DIR || '/tmp') + '" | tail -1';
-
-    const { execFile: ef } = await import('node:child_process');
-    const execAsync = promisify(ef);
-    const { stdout } = await execAsync(command);
-
     if (process.platform === 'win32') {
+      const { execFile: ef } = await import('node:child_process');
+      const execAsync = promisify(ef);
+      const { stdout } = await execAsync('wmic_logicaldisk get Size,FreeSpace /format:list');
       const freeMatch = stdout.match(/FreeSpace=(\d+)/);
       const sizeMatch = stdout.match(/Size=(\d+)/);
       const freeMb = freeMatch ? Math.round(parseInt(freeMatch[1]) / (1024 * 1024)) : undefined;
       const totalMb = sizeMatch ? Math.round(parseInt(sizeMatch[1]) / (1024 * 1024)) : undefined;
       return { ok: !freeMb || freeMb > 50, totalMb, freeMb };
-    } else {
-      // df output: block free (in KB)
-      const parts = stdout.trim().split(/\s+/);
-      const freeKb = parseInt(parts[parts.length - 2] || '0');
-      const freeMb = Math.round(freeKb / 1024);
-      return { ok: freeMb > 50, freeMb, totalMb: freeMb * 4 }; // rough estimate
     }
+
+    // POSIX: df -kP 保证 6 列（Filesystem 1024-blocks Used Available Capacity Mounted）。
+    // 修复记录：此前把 shell 管道命令传给 execFile（'df -k "<dir>" | tail -1'），
+    // execFile 不经 shell 解析 → 恒 ENOENT → disk.ok 永远 false，/api/health 永久
+    // 误报 degraded（2026-10-02 诊断确认）。且旧解析取倒数第二列实为 Capacity%，
+    // 即使管道可用也会把容量百分比当剩余空间。现改为 -P 格式直接取第 4 列 Available。
+    const dir = process.env.UPLOAD_DIR || '/tmp';
+    const { execFile: ef2 } = await import('node:child_process');
+    const execAsync2 = promisify(ef2);
+    const { stdout } = await execAsync2('df', ['-kP', dir]);
+    const lines = stdout.trim().split('\n');
+    const dataLine = lines[lines.length - 1].trim().split(/\s+/);
+    // -P 格式固定 6 列，Available 是第 4 列（index 3）
+    const freeKb = parseInt(dataLine[3] || '0', 10);
+    const totalKb = parseInt(dataLine[1] || '0', 10);
+    const freeMb = Math.round(freeKb / 1024);
+    const totalMb = Math.round(totalKb / 1024);
+    return { ok: freeMb > 50, freeMb, totalMb };
   });
 }
 
@@ -104,7 +112,13 @@ export async function GET(req: NextRequest) {
     checkQueueStuckJobs(),
   ]);
 
-  const allOk = redisResult.ok && calibreResult.ok && diskResult.ok;
+  // 转换能力 = Calibre 本地可用 或 CloudConvert 兜底已配置。
+  // Vercel Serverless 无 Calibre 二进制是已知常态（走 CloudConvert），此前把
+  // calibre.ok=false 直接计入 overall → 转换完全正常时仍报 degraded，误导排障。
+  const cloudConvertConfigured = isCloudConvertConfigured();
+  const conversionCapable = calibreResult.ok || cloudConvertConfigured;
+
+  const allOk = redisResult.ok && diskResult.ok && conversionCapable;
   const status = allOk ? 'ok' : 'degraded';
   const statusCode = allOk ? 200 : 503;
 
@@ -112,6 +126,10 @@ export async function GET(req: NextRequest) {
     redis: { ok: redisResult.ok },
     calibre: { ok: calibreResult.ok },
     disk: { ok: diskResult.ok },
+    conversionBackend: {
+      active: calibreResult.ok ? 'calibre' : cloudConvertConfigured ? 'cloudconvert' : 'none',
+      cloudConvertConfigured,
+    },
   };
 
   if (redisResult.error && (verbose || !allowed)) {

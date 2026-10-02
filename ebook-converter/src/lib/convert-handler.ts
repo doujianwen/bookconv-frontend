@@ -12,6 +12,7 @@ import { NextResponse } from "next/server";
 import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 import { runConversion } from "@/lib/conversion";
+import { notifyConversionFailure } from "@/lib/alerts";
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024;
 
@@ -67,6 +68,15 @@ export async function convertAndStream(
     const convMsg = convErr instanceof Error ? convErr.message : String(convErr);
     console.error('[DEBUG] Conversion error:', convMsg);
     const errorCode = mapErrorCode(sanitizeError(convErr));
+    // 实时 Feishu 告警（节流 + 3s 超时，内部消化异常）：生产同步路径此前无任何
+    // 失败告警，2026-10-01 转换 100% 失败直到 T+1 才被 GA4 日报发现。
+    await notifyConversionFailure({
+      kind: 'conversion-error',
+      jobId,
+      sourceFormat,
+      targetFormat,
+      error: convMsg,
+    });
     // Surface raw error only when CC_DEBUG is explicitly enabled (prod-safe)
     const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convMsg } : {};
     return NextResponse.json(

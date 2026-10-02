@@ -18,6 +18,7 @@ import {
   RATE_LIMIT_STRATEGIES,
 } from "@/lib/rate-limit";
 import { convertAndStream } from "@/lib/convert-handler";
+import { notifyConversionFailure } from "@/lib/alerts";
 
 export const maxDuration = 300; // Vercel Pro 支持 300s；大文件（50+页EPUB→PDF经Calibre引擎）需 60-120s 处理时间
 
@@ -64,7 +65,13 @@ export async function POST(request: NextRequest) {
           headers,
         });
       } catch (fwdErr) {
-        console.error("POST /api/convert backend forward failed:", fwdErr instanceof Error ? fwdErr.message : fwdErr);
+        const fwdMsg = fwdErr instanceof Error ? fwdErr.message : String(fwdErr);
+        console.error("POST /api/convert backend forward failed:", fwdMsg);
+        // 后端不可达 = 全站转换不可用的最高优先信号，实时 Feishu 告警（节流见 alerts.ts）
+        await notifyConversionFailure({
+          kind: "backend-unavailable",
+          error: fwdMsg,
+        });
         return NextResponse.json(
           { error: "Conversion service temporarily unavailable. Please try again later." },
           { status: 503, headers: rateHeaders },
