@@ -88,13 +88,22 @@ export async function convertAndStream(
   const outBuffer = Buffer.from(result.base64Data, "base64");
   const ext = result.extension || "bin";
   const mimeType = result.mimeType || "application/octet-stream";
-  const baseName = file.name.replace(/\.[^.]+$/, "");
+  const baseName = file.name.replace(/\.[^.]+$/, "") || "converted";
+  // RFC 5987: HTTP header values are Latin1 (ByteString). A non-ASCII file name
+  // (e.g. Chinese "全集.epub") crashes Header construction with "Cannot convert
+  // argument to a ByteString" — this was the silent 100% conversion-failure root
+  // cause (conversion succeeded, the response header step threw). Encode the real
+  // name in filename*=UTF-8'' (percent-encoded, Latin1-safe) and keep an ASCII-only
+  // legacy filename fallback.
+  const asciiBase = baseName.replace(/[^\x20-\x7E]/g, "_");
+  const dispositionValue =
+    `attachment; filename="${asciiBase}.${ext}"; filename*=UTF-8''${encodeURIComponent(`${baseName}.${ext}`)}`;
 
   return new NextResponse(new Uint8Array(outBuffer), {
     status: 200,
     headers: {
       "Content-Type": mimeType,
-      "Content-Disposition": `attachment; filename="${baseName}.${ext}"`,
+      "Content-Disposition": dispositionValue,
       "Cache-Control": "no-store",
       ...rateHeaders,
     },

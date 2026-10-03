@@ -115,8 +115,12 @@ async function detectFormat(filePath: string): Promise<Detected> {
     if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return 'jpg';
     if (b[0] === 0x25 && b[1] === 0x50 && b[2] === 0x44 && b[3] === 0x46) return 'pdf'; // %PDF
     if (b[0] === 0x50 && b[1] === 0x4b && (b[2] === 0x03 || b[2] === 0x05 || b[2] === 0x07)) return 'zip'; // PK
-    const sig = b.subarray(0, 4).toString('latin1');
-    if (sig === 'BOOK' || sig === 'TEXt') return 'mobi';
+    // MOBI / AZW3 are PalmDB containers. The 4-byte type field at offset 60 is
+    // "BOOK" (creator "MOBI" sits at offset 64). Checking bytes 0-3 is wrong —
+    // those 32 bytes are the database *name*, not the type. That bug made every
+    // valid MOBI/AZW3 output mis-detect as 'unknown' and raise a spurious
+    // format-unverified warning. Fixed 2026-10-03 (ehermes).
+    if (b.length >= 68 && b.subarray(60, 64).toString('latin1') === 'BOOK') return 'mobi';
     if (b[0] === 0xd0 && b[1] === 0xcf && b[2] === 0x11 && b[3] === 0xe0) return 'ole'; // DOC/LIT
     if (b[0] === 0x52 && b[1] === 0x61 && b[2] === 0x72 && b[3] === 0x21) return 'rar'; // Rar! (CBR)
     if (b[0] === 0x41 && b[1] === 0x54 && b[2] === 0x26 && b[3] === 0x54) return 'djvu'; // AT&T
