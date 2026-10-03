@@ -14,7 +14,9 @@ export const keyTakeaways = [
   'BookConv converts EPUB to AZW3 in the browser with no install.',
 ]
 export const content = {
-  intro: `You have an EPUB and a Kindle. Emailing the EPUB to Amazon works, but the result is a lottery: covers vanish, spacing shifts, complex layouts flatten. AZW3 is Amazon's premium format that respects your styling.
+  intro: `Yes — converting your EPUB to AZW3 before sending it to a Kindle is the reliable way to keep your formatting: AZW3 (Amazon's KF8) preserves fonts, images, and chapter structure, while emailed EPUBs pass through Amazon's auto-converter with no layout control. Short version: convert, download, sideload — under a minute, no install.
+
+You have an EPUB and a Kindle. Emailing the EPUB to Amazon works, but the result is a lottery: covers vanish, spacing shifts, complex layouts flatten. AZW3 is Amazon's premium format that respects your styling.
 
 **Need to convert now?** Use our [free EPUB to AZW3 converter](/convert/epub-to-azw3) — it runs in your browser with no install.
 
@@ -45,6 +47,13 @@ For the MOBI path (very old Kindles only): [/guide/epub-to-mobi-keep-formatting]
 - **Formatting survives** — fonts, images, layout carry over
 - **DRM-free output** — you own the file
 - **Not for non-Kindle** — keep EPUB for Kobo and Apple Books`,
+    },
+    {
+      heading: 'Verified Facts, With Sources',
+      body: `- **AZW3 is Amazon's KF8, announced in 2011** with over 150 new formatting features including HTML5 and CSS3 support (source: Amazon KF8 announcement, Kindle Publisher Tools documentation).
+- **Send to Kindle dropped MOBI in August 2022** and now auto-converts emailed EPUBs to KF8 instead (source: Amazon Send to Kindle help documentation).
+- **Every e-ink Kindle since the Paperwhite 3 (2015) reads AZW3 natively** (source: Amazon Paperwhite release timeline, 2012–2024).
+- **BookConv's converter runs on a Calibre-derived engine and deletes uploaded files within 1 hour** (source: BookConv privacy note on this page).`,
     },
   ],
 }

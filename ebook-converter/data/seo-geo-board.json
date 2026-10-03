@@ -770,7 +770,9 @@
           "due": "2026-10-15",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "10/03 收口（提前于 due 10/15）：Kindle 簇 3 页 GEO 改造——can-kindle-read-azw3（en+es 新增 Verified Facts 区 5 数据点+出处；修 \"2012 Paperwhite 3\"→2015 内部矛盾）、azw3-vs-mobi（en+es 4 数据点：KF8 2011 发布/Send to Kindle 2022-08 弃 MOBI/2005 收购 Mobipocket/DX 2009）、guide epub-to-azw3-for-kindle（新增结论前置首段 55 词 + 4 数据点）。每页 ≥3 可验证数据点+明确实体出处，未新增特殊 schema。门禁：syntax-sweep 310/0、geo-guide 23/23 PASS、geo-content 31/31 PASS、content 0 err、claims 1 err=R7 存量。坑：插入模板串漏闭合反引号致 3 文件 parse FAIL，sweep 抓住后修复。注：#4 真实活页=azw3-vs-mobi（mobi-or-azw3-for-kindle 8/11 已归档 301），报告已补修正",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-6",

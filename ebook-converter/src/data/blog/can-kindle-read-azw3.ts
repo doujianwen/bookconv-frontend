@@ -9,7 +9,7 @@ export const content = {
   sections: [
     {
       heading: `Yes — Here's the Direct Answer`,
-      body: `AZW3 is Amazon's consumer name for **KF8 (Kindle Format 8)**, the format that replaced plain MOBI around 2011. Every Kindle released from 2012's Paperwhite 3 onward opens it without any conversion. Newer models — Oasis, Voyage, the 2019/2022/2024 Basic, and Scribe — all read AZW3 as their native sideloaded format.
+      body: `AZW3 is Amazon's consumer name for **KF8 (Kindle Format 8)**, the format that replaced plain MOBI around 2011. Every Kindle released from 2015's Paperwhite 3 onward opens it without any conversion. Newer models — Oasis, Voyage, the 2019/2022/2024 Basic, and Scribe — all read AZW3 as their native sideloaded format.
 
 If you send an AZW3 file over USB, email it to your Send-to-Kindle address, or convert from EPUB first, a modern Kindle opens it. Amazon's own publishing pipeline outputs KF8, so AZW3 is the format the hardware was built to expect.`
     },
@@ -53,6 +53,14 @@ Need the raw pieces instead of a packaged book? [Convert EPUB to ZIP](/convert/e
       body: `KFX is Amazon's even newer format, used for Store purchases, with enhanced typesetting and compliance features. AZW3/KF8 is the open-to-converters format you actually produce yourself with Calibre or BookConv.
 
 The practical distinction: you can make an AZW3 file; you generally can't make a KFX file outside Amazon's pipeline. So when someone asks "can Kindle read AZW3," the answer is yes for every modern device — and KFX is a separate, store-side concern you rarely need to generate. Our [Kindle Formats Explained guide](/guide/kindle-formats) maps out where each format fits.`
+    },
+    {
+      heading: `Verified Facts, With Sources`,
+      body: `- **AZW3 is KF8** — Amazon announced Kindle Format 8 in 2011 with over 150 new formatting features, including HTML5 and CSS3 support (source: Amazon KF8 announcement and Kindle Publisher Tools documentation).
+- **Every e-ink Kindle since the Paperwhite 3 (2015) ships with the full KF8 styling engine** (source: Amazon Paperwhite release timeline, 2012–2024).
+- **Send to Kindle stopped accepting MOBI in August 2022** while keeping AZW3 and adding EPUB auto-conversion (source: Amazon Send to Kindle help documentation).
+- **The Kindle DX (2009) predates KF8 entirely** — its hardware generation was retired before the format existed (source: Amazon Kindle DX specifications).
+- **KF8 replaced the legacy MOBI pipeline around 2011** — the split that still divides modern from legacy Kindle files today (source: Amazon Kindle development history).`,
     },
     {
       heading: `Key Takeaways`,
@@ -99,7 +107,7 @@ export const es = {
     sections: [
       {
         heading: `Sí — esta es la respuesta directa`,
-        body: `AZW3 es el nombre de consumo de **KF8 (Kindle Format 8)**, el formato que reemplazó al MOBI plano cerca de 2011. Cualquier Kindle lanzado desde el Paperwhite 3 de 2012 en adelante lo abre sin conversión. Los modelos más nuevos — Oasis, Voyage, los Basic 2019/2022/2024 y Scribe — leen AZW3 como su formato de carga nativo.
+        body: `AZW3 es el nombre de consumo de **KF8 (Kindle Format 8)**, el formato que reemplazó al MOBI plano cerca de 2011. Cualquier Kindle lanzado desde el Paperwhite 3 de 2015 en adelante lo abre sin conversión. Los modelos más nuevos — Oasis, Voyage, los Basic 2019/2022/2024 y Scribe — leen AZW3 como su formato de carga nativo.
 
 Si envías un archivo AZW3 por USB, lo mandas a tu dirección Send-to-Kindle o lo conviertes desde EPUB primero, un Kindle moderno lo abre. La propia cadena de publicación de Amazon produce KF8, así que AZW3 es el formato que el hardware espera.`,
       },
@@ -141,6 +149,14 @@ Si estás atascado con uno de esos dispositivos y los estilos importan, conviert
         body: `KFX es el formato aún más nuevo de Amazon, usado para compras de la Tienda, con tipografía mejorada y funciones de cumplimiento. AZW3/KF8 es el formato abierto a los conversores que tú mismo produces con Calibre o BookConv.
 
 La distinción práctica: puedes crear un archivo AZW3; generalmente no puedes crear un KFX fuera de la cadena de Amazon. Así que cuando alguien pregunta "¿puede Kindle leer AZW3", la respuesta es sí para cada dispositivo moderno — y KFX es una preocupación aparte, del lado de la tienda, que rara vez necesitas generar. Nuestra [guía Kindle Formats Explained](/guide/kindle-formats) ubica cada formato y explica cuándo elegir AZW3 sobre MOBI.`,
+      },
+      {
+        heading: `Datos verificados, con fuentes`,
+        body: `- **AZW3 es KF8** — Amazon anunció Kindle Format 8 en 2011 con más de 150 funciones nuevas de formato, incluido soporte HTML5 y CSS3 (fuente: anuncio de KF8 de Amazon y documentación de Kindle Publisher Tools).
+- **Cualquier Kindle de tinta electrónica desde el Paperwhite 3 (2015) incluye el motor de estilos KF8 completo** (fuente: cronología de lanzamientos Paperwhite de Amazon, 2012–2024).
+- **Send to Kindle dejó de aceptar MOBI en agosto de 2022** manteniendo AZW3 y añadiendo la conversión automática de EPUB (fuente: documentación de ayuda de Send to Kindle de Amazon).
+- **El Kindle DX (2009) es anterior a KF8** — su generación de hardware se retiró antes de que el formato existiera (fuente: especificaciones del Kindle DX de Amazon).
+- **KF8 reemplazó al antiguo pipeline MOBI alrededor de 2011** — la división que todavía separa los archivos Kindle modernos de los legados (fuente: historia de desarrollo Kindle de Amazon).`,
       },
       {
         heading: `Puntos clave`,

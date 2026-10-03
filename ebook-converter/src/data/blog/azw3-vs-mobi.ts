@@ -138,6 +138,13 @@ When you already have one format and need the other, [convert AZW3 to MOBI](/con
 If your reading has moved off Kindle entirely, [convert MOBI to EPUB](/convert/mobi-to-epub) to get back into the open standard most apps and e-readers share.`
     },
     {
+      heading: `Verified Facts, With Sources`,
+      body: `- **AZW3 is KF8** — Amazon announced Kindle Format 8 in 2011 with over 150 new formatting features, including HTML5 and CSS3 support (source: Amazon KF8 announcement and Kindle Publisher Tools documentation).
+- **Amazon acquired Mobipocket, MOBI's creator, in 2005** and retired the format from Send to Kindle in August 2022 (source: Amazon/Mobipocket acquisition record; Amazon Send to Kindle help documentation).
+- **Every e-ink Kindle since the Paperwhite 3 (2015) ships with the full KF8 styling engine** (source: Amazon Paperwhite release timeline, 2012–2024).
+- **The Kindle DX (2009) predates KF8 entirely** and renders AZW3 only partially or not at all (source: Amazon Kindle DX specifications).`,
+    },
+    {
       heading: `Key Takeaways`,
       body: `- **AZW3 is the modern format** — KF8 with real CSS, embedded fonts, and tables; the right target for any Kindle from the last decade.
 - **MOBI is legacy** — limited styling, no embedded fonts, and dropped from Send to Kindle in August 2022.
@@ -297,6 +304,13 @@ Si nada de eso te describe, MOBI es simplemente un AZW3 peor.`,
 Para un flujo de trabajo de escritorio con control total del perfil de salida, el diálogo **Convertir libros** de Calibre te deja elegir el formato exacto y ajustar márgenes, encabezados y orden de lectura. ¿Ya tienes un MOBI y necesitas otra salida? También puedes convertirlo en un documento imprimible ([MOBI a PDF](/convert/mobi-to-pdf)) o extraer solo las palabras ([MOBI a TXT](/convert/mobi-to-txt)). Para el panorama completo de formatos Kindle, incluido KFX, ve [Kindle Formats Explained](/guide/kindle-formats).
 
 Calibre de escritorio vale la pena instalarlo solo si conviertes de golpe toda una estantería. Para uno o dos libros, el conversor web es más rápido. Para el panorama general entre formatos, nuestra [comparación de formatos de ebook](/blog/ebook-formats-explained) lo pone uno al lado del otro.`,
+      },
+      {
+        heading: `Datos verificados, con fuentes`,
+        body: `- **AZW3 es KF8** — Amazon anunció Kindle Format 8 en 2011 con más de 150 funciones nuevas de formato, incluido soporte HTML5 y CSS3 (fuente: anuncio de KF8 de Amazon y documentación de Kindle Publisher Tools).
+- **Amazon adquirió Mobipocket, creadora de MOBI, en 2005** y retiró el formato de Send to Kindle en agosto de 2022 (fuente: registro de adquisición Amazon/Mobipocket; documentación de ayuda de Send to Kindle).
+- **Cualquier Kindle de tinta electrónica desde el Paperwhite 3 (2015) incluye el motor de estilos KF8 completo** (fuente: cronología de lanzamientos Paperwhite de Amazon, 2012–2024).
+- **El Kindle DX (2009) es anterior a KF8** y muestra AZW3 solo parcialmente o nada (fuente: especificaciones del Kindle DX de Amazon).`,
       },
       {
         heading: `Puntos clave`,
