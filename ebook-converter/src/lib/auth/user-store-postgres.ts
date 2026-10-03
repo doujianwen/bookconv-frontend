@@ -103,4 +103,17 @@ export const postgresUserStore: UserStore = {
     );
     return result.rowCount !== null && result.rowCount > 0;
   },
+
+  async setPassword(email, newPassword) {
+    await ensureTable();
+    const client = await getPool();
+    // UPDATE 不带 ON CONFLICT：账号不存在时 rowCount=0，如实返回，
+    // 绝不静默插入一个空账号（那会让「改密」变成「注册」）。
+    const result = await client.query(
+      `UPDATE ${TABLE} SET password_hash = $2 WHERE email = $1`,
+      [email.toLowerCase(), hashPassword(newPassword)]
+    );
+    if (result.rowCount === 0) return { success: false, error: 'Account not found' };
+    return { success: true };
+  },
 };

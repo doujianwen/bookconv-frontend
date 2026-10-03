@@ -163,6 +163,18 @@ export async function middleware(request: NextRequest) {
       response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
       return applySecurityHeaders(request, response);
     }
+    // /es/auth — localized sign-in page (2026-10-03). Same reasoning as the
+    // workbench above: an auth page is not indexable content (it sets
+    // robots noindex,nofollow), so serving it under /es creates no
+    // pseudo-Spanish signal. Without this whitelist the operator working in
+    // the Spanish UI had no reachable login route — /es/auth fell through to
+    // the catch-all 404 below, while the workbench it unlocks lives at
+    // /es/admin. The page now exists at src/app/[locale]/auth/page.tsx.
+    if (pathname === '/es/auth' || pathname.startsWith('/es/auth/')) {
+      const response = NextResponse.next();
+      response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+      return applySecurityHeaders(request, response);
+    }
 
     // All other /es/* paths → 404 (static pages, blog without es version)
     return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
@@ -200,6 +212,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - sitemap.xml, robots.txt (metadata files — must bypass i18n rewrite)
      */
-    '/((?!api|auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html)$).*)',
+    '/((?!api|auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|manifest.json|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html)$).*)',
   ],
 };

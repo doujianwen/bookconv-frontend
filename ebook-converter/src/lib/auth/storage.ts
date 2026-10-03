@@ -37,3 +37,14 @@ export async function getUser(email: string): Promise<StoredUser | null> {
 export async function userExists(email: string): Promise<boolean> {
   return getStore().userExists(email);
 }
+
+/**
+ * 覆盖式设置新密码。**不校验旧密码** —— 鉴权由调用方（API 层）负责。
+ * 账号不存在时返回 { success:false }，绝不隐式创建账号。
+ */
+export async function changePassword(
+  email: string,
+  newPassword: string
+): Promise<{ success: boolean; error?: string }> {
+  return getStore().setPassword(email, newPassword);
+}

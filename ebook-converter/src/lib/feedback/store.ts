@@ -128,6 +128,67 @@ export interface FeedbackRow {
   delivered: boolean;
 }
 
+/**
+ * 取「飞书未送达」的反馈记录，按时间正序（最早的先补发）。
+ *
+ * 用途：反馈通道是**尽力而为**的——webhook 未配置、机器人关键词校验、
+ * 网络抖动都会让一条反馈落库却没通知到人。这些记录在运营台上显示为
+ * 红点，但不会自己恢复。运营者需要一条受控的补发通道。
+ *
+ * 排序用 ASC 而非 DESC：补发时先处理最早被漏掉的，符合告警语义。
+ */
+export async function getUndeliveredFeedback(limit = 20): Promise<FeedbackRow[] | null> {
+  if (!isFeedbackStoreConfigured()) return null;
+  try {
+    await ensureTable();
+    const client = await getPool();
+    const result = await client.query(
+      `SELECT id::text AS id, created_at::text AS created_at, message, email,
+              source_format, target_format, error_code, page_path, delivered
+         FROM ${TABLE}
+        WHERE delivered = FALSE
+        ORDER BY created_at ASC
+        LIMIT $1`,
+      [limit]
+    );
+    return result.rows.map(toFeedbackRow);
+  } catch (err) {
+    console.error(
+      '[feedback-store] undelivered query failed:',
+      err instanceof Error ? err.message : String(err)
+    );
+    return null;
+  }
+}
+
+/**
+ * 把指定 id 的反馈标记为已送达。
+ *
+ * 只在**飞书真正返回成功**后调用——这正是本仓库头号失败模式
+ * （「静默假成功」）的防线：绝不因为「已尝试发送」就置 delivered=true，
+ * 否则重推脚本会把失败的记录标成成功，红点消失但通知从未送达。
+ *
+ * @returns 实际更新的行数；0 表示 id 不存在或已被标记过。
+ */
+export async function markFeedbackDelivered(ids: string[]): Promise<number> {
+  if (!isFeedbackStoreConfigured() || ids.length === 0) return 0;
+  try {
+    await ensureTable();
+    const client = await getPool();
+    const result = await client.query(
+      `UPDATE ${TABLE} SET delivered = TRUE WHERE id = ANY($1::bigint[]) AND delivered = FALSE`,
+      [ids]
+    );
+    return result.rowCount ?? 0;
+  } catch (err) {
+    console.error(
+      '[feedback-store] mark delivered failed:',
+      err instanceof Error ? err.message : String(err)
+    );
+    return 0;
+  }
+}
+
 export interface FeedbackStats {
   total: number;
   last7: number;
@@ -141,6 +202,31 @@ export interface FeedbackStats {
 
 function ymd(d: Date): string {
   return d.toISOString().slice(0, 10);
+}
+
+/** DB 行 → FeedbackRow。getUndeliveredFeedback 与 getFeedbackStats 共用。 */
+function toFeedbackRow(r: {
+  id: string;
+  created_at: string;
+  message: string;
+  email: string | null;
+  source_format: string | null;
+  target_format: string | null;
+  error_code: string | null;
+  page_path: string | null;
+  delivered: boolean;
+}): FeedbackRow {
+  return {
+    id: r.id,
+    createdAt: r.created_at,
+    message: r.message,
+    email: r.email,
+    sourceFormat: r.source_format,
+    targetFormat: r.target_format,
+    errorCode: r.error_code,
+    pagePath: r.page_path,
+    delivered: r.delivered,
+  };
 }
 
 /**
@@ -208,29 +294,7 @@ export async function getFeedbackStats(days = 30): Promise<FeedbackStats | null>
       daily,
       byErrorCode: byErrR.rows as FeedbackBreakdown[],
       byFormatPair: byPairR.rows as FeedbackBreakdown[],
-      recent: recentR.rows.map(
-        (r: {
-          id: string;
-          created_at: string;
-          message: string;
-          email: string | null;
-          source_format: string | null;
-          target_format: string | null;
-          error_code: string | null;
-          page_path: string | null;
-          delivered: boolean;
-        }): FeedbackRow => ({
-          id: r.id,
-          createdAt: r.created_at,
-          message: r.message,
-          email: r.email,
-          sourceFormat: r.source_format,
-          targetFormat: r.target_format,
-          errorCode: r.error_code,
-          pagePath: r.page_path,
-          delivered: r.delivered,
-        })
-      ),
+      recent: recentR.rows.map(toFeedbackRow),
     };
   } catch (err) {
     console.error(

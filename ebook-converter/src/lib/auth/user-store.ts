@@ -18,6 +18,11 @@ export interface UserStore {
   authenticate(email: string, password: string): Promise<{ success: boolean; error?: string }>;
   getUser(email: string): Promise<StoredUser | null>;
   userExists(email: string): Promise<boolean>;
+  /**
+   * 覆盖式设置新密码。调用方**必须**已验证旧密码或持有特权——本方法
+   * 不做任何身份校验，鉴权在 API 层（/api/auth/change-password）完成。
+   */
+  setPassword(email: string, newPassword: string): Promise<{ success: boolean; error?: string }>;
 }
 
 export function hashPassword(password: string): string {
@@ -62,5 +67,12 @@ export const memoryUserStore: UserStore = {
 
   async userExists(email) {
     return users.has(email.toLowerCase());
+  },
+
+  async setPassword(email, newPassword) {
+    const key = email.toLowerCase();
+    if (!users.has(key)) return { success: false, error: 'Account not found' };
+    users.set(key, { email: key, passwordHash: hashPassword(newPassword) });
+    return { success: true };
   },
 };
