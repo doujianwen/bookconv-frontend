@@ -1,0 +1,36 @@
+NOTE 查询数.csv: loose GSC UI export, snapshot date unknown
+NOTE 网页.csv: loose GSC UI export, snapshot date unknown
+NOTE 国家_地区.csv: loose GSC UI export, snapshot date unknown
+NOTE 设备.csv: loose GSC UI export, snapshot date unknown
+NOTE 图表.csv: loose GSC UI export, snapshot date unknown
+NOTE 搜索结果呈现.csv: loose GSC UI export, snapshot date unknown
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\google\normalized_google_search.csv rows=6876
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\bing\normalized_bing_search.csv rows=1065
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\ai_search\normalized_bing_ai.csv rows=829
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\bing\normalized_bing_url_index_state.csv rows=525
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\bing\bing_dark_pages_Bing暗页清单-EN-77.csv rows=77
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\serp\normalized_serp.csv rows=138
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\reddit\normalized_reddit.csv rows=17
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_products.csv rows=2
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_personas.csv rows=9
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_scenarios.csv rows=63
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_questions.csv rows=267
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_clusters.csv rows=20
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_question_cluster.csv rows=267
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_briefs.csv rows=18
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_citations.csv rows=129
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_entities.csv rows=20
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_prompts.csv rows=10
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_monitors.csv rows=131
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_content_gaps.csv rows=5
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_keywords.csv rows=41
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\table_keyword_hits.csv rows=0
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\normalized_questions.csv rows=267
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\normalized_clusters.csv rows=20
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\normalized_content_gaps.csv rows=5
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\normalized_monitors.csv rows=131
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\normalized_citations.csv rows=129
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\user_intent\intent_seeds.json_normalized.csv rows=25
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\content\normalized_content.csv rows=109
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\events\event_timeline.csv rows=996
+WROTE E:\一人公司\电子书格式转换站\ebook-converter\bookconv_data_asset\reports\data_quality.csv rows=12

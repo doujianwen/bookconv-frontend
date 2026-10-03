@@ -1,0 +1,13 @@
+﻿file,row_count,date_min,date_max,duplicate_rows,unique_query_key,unique_page_key,unique_entity,unique_text,null_query_key,null_page_key,null_entity,null_text,null_date
+normalized_google_search.csv,6876,2026-07-23,2026-09-04,0,390,54,0,0,1566,6527,6876,6876,4330
+normalized_bing_search.csv,1065,2026-07-26,2026-09-05,0,233,45,0,0,347,942,1065,1065,841
+normalized_bing_ai.csv,829,2026-07-27,2026-09-05,0,39,36,0,0,612,549,829,829,497
+normalized_serp.csv,138,,,0,39,0,0,0,0,138,138,138,138
+normalized_reddit.csv,17,,,0,10,0,0,0,0,17,17,17,17
+normalized_questions.csv,267,2026-08-15,2026-08-15,0,0,0,0,267,267,267,267,0,267
+normalized_clusters.csv,20,2026-08-15,2026-08-15,0,0,0,0,0,20,20,20,20,20
+normalized_content_gaps.csv,5,2026-08-15,2026-08-15,0,0,0,0,0,5,5,5,5,5
+normalized_monitors.csv,131,2026-08-15,2026-08-24,0,0,0,0,0,131,131,131,131,131
+normalized_citations.csv,129,2026-06-12,2026-08-26,0,0,0,0,0,129,129,129,129,129
+normalized_content.csv,109,2026-07-12,2026-09-07,0,0,0,0,0,109,109,109,109,109
+event_timeline.csv,996,2026-07-12,2026-09-07,0,0,0,641,0,996,996,0,996,996

@@ -1,0 +1,3 @@
+﻿id,name,market,target_customer,description,created_at,intent_schema
+1,GEO 入门课 $47,欧美（US/UK/EU）,B2B 营销负责人、SEO 经理、内容营销经理,面向营销人的生成式引擎优化（GEO）入门课程，帮助品牌在 ChatGPT/Gemini/Perplexity 中被引用。,2026-08-15 17:21:48,
+2,bookconv.com,全球 EN + ES,需要电子书格式转换的个人与内容创作者,电子书格式转换站（27 转换页 + FAQPage JSON-LD + llms.txt）。GEO 目标：在 ChatGPT/Gemini/Claude/Perplexity 的 ebook 转换类问答中被引用。,2026-08-15 18:00:30,"[""设备兼容"", ""AI 喂料"", ""遗留格式"", ""排版版式"", ""效率与替代"", ""排障科普"", ""选型拦截""]"

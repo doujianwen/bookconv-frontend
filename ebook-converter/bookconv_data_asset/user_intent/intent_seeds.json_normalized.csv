@@ -1,0 +1,26 @@
+﻿question,query_key,intent,target_slug,source_file
+epub to azw3,epub to azw3,device,epub-to-azw3,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+azw3 to epub,azw3 to epub,device,azw3-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+azw3 to mobi,azw3 to mobi,device,azw3-to-mobi,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub to pdf,epub to pdf,device,epub-to-pdf,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub to txt,epub to txt,ai-feed,epub-to-txt,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub to word,epub to word,ai-feed,epub-to-word,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub to html,epub to html,ai-feed,epub-to-html,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+lit to epub,lit to epub,legacy,lit-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+djvu to pdf,djvu to pdf,legacy,djvu-to-pdf,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+fb2 to epub,fb2 to epub,legacy,fb2-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+rtf to epub,rtf to epub,legacy,rtf-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+pdf to epub,pdf to epub,layout,pdf-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+docx to epub,docx to epub,layout,docx-to-epub,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub to mobi,epub to mobi,efficiency,epub-to-mobi,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+azw3 to pdf,azw3 to pdf,efficiency,azw3-to-pdf,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+calibre alternative,calibre alternative,efficiency,calibre-alternative,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+batch ebook converter,batch ebook converter,efficiency,batch-converter,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub vs azw3,epub vs azw3,troubleshoot,epub-vs-azw3,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+fix epub to pdf formatting,fix epub to pdf formatting,troubleshoot,fix-epub-to-pdf-formatting,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+ebook formats explained,ebook formats explained,troubleshoot,ebook-formats-explained,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub vs pdf,epub vs pdf,troubleshoot,epub-vs-pdf,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+epub file not opening,epub file not opening,troubleshoot,epub-file-not-opening,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+ai ebook converter,ai ebook converter,intercept,ai-ebook-converter,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+best ebook converter,best ebook converter,intercept,best-ebook-converter,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json
+kindle supported formats,kindle supported formats,intercept,kindle-formats,E:\一人公司\电子书格式转换站\ebook-converter\geo\intent-seeds.json

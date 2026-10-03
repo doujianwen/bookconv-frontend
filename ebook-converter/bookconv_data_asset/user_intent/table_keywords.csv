@@ -1,0 +1,42 @@
+﻿id,product_id,name,pattern,type,intent_class,priority,usage_count,last_hit_at,notes,created_at
+1,1,知识类,what is|what's|define|definition|explain|means|meaning,intent,Knowledge,P1,0,,匹配定义类问题,2026-08-24 22:05:44
+2,1,对比类,vs|versus|difference|compare|comparison|how is.*different,intent,Comparison,P1,0,,匹配对比类问题,2026-08-24 22:05:44
+3,1,推荐类,best|recommend|top|which.*to use|good.*for,intent,Recommendation,P0,0,,匹配推荐类问题,2026-08-24 22:05:44
+4,1,购买决策,buy|purchase|hire|worth|price|cost|expensive|cheap|should i,intent,Buying,P0,0,,匹配购买决策类问题,2026-08-24 22:05:44
+5,1,解决方案,how to|how do|i need|solution|fix|solve|make.*work,intent,Solution,P1,0,,匹配解决方案类问题,2026-08-24 22:05:44
+6,1,评测类,review|real.*result|actually work|case study|proof,intent,Review,P1,0,,匹配评测类问题,2026-08-24 22:05:44
+7,1,替代方案,alternative|instead of|other than|different from,intent,Alternative,P1,0,,匹配替代方案类问题,2026-08-24 22:05:44
+8,1,趋势类,future|trend|will|going to|next.*year|evolving,intent,Future,P2,0,,匹配趋势类问题,2026-08-24 22:05:44
+9,1,问题类,why|problem|issue|trouble|can't|not working|help,intent,Problem,P1,0,,匹配问题类问题,2026-08-24 22:05:44
+10,1,专家类,expert|professional|agency|consultant|specialist,intent,Expert,P2,0,,匹配专家/服务类问题,2026-08-24 22:05:44
+11,1,ChatGPT,chatgpt|openai,entity,,P0,0,,匹配 ChatGPT 相关问句,2026-08-24 22:05:44
+12,1,Gemini,gemini|google ai|bard,entity,,P0,0,,匹配 Gemini 相关问句,2026-08-24 22:05:44
+13,1,Claude,claude|anthropic,entity,,P0,0,,匹配 Claude 相关问句,2026-08-24 22:05:44
+14,1,Perplexity,perplexity,entity,,P0,0,,匹配 Perplexity 相关问句,2026-08-24 22:05:44
+15,1,课程,course|class|training|learn|tutorial|guide,phrase,Buying,P0,0,,匹配课程相关问句,2026-08-24 22:05:44
+16,1,SEO vs GEO,seo|search engine optimization|traditional seo,keyword,Comparison,P1,0,,匹配 SEO 对比相关问句,2026-08-24 22:05:44
+17,1,AEO,aero|answer engine optimization|ai engine optimization,keyword,Knowledge,P2,0,,匹配 AEO 相关问句,2026-08-24 22:05:44
+18,1,B2B,b2b|business|company|enterprise|agency,keyword,Buying,P1,0,,匹配 B2B 场景问句,2026-08-24 22:05:44
+19,1,营销人,marketer|content creator|seo manager|growth hacker,keyword,Scenario,P2,0,,匹配营销人角色问句,2026-08-24 22:05:44
+20,1,引用追踪,cite|citation|reference|mention|tracked|monitor,keyword,Solution,P1,0,,匹配引用追踪相关问句,2026-08-24 22:05:44
+21,2,EPUB,epub,keyword,Knowledge,P1,0,,匹配 EPUB 格式相关问句,2026-08-24 22:05:44
+22,2,MOBI,mobi,keyword,Knowledge,P1,0,,匹配 MOBI 格式相关问句,2026-08-24 22:05:44
+23,2,AZW,azw|azw3|kindle format,keyword,Knowledge,P1,0,,匹配 AZW/Kindle 格式相关问句,2026-08-24 22:05:44
+24,2,TXT,txt|text format,keyword,Knowledge,P2,0,,匹配 TXT 格式相关问句,2026-08-24 22:05:44
+25,2,转换工具,converter|convert|transform,keyword,Solution,P0,0,,匹配转换工具相关问句,2026-08-24 22:05:44
+26,2,批量转换,batch|bulk|multiple files,keyword,Solution,P0,0,,匹配批量转换相关问句,2026-08-24 22:05:44
+27,2,Calibre,calibre,entity,Alternative,P1,0,,匹配 Calibre 替代方案问句,2026-08-24 22:05:44
+28,2,AI 转换,ai|artificial intelligence|ml|machine learning,keyword,Review,P1,0,,匹配 AI 转换评测相关问句,2026-08-24 22:05:44
+29,2,Kindle,kindle|amazon|prime reading,entity,Knowledge,P0,0,,匹配 Kindle 设备相关问句,2026-08-24 22:05:44
+30,2,iOS/Android,iphone|ipad|android|mobile|app,keyword,Scenario,P2,0,,匹配移动设备相关问句,2026-08-24 22:05:44
+31,2,格式对比,format comparison|which format|better format,intent,Comparison,P1,0,,匹配格式对比类问题,2026-08-24 22:05:44
+32,2,兼容性,compatible|support|work on|device,intent,Knowledge,P1,0,,匹配兼容性相关问句,2026-08-24 22:05:44
+33,1,test-keyword,test.*keyword,intent,Knowledge,P2,0,,测试关键词,2026-08-24 22:05:55
+34,2,对比类,vs|versus|difference|compared to,intent,Comparison,P0,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+35,2,推荐类,best|top|recommended|which.*to use|good.*for,intent,Recommendation,P0,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+36,2,替代方案,alternative|instead of|other than|different from|without calibre,intent,Alternative,P0,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+37,2,购买决策,buy|purchase|price|cost|paid|free|worth|should i,intent,Buying,P1,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+38,2,问题类,error|cannot|cant|won't work|not working|problem|issue,intent,Problem,P1,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+39,2,解决方案,how to|how do|i need|fix|solution|convert.*to,intent,Solution,P1,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+40,2,评测类,review|result|actually work|works.*on|tested,intent,Review,P1,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50
+41,2,专家类,professional|service|hire|agency|consultant,intent,Expert,P2,0,,Auto-added for bookconv intent classification,2026-08-24 22:35:50

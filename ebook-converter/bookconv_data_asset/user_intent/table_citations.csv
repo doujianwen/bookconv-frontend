@@ -1,0 +1,130 @@
+﻿id,product_id,brief_id,engine,query_text,query_date,mentioned,brand_mentioned,notes,monitor_id,result,position,cited_url,sentiment
+1,1,,ChatGPT,Best GEO course for marketers in 2026,2026-06-12,0,0,未进入推荐列表。,1,not_found,,,neutral
+2,1,,Perplexity,Best GEO course for marketers in 2026,2026-07-15,0,1,出现品牌名但未作为来源引用。,1,brand_only,,,neutral
+3,1,,ChatGPT,Best GEO course for marketers in 2026,2026-08-10,1,1,推荐列表第 2 位，作为来源被引用。,1,cited,2,https://geo.academy/best-geo-course,positive
+4,1,,ChatGPT,How do I get ChatGPT to cite my website,2026-06-20,0,0,无引用。,2,not_found,,,neutral
+5,1,,ChatGPT,How do I get ChatGPT to cite my website,2026-08-05,1,1,置顶答案直接引用了我们的指南。,2,cited,1,https://geo.academy/cite-my-site,positive
+6,1,,Gemini,What is GEO and how is it different from SEO?,2026-07-01,0,1,解释中出现品牌，但未引内容。,3,brand_only,,,neutral
+7,1,,Gemini,What is GEO and how is it different from SEO?,2026-08-08,1,1,作为定义来源被引用。,3,cited,3,https://geo.academy/what-is-geo,neutral
+12,2,,ChatGPT,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+13,2,,Gemini,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+14,2,,Claude,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+15,2,,Perplexity,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+16,2,,ChatGPT,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+17,2,,Gemini,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+18,2,,Claude,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+19,2,,Perplexity,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+20,2,,ChatGPT,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+21,2,,ChatGPT,Batch Ebook Conversion API / Tool,2026-08-15,0,0,,38,not_found,,,
+22,2,,ChatGPT,AI Ebook Converter: Can AI Convert Ebooks?,2026-08-15,0,0,,37,not_found,,,
+23,2,,ChatGPT,Best Free Calibre Alternative for Ebook Conversion,2026-08-15,0,0,,36,not_found,,,
+24,2,,ChatGPT,How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,2026-08-15,0,0,,35,not_found,,,
+25,2,,ChatGPT,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+26,2,,Gemini,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+27,2,,Claude,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+28,2,,Perplexity,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+29,2,,ChatGPT,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+30,2,,Gemini,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+31,2,,Claude,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+32,2,,Perplexity,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+33,2,,ChatGPT,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+34,2,,Gemini,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+35,2,,Perplexity,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+36,2,,Claude,Best Ebook Converter Website,2026-08-15,0,0,,40,not_found,,,
+37,2,,ChatGPT,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+38,2,,Gemini,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+39,2,,Perplexity,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+40,2,,Claude,What Formats Does Kindle Support,2026-08-15,0,0,,39,not_found,,,
+41,2,,ChatGPT,Batch Ebook Conversion API / Tool,2026-08-15,0,0,,38,not_found,,,
+42,2,,Gemini,Batch Ebook Conversion API / Tool,2026-08-15,0,0,,38,not_found,,,
+43,2,,Perplexity,Batch Ebook Conversion API / Tool,2026-08-15,0,0,,38,not_found,,,
+44,2,,Claude,Batch Ebook Conversion API / Tool,2026-08-15,0,0,,38,not_found,,,
+45,2,,ChatGPT,AI Ebook Converter: Can AI Convert Ebooks?,2026-08-15,0,0,,37,not_found,,,
+46,2,,Gemini,AI Ebook Converter: Can AI Convert Ebooks?,2026-08-15,0,0,,37,not_found,,,
+47,2,,Perplexity,AI Ebook Converter: Can AI Convert Ebooks?,2026-08-15,0,0,,37,not_found,,,
+48,2,,Claude,AI Ebook Converter: Can AI Convert Ebooks?,2026-08-15,0,0,,37,not_found,,,
+49,2,,ChatGPT,Best Free Calibre Alternative for Ebook Conversion,2026-08-15,0,0,,36,not_found,,,
+50,2,,Gemini,Best Free Calibre Alternative for Ebook Conversion,2026-08-15,0,0,,36,not_found,,,
+51,2,,Perplexity,Best Free Calibre Alternative for Ebook Conversion,2026-08-15,0,0,,36,not_found,,,
+52,2,,Claude,Best Free Calibre Alternative for Ebook Conversion,2026-08-15,0,0,,36,not_found,,,
+53,2,,ChatGPT,What is the best ebook converter website?,2026-08-15,0,0,,12,not_found,,,
+54,2,,Gemini,What is the best ebook converter website?,2026-08-15,0,0,,12,not_found,,,
+55,2,,Perplexity,What is the best ebook converter website?,2026-08-15,0,0,,12,not_found,,,
+56,2,,Claude,What is the best ebook converter website?,2026-08-15,0,0,,12,not_found,,,
+57,2,,ChatGPT,"What ebook formats does Kindle support, explained?",2026-08-15,0,0,,11,not_found,,,
+58,2,,Gemini,"What ebook formats does Kindle support, explained?",2026-08-15,0,0,,11,not_found,,,
+59,2,,Perplexity,"What ebook formats does Kindle support, explained?",2026-08-15,0,0,,11,not_found,,,
+60,2,,Claude,"What ebook formats does Kindle support, explained?",2026-08-15,0,0,,11,not_found,,,
+61,2,,ChatGPT,Is there an ebook conversion API or batch converter?,2026-08-15,0,0,,10,not_found,,,
+62,2,,Gemini,Is there an ebook conversion API or batch converter?,2026-08-15,0,0,,10,not_found,,,
+63,2,,Perplexity,Is there an ebook conversion API or batch converter?,2026-08-15,0,0,,10,not_found,,,
+64,2,,Claude,Is there an ebook conversion API or batch converter?,2026-08-15,0,0,,10,not_found,,,
+65,2,,ChatGPT,"What is the best AI ebook converter, can AI convert ebooks?",2026-08-15,0,0,,9,not_found,,,
+66,2,,Gemini,"What is the best AI ebook converter, can AI convert ebooks?",2026-08-15,0,0,,9,not_found,,,
+67,2,,Perplexity,"What is the best AI ebook converter, can AI convert ebooks?",2026-08-15,0,0,,9,not_found,,,
+68,2,,Claude,"What is the best AI ebook converter, can AI convert ebooks?",2026-08-15,0,0,,9,not_found,,,
+69,2,,ChatGPT,What is the best free Calibre alternative for ebook conversion?,2026-08-15,0,0,,8,not_found,,,
+70,2,,Gemini,What is the best free Calibre alternative for ebook conversion?,2026-08-15,0,0,,8,not_found,,,
+71,2,,Perplexity,What is the best free Calibre alternative for ebook conversion?,2026-08-15,0,0,,8,not_found,,,
+72,2,,Claude,What is the best free Calibre alternative for ebook conversion?,2026-08-15,0,0,,8,not_found,,,
+73,2,,ChatGPT,Best alternatives to Calibre ebook manager 2026,2026-08-15 23:18:34,0,0,bookconv.com为20天新站，权重低，ChatGPT不太可能引用其具体內容。,81,not_found,,,neutral
+74,2,,Gemini,Best alternatives to Calibre ebook manager 2026,2026-08-15 23:18:35,0,0,bookconv.com为上线仅20天的新站，权重低，Gemini在对比类查询中通常优先引用权威成熟来源，不大可能引用该站点。,81,not_found,,,neutral
+75,2,,Claude,Best alternatives to Calibre ebook manager 2026,2026-08-15 23:19:23,0,0,新站权重低（20天），Claude 无索引数据，无法引用具体内容,81,not_found,,,neutral
+76,2,,Perplexity,Best alternatives to Calibre ebook manager 2026,2026-08-15 23:18:36,0,0,新站仅20天，权限低；Perplexity优先引用权威来源如Reddit、Medium， unlikely to cite this site for competitive comparison queries.,81,not_found,,,
+77,2,,ChatGPT,Free Calibre alternatives for EPUB conversion,2026-08-15 23:18:37,0,0,新站权重低，ChatGPT 通常引用知名竞品而非小众工具,82,not_found,,,
+78,2,,Gemini,Free Calibre alternatives for EPUB conversion,2026-08-15 23:18:38,0,0,BookConv为新站（20天），权重低，Gemini大概率不会引用该具体URL。,82,not_found,,,neutral
+79,2,,Claude,Free Calibre alternatives for EPUB conversion,2026-08-15 23:18:39,0,0,新站权重低，Claude对冷门替代工具通常不引用具体品牌，除非广泛知名。,82,not_found,,,neutral
+80,2,,Perplexity,Free Calibre alternatives for EPUB conversion,2026-08-15 23:18:40,0,0,新站权重低，Perplexity 更可能引用知名竞品如 Calibre、CloudConvert 等，未检索到 BookConv 相关内容。,82,not_found,,,neutral
+81,2,,ChatGPT,Can AI convert ebooks? Best AI ebook converter tools,2026-08-15 23:18:41,0,0,bookconv.com为新站（约20天），权重低，ChatGPT在2026年7月前的训练数据中极可能未收录，不会引用或提及。,83,not_found,,,
+82,2,,Gemini,Can AI convert ebooks? Best AI ebook converter tools,2026-08-15 23:18:41,0,0,新站权重低，Gemini通常引用主流工具如Adobe、Calibre、Zamzar，未提及BookConv。,83,not_found,,,neutral
+83,2,,Claude,Can AI convert ebooks? Best AI ebook converter tools,2026-08-15 23:18:50,0,0,新站权重低，Claude未引用bookconv.com具体内容,83,not_found,,,neutral
+84,2,,Perplexity,Can AI convert ebooks? Best AI ebook converter tools,2026-08-15 23:18:51,0,0,BookConv上线仅20天，权重低，Perplexity unlikely引用其具体页面或内容。,83,not_found,,,neutral
+85,2,,ChatGPT,AI-powered ebook conversion software review 2026,2026-08-15 23:18:54,0,0,20天新站权重过低，AI训练数据未收录，ChatGPT无法引用。,84,not_found,,,neutral
+86,2,,Gemini,AI-powered ebook conversion software review 2026,2026-08-15 23:18:54,0,0,新站权重低，Gemini 2026 年对该小众工具无引用数据。,84,not_found,,,neutral
+87,2,,Claude,AI-powered ebook conversion software review 2026,2026-08-15 23:18:55,0,0,新站权重低，2026年AI评测查询更倾向引用成熟平台如Calibre或Scribd,84,not_found,,,neutral
+88,2,,Perplexity,AI-powered ebook conversion software review 2026,2026-08-15 23:18:56,0,0,bookconv.com为20天新站，权重低，Perplexity unlikely引用,84,not_found,,,neutral
+89,2,,ChatGPT,Is there an AI tool that can convert ebooks automatically?,2026-08-15 23:18:57,0,0,新站权重低，ChatGPT 通常引用知名工具如 Calibre 或在线服务，不会提及 bookconv.com,85,not_found,,,neutral
+90,2,,Gemini,Is there an AI tool that can convert ebooks automatically?,2026-08-15 23:18:58,0,0,新站仅20天历史，低权重，Gemini通常不会在首轮回答中引用此类小型工具站的具体内容。,85,not_found,,,neutral
+91,2,,Claude,Is there an AI tool that can convert ebooks automatically?,2026-08-15 23:19:27,0,0,bookconv.com为上线20天的新站，权重低，Claude大概率引用成熟竞品而非提及该站。,85,not_found,,,neutral
+92,2,,Perplexity,Is there an AI tool that can convert ebooks automatically?,2026-08-15 23:19:24,0,0,bookconv.com为上线仅20天的新站，权重低，Perplexity大概率引用Zamzar/CloudConvert等成熟工具，未提及该品牌。,85,not_found,,,neutral
+93,2,,ChatGPT,Best batch ebook converter online tool 2026,2026-08-15 23:20:16,0,0,新站权重低，ChatGPT 通常引用权威旧内容，20天内难获引用。,86,not_found,,,neutral
+94,2,,Gemini,Best batch ebook converter online tool 2026,2026-08-15 23:20:16,0,0,新站上方约20天，域名权重低，Gemini likely优先引用Amazon/Reddit老牌评测，未收录bookconv具体页面。,86,not_found,,,neutral
+95,2,,Claude,Best batch ebook converter online tool 2026,2026-08-15 23:20:17,0,0,bookconv.com 为新站（20天），权重低；Claude 倾向引用高权威老牌工具如 Calibre、CloudConvert，未检索到该站内容。,86,not_found,,,neutral
+96,2,,Perplexity,Best batch ebook converter online tool 2026,2026-08-15 23:20:18,0,0,bookconv.com 为新站(20天)，权重低，不太可能被 Perplexity 引用,86,not_found,,,neutral
+97,2,,ChatGPT,How to convert many ebooks at once? Batch conversion guide,2026-08-15 23:20:18,0,0,"bookconv.com为新站(20天)，权重低，ChatGPT对热门书籍格式问题多引用老牌工具如Calibre/AZW/Epub, 不太可能引用此新站内容。",87,not_found,,,neutral
+98,2,,Gemini,How to convert many ebooks at once? Batch conversion guide,2026-08-15 23:20:19,0,0,Bookconv上线仅20天，权重极低，Gemini不会引用其内容。,87,not_found,,,neutral
+99,2,,Claude,How to convert many ebooks at once? Batch conversion guide,2026-08-15 23:20:19,0,0,新站上线20天，权重低，Claude可能引用通用指南而非具体页面内容,87,not_found,,,neutral
+100,2,,Perplexity,How to convert many ebooks at once? Batch conversion guide,2026-08-15 23:20:20,0,0,新站约20天，Perplexity优先引用权威来源，不会引用bookconv.com,87,not_found,,,neutral
+101,2,,ChatGPT,Bulk ebook conversion API or desktop tool comparison,2026-08-15 23:20:20,0,0,BookConv上线仅20天，权重低，ChatGPT对新兴小站引用概率极低。,88,not_found,,,neutral
+102,2,,Gemini,Bulk ebook conversion API or desktop tool comparison,2026-08-15 23:20:22,0,0,bookconv.com上线仅20天，新站权重极低。Gemini通常引用知名工具（Calibre、Convertio）而非新站，且该查询偏商业API对比，非其核心内容覆盖范围。,88,not_found,,,neutral
+103,2,,Claude,Bulk ebook conversion API or desktop tool comparison,2026-08-15 23:20:21,0,0,新站权重低，未收录；Claude优先引用知名工具如Calibre、CloudConvert,88,not_found,,,neutral
+104,2,,Perplexity,Bulk ebook conversion API or desktop tool comparison,2026-08-15 23:20:22,0,0,BookConv为新站权重低，Perplexity大概率不会引用其具体内容。,88,not_found,,,neutral
+105,2,,ChatGPT,What formats does Kindle support in 2026?,2026-08-15 23:20:23,0,0,新站权重低，查询为通用知识问题，ChatGPT大概率引用权威来源而非新站。,89,not_found,,,neutral
+106,2,,Gemini,What formats does Kindle support in 2026?,2026-08-15 23:20:23,0,0,新站权重低，Gemini大概率引用亚马逊官方文档而非第三方转换工具页面,89,not_found,,,neutral
+107,2,,Claude,What formats does Kindle support in 2026?,2026-08-15 23:20:24,0,0,新站权重低，查询为通用事实类问题，Claude 不会引用具体工具网站。,89,not_found,,,neutral
+108,2,,Perplexity,What formats does Kindle support in 2026?,2026-08-15 23:20:24,0,0,新站权重低，查询为通用知识类问题，Perplexity 不太可能引用此站点。,89,not_found,,,neutral
+109,2,,ChatGPT,Kindle ebook format compatibility guide EPUB MOBI AZW3,2026-08-15 23:20:25,0,0,新站权重低，ChatGPT 不会引用该站，仅生成通用格式兼容性知识。,90,not_found,,,neutral
+110,2,,Gemini,Kindle ebook format compatibility guide EPUB MOBI AZW3,2026-08-15 23:20:25,0,0,新站权重低，Gemini 倾向于引用权威来源而非工具站，未检测到引用。,90,not_found,,,neutral
+111,2,,Claude,Kindle ebook format compatibility guide EPUB MOBI AZW3,2026-08-15 23:20:26,0,0,新站权重低，Claude 通常引用权威来源如 Amazon 或 WIKI，不会引用此类小众转换工具站,90,not_found,,,neutral
+112,2,,Perplexity,Kindle ebook format compatibility guide EPUB MOBI AZW3,2026-08-15 23:21:44,0,0,bookconv.com为新站（20天），权重低；该查询偏向官方格式文档，Perplexity更可能引用Amazon/Kindle官方来源而非小型转换工具站。,90,not_found,,,neutral
+113,2,,ChatGPT,Best ebook formats for Amazon Kindle devices,2026-08-15 23:21:43,0,0,新站权重低，ChatGPT基于已有知识回答Kindle格式兼容问题，未引用bookconv.com具体内容,91,not_found,,,neutral
+114,2,,Gemini,Best ebook formats for Amazon Kindle devices,2026-08-15 23:21:44,0,0,新站权重低，未进入 Gemini 对 Kindle 格式查询的引用来源。,91,not_found,,,neutral
+115,2,,Claude,Best ebook formats for Amazon Kindle devices,2026-08-15 23:21:45,0,0,新站权重低，查询属通用知识类，Claude 不会引用具体工具网站内容。,91,not_found,,,neutral
+116,2,,Perplexity,Best ebook formats for Amazon Kindle devices,2026-08-15 23:21:45,0,0,新站权重低，Perplexity 倾向于引用权威来源（如 Amazon官方文档），未引用 bookconv.com,91,not_found,,,neutral
+117,2,,ChatGPT,What is the best ebook converter website in 2026?,2026-08-15 23:21:46,0,0,bookconv.com为新站(约20天)，权重低，ChatGPT大概率推荐历史更久、知名度更高的主流工具如CloudConvert、Zamzar或Calibre，不会引用新站内容。,92,not_found,,,neutral
+118,2,,Gemini,What is the best ebook converter website in 2026?,2026-08-15 23:21:46,0,0,新站权重低，未上线足够时间被主流AI引擎索引或引用，大概率仅提及传统头部工具。,92,not_found,,,neutral
+119,2,,Claude,What is the best ebook converter website in 2026?,2026-08-15 23:21:46,0,0,BookConv上线仅20天，权重低，AI在2026年7月查询时不太可能引用该新站的具体内容或品牌名。,92,not_found,,,neutral
+120,2,,Perplexity,What is the best ebook converter website in 2026?,2026-08-15 23:21:48,0,0,bookconv.com为新站（20天），权重低，Perplexity可能推荐Zamzar/CloudConvert等成熟平台，未引用该站。,92,not_found,,,neutral
+121,2,,ChatGPT,Top online ebook converters compared: Zamzar vs CloudConvert vs BookConv,2026-08-15 23:21:47,0,0,新站权重低，20天不足以进入ChatGPT主流回答引用范围。,93,not_found,,,neutral
+122,2,,Gemini,Top online ebook converters compared: Zamzar vs CloudConvert vs BookConv,2026-08-15 23:21:48,0,1,BookConv为上线20天的新站，权重低，Gemini可能在对比中提及品牌名但不会引用具体页面内容。,93,brand_only,,,neutral
+123,2,,Claude,Top online ebook converters compared: Zamzar vs CloudConvert vs BookConv,2026-08-15 23:22:14,0,0,BookConv 上线仅20天，索引覆盖不足，新站权重低，Claude 大概率未检索到其具体内容。,93,not_found,,,neutral
+124,2,,Perplexity,Top online ebook converters compared: Zamzar vs CloudConvert vs BookConv,2026-08-15 23:22:44,0,0,BookConv 为新站（20天），权重低；Perplexity 更倾向引用高权威对比内容，未检索到其具体页面引用。,93,not_found,,,neutral
+125,2,,ChatGPT,Best free online ebook format converter review,2026-08-15 23:22:15,0,0,新站权重低，ChatGPT 不太可能引用 BookConv 内容。,94,not_found,,,
+126,2,,Gemini,Best free online ebook format converter review,2026-08-15 23:22:16,0,0,新站权重低，Gemini大概率推荐Zamzar/CloudConvert等成熟工具，未收录bookconv.com内容。,94,not_found,,,neutral
+127,2,,Claude,Best free online ebook format converter review,2026-08-15 23:22:17,0,0,新站权重低，上线20天，暂无足够引用信号,94,not_found,,,neutral
+128,2,,Perplexity,Best free online ebook format converter review,2026-08-15 23:22:44,0,0,BookConv上线仅20天，权重低，Perplexity大概率引用Zamzar/CloudConvert等成熟工具，未覆盖该书。,94,not_found,,,neutral
+129,2,,ChatGPT,test query,2026-08-26,0,0,test note,1,not_found,,,
+130,2,,ChatGPT,test named,2026-08-26,0,0,test,1,not_found,,,
+131,2,,ChatGPT,test query from script,2026-08-26,0,0,test note,1,not_found,,,
+132,2,,ChatGPT,What is the best ebook converter?,2026-08-26,1,1,[降级模式] bookconv.com 专注电子书转换，与查询匹配度高，AI 可能引用作为推荐工具,1,cited,3,https://www.bookconv.com,positive
+133,1,,ChatGPT,What is the best ebook converter for Kindle in 2026?,2026-08-26,0,1,[降级模式] bookconv.com 为新站，SEO 积累不足，2026 年查询难以引用,,brand_only,,,neutral

@@ -1,0 +1,62 @@
+{
+  "week": "2026-W38",
+  "date": "2026-09-13",
+  "timestamp": "2026-09-13T23:50:45.263024",
+  "status": "RCD Phase 2 - Longitudinal Observation",
+  "bing_ai": {
+    "citations": 3311,
+    "active_days": 32,
+    "daily_avg": 70.4,
+    "cited_pages": 41
+  },
+  "google_ai": {
+    "impressions": 17,
+    "active_days": 9,
+    "daily_avg": 1.9,
+    "last_active": "2026-09-04"
+  },
+  "cross_engine": {
+    "overlap_percentage": 9.3,
+    "divergence_ratio": "37.1x",
+    "es_page_anomaly": {
+      "google_share_percent": 58.8,
+      "bing_share_percent": 0.1,
+      "page": "/es/blog/azw3-vs-mobi"
+    }
+  },
+  "verified_facts": [
+    "F01",
+    "F02",
+    "F03",
+    "F04"
+  ],
+  "frozen_actions": [
+    "删除/es/页面",
+    "修改hreflang",
+    "修改canonical",
+    "大规模内链调整",
+    "A/B测试"
+  ],
+  "pending_hypotheses": [
+    {
+      "id": "H01",
+      "desc": "平台候选生成机制差异",
+      "priority": "P0"
+    },
+    {
+      "id": "H02",
+      "desc": "Google语言/地区匹配",
+      "priority": "P1"
+    },
+    {
+      "id": "H03",
+      "desc": "Query Coverage差异",
+      "priority": "P2"
+    },
+    {
+      "id": "H04",
+      "desc": "Spam Update影响",
+      "priority": "P2"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+﻿id,product_id,query_text,source_type,source_id,target_engines,frequency,status,last_checked,created_at
+1,1,Best GEO course for marketers in 2026,question,3,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-10,2026-08-15 17:21:48
+2,1,How do I get ChatGPT to cite my website,question,5,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-05,2026-08-15 17:21:48
+3,1,What is GEO and how is it different from SEO?,question,1,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-08,2026-08-15 17:21:48
+4,1,Is GEO worth it for a small B2B company?,question,2,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 17:49:13
+5,1,GEO vs AEO vs SEO what is the difference,question,4,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 17:49:13
+6,1,GEO tools comparison which one to use,question,7,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 17:49:13
+7,1,Should I hire a GEO agency or do it myself,question,9,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 17:49:13
+8,2,What is the best free Calibre alternative for ebook conversion?,question,29,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:00:59
+9,2,"What is the best AI ebook converter, can AI convert ebooks?",question,37,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:00:59
+10,2,Is there an ebook conversion API or batch converter?,question,30,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:01:00
+11,2,"What ebook formats does Kindle support, explained?",question,39,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:01:00
+12,2,What is the best ebook converter website?,question,38,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:01:01
+13,2,What is the best CloudConvert alternative for ebook conversion?,question,36,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+14,2,"My EPUB file won't open, how do I fix it?",question,35,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+15,2,EPUB vs PDF which is better?,question,34,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+16,2,What is EPUB / MOBI / AZW3 format?,question,33,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+17,2,Why does my converted PDF look broken when I change EPUB to PDF?,question,32,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+18,2,"EPUB vs AZW3, which preserves fonts better?",question,31,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+19,2,Are there safe online converters for AZW3 to PDF that don't steal my files?,question,28,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+20,2,What is the fastest online tool to convert EPUB to MOBI for free without installing Calibre?,question,27,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+21,2,How do I convert DOCX to EPUB without messing up the table of contents?,question,26,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+22,2,How do I convert an EPUB into a PDF so I can print a physical copy?,question,25,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+23,2,How do I convert a scanned PDF into a reflowable EPUB so text reflows on my phone?,question,24,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+24,2,How do I convert RTF documents into EPUB for publishing?,question,23,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+25,2,What is an FB2 file and how do I convert FB2 to EPUB?,question,22,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+26,2,How do I convert DJVU scanned research papers to PDF with good resolution?,question,21,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+27,2,"I found old Microsoft Reader .lit books from 2005, how do I convert LIT to EPUB?",question,20,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+28,2,How do I convert EPUB to clean HTML for a data project?,question,19,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+29,2,How do I turn an EPUB ebook into a Word document (DOCX) so I can edit it?,question,18,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+30,2,What is the easiest way to convert EPUB to TXT without line break issues?,question,17,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+31,2,How do I extract text from an EPUB or MOBI book to upload into NotebookLM?,question,16,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+32,2,How can I convert EPUB to PDF on Linux command line using a simple tool?,question,15,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+33,2,"What is the best format for Kindle, AZW3 or MOBI, and how do I convert AZW3 to MOBI?",question,14,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+34,2,Amazon dropped MOBI on Kindle. Should I convert my books to EPUB or AZW3?,question,13,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:09:19
+35,2,How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,question,12,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+36,2,Best Free Calibre Alternative for Ebook Conversion,content_gap,1,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+37,2,AI Ebook Converter: Can AI Convert Ebooks?,content_gap,2,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+38,2,Batch Ebook Conversion API / Tool,content_gap,3,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+39,2,What Formats Does Kindle Support,content_gap,4,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+40,2,Best Ebook Converter Website,content_gap,5,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,2026-08-15,2026-08-15 18:09:19
+41,2,mobi to epub,question,56,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+42,2,azw3 vs mobi,question,49,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+43,2,convert mobi to epub,question,57,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+44,2,epub to zip,question,45,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+45,2,mobi vs azw3,question,101,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+46,2,lit to epub,question,20,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+47,2,epub to txt,question,17,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+48,2,epub to azw3,question,108,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+49,2,mobi epub,question,68,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+50,2,mobi to epub converter,question,69,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+51,2,azw3 to mobi,question,14,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+52,2,ebook converter,question,37,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+53,2,docx to epub,question,26,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+54,2,azw3,question,13,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+55,2,epub para doc,question,136,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+56,2,mobi in epub,question,54,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+57,2,azw3 kindle,question,90,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+58,2,epub vs mobi,question,139,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+59,2,change mobi to epub,question,70,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+60,2,convert to mobi,question,71,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+61,2,what is azw3,question,104,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+62,2,mobi or azw3,question,100,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+63,2,calibre converter,question,166,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+64,2,convert epub to zip,question,45,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+65,2,azw to mobi,question,47,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+66,2,mobi to epub conversion,question,73,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+67,2,epub to mobi,question,27,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+68,2,change epub to mobi,question,63,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+69,2,convert epub to azw3,question,108,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+70,2,rtf to epub,question,125,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+71,2,epub a azw3,question,182,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+72,2,epub para txt,question,183,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+73,2,azw3 file format,question,248,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+74,2,conversion mobi epub,question,80,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+75,2,convert epub to mobi,question,27,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+76,2,convertir en mobi,question,88,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+77,2,azw3 or mobi,question,14,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+78,2,book converter,question,37,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+79,2,can kindle read azw3,question,94,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+80,2,azw3 or mobi for kindle,question,105,"ChatGPT,Gemini,Claude,Perplexity",weekly,active,,2026-08-15 18:20:35
+81,2,Best alternatives to Calibre ebook manager 2026,content_gap,1,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,,2026-08-15 22:51:29
+82,2,Free Calibre alternatives for EPUB conversion,content_gap,1,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,,2026-08-15 22:51:29
+83,2,Can AI convert ebooks? Best AI ebook converter tools,content_gap,2,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,,2026-08-15 22:51:29
+84,2,AI-powered ebook conversion software review 2026,content_gap,2,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,,2026-08-15 22:51:29
+85,2,Is there an AI tool that can convert ebooks automatically?,content_gap,2,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,,2026-08-15 22:51:29
+86,2,Best batch ebook converter online tool 2026,content_gap,3,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:21:28,2026-08-15 22:51:29
+87,2,How to convert many ebooks at once? Batch conversion guide,content_gap,3,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:21:28,2026-08-15 22:51:29
+88,2,Bulk ebook conversion API or desktop tool comparison,content_gap,3,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:21:28,2026-08-15 22:51:29
+89,2,What formats does Kindle support in 2026?,content_gap,4,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:21:28,2026-08-15 22:51:29
+90,2,Kindle ebook format compatibility guide EPUB MOBI AZW3,content_gap,4,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:22:48,2026-08-15 22:51:29
+91,2,Best ebook formats for Amazon Kindle devices,content_gap,4,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:22:48,2026-08-15 22:51:29
+92,2,What is the best ebook converter website in 2026?,content_gap,5,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:22:48,2026-08-15 22:51:29
+93,2,Top online ebook converters compared: Zamzar vs CloudConvert vs BookConv,content_gap,5,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:22:48,2026-08-15 22:51:29
+94,2,Best free online ebook format converter review,content_gap,5,"[""chatgpt"", ""gemini"", ""claude"", ""perplexity""]",weekly,active,2026-08-15 23:22:48,2026-08-15 22:51:29
+95,2,epub to txt converter,question,52,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+96,2,converting epub to mobi,question,82,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+97,2,book converter,question,93,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+98,2,does azw3 work on kindle,question,96,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+99,2,ebook conversion,question,98,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+100,2,change epub to mobi,question,103,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+101,2,calibre ebook converter,question,106,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+102,2,epub a awz3,question,110,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+103,2,epub mobi converter,question,130,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+104,2,epub to docx converter,question,137,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+105,2,converter epub em docx,question,141,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+106,2,convertidor de epub a docx,question,143,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+107,2,epub to amz,question,147,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+108,2,epub vs mobi for kobo,question,151,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+109,2,prc to mobi,question,159,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+110,2,calibre ebook convert,question,167,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+111,2,ebook converter online,question,173,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+112,2,book conversion,question,180,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+113,2,convert book,question,194,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+114,2,convert books,question,195,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+115,2,convert ebooks,question,196,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+116,2,epub to awz3,question,203,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+117,2,.mobi to epub converter,question,206,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+118,2,converter mobi para epub,question,208,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+119,2,caliber ebook converter,question,215,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+120,2,can kobo read azw3,question,217,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+121,2,convert book into ebook,question,219,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+122,2,convert from mobi to epub,question,221,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+123,2,converting mobi to epub,question,225,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+124,2,ebook conversions,question,228,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+125,2,free ebook converter for kindle,question,233,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+126,2,how do i convert mobi to epub,question,234,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+127,2,kindle epub or mobi,question,236,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+128,2,mobi converter to epub,question,238,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+129,2,book to ebook converter,question,252,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+130,2,docx in epub,question,260,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28
+131,2,epub to mobi converter,question,266,"ChatGPT,Perplexity,Gemini,Claude",weekly,active,,2026-08-24 22:37:28

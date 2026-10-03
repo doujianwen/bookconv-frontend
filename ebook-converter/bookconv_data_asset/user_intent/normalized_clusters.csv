@@ -1,0 +1,21 @@
+﻿cluster_id,parent_topic,description,question_count,name,product_id,created_at
+1,GEO 是什么 / 与 SEO 关系,覆盖定义、对比、趋势类问句，建立认知入口。,3,GEO 基础认知,1,2026-08-15 17:21:48
+2,引用优化方法,解决方案 + 推荐类，直接对应产品核心价值与品牌机会。,3,让 AI 引用你的内容,1,2026-08-15 17:21:48
+3,值不值得做 / 怎么开始,决策与购买意图，转化临门一脚。,4,投入决策,1,2026-08-15 17:21:48
+5,Device Compatibility,围绕电子书阅读器设备格式适配的问句簇,4,Device Compatibility · Kindle/AZW3/MOBI,2,2026-08-15 18:00:33
+6,AI Feeding,把转换结果喂给 AI 工具的问句簇,4,AI Feeding · NotebookLM/ChatGPT Import,2,2026-08-15 18:00:33
+7,Legacy Formats,老旧/小众格式转换的问句簇,4,Legacy Format Rescue · LIT/DJVU/FB2/RTF,2,2026-08-15 18:00:33
+8,Layout & Typesetting,版式保留与重排的问句簇,3,Layout & Typesetting · PDF↔EPUB/DOCX,2,2026-08-15 18:00:33
+9,Efficiency & Alternatives,效率、免费替代类问句簇,4,Efficiency & Alternatives · Calibre-Free/Batch/Free,2,2026-08-15 18:00:33
+10,Troubleshooting & FAQ,故障排查与格式科普的问句簇,5,Troubleshooting & FAQ · Format Comparison/Can't Open,2,2026-08-15 18:00:33
+11,Selection & Intercept,高商业意图的选型/替代问句簇（含 404 缺口页）,4,Selection & Intercept · Best/Alternative/AI Converter,2,2026-08-15 18:00:33
+12,Ebook Format Conversion,Convert MOBI format ebooks to EPUB format,40,Mobi to Epub Conversion,2,2026-08-15 19:03:18
+13,Ebook Format Conversion,Convert EPUB format ebooks to MOBI format,20,Epub to Mobi Conversion,2,2026-08-15 19:03:18
+14,Ebook Format Conversion,Convert AZW3 format ebooks to MOBI format,19,Azw3 to Mobi Conversion,2,2026-08-15 19:03:18
+15,Ebook Format Conversion,Convert EPUB format ebooks to plain text format,14,Epub to Text Conversion,2,2026-08-15 19:03:18
+16,Ebook Compatibility,Understand which formats are supported by Kindle devices,34,Azw3/Epub/Mobi Compatibility with Kindle,2,2026-08-15 19:03:18
+17,Ebook Format Conversion,Convert EPUB format ebooks to Word/DOCX format,18,Epub to Word/Docx Conversion,2,2026-08-15 19:03:18
+18,Ebook Format Conversion,Convert Lit format ebooks or learn about Lit files,10,Lit Format Conversion and Info,2,2026-08-15 19:03:18
+19,Ebook Format Conversion,"Convert EPUB to LRF, PRC, AZW, or ZIP formats",13,Epub to Various Other Formats,2,2026-08-15 19:03:18
+20,Ebook Conversion,"Find general ebook conversion tools or software (Calibre, online converters)",41,General Ebook Conversion Tools,2,2026-08-15 19:03:18
+21,Uncategorized,未归入上述簇的问句,20,Unclassified Questions,2,2026-08-15 19:03:18

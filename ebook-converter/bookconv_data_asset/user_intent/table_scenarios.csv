@@ -1,0 +1,64 @@
+﻿id,product_id,name,description,stage
+1,1,评估是否要投入 GEO,对比 GEO 与传统 SEO 的 ROI,MOFU
+2,1,上线后监测 AI 引用,发布内容后验证 ChatGPT 是否引用,POST
+3,1,选型与学习路径,找适合营销人的 GEO 课程,MOFU
+4,2,刚换新阅读器，不知道旧书能用什么格式,Kindle 生态迁移者 · TOFU,TOFU
+5,2,收到别人分享的 Kindle 文件，打不开,Kindle 生态迁移者 · TOFU,TOFU
+6,2,听说 Send to Kindle 不再支持 MOBI，懵了,Kindle 生态迁移者 · TOFU,TOFU
+7,2,对比转换工具，担心质量,Kindle 生态迁移者 · MOFU,MOFU
+8,2,担心转换后目录/图片丢失,Kindle 生态迁移者 · MOFU,MOFU
+9,2,纠结 AZW3 和 EPUB 哪个更适合新 Kindle,Kindle 生态迁移者 · MOFU,MOFU
+10,2,找免费在线转换，不想装软件,Kindle 生态迁移者 · BOFU,BOFU
+11,2,大文件转换，担心大小限制,Kindle 生态迁移者 · BOFU,BOFU
+12,2,批量迁移整个藏书,Kindle 生态迁移者 · BOFU,BOFU
+13,2,转换完在 Kobo 里打不开,Kindle 生态迁移者 · POST,POST
+14,2,文件太大无法上传,Kindle 生态迁移者 · POST,POST
+15,2,转换后章节标题错位,Kindle 生态迁移者 · POST,POST
+16,2,听说要装 Calibre，吓退了,Calibre 拒绝者 · TOFU,TOFU
+17,2,之前用过 Calibre，觉得太复杂,Calibre 拒绝者 · TOFU,TOFU
+18,2,只想转一个文件，不想学新功能,Calibre 拒绝者 · TOFU,TOFU
+19,2,对比免费在线工具，担心隐私,Calibre 拒绝者 · MOFU,MOFU
+20,2,看到各种工具推荐，不知道选谁,Calibre 拒绝者 · MOFU,MOFU
+21,2,担心转换质量差,Calibre 拒绝者 · MOFU,MOFU
+22,2,找零注册、即转即走的工具,Calibre 拒绝者 · BOFU,BOFU
+23,2,需要快速完成，不想等,Calibre 拒绝者 · BOFU,BOFU
+24,2,看到 Pro 定价，犹豫要不要买,Calibre 拒绝者 · BOFU,BOFU
+25,2,转换失败，不知道原因,Calibre 拒绝者 · POST,POST
+26,2,下载的文件打不开,Calibre 拒绝者 · POST,POST
+27,2,想知道怎么再转一次,Calibre 拒绝者 · POST,POST
+28,2,刚写完书，不知道要准备几种格式,自出版 / 小型作者 · TOFU,TOFU
+29,2,被分发平台搞糊涂了,自出版 / 小型作者 · TOFU,TOFU
+30,2,不懂排版，担心转出来难看,自出版 / 小型作者 · TOFU,TOFU
+31,2,对比不同转换工具的质量,自出版 / 小型作者 · MOFU,MOFU
+32,2,担心封面/目录丢失,自出版 / 小型作者 · MOFU,MOFU
+33,2,评估是否值得付费买专业工具,自出版 / 小型作者 · MOFU,MOFU
+34,2,需要同时输出多格式,自出版 / 小型作者 · BOFU,BOFU
+35,2,批量处理多本书,自出版 / 小型作者 · BOFU,BOFU
+36,2,第一次用在线转换，担心质量,自出版 / 小型作者 · BOFU,BOFU
+37,2,转换后 EPUB 校验失败,自出版 / 小型作者 · POST,POST
+38,2,封面图片丢失或错位,自出版 / 小型作者 · POST,POST
+39,2,想保存转换模板,自出版 / 小型作者 · POST,POST
+40,2,想用 AI 读电子书，不知道格式,AI 工具使用者 · TOFU,TOFU
+41,2,想用 NotebookLM 分析整本书,AI 工具使用者 · TOFU,TOFU
+42,2,想看电子版但手机没空间,AI 工具使用者 · TOFU,TOFU
+43,2,比较 TXT 和 PDF 哪个适合 AI,AI 工具使用者 · MOFU,MOFU
+44,2,担心 AI 工具识别不了专有格式,AI 工具使用者 · MOFU,MOFU
+45,2,想看转换质量和 token 消耗,AI 工具使用者 · MOFU,MOFU
+46,2,找快速把书变 TXT 的工具,AI 工具使用者 · BOFU,BOFU
+47,2,要处理多本书做批量分析,AI 工具使用者 · BOFU,BOFU
+48,2,关注隐私（手稿不能被泄露）,AI 工具使用者 · BOFU,BOFU
+49,2,转出来的 TXT 有乱码,AI 工具使用者 · POST,POST
+50,2,AI 总结时遗漏章节,AI 工具使用者 · POST,POST
+51,2,想恢复目录结构,AI 工具使用者 · POST,POST
+52,2,换了新设备，想看旧书,多平台同步读者 · TOFU,TOFU
+53,2,想在多个平台同步阅读进度,多平台同步读者 · TOFU,TOFU
+54,2,不知道云同步需要什么格式,多平台同步读者 · TOFU,TOFU
+55,2,比较不同阅读 App 的格式支持,多平台同步读者 · MOFU,MOFU
+56,2,担心同步功能丢失,多平台同步读者 · MOFU,MOFU
+57,2,想了解跨平台阅读的最佳实践,多平台同步读者 · MOFU,MOFU
+58,2,找统一格式方案,多平台同步读者 · BOFU,BOFU
+59,2,需要批量整理藏书,多平台同步读者 · BOFU,BOFU
+60,2,考虑用 BookConv 作为长期工具,多平台同步读者 · BOFU,BOFU
+61,2,转换后笔记没同步,多平台同步读者 · POST,POST
+62,2,想在电脑上继续读,多平台同步读者 · POST,POST
+63,2,想定期整理藏书,多平台同步读者 · POST,POST

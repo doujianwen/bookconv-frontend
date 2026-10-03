@@ -1,0 +1,21 @@
+﻿id,product_id,name,type,description
+1,1,GEO Academy,brand,本课程所属品牌
+2,1,GEO 入门课 $47,product,旗舰入门产品
+3,1,David Dou,person,主讲讲师
+4,1,AI 引用追踪看板,feature,课程附带的实操工具
+5,1,ChatGPT,brand,OpenAI ChatGPT
+6,2,Kindle,brand,Amazon Kindle ebook reader
+7,2,Kobo,brand,Kobo ebook reader
+8,2,Calibre,brand,Calibre ebook management software
+9,2,CloudConvert,brand,CloudConvert online file converter
+10,2,NotebookLM,brand,Google NotebookLM AI tool
+11,2,EPUB,product,EPUB ebook format
+12,2,MOBI,product,MOBI ebook format
+13,2,AZW3,product,AZW3 Kindle format
+14,2,PDF,product,PDF document format
+15,2,TXT,product,TXT plain text format
+16,2,DJVU,product,DJVU scanned document format
+17,2,FB2,product,FB2 FictionBook format
+18,2,DOCX,product,Microsoft Word format
+19,2,Table of Contents,feature,ebook table of contents
+20,2,Formatting,feature,ebook formatting options

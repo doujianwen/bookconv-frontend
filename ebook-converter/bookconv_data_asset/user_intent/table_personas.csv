@@ -1,0 +1,10 @@
+﻿id,product_id,name,description,pain_points,goals
+1,1,In-house SEO Manager,负责公司自然流量，KPI 是 organic 增长,搜索算法变化快，老板要求布局 AI 搜索但不给明确预算,证明 GEO 对业务有价值，拿到资源
+2,1,B2B Content Marketer,产出博客/白皮书，KPI 是 lead 与 engagement,内容产出多但 AI 引用率低，辛苦写没人看,让内容被 AI 助手主动推荐，提升曝光
+3,1,Agency Founder,对外接 SEO/GEO 服务,客户问'AI 搜索要不要做'，自己也说不清,建立 GEO 服务线，开单变现
+4,2,跨设备电子书读者 · 轻量格式转换需求者,拥有电子书文件、需要在不同阅读设备/平台间迁移或转换格式的成年读者。非技术专家，不愿为了一次性需求安装和学习 Calibre。通过搜索明确格式问题进入网站（如 mobi to epub / azw3 vs mobi），希望不注册、不安装、不付费，几分钟内得到可正常打开的文件。典型场景：Kindle↔Kobo/Apple Books 迁移、旧 Kindle 兼容、PDF/TXT 转 EPUB、为 NotebookLM/ChatGPT 准备 TXT/PDF。,1) 设备不兼容，不知道转什么格式；2) Calibre 安装复杂、学习曲线陡；3) 在线工具强制注册/水印/限大小/质量差；4) EPUB/MOBI/AZW3/PDF/TXT 决策困难；5) 转换后目录/图片/排版丢失；6) 批量处理麻烦；7) 担心隐私泄露。,1) 网页上传即转、几分钟内下载正确格式；2) 零注册、零安装、无水印、免费额度够用；3) 保留章节/目录/图片/元数据；4) 通过对比文章快速确定该用什么格式；5) 文件加密传输、处理完自动删除；6) 大文件/批量/高频时愿意小额升级 Pro；7) 为 AI 工具输出干净 TXT/PDF。
+5,2,Kindle 生态迁移者,刚换新阅读器或需从 Kindle 迁移到 Kobo/Apple Books 的用户,,
+6,2,Calibre 拒绝者,不想装桌面软件、只想网页点一下的轻量用户,,
+7,2,自出版 / 小型作者,manuscript 需要分发到 Amazon/Kobo/Apple Books 的作者,,
+8,2,AI 工具使用者,要把电子书喂给 NotebookLM/ChatGPT/Claude 做分析的用户,,
+9,2,多平台同步读者,手机、平板、电子阅读器、电脑都要读，需要跨设备同步的用户,,

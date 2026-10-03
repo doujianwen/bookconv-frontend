@@ -1,7 +1,7 @@
 # AI 自动化运营落地方案 v2.1
 
 > 2026-07-30 · 基于对现有自动化的实地诊断与地基修复实践重写
-> 替代 `ai-automation-plan-v2.md`（v2 方向正确但脱离地基，本版拉回地面）
+> 替代 `docs/ai-automation/archive/ai-automation-plan-v2.md`（v2 方向正确但脱离地基，本版拉回地面）
 
 ---
 
