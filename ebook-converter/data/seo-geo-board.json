@@ -9,22 +9,24 @@
     "priority: P0 阻断性 / P1 本周必须推进 / P2 有页面承接时做 / P3 低确定性先观察",
     "owner: O=站长裁决 / A=AI执行 / S=脚本门禁 / T=第三方工具",
     "recurring 取值：daily(每日) / weekly(每周) / weekly-monday(每周一) / every-2-days(隔日) / monthly(每月) / monthly-first-week(每月首周) / monthly-end(每月末) / quarterly(每季) / continuous(持续) / per-change(每次变更) / per-round(每轮)",
-    "⚠️ continuous / per-change / per-round 是「常驻纪律」——它们每天均适用、没有完成状态，所以作战台把它们单列在折叠区，不混进「今日工作」有期清单（否则 8 条常驻会淹掉真正要出货的 5 条有期任务）。要改动这个分组，改 src/lib/board/types.ts 的 STANDING_CADENCES。"
+    "⚠️ continuous / per-change / per-round 是「常驻纪律」——它们每天均适用、没有完成状态，所以作战台把它们单列在折叠区，不混进「今日工作」有期清单（否则 8 条常驻会淹掉真正要出货的 5 条有期任务）。要改动这个分组，改 src/lib/board/types.ts 的 STANDING_CADENCES。",
+    "🔴 工作节奏（2026-09-28 用户铁律，详见 meta.cadencePolicy）：分析类任务（关键词处理 / 竞品变化 / GEO 监测）已由 daily、every-2-days 改为 weekly，竞品深度对比 monthly。降频只针对分析，不针对交付与验收——故障监控、内容/代码改动后的门禁与两层审计照旧每次执行。"
   ],
   "meta": {
     "project": "BookConv.com",
     "sourceSpec": "Notion《英文SEO与GEO实施规范手册V2.0》2026-09-26",
     "sourceBreakdown": "docs/SEO-GEO-V2.0-执行拆解表-2026-09-27.md",
     "d0": "2026-09-27",
-    "discipline": "≤10 页/日；改内容后必须跑门禁 + 两层审计（机械层 + 事实层）"
+    "discipline": "≤10 页/日；改内容后必须跑门禁 + 两层审计（机械层 + 事实层）",
+    "cadencePolicy": "2026-09-28 用户铁律：分析类（Google/Bing 数据分析、关键词排名、竞品、GEO）一律每周一次；竞品深度对比每月一次；交付类（内容/代码/外链）每日单一主线推进；故障监控与改动验收保持每次/持续，不降频",
+    "cadencePolicySource": "docs/seo-geo-execution-plan-2026-09-17.md §十一（2026-09-28）+ HERMES.md 工作节奏章节"
   },
-
   "anchors": [
     {
       "id": "A1",
       "date": "2026-10-01",
       "label": "Tier-1 首读",
-      "detail": "首轮 Prompt 跑测基线读数（M6-3）。只读数，不改站。",
+      "detail": "首轮 Prompt 跑测基线读数（M6-3）。已于 09-27 完成（v4 严谨版，强推荐 1/25），10-03 核实产物并回填。",
       "kind": "read"
     },
     {
@@ -47,9 +49,15 @@
       "label": "差异化 30 天验收",
       "detail": "M2-2 差异化基线由 FAIL 2/4 → PASS ≥3/4，且 Jaccard 仍 <0.5。只读数，不改站。",
       "kind": "accept"
+    },
+    {
+      "id": "A5",
+      "date": "2026-10-05",
+      "label": "周一三合一首跑",
+      "detail": "M14 三合一分析首次运行（自动化周一 07:30）。只读数与产出报告，不改站。",
+      "kind": "read"
     }
   ],
-
   "social": {
     "note": "每日草稿是弹药库，不是当日连发清单。同日 5 Post + 7 Thread + 3 Reddit = spam 形态。必须按排期每天 1 条。",
     "x": {
@@ -60,20 +68,76 @@
       "windowEnd": "2026-10-23",
       "total": 20,
       "slots": [
-        { "date": "2026-09-27", "item": "Post 1", "series": "三层假信号" },
-        { "date": "2026-09-29", "item": "Post 2", "series": "三层假信号" },
-        { "date": "2026-10-01", "item": "Post 3", "series": "三层假信号" },
-        { "date": "2026-10-03", "item": "Post 4", "series": "三层假信号" },
-        { "date": "2026-10-05", "item": "Post 5", "series": "三层假信号" },
-        { "date": "2026-10-07", "item": "Thread 7 连", "series": "三层假信号" },
-        { "date": "2026-10-09", "item": "Post 6", "series": "延长期内容库" },
-        { "date": "2026-10-11", "item": "Post 7", "series": "延长期内容库" },
-        { "date": "2026-10-13", "item": "Post 8", "series": "延长期内容库" },
-        { "date": "2026-10-15", "item": "Post 9", "series": "延长期内容库" },
-        { "date": "2026-10-17", "item": "Post 10", "series": "延长期内容库" },
-        { "date": "2026-10-19", "item": "Post 11", "series": "延长期内容库" },
-        { "date": "2026-10-21", "item": "Post 12", "series": "延长期内容库" },
-        { "date": "2026-10-23", "item": "Post 13", "series": "延长期内容库" }
+        {
+          "date": "2026-09-27",
+          "item": "Post 1",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-09-29",
+          "item": "Post 2",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-10-01",
+          "item": "Post 3",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-10-03",
+          "item": "Post 4",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-10-05",
+          "item": "Post 5",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-10-07",
+          "item": "Thread 7 连",
+          "series": "三层假信号"
+        },
+        {
+          "date": "2026-10-09",
+          "item": "Post 6",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-11",
+          "item": "Post 7",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-13",
+          "item": "Post 8",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-15",
+          "item": "Post 9",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-17",
+          "item": "Post 10",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-19",
+          "item": "Post 11",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-21",
+          "item": "Post 12",
+          "series": "延长期内容库"
+        },
+        {
+          "date": "2026-10-23",
+          "item": "Post 13",
+          "series": "延长期内容库"
+        }
       ]
     },
     "reddit": {
@@ -85,10 +149,22 @@
       "warmupEnd": "2026-10-25",
       "total": 4,
       "slots": [
-        { "date": "2026-10-26", "item": "r/webdev" },
-        { "date": "2026-10-28", "item": "r/SEO" },
-        { "date": "2026-10-30", "item": "r/IndieHackers" },
-        { "date": "2026-11-01", "item": "r/SideProject" }
+        {
+          "date": "2026-10-26",
+          "item": "r/webdev"
+        },
+        {
+          "date": "2026-10-28",
+          "item": "r/SEO"
+        },
+        {
+          "date": "2026-10-30",
+          "item": "r/IndieHackers"
+        },
+        {
+          "date": "2026-11-01",
+          "item": "r/SideProject"
+        }
       ],
       "warnings": [
         "时态漂移：四条正文含 Today / This week 时间锚点，顺延一个月后已失真，发帖前必须改写。",
@@ -96,7 +172,6 @@
       ]
     }
   },
-
   "modules": [
     {
       "id": "M0",
@@ -114,7 +189,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 数据分析/Tier-1-首次读数基线-2026-09-21.md：五页 GSC+Bing 基线表齐全（已读验证）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M0-2",
@@ -126,7 +203,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 数据分析/Bing-Google双渠道-数据口径冲突核查-2026-09-21.md + 对抗式审计报告：Bing AI/Web 双口径拆分完成",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M0-3",
@@ -138,7 +217,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "口径字典已成型：冲突核查报告 + VI v1.0 统一度量衡 + 术语铁律段落",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M0-4",
@@ -150,7 +231,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "双渠道分离看板已落地：9-20~9-30 共 8 期双渠道日报 + data/keyword-series.json 面板",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M0-5",
@@ -162,11 +245,12 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "断言体系存在于 check-indexing.mjs / cwv-mobile-check.mjs / correction-guards.blog.mjs，但无独立『断言分级表』文档",
+          "statusAudited": "2026-10-03"
         }
       ]
     },
-
     {
       "id": "M1",
       "name": "关键词策略",
@@ -183,7 +267,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 数据分析/keyword-rank-series.csv + keyword-reason-candidates-2026-09-27.md + /admin/keywords 面板",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M1-2",
@@ -195,7 +281,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "固定词已入库 data/competitor-config.json keywords 数组（9-27 补入 5 个实测变动词）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M1-3",
@@ -207,7 +295,9 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 docs/ops/mobi-epub整簇意图分布总览.md：29 页逐页意图标注（非估算）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M1-4",
@@ -219,17 +309,19 @@
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "未找到内耗处置产物；且依赖 M1-3 意图分布的裁决结论",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M1-5",
-          "action": "每日 P0/P1 词处理",
-          "detail": "每天只处理：异常/下降词（P0）、有曝光有空间的词（P1）、Top30/20/10 临界词（P1）；其余不动。",
+          "action": "每周 P0/P1 词处理（2026-09-28 起由每日改为每周）",
+          "detail": "每周一次批量处理：异常/下降词（P0）、有曝光有空间的词（P1）、Top30/20/10 临界词（P1）；其余不动。🔴 改为每周后禁止每日拉排名重排优先级——没有足以改变行动的新证据就维持上周结论。",
           "owner": "O",
-          "deliverable": "Daily Board 对应行",
-          "accept": "当日表内 ≥1 个关键词动作，且带 Recheck 日期",
-          "due": "每日",
-          "recurring": "daily",
+          "deliverable": "周度关键词动作行（含 Recheck 日期）",
+          "accept": "每周 ≥1 个关键词动作且带 Recheck 日期；若结论为「维持原计划」须显式写明",
+          "due": "每周",
+          "recurring": "weekly",
           "priority": "P0",
           "tier": "CORE",
           "status": "todo"
@@ -261,7 +353,6 @@
         }
       ]
     },
-
     {
       "id": "M2",
       "name": "内容结构与程序化页面治理",
@@ -278,7 +369,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "门禁已建 scripts/audit-convert-differentiation.mjs(136行) 但 10-03 实跑 FAIL 2/4：24 页共用 Conversion Quality Checklist",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M2-2",
@@ -327,7 +420,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "未找到头号资产保护的独立产物",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M2-6",
@@ -339,7 +434,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "承诺一致性门禁 audit:claims 可跑；10-03 实跑 1 error = 已知 R7 权益不实存量（convert-handler.ts:16/rate-limit.ts:49），非回归",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M2-7",
@@ -353,10 +450,33 @@
           "priority": "P0",
           "tier": "SUPP",
           "status": "todo"
+        },
+        {
+          "id": "M2-8",
+          "action": "13 个零抓取页差异化（执行计划 M1-E）",
+          "detail": "M1-D 覆盖率核查（10-02）实测 28 个 convert 页中 13 页 crawl=never：9 页已发现未抓取 + 4 页完全未知（txt-to-epub / doc-to-epub / mobi-to-txt / djvu-to-pdf）。定为 Tier-2 差异化前置子集，复用既有差异化节奏（≤3 页/天）。技术前置已全过（HTTP 200 / canonical 自指 / sitemap 含 / 无 noindex，均实测断言）；Google 无「请求编入索引」API，发现杠杆 = 内链 + sitemap + 等抓取配额。",
+          "owner": "A",
+          "deliverable": "13 页逐页差异化改写（基线 = 数据分析/GSC_URLInspection_2026-10-02.csv）",
+          "accept": "每页改后门禁全绿；10-20 用 URL Inspection 复评 crawl 时间与 referringUrls 有增量",
+          "due": "2026-10-20",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "todo"
+        },
+        {
+          "id": "M2-9",
+          "action": "博客内容补给（执行计划 M15，已定：操作指南类优先）",
+          "detail": "博客停更 8 天（最后一批 09-24，现 69 篇）。缺口实测：GEO v4 报告零覆盖区（操作指南类强推荐 0/7、对比类 0/4、阅读器类 0/3）+ 13 个零抓取页缺有曝光内链上游 + Top1 集中度 25%。建议每周 2 篇（1 指南 + 1 对比），选题源 = keyword-reason-candidates-2026-09-27.md + reddit-signals.csv。内容 KPI（Google 恢复前）= Bing AI 引用 + 内链上游，不是 Google 流量。选题方向已拍板（2026-10-02）：优先「操作指南类」（GEO 强推荐 0/7），对比类（0/4）次之；每篇 ≥2 条内链优先指向 13 零抓取页与 formats 页（同步缓解其 referringUrls=0 孤页问题）。",
+          "owner": "O",
+          "deliverable": "每周 2 篇新博文（src/data/blog/*.ts）",
+          "accept": "publish-gate 全绿；每篇含 ≥2 条指向 13 零抓取页或高曝光页的内链",
+          "due": "2026-10-10",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo"
         }
       ]
     },
-
     {
       "id": "M3",
       "name": "技术 SEO",
@@ -373,20 +493,22 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 数据分析/GSC_URLInspection_2026-10-02.csv：28 页逐页 verdict+coverage+crawlTime+referringUrls",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M3-2",
           "action": "sitemap 完整性",
-          "detail": "当前 formats/*(17) 与 compat/*(1) 实测不在 sitemap 内；决策「补入 or 明确不索引」并留痕。",
+          "detail": "已裁决并实现（9/27 决策、10/02 复核）：formats/*(17) 与 compat/*(1) 全部补入 sitemap——线上 curl 实测 17+1 条 <loc> 均在，URL Inspection inSitemap=1；决策留痕 = src/app/sitemap.ts 注释（M3-2 decision 2026-09-27）。残余问题（formats 17 页 discovered-not-indexed、0 内链）移交 D1 残余分叉。",
           "owner": "O→A",
           "deliverable": "决策记录 + sitemap diff",
           "accept": "每个 URL 状态明确（在表 / 有意排除）；无「既不在表又依赖自然收录」的页面",
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "note": "⚠️ 有 Owner 待决策分叉。建议先按「有独立信息增量的补入、纯模板的不补」二分。"
+          "status": "done",
+          "note": "✅ 2026-10-02 收口：二分结论 = 两类均有独立信息增量（format 页有 per-format pros/cons/useCases 独立文案），全部补入。"
         },
         {
           "id": "M3-3",
@@ -398,7 +520,9 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 scripts/cwv-mobile-check.mjs + GSC性能分析系列 8/10~8/14 抽检报告",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M3-4",
@@ -423,7 +547,9 @@
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "未找到 no-JS 抓取快照产物",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M3-6",
@@ -440,7 +566,6 @@
         }
       ]
     },
-
     {
       "id": "M4",
       "name": "外链与外部权威建设",
@@ -457,7 +582,9 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 docs/ops/外链追踪总表-2026-08-25.md（标注 Source of Truth）+ 外链建设行动清单",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M4-2",
@@ -511,7 +638,6 @@
         }
       ]
     },
-
     {
       "id": "M5",
       "name": "本地化 / 国际化优化",
@@ -528,7 +654,9 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "canonical 复核有产物（10-02 Inspection 28 页 canonical 自指实测），但 hreflang 无独立复核记录",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M5-2",
@@ -569,7 +697,6 @@
         }
       ]
     },
-
     {
       "id": "M6",
       "name": "AI 搜索引擎适配 / GEO",
@@ -586,7 +713,9 @@
           "due": "2026-10-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "Prompt 集以 GEO三平台长尾明细表-20260927.csv（25 词 × 3 平台）形态存在，非独立 Prompt Set 文档",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-2",
@@ -598,7 +727,9 @@
           "due": "2026-10-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "检查记录表 = GEO三平台长尾明细表-20260927.csv + 覆盖率报告 4 份",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-3",
@@ -610,8 +741,10 @@
           "due": "2026-10-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "note": "对应锚点 A1（Tier-1 首读）"
+          "status": "done",
+          "note": "对应锚点 A1（Tier-1 首读）",
+          "statusNote": "首轮跑测完成：GEO三平台长尾业务词覆盖率报告-20260927.md（v4 严谨版，强推荐 1/25，经红队逐行修正误判）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-4",
@@ -623,7 +756,9 @@
           "due": "2026-10-03",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "机会清单未产出；原料已齐（M6-3 跑测 + M1 曝光词表）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-5",
@@ -660,7 +795,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "负向门禁落地于 audit-workbench-honesty.mjs（P1-P5 诚实性断言）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M6-8",
@@ -677,7 +814,6 @@
         }
       ]
     },
-
     {
       "id": "M7",
       "name": "竞品跟踪",
@@ -694,7 +830,9 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "产物 data/competitor-series.json + competitor-serp-2026-09-27/28.json + /admin/competitors 面板",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M7-2",
@@ -706,17 +844,19 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "名单已固化 data/competitor-config.json（convertio/onlineconvert/zamzar/freeconvert/anyconv），但 _readme 自承为『默认占位』非真实竞品",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M7-3",
-          "action": "隔日抓变化",
-          "detail": "只抓 7 类变化：Top10 新进入者 / 原有竞品排名变化 / 新页面 / 明显更新 / 新覆盖意图 / 新增外部信号 / AI 提及引用变化。",
+          "action": "每周抓变化（2026-09-28 起由隔日改为每周）",
+          "detail": "只抓 7 类变化：Top10 新进入者 / 原有竞品排名变化 / 新页面 / 明显更新 / 新覆盖意图 / 新增外部信号 / AI 提及引用变化。🔴 每周只做一次轻扫；深度竞品对比每月一次，不在周频内展开。",
           "owner": "A",
           "deliverable": "变化记录行",
-          "accept": "每次抓取 ≥1 条变化记录；连续 3 次无变化则下调抓取频率并留痕",
-          "due": "隔日",
-          "recurring": "every-2-days",
+          "accept": "每周 ≥1 条变化记录；无变化则写「本周无变化、维持原计划」并留痕，不得为凑数降低证据标准",
+          "due": "每周",
+          "recurring": "weekly",
           "priority": "P1",
           "tier": "CORE",
           "status": "todo"
@@ -724,12 +864,12 @@
         {
           "id": "M7-4",
           "action": "每条发现必须转动作",
-          "detail": "每条竞品发现回答一句「这对 BookConv 今天有什么动作？」；无动作 → 进观察区，不再耗时分析。",
+          "detail": "每条竞品发现回答一句「这对 BookConv 本周有什么动作？」；无动作 → 进观察区，不再耗时分析。",
           "owner": "O",
           "deliverable": "Action 列填写",
           "accept": "Action 列非空率 100%；观察区条目 ≤50% 且各带观察期限",
-          "due": "隔日",
-          "recurring": "every-2-days",
+          "due": "每周",
+          "recurring": "weekly",
           "priority": "P0",
           "tier": "CORE",
           "status": "todo"
@@ -749,7 +889,6 @@
         }
       ]
     },
-
     {
       "id": "M8",
       "name": "效果监测与数据纪律",
@@ -792,7 +931,9 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "阈值降级已执行并写入 board meta.cadencePolicy（2026-09-28 用户铁律）+ HERMES.md §十一",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M8-4",
@@ -804,7 +945,9 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "诊断模型替换：双渠道诊断-红队互辩审计 + 苏格拉底审计系列 9-18~9-30 共 6 期",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M8-5",
@@ -816,7 +959,9 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "强断言已随门禁清理，但无独立清理记录文档",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M8-6",
@@ -846,7 +991,6 @@
         }
       ]
     },
-
     {
       "id": "M9",
       "name": "运营节奏：日 / 周 / 月",
@@ -863,30 +1007,32 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "Daily Optimization Board = /admin 工作台 12 面板 + data/seo-geo-board.json（9-27 建，10-02 更新）",
+          "statusAudited": "2026-10-03"
         },
         {
           "id": "M9-2",
-          "action": "每日最低交付",
-          "detail": "每日 ≥4 项：1 个关键词动作 + 1 个页面/内链/内容动作 + 1 个竞品变化记录 +（需要时）1 个 GEO 动作；每项带复查日期。",
+          "action": "每周三件套 + 每日单一主线（2026-09-28 起改）",
+          "detail": "🔴 每日：只推一个主任务，完成并验收再进下一个（不重排优先级、不换方向）。每周一次合并产出三件套：1 个关键词动作 + 1 个页面/内链/内容动作 + 1 个竞品/GEO 变化记录；每项带复查日期。",
           "owner": "O",
-          "deliverable": "Daily Board 当日行组",
-          "accept": "四项齐全；缺项须写明「为什么不做」而非凑数",
-          "due": "每日",
-          "recurring": "daily",
+          "deliverable": "周度三件套记录 + 每日主任务交付",
+          "accept": "三件套齐全；缺项须写明「为什么不做」而非凑数；每日主任务须有可验收交付物",
+          "due": "每周",
+          "recurring": "weekly",
           "priority": "P0",
           "tier": "CORE",
           "status": "todo"
         },
         {
           "id": "M9-3",
-          "action": "时间配比守门",
-          "detail": "分析 30–40% / 执行验证 60–70%（运营管理目标，非统计标准）；超时分析须在当日记录中注明。",
+          "action": "时间配比守门（按周核算）",
+          "detail": "分析 30–40% / 执行验证 60–70%（运营管理目标，非统计标准）；🔴 2026-09-28 起按周核算，不再每日记录——每日记账本身就是在制造分析开销。",
           "owner": "O",
-          "deliverable": "当日时间分配记录",
-          "accept": "执行占比 ≥60%；低于则次日强制补执行",
-          "due": "每日",
-          "recurring": "daily",
+          "deliverable": "周度时间分配记录（周复盘时填）",
+          "accept": "执行占比 ≥60%；低于则下周强制补执行并削减分析项",
+          "due": "每周",
+          "recurring": "weekly",
           "priority": "P1",
           "tier": "SUPP",
           "status": "todo"
@@ -929,10 +1075,22 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "todo"
+        },
+        {
+          "id": "M9-7",
+          "action": "周一三合一分析（执行计划 M14，已挂自动化）",
+          "detail": "每周一 07:30 自动化运行：① 关键词排名（build-keyword-series.mjs 刷新 /admin/keywords 数据源 + 升降 Top10 + 品牌词走势）；② 竞品（fetch-competitor-serp → build-competitor-series 刷新 /admin/competitors，对照 09-25 基线 diff）；③ GEO 对照（vs GEO三平台长尾业务词覆盖率报告-20260927 基线）。结果并入双渠道最终报告，不单独建文档。全量 25 词三平台重采仍按 M6 系列排期（11-01）。",
+          "owner": "S+A",
+          "deliverable": "数据分析/Bing-Google双渠道最终报告-<日期>.md（含三合一模块）",
+          "accept": "四报告产出且标证据等级；失败模块标 PENDING 并写明原因，绝不编造",
+          "due": "每周一",
+          "recurring": "weekly-monday",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo"
         }
       ]
     },
-
     {
       "id": "M10",
       "name": "方法论回写与新项目复制",
@@ -980,14 +1138,13 @@
       ]
     }
   ],
-
   "openDecisions": [
     {
       "id": "D1",
-      "title": "formats/*(17) 与 compat/*(1) 是否补入 sitemap",
-      "context": "当前实测这两个类型的页面不在 sitemap 内。补入会扩大程序化页面规模（与 §7.2 规模化内容风险冲突）；不补入则长期靠自然发现。",
-      "suggestion": "先按「有独立信息增量的补入、纯模板的不补」二分，并写入决策记录。",
-      "blocks": "M3-2",
+      "title": "formats/*(17) 未收录的处置：差异化 vs 有意排除（原「是否补入 sitemap」已于 9/27 收口：已补入）",
+      "context": "原问题已解决：9/27 决策补入 sitemap（M3-2），10/02 线上复核 17+1 全在表。当前实测（URL Inspection）：formats/epub、/mobi = 「已发现未收录」、referringUrls=0（零内链孤页）；compat/calibre = 「Google 完全未知」。",
+      "suggestion": "10/20 Google 重评估前维持现状（发现杠杆已到位：sitemap ✓）；重评估后按结果二选一——A = 差异化 formats 页争取索引（注意 §7.2 规模化风险）；B = 有意排除（noindex/瘦身）。期间 M2-9 新博文内链可自然给 formats 页供血，先观察内链效果再裁决。",
+      "blocks": "M2-8",
       "owner": "O"
     }
   ]

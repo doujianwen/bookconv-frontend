@@ -59,6 +59,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [How to Convert MOBI to EPUB (And Why You'd Want To)](https://www.bookconv.com/blog/mobi-to-epub)
 - [Can Kindle Read AZW3? Compatibility by Model, Explained](https://www.bookconv.com/blog/can-kindle-read-azw3)
 - [Can Kobo Read EPUB Files? (And When to Convert)](https://www.bookconv.com/blog/can-kobo-read-epub-files)
+- [Which Kindle Books Can You Convert? (DRM-Free Checklist)](https://www.bookconv.com/blog/which-kindle-books-can-you-convert-drm-free-checklist)
 - [MOBI to Kobo: How to Read Your MOBI Books on a Kobo Reader](https://www.bookconv.com/blog/mobi-to-kobo)
 - [EPUB vs MOBI: Which Ebook Format Should You Actually Use?](https://www.bookconv.com/blog/epub-vs-mobi)
 - [Batch Ebook Converter: How to Convert Many Files at Once (and When to Use Calibre)](https://www.bookconv.com/blog/batch-converter)
