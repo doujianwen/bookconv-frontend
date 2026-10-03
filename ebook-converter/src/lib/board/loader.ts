@@ -1,25 +1,54 @@
 // src/lib/board/loader.ts
 // Reads the board data file and exposes derived views.
 //
-// The JSON file is the single source of truth. This module only reads it.
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+// ── Why this reads via a static import, not readFileSync ───────────────────
+// This loader originally did:
+//
+//     readFileSync(join(process.cwd(), 'data/seo-geo-board.json'), 'utf8')
+//
+// which works locally and **fails on Vercel**. Next.js output file tracing only
+// bundles files reachable through the static import graph; a path built at
+// runtime with `join(process.cwd(), …)` is invisible to that analysis, so the
+// JSON is not present in the serverless function bundle and every read throws
+// ENOENT. Observed on 2026-10-03 as HTTP 500 ("Something went wrong") on both
+// /es/admin/board and /es/admin/board/register, while every other /admin page
+// rendered fine — i.e. the failure tracked this loader specifically, not auth
+// and not the JSON contents (the same file validated cleanly with 0 errors).
+//
+// The fix is a static `import` with a JSON import assertion: the bundler now
+// sees the dependency, emits the file, and the runtime read disappears.
+//
+// The cast to BoardData is deliberate and unavoidable: TypeScript's default
+// `resolveJsonModule` types land as widened primitives rather than the literal
+// unions in BoardTask, so the declared shape is asserted rather than inferred.
+// validateBoardData() below is the runtime guard that makes the assertion safe
+// — it is not a bare lie, it is checked on every load. Keep it that way: adding
+// a field to BoardData without teaching the validator about it reintroduces
+// silent drift, so extend the validator in the same commit.
+import boardJson from '../../../data/seo-geo-board.json' with { type: 'json' };
 import type { BoardData, BoardView } from './types';
 import { deriveBoard, isoDay } from './derive';
 
-const BOARD_FILE = 'data/seo-geo-board.json';
-
-/** Load and parse data/seo-geo-board.json from the project root. */
-export function loadBoardData(root: string = process.cwd()): BoardData {
-  const raw = readFileSync(join(root, BOARD_FILE), 'utf8');
-  const data = JSON.parse(raw) as BoardData;
+/**
+ * Parse and validate the board data.
+ *
+ * Kept as a separate step (rather than validating the imported object
+ * in place) so tests and any future non-JS source can reuse the same guard.
+ */
+function parseBoardData(raw: unknown): BoardData {
+  const data = raw as BoardData;
   validateBoardData(data);
   return data;
 }
 
+/** Load, parse and validate data/seo-geo-board.json. */
+export function loadBoardData(): BoardData {
+  return parseBoardData(boardJson);
+}
+
 /** Build the whole board view for a day (defaults to today, UTC). */
-export function getBoardView(today: string = isoDay(), root: string = process.cwd()): BoardView {
-  return deriveBoard(loadBoardData(root), today);
+export function getBoardView(today: string = isoDay()): BoardView {
+  return deriveBoard(loadBoardData(), today);
 }
 
 /**
