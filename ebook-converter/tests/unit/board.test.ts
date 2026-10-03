@@ -184,13 +184,12 @@ describe('board derivation', () => {
     expect(view.totals.tasks).toBe(66);
     // 2026-10-03 backfill: 25 overdue tasks audited against on-disk evidence.
     // 18 moved todo->done, 6 todo->doing (gate built, acceptance not met),
-    // 1 pre-existing done (M3-2); M8-5 + M2-5 + M6-4 + M6-5 + M7-2 closed
-    // done the same day (grep-verified cleanup; top-asset 9/9; cross-check
-    // 10 hits; Kindle-cluster GEO rebuild; evidence-based competitor list).
+    // 1 pre-existing done (M3-2); M8-5 + M2-5 + M6-4 + M6-5 + M7-2 + M5-1 +
+    // M0-5 + M6-1 closed done the same day (all grep/online-verified).
     // open = todo + doing.
-    expect(view.totals.done).toBe(24);
-    expect(view.totals.open).toBe(42);
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(42);
+    expect(view.totals.done).toBe(27);
+    expect(view.totals.open).toBe(39);
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(39);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -280,25 +279,24 @@ describe('board derivation', () => {
 
   it('counts module progress from statuses only', () => {
     const m0 = view.modules.find((m) => m.id === 'M0')!;
-    // 2026-10-03 backfill closed M0-1/2/3/4 as done; M0-5 is doing.
+    // 2026-10-03: M0-5 closed done (claim-tier register), M0 fully complete.
     expect(m0.total).toBe(5);
-    expect(m0.done).toBe(4);
-    expect(m0.pct).toBe(80);
-    expect(m0.p0Open).toBe(1); // M0-5 still open
-    expect(m0.nextDue).toBe('2026-09-30');
+    expect(m0.done).toBe(5);
+    expect(m0.pct).toBe(100);
+    expect(m0.p0Open).toBe(0);
+    expect(m0.nextDue).toBeNull();
   });
 
   it('reflects a completed task in module progress and totals', () => {
     const mutated = JSON.parse(JSON.stringify(data)) as BoardData;
-    // M0-5 is 'doing' after the backfill, so promoting it to done closes M0 fully.
-    mutated.modules[0].tasks[4].status = 'done';
+    // M2-1 is 'doing' (overdue probe); promoting it to done shifts totals.
+    const m2 = mutated.modules.find((m) => m.id === 'M2')!;
+    m2.tasks.find((t) => t.id === 'M2-1')!.status = 'done';
     const v = deriveBoard(mutated, '2026-09-27');
-    const m0 = v.modules.find((m) => m.id === 'M0')!;
-    expect(m0.done).toBe(5);
-    expect(m0.pct).toBe(100);
-    expect(m0.p0Open).toBe(0);
-    expect(v.totals.done).toBe(25); // 24 after backfill (incl. M8-5/M2-5/M6-4/M6-5/M7-2) + M0-5 promoted
-    expect(v.totals.open).toBe(41); // isOpen() counts todo + doing
+    const m2v = v.modules.find((m) => m.id === 'M2')!;
+    expect(m2v.pct).toBeGreaterThan(0);
+    expect(v.totals.done).toBe(28); // 27 incl. M5-1/M0-5/M6-1 + M2-1 promoted
+    expect(v.totals.open).toBe(38); // isOpen() counts todo + doing
   });
 
   it('excludes dropped tasks from the open count', () => {
@@ -306,7 +304,7 @@ describe('board derivation', () => {
     // M1-1 closed in the 2026-10-03 backfill, so drop an actually-open task (M1-4).
     mutated.modules[1].tasks[3].status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    expect(v.totals.open).toBe(41); // 42 - M1-4 dropped
+    expect(v.totals.open).toBe(38); // 39 - M1-4 dropped
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(3);
   });
 

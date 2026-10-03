@@ -245,8 +245,8 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "逾期原因：10/03 产能优先给了可即日收口的 5 项（M8-5/M2-5/M6-4/M6-5/M7-2），分级表为纯文档工作未开工。下一步：10 条结论逐条贴 CASE-SUPPORTED/SUPPORTED/UNKNOWN 标签成独立表（约 0.5 天），排下一批。 【实测证据 10-03】实测无产物（10-03）：全仓 grep CASE-SUPPORTED / OPERATIONAL REQUIREMENT / 禁止的对外表述 仅命中任务定义自身（V2.0拆解表），10 条结论逐条贴标签的独立分级表未落地",
+          "status": "done",
+          "statusNote": "10/03 收口：docs/claim-tier-register.md v1.0——MEMORY 10 条承重结论逐条贴标签（CASE-SUPPORTED 4 / SUPPORTED 2 / OPERATIONAL REQUIREMENT 2 / UNKNOWN-已证伪 3 中的证伪项 #5/#6/#7），每条含「等级+证据来源+禁止的对外表述」（❌ 22 条硬约束）；维护纪律 4 条（新结论先入表、与 MEMORY 同步、对外材料逐条对照）。自检断言 10 行 ✓。",
           "statusAudited": "2026-10-03"
         }
       ]
@@ -654,8 +654,8 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "doing",
-          "statusNote": "逾期原因：canonical 半边已完成（10-02 Inspection 28 页实测）；hreflang 半边需全站 en↔es 双向回指逐页复核，此前排队在后。下一步：写一个 en↔es 回指断言脚本（仿 protect-top-asset 模式，约 0.5 天），产出即收口。 【实测证据 10-03】canonical 复核已有产物（10-02 Inspection 28 页 canonical 自指实测）；hreflang 仅存在于 publish-gate.mjs / seo-critic.mjs 门禁代码，en↔es 双向回指全站复核记录仍缺失",
+          "status": "done",
+          "statusNote": "10/03 收口：新增 scripts/verify-hreflang-canonical.mjs 全站 171 URL 实测断言——首轮抓出 **17 处 es 回指指向死页**（formats 页绕过 buildAlternates 手写 /es/formats/* 回指，middleware P3-C 一律 404）+ sitemap 列 /es 死链（middleware 404）。修复：formats page 回归 buildAlternates(hasEsVersion:false)、sitemap es 分支跳过首页（commit 3eabf1e）。线上复测：170 URL、es 三件套 18 页（9 组 en↔es 双向闭合）、**V1 canonical 0 违规 / V3 单向回指 0**，验收达成。范围外发现（不动）：/compat/epub-to-mobi-on-kindle-paperwhite 缺 x-default；10 个 /es/guide 页存在但无 hreflang 配对。",
           "statusAudited": "2026-10-03"
         },
         {
@@ -713,8 +713,8 @@
           "due": "2026-10-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "逾期原因：距验收的三项（扩至 ≥30 条、五类意图标注、资产页映射）是逐条人工判定工作，非脚本可批量。下一步：直接复用 M6-4 交叉比对的 10 条命中+4 边缘区做意图簇标注底稿（约 0.5–1 天），25→30 差额从 M15 选题池补。 【实测证据 10-03】现有形态=数据分析/GEO三平台长尾明细表-20260927.csv：25 prompt×3 平台=75 行；距验收差三项：25<30 条、五类意图未标注（无法验各≥5）、每条未映射资产页",
+          "status": "done",
+          "statusNote": "10/03 收口：数据分析/geo-prompt-set-v1.md——31 条 prompt（25 存量 9/27 三平台实测 + 6 新增补 troubleshooting/format-diff 缺口），五类意图 How-to 9/Which-tool 6/Format-diff 5/Compatibility 6/Troubleshooting 5 各 ≥5 ✓，逐条映射资产页（21 个去重 slug 磁盘存在性断言 0 缺失 ✓）；OCR prompt 判无资产机会区暂缓入集（M15 建页后纳）；新增 6 条待首测补 R_pre。",
           "statusAudited": "2026-10-03"
         },
         {
