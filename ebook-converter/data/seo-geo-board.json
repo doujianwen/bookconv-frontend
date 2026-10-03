@@ -246,7 +246,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "断言体系存在于 check-indexing.mjs / cwv-mobile-check.mjs / correction-guards.blog.mjs，但无独立『断言分级表』文档",
+          "statusNote": "实测无产物（10-03）：全仓 grep CASE-SUPPORTED / OPERATIONAL REQUIREMENT / 禁止的对外表述 仅命中任务定义自身（V2.0拆解表），10 条结论逐条贴标签的独立分级表未落地",
           "statusAudited": "2026-10-03"
         }
       ]
@@ -309,8 +309,8 @@
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "未找到内耗处置产物；且依赖 M1-3 意图分布的裁决结论",
+          "status": "doing",
+          "statusNote": "实测有产物（10-03 取证）：内耗组=R1/R2（docs/ops/mobi-epub整簇意图分布总览.md），合并已于 8/11 部署（docs/ops/R1-R5内耗治理完成总结.md，commits f6a8a1d/3a60fd9/a02df6d）；总览确认 epub↔mobi 三层配对无内耗；剩验收=拉 GSC 词展示确认无双页分摊下降",
           "statusAudited": "2026-10-03"
         },
         {
@@ -370,7 +370,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "门禁已建 scripts/audit-convert-differentiation.mjs(136行) 但 10-03 实跑 FAIL 2/4：24 页共用 Conversion Quality Checklist",
+          "statusNote": "10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定，但「两份报告分开存档」未落盘",
           "statusAudited": "2026-10-03"
         },
         {
@@ -421,7 +421,7 @@
           "priority": "P0",
           "tier": "SUPP",
           "status": "todo",
-          "statusNote": "未找到头号资产保护的独立产物",
+          "statusNote": "实测无产物（10-03）：scripts/ grep best-ebook-converter 0 命中，sitemap 含/robots 未屏蔽/noindex 未设三项自动化断言均未建",
           "statusAudited": "2026-10-03"
         },
         {
@@ -548,7 +548,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "todo",
-          "statusNote": "未找到 no-JS 抓取快照产物",
+          "statusNote": "实测无产物（10-03）：scripts/ 与 数据分析/ 均 grep 不到 no-JS 快照检查（no-JS/nojs/禁用JS 0 命中），3 个代表页 no-JS 快照未做",
           "statusAudited": "2026-10-03"
         },
         {
@@ -655,7 +655,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "canonical 复核有产物（10-02 Inspection 28 页 canonical 自指实测），但 hreflang 无独立复核记录",
+          "statusNote": "canonical 复核已有产物（10-02 Inspection 28 页 canonical 自指实测）；hreflang 仅存在于 publish-gate.mjs / seo-critic.mjs 门禁代码，en↔es 双向回指全站复核记录仍缺失",
           "statusAudited": "2026-10-03"
         },
         {
@@ -714,7 +714,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "Prompt 集以 GEO三平台长尾明细表-20260927.csv（25 词 × 3 平台）形态存在，非独立 Prompt Set 文档",
+          "statusNote": "现有形态=数据分析/GEO三平台长尾明细表-20260927.csv：25 prompt×3 平台=75 行；距验收差三项：25<30 条、五类意图未标注（无法验各≥5）、每条未映射资产页",
           "statusAudited": "2026-10-03"
         },
         {
@@ -757,7 +757,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "todo",
-          "statusNote": "机会清单未产出；原料已齐（M6-3 跑测 + M1 曝光词表）",
+          "statusNote": "输入已齐备：M6-3 明细表（数据分析/GEO三平台长尾明细表-20260927.csv，75 行=25 prompt×3 平台）+ M1 曝光词库；「有 SEO 资产但 AI 未识别」交叉比对产物未产出，待开工",
           "statusAudited": "2026-10-03"
         },
         {
@@ -845,7 +845,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "名单已固化 data/competitor-config.json（convertio/onlineconvert/zamzar/freeconvert/anyconv），但 _readme 自承为『默认占位』非真实竞品",
+          "statusNote": "名单已固化 data/competitor-config.json（5 家 ≤5 ✓），但 _readme 自承「默认占位」非真实竞品，且每家未标注主要重叠关键词——验收第二条件未满足",
           "statusAudited": "2026-10-03"
         },
         {
@@ -959,8 +959,8 @@
           "due": "2026-09-30",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "强断言已随门禁清理，但无独立清理记录文档",
+          "status": "done",
+          "statusNote": "10/03 收口：docs/ 权威面 4 文件 5 处强断言已改为 hedge 表述（实施规范手册 v1、通用手册 v1、training README、案例集×2），grep 复核原强断言 0 残留、新表述 5/5 落位；数据分析/ 历史日报 18 处为 append-only 快照有意保留（不入库），_archived/ 2 处归档不动；权威口径已同步 MEMORY §5",
           "statusAudited": "2026-10-03"
         },
         {
