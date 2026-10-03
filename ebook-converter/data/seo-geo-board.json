@@ -246,7 +246,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "实测无产物（10-03）：全仓 grep CASE-SUPPORTED / OPERATIONAL REQUIREMENT / 禁止的对外表述 仅命中任务定义自身（V2.0拆解表），10 条结论逐条贴标签的独立分级表未落地",
+          "statusNote": "逾期原因：10/03 产能优先给了可即日收口的 5 项（M8-5/M2-5/M6-4/M6-5/M7-2），分级表为纯文档工作未开工。下一步：10 条结论逐条贴 CASE-SUPPORTED/SUPPORTED/UNKNOWN 标签成独立表（约 0.5 天），排下一批。 【实测证据 10-03】实测无产物（10-03）：全仓 grep CASE-SUPPORTED / OPERATIONAL REQUIREMENT / 禁止的对外表述 仅命中任务定义自身（V2.0拆解表），10 条结论逐条贴标签的独立分级表未落地",
           "statusAudited": "2026-10-03"
         }
       ]
@@ -370,7 +370,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定，但「两份报告分开存档」未落盘",
+          "statusNote": "逾期原因：验收的「差异化达标」依赖 52 程序化页骨架改造（=待办 #0 大工程，6–8 周），按 ROI 排队不在此冲刺；门禁本身已建成并实跑（两分层分开判定=结构性验收已过一半）。下一步：差异化改造排期进 #0；下次实跑时顺手把两份报告分开存档（0.1 天）。 【实测证据 10-03】10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定，但「两份报告分开存档」未落盘",
           "statusAudited": "2026-10-03"
         },
         {
@@ -655,7 +655,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "canonical 复核已有产物（10-02 Inspection 28 页 canonical 自指实测）；hreflang 仅存在于 publish-gate.mjs / seo-critic.mjs 门禁代码，en↔es 双向回指全站复核记录仍缺失",
+          "statusNote": "逾期原因：canonical 半边已完成（10-02 Inspection 28 页实测）；hreflang 半边需全站 en↔es 双向回指逐页复核，此前排队在后。下一步：写一个 en↔es 回指断言脚本（仿 protect-top-asset 模式，约 0.5 天），产出即收口。 【实测证据 10-03】canonical 复核已有产物（10-02 Inspection 28 页 canonical 自指实测）；hreflang 仅存在于 publish-gate.mjs / seo-critic.mjs 门禁代码，en↔es 双向回指全站复核记录仍缺失",
           "statusAudited": "2026-10-03"
         },
         {
@@ -714,7 +714,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "现有形态=数据分析/GEO三平台长尾明细表-20260927.csv：25 prompt×3 平台=75 行；距验收差三项：25<30 条、五类意图未标注（无法验各≥5）、每条未映射资产页",
+          "statusNote": "逾期原因：距验收的三项（扩至 ≥30 条、五类意图标注、资产页映射）是逐条人工判定工作，非脚本可批量。下一步：直接复用 M6-4 交叉比对的 10 条命中+4 边缘区做意图簇标注底稿（约 0.5–1 天），25→30 差额从 M15 选题池补。 【实测证据 10-03】现有形态=数据分析/GEO三平台长尾明细表-20260927.csv：25 prompt×3 平台=75 行；距验收差三项：25<30 条、五类意图未标注（无法验各≥5）、每条未映射资产页",
           "statusAudited": "2026-10-03"
         },
         {
