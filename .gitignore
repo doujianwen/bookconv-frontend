@@ -41,3 +41,9 @@ Thumbs.db
 # 外链提交记录含账号等敏感信息，不纳入版本控制
 docs/submissions/
 ebook-converter/nul
+
+# 数据资产文件级清单：file_path 列含本机绝对路径（E:\一人公司\…），
+# 进 public 仓库会泄露本地目录结构。2026-09-28 已被误提交（0c58c66，
+# 混在一条博客修复 commit 里），当日从版本控制移除。磁盘文件保留。
+# 同一份数据在 bookconv_data_asset/raw_inventory.csv 亦有副本。
+report/raw_inventory.csv

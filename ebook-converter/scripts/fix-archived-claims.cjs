@@ -2,7 +2,15 @@
 // Fix false plan claims in archived blog post (7 spots).
 // All replacements: honest 10MB-everywhere copy, no per-hour/priority/50MB/100MB.
 const fs = require('fs');
-const FILE = 'E:/一人公司/电子书格式转换站/ebook-converter/src/data/_archived/how-to-convert-epub-to-mobi.ts';
+const path = require('path');
+// Derive from this file's location rather than hardcoding an absolute path:
+// the hardcoded form leaked the author's local directory layout into a public
+// repo and broke the script on any other machine.
+const FILE = path.join(
+  __dirname,
+  '..',
+  'src/data/_archived/how-to-convert-epub-to-mobi.ts'
+);
 
 const REPLACEMENTS = [
   // EN :34

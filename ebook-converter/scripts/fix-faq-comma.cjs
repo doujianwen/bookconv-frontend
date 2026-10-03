@@ -3,7 +3,7 @@
 // Byte-level, EOL-agnostic, no regex on the question text.
 const fs = require('fs');
 const path = require('path');
-const DIR = 'E:/一人公司/电子书格式转换站/ebook-converter/src/data/content';
+const DIR = path.join(__dirname, '..', 'src/data/content');
 
 const MAP = {
   'djvu-to-pdf': "Is DjVu the same as PDF?",

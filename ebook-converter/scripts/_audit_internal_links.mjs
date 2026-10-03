@@ -1,7 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = 'E:/一人公司/电子书格式转换站/ebook-converter';
+// Derive the project root from this file's location instead of hardcoding an
+// absolute path. The hardcoded form leaked the author's local directory layout
+// into a public repo and broke the script on any other machine.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const blogDir = path.join(ROOT, 'src/data/blog');
 const guideDir = path.join(ROOT, 'src/data/guides');
 const contentDir = path.join(ROOT, 'src/data/content');
