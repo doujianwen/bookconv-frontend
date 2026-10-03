@@ -2,7 +2,11 @@
   "$schema": "competitor-config/v1",
   "_readme": [
     "竞品 SERP 采集配置。改这个文件就能换盯哪些竞品、哪些词，零代码改动。",
-    "competitors：要盯的竞品域名（换成你真正的对手；convertio/onlineconvert/zamzar/freeconvert/anyconv 是默认占位）。",
+    "competitors：要盯的竞品域名。2026-10-03（M7-2）名单已按实测证据固化，非默认占位，季度内不变：",
+    "  - 依据① SERP 实测（数据分析/competitor-serp-2026-09-27|28.json，17 监测词）：convertio 6 词次命中、freeconvert 4、zamzar 1；onlineconvert.com 与 anyconv.com 全 0。",
+    "  - 依据② AI 引用（数据分析/GEO竞品洞察与BookConv优化建议-20260927.md，三平台 N=25）：Calibre 24 次被引（工具类 48%）居首，Adobe 6、Convertio 4、Zamzar 3、CloudConvert 2。",
+    "  - 换入 calibre-ebook.com（AI 引用第一但此前完全未监控）与 cloudconvert.com（API 护城河）；换出 onlineconvert.com（域名疑误：真实品牌为 online-convert.com 带连字符）与 anyconv.com（0 证据）。",
+    "  - 每家 overlapKeywords = 该竞品与 BookConv 实测重叠的主要监测词（SERP 命中或 AI 引用依据）。",
     "keywords：要监控排名的目标词（我们的词；可扩到几十个，越多抓取越慢/越费 API 额度）。",
     "⚠️ 收录原则（2026-09-27）：优先盯「真正会动的词」。若监测词与实际变动词不相交，候选原因永远为 0（变动词∩监测词=0）。",
     "   2026-09-27 补入 5 个实测变动词（Δ 来自 keyword-series.json）：is azw3 compatible with kindle(-7)、ebook converter online(+4)、mobi vs azw3(-2)、epub to zip(-2)、can i use calibre online without installing(+2)。",
@@ -11,13 +15,39 @@
     "面板：/admin/competitors"
   ],
   "competitors": [
-    { "domain": "convertio.co", "name": "Convertio" },
-    { "domain": "onlineconvert.com", "name": "OnlineConvert" },
-    { "domain": "zamzar.com", "name": "Zamzar" },
-    { "domain": "freeconvert.com", "name": "FreeConvert" },
-    { "domain": "anyconv.com", "name": "AnyConv" }
+    {
+      "domain": "calibre-ebook.com",
+      "name": "Calibre",
+      "overlapKeywords": ["calibre online", "calibre alternative", "can i use calibre online without installing", "best ebook converter"],
+      "evidence": "AI 引用第一：24 次被引，占三平台工具类引用 48%（GEO竞品洞察-20260927）；官方文档语料是 LLM 默认答案来源"
+    },
+    {
+      "domain": "convertio.co",
+      "name": "Convertio",
+      "overlapKeywords": ["ebook converter", "ebook converter online", "epub to azw3", "pdf to mobi", "convert epub to mobi"],
+      "evidence": "SERP 实测最强：9/27-28 共 6 词次命中（ebook converter #2/#3、ebook converter online #2/#3、epub to azw3 #2、pdf to mobi #2）+ AI 引用 4 次"
+    },
+    {
+      "domain": "zamzar.com",
+      "name": "Zamzar",
+      "overlapKeywords": ["epub to azw3", "convert epub to mobi", "mobi to epub"],
+      "evidence": "AI 引用 3 次（zamzar.com/convert/{azw3,pdf,mobi}-to-epub）+ SERP epub to azw3 #7（9/28）"
+    },
+    {
+      "domain": "freeconvert.com",
+      "name": "FreeConvert",
+      "overlapKeywords": ["free ebook converter", "epub to azw3", "pdf to mobi"],
+      "evidence": "SERP 4 词次命中（9/27-28）：free ebook converter #2、epub to azw3 #3/#5、pdf to mobi #5"
+    },
+    {
+      "domain": "cloudconvert.com",
+      "name": "CloudConvert",
+      "overlapKeywords": ["mobi to epub", "epub to pdf", "ebook converter online"],
+      "evidence": "AI 引用 2 次（cloudconvert.com/{mobi,epub}-to-{epub,pdf}），API+Web 双入口护城河（GEO竞品洞察-20260927）"
+    }
   ],
   "keywords": [
+    "best ebook converter",
     "ebook converter",
     "online ebook converter",
     "convert epub to mobi",
@@ -30,6 +60,7 @@
     "kindle converter",
     "free ebook converter",
     "calibre online",
+    "calibre alternative",
     "is azw3 compatible with kindle",
     "ebook converter online",
     "mobi vs azw3",

@@ -846,8 +846,8 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "名单已固化 data/competitor-config.json（5 家 ≤5 ✓），但 _readme 自承「默认占位」非真实竞品，且每家未标注主要重叠关键词——验收第二条件未满足",
+          "status": "done",
+          "statusNote": "10/03 收口：competitor-config.json 名单按实测证据固化（≤5 ✓，每家标注 overlapKeywords ✓）——换入 calibre-ebook.com（AI 引用 24 次第一，此前未监控）与 cloudconvert.com（AI 2 次+API 护城河），换出 onlineconvert.com（域名疑误，真实品牌=online-convert.com）与 anyconv.com（两日 SERP 全 0）；保留 convertio（6 词次命中）/zamzar（AI 3）/freeconvert（4 词次）。词表补 best ebook converter（头号资产词）与 calibre alternative（M6-4 命中词）；所有 overlapKeywords 均在监测词表内（脚本断言）；消费方仅读 domain/name，新字段 additive 安全",
           "statusAudited": "2026-10-03"
         },
         {
