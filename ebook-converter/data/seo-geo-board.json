@@ -756,8 +756,8 @@
           "due": "2026-10-03",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "输入已齐备：M6-3 明细表（数据分析/GEO三平台长尾明细表-20260927.csv，75 行=25 prompt×3 平台）+ M1 曝光词库；「有 SEO 资产但 AI 未识别」交叉比对产物未产出，待开工",
+          "status": "done",
+          "statusNote": "10/03 收口：交叉比对报告 数据分析/有资产未被引-交叉比对-2026-10-03.md——M6-3 三平台均未引用的 20 prompt × GSC page 组（8/17–9/30 快照）+ Bing query 排名，命中 **10 条**（Kindle 兼容族×4、PDF/Word 转换×2、Calibre 族×2、阅读器族×2，均有 imp/排名证据），另 4 条边缘区（资产在、曝光未起）+ 2 条无资产机会区；行动项并入 M6-5（due 10/15）",
           "statusAudited": "2026-10-03"
         },
         {
