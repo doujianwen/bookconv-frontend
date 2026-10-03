@@ -156,12 +156,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const locale of locales) {
     const prefix = locale === 'en' ? '' : '/' + locale
 
-    allUrls.push({
-      url: baseUrl + prefix,
-      lastModified: new Date(STATIC_DATES['/'] || '2026-07-26'),
-      changeFrequency: 'weekly' as const,
-      priority: 1.0,
-    })
+    // M5-1 修复（2026-10-03）：/es 首页被 middleware P3-C 规则 404（线上实测
+    // https://www.bookconv.com/es → 404），sitemap 不应列出死链。es 分支跳过首页。
+    if (locale === 'en') {
+      allUrls.push({
+        url: baseUrl + prefix,
+        lastModified: new Date(STATIC_DATES['/'] || '2026-07-26'),
+        changeFrequency: 'weekly' as const,
+        priority: 1.0,
+      })
+    }
 
     const staticPages: {
       path: string

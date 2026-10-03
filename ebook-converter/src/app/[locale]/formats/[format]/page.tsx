@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getFormatData, SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { FORMAT_DISPLAY_NAMES } from '@/lib/conversion-map'
+import { buildAlternates } from '@/lib/seo/alternates'
 import dynamic from 'next/dynamic'
 
 
@@ -15,7 +16,7 @@ const FormatPageClientDynamic = dynamic(
 )
 
 interface FormatPageProps {
-  params: Promise<{ format: string }>
+  params: Promise<{ locale: string; format: string }>
 }
 
 export function generateStaticParams() {
@@ -23,7 +24,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: FormatPageProps): Promise<Metadata> {
-  const { format } = await params
+  const { format, locale = 'en' } = await params
   const data = getFormatData(format)
   if (!data) {
     return { title: 'Format Not Found' }
@@ -31,13 +32,19 @@ export async function generateMetadata({ params }: FormatPageProps): Promise<Met
   const display = FORMAT_DISPLAY_NAMES[format] || format.toUpperCase()
   const title = `${display} 电子书格式介绍`
   const description = `${display} 是一种流行的电子书格式。了解它的优缺点、适用场景，以及如何与其他格式互转。`
+  // M5-1 修复（2026-10-03）：此前手写 languages 硬编码了 /es/formats/* 回指，
+  // 但 middleware P3-C 对 /es/formats/* 一律 404 → es 回指全部指向死页。
+  // 回归 buildAlternates 单一权威点：formats 无 es 版本 → 只输出 en + x-default。
+  const alternates = buildAlternates({
+    locale,
+    slugPath: `/formats/${format}`,
+    pageType: 'leaf',
+    hasEsVersion: false,
+  })
   return {
     title,
     description,
-    alternates: {
-      canonical: `https://www.bookconv.com/formats/${format}`,
-      languages: { en: `/formats/${format}`, es: `/es/formats/${format}`, 'x-default': `/formats/${format}` },
-    },
+    alternates,
     openGraph: {
       title,
       description,
