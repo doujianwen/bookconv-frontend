@@ -22,6 +22,7 @@
     "audit:geo-content": "node scripts/geo-audit-content.mjs --no-online",
     "audit:geo-guide": "node scripts/geo-audit-guide.mjs --no-online",
     "audit:workbench": "node scripts/audit-workbench-honesty.mjs",
+    "audit:top-asset": "node scripts/protect-top-asset.mjs",
     "build:workbench": "node scripts/build-workbench-html.mjs",
     "fetch:bing": "node scripts/fetch-bing-webmaster.mjs",
     "fetch:gsc": "node scripts/fetch-gsc-webmaster.mjs",

@@ -184,11 +184,12 @@ describe('board derivation', () => {
     expect(view.totals.tasks).toBe(66);
     // 2026-10-03 backfill: 25 overdue tasks audited against on-disk evidence.
     // 18 moved todo->done, 6 todo->doing (gate built, acceptance not met),
-    // 1 pre-existing done (M3-2); M8-5 closed done the same day (strong-claim
-    // cleanup verified by grep). open = todo + doing.
-    expect(view.totals.done).toBe(20);
-    expect(view.totals.open).toBe(46);
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(46);
+    // 1 pre-existing done (M3-2); M8-5 + M2-5 closed done the same day
+    // (strong-claim cleanup grep-verified; top-asset assertions 9/9 PASS).
+    // open = todo + doing.
+    expect(view.totals.done).toBe(21);
+    expect(view.totals.open).toBe(45);
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(45);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -248,13 +249,15 @@ describe('board derivation', () => {
   it('surfaces a task as overdue the day after its due date', () => {
     const next = deriveBoard(data, '2026-09-29');
     const ids = next.overdue.map((d) => d.taskId);
-    // 2026-10-03 backfill: M0-1/M0-2/M1-1/M9-1 were closed by that audit.
-    // M2-5 is still open with due 2026-09-28, so it remains the overdue probe.
-    expect(ids).toContain('M2-5'); // due 09-28
+    // 2026-10-03 backfill: M0-1/M0-2/M1-1/M9-1 were closed by that audit;
+    // M2-5 closed done the same day (top-asset assertions). M2-1 (due 09-28,
+    // still doing) is now the earliest open overdue probe.
+    expect(ids).toContain('M2-1'); // due 09-28
     expect(ids).not.toContain('M0-1'); // closed 2026-10-03
+    expect(ids).not.toContain('M2-5'); // closed 2026-10-03
     // and records how late it is
-    const m25 = next.overdue.find((d) => d.taskId === 'M2-5')!;
-    expect(m25.daysLate).toBe(1);
+    const m21 = next.overdue.find((d) => d.taskId === 'M2-1')!;
+    expect(m21.daysLate).toBe(1);
   });
 
   it('keeps overdue items accumulating rather than dropping off', () => {
@@ -262,8 +265,9 @@ describe('board derivation', () => {
     const d2 = deriveBoard(data, '2026-10-05');
     expect(d2.overdue.length).toBeGreaterThan(d1.overdue.length);
     // the earliest item is still present, now later
-    // 2026-10-03 backfill closed M0-1, so M2-5 (due 09-28) is the earliest open one.
-    expect(d2.overdue.map((d) => d.taskId)).toContain('M2-5');
+    // M2-1 (due 09-28, still doing) is the earliest open one after the
+    // 2026-10-03 backfill closed M0-1 and M2-5.
+    expect(d2.overdue.map((d) => d.taskId)).toContain('M2-1');
   });
 
   it('sorts due-today by priority, P0 first', () => {
@@ -292,8 +296,8 @@ describe('board derivation', () => {
     expect(m0.done).toBe(5);
     expect(m0.pct).toBe(100);
     expect(m0.p0Open).toBe(0);
-    expect(v.totals.done).toBe(21); // 20 after backfill (incl. M8-5) + M0-5 promoted
-    expect(v.totals.open).toBe(45); // isOpen() counts todo + doing
+    expect(v.totals.done).toBe(22); // 21 after backfill (incl. M8-5/M2-5) + M0-5 promoted
+    expect(v.totals.open).toBe(44); // isOpen() counts todo + doing
   });
 
   it('excludes dropped tasks from the open count', () => {
@@ -301,7 +305,7 @@ describe('board derivation', () => {
     // M1-1 closed in the 2026-10-03 backfill, so drop an actually-open task (M1-4).
     mutated.modules[1].tasks[3].status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    expect(v.totals.open).toBe(45); // 46 - M1-4 dropped
+    expect(v.totals.open).toBe(44); // 45 - M1-4 dropped
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(3);
   });
 

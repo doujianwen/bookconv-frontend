@@ -420,8 +420,8 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "实测无产物（10-03）：scripts/ grep best-ebook-converter 0 命中，sitemap 含/robots 未屏蔽/noindex 未设三项自动化断言均未建",
+          "status": "done",
+          "statusNote": "10/03 收口：scripts/protect-top-asset.mjs（npm run audit:top-asset）双层断言——静态层（数据文件/middleware 无重定向映射/页代码无 noindex）+ 线上层（HTTP 200/URL 未改写/meta robots=index,follow/H1 渲染/sitemap 含/robots 未屏蔽），实跑 9/9 PASS",
           "statusAudited": "2026-10-03"
         },
         {
