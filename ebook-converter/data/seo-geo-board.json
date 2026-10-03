@@ -370,7 +370,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "逾期原因：验收的「差异化达标」依赖 52 程序化页骨架改造（=待办 #0 大工程，6–8 周），按 ROI 排队不在此冲刺；门禁本身已建成并实跑（两分层分开判定=结构性验收已过一半）。下一步：差异化改造排期进 #0；下次实跑时顺手把两份报告分开存档（0.1 天）。 【实测证据 10-03】10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定，但「两份报告分开存档」未落盘",
+          "statusNote": "10/03 晚：顺手项完成——脚本新增两份报告自动落盘（数据分析/convert差异化-结构层报告.md + convert差异化-文本层报告.md，分开存档不合并成单一重复度分，验收第二条件达成）；实跑判定不变（结构层 FAIL 2：骨架 9>3、24 页共用 Checklist；文本层 PASS）。剩余逾期原因：结构层达标依赖 52 程序化页骨架改造（=待办 #0 大工程，6–8 周），按 ROI 排队，随 #0 推进收口。 【实测证据 10-03】10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定",
           "statusAudited": "2026-10-03"
         },
         {

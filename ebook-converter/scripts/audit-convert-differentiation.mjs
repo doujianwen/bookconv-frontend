@@ -13,7 +13,7 @@
  * 用法：node scripts/audit-convert-differentiation.mjs
  * 退出码：0 = PASS，1 = FAIL（未达差异化目标）
  */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, basename } from 'node:path';
 
 const DIR = 'src/data/content';
@@ -133,4 +133,46 @@ if (pairs.length) {
 
 const failed = results.filter((r) => !r.ok).length;
 console.log(`\n${failed === 0 ? 'PASS' : 'FAIL'}  ${results.length - failed}/${results.length} 项达标`);
+
+// --- 两份报告分开存档（M2-1 验收：不合并成单一「重复度分」） ---
+const now = new Date().toLocaleString('sv-SE').slice(0, 16) + ' (本地时间)';
+const OUT = '数据分析';
+try {
+  const structMd = [
+    `# convert 页差异化 · 结构层报告（骨架同质度）`,
+    ``,
+    `> 生成：${now} · \`node scripts/audit-convert-differentiation.mjs\`（自动落盘，勿手改）`,
+    `> 判据：共用骨架（归一化后出现在 >=${TARGET.minShare} 页）数 <= ${TARGET.maxSharedSkeletons}；最高频共用章节覆盖页数 <= ${TARGET.maxTopHeadingPages}`,
+    ``,
+    `## 判定（结构层 2 项）`,
+    ...results.slice(0, 2).map((r) => `- ${r.ok ? 'PASS' : 'FAIL'}  ${r.label}: ${r.actual}（目标 ${r.limit}）`),
+    ``,
+    `## 共用骨架明细（页数降序）`,
+    ...shared.map(([k, set]) => `- ${set.size} 页  \`${k}\``),
+    ``,
+    `## 高频共用章节原文（改动靶子 Top5）`,
+    ...topRaw.map(([h, n]) => `- ${n} 页  ${h.slice(0, 80)}`),
+    ``,
+  ].join('\n');
+  writeFileSync(join(OUT, 'convert差异化-结构层报告.md'), structMd);
+
+  const textMd = [
+    `# convert 页差异化 · 文本层报告（两两 Jaccard）`,
+    ``,
+    `> 生成：${now} · \`node scripts/audit-convert-differentiation.mjs\`（自动落盘，勿手改）`,
+    `> 判据：同簇两两 Jaccard 平均 < ${TARGET.maxAvgJaccard}；最高 < ${TARGET.maxTopJaccard}`,
+    ``,
+    `## 判定（文本层 2 项）`,
+    ...results.slice(2).map((r) => `- ${r.ok ? 'PASS' : 'FAIL'}  ${r.label}: ${r.actual}（目标 ${r.limit}）`),
+    ``,
+    `## 最相似页对 Top10`,
+    ...(pairs.length ? pairs.slice(0, 10).map((p) => `- ${p.s.toFixed(3)}  ${p.x} <-> ${p.y}`) : ['-（无数据）']),
+    ``,
+  ].join('\n');
+  writeFileSync(join(OUT, 'convert差异化-文本层报告.md'), textMd);
+  console.log(`已存档：${OUT}/convert差异化-结构层报告.md + convert差异化-文本层报告.md`);
+} catch (e) {
+  console.error('报告存档失败（不影响门禁判定）:', e.message);
+}
+
 process.exit(failed === 0 ? 0 : 1);

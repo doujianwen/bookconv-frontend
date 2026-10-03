@@ -14,8 +14,8 @@ const FORMAT_ICONS: Record<string, LucideIcon> = {
 }
 
 export const metadata: Metadata = {
-  title: '电子书格式指南',
-  description: '了解 EPUB、PDF、MOBI、AZW3、TXT、DOCX 等主流电子书格式的优缺点和适用场景。',
+  title: 'Ebook Format Guides: EPUB, PDF, MOBI, AZW3 & More | BookConv',
+  description: 'Compare the pros, cons and best use cases of popular ebook formats — EPUB, PDF, MOBI, AZW3, TXT, DOCX and more.',
   alternates: {
     canonical: 'https://www.bookconv.com/formats',
     languages: { en: '/formats', 'x-default': '/formats' },
@@ -26,9 +26,9 @@ export default function FormatsPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
       <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">电子书格式指南</h1>
+        <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">Ebook Format Guides</h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-          深入了解各种电子书格式的特点，选择最适合你的格式。
+          Learn the strengths and weaknesses of each ebook format, and pick the right one for your device.
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export default function FormatsPage() {
               </div>
               <p className="text-sm text-gray-600 line-clamp-3">{data.description}</p>
               <div className="mt-4 flex items-center gap-1 text-sm font-medium text-blue-600">
-                了解更多
+                Learn more
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </div>
             </Link>
