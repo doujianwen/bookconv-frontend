@@ -113,7 +113,7 @@ Now, file size. Be ready for it. CBR archives are already compressed images insi
       If that seems large, it is — but it's the same pixels you already had, just in a different wrapper. If size is the priority, keep the CBR. If access is the priority, take the PDF.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Checking the Pages Came Out in Order',
       body: `After download, confirm these before you rely on the PDF:
 
 - **Page order correct** — flip through once; pages should ascend 1, 2, 3 in reading order

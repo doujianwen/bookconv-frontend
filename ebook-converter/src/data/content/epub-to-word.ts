@@ -114,21 +114,21 @@ The conversion lands on DOCX because that is where editing, reviewing, and colla
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Checking the DOCX Is Actually Editable',
+      body: `The point of this conversion is an editable file, so the checks are about Word behaviour rather than reading fidelity.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Heading styles are real Word styles** — open the Navigation pane; headings should be Heading 1/2/3, not manually bolded text.
+- **Images are embedded, not linked** — if a picture vanishes after you move the file, it was linked rather than embedded.
+- **Paragraphs did not merge** — flowing text can turn into one long block; check a chapter break.
+- **Lists and tables survived as objects** — a list rendered as plain text means the structure was flattened.
+- **It opens without a repair prompt** — Word telling you the file is damaged means the structure broke during conversion.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+Also worth knowing: DOCX reflows text, so an exact page-for-page match with the original is not expected.`
     },
 
     {
-      heading: 'Before You Convert: Check Your EPUB',
+
+heading: 'Before You Convert: Check Your EPUB',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

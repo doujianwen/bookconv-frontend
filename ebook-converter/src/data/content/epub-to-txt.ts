@@ -126,7 +126,7 @@ Click the Download button to save your plain text file. The converter automatica
 - Basic text analysis and research`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Verifying the TXT Came Through Cleanly',
       body: `Before downloading your converted TXT file, verify these quality markers to ensure optimal results:
 
 | Check Item | Expected Result | How to Verify |

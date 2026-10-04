@@ -99,21 +99,21 @@ One rule that saves grief: **don't re-save a JPG repeatedly.** Each save runs co
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Checking the Images You Are About to Share',
+      body: `EPUB is reflowable text, so this conversion bakes each page into a fixed image. Check the output as an image, not as a book.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Page dimensions are what you asked for** — the images are fixed-size now; confirm the width and height suit where you will post them.
+- **Text is sharp at full size** — because the page is an image, small type can look soft when scaled. Zoom to 100% on a paragraph.
+- **Every page rendered** — count the images against the book's page count; a blank one means a failed render, not an empty chapter.
+- **No page is cropped** — headers or footnotes cut off at the edge usually mean a page-size mismatch.
+- **The aspect ratio is unchanged** — stretched or squashed text means the renderer did not honour the page box.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+Screenshots and diagrams usually come through well; long tables are where JPG output tends to blur.`
     },
 
     {
-      heading: 'Before You Convert: Check Your EPUB',
+
+heading: 'Before You Convert: Check Your EPUB',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

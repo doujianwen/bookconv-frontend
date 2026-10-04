@@ -85,21 +85,21 @@ CHM converts cleanly because both formats are HTML-based, but MOBI drops the pre
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Checking the Help File Survived the Trip to Kindle',
+      body: `CHM converts well because both formats are HTML-based, but the details still matter for a manual you intend to search.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **The table of contents is navigable** — help files are structure-heavy; confirm each entry jumps to the right topic.
+- **Search works in the reader** — Kindle's search needs text as text, not images. Try a word you know is on page three.
+- **Code blocks keep their spacing** — monospace runs and indentation are what make a manual readable; check one sample closely.
+- **Images from the help topic are present** — screenshots often live beside the steps they illustrate.
+- **Nothing was silently dropped** — CHM files can hold scripts or embedded help systems that do not survive; spot-check the sections you rely on.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+A CHM manual that lost its search index is still readable, which is why this problem often goes unnoticed until you need it.`
     },
 
     {
-      heading: 'Before You Convert: Check Your CHM',
+
+heading: 'Before You Convert: Check Your CHM',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really CHM** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

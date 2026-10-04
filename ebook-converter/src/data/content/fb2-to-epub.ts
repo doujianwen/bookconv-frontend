@@ -110,7 +110,7 @@ Nothing meaningful is lost. You'll notice the book looks slightly different in a
 Keep FB2 inside its native ecosystem. Convert to EPUB to read on mainstream devices or publish.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Checking the EPUB From FB2',
       body: `After download, confirm these:
 
 - **Chapters navigate** — FB2 sections became tappable EPUB chapters

@@ -100,21 +100,21 @@ When you genuinely can't decide: text-heavy book, go PNG. The size difference is
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Verifying PNG Page Quality and File Size',
+      body: `PNG keeps detail better than JPG and produces larger files. Both matter when you render a whole book to images.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Text edges are crisp** — PNG is lossless, so type should stay sharp; softness here means the source render was already low-resolution.
+- **File size per page is predictable** — PNG pages run noticeably larger than JPG. If one page is an outlier, it is probably a photographic plate.
+- **No transparency artifacts** — pages should be fully opaque; unexpected transparency means a layer did not flatten.
+- **Page count matches the book** — a missing page is a render failure, not a blank chapter.
+- **The images open outside the tool** — check one in a normal image viewer before you commit to a batch.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+If file size is the constraint rather than quality, that is the JPG conversion's job, not PNG's.`
     },
 
     {
-      heading: 'Before You Convert: Check Your EPUB',
+
+heading: 'Before You Convert: Check Your EPUB',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

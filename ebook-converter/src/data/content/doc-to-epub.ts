@@ -105,7 +105,7 @@ Most documents under 100 pages finish in ten to thirty seconds. Files with a lot
 Keep DOC if you must keep editing in Word and printing. Convert to EPUB when the goal is reading or wide distribution.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Running These Checks on the EPUB',
       body: `After download, confirm these on the EPUB:
 
 - **Table of contents works** — tapping a chapter title navigates correctly

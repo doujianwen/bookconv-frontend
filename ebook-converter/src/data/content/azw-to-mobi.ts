@@ -74,21 +74,21 @@ For ordinary books the reading experience is unchanged. You trade a little styli
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Confirming the Repackage Did Not Cost You Anything',
+      body: `AZW and MOBI are close enough that a repackage is usually invisible — which is exactly why you should check.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **The file opens on your Kindle** — sideload it and confirm the library shows the cover, not a blank tile.
+- **Internal links still jump** — AZW files from Amazon sometimes carry store-injected navigation; check that a TOC entry lands on the right chapter.
+- **Fonts did not collapse** — older AZW files rely on the reader's own fonts, so text reflows differently than on the device it came from.
+- **Annotations are not expected back** — highlights and notes live in Amazon's cloud, not inside the file. Treat the MOBI as a read-only copy.
+- **The original AZW is untouched** — keep it. This conversion is a fallback for older hardware, not an upgrade.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+If it opens but the navigation feels off, that is usually the source file's own TOC, not the conversion.`
     },
 
     {
-      heading: 'Before You Convert: Check Your AZW',
+
+heading: 'Before You Convert: Check Your AZW',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really AZW** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

@@ -95,7 +95,7 @@ None of this is a defect in the converter — it is the honest gap between a rea
 Keep EPUB for reading. Convert to RTF when you need an editable document for an editor or legacy system.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Checking the RTF Opens Cleanly',
       body: `After download, confirm these:
 
 - **Text editable** — open the .rtf in Word or LibreOffice and start editing

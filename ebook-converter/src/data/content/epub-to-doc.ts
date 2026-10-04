@@ -103,7 +103,7 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
 **Bottom line:** keep EPUB for reading and sharing, and only generate DOC when an external system literally will not accept anything newer. For almost every other case, our EPUB to DOCX tool is the better destination.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Word Checks Worth Doing Before You Ship',
       body: `Before you download the .doc, run through these checks so you are not surprised later:
 
 | Check item | Expected result | How to verify |

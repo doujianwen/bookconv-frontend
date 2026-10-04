@@ -137,21 +137,21 @@ If your Kindle predates late 2011, MOBI is your only option. For anything newer,
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'What Downgrading to MOBI Should Look Like',
+      body: `A downgrade is a loss, so the useful question is: what did you keep?
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Plain text and images survive** — MOBI carries both, so body content and figures come through intact.
+- **CSS styling flattens** — AZW3's advanced typography reduces to the basic styling MOBI supports. Expect plainer headings and fonts.
+- **Footnote links may go static** — interactive note navigation is an AZW3 feature; in MOBI they become plain text.
+- **It opens on pre-2011 Kindles** — that is the whole point. Verify on the oldest device you actually care about.
+- **The AZW3 original stays intact** — keep it, because the reverse conversion will not recover what this step dropped.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+If a chapter renders as one undifferentiated block, the source had CSS-dependent structure that MOBI cannot express.`
     },
 
     {
-      heading: 'Before You Convert: Check Your AZW3',
+
+heading: 'Before You Convert: Check Your AZW3',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really AZW3** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

@@ -66,7 +66,7 @@ Keep AZW3 only if you read exclusively on a modern Kindle and never share files.
 One hard limit: AZW3 files bought from the Kindle Store carry DRM and cannot be opened by any converter. DRM-free files convert without trouble.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Checking the EPUB Before You Trust It',
       body: `Before you rely on the EPUB, confirm these:
 
 - **Chapters navigate** — tapping a chapter title in your reader jumps to the right place

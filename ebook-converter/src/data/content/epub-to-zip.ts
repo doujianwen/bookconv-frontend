@@ -48,7 +48,7 @@ If you only want to read the book, keep the EPUB. If you need to get inside it, 
       body: `Once you have the ZIP, open it with any archive tool and look for: OEBPS/ or EPUB/ — the folder holding chapter .xhtml files. images/ — cover and inline illustrations. style/ — the CSS that controls typography. META-INF/container.xml and content.opf — the manifest and metadata. Edit what you need, then re-zip and (if required) rename back to .epub to rebuild a valid e-book. Want a readable book instead of raw files? See our [AZW3 vs MOBI comparison](/blog/azw3-vs-mobi) to pick the right Kindle format.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'When a ZIP "Conversion" Has Nothing to Convert',
       body: `Because this is a byte-exact copy, the "conversion" either worked perfectly or the file was already broken. There is little in between. Verify with this short list:
 
 | Check item | Expected result | How to verify |

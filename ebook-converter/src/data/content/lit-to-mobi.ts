@@ -86,21 +86,21 @@ Because LIT is already HTML under the hood, conversion to MOBI is smooth and kee
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Confirming the LIT Rescue Actually Worked',
+      body: `LIT is a rarely used format, so conversions from it are often rescue jobs. Check that you got real content, not a partial parse.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **The word count is plausible** — open the first and last chapters; LIT parsers sometimes stop early, producing a truncated file.
+- **Chapter breaks are present** — not one continuous block. Missing breaks usually mean the parser missed LIT's internal markers.
+- **Metadata carried across** — title and author often survive where the body does not, so check both.
+- **Images decoded** — LIT stores them in a proprietary scheme; missing figures mean the decoder did not handle this particular file.
+- **It opens on the Kindle** — the final test, and the one that matters.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+Keep the original LIT regardless — it is the only copy of files this old.`
     },
 
     {
-      heading: 'Before You Convert: Check Your LIT',
+
+heading: 'Before You Convert: Check Your LIT',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really LIT** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

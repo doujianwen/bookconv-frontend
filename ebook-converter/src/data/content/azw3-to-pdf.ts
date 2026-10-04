@@ -89,7 +89,7 @@ Keep AZW3 for daily Kindle reading. Convert to PDF when you need to print, cite,
 - **Margin Optimization**: Margins are adjusted based on target paper size (A4 Letter etc.)`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Markers to Look for in the PDF',
       body: `Before you print or share, confirm these markers on the output PDF:
 
 - **Page numbers present** — each page carries a footer number for citation

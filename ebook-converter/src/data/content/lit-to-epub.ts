@@ -104,7 +104,7 @@ If the file already opens fine in a LIT reader and you have no plan to change de
 **Step 4 — Download and verify.** Open the EPUB in any reader. Confirm the table of contents populated, the cover image is present, and chapter order is correct before you archive the original.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Confirming the LIT Was Fully Recovered',
       body: `Before you delete the original LIT, verify the rescue actually worked:
 
 | Check item | Expected result | How to verify |

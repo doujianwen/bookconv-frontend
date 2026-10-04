@@ -100,7 +100,7 @@ HTML preserves structure and content beautifully. It just stops pretending to be
 Keep EPUB for reading. Convert to HTML when you need to publish, restyle, or make the content findable.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'Checking the Web Bundle',
       body: `After download, confirm these:
 
 - **index.html opens** — double-click it and the book loads in your browser offline

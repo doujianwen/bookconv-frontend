@@ -48,21 +48,21 @@ Unless your device predates late 2011, AZW3 is strictly better: sharper typograp
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Verifying the Upgrade Fixed What You Were Trying to Fix',
+      body: `This conversion is usually done to get modern styling, so the checks should look at exactly that.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Fonts are embedded** — that is the main upgrade. If type still renders with the reader's defaults, embedding did not happen.
+- **CSS styling applies** — headings, block quotes and coloured text should now look as designed.
+- **Footnotes are interactive again** — tap a note marker and it should jump; static markers mean the conversion missed the feature.
+- **The file is smaller or similar, not larger** — AZW3 usually compresses better than MOBI; a much larger file suggests images were re-encoded badly.
+- **It opens on a current Kindle** — and still on the older device, if you still need that.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+This step is one-way in practice: converting back to MOBI will not restore what MOBI could not express.`
     },
 
     {
-      heading: 'Before You Convert: Check Your MOBI',
+
+heading: 'Before You Convert: Check Your MOBI',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really MOBI** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

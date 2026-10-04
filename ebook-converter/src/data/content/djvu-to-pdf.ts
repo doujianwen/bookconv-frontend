@@ -91,21 +91,21 @@ The short version: keep the DjVu if disk space matters and you have a viewer you
     },
 
     {
-      heading: 'Conversion Quality Checklist',
-      body: `Before you call the conversion done, run through this short list. It takes thirty seconds and catches the mistakes that waste an hour later.
+      heading: 'Judging a Scanned DjVu After Conversion',
+      body: `A DjVu is page images, not text — so these checks are about fidelity, not structure.
 
-- **Text is complete** — open the first and last chapters; no missing pages or truncated paragraphs.
-- **Chapters are in order** — the reading sequence matches the original, with no duplicates or skips.
-- **Special characters render** — accents, em dashes, and curly quotes show correctly, not as empty boxes.
-- **Images came through** — covers and diagrams are present, not blank.
-- **Source was DRM-free** — a successful file proves the converter could read it; locked files fail outright.
-- **It opens on your target device** — the final proof is opening it where you actually intend to read.
+- **Every page is present** — compare the page count against the original; scanned archives often have unnumbered front matter that still must come through.
+- **Resolution holds up when zoomed** — scan text stays sharp at 200% rather than turning into blocks. This is the single best quality signal.
+- **Orientation is correct** — landscape pages in the original sometimes arrive rotated.
+- **No page is blank or black** — a failed page usually means a decode problem in that specific page, not the whole document.
+- **Text search does NOT work** — expected, because the source has no text layer. If you need searchable output, you need OCR, not a format conversion.
 
-Any of these look wrong? Re-run the conversion, or check whether your source file itself was the problem.`
+If a page comes out blank, retry that page range; the rest of the document is usually fine.`
     },
 
     {
-      heading: 'Before You Convert: Check Your DjVu',
+
+heading: 'Before You Convert: Check Your DjVu',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really DjVu** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
