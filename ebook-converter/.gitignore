@@ -1,5 +1,6 @@
 ﻿# Build
 .next/
+.next-*/
 out/
 dist/
 *.tsbuildinfo
@@ -17,7 +18,7 @@ node_modules/
 # IDE
 .vscode/
 .idea
-.workbuddy-ai//
+.workbuddy-ai/
 
 # OS
 .DS_Store
@@ -123,3 +124,4 @@ _wb_tmp/
 
 # 每日垃圾清理备份（cleanup-daily-junk 移动到此，可恢复，不入库）
 .trash/
+.trash-*/
