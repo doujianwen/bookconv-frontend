@@ -186,10 +186,12 @@ describe('board derivation', () => {
     // 18 moved todo->done, 6 todo->doing (gate built, acceptance not met),
     // 1 pre-existing done (M3-2); M8-5 + M2-5 + M6-4 + M6-5 + M7-2 + M5-1 +
     // M0-5 + M6-1 closed done the same day (all grep/online-verified).
+    // 2026-10-04: M3-5 (no-JS render audit) closed done after
+    // scripts/verify-nojs-render.mjs passed 10/10 page templates online.
     // open = todo + doing.
-    expect(view.totals.done).toBe(27);
-    expect(view.totals.open).toBe(39);
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(39);
+    expect(view.totals.done).toBe(28);
+    expect(view.totals.open).toBe(38);
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(38);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -295,8 +297,8 @@ describe('board derivation', () => {
     const v = deriveBoard(mutated, '2026-09-27');
     const m2v = v.modules.find((m) => m.id === 'M2')!;
     expect(m2v.pct).toBeGreaterThan(0);
-    expect(v.totals.done).toBe(28); // 27 incl. M5-1/M0-5/M6-1 + M2-1 promoted
-    expect(v.totals.open).toBe(38); // isOpen() counts todo + doing
+    expect(v.totals.done).toBe(29); // 28 incl. M3-5 + M2-1 promoted
+    expect(v.totals.open).toBe(37); // isOpen() counts todo + doing
   });
 
   it('excludes dropped tasks from the open count', () => {
@@ -304,7 +306,7 @@ describe('board derivation', () => {
     // M1-1 closed in the 2026-10-03 backfill, so drop an actually-open task (M1-4).
     mutated.modules[1].tasks[3].status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    expect(v.totals.open).toBe(38); // 39 - M1-4 dropped
+    expect(v.totals.open).toBe(37); // 38 - M1-4 dropped
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(3);
   });
 

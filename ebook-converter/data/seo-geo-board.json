@@ -547,9 +547,9 @@
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "实测无产物（10-03）：scripts/ 与 数据分析/ 均 grep 不到 no-JS 快照检查（no-JS/nojs/禁用JS 0 命中），3 个代表页 no-JS 快照未做",
-          "statusAudited": "2026-10-03"
+          "status": "done",
+          "statusNote": "10-04 收口：新建 scripts/verify-nojs-render.mjs（npm run audit:nojs）实跑 10 类页面模板，硬判据 10/10 PASS（口径A=剥script 后含完整 H1+正文；convert 页正文 16,079 字符/64 段）。原验收标准会掩盖问题，故升级为双口径判据——加口径B（剥 <div hidden> = no-JS 浏览器真实可见）后：① 抓到真实缺陷 /tutorial H1 光杆词 'Tutorial'（8 字符，全站唯一<10），已修 messages/{en,es}.json（en→'Ebook Conversion Tutorial: Step by Step' / es→'Tutorial de Conversión de Ebooks: Paso a Paso'），⚠️ 待上线验证；② 结构性观察：convert 31 页 + formats 详情 17 页共 48 页正文经 React streaming Suspense 投递（口径B 可见 3%/30%），但口径A 完整 ⇒ GEO 无实质影响，且 10/20 读数前不动 48 页渲染路径，暂不修转为持续监测。报告 数据分析/M3-5-抓取与渲染可解析性-2026-10-04.md。方法论踩坑3 则：URL 靠猜致3 处 404 误判页面缺陷、非贪婪正则测 hidden 致 H1 假消失、判据只测口径A 造成全PASS 假安心。",
+          "statusAudited": "2026-10-04"
         },
         {
           "id": "M3-6",
