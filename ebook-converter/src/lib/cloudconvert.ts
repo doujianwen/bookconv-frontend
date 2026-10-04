@@ -16,6 +16,42 @@ const API_KEY = process.env.CLOUD_CONVERT_API_KEY;
 const MAX_POLL_ATTEMPTS = 55; // 55 * 2s = 110s，适配大文件（50+页EPUB→PDF需Calibre渲染60-90s）；route maxDuration=120s，留10s给创建job+上传+下载开销
 const POLL_INTERVAL_MS = 2000;
 
+/**
+ * Calibre 引擎能够读取的输入格式（白名单 = Calibre ebook-convert 的 INPUT 全集，
+ * 不含 DjVu / PDF 这类扫描图或排版容器）。
+ *
+ * 2026-10-04 事故：djvu → pdf 全程硬写 engine:'calibre'，Calibre 读不了 DjVu
+ * ⇒ CloudConvert job 落到 error。白名单之外的输入格式改省 engine，交给
+ * CloudConvert 自动选引擎（其官网 djvu-to-pdf 转换器走的正是默认引擎）。
+ * 白名单内的格式行为完全不变，既有成功路径零风险。
+ */
+const CALIBRE_INPUT_FORMATS = new Set([
+  'azw3',
+  'azw4',
+  'cbz',
+  'docx',
+  'epub',
+  'html',
+  'htmlz',
+  'kepub',
+  'lit',
+  'lrf',
+  'mobi',
+  'oeb',
+  'pdb',
+  'rb',
+  'rtf',
+  'shtml',
+  'txt',
+  'txtz',
+  'zip',
+]);
+
+/** 该输入格式是否交给 Calibre 引擎处理（决定 job 里是否带 engine:'calibre'） */
+function isCalibreInput(sourceFormat: string): boolean {
+  return CALIBRE_INPUT_FORMATS.has(String(sourceFormat || '').toLowerCase());
+}
+
 /** 检查 API Key 是否已配置（决定是否启用 CloudConvert 降级） */
 export function isCloudConvertConfigured(): boolean {
   return !!API_KEY;
@@ -76,6 +112,35 @@ async function ccRequest<T>(
   throw new Error('CloudConvert request failed after retries');
 }
 
+/**
+ * 从 CloudConvert job 提取可读的失败原因，覆盖三种真实形态：
+ *   ① 失败 task 的 result.message / code（最常见）；
+ *   ② job 级 result —— job 整体 error、tasks 里却没有 status==='error' 的 task
+ *      （2026-10-04 djvu→pdf 事故即此形态：旧实现只读 ①，只能抛出
+ *      "unknown failure"，飞书告警因此完全不可定位）；
+ *   ③ 两者都缺时给出 task 状态摘要，保证告警永远有信息量。
+ */
+function describeJobFailure(job: CCJobResponse): string {
+  const tasks = (job && job.data && job.data.tasks) || [];
+  const failed = tasks.find((t) => t.status === 'error');
+  // result 的类型声明只覆盖 id/message/code/files/form；此处额外读 'error' 字段，
+  // 故按 Record 取值（CloudConvert 部分错误会在 result.error 里带人类可读原因）。
+  const r = failed && failed.result
+    ? (failed.result as unknown as Record<string, unknown>)
+    : undefined;
+  const fromTask = r ? (r.message || r.code || r.error) : undefined;
+  if (fromTask) return String(fromTask);
+
+  const jd = job && job.data
+    ? (job.data as unknown as { result?: { message?: string; code?: string } })
+    : undefined;
+  const fromJob = jd && jd.result ? jd.result.message || jd.result.code : undefined;
+  if (fromJob) return String(fromJob);
+
+  const summary = tasks.map((t) => `${t.operation || '?'}:${t.status || '?'}`).join(', ');
+  return `no failure detail (tasks: ${summary || 'none'})`;
+}
+
 interface CCJobResponse {
   data: {
     id: string;
@@ -126,7 +191,9 @@ export async function convertWithCloudConvert(
         input: 'import-file',
         input_format: sourceFormat,
         output_format: targetFormat,
-        engine: 'calibre',
+        // Calibre 读不了 DjVu / PDF 等扫描图或排版类输入；这些格式省 engine，
+        // 让 CloudConvert 自动选引擎（默认引擎对 djvu→pdf 是支持的）。
+        ...(isCalibreInput(sourceFormat) ? { engine: 'calibre' } : {}),
       },
       'export-file': { operation: 'export/url', input: 'convert-file' },
     },
@@ -167,8 +234,7 @@ export async function convertWithCloudConvert(
     if (finished.data.status === 'finished') break;
     if (finished.data.status === 'error') {
       const failed = finished.data.tasks.find((t) => t.status === 'error');
-      const detail =
-        failed?.result?.message || failed?.result?.code || 'unknown failure';
+      const detail = describeJobFailure(finished);
       // 服务端日志：把失败任务的完整结果打出来，便于在 Vercel 函数日志里定位 CloudConvert 真实失败原因
       console.error(
         '[CloudConvert] job failed. detail=',

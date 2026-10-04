@@ -309,9 +309,9 @@
           "due": "2026-10-03",
           "priority": "P1",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "实测有产物（10-03 取证）：内耗组=R1/R2（docs/ops/mobi-epub整簇意图分布总览.md），合并已于 8/11 部署（docs/ops/R1-R5内耗治理完成总结.md，commits f6a8a1d/3a60fd9/a02df6d）；总览确认 epub↔mobi 三层配对无内耗；剩验收=拉 GSC 词展示确认无双页分摊下降",
-          "statusAudited": "2026-10-03"
+          "status": "done",
+          "statusNote": "10-04 验收通过（实跑 GSC query×page API，报告 数据分析/M1-4-内耗处置-验收报告-2026-10-04.md）。① 合并生效取证：curl /blog/mobi-or-azw3-for-kindle → 301 /blog/azw3-vs-mobi（src/middleware.ts:25，commit 3a60fd9），三闭环（import+磁盘+数组注册）一致。② 内耗清零=分窗验证：旧页展示 8/12–8/31 仍有 13 行/20 展示（301 后索引缓存残留，非活体竞争），但 9/01–10/02 归零 ⇒ 以 32 天窗判 PASS。③ 真伪判据：GSC 90 天窗 55 组「同 query 多 URL」经 8-gram Jaccard 证伪后真内耗 0 组（最大组 mobi to epub 86 展示/convert+guide+blog 三页，Jaccard 0.001）⇒ 属意图分化非内耗，无需再处置。④ 占比演化：可判窗口 14.0%(合并前)→12.7%(合并后)；断崖后窗 URL 仅 6–8 个，样本不足，其「0 组」是假清零不采信。方法论踩坑 4 则（slug 同名假内耗/正则斜杠数/窗口横跨上线时点/多 URL≠内耗）已入报告。",
+          "statusAudited": "2026-10-04"
         },
         {
           "id": "M1-5",
@@ -369,9 +369,9 @@
           "due": "2026-09-28",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "10/03 晚：顺手项完成——脚本新增两份报告自动落盘（数据分析/convert差异化-结构层报告.md + convert差异化-文本层报告.md，分开存档不合并成单一重复度分，验收第二条件达成）；实跑判定不变（结构层 FAIL 2：骨架 9>3、24 页共用 Checklist；文本层 PASS）。剩余逾期原因：结构层达标依赖 52 程序化页骨架改造（=待办 #0 大工程，6–8 周），按 ROI 排队，随 #0 推进收口。 【实测证据 10-03】10-03 实跑 scripts/audit-convert-differentiation.mjs：FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 0.063/0.333 PASS。门禁已实现两分层分开判定",
-          "statusAudited": "2026-10-03"
+          "status": "done",
+          "statusNote": "10-04 收口（实跑取证，报告 数据分析/convert差异化-结构层报告.md + convert差异化-文本层报告.md）。交付物验收条件「两份报告分开存档、不合并成单一重复度分」已满足：脚本自动落盘两份独立 md，各自独立判据与 PASS/FAIL。实跑结果 FAIL 2/4——结构层共用骨架 9（目标≤3）、24 页共用 Conversion Quality Checklist（目标≤8）；文本层 Jaccard 均值 0.063/最高 0.333 PASS。剩余部分（结构层骨架改造）依赖 #0 程序化页差异化大工程（6–8 周），按 ROI 排队随 #0 收口，不阻塞本项交付物验收。",
+          "statusAudited": "2026-10-04"
         },
         {
           "id": "M2-2",
@@ -548,7 +548,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "done",
-          "statusNote": "10-04 收口：新建 scripts/verify-nojs-render.mjs（npm run audit:nojs）实跑 10 类页面模板，硬判据 10/10 PASS（口径A=剥script 后含完整 H1+正文；convert 页正文 16,079 字符/64 段）。原验收标准会掩盖问题，故升级为双口径判据——加口径B（剥 <div hidden> = no-JS 浏览器真实可见）后：① 抓到真实缺陷 /tutorial H1 光杆词 'Tutorial'（8 字符，全站唯一<10），已修 messages/{en,es}.json（en→'Ebook Conversion Tutorial: Step by Step' / es→'Tutorial de Conversión de Ebooks: Paso a Paso'），⚠️ 待上线验证；② 结构性观察：convert 31 页 + formats 详情 17 页共 48 页正文经 React streaming Suspense 投递（口径B 可见 3%/30%），但口径A 完整 ⇒ GEO 无实质影响，且 10/20 读数前不动 48 页渲染路径，暂不修转为持续监测。报告 数据分析/M3-5-抓取与渲染可解析性-2026-10-04.md。方法论踩坑3 则：URL 靠猜致3 处 404 误判页面缺陷、非贪婪正则测 hidden 致 H1 假消失、判据只测口径A 造成全PASS 假安心。",
+          "statusNote": "10-04 收口（实跑 npm run audit:nojs，10 类页面模板硬判据 10/10 PASS，报告 数据分析/M3-5-抓取与渲染可解析性-2026-10-04.md）。双口径判据：口径A（剥 script 后含完整 H1+正文）10/10 PASS；口径B（剥 <div hidden> = no-JS 浏览器真实可见）抓到真实缺陷 /tutorial H1 光杆词，已修 messages/{en,es}.json（en→\"Ebook Conversion Tutorial: Step by Step\"）待上线验证。结构性观察：convert 31 页 + formats 详情 17 页共 48 页正文经 React streaming Suspense 投递（口径B 可见 3%/30%），但口径A 完整 ⇒ GEO 无实质影响，10/20 读数前不动渲染路径，转持续监测。",
           "statusAudited": "2026-10-04"
         },
         {
