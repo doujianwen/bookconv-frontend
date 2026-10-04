@@ -46,10 +46,13 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   // client's internal backoff means the monthly allowance is gone, not a
   // transient concurrency bump, so callers should stop rather than retry.
   'cloudconvert client error 402': 'CONVERSION_QUOTA_EXCEEDED',
+  // CloudConvert polling timeout — 大文件（50+页）Calibre渲染超过轮询窗口
+  // MUST stay ABOVE the 'cloudconvert' catch-all below: mapErrorCode matches by
+  // object insertion order and every CloudConvert message contains "cloudconvert",
+  // so a timeout would otherwise always be swallowed by the catch-all.
+  'did not finish in time': 'CONVERSION_TIMEOUT',
   // CloudConvert errors (catch-all covers all "CloudConvert ..." messages)
   'cloudconvert': 'CLOUD_CONVERT_ERROR',
-  // CloudConvert polling timeout — 大文件（50+页）Calibre渲染超过轮询窗口
-  'did not finish in time': 'CONVERSION_TIMEOUT',
   // Node.js errors
   'signal SIGKILL': 'MEMORY_LIMIT',
   'signal SIGTERM': 'MEMORY_LIMIT',

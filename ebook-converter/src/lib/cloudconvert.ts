@@ -113,32 +113,43 @@ async function ccRequest<T>(
 }
 
 /**
- * 从 CloudConvert job 提取可读的失败原因，覆盖三种真实形态：
- *   ① 失败 task 的 result.message / code（最常见）；
- *   ② job 级 result —— job 整体 error、tasks 里却没有 status==='error' 的 task
- *      （2026-10-04 djvu→pdf 事故即此形态：旧实现只读 ①，只能抛出
- *      "unknown failure"，飞书告警因此完全不可定位）；
- *   ③ 两者都缺时给出 task 状态摘要，保证告警永远有信息量。
+ * 从 CloudConvert job 提取可读的失败原因。
+ *
+ * 覆盖全部已知的错误载体（2026-10-04 实测：只读 task.result 会拿到空的
+ * "no failure detail"，真实原因可能挂在 task 自身、job.result 或 job.error 上）：
+ *   ① 失败 task 的 result.message / code / error，以及 task 自身的 message / code / error；
+ *   ② job 级 result 与 job 级 error 两种形态；
+ *   ③ 都缺时给出 job status + task 状态摘要，保证告警永远有信息量。
  */
 function describeJobFailure(job: CCJobResponse): string {
   const tasks = (job && job.data && job.data.tasks) || [];
   const failed = tasks.find((t) => t.status === 'error');
-  // result 的类型声明只覆盖 id/message/code/files/form；此处额外读 'error' 字段，
-  // 故按 Record 取值（CloudConvert 部分错误会在 result.error 里带人类可读原因）。
-  const r = failed && failed.result
-    ? (failed.result as unknown as Record<string, unknown>)
-    : undefined;
-  const fromTask = r ? (r.message || r.code || r.error) : undefined;
-  if (fromTask) return String(fromTask);
+  const asRec = (v: unknown): Record<string, unknown> | undefined =>
+    v && typeof v === 'object' ? (v as Record<string, unknown>) : undefined;
+  const pick = (...vals: unknown[]): string | undefined => {
+    for (const v of vals) {
+      if (typeof v === 'string' && v.trim()) return v.trim();
+      if (v && typeof v === 'object') {
+        const nested = pick((v as Record<string, unknown>).message, (v as Record<string, unknown>).code);
+        if (nested) return nested;
+      }
+    }
+    return undefined;
+  };
 
-  const jd = job && job.data
-    ? (job.data as unknown as { result?: { message?: string; code?: string } })
-    : undefined;
-  const fromJob = jd && jd.result ? jd.result.message || jd.result.code : undefined;
-  if (fromJob) return String(fromJob);
+  const ft = asRec(failed);
+  const fr = asRec(ft ? ft.result : undefined);
+  const fromTask = pick(fr?.message, fr?.code, fr?.error, ft?.message, ft?.code, ft?.error);
+  if (fromTask) return fromTask;
+
+  const jd = asRec(job ? (job.data as unknown) : undefined);
+  const jr = asRec(jd ? jd.result : undefined);
+  const je = asRec(jd ? jd.error : undefined);
+  const fromJob = pick(jr?.message, jr?.code, jr?.error, je?.message, je?.code, je?.error);
+  if (fromJob) return fromJob;
 
   const summary = tasks.map((t) => `${t.operation || '?'}:${t.status || '?'}`).join(', ');
-  return `no failure detail (tasks: ${summary || 'none'})`;
+  return `no failure detail (job=${(jd ? jd.status : undefined) || 'unknown'}, tasks: ${summary || 'none'})`;
 }
 
 interface CCJobResponse {
@@ -165,7 +176,154 @@ interface CCJobResponse {
 }
 
 /**
+ * 一次尝试失败时携带「失败是否发生在 convert 任务」的标记。
+ * 只有 convert 任务失败才值得换引擎重试；参数/配额/上传类失败重试无意义。
+ */
+class CloudConvertJobFailure extends Error {
+  readonly convertTaskFailed: boolean;
+  constructor(message: string, convertTaskFailed: boolean) {
+    super(message);
+    this.name = 'CloudConvertJobFailure';
+    this.convertTaskFailed = convertTaskFailed;
+  }
+}
+
+/** 创建 job。useCalibre=true 时指定 calibre 引擎；false 时省略 engine，交给 CloudConvert 自动选引擎。 */
+async function createJob(
+  sourceFormat: string,
+  targetFormat: string,
+  useCalibre: boolean,
+): Promise<CCJobResponse> {
+  return ccRequest<CCJobResponse>('POST', '/jobs', {
+    tasks: {
+      'import-file': { operation: 'import/upload' },
+      'convert-file': {
+        operation: 'convert',
+        input: 'import-file',
+        input_format: sourceFormat,
+        output_format: targetFormat,
+        // Calibre 读不了 DjVu / PDF 等扫描图或排版类输入（省 engine 让默认引擎接管），
+        // 同时它的输出格式白名单也不含 docx（见 convertWithCloudConvert 的降级重试）。
+        ...(useCalibre ? { engine: 'calibre' } : {}),
+      },
+      'export-file': { operation: 'export/url', input: 'convert-file' },
+    },
+  });
+}
+
+/** 把文件上传到 import/upload 任务的签名表单（S3 直传，不是 /v2/uploads） */
+async function uploadToJob(
+  job: CCJobResponse,
+  inputBase64: string,
+  sourceFormat: string,
+  originalFilename?: string,
+): Promise<void> {
+  const importTask = job.data.tasks.find((t) => t.operation === 'import/upload');
+  if (!importTask) {
+    throw new CloudConvertJobFailure(
+      'CloudConvert: import/upload task not found in job response',
+      false,
+    );
+  }
+  const uploadForm = importTask.result?.form;
+  if (!uploadForm?.url || !uploadForm.parameters) {
+    throw new CloudConvertJobFailure(
+      'CloudConvert: upload form not available in import task result',
+      false,
+    );
+  }
+  const fd = new FormData();
+  for (const [k, v] of Object.entries(uploadForm.parameters)) {
+    fd.append(k, String(v));
+  }
+  // key 参数里含 ${filename} 占位符，S3 会用 file 字段的实际文件名替换它
+  fd.append(
+    'file',
+    new Blob([Buffer.from(inputBase64, 'base64')], { type: 'application/octet-stream' }),
+    originalFilename || `input.${sourceFormat}`,
+  );
+  const upRes = await fetch(uploadForm.url, { method: 'POST', body: fd });
+  // success_action_status=201 → 成功时返回 201
+  if (upRes.status !== 201 && upRes.status !== 200 && upRes.status !== 204) {
+    const t = await upRes.text().catch(() => '');
+    throw new CloudConvertJobFailure(
+      `CloudConvert upload failed ${upRes.status}: ${t.slice(0, 200)}`,
+      false,
+    );
+  }
+}
+
+/** 轮询 job 直到 finished；job 级 error 时抛 CloudConvertJobFailure（convertTaskFailed 标记是否发生在 convert 任务） */
+async function pollUntilDone(job: CCJobResponse): Promise<CCJobResponse> {
+  let finished: CCJobResponse = job;
+  for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+    finished = await ccRequest<CCJobResponse>('GET', `/jobs/${job.data.id}`);
+    if (finished.data.status === 'finished') return finished;
+    if (finished.data.status === 'error') {
+      const failed = finished.data.tasks.find((t) => t.status === 'error');
+      const detail = describeJobFailure(finished);
+      // 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因
+      console.error(
+        '[CloudConvert] job failed. detail=',
+        detail,
+        '| failedTask=',
+        JSON.stringify(failed ?? null),
+        '| allTasks=',
+        JSON.stringify(
+          finished.data.tasks.map((t) => ({
+            op: t.operation,
+            name: t.name,
+            status: t.status,
+            result: t.result,
+          })),
+        ),
+      );
+      throw new CloudConvertJobFailure(
+        `CloudConvert job failed: ${detail}`,
+        failed?.operation === 'convert',
+      );
+    }
+  }
+  throw new CloudConvertJobFailure(
+    `CloudConvert job did not finish in time (status: ${finished.data.status})`,
+    false,
+  );
+}
+
+/** 从已完成的 job 里取 export URL 并下载结果（签名临时 URL，无需鉴权） */
+async function downloadResult(
+  finished: CCJobResponse,
+  targetFormat: string,
+): Promise<{ base64Data: string; mimeType: string; filename: string; fileSize: number }> {
+  const exportTask = finished.data.tasks.find((t) => t.operation === 'export/url');
+  const file = exportTask?.result?.files?.[0];
+  if (!file?.url) {
+    throw new CloudConvertJobFailure('CloudConvert: no export file URL in job result', false);
+  }
+  const dlRes = await fetch(file.url);
+  if (!dlRes.ok) {
+    throw new CloudConvertJobFailure(`CloudConvert download failed: ${dlRes.status}`, false);
+  }
+  const buffer = Buffer.from(await dlRes.arrayBuffer());
+  const mimeType = dlRes.headers.get('content-type') || 'application/octet-stream';
+  const cd = dlRes.headers.get('content-disposition') || '';
+  const filenameMatch = cd.match(/filename[^;=\n]*=((['\"]).*?\2|[^;\n]*)/);
+  const filename =
+    (filenameMatch?.[1]?.replace(/['\"]/g, '') || file.filename) ||
+    `output.${targetFormat}`;
+
+  return { base64Data: buffer.toString('base64'), mimeType, filename, fileSize: buffer.length };
+}
+
+/**
  * 完整转换流程：创建 job → 上传文件 → 轮询 → 下载
+ *
+ * 引擎降级重试（2026-10-04 新增）：calibre 引擎**只覆盖输入，不覆盖全部输出**。
+ * 实测 epub→pdf、epub→mobi 成功，而 epub→docx、html→docx、txt→docx 全部失败
+ * ⇒ CloudConvert 的 calibre 引擎不支持 docx 作为输出格式（与输入格式无关）。
+ * 因此 convert 任务失败时，自动**省掉 engine 重试一次**并让 CloudConvert 自选引擎；
+ * 两次都失败才抛错，错误里同时带两次尝试的引擎与原因，便于一眼定位。
  */
 export async function convertWithCloudConvert(
   sourceFormat: string,
@@ -182,108 +340,37 @@ export async function convertWithCloudConvert(
     throw new Error('CloudConvert API key is not configured');
   }
 
-  // 1. 创建 job
-  const job = await ccRequest<CCJobResponse>('POST', '/jobs', {
-    tasks: {
-      'import-file': { operation: 'import/upload' },
-      'convert-file': {
-        operation: 'convert',
-        input: 'import-file',
-        input_format: sourceFormat,
-        output_format: targetFormat,
-        // Calibre 读不了 DjVu / PDF 等扫描图或排版类输入；这些格式省 engine，
-        // 让 CloudConvert 自动选引擎（默认引擎对 djvu→pdf 是支持的）。
-        ...(isCalibreInput(sourceFormat) ? { engine: 'calibre' } : {}),
-      },
-      'export-file': { operation: 'export/url', input: 'convert-file' },
-    },
-  });
+  // 只有首选 calibre 的组合才值得降级重试（白名单外的输入本来就用默认引擎）
+  const calibreFirst = isCalibreInput(sourceFormat);
+  const maxAttempts = calibreFirst ? 2 : 1;
+  const trail: string[] = [];
 
-  const importTask = job.data.tasks.find((t) => t.operation === 'import/upload');
-  if (!importTask) {
-    throw new Error('CloudConvert: import/upload task not found in job response');
-  }
-
-  // 2. 上传文件到 import/upload 任务给出的签名 URL（S3 直传，不是 /v2/uploads）
-  const uploadForm = importTask.result?.form;
-  if (!uploadForm?.url || !uploadForm.parameters) {
-    throw new Error('CloudConvert: upload form not available in import task result');
-  }
-  const fd = new FormData();
-  for (const [k, v] of Object.entries(uploadForm.parameters)) {
-    fd.append(k, String(v));
-  }
-  // key 参数里含 ${filename} 占位符，S3 会用 file 字段的实际文件名替换它
-  fd.append(
-    'file',
-    new Blob([Buffer.from(inputBase64, 'base64')], { type: 'application/octet-stream' }),
-    originalFilename || `input.${sourceFormat}`,
-  );
-  const upRes = await fetch(uploadForm.url, { method: 'POST', body: fd });
-  // success_action_status=201 → 成功时返回 201
-  if (upRes.status !== 201 && upRes.status !== 200 && upRes.status !== 204) {
-    const t = await upRes.text().catch(() => '');
-    throw new Error(`CloudConvert upload failed ${upRes.status}: ${t.slice(0, 200)}`);
-  }
-
-  // 3. 轮询 job 状态
-  let finished: CCJobResponse = job;
-  for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
-    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-    finished = await ccRequest<CCJobResponse>('GET', `/jobs/${job.data.id}`);
-    if (finished.data.status === 'finished') break;
-    if (finished.data.status === 'error') {
-      const failed = finished.data.tasks.find((t) => t.status === 'error');
-      const detail = describeJobFailure(finished);
-      // 服务端日志：把失败任务的完整结果打出来，便于在 Vercel 函数日志里定位 CloudConvert 真实失败原因
-      console.error(
-        '[CloudConvert] job failed. detail=',
-        detail,
-        '| failedTask=',
-        JSON.stringify(failed?.result ?? failed),
-        '| allTasks=',
-        JSON.stringify(
-          finished.data.tasks.map((t) => ({
-            op: t.operation,
-            status: t.status,
-            result: t.result,
-          })),
-        ),
-      );
-      throw new Error(`CloudConvert job failed: ${detail}`);
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const useCalibre = attempt === 0 && calibreFirst;
+    const label = useCalibre ? 'engine=calibre' : 'engine=auto';
+    try {
+      const job = await createJob(sourceFormat, targetFormat, useCalibre);
+      await uploadToJob(job, inputBase64, sourceFormat, originalFilename);
+      const finished = await pollUntilDone(job);
+      return await downloadResult(finished, targetFormat);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      trail.push(`${label}: ${msg}`);
+      const retryable =
+        err instanceof CloudConvertJobFailure && err.convertTaskFailed && attempt < maxAttempts - 1;
+      if (!retryable) break;
+      console.warn('[CloudConvert] convert task failed; retrying without engine', {
+        sourceFormat,
+        targetFormat,
+        firstAttempt: msg,
+      });
     }
   }
 
-  if (finished.data.status !== 'finished') {
-    throw new Error(
-      `CloudConvert job did not finish in time (status: ${finished.data.status})`,
-    );
-  }
-
-  // 4. 取 export URL
-  const exportTask = finished.data.tasks.find((t) => t.operation === 'export/url');
-  const file = exportTask?.result?.files?.[0];
-  if (!file?.url) {
-    throw new Error('CloudConvert: no export file URL in job result');
-  }
-
-  // 5. 下载结果（签名临时 URL，无需 Authorization）
-  const dlRes = await fetch(file.url);
-  if (!dlRes.ok) {
-    throw new Error(`CloudConvert download failed: ${dlRes.status}`);
-  }
-  const buffer = Buffer.from(await dlRes.arrayBuffer());
-  const mimeType = dlRes.headers.get('content-type') || 'application/octet-stream';
-  const cd = dlRes.headers.get('content-disposition') || '';
-  const filenameMatch = cd.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-  const filename =
-    (filenameMatch?.[1]?.replace(/['"]/g, '') || file.filename) ||
-    `output.${targetFormat}`;
-
-  return {
-    base64Data: buffer.toString('base64'),
-    mimeType,
-    filename,
-    fileSize: buffer.length,
-  };
+  throw new CloudConvertJobFailure(
+    `CloudConvert job failed after ${trail.length} attempt(s) | ${trail.join(' || ')}`,
+    false,
+  );
 }
+
+
