@@ -47,3 +47,44 @@ ebook-converter/nul
 # 混在一条博客修复 commit 里），当日从版本控制移除。磁盘文件保留。
 # 同一份数据在 bookconv_data_asset/raw_inventory.csv 亦有副本。
 report/raw_inventory.csv
+
+# ── 2026-10-04 新增：一次性中间产物与工具工作区 ──
+# 判据（勿随意扩大）：只 ignore「跑完即弃、磁盘留着但无 Reproduction 价值」的产物。
+# 真实资产（父目录 package.json / scripts/ 下的 Multica 与外链提交工具 / mc-*.ps1）
+# 一律【不入库也不 ignore】——它们是需要长期使用的工具，不是垃圾。
+
+# 1) base64 中转产物（一次性粘贴用）
+_py_b64*.txt
+_gen_b64.txt
+
+# 2) GitHub issue 工单导出（issue 原文在 GitHub 侧有权威副本）
+issue_p*.txt
+issues_list.json
+
+# 3) 评论/提交结果回执（内容已落到 GitHub issue 或提交站）
+comment_*.txt
+ebo6_comment.txt
+
+# 4) 一次性修复脚本（跑完即弃；注意区别于父目录 scripts/ 下的长期工具）
+#    已有规则 `*_fix*.py` 覆盖的是「中间词在中间」的写法，这里补前缀式
+fix_*.py
+fetch_issues.js
+get_issues.ps1
+analyze_gsc.py
+simple_analysis.py
+
+# 5) 本地 AI 工具工作区（Codex 会话 / self-evolve 记录 / 课程归档）
+.codex/
+self-evolve/
+_archived/ai-indie-course-course-docs/
+
+# 6) 审计报告产物（每次跑都重新生成，且含本机绝对路径）
+ebook-converter/audit-report.json
+ebook-converter/audit-guide-report.json
+# 2026-10-04 修正：原先误写成 `draft_*/folder/`，但实际目录名本身就是 draft_xxx/
+# （实测 ls：draft_a95722eb_folder/ 下直接是 draft.xml / gen_draft.py，没有再嵌一层 folder/）
+ebook-converter/draft_*/
+
+# 7) 根目录空的 next.config.ts（真配置在 ebook-converter/next.config.ts，
+#    根目录这份是 0 字节残留；被 Next 自动读取反而会干扰解析）
+/next.config.ts
