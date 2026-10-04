@@ -116,6 +116,13 @@ jobs:
       - name: Run agent discipline audit (fails on fake gates / path guessing)
         run: cd ebook-converter && node scripts/audit-agent-discipline.mjs
 
+      # 防 #0 程序化页差异化成果退化：同一 heading 被 3+ 页共用即失败，
+      # 且每个内容页都必须解析出 section（解析器失灵时前者会全部通过，是假通过）。
+      # 阈值取 3 而非「必须唯一」：知识型标题本就应一致，强制唯一会产大量
+      # 无意义改动与噪声。合理共用的标题需登记在脚本 SHARED_OK 并写明理由。
+      - name: Run heading uniqueness audit (fails on shared headings)
+        run: cd ebook-converter && node scripts/audit-heading-uniqueness.mjs
+
       # GEO compliance: convert pages (7 mandatory elements, 0-7 graded score).
       # 31/31 PASS is the baseline (9/25 calibration). Any new page missing a
       # GEO element demotes the rating and blocks deployment.

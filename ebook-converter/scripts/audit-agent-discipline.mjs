@@ -245,7 +245,7 @@ try {
 }
 
 // CI 侧：workflow 必须真调用（这部分在任何环境都可判定）
-const GATES = ['audit-agent-discipline.mjs', 'audit-workflow-integrity.mjs', 'syntax-sweep.mjs', 'audit-content-integrity.mjs'];
+const GATES = ['audit-agent-discipline.mjs', 'audit-workflow-integrity.mjs', 'syntax-sweep.mjs', 'audit-content-integrity.mjs', 'audit-heading-uniqueness.mjs'];
 const CI = path.join(REPO, '.github/workflows/ci.yml');
 if (!fs.existsSync(CI)) {
   i4Problems.push('找不到 .github/workflows/ci.yml ⇒ CI 挂载点无法验证');
