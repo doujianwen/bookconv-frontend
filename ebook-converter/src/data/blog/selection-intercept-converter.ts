@@ -18,6 +18,10 @@ export const content = {
     {
       "heading": "Why AI-Assisted Conversion Matters Now",
       "body": "Modern converters use AI to detect chapter breaks, normalize typography, and fix broken TOCs during selection. This means less manual editing and higher-quality output. AI also helps intercept formatting errors by predicting how your ebook will render on Kindle, Kobo, or Apple Books. Instead of guessing which format fits your device, let smart conversion select the optimal path automatically. For a deeper format comparison, see [EPUB vs MOBI](/blog/epub-vs-mobi). And if you're working with large files or batch jobs, check our [large file conversion guide](/blog/large-file-conversion-guide)."
+    },
+    {
+      "heading": "Key Takeaways",
+      "body": "- **选转换器看三件事。** 格式支持、隐私、速度；避开要邮箱和往书里插广告的。\n\n- **文件改名不是转换。** 转 EPUB 为 MOBI 供 Kindle 读需要真正保留版式，改后缀只会得到打不开的文件。\n\n- **转换失败多半是源文件问题。** 损坏文件或复杂 CSS 是主因；PDF 转 EPUB 失败先查是不是扫描件，需要 OCR 优先的工具。\n\n- **大文件不要硬撞上限。** 大文件会自动拆分或压缩，让你不会直接卡在硬性限制上。\n\n- **先用小样本测。** 保留原始文件备份，先拿一小段试转换再上全量。"
     }
   ]
 };

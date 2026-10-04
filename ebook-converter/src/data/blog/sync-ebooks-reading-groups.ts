@@ -27,6 +27,14 @@ export const content = {
     {
       heading: `Common Pitfalls for Reading Groups`,
       body: `**DRM-protected editions.** Store-bought books often carry DRM that blocks conversion or transfer. For club reads, choose DRM-free editions or public domain titles so everyone can convert and sync.\n\n**Mismatched formats.** If half the group gets MOBI and half gets EPUB, page references break. Standardize on EPUB before the first meeting.\n\n**Renaming instead of converting.** Changing .epub to .mobi does not change the format — readers reject it. Always run a real conversion.\n\n**Assuming one ecosystem fits all.** A group with mixed devices needs a cross-platform method (Play Books or shared EPUB), not a single-vendor sync.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **各家云互不相通。** Amazon 只在 Kindle 内同步，Apple Books 只在 iCloud 内，Kobo 自有系统，跨平台必须靠统一格式加第三方工具。
+- **EPUB 是小组的通用语言。** Kobo、Apple Books、Google Play Books 和多数 Android 阅读器都能直接打开。
+- **Google Play Books 对读书会最友好。** 一人上传，各人打开自己的书库，进度自动同步。
+- **Kindle Family Library 仅限全员 Kindle。** Whispersync 能在关联设备间对齐位置，但非 Kindle 用户被完全排除。
+- **改扩展名不叫转换。** 把 epub 改名成 mobi 格式不会变，阅读器会拒绝。`
     }
   ]
 };

@@ -18,6 +18,10 @@ export const content = {
     {
       "heading": "Troubleshooting Common Errors",
       "body": "If your converted file looks messy, don't worry. Here is how to fix it:\n<ul>\n<li><strong>Broken Images:</strong> If images disappear, they may be embedded in a way the converter cannot extract. Try saving them separately.</li>\n<li><strong>Jumbled Text:</strong> This usually happens with multi-column layouts. Reformat the original PDF into single columns before using <a href=\"/convert/word-to-epub\">BookConv</a>.</li>\n<li><strong>Font Issues:</strong> If special fonts don't appear, convert the text to standard fonts (like Arial or Times New Roman) in your source document.</li>\n</ul>"
+    },
+    {
+      "heading": "Key Takeaways",
+      "body": "- **PDF 与 EPUB 的根本差异是固定版式对可回流。** 直接转 PDF 时，多栏、脚注、特殊字体常被破坏，因为回流引擎要把静态版面塞进弹性容器。\n\n- **文本型 PDF 远好于扫描件。** 避免扫描图和装饰过重的 PDF，这是最有效的单一改进。\n\n- **先简化排版再转换。** 去掉多余页眉页脚和异常页边距，能消除大部分后续问题。\n\n- **页宽过大会让 EPUB 里的行长过短。** 转换前检查页面尺寸是否合理。\n\n- **MOBI 和 AZW3 同样依赖可回流文本。** 面向 Kindle 时上面这些规则一样适用。\n\n- **多栏错乱要先改源 PDF。** 把原文档重排成单栏再转，而不是在转换器里反复试参数。"
     }
   ]
 };

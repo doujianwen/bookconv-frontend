@@ -47,6 +47,15 @@ export const content = {
     {
       heading: 'Common Problems and Solutions',
       body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings. Narnia has illustrations and special typography that need careful handling. If you encounter [common conversion errors](/blog/conversion-error-guide), check our troubleshooting steps.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Convert each book separately using BookConv.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms.\n\n**Problem: Illustrations do not display properly**\nSome EPUB editions include Pauline Baynes illustrations that may not render well on e-ink devices. Consider keeping a high-quality PDF version for illustration viewing.\n\n**Problem: Lost progress after device change**\nReading progress is stored locally on most e-readers. When switching devices, manually note your page or use a tracking app to maintain your place across platforms.'
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 是 Kindle 上的首选。** 经典排版和插图都能保住；MOBI 是遗留格式，会剥掉高级特性。Kobo、Apple Books、Android 全部原生 EPUB。
+- **EPUB 回流特性适合全系列。** 6 英寸墨水屏到 10 英寸平板，同一个文件都能自动适配。
+- **版权状态比想象中复杂。** C.S. Lewis 1963 年去世，按 life-plus-70，纳尼亚正文在英欧要到 2033 年底才进入公有领域。
+- **插图是独立的著作权。** Pauline Baynes 的插画由其遗产权利人单独持有，即使正文免费，扫描进 EPUB 仍可能侵权。
+- **Kindle 会拒绝超过 50MB 的文件。** 大文件需要分册转换。
+- **阅读进度只在同一生态内同步。** 跨平台要用 Goodreads 这类第三方追踪器。`
     }
   ]
 };

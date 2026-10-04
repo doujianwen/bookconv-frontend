@@ -35,6 +35,14 @@ export const content = {
     {
       heading: 'Common Problems and Solutions',
       body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled. Twilight has dialogue-heavy prose that benefits from clean formatting. If you encounter [common conversion errors](/blog/conversion-error-guide), check our troubleshooting steps.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Convert each book separately using BookConv. Our [guide to fixing EPUB to PDF formatting](/guide/fix-epub-to-pdf-formatting) may also help with layout issues.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms. For more on [syncing reading groups](/blog/sync-ebooks-reading-groups), check our guide to virtual reading communities.\n\n**Problem: Kindle cannot open EPUB file**\nKindle does not natively support EPUB. Use BookConv to convert EPUB to AZW3 first. Learn more about [Kindle format compatibility](/blog/kindle-epub-azw3-mobi) to understand the differences.\n\n**Problem: Lost reading progress after device change**\nReading progress is stored locally on most e-readers. When switching devices, manually note your page or use a tracking app like Goodreads to maintain your place across platforms.'
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 是 Kindle 上的首选。** 能保住对话密集的排版和嵌入字体；MOBI 是遗留格式，缺高级特性。
+- **EPUB 覆盖 Kobo、Apple Books、Android。** 四部曲加两本指南的体量下，回流让同一文件适配各种屏。
+- **Kindle 原生不支持 EPUB。** 必须先转 AZW3，Kindle Fire 侧载也不行。
+- **Kindle 会拒收超过 50MB 的文件。** 全系列需要分册转换。
+- **进度只在同生态内同步。** 跨平台要靠 Goodreads 这类第三方追踪器。`
     }
   ]
 };

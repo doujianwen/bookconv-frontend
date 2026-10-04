@@ -39,6 +39,14 @@ export const content = {
     {
       heading: "Common Problems and Solutions",
       body: "**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled. Marvel has complex panel layouts and dialogue bubbles that need careful handling.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Convert each series separately using BookConv.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms.\n\n**Problem: Artwork does not display properly**\nSome EPUB editions include high-resolution artwork that may not render well on e-ink devices. Consider keeping a PDF version for artwork viewing.\n\n**Problem: Lost bookmarks after device change**\nBookmarks are stored locally on most e-readers. When switching devices, manually note your page or use a tracking app to maintain your place across platforms."
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 是 Kindle 上的首选。** 漫画分格、气泡文字和嵌入字体都能保住；MOBI 是遗留格式，会剥掉高级排版。
+- **EPUB 覆盖 Kobo、Apple Books、Android。** 小说和漫画合集都能靠回流适配各种屏。
+- **1970 年前的漫威作品已进入公有领域。** Stan Lee 早期作品是合法的 DRM-free 来源。
+- **Kindle 会拒收超过 50MB 的文件。** 大合集需要分册转换。
+- **进度只在同生态内同步。** 跨平台读漫要靠第三方追踪器。`
     }
   ]
 };

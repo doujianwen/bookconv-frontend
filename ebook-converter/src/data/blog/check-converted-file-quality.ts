@@ -26,6 +26,14 @@ export const content = {
     {
       heading: `Step 5: Fix Common Issues`,
       body: `**Missing table of contents:**\nThe source file may lack TOC metadata. Check the original in your reader first. If it's missing there too, nothing we can do. If it exists in the source but disappeared during conversion, try a different output format.\n\n**Lost images:**\nCompress images in the source EPUB before converting. Remove embedded fonts if possible. For scanned PDFs, lower DPI to 150 before conversion.\n\n**Broken layout:**\nComplex layouts rarely survive conversion perfectly. Try converting to PDF instead of EPUB for print-like output, or accept that some formatting adjustments will be needed.\n\n**Text encoding issues:**\nIf you see garbled characters, the source file may have encoding problems. Try converting to TXT first, then back to EPUB, which often resets encoding.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **先验文件大小。** 大小异常往往比内容异常更早暴露问题。
+- **在目标阅读器里实际打开。** 转换成功不等于能读，必须在真正要用的设备上验证。
+- **逐项检查内容完整性。** 章节、目录、图片、脚注分别确认，缺哪一项补哪一项。
+- **在自己的设备上测，而不是在转换器预览里测。** 转换器的预览与目标设备的渲染引擎不同。
+- **图像丢失优先压源文件。** 扫描件把 DPI 降到 150 通常就能解决，不必重转多遍。`
     }
   ]
 };

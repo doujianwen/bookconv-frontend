@@ -47,6 +47,14 @@ export const content = {
     {
       heading: 'Common Problems and Solutions',
       body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled. Harry Potter has complex footnotes, chapter headers, and embedded images that need careful handling.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Convert each book separately using BookConv. Our [guide to fixing EPUB to PDF formatting](/guide/fix-epub-to-pdf-formatting) may also help with layout issues.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms.\n\n**Problem: Kobo cannot open AZW3 file**\nConvert back to EPUB using BookConv.\n\n**Problem: Lost bookmarks after device change**\nBookmarks are stored locally on most e-readers. When switching devices, manually note your page or use a tracking app to maintain your place across platforms.'
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 是 Kindle 上的首选。** 能保住复杂脚注、章节页眉和嵌入图片；MOBI 是遗留格式，会剥掉高级特性。
+- **EPUB 覆盖 Kobo、Apple Books、Android。** 回流特性让全系列在 6 英寸墨水屏到平板都合适。
+- **超过 50MB 的文件 Kindle 会拒收。** 全系列需要分册转换。
+- **进度不跨生态同步。** Kindle 的进度不会出现在 Kobo，需要 Goodreads 之类的第三方追踪器。
+- **Kobo 打不开 AZW3。** 转回 EPUB 才能在 Kobo 上读。`
     }
   ]
 };

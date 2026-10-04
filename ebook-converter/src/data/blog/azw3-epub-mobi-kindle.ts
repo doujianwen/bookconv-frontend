@@ -19,6 +19,10 @@ export const content = {
     {
       "heading": "The EPUB Debate: Best Format for Kobo and Non-Amazon E-Readers",
       "body": "For Kobo, NOOK, and Apple Books users, EPUB remains the gold standard. It offers the best layout preservation and is supported natively by almost every non-Amazon device. \n\nHowever, confusion often arises with Kindle Fire tablets. You *can* side-load DRM-free EPUBs onto a Kindle Fire, but they will not appear in your Kindle library in the same way as purchased books. For Paperwhite and Oasis users, EPUB must be converted before reading. Using a reliable converter like [bookconv.com](/convert) ensures that complex EPUBs remain readable when translated to AZW3 for Amazon devices."
+    },
+    {
+      "heading": "Key Takeaways",
+      "body": "- **Kindle 首选 AZW3。** MOBI 曾是标准，但缺少现代排版能力；Paperwhite、Oasis、Scribe 都应优先 AZW3。\n\n- **Kobo / Nook / Apple Books 统一用 EPUB。** 兼容矩阵里 PDF 虽处处可读，但在小屏上回流效果差。\n\n- **Kindle Fire 的 EPUB 支持有前提。** 可以侧载无 DRM 的 EPUB，但不会像购书那样进入 Kindle 图书馆；Paperwhite 和 Oasis 仍必须先转 AZW3。\n\n- **X-Ray 需要 AZW3。** 想用 Kindle 的 X-Ray 查人物信息，就必须输出 AZW3。\n\n- **提前转换。** 源文件先转好，字体、图片、章节标题才能在各平台正确渲染。"
     }
   ]
 };

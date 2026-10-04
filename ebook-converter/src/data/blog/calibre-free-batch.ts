@@ -30,6 +30,14 @@ export const content = {
     {
       heading: "The Future of Lightweight Conversion",
       body: `As cloud computing power increases, we are seeing a shift towards browser-based processing that rivals desktop software. WebAssembly (Wasm) technologies now allow complex conversion engines to run locally in your browser, combining the privacy of offline tools with the ease of online converters. \n\nThis means you may soon be able to run Calibre-like algorithms in Chrome or Firefox without installing anything. For now, the hybrid approach—using cloud tools for quick jobs and lightweight desktop apps for sensitive or large batches—remains the most practical strategy. Stay tuned to the evolving ecosystem of ebook tools, as the gap between 'simple' and 'powerful' continues to close.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **Calibre 对批量转换是过度配置。** 界面拥挤、安装体积大、学习曲线陡，批量任务往往要点多次还要等它索引根本不存在的书库。
+- **只做格式转换时，浏览器工具更快。** 把一堆 EPUB 变 MOBI、或 PDF 变可读文件，拖进网页就完事。
+- **桌面替代品各有取舍。** 更轻量的桌面工具适合离线批处理，但可控参数不如 Calibre 细。
+- **先清理再批量。** 批量任务里一个坏文件会拖垮整批，开跑前先筛掉损坏和带 DRM 的。
+- **批量之后必须抽检。** 跑完抽查几本，确认字体、目录、图片都没丢再收工。`
     }
   ]
 };

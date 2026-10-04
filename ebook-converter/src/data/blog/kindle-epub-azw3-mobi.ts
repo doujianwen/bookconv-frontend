@@ -43,6 +43,14 @@ For users who prefer a browser-based solution, BookConv offers a fast and intuit
 - **Broken Layouts:** Often caused by complex CSS in the source file. Simplify your stylesheet before converting.
 - **Missing Fonts:** Ensure your font files are embedded in the source and the converter is set to embed them in the output.
 - **TOC Errors:** Generate a detailed table of contents in your word processor before conversion to ensure links remain functional.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **生态边界要先搞清楚。** Kindle 原生 AZW3 与 MOBI，Kobo、Nook、Apple Books 依赖 EPUB；用错格式会得到布局错乱、字体丢失甚至设备拒绝打开。
+- **AZW3 是现代 Kindle 的正确答案。** 支持高级 CSS、精细排版控制、脚注与元数据；MOBI 在新设备上阅读体验明显逊色。
+- **EPUB 是面向广泛市场的必选项。** 从高质量 EPUB 出发，目录和元数据才能准确保留。
+- **代码校验不可省。** 结构不良的 EPUB 会在 Kobo 上引发同步问题。
+- **Kindle Fire 能侧载 EPUB，Paperwhite 和 Oasis 不行。** 后两者仍需转成 AZW3。`
     }
   ]
 };

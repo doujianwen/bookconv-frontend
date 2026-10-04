@@ -26,6 +26,15 @@ export const content = {
     {
       heading: `Quick Decision Checklist`,
       body: `- **Under 10 MB?** Upload directly. No action needed.\n- **10–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 10 MB.\n- **Converting many files?** Pro takes several in one upload rather than one at a time.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **超过 10 MB 通常有四个原因。** 内嵌图片、扫描 PDF（300 页轻松 20 到 100 MB）、多字重嵌入字体、以及 CBZ/CBR 这类无损全页图格式。
+- **EPUB 就是个 ZIP。** 改扩展名为 .zip 打开，压缩 images 目录再改回来，体积立刻下来。
+- **扫描 PDF 降 DPI 是最划算的一招。** 从 300 DPI 降到 150 DPI，体积减 75% 而文字依然可读。
+- **10 MB 上限对所有套餐都一样，Pro 也不提高。** Pro 增加的是批量上传，不是单文件额度。
+- **超 50 MB 就分册。** 按章节切开分别上传，多数阅读应用可以把多个文件合并成一个书库视图。
+- **纯文本几乎都不到 5 MB。** 喂给 NotebookLM、ChatGPT 这类工具时，转 TXT 比转 EPUB 省事得多。`
     }
   ]
 };

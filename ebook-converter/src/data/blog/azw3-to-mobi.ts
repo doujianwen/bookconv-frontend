@@ -45,6 +45,14 @@ Remember, online converters like BookConv are designed to handle most scenarios,
 - **Community Resources**: Join forums or subreddits dedicated to ebook management, where users share tips and troubleshoot issues.
 
 By expanding your skills beyond basic conversion, you can build a robust and enjoyable digital reading lifestyle.` },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 与 MOBI 各有取舍。** AZW3 是 Kindle 新设备标准、支持嵌入字体与复杂排版；MOBI 更通用，老 Kindle、Kobo、Nook 都能读。
+- **转 MOBI 的三个真实动机。** 设备不支持 AZW3、MOBI 文件更小更适合长期归档、部分平台偏好 MOBI 便于分发。
+- **MOBI 转其他格式反而更顺。** 不少用户发现 MOBI 再转 EPUB 效果更好，这给了你更多回旋余地。
+- **先备份原 AZW3。** 转换前务必留底，必要时可重新转换。
+- **自定义字体可能丢。** AZW3 的自定义字体和复杂版式不一定能在 MOBI 里还原，先试一章再全量。`
+    }
   ]
 };
 

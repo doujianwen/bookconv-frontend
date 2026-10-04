@@ -18,6 +18,10 @@ export const content = {
     {
       "heading": "Troubleshooting Common Conversion Issues",
       "body": "Sometimes, conversions don't go as planned. Here are common issues and how to fix them:"
+    },
+    {
+      "heading": "Key Takeaways",
+      "body": "- **LIT 是早期格式。** 微软和亚马逊在电子阅读器起步阶段广泛使用，如今 EPUB 才是行业标准，MOBI 和 AZW3 只对 Kindle 用户有意义。\n\n- **格式互转有真实场景。** 手里是旧 LIT 收藏、设备只认 EPUB、或要交给只接受 PDF 的投稿系统。\n\n- **上传前确认文件没加密。** 带密码的源文件大部分转换器无法处理。\n\n- **转换后必检。** 字体丢失、目录断裂、图片错位是 LIT 转换最常见的三类问题。"
     }
   ]
 };

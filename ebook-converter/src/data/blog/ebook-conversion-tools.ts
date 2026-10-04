@@ -73,6 +73,14 @@ If you attempt to convert a complex cookbook using a free online converter or ba
 *   **Broken Table of Contents**: If your TOC is not linked to proper heading styles (H1, H2) in the source, the converter cannot generate a clickable chapter list. Always use structured headings in your manuscript. For detailed troubleshooting steps, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting).
 *   **Weird Font Substitution**: E-readers use system fonts. If your source uses a rare custom font, it may fall back to a default sans-serif. Use web-safe fonts or embed fonts if the platform allows (EPUB 3 supports this).
 *   **Pagination Errors**: Fixed-layout books may not paginate correctly on different devices. Test on multiple screen sizes to ensure content isn't cut off.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **Calibre 适合纯文本换格式，不适合复杂版式。** 遇到内嵌 CSS、浮动图片、脚注、多栏排版，它的默认引擎会把结构读错。
+- **Calibre 是瑞士军刀，不是手术刀。** 菜谱、摄影集、带侧栏的教材这类需要视觉保真的书，值得投入专业处理。
+- **OCR 是实体书数字化的关键。** 没有可靠 OCR，电子书就是一叠静态图，不能高亮、不能搜索、字号也调不了。
+- **Kobo 只支持 EPUB。** 它既不支持 MOBI 也不支持 AZW3，所以面向 Kobo 的源文件就该是排版良好的 EPUB。
+- **目录坏掉通常怪源文件。** 标题没套用 H1/H2 结构，转换器就生成不出可点击的目录。`
     }
   ]
 };

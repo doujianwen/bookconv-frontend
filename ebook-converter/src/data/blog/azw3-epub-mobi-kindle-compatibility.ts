@@ -86,6 +86,14 @@ Poor Heading styles in your source document are the usual culprit. Tag chapter t
 **Footnotes That Will Not Link**
 Legacy MOBI renders footnotes as plain inline text or broken jumps. Convert to AZW3 or EPUB, which support proper cross-referenced footnotes, to keep them clickable.`
     },
+    {
+      heading: `Key Takeaways`,
+      body: `- **Kindle 不原生支持 EPUB。** Send to Kindle 的服务器端转换常会剥掉样式、弄坏表格或丢图，要保留设计稿就预先转成 AZW3。
+- **Kobo / Nook / Apple Books 走开放标准。** EPUB 在这些设备上是原生格式，标题、脚注、图片说明都能按你预期呈现。
+- **AZW3 全面胜过 MOBI。** 内嵌字体、CSS3 排版控制、行内脚注交叉引用，MOBI 都做不到。
+- **格式错配的表现很具体。** MOBI 在现代 Kindle 上段落间距不一致、嵌入字体加载失败；在 Kobo 上则需要第三方应用才能打开。
+- **EPUB 是可回流格式。** 小说适合回流；菜谱、儿童书、手册可能需要固定版式 EPUB 才能保住图的位置。`
+    }
   ],
 };
 

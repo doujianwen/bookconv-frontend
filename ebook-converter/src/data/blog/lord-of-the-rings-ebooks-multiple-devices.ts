@@ -35,6 +35,15 @@ export const content = {
     {
       heading: 'Common Problems and Solutions',
       body: '**Problem: Converted books have broken formatting**\nUse BookConv default settings or Calibre with Smarten punctuation enabled. LOTR has complex footnotes and appendices that need careful handling. If you encounter [common conversion errors](/blog/conversion-error-guide), check our troubleshooting steps.\n\n**Problem: Kindle rejects converted file**\nKindle sometimes rejects files larger than 50MB. Break the trilogy into individual volumes and convert separately using BookConv. Our [guide to fixing EPUB to PDF formatting](/guide/fix-epub-to-pdf-formatting) may also help with layout issues.\n\n**Problem: Maps and illustrations do not display**\nSome EPUB editions include high-resolution maps that may not render well on e-ink devices. Consider converting to PDF for map viewing.\n\n**Problem: Reading progress does not sync between devices**\nProgress syncs only within the same ecosystem. Use a third-party tracker like Goodreads to maintain progress across platforms. For more on [syncing reading groups](/blog/sync-ebooks-reading-groups), check our guide to virtual reading communities.\n\n**Problem: Lost progress after device change**\nReading progress is stored locally on most e-readers. When switching devices, manually note your page or use a tracking app to maintain your place across platforms.'
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **AZW3 是 Kindle 上的明确选择。** 地图排版、附录格式和嵌入字体都能保住，这是魔戒系列观感的关键。
+- **EPUB 覆盖 Kobo、Apple Books、Android。** 六卷加附录的体量下，回流特性让同一文件适配从小屏到大屏。
+- **附录不能丢。** 中土历史、语言、谱系资料都在附录里，转换后要确认这部分还在。
+- **Kindle 会拒收超过 50MB 的文件。** 建议分卷转换。
+- **地图在墨水屏上可能显示不佳。** 高分辨率地图建议额外留一份 PDF 用于看图。
+- **DRM 是跨生态搬运的第一道墙。** 书店买的书带 DRM，复制到别的平台会被加密挡住。`
     }
   ]
 };

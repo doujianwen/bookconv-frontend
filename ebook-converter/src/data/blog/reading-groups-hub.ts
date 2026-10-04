@@ -42,6 +42,14 @@ export const content = {
     {
       heading: `Common Pitfalls for Reading Groups`,
       body: `**Mismatched formats.** If half the group gets MOBI and half gets EPUB, page references break during discussions. Standardize on EPUB before the first meeting.\n\n**Renaming instead of converting.** Changing .epub to .mobi doesn't change the format — readers reject it. Always run a real conversion.\n\n**Assuming one ecosystem fits all.** A group with mixed devices needs a cross-platform method (Play Books or shared EPUB), not a single-vendor sync.\n\n**Ignoring DRM.** Store-bought books often can't be converted or shared. Choose DRM-free sources for club reads.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **进度漂移是读书会第一大痛点。** 有人读完第 5 章、有人还卡在第 2 章，根因是各家把进度锁在自己的云里。
+- **Google Play Books 是唯一跨平台同步的。** Amazon 只在 Kindle 内同步，Apple Books 只在 iCloud 内，Kobo 自成一套。
+- **混合设备就用 EPUB。** AZW3/MOBI 只在全员 Kindle 时用，PDF 适合需要固定页码的学术或诗歌小组。
+- **改扩展名不叫转换。** 把 epub 改名成 mobi 格式不会变，阅读器会直接拒绝。
+- **DRM 是读书会最常见的失败原因。** 书店买的书无法转换或分享，选 Smashwords、BookFunnel 这类 DRM-free 来源或公共领域作品。`
     }
   ]
 };

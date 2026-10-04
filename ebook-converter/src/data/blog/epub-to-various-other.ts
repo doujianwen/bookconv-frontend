@@ -31,6 +31,14 @@ export const content = {
     {
       heading: "How BookConv Simplifies Your Workflow",
       body: `Manual conversion using command-line tools or complex desktop software can be daunting for the average user. That is where online solutions shine. BookConv offers a streamlined, user-friendly interface that handles the heavy lifting of format translation. Whether you need to convert a single chapter or batch-process a whole series, BookConv is designed to be fast, secure, and effective.\n\nBy removing the need for technical expertise, BookConv empowers readers and authors alike to manage their digital libraries efficiently. You can quickly switch between formats, ensuring that your content is always accessible on whatever device you choose to use next. Don't let format incompatibility lock your books away; take control of your library today.`
+    },
+    {
+      heading: `Key Takeaways`,
+      body: `- **PDF 的价值在于锁死版式。** 教材手册、法律文件、学术论文这类要求图、表、正文严格对齐的场景，PDF 仍是金标准。
+- **EPUB 转 PDF 的难点是 CSS 扁平化。** 重插图或双栏排版的 EPUB，转换器不够稳就会把元素排乱。
+- **源文件质量决定输出质量。** 损坏或编码混乱的 EPUB 转换后只会更糟，先用干净源文件。
+- **可回流与固定版式之间转换有风险。** 固定版式 EPUB 转成可回流格式，字会小到不可读；复杂版式转 MOBI 基本是一团乱。
+- **务必预览再分享。** 检查断图、缺字体、文字被挤出页面这几项。`
     }
   ]
 };
