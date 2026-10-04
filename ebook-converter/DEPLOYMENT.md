@@ -1,6 +1,6 @@
 # 电子书转换工具站 - 部署指南
 
-> **最后更新**: 2026-08-05
+> **最后更新**: 2026-10-05（VPS 状态更正：荧光云实例已到期未续费）
 
 > 📘 **新人先看这篇**：[`docs/新人部署上手指南-GitHub到Vercel.md`](./docs/新人部署上手指南-GitHub到Vercel.md) — 面向刚接手项目的开发者，讲清从 GitHub push 到 Vercel 上线的完整步骤与常见坑。本文件偏「VPS + Vercel + Cloudflare 全量方案与接线细节」。
 
@@ -9,7 +9,7 @@
 | 组件 | 状态 | 说明 |
 |------|------|------|
 | 前端 + API（Vercel） | ✅ 已上线 | `bookconv.com` → Vercel Serverless |
-| VPS 后端（Calibre） | ⏳ 待部署 | 莹云 VPS，IP 待注入 SSH 密钥后部署 |
+| VPS 后端（Calibre） | ❌ 已到期未续费 | 荧光云 VPS（`149.104.69.126`）**已到期、未续费，实例不可用**；Calibre 委派路径整体不可用 |
 | Redis 队列 | ❌ 未使用 | Vercel serverless 不支持常驻 Worker，异步队列已降级为同步请求内处理 |
 
 ## 生产地址
@@ -39,30 +39,38 @@ docker-compose up -d
 
 ---
 
-## VPS 部署（莹云，待部署）
+## VPS 部署（荧光云，实例已到期 — 当前不可用）
 
-> **重要**：以下 VPS 部署指南为**计划方案**，当前尚未执行。网站目前完全运行在 Vercel 上。
+> ❌ **状态：已到期、未续费，实例当前不可用**（2026-10-05 用户核实）。
+>
+> 本节保留为**历史方案存档**，供将来重新采购时复用。**不要**把下列步骤当作现行可执行方案：`docker compose up`、`ssh root@149.104.69.126` 等命令在实例续费并重装前一律无效。
+>
+> 现行生产路径：网站与 API **完全运行在 Vercel**；Calibre 类格式依赖 CloudConvert fallback（额度有限，见文末「已知限制」）。
 
-### VPS 信息（莹云控制台）
+### VPS 信息（荧光云控制台 · 历史存档）
 
 | 项目 | 值 |
 |------|-----|
-| IP 地址 | `149.104.69.126` |
-| 实例 ID | `ecs-di00005bwn85` |
+| 供应商 | 荧光云（曾误记为「莹云」，2026-10-05 更正） |
+| IP 地址 | `149.104.69.126`（**已到期，地址不再分配**） |
+| 实例 ID | `ecs-di00005bwn85`（**已到期，实例不可用**） |
 | 机房 | SoftBank 日本节点 |
 | SSH 端口 | 22 |
-| 状态 | ⚠️ 未部署本项目（端口 80 运行其他网站） |
+| 状态 | ❌ **已到期未续费，实例不可用**（此前误记为「已购待部署」） |
 
-### SSH 密钥注入（首次部署前必须执行）
+### SSH 密钥注入（**仅在重新采购并续费后**才需要执行）
 
-在莹云控制台 → 实例 `ecs-di00005bwn85` → **重置密钥**，注入以下公钥：
+> 原实例已到期，荧光云控制台已无法操作。以下步骤仅在**重新采购新实例**后适用，届时请把新实例 ID 与 IP 一并更新本表。
+
+在荧光云控制台 → 新实例 → **重置密钥**，注入以下公钥（⚠️ 原实例已到期，当前无法执行）：
 
 ```
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+6weQvfTbp63GiuwTZb2bAj57pxWfhAEtzvF3vNLxS 7701484@qq.com
 ```
 
-注入成功后即可 SSH 登录：
+注入成功后即可 SSH 登录 —— ⚠️ **原实例已到期，以下命令当前无效**：
 ```bash
+# ❌ 实例已到期未续费，此地址不再分配，不要执行
 ssh root@149.104.69.126
 ```
 
@@ -372,18 +380,25 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 ## Vercel 与 VPS 转换后端接线（Calibre 委派）
 
-> **当前状态**：VPS 尚未部署，此功能待启用。Vercel 上仅有纯透传格式（epub→zip 等）可用，走 Calibre 的 25 个格式仍返回 500。
+> ❌ **当前状态：此路径已不可用**（2026-10-05）。VPS 实例已到期未续费，不存在可委派的 Calibre 后端。
+>
+> 下文三步接线方案**仅作历史存档**。若将来重新采购 VPS，需先确认 CloudConvert 额度与 Vercel Hobby 60s 超时上限这两个已知限制是否已解决 —— 详见文末「已知限制」。
+>
+> 另注：本节原稿在此处与后文「前置条件」自相矛盾（一处写「尚未部署」、一处写「已安装 Calibre」）；两者均与「实例已到期」不符，已一并更正。
 
 Vercel serverless 运行时**没有 Calibre 二进制**，因此 25 个走 Calibre 的格式在 Vercel 上无法转换。方案：Vercel 的 `/api/convert` 在设了 `CONVERSION_BACKEND_URL` 时，把上传**转发**到装 Calibre 的 VPS 的 `/api/convert-internal`，再把结果流式返回。epub→zip 等纯透传格式无需后端，Vercel 本地即可完成。
 
 ### 前置条件
 
-- VPS（莹云 `149.104.69.126`）已安装 Calibre（`ebook-convert --version` 可用）
-- VPS 已从 `main` 重新部署，包含新的 `/api/convert-internal` 路由
+- ~~VPS（荧光云 `149.104.69.126`）已安装 Calibre~~ ❌ **不成立**：该实例已到期，Calibre 从未在本项目部署成功
+- ~~VPS 已从 `main` 重新部署~~ ❌ **不成立**：无实例可部署
+
+> 这两条前置条件在原稿中写作已满足，实际均未发生。留着会让人以为「只差配两个环境变量就能上线」。
 
 ### 步骤 1：VPS 重部署（拉取含 convert-internal 的新镜像）
 
 ```bash
+# ❌ 实例已到期未续费，以下步骤当前无效，仅供将来重购新实例时参考
 ssh root@149.104.69.126
 cd /opt/ebook-converter
 # 生成并写入内部密钥（与 Vercel 侧一致）
@@ -401,7 +416,7 @@ Vercel Dashboard → 项目 → Settings → Environment Variables，添加：
 
 | 变量名 | 值 | 说明 |
 |--------|-----|------|
-| `CONVERSION_BACKEND_URL` | `http://149.104.69.126` | VPS 公网地址（需能被 Vercel 出站访问） |
+| `CONVERSION_BACKEND_URL` | ~~`http://149.104.69.126`~~ ❌ 实例已到期，**当前无有效值** | 重新采购 VPS 后填入新公网地址（需能被 Vercel 出站访问） |
 | `CONVERSION_INTERNAL_SECRET` | 与步骤 1 中 VPS `.env` 里的随机串完全一致 | 校验转发请求，防开放代理 |
 
 保存后 Vercel 会自动重建。
@@ -422,6 +437,21 @@ file out.txt
 
 ---
 
+## 已知限制（2026-10-05 实测，VPS 关闭后）
+
+VPS Calibre 后端已到期关闭后，转换能力受两条**互相独立**的限制约束：
+
+| 限制 | 判据 | 影响 | 花钱能否解决 |
+|------|------|------|--------------|
+| **CloudConvert 额度** | 402 `Your account has run out of conversion credits`；免费档 10 credits/日 | 除 epub→txt、epub→zip 外的格式全部失败 | ✅ 充值可解（Package $17 / 1000 credits，不过期） |
+| **Vercel Hobby 60s 硬上限** | 唯一生产锚点：`epub→mobi @ 2MB = 55098ms` | 余量仅 5s；线性外推 3MB≈83s✗ / 10MB≈275s✗ | ❌ **不可解** —— `maxDuration=300` 在 Hobby 上被静默忽略 |
+
+**因此充值只能解 402，解不了超时。** 站点 `MAX_FILE_SIZE_MB = 10` 与 60s 上限互相矛盾，
+大文件必然超时。若要支持大文件，只有三条路：升 Vercel Pro（$20/月）、换无平台上限的机器、
+或改为异步 webhook（基础设施具备：`.env.production` 含 `SUPABASE_*`、`src/lib/queue.ts` 存在）。
+
+⚠️ `MAX_POLL_ATTEMPTS = 55 × 2s = 110s` 的轮询设计永远等不到 50s 预算之外的结果。
+
 ## 成本估算
 
 | 项目 | 费用 | 说明 |
@@ -431,14 +461,14 @@ file out.txt
 | Cloudflare CDN | $0 | 免费计划足够 |
 | Supabase | $0 | 免费层 500MB DB |
 | Cloudflare R2 | ~$1/月 | 10GB 存储 |
-| 莹云 VPS（计划） | 待确认 | 用于 Calibre 后端转换 |
+| 荧光云 VPS | ❌ $0（已到期未续费） | 已停用；若恢复需重新采购 + 续费 |
 | **当前总计** | **~$1/月** | 仅域名+R2 |
 
 ---
 
 ## 下一步优化
 
-1. **启用 VPS Calibre 后端** — 注入 SSH 密钥，部署 Docker，设置 `CONVERSION_BACKEND_URL`
+1. ~~**启用 VPS Calibre 后端**~~ ❌ 已作废：荧光云实例已到期未续费。Calibre 类格式现走 CloudConvert fallback，受额度与 60s 超时双重限制（见文末「已知限制」）
 2. **CI/CD 自动化** — GitHub Actions 自动构建部署
 3. **日志聚合** — 接入 Sentry 错误追踪
 4. **性能监控** — 接入 Plausible 或自建 Statsig
@@ -447,6 +477,7 @@ file out.txt
 
 ---
 
-*最后更新：2026-08-05*
+*最后更新：2026-10-05*
 *当前生产：Vercel（bookconv.com）*
-*计划后端：莹云 VPS 149.104.69.126（未部署）*
+*后端：荧光云 VPS 149.104.69.126 —— **已到期未续费，实例不可用**（2026-10-05 核实；供应商名此前误记为「莹云」）*
+*Calibre 委派路径已关闭；Vercel 本地仅 epub→txt / epub→zip 可用，其余格式依赖 CloudConvert*

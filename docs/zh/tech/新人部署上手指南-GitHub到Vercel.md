@@ -106,7 +106,7 @@ git push origin main
 ### 进阶（接 VPS Calibre 后端时才需要）
 | 变量名 | 说明 |
 |--------|------|
-| `CONVERSION_BACKEND_URL` | VPS 公网地址，如 `http://149.104.69.126` |
+| `CONVERSION_BACKEND_URL` | VPS 公网地址。❌ **当前不要设置**：旧地址 `149.104.69.126`（供应商：荧光云）**已到期未续费**，指向空处。需重新采购 VPS 后才填；在此之前留空即可 —— 未设置时 API 会走本地处理。 |
 | `CONVERSION_INTERNAL_SECRET` | 与 VPS 端一致的随机串，防开放代理 |
 
 ---

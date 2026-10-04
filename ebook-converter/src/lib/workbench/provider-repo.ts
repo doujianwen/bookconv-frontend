@@ -171,12 +171,12 @@ export const repoProvider: WorkbenchProvider = {
           { label: 'Primary domain', value: 'bookconv.com', trend: 'flat' },
           { label: 'DNS provider', value: 'Cloudflare', trend: 'flat' },
           { label: 'Hosting', value: 'Vercel', trend: 'flat' },
-          { label: 'Fallback VPS', value: '149.104.69.126', trend: 'flat', hint: 'provisioned, never deployed' },
+          { label: 'Fallback VPS', value: '149.104.69.126', trend: 'flat', hint: 'expired, not renewed — instance unavailable (vendor: Yingguang Cloud / 荧光云)' },
         ],
         pills: [
           { label: 'SSL certificate', level: 'unknown', detail: 'unverified — needs Cloudflare API' },
           { label: 'DNS propagation', level: 'unknown', detail: 'unverified' },
-          { label: 'Backup origin (VPS)', level: 'warning', detail: 'provisioned but never deployed' },
+          { label: 'Backup origin (VPS)', level: 'critical', detail: 'expired and not renewed — there is NO backup origin; VPS Calibre delegation is unavailable' },
         ],
         tables: [
           {
@@ -191,12 +191,13 @@ export const repoProvider: WorkbenchProvider = {
               { id: 'd1', cells: { type: 'A', name: '@', value: 'Vercel anycast', state: 'unknown' } },
               { id: 'd2', cells: { type: 'CNAME', name: 'www', value: 'cname.vercel-dns.com', state: 'unknown' } },
               { id: 'd3', cells: { type: 'TXT', name: '@', value: 'SPF / DKIM for transactional mail', state: 'unknown' } },
-              { id: 'd4', cells: { type: 'A', name: 'vps', value: '149.104.69.126', state: 'warning' } },
+              { id: 'd4', cells: { type: 'A', name: 'vps', value: '149.104.69.126 (expired, not renewed)', state: 'critical' } },
             ],
           },
         ],
         notes: [
           'This panel performs no DNS lookup. It is a hand-maintained reminder list, not a record of live DNS state.',
+          'Row d4 (vps A record) refers to an instance that expired and was not renewed. Treat the address as unallocated; do not point anything at it.',
           'To make it real, implement a Cloudflare provider and register it in provider.ts.',
         ],
       },

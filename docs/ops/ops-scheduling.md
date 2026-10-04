@@ -1,11 +1,11 @@
 > ⚠️ **RECONSTRUCTED FROM A CORRUPTED SOURCE** — The original `docs/zh/ops/ops-scheduling.md` was corrupted in the repository (its body was double-encoded and only partially recoverable). This English version is rebuilt from the recovered Chinese text plus project context. **Please verify against the original Chinese in `docs/zh/ops/ops-scheduling.md` before relying on it.** The clean blockquote at the top is intact.
 
-> **Production server note (updated 2026-08-05):** The current production environment is deployed on Vercel (no long-running process); the Yingyun VPS (149.104.69.126) has no application deployed yet. The crontab plan below should be enabled after the VPS is deployed.
+> **Production server note (updated 2026-10-05):** The current production environment is deployed on Vercel (no long-running process). ~~The Yingyun VPS (149.104.69.126) has no application deployed yet.~~ **That instance has expired and was not renewed; it is no longer reachable.** (The vendor's correct name is **Yingguang Cloud / 荧光云** — "Yingyun" was a mis-transcription.) The crontab plan below can no longer be enabled and is kept for historical reference only.
 >
 > VPS status:
-> - IP: 149.104.69.126 | Instance ID: ecs-di00005bwn85
-> - SSH port 22 is open, but the key is not injected yet — inject the public key in the Yingyun console first
-> - Port 80 runs another website; port 3000 is not listening
+> - IP: 149.104.69.126 | Instance ID: ecs-di00005bwn85 | Status: **expired, not renewed — instance unavailable**
+> ~~SSH port 22 is open, but the key is not injected yet — inject the public key in the Yingyun console first~~（"Yingyun" was the **mis-transcription** of the vendor name） **Obsolete:** the instance has expired, so the vendor console can no longer reset keys or inject a public key.
+> ~~Port 80 runs another website; port 3000 is not listening~~ This observation expired along with the instance; no current observation exists.
 
 # Operations Audit Scheduling Plan
 

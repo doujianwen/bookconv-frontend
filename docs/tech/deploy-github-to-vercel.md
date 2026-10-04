@@ -106,7 +106,7 @@ git push origin main
 ### Advanced (only needed when wiring the VPS Calibre backend)
 | Variable | Notes |
 |--------|------|
-| `CONVERSION_BACKEND_URL` | VPS public address, e.g. `http://149.104.69.126` |
+| `CONVERSION_BACKEND_URL` | VPS public address. ❌ **Do not set this today** — the old address `149.104.69.126` (vendor: Yingguang Cloud / 荧光云) **expired and was not renewed**, so it points at nothing. Only set this after purchasing a replacement VPS. Leave it unset in the meantime: the API falls back to local handling when it is absent. |
 | `CONVERSION_INTERNAL_SECRET` | random string matching the VPS side, prevents open-proxy abuse |
 
 ---

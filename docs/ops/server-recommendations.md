@@ -1,6 +1,6 @@
 > ⚠️ **RECONSTRUCTED FROM A CORRUPTED SOURCE** — The original `docs/zh/ops/server-recommendations.md` was corrupted in the repository (its body was double-encoded and only partially recoverable). This English version is rebuilt from the recovered Chinese text plus project context. **Please verify against the original Chinese in `docs/zh/ops/server-recommendations.md` before relying on it.** The clean blockquote at the top is intact.
 
-> **Actual deployment status (updated 2026-08-05):** The current production environment is deployed on **Vercel** (free plan); the site https://bookconv.com runs normally. The Yingyun VPS (149.104.69.126) was purchased but not yet deployed — it is reserved for the later Calibre backend conversion.
+> **Actual deployment status (updated 2026-10-05):** The current production environment is deployed on **Vercel** (free plan); the site https://bookconv.com runs normally. ~~The Yingyun VPS (149.104.69.126) was purchased but not yet deployed — it is reserved for the later Calibre backend conversion.~~ **That instance has expired and was not renewed; it is unavailable.** (The vendor's correct name is **Yingguang Cloud / 荧光云** — "Yingyun" was a mis-transcription.) The Calibre-delegation plan is **cancelled**: restoring it requires purchasing a new VPS.
 >
 > The comparison table below is kept for reference; **the actually chosen plan is A (Vercel).**
 
