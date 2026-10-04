@@ -381,7 +381,10 @@ function report() {
     fails.forEach((f) => console.log(`  · [${f.id}] ${f.label}`));
   }
   console.log('');
-  return fails.length === 0;
+  // 🔴 返回结构必须与调用方解构一致（10-04踩坑：曾return 裸布尔值，
+  // 调用方按 {ok, hasUnknown} 解构 ⇒ ok 恒undefined ⇒ 明明"通过"却 exit 1，
+  // 会让 CI 永远红）。UNKNOWN 不影响退出码（判据未执行≠不通过）。
+  return { ok: fails.length === 0, hasUnknown };
 }
 
 checkPublicJunk();
