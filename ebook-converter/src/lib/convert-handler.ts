@@ -95,7 +95,12 @@ export async function convertAndStream(
   // cause (conversion succeeded, the response header step threw). Encode the real
   // name in filename*=UTF-8'' (percent-encoded, Latin1-safe) and keep an ASCII-only
   // legacy filename fallback.
-  const asciiBase = baseName.replace(/[^\x20-\x7E]/g, "_");
+  //
+  // The legacy fallback must also drop the HTTP header delimiters `"` `;` `\`.
+  // Filtering only non-printable-ASCII is not enough: a name like `a"b.epub`
+  // yields `filename="a"b.epub"`, which closes the field early and corrupts the
+  // disposition for clients that read the legacy parameter.
+  const asciiBase = baseName.replace(/[^\x20-\x7E]/g, "_").replace(/["\\;]/g, "_");
   const dispositionValue =
     `attachment; filename="${asciiBase}.${ext}"; filename*=UTF-8''${encodeURIComponent(`${baseName}.${ext}`)}`;
 
