@@ -50,8 +50,16 @@ report/raw_inventory.csv
 
 # ── 2026-10-04 新增：一次性中间产物与工具工作区 ──
 # 判据（勿随意扩大）：只 ignore「跑完即弃、磁盘留着但无 Reproduction 价值」的产物。
-# 真实资产（父目录 package.json / scripts/ 下的 Multica 与外链提交工具 / mc-*.ps1）
-# 一律【不入库也不 ignore】——它们是需要长期使用的工具，不是垃圾。
+#
+# ⚠️ 2026-10-04 规则修订：原写「真实资产（父目录 package.json / scripts/ 下的
+# Multica 与外链提交工具 / mc-*.ps1）一律【不入库也不 ignore】」——
+# 这条原则的前提是「这些资产没有自己的版本管理」，实测后发现前提不成立：
+# 它们已迁入独立仓库 doujianwen/ebook-converter-ops（commit 4d8f8c5，123 文件），
+# 且实测 require/import 站内模块的真依赖 = 0 ⇒ 迁走不破坏站点。
+# 于是「不入库也不 ignore」变成「不入库、也不 ignore、还每天制造 105 条 ?? 噪声」，
+# 噪声会掩盖真改动（10-04 就差点让我把 core.autocrlf 假 diff 误判成真改动）。
+# 结论：迁库之后就可以安全 ignore 了——**前提是资产确实已在独立仓库里有副本**。
+# 判据：任何新 ignore 规则，先确认资产已在别处入库，否则不许 ignore。
 
 # 1) base64 中转产物（一次性粘贴用）
 _py_b64*.txt
@@ -88,3 +96,22 @@ ebook-converter/draft_*/
 # 7) 根目录空的 next.config.ts（真配置在 ebook-converter/next.config.ts，
 #    根目录这份是 0 字节残留；被 Next 自动读取反而会干扰解析）
 /next.config.ts
+
+# 8) 2026-10-04 迁库后：本地 AI 运营工具链（已入库 doujianwen/ebook-converter-ops）
+#    磁盘文件保留（日常工作副本，仍从父目录跑），只是不再在本仓库产生 ?? 噪声。
+#    权威副本：https://github.com/doujianwen/ebook-converter-ops（commit 4d8f8c5）
+#    改这些工具时去那个仓库改，别在这里改（改这里不会入库 = 静默丢失）。
+/scripts/
+/mc.ps1
+/mc-autopilot.ps1
+/mc-issue.ps1
+/mc-log.ps1
+/mc-setup.ps1
+/mc-sync.ps1
+/_multica_template/
+/package.json
+/package-lock.json
+#    ⚠️ 上面的 /package.json 只针对仓库根（前置斜杠 = 只匹配根级）。
+#    父目录这份是 ops 工具链的依赖声明（playwright / sharp），
+#    ebook-converter/package.json 是站点自己的，必须照常入库——所以必须带前置斜杠。
+#    实测：check-ignore -v 对 'ebook-converter/package.json' 应返回「未 ignore」。

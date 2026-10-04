@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>9-10 月工作复盘与工作流优化迭代 · 2026-10-04</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1a1d21;--sub:#5b6470;--line:#e4e7ec;--red:#c0392b;--grn:#1a7f4b;--amb:#b8791a;--blu:#2563a8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;padding:32px 20px}
+.wrap{max-width:940px;margin:0 auto}
+h1{font-size:27px;margin:0 0 6px;letter-spacing:-.3px}
+.meta{color:var(--sub);font-size:13px;margin-bottom:26px}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
+.k{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.k b{display:block;font-size:24px;line-height:1.2}
+.k span{font-size:12px;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{background:#f0f2f5;font-weight:600;font-size:13px}
+.bar{height:7px;background:var(--blu);border-radius:4px}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600}
+.t-r{background:#fbe9e7;color:var(--red)}.t-g{background:#e6f4ec;color:var(--grn)}.t-a{background:#fdf3e2;color:var(--amb)}
+.t-b{background:#e8f0fa;color:var(--blu)}
+ul{margin:8px 0;padding-left:22px}li{margin:5px 0}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px;font-family:Consolas,monospace}
+.fix{background:#f0f7f2;border-left:3px solid var(--grn);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0}
+.bad{background:#fdf0ee;border-left:3px solid var(--red);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0}
+.foot{color:var(--sub);font-size:12px;margin-top:30px;padding-top:14px;border-top:1px solid var(--line)}
+</style></head><body><div class="wrap">
+<h1>9–10 月工作复盘 与 工作流优化迭代</h1>
+<div class="meta">2026-10-04 · 量化基线来自 32 天工作日志（517 KB）· 所有数字为脚本实跑统计，非印象</div>
+
+<h2>一、量化基线</h2>
+<div class="kpi">
+<div class="k"><b>32</b><span>日志天数</span></div>
+<div class="k"><b>517 KB</b><span>日志总量</span></div>
+<div class="k"><b>705</b><span>push/commit 命中</span></div>
+<div class="k"><b>576</b><span>GSC/SEO 数据</span></div>
+<div class="k"><b>494</b><span>转化/CloudConvert</span></div>
+<div class="k"><b>394</b><span>判据/自查</span></div>
+<div class="k"><b>282</b><span>门禁/审计</span></div>
+<div class="k"><b>252</b><span>踩坑/事故</span></div>
+</div>
+<div class="card">
+<b>踩坑密度 TOP 6 天</b>
+<table><tr><th>日期</th><th>命中</th><th>占比图</th></tr>
+<tr><td>10-04</td><td>155</td><td><div class="bar" style="width:100%"></div></td></tr>
+<tr><td>10-03</td><td>85</td><td><div class="bar" style="width:55%"></div></td></tr>
+<tr><td>09-26</td><td>60</td><td><div class="bar" style="width:39%"></div></td></tr>
+<tr><td>10-02</td><td>56</td><td><div class="bar" style="width:36%"></div></td></tr>
+<tr><td>09-24</td><td>54</td><td><div class="bar" style="width:35%"></div></td></tr>
+<tr><td>09-19</td><td>24</td><td><div class="bar" style="width:15%"></div></td></tr>
+</table>
+<div class="bad"><b>关键信号</b>：「静默假成功」全库精确计数 <b>10 次</b>，横跨 9-19 → 10-04 共 <b>2 个月</b>、<b>6 个不同日期</b>。这不是偶发失误，是<b>结构性缺失</b>。</div>
+</div>
+
+<h2>二、根因诊断（三条，均实测取证）</h2>
+<div class="card">
+<h3 style="margin:0 0 8px;font-size:16px">① 门禁挂载点缺失 <span class="tag t-r">已修</span></h3>
+<p style="margin:4px 0">仓库有 <b>51 个门禁脚本</b>，但只有 <code>pre-push</code>、<b>没有 pre-commit</b>。而「静默假成功」恰恰发生在<b>提交之前</b>——脏东西在 commit 时已入库，而 pre-push 用 <code>GATE_SLUGS</code> 只审本次 push 涉及的博文 slug，非博文文件根本不经它。</p>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px;font-size:16px">② 门禁自身就是假门禁 <span class="tag t-r">已修</span></h3>
+<p style="margin:4px 0 10px"><code>audit.yml</code> + <code>weekly-audit.yml</code> 三个 bug 叠加，导致这道「轻量纠错审查」<b>在 CI 上从未真正生效</b>，却一直显示有门禁：</p>
+<table><tr><th>缺陷</th><th>后果</th><th>修法</th></tr>
+<tr><td><code>bash ../../scripts/audit.sh</code></td><td>从 <code>working-directory: ./ebook-converter</code> 上两级退到<b>仓库外</b>，runner 上不存在 ⇒ 必 exit 127</td><td>改 <code>../scripts/audit.sh</code></td></tr>
+<tr><td><code>| tee audit.log</code></td><td>管道吞掉脚本退出码 ⇒ 审查失败 workflow 仍报绿</td><td><code>set -o pipefail</code> + <code>exit "${PIPESTATUS[0]}"</code></td></tr>
+<tr><td>引用未入库的 <code>scripts/audit.sh</code></td><td>两个 workflow 都引用它，但从未提交（<code>check-ignore -v</code> exit=1 证明不是被忽略）</td><td>已入库</td></tr>
+</table>
+</div>
+<div class="card">
+<h3 style="margin:0 0 8px;font-size:16px">③ 凭据泄露 <span class="tag t-a">需你操作</span></h3>
+<p style="margin:4px 0">飞书 webhook token 硬编码在<b>已入库</b>的 <code>weekly-audit.yml</code>（<code>422e94ef…</code>）与未入库的 <code>scripts/ai-audit.js</code>（<code>a7a8f44f…</code>）。已改为读 <code>secrets.FEISHU_WEBHOOK_URL</code>，<b>但旧 token 已推送过，须在飞书后台重置</b>。</p>
+</div>
+
+<h2>三、落地改动（4 个 commit，全部已上线）</h2>
+<div class="card">
+<table><tr><th>Commit</th><th>内容</th></tr>
+<tr><td><code>cc4d56c</code></td><td>入库 audit.sh + ai-audit.js；两 workflow 路径 <code>../../</code>→<code>../</code>；<code>| tee</code>→PIPESTATUS；token→secret；移除与 audit.sh 重复的 tsc/eslint</td></tr>
+<tr><td><code>874fde6</code></td><td>新增 <code>audit-workflow-integrity.mjs</code>（5 项不变量）并挂进 <code>ci.yml</code></td></tr>
+<tr><td><code>1716bec</code></td><td>secRe 二次修复：兼容 JSON 风格写法</td></tr>
+<tr><td><code>(hooks)</code></td><td>新建 <code>.git/hooks/pre-commit</code>：syntax-sweep + audit-content-integrity，&lt;4s</td></tr>
+</table>
+<div class="fix"><b>新门禁的 5 项不变量</b>：① workflow 无 <code>../../</code> 越界 ② 未用裸 <code>| tee</code> 吞退出码 ③ 引用脚本均已入库 ④ 无硬编码 webhook token ⑤ 存在可执行 pre-commit。</div>
+</div>
+
+<h2>四、双向验证（每道都做了反向验证）</h2>
+<div class="card">
+<p style="margin:4px 0">只跑「当前状态通过」证明不了判据有效。实测记录：</p>
+<table><tr><th>门禁</th><th>注入事故</th><th>恢复</th></tr>
+<tr><td>pre-commit</td><td><span class="tag t-r">exit 1</span> 注入未闭合反引号，报 <code>30 error(s) @line 10</code></td><td><span class="tag t-g">exit 0</span> 且 <code>git diff</code> 复核已真恢复</td></tr>
+<tr><td>workflow 完整性</td><td><span class="tag t-r">exit 1</span> 4 类事故逐条被抓，精确到行号</td><td><span class="tag t-g">exit 0</span> 5/5 通过</td></tr>
+<tr><td>secRe</td><td>0 段文件 4 → <b>0</b>，段落总数 472 → <b>484</b></td><td>探针段落数 3、二次扫描一致</td></tr>
+</table>
+</div>
+
+<h2>五、本轮我自己的 4 次判据 bug（元教训）</h2>
+<div class="card">
+<div class="bad"><b>① 抽样偏差</b>：只看 <code>tail -8</code> 见到 <code>exit 0</code> 就断言「audit.sh 恒绿」，实际第 204 行有 <code>exit 1</code>。<b>判退出码逻辑必须 grep 全文</b>。</div>
+<div class="bad"><b>② 路径基准错</b>：判据把 7 个真实存在的脚本误报「未入库」（<b>假失败</b>）⇒ 改用 <code>git ls-files -z</code> 作单一数据源。</div>
+<div class="bad"><b>③ Windows fork EBUSY</b>：Node 内 fork git 恒 <code>status=null</code> ⇒ 改为 stdin 接清单，拿不到就 <code>exit(2)</code>。</div>
+<div class="bad"><b>④ <code>git -C</code> 陷阱</b>：CI 里上一行已 <code>cd ebook-converter</code>，不加 <code>-C ..</code> 则全假失败。<b>若不做反向验证，我就是亲手造了一个假门禁。</b></div>
+<p style="margin:10px 0 0"><b>共同点</b>：这 4 个都是<b>刚踩过的坑的变体</b>。已全部写成 MEMORY 硬规则第 12/16/17/18/19 条。</p>
+</div>
+
+<h2>六、待办</h2>
+<div class="card">
+<ul>
+<li><span class="tag t-r">P0</span> <b>飞书 token 重置</b>（旧 <code>422e94ef…</code>/<code>a7a8f44f…</code> 已推送泄露）→ 在飞书后台重置机器人 → GitHub 配 Secret <code>FEISHU_WEBHOOK_URL</code></li>
+<li><span class="tag t-a">P1</span> <b>22 篇博文缺 Key Takeaways</b>（用修好后的判据实跑确认，无假缺）⇒ 属 #0 程序化页差异化主线</li>
+<li><span class="tag t-b">待决策</span> <b>40 个未跟踪项</b>：全部是工作资产（Skill 包 / Multica 工单 / 草稿产物），需决定「脱敏入库」还是「加 .gitignore」</li>
+<li><span class="tag t-a">注意</span> <b>新克隆或换机器必须重装 pre-commit 钩子</b>（<code>.git/hooks/</code> 是 git 机制，不入库）</li>
+</ul>
+</div>
+<div class="foot">数据来源：<code>.workbuddy/memory/</code> 32 天日志（脚本统计）· 门禁结论全部为实跑/源码级取证，非推断 · 生成于 2026-10-04</div>
+</div></body></html>
