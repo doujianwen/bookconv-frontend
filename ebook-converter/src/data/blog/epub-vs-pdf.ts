@@ -73,7 +73,7 @@ Neither conversion needs desktop software for a handful of files. Keep your sour
 - **PDF is the snapshot format** — fixed layout, ideal for printing, legal files, forms, and archival.
 - **EPUB wins for screens; PDF wins for print** — pick by what the reader will do with the file.
 - **They convert both ways** — [EPUB to PDF](/convert/epub-to-pdf) for a fixed copy, [PDF to EPUB](/convert/pdf-to-epub) for comfortable reading (text-based PDFs only).
-- **Keep the source in the right format** and convert per device or per job; you only re-process when a use case demands a different output.`
+- **Keep the source in the right format** and convert per device or per job; you only re-process when a use case demands a different output. For the fixed-layout side of the comparison, our [PDF format reference](/formats/pdf) sets out what that format guarantees and where it falls short.`
     }
   ]
 };

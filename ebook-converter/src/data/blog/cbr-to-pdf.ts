@@ -45,7 +45,7 @@ The 10 MB cap is the real constraint here — comic scans are large, so anything
 - **PDF opens everywhere** — your portable fallback for print and share.
 - **Page order follows filenames** — zero-pad them to avoid scrambles.
 - **Expect source-size output** — 24 pages ≈ 30–80 MB.
-- **10 MB per file** — the tightest constraint for comics; compress images or convert locally for full volumes.`
+- **10 MB per file** — the tightest constraint for comics; compress images or convert locally for full volumes. The [CBR format reference](/formats/cbr) explains what the archive actually contains and why ordering sometimes breaks.`
     }
   ]
 };

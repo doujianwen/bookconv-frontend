@@ -33,7 +33,7 @@ export const content = {
     },
     {
       heading: 'Set expectations: layout will change',
-      body: `EPUB is reflowable, so a precisely laid-out PDF (multiple columns, side notes, fixed caption positions) will not survive conversion unchanged. Accept that the EPUB will be a clean reading version, not a pixel copy. If you need the exact layout, keep the PDF.`,
+      body: `EPUB is reflowable, so a precisely laid-out PDF (multiple columns, side notes, fixed caption positions) will not survive conversion unchanged. Accept that the EPUB will be a clean reading version, not a pixel copy. If you need the exact layout, keep the PDF. Understanding what [PDF format](/formats/pdf) preserves — and what it flattens — makes it easier to judge whether a conversion kept your layout.`,
     },
   ],
 }

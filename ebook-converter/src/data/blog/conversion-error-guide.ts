@@ -29,7 +29,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Upload errors are fast** — size, DRM, or corruption are rejected immediately, not after a long wait.\n- **Output quality depends on source quality** — broken or complex source files produce broken or simplified outputs.\n- **Rate limits are hourly** — if you hit them, wait or upgrade.\n- **Send us metadata, not files** — we can reproduce the issue without seeing your book.`
+      body: `- **Upload errors are fast** — size, DRM, or corruption are rejected immediately, not after a long wait.\n- **Output quality depends on source quality** — broken or complex source files produce broken or simplified outputs.\n- **Rate limits are hourly** — if you hit them, wait or upgrade.\n- **Send us metadata, not files** — we can reproduce the issue without seeing your book. If the file you are converting is a legacy [DOC](/formats/doc), that reference explains what the format can and cannot carry.`
     }
   ]
 };

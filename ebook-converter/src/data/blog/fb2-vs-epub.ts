@@ -58,7 +58,7 @@ If the FB2 came from an old reader and you want it on a Kindle, go FB2 to EPUB, 
 - **FB2 is a clean single-file XML** best for text novels and archives.
 - **EPUB carries styling and media**; FB2 relies on the reader's theme.
 - **Both convert to each other**; for Kindle, route through EPUB to AZW3.
-- **Choose EPUB for stores and broad reading**; keep FB2 for archive compatibility.`
+- **Choose EPUB for stores and broad reading**; keep FB2 for archive compatibility. The [FB2 format reference](/formats/fb2) covers what FictionBook keeps that EPUB tends to flatten.`
     }
   ]
 };

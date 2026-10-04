@@ -133,7 +133,7 @@ DJVU files are already compressed, but PDFs can grow significantly depending on 
     },
     {
       heading: 'Related resources',
-      body: `For more on DJVU and related topics:\n- [What is DJVU format?](/blog/djvu-format-explained) — History and technical details\n- [Internet Archive DJVU guide](/blog/archive-org-djvu) — Finding and downloading Archive files\n- [PDF vs DJVU comparison](/blog/pdf-vs-djvu) — When to use each format\n- [Best free eBook formats](/blog/best-ebook-formats) — Complete format guide\n\nAnd for conversion tools:\n- [Online DJVU to PDF converter](/convert/djvu-to-pdf)\n- [Calibre installation guide](/guide/calibre-installation)\n- [Batch conversion guide](/guide/batch-converter)`,
+      body: `For more on DJVU and related topics:\n- [What is DJVU format?](/blog/djvu-format-explained) — History and technical details\n- [Internet Archive DJVU guide](/blog/archive-org-djvu) — Finding and downloading Archive files\n- [PDF vs DJVU comparison](/blog/pdf-vs-djvu) — When to use each format\n- [Best free eBook formats](/blog/best-ebook-formats) — Complete format guide\n\nAnd for conversion tools:\n- [Online DJVU to PDF converter](/convert/djvu-to-pdf)\n- [Calibre installation guide](/guide/calibre-installation)\n- [Batch conversion guide](/guide/batch-converter). Scanned pages are usually [PNG](/formats/png) or JPEG images underneath, which is what this conversion has to reassemble. For the format-level background, the [DJVU format reference](/formats/djvu) explains the scan-optimised layout.`,
     },
   ],
 }

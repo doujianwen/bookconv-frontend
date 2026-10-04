@@ -57,7 +57,7 @@ If you mostly care about storage, keep DjVu. If you care about actually using th
 - **Expect a 3–6x size increase** — normal, not a conversion error.
 - **OCR carries over if present** — otherwise the PDF is images only.
 - **10 MB per file** — DjVu compresses well, so many scans fit; long or high-resolution ones may not.
-- **Convert when you need to read, print, or keep** — not just to hoard.`
+- **Convert when you need to read, print, or keep** — not just to hoard. The [DJVU format reference](/formats/djvu) covers the page structure that makes these files awkward on e-readers.`
     }
   ]
 };

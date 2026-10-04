@@ -70,7 +70,7 @@ None of these are locked to a single vendor's account system, which is exactly w
 - **It's HTML in a proprietary box** — an OEBPS document inside Microsoft's ITOLITER container, usually with DRM.
 - **Nothing Microsoft ships opens it now** — the app won't run and the DRM servers are gone.
 - **Calibre or an online converter is the fix** — both unpack the container and rebuild it as EPUB.
-- **Convert to EPUB, don't just view** — a converted file is portable; a Calibre-only view keeps you locked to one tool.`
+- **Convert to EPUB, don't just view** — a converted file is portable; a Calibre-only view keeps you locked to one tool. Some older readers expect [HTML](/formats/html) rather than an ebook container, which is the link page format is for. The [LIT format reference](/formats/lit) covers what this older format does well and why support is thin.`
     }
   ]
 };

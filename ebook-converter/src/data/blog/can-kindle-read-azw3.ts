@@ -164,7 +164,7 @@ La distinción práctica: puedes crear un archivo AZW3; generalmente no puedes c
 - **Los dispositivos viejos lo abren parcialmente** — los Kindle previos a 2015 muestran el texto pero descartan los estilos que AZW3 lleva.
 - **Tres formas de cargarlo** — USB, correo Send to Kindle o convertir desde EPUB primero.
 - **AZW3 es KF8** — el nombre de consumo del formato que el hardware espera.
-- **KFX es distinto** — un formato más nuevo del lado de la tienda que usualmente no generas tú.`,
+- **KFX es distinto** — un formato más nuevo del lado de la tienda que usualmente no generas tú. The [AZW3 format reference](/formats/azw3) covers the layout and font handling that makes it the Kindle default.`,
       },
     ],
   },

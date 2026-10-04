@@ -57,7 +57,7 @@ export const content = {
       3. **Check Metadata:** After conversion, inspect the title and author fields. Older formats often lose this data during messy transfers, so ensure it is correct.
       4. **Test on Your Device:** Do not assume the conversion worked perfectly. Open the file on your actual e-reader to check for formatting errors.
 
-      By focusing on these steps, you can transition your entire backlog of old ebooks into modern formats that will last for years to come.`
+      By focusing on these steps, you can transition your entire backlog of old ebooks into modern formats that will last for years to come. For the other legacy format in this family, the [RTF format reference](/formats/rtf) explains what it preserves and what it drops. For the format-level detail, the [FB2 format reference](/formats/fb2) explains what converts cleanly and what does not.`
     }
   ]
 };

@@ -244,7 +244,7 @@ Luego haz una copia de seguridad en un sitio sensato. Toda la lógica de este ej
 - **BookConv resuelve los trabajos pequeños rápido** — sube, convierte, descarga; sin instalar, sin cuenta, con Calibre detrás.
 - **Calibre maneja grandes bibliotecas** — gratis, capaz de lotes, y te deja corregir metadatos rotos por el camino.
 - **El DRM bloquea la conversión** — los archivos LIT protegidos no convertirán, y no hay solución legítima.
-- **Siempre comprueba la salida** — hojea un capítulo y la tabla de contenidos antes de borrar los originales.`,
+- **Siempre comprueba la salida** — hojea un capítulo y la tabla de contenidos antes de borrar los originales. If your reader only opens [HTML](/formats/html) files, that is a reader limitation rather than a problem with the book. The [LIT format reference](/formats/lit) is useful background if you are deciding whether a conversion is worth it.`,
       },
     ],
   },

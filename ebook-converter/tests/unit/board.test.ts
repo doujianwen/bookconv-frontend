@@ -276,12 +276,14 @@ describe('board derivation', () => {
     // 2026-10-05 is a still-open task; assert the set only grows, and that
     // every retained item is strictly later than it was on the earlier day.
     if (d1.overdue.length > 0) {
-      const earliest = d1.overdue[0].taskId;
-      const stillThere = d2.overdue.find((d) => d.taskId === earliest);
-      if (stillThere) {
-        expect(stillThere.daysLate).toBeGreaterThanOrEqual(
-          d1.overdue.find((d) => d.taskId === earliest)!.daysLate
-        );
+      const earliest = d1.overdue[0];
+      const laterSame = d2.overdue.find((d) => d.taskId === earliest.taskId);
+      if (laterSame) {
+        // daysLate is optional on the view model; both sides are overdue items
+        // so it is always present in practice — coerce to compare safely.
+        const wasLate = earliest.daysLate ?? 0;
+        const isLate = laterSame.daysLate ?? 0;
+        expect(isLate).toBeGreaterThanOrEqual(wasLate);
       }
     }
     // no dropped item may reappear

@@ -279,7 +279,7 @@ Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, edita
 - **EPUB es tu copia maestra** — estándar abierto, refulible, y los otros dos formatos se pueden generar a partir de él.
 - **AZW3 gana en Kindle** — mejores fuentes, tablas y diseño que MOBI, sin coste de compatibilidad dentro del ecosistema de Amazon.
 - **MOBI es una red de seguridad** — consérvalo para hardware previo a KF8, no lo elijas en otro caso.
-- **Convierte bajo demanda** — una fuente limpia más un navegador le ganan a tres copias a medias de cada libro.`,
+- **Convierte bajo demanda** — una fuente limpia más un navegador le ganan a tres copias a medias de cada libro. For a per-format breakdown of the older Kindle formats, the [MOBI format reference](/formats/mobi) covers where it still makes sense. The [RTF format reference](/formats/rtf) covers where this format still fits in a modern workflow. For image-based formats, the [JPG format reference](/formats/jpg) covers the tradeoffs between file size and quality. The [PNG format reference](/formats/png) covers when lossless images are worth the larger files.`,
       },
     ],
   },

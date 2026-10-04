@@ -1144,8 +1144,8 @@
     {
       "id": "D1",
       "title": "formats/*(17) 未收录的处置：差异化 vs 有意排除（原「是否补入 sitemap」已于 9/27 收口：已补入）",
-      "context": "原问题已解决：9/27 决策补入 sitemap（M3-2），10/02 线上复核 17+1 全在表。当前实测（URL Inspection）：formats/epub、/mobi = 「已发现未收录」、referringUrls=0（零内链孤页）；compat/calibre = 「Google 完全未知」。",
-      "suggestion": "10/20 Google 重评估前维持现状（发现杠杆已到位：sitemap ✓）；重评估后按结果二选一——A = 差异化 formats 页争取索引（注意 §7.2 规模化风险）；B = 有意排除（noindex/瘦身）。期间 M2-9 新博文内链可自然给 formats 页供血，先观察内链效果再裁决。",
+      "context": "原问题已解决：9/27 决策补入 sitemap（M3-2），10-04 线上 curl 复核 sitemap.xml 仍含 17 条 /formats/* <loc>。10-04 增量实测（_wb_tmp/check-formats-links.mjs，只统计 src/data 非归档内容文件，对齐 GSC referringUrls 口径）：入链覆盖 1/17 = 6% —— /formats/epub 已由 2 篇博文供血（can-kobo-read-epub-files、which-kindle-books-can-you-convert-drm-free-checklist；线上 status=200 且 formats/epub 链接渲染 2 处，已生效）。⚠️ 修正旧记录：9/27 记的「epub、mobi 均零内链」中 epub 一项已不成立，/formats/mobi 仍为 0。其余 16 页（pdf/mobi/azw3/txt/docx/rtf/jpg/png/html/fb2/lit/cbr/djvu/doc/word/text）仍全为零内链孤页。compat/calibre = 「Google 完全未知」状态本次未复核（不在本轮范围）。",
+      "suggestion": "维持现状至 10/20 Google 重评估（A3 锚点，kind=read，只读数不改站）。依据已从「先观察内链效果」推进为「已有初步读数」：1/17 页（epub）证明内链供血路径有效，故 D1 的真问题已收敛为「剩余 16 页是补内链还是有意排除」，而非「sitemap 是否补入」。10/20 后二选一 —— A = 差异化 formats 页争取索引（注意 §7.2 规模化风险：17 页同模板，疑似 Scaled Content）；B = 有意排除（noindex/瘦身）。⚠️ 决策前置提醒：D1 标注 blocks=M2-8，但 M2-8（13 个零抓取页差异化，P0，due 10-20）当前仍为 todo。若 10/20 前 M2-8 未启动，formats 页的差异化投入应与之合并排期，避免两条线同时改 48 个程序化页。",
       "blocks": "M2-8",
       "owner": "O"
     }

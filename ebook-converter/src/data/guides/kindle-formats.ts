@@ -93,7 +93,7 @@ One caveat: older MOBI files built with non-standard tools sometimes fail to ope
     },
     {
       heading: 'Start converting now',
-      body: `Ready to convert? Head to the [EPUB to AZW3 converter](/convert/epub-to-azw3) for a modern Kindle, or [MOBI to EPUB](/convert/mobi-to-epub) if you want to escape the Amazon ecosystem entirely. Both run in your browser with no install.`,
+      body: `Ready to convert? Head to the [EPUB to AZW3 converter](/convert/epub-to-azw3) for a modern Kindle, or [MOBI to EPUB](/convert/mobi-to-epub) if you want to escape the Amazon ecosystem entirely. Both run in your browser with no install. For the format-level detail behind this page, the [AZW3 format reference](/formats/azw3) sets out its capabilities and limits.`,
     },
   ],
 }

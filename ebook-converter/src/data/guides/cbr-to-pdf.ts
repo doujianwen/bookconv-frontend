@@ -41,7 +41,7 @@ If you are choosing between a desktop tool and an online converter, see [/guide/
     },
     {
       heading: 'Check page order before you share',
-      body: `After conversion, flip through the PDF once to confirm the pages are in the right order and none are missing. CBR page ordering depends on the original file names; a clean source produces a clean PDF. For scanned-book archives in a different format, see [/guide/djvu-to-pdf](/guide/djvu-to-pdf).`,
+      body: `After conversion, flip through the PDF once to confirm the pages are in the right order and none are missing. CBR page ordering depends on the original file names; a clean source produces a clean PDF. For scanned-book archives in a different format, see [/guide/djvu-to-pdf](/guide/djvu-to-pdf). Most comic archives store their pages as [JPG](/formats/jpg) images, which is why this conversion is mostly an image repackaging job. Understanding what [CBR](/formats/cbr) files are made of makes the conversion behaviour much easier to predict.`,
     },
   ],
 }

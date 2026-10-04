@@ -68,7 +68,7 @@ If you later want a Kindle-native file from the same text, convert the EPUB onwa
 - **Three steps on BookConv.** Upload, convert, download — no install, no account, 10 MB free tier.
 - **Pre-format for clean chapters.** Blank-line breaks and consistent "Chapter N" headings get the best TOC.
 - **Save as UTF-8.** Old code pages produce garbled characters.
-- **Save immediately.** Download links are temporary and files are deleted after a period.`
+- **Save immediately.** Download links are temporary and files are deleted after a period. The [TXT format reference](/formats/txt) covers the encoding and metadata limits worth knowing before you convert.`
     }
   ]
 };

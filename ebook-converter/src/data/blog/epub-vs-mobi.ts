@@ -111,7 +111,7 @@ If you are moving books between stores, also see [MOBI to Kobo](/blog/mobi-to-ko
 - **Modern Kindles want AZW3**, not MOBI — convert EPUB to AZW3 for them.
 - **Keep EPUB as your master** and convert per device; you only re-process when a reader demands a different format.
 
-Ready to convert? [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old Kindle, or [Convert MOBI to EPUB →](/convert/mobi-to-epub) to read a legacy book anywhere.`
+Ready to convert? [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old Kindle, or [Convert MOBI to EPUB →](/convert/mobi-to-epub) to read a legacy book anywhere. The [MOBI format reference](/formats/mobi) lists what the format still does well on older devices, alongside its limits.`
     }
   ]
 };

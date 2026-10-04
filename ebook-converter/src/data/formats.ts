@@ -113,23 +113,26 @@ const formatMap: Record<string, Omit<FormatInfo, 'recommendedConverters'>> = {
     cons: ['No longer updated; lower security', 'No modern typography features', 'Larger file size', 'Weaker cross-platform compatibility than DOCX'],
     useCases: ['Reading legacy documents', 'Old-system compatibility', 'Legal and government documents'],
   },
-  word: {
-    name: 'Word (DOCX)',
-    description: 'Word documents (DOCX) are today’s most common office format, used by the Microsoft Office suite. They are the standard starting point for ebook authoring and collaboration.',
-    pros: ['The world’s most popular document format', 'Powerful editing features', 'Rich templates and styles', 'Good cloud-collaboration support'],
-    cons: ['Not an ebook-specific format', 'Requires conversion for e-readers', 'Version-compatibility issues'],
-    useCases: ['Ebook authoring starting point', 'Collaborative editing', 'Formal documents'],
-  },
-  text: {
-    name: 'Text',
-    description: 'Plain text (Text/TXT) is the most basic document format, carrying no formatting. It is the foundational format for all text processing.',
-    pros: ['The simplest format', 'Zero compatibility barriers', 'Smallest file size', 'Easy to process programmatically'],
-    cons: ['No formatting support', 'No metadata', 'No structuring ability'],
-    useCases: ['Code files', 'Log files', 'Plain-text notes'],
-  },
 }
 
 // Generate recommended converters dynamically based on format relationships
+// D1 decision (2026-10-04, continued): /formats/word merged into /formats/docx.
+// Two reasons, both observed on-disk:
+//  1. The pair described the same format — name was "Word (DOCX)" vs "DOCX",
+//     and pros/useCases overlapped almost point for point.
+//  2. `word` is absent from CONVERSION_MAP, so publish-gate
+//     (dead-internal-link via SUPPORTED_FORMATS) flagged every link to
+//     /formats/word as a dead end even though the page existed.
+// docx is kept: its cons list is longer (4 vs 3) and names the
+// cross-reader rendering inconsistency that docx genuinely has.
+// D1 decision (2026-10-04): /formats/text merged into /formats/txt.
+// The pair shared 7/15 concept keywords (both describe plain text) and
+// produced two near-identical thin pages competing for the same intent.
+// txt is kept (richer cons list: metadata loss is an ebook-relevant
+// dimension). /formats/text now 301-redirects to /formats/txt via
+// CONVERSION_REDIRECTS-equivalent entry in src/middleware.ts, and is
+// gone from the sitemap because SUPPORTED_FORMAT_SLUGS derives from
+// formatMap — deleting the entry is the single point of change.
 function getRecommendedConverters(slug: string): Array<{ label: string; href: string }> {
   const converters: Record<string, Array<{ label: string; href: string }>> = {
     epub: [
@@ -198,12 +201,6 @@ function getRecommendedConverters(slug: string): Array<{ label: string; href: st
     ],
     doc: [
       { label: 'DOC → EPUB', href: '/convert/doc-to-epub' },
-    ],
-    word: [
-      { label: 'EPUB → Word', href: '/convert/epub-word' },
-    ],
-    text: [
-      { label: 'TXT → EPUB', href: '/convert/txt-to-epub' },
     ],
   }
   return converters[slug] || []

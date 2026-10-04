@@ -23,6 +23,10 @@ const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/how-to-convert-epub-to-mobi': '/blog/epub-to-mobi-guide',
   '/blog/epub-vs-azw3-vs-mobi': '/blog/ebook-formats-explained',
   '/blog/mobi-or-azw3-for-kindle': '/blog/azw3-vs-mobi',
+  // D1 decision 2026-10-04: text merged into txt (near-duplicate pair).
+  '/formats/text': '/formats/txt',
+  // D1 decision 2026-10-04: word merged into docx (same format + gate flagged it).
+  '/formats/word': '/formats/docx',
   '/blog/mobi-vs-azw3': '/blog/azw3-vs-mobi',
   '/guide/mobi-vs-azw3': '/blog/azw3-vs-mobi',
   // B1 (Batch 4 Day 2): EPUB→Word/DOCX near-duplicate blogs → canonical /blog/epub-to-word
