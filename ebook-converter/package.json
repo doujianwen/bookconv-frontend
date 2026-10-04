@@ -24,6 +24,7 @@
     "audit:workbench": "node scripts/audit-workbench-honesty.mjs",
     "audit:top-asset": "node scripts/protect-top-asset.mjs",
     "audit:nojs": "node scripts/verify-nojs-render.mjs",
+    "audit:repo": "node scripts/audit-repo-hygiene.mjs",
     "build:workbench": "node scripts/build-workbench-html.mjs",
     "fetch:bing": "node scripts/fetch-bing-webmaster.mjs",
     "fetch:gsc": "node scripts/fetch-gsc-webmaster.mjs",
