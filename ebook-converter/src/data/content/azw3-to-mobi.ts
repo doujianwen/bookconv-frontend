@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is AZW3 Format?',
+      heading: 'What AZW3 Adds That MOBI Cannot Do',
       body: `AZW3 — Amazon calls it Kindle Format 8, or KF8 — launched in 2011 alongside the Kindle Fire. It was Amazon's answer to a real problem: the old MOBI format was built on 1990s technology and couldn't handle modern book design.
 
 Under the hood, AZW3 supports a meaningful subset of HTML5 and CSS3. That's what makes it capable of things MOBI simply can't do:
@@ -58,7 +58,7 @@ But hardware outlives file formats. There are still working Kindle Keyboards, Ki
 Also note that USB sideloading is the only reliable delivery path here. Amazon's Send to Kindle no longer accepts MOBI, so emailing it won't work.`
     },
     {
-      heading: 'When Do You Actually Need This?',
+      heading: 'When Downgrading AZW3 to MOBI Is Worth It',
       body: `Honestly? Less often than you'd think. Check whether you really need it before converting.
 
 **Your Kindle predates late 2011.** Kindle 1, Kindle 2, Kindle DX, Kindle DXG, and Kindle Keyboard (3rd gen) can't read AZW3. If you're holding one of these, MOBI is your format. Everything from the Kindle Touch and Paperwhite onward reads AZW3 fine.

@@ -106,7 +106,7 @@ Keep PDF if:
 **What the interface looks like:** one upload area, a live progress indicator, and one download button. There is no separate OCR checkbox to find — if the PDF has no text layer, OCR runs automatically on Pro accounts, and on free accounts the job reports that the file appears to be a scan rather than returning a blank EPUB.`
     },
     {
-      heading: 'Common Issues & Solutions',
+      heading: 'Common Scanned PDF Issues and How to Fix Them',
       body: `Based on real user support tickets, here are the top problems and fixes:
 
 **Issue 1: Scanned PDFs Produce Unreadable EPUB**
@@ -135,7 +135,7 @@ Keep PDF if:
 - *Fix*: Check file size (10 MB limit). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
     },
     {
-      heading: 'Device Compatibility Report',
+      heading: 'Which Devices Read EPUB After PDF Export',
       body: `**EPUB Format Support by Device**
 
 | Device | Native Support | Notes |

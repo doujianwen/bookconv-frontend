@@ -27,7 +27,7 @@ Technically it is a binary compound file: a small filesystem-inside-a-file holdi
 If you have theses, manuscripts, reports, or family history documents sitting in .doc, converting them is less about convenience and more about not losing them.`
     },
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is and Why Archives Need Digitizing',
       body: `EPUB is the open ebook standard — XHTML and CSS in a ZIP container, with a manifest defining reading order.
 
 The critical difference from DOC is **reflow**. There is no fixed page. The reading device lays out the text to fit whatever screen it has, at whatever font size you prefer.

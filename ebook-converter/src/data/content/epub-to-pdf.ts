@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'About EPUB Format',
+      heading: 'About EPUB: The Format Specs Behind PDF Export',
       body: `EPUB (Electronic Publication) is a reflowable ebook format maintained by the W3C Publishing Group. It was originally developed by the International Digital Publishing Forum (IDPF) in 2007 and later adopted as an open standard.
 
 **Key Specifications:**
@@ -117,7 +117,7 @@ If you prefer not to install desktop software, BookConv runs the same Calibre en
 **What the interface looks like:** one page, one upload area, a live progress indicator, and a single download button. There are no intermediate settings to configure — page size, margins, and font embedding are applied automatically, so the whole flow is three clicks from start to finished PDF.`
     },
     {
-      heading: 'Common Issues & Solutions',
+      heading: 'Common PDF Export Issues and How to Fix Them',
       body: `Based on real user support tickets, here are the top problems and fixes:
 
 **Issue 1: Page Numbers Don't Match Original**
@@ -146,7 +146,7 @@ If you prefer not to install desktop software, BookConv runs the same Calibre en
 - *Fix*: Use Calibre to compress images before converting, or accept the larger file for better print quality.`
     },
     {
-      heading: 'Device Compatibility Report',
+      heading: 'Which Devices Read PDF Well',
       body: `**PDF Format Support by Device**
 
 | Device | Native Support | Notes |

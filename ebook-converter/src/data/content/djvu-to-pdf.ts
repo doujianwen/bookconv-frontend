@@ -56,7 +56,7 @@ A few things worth knowing before you start. If your DjVu came from a library sc
 Also: don't rename a .djvu to .pdf and hope. That's not how file formats work. The bytes inside are completely different.`
     },
     {
-      heading: 'When Do You Actually Need This?',
+      heading: 'When a DjVu File Is Worth Converting',
       body: `Most people converting DjVu aren't format enthusiasts — they hit a wall and need a way around it. The usual walls:
 
 **You downloaded a book from an archive and can't open it.** Internet Archive, library digitization projects, and older academic repositories still serve DjVu. You grabbed the file, and nothing on your laptop knows what to do with it.

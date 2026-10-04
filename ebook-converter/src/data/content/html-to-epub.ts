@@ -27,7 +27,7 @@ It is brilliant for the web and mildly awful for long reading. A browser tab has
 All of those can become an ebook. The cleaner your markup, the better the result — but you do not need perfect HTML to get something readable. When the chapters only have to open in a browser, skip the ebook step and use [EPUB to HTML](/convert/epub-to-html) instead.`
     },
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is and Why Readers Speak It Natively',
       body: `EPUB is the open ebook standard, and it is what nearly every reading device speaks natively — Apple Books, Kobo, Nook, Google Play Books, PocketBook, and Kindle via Send to Kindle.
 
 Under the hood it is a ZIP archive of XHTML, CSS, and images, which is exactly why HTML converts into it so naturally. The difference is everything EPUB wraps around that content:

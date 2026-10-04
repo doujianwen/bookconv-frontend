@@ -12,27 +12,18 @@ export const content = {
 
   sections: [
     {
-      heading: 'About EPUB Format',
-      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size — perfect for phones, tablets, and e-ink readers alike.
+      heading: 'About EPUB: What AZW3 Conversion Gains and Costs',
+      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size.
 
-**Key Specifications:**
-- **Developer**: IDPF / W3C
-- **Initial Release**: 2007
-- **Latest Version**: 3.3 (2023-05)
-- **Type**: Reflowable
-- **Open Standard**: Yes — managed by W3C Publishing Working Group
+Converting EPUB to AZW3 moves a modern, open-standard file into Amazon's proprietary container. That direction has one advantage and one cost.
 
-**Primary Use Cases:**
-- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
-- Web-based reading platforms and digital libraries
-- Academic and publishing industry standard
+**The advantage:** AZW3 is the current Kindle format. Converted files open on every Kindle made since roughly 2010 and keep improved typography, better font handling, and compressed storage that older MOBI cannot match.
 
-**Known Limitations:**
-- Not natively supported by older Kindle devices (pre-2022)
-- Complex fixed-layouts may not render consistently
-- Interactive features require EPUB 3 support
+**The cost:** AZW3 is not an open standard. It is readable by Kindle devices and a limited set of tools, and it will not open on Kobo, Nook, Apple Books, or most Android reader apps. If your reading lives beyond Amazon, keep the EPUB as your master file.
 
-**Official Resources:**
+**What the conversion preserves:** chapter structure and navigation, images, hyperlinks, and the metadata that decides how the book appears in a library.
+
+**Official resources:**
 - [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
 - [IDPF Official Site](https://idpf.org/)`
     },
@@ -41,7 +32,7 @@ export const content = {
       body: 'While modern Kindle devices can accept EPUB files via the Send to Kindle service (which converts them cloud-side), providing AZW3 format directly offers several advantages: Offline Conversion — No need to upload to Amazon servers, protecting your privacy. Faster Processing — Local conversion completes in seconds, no waiting for cloud queues. Greater Control — Customize fonts, margins, paragraph spacing, and other typography parameters. Native Compatibility — AZW3 is natively supported on all Kindle devices, requiring no additional processing. Better Typography — AZW3 supports advanced layout features like enhanced kerning, ligatures, and custom font embedding.'
     },
     {
-      heading: 'What is AZW3 Format?',
+      heading: 'What AZW3 Is and Why It Succeeded MOBI',
       body: 'AZW3, also known as Kindle Format 8 (KF8), was introduced by Amazon in 2011 as the successor to the aging MOBI format. It brings significant improvements: CSS3 Support — Full cascading stylesheet support for precise typography control. Font Embedding — Embed custom fonts for consistent rendering across devices. Enhanced Layout — Support for complex layouts including columns, tables, and footnotes. Better Image Handling — Higher quality image rendering and positioning. Improved Navigation — Structured table of contents with hierarchical chapter links. AZW3 is the default format for Kindle Paperwhite, Kindle Oasis, Kindle Voyage, and other modern Kindle devices released after 2012.'
     },
     {
@@ -77,7 +68,7 @@ export const content = {
 **What the interface looks like:** one upload area, a live progress indicator, and one download button — there are no device-model menus to choose from. The output targets modern Kindle firmware (KF8), which covers Paperwhite, Oasis, Voyage, and later models; if you own a pre-2012 Kindle, convert to MOBI instead.`
     },
     {
-      heading: 'Common Issues & Solutions',
+      heading: 'Common AZW3 Issues and How to Fix Them',
       body: `Based on real user support tickets, here are the top problems and fixes:
 
 **Issue 1: AZW3 Doesn't Open on Kindle**
@@ -106,7 +97,7 @@ export const content = {
 - *Fix*: Split large books into smaller chapters. Check file size (10 MB limit).`
     },
     {
-      heading: 'Device Compatibility Report',
+      heading: 'Which Kindle Devices Read AZW3',
       body: `**AZW3 Format Support by Kindle Device**
 
 | Kindle Device | Native Support | Notes |

@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is and Why Renaming It to ZIP Reveals It',
       body: `EPUB is the open standard for ebooks, and it's simpler than most people assume. Rename an .epub to .zip, unpack it, and you'll find HTML files, a CSS stylesheet, an images folder, and an XML manifest listing the reading order. It's a small offline website in a box.
 
 The defining feature is **reflowable text**. EPUB doesn't have pages. Text flows into whatever space the reader gives it, so bumping the font size on your phone reflows the whole book around your choice. There's no "page 47" — there's just a position in a continuous stream.

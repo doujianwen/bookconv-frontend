@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is and Why It Is Already a Website',
       body: `EPUB is the open standard for reflowable ebooks. It is maintained by the W3C and supported by Apple Books, Kobo, Google Play Books, Nook, and — since 2022 — Kindle through Send to Kindle.
 
 Here is the part most people never realize: **an EPUB file is already a website in disguise.** Rename any .epub to .zip, unzip it, and you will find XHTML documents, CSS stylesheets, images, and an OPF manifest holding it all together. A reader app is essentially a stripped-down browser with page-turn animations.

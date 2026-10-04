@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'About EPUB Format',
+      heading: 'About EPUB: The Format Specs Behind Plain Text',
       body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size — perfect for phones, tablets, and e-ink readers alike.
 
 **Key Specifications:**

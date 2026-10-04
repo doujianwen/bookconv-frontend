@@ -30,7 +30,7 @@ The solution was elegantly boring. RTF stores everything as plain ASCII with con
 The format is not dead — it is just finished. It still shows up in legal templates, government forms, older Scrivener exports, and any archive built before DOCX took over. Sending the text back the other way is just as direct with [EPUB to RTF](/convert/epub-to-rtf).`
     },
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Adds That RTF Cannot Give You',
       body: `EPUB is the open standard for reflowable ebooks, and it solves exactly the thing RTF cannot do.
 
 Instead of a fixed page, EPUB stores XHTML and CSS in a ZIP container and lets the reading device decide how to lay it out. Change the font size and the text simply reshapes around it.
@@ -103,7 +103,7 @@ One thing worth checking before you upload: if your RTF fakes headings by making
 Keep RTF for editing and printing. Convert to EPUB for reading on screens or distribution.`
     },
     {
-      heading: 'Conversion Quality Checklist',
+      heading: 'What to Check After an RTF to EPUB Export',
       body: `After download, confirm these:
 
 - **Table of contents works** — built from your heading styles, fully clickable

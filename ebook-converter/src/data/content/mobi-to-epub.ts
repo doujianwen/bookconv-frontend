@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'About EPUB Format',
+      heading: 'About EPUB: The Format You Are Converting To',
       body: `EPUB (Electronic Publication) is the international standard for ebooks, maintained by the W3C. Currently at version 3.3 (2023), EPUB is a reflowable format based on XHTML/CSS — meaning text automatically adapts to any screen size, from phone to tablet to e-ink reader.
 
 **Key Specifications:**
@@ -151,7 +151,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 **What the interface looks like:** one upload area, a live progress indicator, and one download button. If the MOBI carries DRM, the job fails at step 2 with a clear error rather than producing a broken file — you will never be handed a silently corrupted EPUB.`
     },
     {
-      heading: 'Common Issues & Solutions',
+      heading: 'Common MOBI to EPUB Issues and How to Fix Them',
       body: `Based on real user support tickets, here are the top problems and fixes:
 
 **Issue 1: Chapter Navigation Broken After Conversion**
@@ -180,7 +180,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 - *Fix*: Use Calibre's "Edit Book" feature to customize fonts in the EPUB if needed.`
     },
     {
-      heading: 'Device Compatibility Report',
+      heading: 'Which Devices Read EPUB',
       body: `**EPUB Format Support by Device**
 
 | Device | Native Support | Notes |

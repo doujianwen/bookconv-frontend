@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is and What It Is Not Built For',
       body: `EPUB is the open standard for reflowable ebooks. Inside the file is a ZIP archive holding XHTML chapters, CSS, images, and a manifest that tells the reader what order everything goes in.
 
 The whole design assumes reading, not editing. Text reflows to fit the screen, the reader controls the typography, and the file has no notion of a page — which is exactly why it feels great on a Kobo and awful the moment you need to mark up a draft.

@@ -12,27 +12,18 @@ export const content = {
 
   sections: [
     {
-      heading: 'About EPUB Format',
-      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size — perfect for phones, tablets, and e-ink readers alike.
+      heading: 'About EPUB: What MOBI Conversion Gains and Loses',
+      body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS.
 
-**Key Specifications:**
-- **Developer**: IDPF / W3C
-- **Initial Release**: 2007
-- **Latest Version**: 3.3 (2023-05)
-- **Type**: Reflowable
-- **Open Standard**: Yes — managed by W3C Publishing Working Group
+Converting EPUB to MOBI moves an open-standard file into the format Amazon built the original Kindle around. MOBI is less capable than EPUB, and the reason to convert is compatibility rather than quality.
 
-**Primary Use Cases:**
-- Universal ebook format for Apple Books, Google Play Books, Kobo, Nook
-- Web-based reading platforms and digital libraries
-- Academic and publishing industry standard
+**What you gain:** reach. A MOBI file opens on every Kindle ever made, including the 2007 original, plus old third-party readers and most free reading apps. If a file needs to open on a device you do not control, MOBI is the format least likely to fail.
 
-**Known Limitations:**
-- Not natively supported by older Kindle devices (pre-2022)
-- Complex fixed-layouts may not render consistently
-- Interactive features require EPUB 3 support
+**What you lose:** presentation. MOBI supports only a small subset of HTML and CSS, so no embedded fonts, minimal styling, and no fixed-layout rendering. Complex chapter layouts and fine typography get simplified, and any interactive EPUB 3 feature is dropped entirely.
 
-**Official Resources:**
+**That trade-off runs in one direction:** the EPUB stays the better master file. Convert to MOBI only for a specific device that requires it, and keep the EPUB for everything else.
+
+**Official resources:**
 - [W3C EPUB 3.3 Specification](https://www.w3.org/publishing/epub3/)
 - [IDPF Official Site](https://idpf.org/)`
     },
@@ -185,7 +176,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 **What the interface looks like:** one upload area, a live progress indicator, and one download button — no format toggles or quality sliders to guess at. MOBI output is tuned for older Kindle firmware by default, so if your device is a 2012-or-earlier model you can use the file straight away without further conversion.`
     },
     {
-      heading: 'Common Issues & Solutions',
+      heading: 'Common MOBI Issues and How to Fix Them',
       body: `Based on real user support tickets, here are the top problems and how to fix them:
 
 **Issue 1: Missing Chapters After Conversion**
@@ -214,7 +205,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 - *Fix*: Check file size (10 MB limit). Remove any DRM first. Verify EPUB validity in Calibre.`
     },
     {
-      heading: 'Device Compatibility Report',
+      heading: 'Which Devices Read MOBI',
       body: `**MOBI Format Support by Device**
 
 | Device | Native Support | Notes |

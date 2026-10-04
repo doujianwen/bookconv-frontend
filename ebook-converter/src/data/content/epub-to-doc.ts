@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is EPUB Format?',
+      heading: 'What EPUB Is Under the Hood: XHTML in a ZIP',
       body: `EPUB is the open standard for ebooks, and under the hood it's less mysterious than people expect. Unzip an .epub file and you'll find HTML pages, CSS stylesheets, images, and an XML manifest describing the reading order. It's a tiny website in a ZIP file.
 
 That design gives EPUB its defining trait: **reflowable text**. There are no fixed pages. The reader app decides where lines break based on your screen size and font settings. Bump the text size on your phone and the book reflows around it.

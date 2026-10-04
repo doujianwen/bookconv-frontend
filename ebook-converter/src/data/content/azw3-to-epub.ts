@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is AZW3 Format?',
+      heading: 'What AZW3 Is and What It Replaced',
       body: 'AZW3 (Amazon Kindle Format 8) is an ebook format launched by Amazon in 2011 to replace the aging MOBI format. It supports better typography, font embedding, CSS styling, and table rendering — making it the native format for Kindle Paperwhite, Kindle Oasis, and other modern Kindle devices. However, AZW3 biggest problem is that it only works within Amazon ecosystem. If you want to read AZW3 files on Apple Books, Google Play Books, Kobo, or any third-party reader, you need to convert it to the universal EPUB format.'
     },
     {

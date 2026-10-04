@@ -38,7 +38,7 @@ Because every Kindle reads MOBI natively, it remains the safest universal target
 **DRM stops this cold.** If your LIT file was purchased with Microsoft Reader DRM, it cannot be decrypted — no converter can. Use this on DRM-free files only.`
     },
     {
-      heading: 'When Do You Actually Need This?',
+      heading: 'When a Dead LIT File Is Worth Converting',
       body: `LIT is a dead format, so you only reach for this when old files resurface.
 
 **You found a LIT book in an archive.** Early-2000s purchases, CD-ROM bundles, or backups from a long-gone reader app often sit as .lit. Converting them to MOBI makes them readable again.
