@@ -107,6 +107,15 @@ jobs:
       - name: Run workflow integrity audit (fails on fake gates)
         run: cd ebook-converter && node scripts/audit-workflow-integrity.mjs --tracked-from-stdin < <(git -C .. ls-files -z)
 
+      # 2026-10-04 新增：执行纪律门禁。把当天三类重复错误固化成可执行判据：
+      #   I1 shell 退出码逻辑必须「失败计数 ⇒ 非 0 exit」全文配对（防只看尾部就判恒绿）
+      #   I2 权威源必须【唯一定义处】（防凭记忆猜路径）
+      #   I3 heredoc + 反斜杠反模式（仅 .sh 可静态检测的子集，脚本内已标注盲区）
+      #   I4 本门禁与其它门禁的挂载点自检（防「门禁存在 ≠ 门禁生效」）
+      # 环境说明：CI 上 .git/hooks 不入库 ⇒ I4 自动降级为 UNKNOWN 并明示，不制造假红。
+      - name: Run agent discipline audit (fails on fake gates / path guessing)
+        run: cd ebook-converter && node scripts/audit-agent-discipline.mjs
+
       # GEO compliance: convert pages (7 mandatory elements, 0-7 graded score).
       # 31/31 PASS is the baseline (9/25 calibration). Any new page missing a
       # GEO element demotes the rating and blocks deployment.
