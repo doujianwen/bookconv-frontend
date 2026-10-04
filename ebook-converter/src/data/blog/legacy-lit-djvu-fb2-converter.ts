@@ -58,6 +58,16 @@ export const content = {
       4. **Test on Your Device:** Do not assume the conversion worked perfectly. Open the file on your actual e-reader to check for formatting errors.
 
       By focusing on these steps, you can transition your entire backlog of old ebooks into modern formats that will last for years to come. For the other legacy format in this family, the [RTF format reference](/formats/rtf) explains what it preserves and what it drops. For the format-level detail, the [FB2 format reference](/formats/fb2) explains what converts cleanly and what does not.`
+    },
+    {
+      heading: "Key Takeaways",
+      body: `
+      - **LIT, DJVU, and FB2 are read-heavy, not write-heavy formats.** Their value was distribution to a specific ecosystem, which is why modern readers dropped them.
+      - **FB2 is the one to prioritise.** It was designed for Russian e-libraries with a real reader base, so scanned collections using it are substantial.
+      - **RTF looks universal and is not.** Its plain-text heritage means the encoding and structure assumptions break on files that predate modern Unicode.
+      - **Scanned DJVU carries OCR quality that no converter improves.** If the text layer is poor, converting to a reflowable format reproduces the OCR errors rather than fixing them.
+      - **Convert to EPUB, not to PDF, if the goal is reading on a modern device.** PDF preserves the page image but not the reflow behaviour these old formats were never built for.
+    `
     }
   ]
 };

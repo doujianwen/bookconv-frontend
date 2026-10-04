@@ -13,7 +13,14 @@ export const content = {
     { heading: "Outdated Reading Software", body: `Old versions of Kindle Previewer, Adobe Digital Editions, or Apple Books may fail to open newer format versions. Keep your reading apps updated. For conversion issues, remember that BookConv supports the latest EPUB 3.2 and updated PDF standards.` },
     { heading: "DRM Protection Barriers", body: `Many ebooks from libraries and bookstores contain Digital Rights Management (DRM) protection. These files won't convert or open on unauthorized devices. BookConv's tools work with DRM-free files only. Check your source if conversion fails — you may need to remove DRM legally before conversion.` },
     { heading: "Screen Size and Resolution", body: `PDFs and fixed-layout EPUBs struggle on small screens regardless of format. Convert to reflowable EPUB for mobile reading. For academic or illustrated books, consider converting PDF to MOBI for better Kindle display or keeping as high-resolution PDF for desktop viewing.` },
-    { heading: "Batch and Large File Workflows", body: `For libraries with many files or large scanned PDFs, single-file converters fall short. Our [batch converter guide](/guide/batch-converter) covers Calibre-based workflows for bulk jobs, and the [large file conversion guide](/blog/large-file-conversion-guide) explains how to handle files over 10 MB without hitting size limits. Old [DOC](/formats/doc) files are a common source of odd results — the format reference explains why.` }
+    { heading: "Batch and Large File Workflows", body: `For libraries with many files or large scanned PDFs, single-file converters fall short. Our [batch converter guide](/guide/batch-converter) covers Calibre-based workflows for bulk jobs, and the [large file conversion guide](/blog/large-file-conversion-guide) explains how to handle files over 10 MB without hitting size limits. Old [DOC](/formats/doc) files are a common source of odd results — the format reference explains why.` },
+    { heading: "Key Takeaways", body: `
+      - **DRM is the only genuinely unfixable cause.** Every other failure has a remedy; if the file opens only in a signed-in session, no conversion tool will help.
+      - **A renamed extension is the most common false alarm.** Renaming a .mobi file to .epub changes nothing about the bytes inside, and the mismatch surfaces as a parse error rather than a format error.
+      - **Truncated downloads produce parse errors that look like corruption.** Re-download before concluding the file is damaged.
+      - **Outdated reader software is a fixable compatibility problem.** Current versions of Kindle Previewer, Adobe Digital Editions, and Calibre add format support that older builds lack.
+      - **Large scanned PDFs are a size-and-resolution problem, not a conversion problem.** Split the file first, then convert — the result is far more usable on a small screen.
+    ` }
   ]
 };
 

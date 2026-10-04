@@ -99,9 +99,14 @@ function parsePost(src, file) {
   const intro = introM ? introM[1] : '';
 
   const sections = [];
-  const secRe = /heading:\s*`([^`]*?)`,\s*body:\s*`([\s\S]*?)`\s*\}/g;
+  // 2026-10-04 修复：原正则硬编码反引号且要求 body 紧跟 `}`，在 23/64 篇博文上解析丢段
+  // （其中 15 篇整篇解析为 0 段），导致 hasKeyTakeaways 等派生指标全部误判为「内容缺失」。
+  // 现改为：heading 与 body 各自用反向引用 \1 / \3 匹配 ⇒ 兼容 反引号/单引号/双引号 的任意组合；
+  // 结尾额外允许可选尾随逗号（`body: '...',}` 这种写法在旧正则下会失配）。
+  // 实测：64/64 篇解析完整，假缺归零。详见 _wb_tmp/final-regex-v2.mjs。
+  const secRe = /heading:\s*(["'`])([\s\S]*?)\1\s*,\s*body:\s*(["'`])([\s\S]*?)\3\s*,?\s*\}/g;
   let sm;
-  while ((sm = secRe.exec(src))) sections.push({ heading: sm[1], body: sm[2] });
+  while ((sm = secRe.exec(src))) sections.push({ heading: sm[2], body: sm[4] });
 
   // FAQ 计数：在 faqs 块内数 `question:` 出现次数（稳健，不受 answer 内含反引号/花括号干扰）
   const faqBlockM = src.match(/export const faqs\s*=\s*\[([\s\S]*?)\n\];/);
