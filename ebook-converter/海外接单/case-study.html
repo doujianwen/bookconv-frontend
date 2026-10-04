@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-page-node-id="5wubLcShzPgGU1WuSH5VNP">
+<head data-page-node-id="BFuUKl4x33WebD7Mnwjd6k">
+<meta charset="utf-8" data-page-node-id="wIUVJIKdQ7uzvVd9wJxGqH">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="V6D0afEgBZwu8iqLXQOVyT">
+<title>BookConv — AI Search Visibility Case Study (41 days, measured)</title>
+<meta name="description" content="A measured case study: how 28 long-form pages earned 94.3% of 1,314 AI citations while 30 programmatic pages earned 0.8%, and what the Google spam update took." data-page-node-id="sOVcgv1EEaqwJbx4Qv8CBE">
+<style>
+  :root{
+    --ink:#1a1a1a; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --surface:#f7f6f3;
+    --teal:#1d9e75; --teal-d:#0f6e56; --blue:#378add; --gray:#b4b2a9; --red:#a32d2d;
+    --amber-bg:#faeeda; --amber-b:#ba7517;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  header{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin:0 0 16px}
+  h1{font-size:34px;line-height:1.25;font-weight:600;margin:0 0 16px;letter-spacing:-.01em}
+  .sub{font-size:19px;color:var(--ink2);margin:0 0 28px;font-weight:400}
+  .meta{font-size:13px;color:var(--ink3);margin:0}
+  h2{font-size:23px;font-weight:600;margin:56px 0 8px;letter-spacing:-.01em}
+  h2 + .h2sub{font-size:15px;color:var(--ink2);margin:0 0 24px}
+  h3{font-size:16px;font-weight:600;margin:32px 0 8px}
+  p{margin:0 0 16px}
+  section{padding-bottom:8px}
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px}
+  th{text-align:left;font-weight:600;font-size:13px;color:var(--ink2);
+    border-bottom:1.5px solid var(--line2);padding:8px 12px 8px 0}
+  td{padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num,th.num{text-align:right;padding-right:0;font-variant-numeric:tabular-nums}
+  tr.hl td{background:var(--surface);font-weight:600}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
+  .card{background:var(--surface);border-radius:8px;padding:16px}
+  .card .l{font-size:12.5px;color:var(--ink2);margin:0 0 4px}
+  .card .v{font-size:26px;font-weight:600;margin:0;line-height:1.15;font-variant-numeric:tabular-nums}
+  .card .v.g{color:var(--teal-d)} .card .v.r{color:var(--red)}
+  .chartbox{margin:28px 0}
+  .chartwrap{position:relative;width:100%;height:300px}
+  .cap{font-size:13px;color:var(--ink3);margin:10px 0 0}
+  .note{background:var(--surface);border-radius:8px;padding:16px 20px;margin:24px 0;font-size:14.5px}
+  .note.warn{background:var(--amber-bg);border-left:3px solid var(--amber-b)}
+  .note.warn strong{color:#633806}
+  .note p:last-child{margin-bottom:0}
+  ul{margin:0 0 16px;padding-left:20px} li{margin-bottom:7px}
+  .quote{border-left:3px solid var(--teal);padding:4px 0 4px 20px;margin:24px 0;
+    font-size:18px;line-height:1.5;color:var(--ink)}
+  footer{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 64px;
+    font-size:13.5px;color:var(--ink3)}
+  .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:4px;
+    background:var(--surface);color:var(--ink2);margin-right:6px}
+  @media(max-width:640px){h1{font-size:27px}.sub{font-size:17px}.wrap{padding:0 18px}}
+</style>
+</head>
+<body data-page-node-id="KbdEvQK1mVN8YDwkAPa1Vj">
+<div class="wrap" data-page-node-id="Lo9dYV8nlCGlECALOaPi5R">
+
+<header data-page-node-id="pGoX1NDxZtFGSeEQ6fsvmV">
+  <p class="eyebrow" data-page-node-id="1aGvfC7VCB9OUUqiuYc2Fc">Case study &middot; Measured, not estimated</p>
+  <h1 data-page-node-id="AqPbWLsryr4ymdegw6xeU8">What 41 days of AI search visibility actually looks like &mdash; including the part that went wrong</h1>
+  <p class="sub" data-page-node-id="b0V6l7RxFLC3L3xEOCjbX3">I built an ebook conversion site as a live lab. In its first six weeks it earned 1,314 AI citations across 31 pages in Bing and Copilot &mdash; and lost 88% of its Google impressions to the August spam update. Both results point the same direction.</p>
+  <p class="meta" data-page-node-id="DMFeYiBthiSSGldReQXMAZ">Data as of 2026-09-05 &middot; Google window 2026-07-26 &rarr; 09-02 &middot; Bing window 2026-07-27 &rarr; 09-01 &middot; All figures pulled from Search Console API and Bing Webmaster Tools</p>
+</header>
+
+<section data-page-node-id="5Z1D5aR5c54AmwB4qEHAoy">
+  <h2 data-page-node-id="nmLy64cC8sQuFD2JImjGcN">The finding that matters</h2>
+  <p class="h2sub" data-page-node-id="8noe0Fd5yha0Scdy1H0DrM">I split the 31 AI-cited pages by page type and divided by the real number of published pages in each type. That denominator is what makes this a finding instead of an anecdote.</p>
+
+  <div class="chartbox" data-page-node-id="e3HssDgfq1j2MHILUvh3yc">
+    <div class="chartwrap" data-page-node-id="Iwc1BeYE6qteF6fpzE4Yhi"><canvas id="rate" role="img" aria-label="Bar chart: guide pages 54.5% cited, blog 27.6%, programmatic 3.3%" data-page-node-id="GNBRzCkxveW7GpEuqZjFOK">guide 54.5%, blog 27.6%, programmatic 3.3%.</canvas></div>
+    <p class="cap" data-page-node-id="vdbiN8N0KCPQL5ByS1GBgn">Citation rate = pages that received at least one AI citation &divide; published pages of that type. Denominators counted from source: 22 guides, 58 blog posts, 30 programmatic pages.</p>
+  </div>
+
+  <table data-page-node-id="f9GkDnnQb9HLljGjtGnho5">
+    <thead data-page-node-id="97N3HCubMLkuH5KYFzfuBw"><tr data-page-node-id="jPgHg5k8I4EXBuXVj1HVAq"><th data-page-node-id="AJokR4QbDYE6iSqD4gKLRV">Page type</th><th class="num" data-page-node-id="VBRlvkG1V4GAnZKpF1QHOD">Published</th><th class="num" data-page-node-id="cM1MJpfGF6Wk2fD3Fzwang">Cited</th><th class="num" data-page-node-id="OBisHlaH3LiXrt4tTqValX">Citation rate</th><th class="num" data-page-node-id="MHWW9mF8eNtfenozNT98VY">Share of citations</th></tr></thead>
+    <tbody data-page-node-id="54Q7LaoZN90PS7xKOd3b2t">
+      <tr class="hl" data-page-node-id="GXsV8gVqq7kh9sWVNYWS4x"><td data-page-node-id="EHnmS3l6Dpdt9o06KrmTsY">Long-form guides</td><td class="num" data-page-node-id="pPsTX3CTVjBfAIGFTZBUvA">22</td><td class="num" data-page-node-id="IHinET4hdXkgjuh1Sr4QgX">12</td><td class="num" data-page-node-id="DgcVt1RNv4hOllFSNFj59X">54.5%</td><td class="num" data-page-node-id="EYukJCCRlzSh45qAK5I7qk">34.9%</td></tr>
+      <tr data-page-node-id="Uw07jJXGKUQ1HQCAfUla6J"><td data-page-node-id="iDLeT92GPah59e34s4NpsX">Long-form blog posts</td><td class="num" data-page-node-id="C41Psxk0WyAnn3RmEZG3AL">58</td><td class="num" data-page-node-id="FUBLtQi7h4Gb6QUbvMhTxd">16</td><td class="num" data-page-node-id="GSesHC3lwIo3dCNFa9nYBX">27.6%</td><td class="num" data-page-node-id="x4b60FxwPKJcig1vq0GhCn">59.4%</td></tr>
+      <tr data-page-node-id="rkkxmKa4AqrzyEIWqQbIWR"><td data-page-node-id="gNp2oChu73vjbMEu31FSAx">Programmatic conversion pages</td><td class="num" data-page-node-id="n1nAOo4UWAFT1XYFhfl7co">30</td><td class="num" data-page-node-id="Wx5ejlpXaAMnX3y5Gg8GCp">1</td><td class="num" data-page-node-id="BIGjsjpcKd5thZ9R5NRIFr">3.3%</td><td class="num" data-page-node-id="kmypSw3NJAo0bqIOMYKESp">0.8%</td></tr>
+      <tr data-page-node-id="Dg0vP491TS1dmpAE364RUf"><td data-page-node-id="JpW4nTiFJV8jQwVnsoI2Aq">Homepage</td><td class="num" data-page-node-id="JWBpvWnu07g7c9DUj7lFJ5">1</td><td class="num" data-page-node-id="kQUnha0mLcUkJm0AStGa0M">1</td><td class="num" data-page-node-id="9JnD0wZDEsy3rEavwdejWL">&mdash;</td><td class="num" data-page-node-id="XQNjRgBxD5HbadkWTeuBlu">4.8%</td></tr>
+    </tbody>
+  </table>
+
+  <p data-page-node-id="ZdpGMEtxLOdZMFpnSDR1Q8"><strong data-page-node-id="2Ir1JGu2p9aF7RLhbAoHn3">A 16.5&times; spread.</strong> 28 long-form pages produced 94.3% of all AI citations. 30 programmatic pages produced 0.8%. An independent measurement on the same site &mdash; zero-citation rate by type &mdash; points the same way: 90% of programmatic pages never got cited at all, versus 20% of guides.</p>
+  <p style="margin-top:8px" data-page-node-id="r9-confounding-cs"><strong>Same confounding rule, applied to the 94.3% number too.</strong> Length and How/Why topic mix are tangled. I have not isolated page length from topic type with a controlled test. Read the 94.3% citation share as <em>long + How/Why, correlated with citation</em>, not <em>long-form causes citation</em>. Same disclosure rule as the warning box above.</p>
+
+  <div class="note warn" data-page-node-id="p4IuPi6pFy59sSHTWdyAHs">
+    <p data-page-node-id="vTmDrw0r2mnkFuRSryq35B"><strong data-page-node-id="IzSNhzzr41AHQsHlFhMifI">The weakness, stated first.</strong> This is a correlation, not a proven cause. Guide topics skew toward how-and-why questions, which may naturally match AI query intent better than format-conversion pages do. I have not run a controlled test on that. I would rather tell you than have you find it.</p>
+  </div>
+</section>
+
+<section data-page-node-id="QwfDwhSXcB0hA5I1RCLAO9">
+  <h2 data-page-node-id="mt3FNT9vEnDFoXdKn1DLjN">Track A &mdash; what worked</h2>
+  <p class="h2sub" data-page-node-id="15Md73HGpJ8BhtbRfXgnIm">Bing and Copilot AI surfaces, first 37 days.</p>
+
+  <div class="cards" data-page-node-id="mBjJdD94iUqBnq3I29DXyS">
+    <div class="card" data-page-node-id="wyF1A8OUMHHLRJuJ6nG9IH"><p class="l" data-page-node-id="VTSLauCHJAtWQQEujaeISN">AI citations</p><p class="v g" data-page-node-id="GnyxLAFGdQa20Gd5AYCEGz">1,314</p></div>
+    <div class="card" data-page-node-id="aGnqykx7Xgmyzw4syNvKI9"><p class="l" data-page-node-id="TqWo3QMTjAiZuFnniPAjBH">Pages cited</p><p class="v g" data-page-node-id="HVsd7vynvypb4XMpEpBF00">31</p></div>
+    <div class="card" data-page-node-id="xbN7A24LPACNCYuCNAwTzy"><p class="l" data-page-node-id="xcttkD3h7yeUCGTqcOtLLU">Peak day</p><p class="v g" data-page-node-id="m69RjfcKIWL59DqRokMt4g">198</p></div>
+    <div class="card" data-page-node-id="DMAPeYMf7UQIneFO3A4RQS"><p class="l" data-page-node-id="bA1WqGUhjNXZQXGeCBGfrs">Peak pages in one day</p><p class="v g" data-page-node-id="b9b4fNtHbqePls9rz3qnSo">22</p></div>
+  </div>
+
+  <div class="chartbox" data-page-node-id="0IavY9XfDVFTPVnChlFVnQ">
+    <div class="chartwrap" data-page-node-id="JzEITNDSYND0mPjSINTR6B"><canvas id="scissors" role="img" aria-label="Combination chart: Google impressions collapse from 142 to 8 after August 22, while Bing AI citations rise to a peak of 198" data-page-node-id="GgYfESilAGIEg9HshaMdEh">Google impressions fall 88% while Bing AI citations rise.</canvas></div>
+    <p class="cap" data-page-node-id="4TxBU47nlGIqBMZ8oS6atl">Google organic impressions per day (bars, left axis) against Bing AI citations per day (line, right axis). The two channels diverged on the same site in the same weeks.</p>
+  </div>
+
+  <h3 data-page-node-id="iwqt4fGtQQw3ZaQ2rAgzwb">Where the citations concentrated</h3>
+  <table data-page-node-id="twY0gdFjfRTwKFOEsMsWSj">
+    <thead data-page-node-id="NxBfCyLaT7H2CGyalP8EFJ"><tr data-page-node-id="x1Fwca4otCFaXx6CzTo2J4"><th data-page-node-id="VrvBO301f7m3YGFRYtvvJJ">Grounding query</th><th class="num" data-page-node-id="LuSak0NvPIdGHAjWrfckTs">Citations</th><th class="num" data-page-node-id="aBGQVQY94e72sFtsdoL3Yk">Citation share</th></tr></thead>
+    <tbody data-page-node-id="slvBrjyyDtJBnz0f1kyWFt">
+      <tr data-page-node-id="wsBNzK1Yd6ZI1aBPvRZ9Gv"><td data-page-node-id="CGCLYkouxRHy2Rv7ZQPvOZ">djvu to pdf</td><td class="num" data-page-node-id="gYVN18940BhGBMI4Z2RvmB">233</td><td class="num" data-page-node-id="dJop1RDvlEkD94gVRK6ExH">6.20%</td></tr>
+      <tr data-page-node-id="tOqXidcbnHOBWH6nbC8pd7"><td data-page-node-id="zfJyVyg35guMhFIrr7fCu8">mobi to epub</td><td class="num" data-page-node-id="a3yNFPY48AHrK2NRtU5fAK">70</td><td class="num" data-page-node-id="i7VOhSjBMW9vpMyAOyi1b4">10.31%</td></tr>
+      <tr data-page-node-id="FXLjC4TY4gpEbMQPd7QoDt"><td data-page-node-id="6KMRpeGgDjuaBB4YPbPvxO">convert mobi to epub</td><td class="num" data-page-node-id="jmD1O7AqicB2EfgUfkiR6H">41</td><td class="num" data-page-node-id="bX0peh1KDGcYgimoQx2TCH">25.62%</td></tr>
+      <tr data-page-node-id="87aIJeNliejf12biBvBaNA"><td data-page-node-id="L7XPuzb9RATFlzr6tghw0r">ebook reader app</td><td class="num" data-page-node-id="oxCnT2HQlj7TFQFPf7VuWc">36</td><td class="num" data-page-node-id="DURoMhAFfwEOJG9zL6rmLa">12.59%</td></tr>
+      <tr class="hl" data-page-node-id="I5p2YgiF1uMVtqnRkxwSu1"><td data-page-node-id="8uBYuqFZGwaOR1jTreB8t9">Harry Potter digital books multiple devices</td><td class="num" data-page-node-id="PINjjlPtyKOuprWW3DpJQv">26</td><td class="num" data-page-node-id="xhSB8TVgocXGVPqu9swUbi">57.78%</td></tr>
+    </tbody>
+  </table>
+  <p data-page-node-id="11UlNNT3xGtKxmciR5YkoD">A single page can take <strong data-page-node-id="KnG0yFQizJzpq2KvqkJbjv">57.78% of all citations</strong> for one query. Specific entity, concrete constraint, narrow scenario &mdash; that is the high-leverage shape.</p>
+</section>
+
+<section data-page-node-id="tqLXf3mWsWch2VUUyXh67c">
+  <h2 data-page-node-id="htUOhMuluTATVBHudwkuUl">Track B &mdash; what broke, and how I diagnosed it</h2>
+  <p class="h2sub" data-page-node-id="8qPCeDA09lDa9IuzBKnvu1">Google, first 39 days.</p>
+
+  <div class="cards" data-page-node-id="UlFBK7lWqqWmRUZFPP0JEq">
+    <div class="card" data-page-node-id="FtcGOgIxUeihEt9HrGTnLJ"><p class="l" data-page-node-id="v8lOd1WbzfCtU4m2PfNYkb">Impressions before</p><p class="v" data-page-node-id="Jvp8qlU924QUhZAwjiCnUM">160.8<span style="font-size:14px;font-weight:400" data-page-node-id="8vr1gKcjM5IqR6guKJzWVZ">/day</span></p></div>
+    <div class="card" data-page-node-id="QAjRtXpQ9pMBr2NsoBNBKk"><p class="l" data-page-node-id="HoB4pCFK3bVC3rya5SAgXO">Impressions after</p><p class="v" data-page-node-id="e8bM54vFKO8BrGTXbS3U7X">19.3<span style="font-size:14px;font-weight:400" data-page-node-id="EJ8v9DDMERQWhLbO8fKevD">/day</span></p></div>
+    <div class="card" data-page-node-id="m2RYlsy4nDPaMGQOTxLew1"><p class="l" data-page-node-id="wQYss0GlqVdl6kuhLAFCLw">Drop</p><p class="v r" data-page-node-id="tIHYeU8BbrpQbT80CGWsiO">&minus;88.0%</p></div>
+    <div class="card" data-page-node-id="sAE46Wh8AzXy7jVz5CcfR4"><p class="l" data-page-node-id="IYTZfMCEU8uH5HFpTHZSdj">Days with no recovery</p><p class="v r" data-page-node-id="VgpExm0X6EjS1KCQ0mzwkq">14</p></div>
+  </div>
+
+  <h3 data-page-node-id="EAivDgLetgvrbcJLQeTCfL">How the attribution worked</h3>
+  <ul data-page-node-id="xKgsA2vUpYwzNar73cUsqI">
+    <li data-page-node-id="166oErCbKW5IZleAWKZeQt"><strong data-page-node-id="Joex7ylTvQWws2wEg05DYJ">Ruled out demand change first.</strong> Impressions per query stayed flat at 1.14&ndash;1.80 before and after, inside the same band as the healthy period. The loss came from the <em data-page-node-id="cjQykVGfggPEaSSobXnr2h">number of queries getting impressions</em>, not from ranking decay on existing ones.</li>
+    <li data-page-node-id="VSuQLHHf3Dr6oTAAIT8DZW"><strong data-page-node-id="RrnCRCTIsv1j1LB8SBbEWq">Found the two-peak split.</strong> Homepage retained 79.6% of its impressions (86.2% day-normalized). Programmatic pages retained 8.2%. Blog 3.3%. That bimodal shape &mdash; not a uniform decline &mdash; is what points at scaled content rather than a sitewide quality signal.</li>
+    <li data-page-node-id="uC9G5EBo7vN72QdIZY0WGP"><strong data-page-node-id="8Ld2FeLPsNEhIjFEctyLII">Caught the second signal on the same day.</strong> New keyword acquisition fell from +15&ndash;17/day to +1/day on August 22, the same day impressions collapsed. Broad match was withdrawn, so new queries stopped being served.</li>
+    <li data-page-node-id="rqOdAloKT2XGXQi7zAPCje"><strong data-page-node-id="zymmew9ZR1rre269J92UAH">Did not panic-edit.</strong> No deletions, no mass merges, no redirects for 14 days. I set a re-test date instead.</li>
+  </ul>
+
+  <div class="note warn" data-page-node-id="J6LJyDKRFaksDrYia1EvJ3">
+    <p data-page-node-id="Qfiux4IyDHUnNs3374WOFB"><strong data-page-node-id="d7rf86hVpc9xsPn3aKrH3D">Confidence, honestly.</strong> I attribute the drop to the August 18 spam update hitting scaled content. That is inference, not an official Google statement about this property &mdash; no console message, no manual action. I would call it medium-high confidence, and I will say so to a client rather than dress it up.</p>
+  </div>
+</section>
+
+<section data-page-node-id="S4J4xYQNfBaBDka7fDePye">
+  <h2 data-page-node-id="hl0HRIY1r0jr7dJ3KKasBI">The full data card</h2>
+  <p class="h2sub" data-page-node-id="EcvsAXgHgxAyL40ch9YG3B">Every number below was measured. Nothing is modeled or rounded up for effect.</p>
+
+  <h3 data-page-node-id="mE2tBVz5rt72oYYICVgyhE">Google Search Console</h3>
+  <table data-page-node-id="W9yxfSTzGi3si3KmFUJuWT">
+    <thead data-page-node-id="OvpfADg5p3AlGFYJJT9sOH"><tr data-page-node-id="sWcpjjdp6yP7K7xrexGzwL"><th data-page-node-id="iXDaUeOFlCjbUanF8HAN8f">Metric</th><th class="num" data-page-node-id="M6ABCgUYX5uLIJv8ZcNeKv">Value</th><th data-page-node-id="tdmoXNvDT0EjoCZSIGdXwa">Notes</th></tr></thead>
+    <tbody data-page-node-id="wxxcVOzVpXvTpMpYptLOSG">
+      <tr data-page-node-id="juvGDZpJsQKZPmzNIB6yMY"><td data-page-node-id="fB3FLFs8FVdZ36lMYv2eNw">Total impressions</td><td class="num" data-page-node-id="st75shKoZij1Rn7nAv7Mi8">2,641</td><td data-page-node-id="lJjs3d19vGSUMJzBknCwHT">39 days</td></tr>
+      <tr class="hl" data-page-node-id="jDXBp9VPG9bfBhoPmTXQrj"><td data-page-node-id="pDW7i8T2bJRvaThjLnEUDs">Total clicks</td><td class="num" data-page-node-id="fA3nNebOYxGo8Kv8aeULvw">6</td><td data-page-node-id="MoVzaNi6GD6Magcz0eJD6j">Yes, six</td></tr>
+      <tr data-page-node-id="0Ap6tMuIAcEb87CAHhlT3l"><td data-page-node-id="0c0syZqXAMyviwxWDWGiVw">Unique queries</td><td class="num" data-page-node-id="HluIz4AapQ3tdP37L3Hckv">390</td><td data-page-node-id="zVU2NEcZqTwJ5iatgCqLES">Cumulative since launch</td></tr>
+      <tr data-page-node-id="wigs5QXwixEtZqtMEy1aMt"><td data-page-node-id="DsPBa6zV0UCVTEQxwp4OBy">Homepage retention</td><td class="num" data-page-node-id="fcxDnv5trOFVSfmAbE09cy">79.6%</td><td data-page-node-id="054tPXzmUuIxvpgUj1Qr3P">86.2% day-normalized</td></tr>
+      <tr data-page-node-id="onZsw32k5NAMMfyhpVcBz4"><td data-page-node-id="3BrPfIr1UieAG5qNMNxCx6">Programmatic page retention</td><td class="num" data-page-node-id="5FQx3wLOSMuQma39km1Dbk">8.2%</td><td data-page-node-id="DLWlAFbJF6WENN8rLV5In0">Low window vs high window</td></tr>
+      <tr data-page-node-id="GfwKZZsAVpGzSCozqGg9Is"><td data-page-node-id="mR4jhJuFnh50x7avgwBGLC">Blog retention</td><td class="num" data-page-node-id="FGFPNDEgQETBiGfPX6cpAG">3.3%</td><td data-page-node-id="7KDxAmvayKV6ahkI2fAmH7">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Google generative AI surfaces</h3>
+  <p>Exported by hand from the Search Console UI &mdash; the Search Analytics API does not expose this data. Window 2026-07-23 &rarr; 09-02. Cross-checked four ways: daily chart, pages, countries and devices all total 16.</p>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Total AI impressions</td><td class="num">16</td><td>42 days</td></tr>
+      <tr><td>Days with any AI impressions</td><td class="num">8</td><td>All between Aug 5 and Aug 20</td></tr>
+      <tr><td>Last AI impression</td><td class="num">Aug 20</td><td>Zero for 13 consecutive days since</td></tr>
+      <tr><td>Pages surfaced</td><td class="num">5</td><td>The top page is Spanish: 62.5% of the total</td></tr>
+      <tr><td>Desktop share</td><td class="num">87.5%</td><td>14 desktop, 2 mobile</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The comparison that matters most</h3>
+  <div class="cards">
+    <div class="card"><p class="l">Bing / Copilot AI citations</p><p class="v g">1,314</p></div>
+    <div class="card"><p class="l">Google AI impressions</p><p class="v">16</p></div>
+    <div class="card"><p class="l">Ratio</p><p class="v">82&times;</p></div>
+  </div>
+  <p>Same site, same six weeks. The two numbers count different actions: <strong>Bing citations are outbound anchor links inside AI answers; Google AI impressions are visual exposures inside an AI overview.</strong> The 82&times; figure is a relative-magnitude comparison of those two counters on the same site &mdash; not a strict ratio between two measurements of the same thing. I still put it in my own sales material because a client will find it anyway &mdash; and because the underlying lesson is useful: AI visibility is not one channel, it is several, and they do not behave alike. Bing and Copilot cite me constantly. Google's AI surfaces essentially do not.</p>
+
+  <h3 data-page-node-id="ABhQAK89WQIMacTJuGMEbD">Bing traditional search</h3>
+  <table data-page-node-id="vluVHWUIK09gsHXNtCZujw">
+    <thead data-page-node-id="M5xgwwsW5FwFT2Y7GFMPyi"><tr data-page-node-id="mESHjru6AofUNdmZOZcFHy"><th data-page-node-id="PTseLBTN5myX53oYdGx2G1">Metric</th><th class="num" data-page-node-id="PsSu5eiCeQZ44APmWcTVeJ">Value</th><th data-page-node-id="c0ZCLCYuaF5s8BvGhXyYAZ">Notes</th></tr></thead>
+    <tbody data-page-node-id="NLJ4l2gA9FCfNOwlpsAOHS">
+      <tr data-page-node-id="0KBYPGbmdoVCR8Y0HsG9o6"><td data-page-node-id="9B0bjlbPOhUTLTPkBUaoyW">Keywords with a ranking</td><td class="num" data-page-node-id="jaJDCtUmxUu15CYexFrQsa">183</td><td data-page-node-id="Xj6RfRUMiAzYHD5NwGhyZ9">&nbsp;</td></tr>
+      <tr data-page-node-id="NXmSkBSQNldOeuALyuTYM4"><td data-page-node-id="FKiHGcgH4Pt3coAO38j0uy">Average position</td><td class="num" data-page-node-id="fH7h0bUUjdqu7WFN3JV0g3">5.73</td><td data-page-node-id="Pivjwo2q3Aj7aiKU5D9x8c">Median 5.00</td></tr>
+      <tr data-page-node-id="1yCBPOEeSKgWKEGKYNHOIx"><td data-page-node-id="5RDSo1cxTYSQbrwgZnKwpB">Share in top 10</td><td class="num" data-page-node-id="ipjs0BY56bGXNQHfxrIfRF">99.5%</td><td data-page-node-id="NSAFENUe0OkBU4ud0nUKAx">182 of 183</td></tr>
+      <tr class="hl" data-page-node-id="qbjqatTYClCmCrUVBOpOMT"><td data-page-node-id="KiAV7eBl1yd4xnEIzBPl0L">Total impressions</td><td class="num" data-page-node-id="dQRTffNX2mXBUn3FvwYW9n">253</td><td data-page-node-id="pCaeLW0QDUiGpSVeInzro2">Ranking is not the bottleneck &mdash; breadth is</td></tr>
+      <tr data-page-node-id="LWm6b6R5sQYPfKwVEfJ7im"><td data-page-node-id="nVZbFjSQFcXtCLCPNQEoEA">Total clicks</td><td class="num" data-page-node-id="0JrJhKgOwzxEWnVXj4CTcA">13</td><td data-page-node-id="M9NiUhe0uEklsHHlusihwO">&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h3 data-page-node-id="27IQZgPUQr7l9xXgqZ6FW2">Audience</h3>
+  <table data-page-node-id="N1kdEMEab7xqgiG8z8aVt1">
+    <thead data-page-node-id="EZ7yPe99T5Ib3yxLyqJNFE"><tr data-page-node-id="ZCIy0C0B77oca0freUPN9O"><th data-page-node-id="0J54RjwH82lcFB6cHMv0XT">Segment</th><th class="num" data-page-node-id="7EivrGIGDbjfKL64IfPusD">Impressions</th><th class="num" data-page-node-id="crOZ3hTmOKbYIRu7MUfXuo">Share</th></tr></thead>
+    <tbody data-page-node-id="3ICSFVqD8gWMSS9bZVd4ow">
+      <tr data-page-node-id="Fv5lFk3RgVbbfqKAhMNqHM"><td data-page-node-id="iw7CMRwbEFBWxVshppB6M3">United States</td><td class="num" data-page-node-id="exAsLWul9A2yNGjtIgHXb1">437</td><td class="num" data-page-node-id="ZzQOV4YysVEbNZmUiKuUqS">16.5%</td></tr>
+      <tr data-page-node-id="E6FGHbjcZH1AAAVccA6c3x"><td data-page-node-id="0fplnnEBsJJFgrpYghtvKO">Tier-1 English (US/UK/CA/AU/NZ/IE)</td><td class="num" data-page-node-id="TE954U2QUzxtGWd11KiEmV">750</td><td class="num" data-page-node-id="ymCesSxum5WcGUtNbRoPwZ">28.4%</td></tr>
+      <tr data-page-node-id="Yz1Y81xlEmeWwfgD7gKAbA"><td data-page-node-id="nDqB6lXS88P856Yt02gt3E">Southeast Asia</td><td class="num" data-page-node-id="wu3bHkrXkHspXaHk7mp22Y">660</td><td class="num" data-page-node-id="CSMOZoPFMQ7B0H2LZMuDUD">25.0%</td></tr>
+      <tr data-page-node-id="aEKl7wGLtfGiCEZzzyG8ZL"><td data-page-node-id="kFV9MQBRr5GV1CeFljBJ9m">Europe</td><td class="num" data-page-node-id="IJ2vNnwufe6ygIeEiiPGit">456</td><td class="num" data-page-node-id="0OogiZMj9X2AR6xaI49Ulz">17.3%</td></tr>
+      <tr data-page-node-id="ysHYH41aHup40riZY5waQB"><td data-page-node-id="AF3r3LRLLzCoOVZ4ayvxdu">India</td><td class="num" data-page-node-id="x6I0faiIAFv98IUIovCNKX">355</td><td class="num" data-page-node-id="omkcELPpKE1M9mF6dwWoDG">13.4%</td></tr>
+      <tr class="hl" data-page-node-id="B2Hc3sXqUCKG5msCK8Tc2q"><td data-page-node-id="XBeZmy0nG4EBUSQarcxSr4">Desktop</td><td class="num" data-page-node-id="rAJNaKUsvJdSvMFttUzglt">2,466</td><td class="num" data-page-node-id="ZNlFA4HAAi9hAAUS8mJTxi">93.4%</td></tr>
+      <tr data-page-node-id="FttUE9I0xtIPHc1fDyTNuX"><td data-page-node-id="cD8QMG89OWBUv5UxNFgJkC">Mobile</td><td class="num" data-page-node-id="fsn5xRmlF2Xn2jBmMBOoMD">172</td><td class="num" data-page-node-id="9ViFGb5PnLlEiYB1lAi6Oq">6.5%</td></tr>
+    </tbody>
+  </table>
+  <p data-page-node-id="IvgapgnOYFcWjHkfaZbFoB">85 countries registered impressions. Top-10 concentration is 69.1% &mdash; the tail is very long.</p>
+</section>
+
+<section data-page-node-id="bcLlHoijJqK2bN2HtVT32t">
+  <h2 data-page-node-id="eurApzAIVvL1gpICKAvyvS">What I will not claim</h2>
+  <div class="note warn" data-page-node-id="nP7yGa1cpeKO8woE8oeOlD">
+    <p data-page-node-id="5vEyPSItj955hZAdDEngtZ"><strong data-page-node-id="jxpQ0vGlZgHGCJkLSA2O5W">This is a visibility case study, not a traffic case study.</strong> Total organic clicks across both engines in six weeks: <strong data-page-node-id="jCPvZFzLeeKr4NFDcDECLr">19</strong> (6 from Google, 13 from Bing). I put that number in my own sales material because a client will find it in thirty seconds of shared screen, and I would rather be the one who says it.</p>
+    <p style="margin-top:12px" data-page-node-id="0ykI4r0ItY3ARraWKJ0rAy"><strong data-page-node-id="vR4vVTMmYOd80AWDxKAh5G">I cannot explain the August 25 step.</strong> Citations went from 38 to 147 in one day. No action of mine accounts for it. I will not tell you my method caused it.</p>
+    <p style="margin-top:12px" data-page-node-id="EJafCQzHtmimQHDFf3aGB2"><strong data-page-node-id="WJVI8rWsz33KBMaOnLSeuq">Citation counts are reported conservatively.</strong> I use 1,314 from the top-page report, not the 1,530 in the full-window overview. The difference is a reporting-window artifact, and I would rather understate.</p>
+    <p style="margin-top:12px"><strong>My Google AI visibility is near zero.</strong> Sixteen impressions in six weeks, on five pages, and nothing since August 21. If your buyers search on Google's AI surfaces, I will measure that for you honestly &mdash; but I will not promise you a result I have not produced on my own site.</p>
+  </div>
+</section>
+
+<section data-page-node-id="9RBgi6eMenLKTmeEfGD47a">
+  <h2 data-page-node-id="iEqZc7kU05KmXCqCVAWFLF">How I work</h2>
+  <div class="quote" data-page-node-id="nHfrWL8ASfm65VbjHAJCpI">Measurement first. Then diagnosis. Then I try to prove myself wrong before I tell you what to do.</div>
+  <p data-page-node-id="iXamk6mdJOFEA9nEZwaFda">I have overturned two of my own conclusions on this project in three rounds of structured self-audit, and both reversals are documented. Most SEO reporting never mentions the findings that did not hold up. Mine does, because a conclusion you cannot falsify is not worth paying for.</p>
+
+  <table data-page-node-id="kmtSLf0vKAuu1aByoXW86m">
+    <thead data-page-node-id="qRQroCkdDeC8aHlSjgpDHe"><tr data-page-node-id="mrxNBCEG9xTPIouGkZMNPD"><th data-page-node-id="R1iK5AFW42w7DFrJjcTk6Y">Engagement</th><th class="num" data-page-node-id="bCPXQJONdBaEohlSI6q171">Price</th><th data-page-node-id="gHp0BBobbmM7liCl8uJIWw">What it is</th></tr></thead>
+    <tbody data-page-node-id="eL38GFoSGVm5aPK1lIqBrV">
+      <tr data-page-node-id="eOtiyub96nJZ3JVV8rd0Dp"><td data-page-node-id="vRAJegfnAsHX2GIicbDiED">AI Visibility Diagnostic</td><td class="num" data-page-node-id="YWpkslPdDUNEQkaUJGwx3o">$600</td><td data-page-node-id="ePqlqrrQ1LEPZgt7V4ee6L">One-time. Baseline, zero-citation audit, prioritized action list. Credited in full to your first retainer month.</td></tr>
+      <tr data-page-node-id="er3LoUHHuWtCfgf66tjC1i"><td data-page-node-id="oi1rWBfKhZDBFSP1A4pnPI">Core</td><td class="num" data-page-node-id="AX63IStbbqDARUD5iWfanO">$800/mo</td><td data-page-node-id="vIUBTPvwtzE4zAQTlo3lbC">Monthly dual-channel report, dark-page audit, index submission, 1 content brief.</td></tr>
+      <tr data-page-node-id="UQBNqacfsm7UehAMzikSFY"><td data-page-node-id="Nq2375igBJKHXyvUAjq5oi">Growth</td><td class="num" data-page-node-id="h2rZH0eYLr0HIgQElBcO4m">$1,200/mo</td><td data-page-node-id="v9yKGBEqwXlHiMm9EPAvhO">Adds 3 briefs/month, schema review, monthly attribution with self-falsification.</td></tr>
+      <tr data-page-node-id="yUda260uvOv6i9NIA6hNlo"><td data-page-node-id="RcgcPCAjD9UtmTkWeBuMAA">Partner</td><td class="num" data-page-node-id="IUuyGacQeaU1mZtO0Y6EH1">$1,500/mo</td><td data-page-node-id="NrpkBxV0lshMnJ9btoXSnd">Adds bi-weekly calls and pre-publish review. Capped at 3 clients.</td></tr>
+    </tbody>
+  </table>
+  <p data-page-node-id="DmyMOYQRQNSB8ZQFq0y9lp">All data comes from tools you own &mdash; your Search Console, your Bing Webmaster Tools. I never show a number you cannot reproduce with your own credentials.</p>
+</section>
+
+<footer data-page-node-id="hysPlyW1CYml9NMyjhpUBs">
+  <p data-page-node-id="LtQBNFvWiCvSN3axmGF4p6"><span class="tag" data-page-node-id="Z1DbBNhdfbnAnlnNuHPiQE">AI Search Visibility</span><span class="tag" data-page-node-id="l6pExUzwYDiukJCY5rjNh8">Measurement</span><span class="tag" data-page-node-id="aqVXhEYJWwqwUBMrDScRJo">Diagnosis</span></p>
+  <p style="margin-top:16px">Figures measured 2026-09-05. Google Search Console API (property <code>https://www.bookconv.com</code>) for organic, country and device data; Google generative AI figures exported manually from the Search Console UI on 2026-09-05, because the Search Analytics API does not expose them; Bing Webmaster Tools exports dated 2026-09-03. Case study v1 &mdash; superseded versions are kept, not overwritten.</p>
+</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const F={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+new Chart(document.getElementById('rate'),{
+  type:'bar',
+  data:{labels:['Guides','Blog posts','Programmatic pages'],
+    datasets:[{data:[54.5,27.6,3.3],backgroundColor:['#1d9e75','#378add','#b4b2a9'],borderRadius:4,barThickness:44}]},
+  options:{...F,indexAxis:'y',
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+'% cited ('+['12 of 22','16 of 58','1 of 30'][c.dataIndex]+')'}}},
+    scales:{x:{beginAtZero:true,max:60,title:{display:true,text:'Citation rate (%)',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:11}}},
+      y:{grid:{display:false},ticks:{font:{size:13}}}}}
+});
+const lb=["07-26","07-27","07-28","07-29","07-30","07-31","08-01","08-02","08-03","08-04","08-05","08-06","08-07","08-08","08-09","08-10","08-11","08-12","08-13","08-14","08-15","08-16","08-17","08-18","08-19","08-20","08-21","08-22","08-23","08-24","08-25","08-26","08-27","08-28","08-29","08-30","08-31","09-01","09-02"];
+const g=[5,10,4,6,14,16,16,27,32,18,41,47,45,37,150,116,131,221,171,159,147,209,178,153,164,150,142,32,8,31,24,27,17,11,19,15,20,15,13];
+const b=[null,0,0,0,0,0,0,0,0,0,0,0,0,4,1,0,13,1,0,0,6,19,38,31,28,38,10,17,43,38,147,162,198,192,159,117,158,110,null];
+new Chart(document.getElementById('scissors'),{
+  data:{labels:lb,datasets:[
+    {type:'bar',label:'Google impressions',data:g,backgroundColor:'#85b7eb',yAxisID:'y',order:2},
+    {type:'line',label:'Bing AI citations',data:b,borderColor:'#1d9e75',borderWidth:2,pointRadius:0,tension:.25,spanGaps:true,yAxisID:'y1',order:1}]},
+  options:{...F,interaction:{mode:'index',intersect:false},
+    scales:{x:{ticks:{autoSkip:false,maxRotation:45,font:{size:10},callback:(v,i)=>i%3===0?lb[i]:''},grid:{display:false}},
+      y:{position:'left',beginAtZero:true,title:{display:true,text:'Google impressions',font:{size:11},color:'#185fa5'},ticks:{font:{size:10},color:'#185fa5'},grid:{color:'rgba(0,0,0,.06)'}},
+      y1:{position:'right',beginAtZero:true,title:{display:true,text:'Bing AI citations',font:{size:11},color:'#0f6e56'},ticks:{font:{size:10},color:'#0f6e56'},grid:{display:false}}}}
+});
+</script>
+</body>
+</html>
