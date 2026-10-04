@@ -108,7 +108,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 - Your MOBI has complex formatting → Conversion may simplify it`
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'What We Preserve and Improve in MOBI to EPUB',
       body: `Our converter uses Calibre's proven engine, validated through millions of successful conversions:
 
 **What We Preserve:**

@@ -145,7 +145,7 @@ export const content = {
 *Source: Amazon Kindle format documentation + Calibre compatibility tables*`
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'How We Preserve Typography and Navigation in AZW3',
       body: `Our converter uses Calibre AZW3 output engine with extensive validation:
 
 - **Typography Preservation**: Fonts, spacing, and layout are carefully mapped to AZW3 equivalents

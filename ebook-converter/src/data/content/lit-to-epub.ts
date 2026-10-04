@@ -51,7 +51,7 @@ Whether you inherited LIT format books from family, collected rare professional 
 Our converter uses Calibre engine, which has been validated through tens of thousands of successful conversions to ensure formatting accuracy.`
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'How We Clean LIT Markup During Conversion',
       body: `We understand that converting LIT to EPUB is not simply changing a file extension. Our converter performs intelligent processing:
 
 - **Smart Tag Removal**: Strips XHTML tags and CSS references from EPUB while preserving paragraph heading, and list structure

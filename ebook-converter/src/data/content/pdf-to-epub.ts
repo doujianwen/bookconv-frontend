@@ -169,7 +169,7 @@ Keep PDF if:
 *Source: W3C EPUB specification + major e-reader manufacturer documentation*`
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'How We Rebuild Tables and Extract the Text Layer',
       body: `We know that PDF to EPUB conversion is not about simply changing file extension. Our converter performs intelligent processing:
 
 - **Smart Table Detection**: Identifies tables and converts them to responsive HTML tables in EPUB

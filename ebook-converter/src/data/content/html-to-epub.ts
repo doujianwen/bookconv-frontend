@@ -66,7 +66,7 @@ If you want someone to read your writing like a book — on a commute, on an e-r
 Typical conversions finish in five to fifteen seconds. Image-heavy pages can take a minute or two while the linked assets are fetched and repackaged. Converting a set of pages? Pro accounts handle batches and larger uploads.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Reading Long Web Articles Offline',
       body: `**Reading long articles properly.** Save a 12,000-word essay or a multi-part investigative piece, convert it, and read it on e-ink without the ads, popups, and newsletter overlays.
 
 **Self-publishing from a web-first draft.** Plenty of writers draft in Markdown, export to HTML, and need an EPUB for distribution. This is the last step of that chain.

@@ -24,7 +24,7 @@ export const content = {
       body: 'Novels, essay collections, technical manuals, academic papers, textbooks, reports, blog compilations, personal journals. Any content written in Word and intended for reading on e-readers should be converted to EPUB format.'
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'What Our DOCX to EPUB Conversion Preserves',
       body: 'Our converter uses Calibre engine combined with custom preprocessing pipeline: Smart style detection maps Word headings to EPUB nav landmarks. Image optimization reduces file size while maintaining quality. Font embedding preserves typography across devices. Chapter separation based on heading hierarchy. Metadata extraction from Word properties and document content.'
     },
     {

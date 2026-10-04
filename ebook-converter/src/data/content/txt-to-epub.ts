@@ -33,7 +33,7 @@ You can also manually specify chapter separators if your file uses unusual forma
       body: 'TXT files may use GBK, UTF-8, ISO-8859-1, or other encodings. Our converter automatically detects encoding and converts correctly, avoiding Chinese garbled text issues. For files with incorrect encoding, an encoding selection interface is provided.'
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'How We Detect Paragraphs and Chapter Structure',
       body: `Our converter performs intelligent processing:
 
 - **Smart Paragraph Detection**: Identifies paragraph breaks based on blank lines and indentation

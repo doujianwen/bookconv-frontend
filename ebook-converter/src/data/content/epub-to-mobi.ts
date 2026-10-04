@@ -37,7 +37,7 @@ export const content = {
 - [IDPF Official Site](https://idpf.org/)`
     },
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why E-readers Still Expect It',
       body: `MOBI (Mobipocket) is one of the earliest ebook formats supported by Amazon Kindle devices, and a free online EPUB to MOBI converter remains the fastest way to get a modern EPUB onto one of those older readers. While modern Kindles prefer AZW3 or EPUB formats, many older Kindle models (pre-2012) still rely on MOBI for file compatibility.
 
 **Key characteristics of MOBI:**

@@ -80,7 +80,7 @@ Two things that trip people up.
 **Cover images sometimes jump.** Files named cover.jpg or 00_cover.jpg usually land first, which is what you want. Files named zz_cover.jpg will end up at the back. Again, a packaging quirk.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Printing a Comic Archive',
       body: `**You want to print.** This is the big one. Print shops accept PDF and nothing else. If you're printing a fan translation, a self-published comic, or an out-of-print issue for personal reading, PDF is the only realistic path.
 
 **You're reading on a device with no comic app.** A work laptop with locked-down software installation. A shared family tablet. A library computer. PDF opens in the browser.

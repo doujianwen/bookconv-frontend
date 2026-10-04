@@ -20,7 +20,7 @@ Despite the "compiled" name, a CHM is fundamentally a bundle of HTML pages, a ta
 You will usually meet CHM as a manual or reference you want to read comfortably — and a phone-screen help viewer is a poor substitute for a Kindle-sized page.`
     },
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why It Replaces Compiled HTML Help',
       body: `MOBI is the format every Kindle reads. It is simple and maximally compatible, which makes it a practical target when you want documentation to live on a dedicated reading device rather than a laptop.
 
 The trade-off is styling. MOBI supports only a small HTML/CSS subset, so the precise layout of a help system is simplified. For reading text-heavy manuals and references, that simplification is rarely a problem.`

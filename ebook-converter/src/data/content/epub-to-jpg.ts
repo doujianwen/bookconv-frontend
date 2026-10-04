@@ -60,7 +60,7 @@ Heads up on **DRM**. If you bought the book from Kobo, Google Play Books, or any
 And the practical note: check your disk space first. Even at JPG's smaller sizes, a long illustrated book can produce a 100MB+ archive.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Sharing Pages as Images',
       body: `**Sharing passages on social media.** WeChat Moments, Weibo, Instagram, and X all handle JPG natively and will re-compress anything you upload anyway — so starting from JPG loses you nothing. A clean 300 DPI page image looks far better than a phone screenshot with your reading app's UI in the corner.
 
 **Building presentations.** Dropping a page image into PowerPoint, Keynote, or Google Slides takes two seconds. Rebuilding a formatted page from copied text takes twenty minutes.

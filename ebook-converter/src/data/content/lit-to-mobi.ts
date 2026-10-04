@@ -20,7 +20,7 @@ Technically LIT is a compressed HTML container: HTML pages, a small image set, a
 The catch is rights management. Many commercial LIT files carried Microsoft's DRM, and those encrypted files cannot be opened or converted by any tool today — Microsoft retired the activation servers years ago. This converter works only on DRM-free LIT files: personal exports, public-domain titles, and books you created yourself.`
     },
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why It Replaces DRM-Bound LIT',
       body: `MOBI is the format Amazon built the original Kindle around. It is a simple, widely compatible container that every Kindle ever made can open, including the 2007 original.
 
 Its strengths are reach and simplicity: a MOBI file opens on virtually any e-ink device, old third-party readers, and most free reading apps. Its weakness is presentation — MOBI supports only a small subset of HTML and CSS, so advanced typography and embedded fonts are lost. For reading a novel on a Kindle, that trade-off is usually invisible.

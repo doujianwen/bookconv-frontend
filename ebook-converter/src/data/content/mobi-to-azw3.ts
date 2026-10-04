@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why You Might Upgrade Instead',
       body: `MOBI started life as the Mobipocket format in the early 2000s, built on an even older standard called PalmDOC. Amazon acquired Mobipocket in 2005 and made MOBI the foundation of the original Kindle.\n\nIt's a simple format, and that simplicity is both its weakness and its entire remaining value:/n/n- **Basic HTML only** — a small subset, roughly what browsers supported in 1999\n- **No embedded fonts** — you get whatever typefaces the device has\n- **Minimal CSS** — most styling is ignored outright\n- **No fixed layout** — everything reflows, always\n- **Larger files** — the older compression is less efficient\n- **Runs on literally every Kindle ever made** — including the 2007 original\n\nAmazon officially stopped accepting MOBI uploads to Kindle Direct Publishing in 2021 and dropped MOBI from Send to Kindle in 2022. As a distribution format, it's finished.\n\nBut hardware outlives file formats. There are still working Kindle Keyboards, Kindle DXs, and Kindle 2s in daily use — devices that have never received a firmware update capable of reading AZW3. For those, MOBI isn't legacy. It's the only option.`
     },
     {

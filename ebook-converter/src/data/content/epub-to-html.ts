@@ -54,7 +54,7 @@ HTML has also outlived a dozen "next big thing" document formats. Pages written 
 Most novels finish in ten to twenty seconds. A heavily illustrated art book or a 900-page technical manual might take a minute. If you have a whole shelf to move, Pro accounts add batch queueing and larger file limits.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Publishing Chapters to the Web',
       body: `**Publishing chapters as blog posts.** Sample chapters, serialized fiction, lead magnets. HTML drops into WordPress, Ghost, or Substack without the formatting wreckage you get from copy-pasting out of a reader app.
 
 **Turning a book into documentation.** Plenty of technical authors write in ebook-friendly tools and then need a real docs site. HTML is the bridge.

@@ -179,7 +179,7 @@ If you prefer not to install desktop software, BookConv runs the same Calibre en
 *Source: Adobe PDF specification + major device manufacturer documentation*`
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'How We Paginate and Embed Fonts in PDF',
       body: `Our converter performs intelligent processing:
 
 - **Smart Pagination**: Break points avoid cutting paragraphs or images

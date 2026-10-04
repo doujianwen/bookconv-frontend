@@ -62,7 +62,7 @@ Before you start, a reality check on size. A 300-page book at 300 DPI produces r
 Also: **DRM-protected EPUBs won't convert.** Files from Kobo, Google Play Books, or any store using Adobe DRM are encrypted and unreadable to any converter. DRM-free books — Project Gutenberg, Standard Ebooks, indie authors, your own exports — work fine.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When You Need Lossless Page Images',
       body: `**You need visual excerpts for social media.** Screenshotting a passage from a reader app gives you whatever font size and theme you had set. Converting gives you clean, consistent, high-resolution page images.
 
 **You're building slides.** Dropping a page image into PowerPoint or Keynote is trivial. Extracting formatted text and rebuilding the layout is not.

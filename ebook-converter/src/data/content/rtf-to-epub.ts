@@ -57,7 +57,7 @@ EPUB is supported by Apple Books, Kobo, Nook, Google Play Books, PocketBook, and
 Most documents finish in ten to thirty seconds. Long manuscripts with many images take longer while the hex-encoded pictures are decoded and re-compressed. Pro accounts add batch conversion for archives of documents.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Rescuing an RTF Archive',
       body: `**Rescuing an old archive.** If you have folders of RTF from the 90s or 2000s, converting to EPUB makes them readable on modern devices instead of stuck in whichever word processor still opens them.
 
 **Sharing a manuscript for review.** Beta readers on phones and tablets have a far easier time with an EPUB than with a document that forces them to pinch and scroll horizontally.

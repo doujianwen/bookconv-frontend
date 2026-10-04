@@ -59,7 +59,7 @@ Worth knowing: FB2 files essentially never have DRM. The format has no encryptio
 If a conversion does fail, the usual cause is malformed XML — some older FB2 files from scanning projects have unescaped characters or unclosed tags that break strict parsers. Opening the file in a proper FB2 editor and re-saving it usually fixes that.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Moving a FB2 Library to a New Device',
       body: `**You switched devices.** You've read on FBReader for years, then bought a Kobo or an iPad. Your entire library is FB2 and the new device shrugs at it.
 
 **You want your books on Kindle.** Amazon's Send to Kindle now accepts EPUB directly. It has never accepted FB2 and never will. Convert once, email it in, done.

@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why Text Extraction Is Possible',
       body: `MOBI started life as Mobipocket, a French ebook format from the early 2000s. Amazon bought the company in 2005 and made MOBI the foundation of the Kindle ecosystem for well over a decade.
 
 It is old technology, and it shows. MOBI is built on a compressed HTML core with a handful of proprietary extensions bolted on. Formatting support is thin, tables are unreliable, and the format has no real concept of modern CSS.

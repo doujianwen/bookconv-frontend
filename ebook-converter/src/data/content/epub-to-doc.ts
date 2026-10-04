@@ -53,7 +53,7 @@ One important warning before you upload: **DRM-protected files won't convert.** 
 Also worth saying out loud: converting a book you don't own the rights to, in order to redistribute it, isn't something a format converter makes legal. Convert your own stuff.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When a Submission System Demands .doc',
       body: `**Submitting to a system that won't take anything else.** Some journal submission portals, grant application systems, and corporate intranets have file-type whitelists written years ago. If the upload button rejects .docx, DOC is your answer.
 
 **Editing a manuscript.** You wrote a book, exported it to EPUB, and now an editor wants to mark it up. Word's track changes is still the publishing industry's default review tool, and some editors are running very old installations.

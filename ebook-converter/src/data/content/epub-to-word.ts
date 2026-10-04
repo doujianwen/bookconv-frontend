@@ -56,7 +56,7 @@ What works fine: Project Gutenberg and Standard Ebooks downloads, Humble Bundle 
 And the obvious point that's worth saying: convert books you have the right to convert.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Editing or Print-Proofing a Manuscript',
       body: `**You're editing your own manuscript.** You exported to EPUB for a beta read, got feedback, and now need to make revisions. Word's track changes remains the publishing industry's default review tool.
 
 **You're preparing a print edition.** Self-publishers going from ebook to paperback typically route through Word — it's what most print-on-demand templates and interior design workflows expect.

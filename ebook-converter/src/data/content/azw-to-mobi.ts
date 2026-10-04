@@ -20,7 +20,7 @@ A few years later Amazon moved on to AZW3 (Kindle Format 8), a much richer forma
 The practical upshot: if you have an old .azw that is DRM-free, converting it to MOBI is often close to a repackaging exercise, because the two formats share the same underlying structure.`
     },
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why Older Kindles Need It',
       body: `MOBI is the foundational Kindle format. Every Kindle ever made reads it, from the 2007 original to the latest Paperwhite. It is simple, predictable, and maximally compatible.
 
 That compatibility is exactly why you might want it. If a file needs to open on an unknown or older Kindle, MOBI is the format least likely to fail. The cost is presentation: MOBI drops embedded fonts and most CSS, keeping the text clean and readable rather than styled.`

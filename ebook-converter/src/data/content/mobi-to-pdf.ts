@@ -12,7 +12,7 @@ export const content = {
 
   sections: [
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why Printing Needs a Different Format',
       body: `MOBI began as Mobipocket, a French ebook format from the early 2000s. Amazon acquired the company in 2005 and built the entire early Kindle ecosystem on top of it.
 
 Underneath, MOBI is compressed HTML with proprietary extensions. It handles reflowable text well on e-ink, supports basic formatting and simple navigation, and stores metadata like title, author, and publisher. What it never handled well is complex layout — tables are unreliable, and modern CSS is simply not part of the picture.
@@ -53,7 +53,7 @@ The trade-off is the mirror image of MOBI's: PDF gives up flexibility to gain pe
 A 300-page novel typically finishes in thirty seconds to two minutes. Books with lots of illustrations take longer, because every image gets re-rendered at print resolution. Pro accounts add batch conversion and larger uploads for bigger jobs.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When You Need to Print or Cite a MOBI',
       body: `**Printing.** The obvious one. You cannot print a MOBI in any sane way — PDF is the format printers actually understand.
 
 **Academic citation.** Citation styles want page numbers. Reflowable formats do not have them, because the text moves when you change the font size. A PDF pins every sentence to a fixed page.

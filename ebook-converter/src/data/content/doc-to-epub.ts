@@ -60,7 +60,7 @@ The reason is practical: LibreOffice has the most forgiving DOC parser available
 Most documents under 100 pages finish in ten to thirty seconds. Files with a lot of embedded images can take a minute or two. Pro accounts add batch conversion, which is the sensible route if you are digitizing an entire archive folder.`
     },
     {
-      heading: 'When Do You Need This Conversion?',
+      heading: 'When Digitizing a Word Archive',
       body: `**Digitizing an old archive.** Theses, dissertations, company reports, newsletters, family histories — anything written between 1997 and 2007 is probably sitting in .doc right now.
 
 **Reading long documents on a tablet.** A 300-page report in DOC is genuinely unpleasant on anything smaller than a laptop. As an EPUB it is just a book.

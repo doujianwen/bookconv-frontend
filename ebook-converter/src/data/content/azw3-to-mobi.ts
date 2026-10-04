@@ -29,7 +29,7 @@ Every Kindle sold since roughly late 2011 reads AZW3 natively, and it's what Ama
 The one thing it can't do is run on hardware that predates it.`
     },
     {
-      heading: 'What is MOBI Format?',
+      heading: 'What MOBI Is and Why It Drops AZW3 Features',
       body: `MOBI started life as the Mobipocket format in the early 2000s, built on an even older standard called PalmDOC. Amazon acquired Mobipocket in 2005 and made MOBI the foundation of the original Kindle.
 
 It's a simple format, and that simplicity is both its weakness and its entire remaining value:

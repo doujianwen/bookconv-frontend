@@ -20,7 +20,7 @@ export const content = {
       body: 'Cross-Platform Reading — EPUB is the global ebook standard, compatible with iOS, Android, Windows, Mac, and all mainstream platforms. Device Freedom — No longer locked into Kindle ecosystem; read on any device. Format Editing — EPUB is essentially a ZIP-compressed HTML/CSS file, making content editing convenient. Future Compatibility — AZW3 is Amazon proprietary format; EPUB 3 is an IDPF international standard with better long-term maintenance guarantees.'
     },
     {
-      heading: 'Conversion Quality Guarantee',
+      heading: 'What Our AZW3 to EPUB Conversion Preserves',
       body: 'Our converter uses Calibre engine, validated through tens of thousands of successful conversions to ensure quality: preserves chapter structure (NCX/NAV navigation), extracts metadata (title, author, ISBN), intelligently handles font mapping, retains images and hyperlinks. For complex AZW3 files with rich layouts (such as textbooks, comics), we perform additional typography optimization.'
     },
     {
