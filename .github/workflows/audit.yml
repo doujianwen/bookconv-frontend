@@ -32,13 +32,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript 编译检查
-        run: npx tsc --noEmit
-
-      - name: ESLint 严格检查
-        run: npx eslint --max-warnings=0 src/
-
-      - name: 轻量纠错审查
-        run: bash ../../scripts/audit.sh
+      # 2026-10-04：原先此处单独跑 tsc + eslint，随后 audit.sh 内部又跑一遍
+      # （audit.sh 第 1、2 项就是 tsc 与 eslint）⇒ 同样检查跑两遍，CI 时间翻倍。
+      # 现统一交给 audit.sh，它会逐项打印 ✅/❌ 与统计，定位失败项更直观。
+      - name: 轻量纠错审查（含 tsc + eslint + 17 项静态规则）
+        # 2026-10-04 修正：原为 `bash ../../scripts/audit.sh`。
+        # working-directory 是 ./ebook-converter，`../../` 会退到仓库【外面】
+        # （$GITHUB_WORKSPACE 之上一级），GitHub runner 上不存在该路径 ⇒ 必然 exit 127。
+        # 正确路径是仓库根内的 `../scripts/audit.sh`。
+        # 另：`scripts/audit.sh` 此前从未入库（check-ignore exit=1 证明不是被忽略），
+        # 已随本次提交入库，否则这一步无论如何都会失败。
+        # 注意：不要在此加 `| tee`——管道会吞掉脚本退出码，让门禁恒绿。
+        run: bash ../scripts/audit.sh
         env:
           CI: true

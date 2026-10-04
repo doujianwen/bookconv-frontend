@@ -28,14 +28,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript 编译检查
-        run: npx tsc --noEmit
-
-      - name: ESLint 严格检查
-        run: npx eslint --max-warnings=0 src/
-
       - name: 轻量纠错审查
-        run: bash ../../scripts/audit.sh 2>&1 | tee audit.log
+        # 2026-10-04 修正三处：
+        #  1) 路径 `../../scripts/audit.sh` 越界到仓库外 ⇒ 改为仓库根内的 `../scripts/audit.sh`
+        #     （working-directory 是 ./ebook-converter，`../../` 退到 $GITHUB_WORKSPACE 上一级，不存在）
+        #  2) `| tee` 吞掉脚本退出码 ⇒ 审查失败时 workflow 仍报绿（假门禁）。
+        #     改用 PIPESTATUS 显式取 audit.sh 的退出码。
+        #  3) tsc/eslint 不在此重复跑（audit.sh 第 1、2 项已包含），交给 audit.sh 统一输出。
+        run: |
+          set -o pipefail
+          bash ../scripts/audit.sh 2>&1 | tee audit.log
+          exit "${PIPESTATUS[0]}"
 
       - name: 构建飞书卡片
         if: always()
@@ -85,7 +88,17 @@ jobs:
 
       - name: 推送飞书通知
         if: always()
+        env:
+          # 2026-10-04 安全修复：原为硬编码飞书 webhook URL，该 token 已随本文件推送到远端
+          # ⇒ 视为【已泄露】，必须在飞书后台重置该机器人并把新地址填入
+          # GitHub 仓库 Settings → Secrets → Actions → New repository secret（名称 FEISHU_WEBHOOK_URL）。
+          # 未配置 secret 时跳过推送（不硬失败），避免每周任务因缺 secret 而红。
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
         run: |
-          curl -s -X POST "https://open.feishu.cn/open-apis/bot/v2/hook/422e94ef-2d07-4805-b15c-6ca90850e8d9" \
+          if [ -z "$FEISHU_WEBHOOK_URL" ]; then
+            echo "⚠️  未配置 secret FEISHU_WEBHOOK_URL，跳过飞书推送（审查结果仍见 GitHub Actions 日志）。"
+            exit 0
+          fi
+          curl -s -X POST "$FEISHU_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d "@feishu_payload.json" || echo "飞书推送失败"
