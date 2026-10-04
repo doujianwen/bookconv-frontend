@@ -187,3 +187,205 @@ hermes cron status                                                  # 查 gatewa
 `developers.google.com/search/updates` 是**文档/政策更新日志，不是排名更新**，
 2026-08/09 无排名更新窗口（唯一真实排名更新是 2026-02 Discover Core Update，无关且无结束日期）。
 → `algorithm-updates.json` 保持空数组。**拿不到可靠日期就留空，绝不编造**。
+
+---
+
+## GA4 每日分析自动化经验（2026-09-28）
+
+### 自动化身份与产出
+- 每日 07:00 自动运行（执行身份 ehermes），输出 `数据分析/GA4日报-<TARGET_DATE>.md`；**TARGET_DATE = 昨天**（GA 有 1 天延迟）。
+- 三块提取：top-events（事件构成）/ 网页和屏幕（热门页）/ 来源媒介（**eventName + sessionMedium 双维度 + page.reload()**）。
+- referral 媒介 = 0 时**跳过**引荐域名挖掘（规则：referral 出现才用 eventName+sessionSource 双维度 + reload 挖具体域名）。
+
+### 🔴 GA 自动化 cookie 自恢复机制（关键，2026-09-28 实测确认）
+- 「GA tab 须预开」实为**软前置**：tabbit 浏览器保留有效的 **Google 会话 cookie**，运行期直接 `page.goto` 到 GA URL 即自动落入已登录态，**不需要用户名/密码**，也无需用户手动开 tab。
+- 唯一硬依赖 = **cookie 未过期**。若 Google 因长期闲置/安全事件强制重新认证，导航会落到登录墙，那时才需用户重新登录一次。
+- 结论：日后运行**不必再报"前置异常"**，直接走导航恢复即可；唯一需用户介入 = cookie 过期后的重新登录。建议用户在 tabbit 固定(pin) GA 标签页并偶尔点开以保持 cookie 活跃。
+
+### tabbit CLI 实操要点（防踩坑）
+- 每条命令前置 `export PATH="/usr/bin:/bin:$PATH"` + `MSYS_NO_PATHCONV=1`。
+- `tabs/claim/nodejs` 均须带 `--task <name>`；`nodejs` 脚本经 **stdin** 传入；`nodejs` 每次带唯一递增 `--request-id`（防缓存假成功）。
+- GA 复用 tab 下**单维度 sessionMedium 不生效**，必须 eventName+sessionMedium 双维度 + 设 hash 后 `page.reload()` 强制重渲染（实测有效）。
+- ⚠️ **「网页和屏幕」报告不能用 URL `r=pages-and-screens` 切换**（2026-10-02 实测会跳到 `reports/intelligenthome` 首页、且日期回退默认区间）。正确做法：先停在已设好单日日期的 top-events 报告，再用 `page.evaluate` **点击左侧"网页和屏幕"链接**（date 继承，不会跳首页、日期保持单日）。
+- 提取后必校验 body 含目标日期中文（如 `9月27日 - 2026年9月27日`），确认非 stale；admin 页（url 含 /admin）= 导航失败，把 hash 拉回 `r=top-events` 恢复。
+- ⚠️ **GA4 Material 选项用页内 `element.click()` 绕过 actionability 超时**：Playwright 原生 `getByRole/getByText(...).click()` 对 GA4 的 `mat-option` / quick-range 选项（如「昨天」「应用」）会因 actionability 校验**超时并触发 60s 硬截止、task 被终止**（10-03 实测两次踩坑）。可靠做法：在 `page.evaluate` 内对目标元素直接 `element.click()` 派发真实点击事件（Angular 的 `(click)` 会响应）；定位时优先选 `tagName==='MAT-OPTION' || role==='option' || class 含 'option'` 的元素。
+- ✅ **每日单日日期固定配方（昨天=TARGET_DATE）**：① 打开日历 = 点击 `role=combobox` 且 `aria-label="打开日期范围选择器"` 的触发器；② 页内 `click()` 文本精确为「昨天」的元素（选单日 = 昨天 = TARGET_DATE，绕开手写日期的 matcher 坑）；③ 同法对「应用」`click()` 确认。三视图（top-events / 网页和屏幕 / 双维度）各自需重设一次（sidebar 切报告会把日期回退 28 天默认）。
+
+### 🔴 GA4 日期切换陷阱（关键，2026-09-30 两次运行实测 · 已修正）
+> ⚠️ 本节经晚间重跑推翻了早间的误判，以本版为准。
+
+- **根因（真正的）**：GA4 探索报告在**硬导航（goto / reload）后忽略 URL hash 中的自定义日期**，一律回退到默认「**昨天**」(Yesterday)。即：`localStorage.clear()` + 带目标日期 hash 的 `page.goto` → 页面落的是「昨天」，**不是** hash 里的日期。早间误以为"清存储+goto 读 hash 落目标日"是错觉——当时 hash 写的是 9/29 而默认昨天也恰好是 9/29，纯属巧合。
+- **IndexedDB 清除只在"全量 goto"生效，reload 不生效**：`localStorage/sessionStorage` + `indexedDB.deleteDatabase` 在 `page.goto`（整页导航）后能真正重置状态，落默认昨天；但同一状态下 `page.reload()` **不会**重置（reload 会重新采纳 URL 里残留的 hash 日期，且 IndexedDB 删除可能被 open connection 阻塞 onblocked）。→ 想换日期，要么**清存储+全量 goto（落默认昨天）**，要么**用 picker**。
+- **拉"指定非昨天日期"只能用 picker**，且 picker **仅在「从默认加载日改向目标日」时可靠**：实测 9/29(默认)→9/28(目标) 成功返回真实 15 事件；但 9/28→9/29、9/29→9/30 的二次改期**失效**（apply 点完日期不变）。同会话内反复用 picker 改期会卡死 → 须 `clear`+`goto` 重置回默认再改。
+- **picker 填日期要点**：用稳定选择器 `input.mat-datepicker-input`（不要用 `#mat-input-1/2`，Material 给递增顺序 id mat-input-N 会漂移）；填完两字段后**逐字段 Tab 失焦**让 Material 提交解析（值变成 `2026年9月29日` 本地格式才算成功）；点 **`取消`+`应用` 配对按钮**（不要只找第一个 `应用`，可能命中对比段/嵌套弹窗的 apply）。
+- **⚠️ 10/01 实测补充（picker 输入兼容·反面教材）**：合成 `Object.getOwnPropertyDescriptor(HTMLInputElement,'value').set` + `dispatchEvent('input')`、**以及** `page.keyboard.type` 裸键盘输入，**两者都无效**——Material datepicker 不采纳，且裸键盘输入会把日期改写成 `2026年1月1日`（URL 变 `date01=20260101`，报告落"没有可用数据"）。**非默认日期复核失败的根因几乎都是没严格用上一条写法**。今日 10/01 因没严格用 `mat-datepicker-input`+Tab 失焦+取消/应用 配对，9/29 复核受阻；既有 9/30 早(07:00)+晚(22:02)双跑三表面交叉验证已证 9/29=0 为持续异常，故未阻塞结论。→ 下次要自动化复核历史非昨天日期，**必须**走 `clear+goto` 重置默认后单次 picker，且严格用 `mat-datepicker-input` 选择器 + 逐字段 Tab 失焦 + 取消/应用配对，禁止合成 setter / 裸键盘。
+- **来源媒介双维度**：eventName + sessionMedium，设 hash（`seldim=["eventName","sessionMedium"]`）后 **`page.reload()`** 重渲染——reload 会采纳 hash，已实测可用；**禁止硬进"流量获取"报告**（易重定向 /admin）。
+
+### 数据纪律（铁律）
+- 数据不可用即标 unknown/PENDING，绝不编造；小样本（<10 用户）百分比仅方向参考。
+- **最新一日判定纪律（2026-09-30 重大修正）**：早间（07:00）拉 9/29 全 0，当时判"GA T+1 早间处理延迟·PENDING"；**晚间（22:02）重跑仍全 0，且同会话 9/28 已完整落地 15 事件** → 9/29 的 0 已**不是**单纯延迟，而是**异常**（偏离 2–6 用户/日基线 + 与前一日反差）。**对策：最新一日若连续两次（早+晚）拉取均 0，且前一日有数据，须标"异常·待验证"并升级 P1/P0 排查，不能简单归为延迟。** 验证手段：清存储+goto 拉"昨天"外指定日须用 picker；确认属性健康（能拉到前一日真实数据）后，若目标日仍 0 → 走站点 uptime / GA4 Realtime / Data Stream 接收 / 服务器日志排查。
+- 当日样例（2026-09-27）：4 用户 / 4 会话 / 4 浏览 / 15 事件 / 0 转化；referral=0；热门页 `/blog/scanned-pdf-to-epub-ocr`(2)、`/`(1)、`/blog/best-epub-reader-android`(1)。
+
+---
+
+## 🔴 工作节奏铁律：分析每周、交付每日（2026-09-28 用户决策）
+
+用户决定：减少反复思考，把时间转向具体细节的推进与交付。**后续工作陆续交由 hermes 执行。**
+
+### 频率表（hermes 必须按此排产）
+
+| 工作 | 频率 | 边界 |
+|------|------|------|
+| Google / Bing 数据分析 | **每周一次** | 看完整周对比；样本少时结合近 28 天，**不凭单日涨跌改方向** |
+| 关键词排名 | **每周一次** | 固定词表与目标页；不每天扩词、不每天重排优先级 |
+| GEO 分析 | **每周一次** | 固定问题集 / 平台 / 记录方式；引用、引荐访问、实际使用分开看 |
+| 竞品分析 | **每周轻扫 + 每月深看一次** | 无实质变化写「维持原计划」，**不重复生成完整竞品报告** |
+| 故障 / 转换失败 / 支付异常 | **持续监控，异常即处理** | ❌ 不降频 |
+| 内容与代码验收 | **每次改动后** | ❌ 不降频：门禁 + 机械层/事实层两层审计 |
+
+### 已落地（2026-09-28 实测，不是纸面记录）
+
+| 项 | 实测 |
+|---|---|
+| `data/seo-geo-board.json` | M1-5 / M7-3 / M7-4 / M9-2 / M9-3 由 `daily`、`every-2-days` → **`weekly`**；新增 `meta.cadencePolicy` + `cadencePolicySource`；`_readme` 增说明行 |
+| `npm run audit:workbench` | **47/47 PASS**（改 cadence 未破坏任何契约断言） |
+| `docs/seo-geo-execution-plan-2026-09-17.md` | 新增 **§十一 工作节奏**（频率表 / 周三问 / 每日规则 / 不降频三件事 / v3 收口表）；版本 v2.6 → **v2.7** |
+| `hermes-context/seo-geo-execution-plan-2026-09-17.md` | 已同步（同步头 2026-09-28，含 §十一） |
+| WorkBuddy 自动化 `f88c301a` | 每周一 09:00 关键词+竞品 SERP+候选原因，**本身已是周频**，与新节奏一致，无需改 |
+
+### 周复盘只回答三个问题（禁止扩写）
+
+1. 上周交付了什么（具体页面 / 修复 / 外链动作，**不看报告数量**）
+2. 有没有足以改变行动的新证据？没有 → 显式写「维持原计划」
+3. 本周最重要的三项交付（每项带完成标准）
+
+> 🔴 禁止为让周报显得有价值而制造新问题、追加新任务、重开已闭环议题。
+
+### hermes 接手范围与规则
+
+1. **唯一权威源** = `docs/seo-geo-execution-plan-2026-09-17.md`（§八 Batch 4 / §九 D 系列 / §十 M + M13 系列 / **§十一 收口表**）；
+   **状态回写** `hermes-context/seo-geo-execution-plan-2026-09-17.md`，冲突以 `docs/` 源为准；**禁止单独新建待办文档**。
+2. ⚠️ **权威源冲突已裁决**：`MEMORY.md` 曾写「以 `docs/待执行计划-v3-2026-09-26.md` 为准」，与 2026-09-27 用户铁律冲突。
+   **以 `seo-geo-execution-plan-2026-09-17.md` 为准**；v3 停止承接新项，其未闭环项（N1/N2/N3/A′/D3/D4/K2）已并入 §十一 收口表。
+3. 每日单一主线：完成并验收再进下一个；新想法记入待选项，不立即转向。
+4. 不自动 push；commit 与 push **分开跑**；用 `git rev-list --left-right --count origin/main...main` 验证 0/0。
+5. 仓库根是**父目录** `E:\一人公司\电子书格式转换站`，staging 只限定 `ebook-converter/...` + `HERMES.md`。
+
+### 待人工处理（阻塞 hermes 接手的已知故障）
+
+- ⚠️ `hermes cron list`（2026-09-28 实测）只有 2 个 job，**均 error exit 127**：脚本路径被 WSL 化
+  （`C:Users29537AppDataLocalhermesscripts*.sh` → `No such file or directory`）
+  - `scan-morning-radar`（`0 8 * * *`，**每日**，与新节奏冲突，建议改每周或直接停用）
+  - `cleanup-daily-junk`（`30 21 * * *`，每日，属清理不属分析，保留）
+- ⚠️ GA4 日报（每日 07:00，id `1d5da91c`）按新铁律应改**每周**；该 job 未出现在当前 `hermes cron list`，需先确认所在 profile 再改，勿臆断。
+
+---
+
+## 🔧 hermes 故障修复：cron 全部 exit 127 的根因与修法（2026-09-28 实测）
+
+### 症状
+`hermes cron list` 两个 job 每天报错：`Script exited with code 127`，stderr 带 WSL 字样：
+```
+wsl: 检测到 localhost 代理配置，但未镜像到 WSL……
+/bin/bash: C:Users29537AppDataLocalhermesscriptsscan-morning-radar.sh: No such file or directory
+```
+
+### 根因（实测确认，不是猜测）
+- 脚本**存在**（`C:\Users\29537\AppData\Local\hermes\scripts\*.sh` 两个都在）。
+- `cron/scheduler_script.py:323` 的 `_script_argv()`：`.sh` → **`shutil.which("bash")`**。
+- hermes gateway 进程的 PATH 里，`bash` 解析到 **`C:\Windows\System32\bash.exe`＝WSL 启动器**（`cmd //c where bash` 实测：PortableGit / **System32(WSL)** / WindowsApps 三个）。
+  本机**没装 Git for Windows**（`C:\Program Files\Git` 不存在），gateway 不在 WorkBuddy 沙箱内时 PATH 没有 PortableGit → 命中 WSL bash。
+- WSL bash 吃不掉 Windows 路径 `C:\Users\...`：反斜杠被当转义吃掉 → 变成 `C:Users29537...` → 127。
+  **同一路径交给 MSYS/Git Bash 则正常**（MSYS 会做 Windows→POSIX 路径转换）。
+
+### 修法（已实施，可逆）
+绕开 PATH 查找——**新增 .py wrapper，由 hermes 用 `sys.executable` 执行**（`.py` 不走 `shutil.which("bash")`）：
+- `AppData\Local\hermes\scripts\cleanup-daily-junk.py`
+- `AppData\Local\hermes\scripts\scan-morning-radar.py`
+
+每个 wrapper：① 显式挑 MSYS/Git Bash（候选表**故意排除** `System32\bash.exe`）→ ② 把脚本路径转成 `C:/Users/...` POSIX 形式 → ③ `subprocess.run` 透传 stdout/stderr 与退出码、转发额外参数（如 `--dry-run`）。
+然后把 job 指过去：
+```bash
+hermes cron edit 6c073b9d16fe --script cleanup-daily-junk.py
+hermes cron edit 33d3b61a59e9 --script scan-morning-radar.py
+```
+
+### 验证（两层，都实测）
+1. dry-run：`python-3.14.7 tools python` 跑 wrapper `--dry-run` → bash 命中 PortableGit、脚本跑完、**exit 0**。
+2. 端到端：`hermes cron run cleanup-daily-junk` → `Ran now: succeeded`；`cron list` 显示 `Last run 2026-09-28T16:17:32 ok`（此前恒为 error 127）。
+
+### 顺带修的连带问题：日清会抹掉周频产物
+清理脚本按「今日产生 + 被 git 忽略」搬文件。分析改每周后，`data/keyword-series.json`（每周一才重建、重建要花 SerpApi 额度）会被每晚搬走 → 面板整周无数据。
+已在 `cleanup-daily-junk.sh` 加 `is_series_keep()`：`*/data/*series*.json` 跳过。
+dry-run 复测：`SKIP(周频序列数据): keyword-series.json` ✅（改前是 `DRYRUN -> 将移入`）。
+
+### 🔴 dashboard 启动失败（已彻底定位并修复，2026-09-28 晚）
+
+报错：`Dashboard startup failed … ports [9120,9121,9122] … exited before ready (exit code: 1)`（桌面版重启仍复现）。
+
+#### 真因（从桌面日志 + 反编译 runtime 确认，不是猜测）
+- 桌面安装根：`E:\Program Files\Hermes Agent CN Desktop\`（**不是** venv 路径 `C:\Users\29537\.hermes\...`）。
+- 桌面后端 = 自带 runtime `data\versions\0.21.0-cn.18\hermes-agent-cn-runtime-win32-x64.exe`，HERMES_HOME = `data\hermes-home`，日志在 `data\hermes-home\logs\`（errors.log / gui.log）。
+- `data\hermes-home\logs\errors.log` 实测 3 次（15:35:55 / 15:35:59 / 15:36:03 = 三次端口尝试）同一栈：
+  ```
+  File "hermes_cli\web_server.py", line 622  → initialize_update_activity()
+  File "hermes_cli\update_activity.py", line 109 → _read()
+  json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+  ```
+- **根因文件**：`E:\Program Files\Hermes Agent CN Desktop\data\update-activity\activity.json`
+  实测是 **36 字节全 `\x00`（NUL）** —— 不是合法 JSON。`update_activity.py::_read()` 在 `web_server.py` **导入期（line 622）** 就 `json.loads()` 它，抛异常 → `cmd_dashboard` 直接 abort → exit code 1 → 桌面连试 3 端口都失败。
+- 反编译 `update_activity.pyc` 确认 schema：该文件是 **`{"entries": [...]}`**（模块对 `entries` 做 `.append()`），正确默认值是 `{"entries": []}`。
+- ⚠️ 之前记的两条猜测（`_resolve_dashboard_web_dist()`、`spawn-ledger.json` 死 PID）**均错误**：web_dist 完整有效，`spawn-ledger` 清空无济于事。真正唯一触发 `exit 1` 的就是这个坏 JSON。
+
+#### 修法（已实施，可逆）
+原子写入合法 JSON（先备份坏文件，再 fsync 落盘，避免再出现半截 NUL）：
+```bash
+# 以管理员/普通权限均可，路径用真实桌面安装根
+cd "E:\Program Files\Hermes Agent CN Desktop"
+python - <<'PY'
+import json, os
+p = r"data\update-activity\activity.json"
+os.replace(p, p + ".broken-20260928")          # 备份坏文件留存取证
+with open(p, "w", encoding="utf-8") as f:
+    f.write(json.dumps({"entries": []}, ensure_ascii=False) + "\n")
+    f.flush(); os.fsync(f.fileno())
+PY
+```
+实测坏文件已备份为 `activity.json.broken-20260928`，新文件 `{"entries": []}` 解析通过。
+
+#### 验证（两层，都实测）
+1. **全树扫描**：`glob **/*.json` 共 353 个文件逐一 `json.loads`，**0 个损坏**（坏的那个已修）。
+2. **启动级端到端**：用桌面自带 runtime 以桌面 HERMES_HOME 跑 `serve --host 127.0.0.1 --port 9131`
+   → 输出 `HERMES_BACKEND_READY port=9131` / `Hermes backend listening on 127.0.0.1:9131`，**无 JSONDecodeError、无 Traceback**（exit 124 仅是我 `timeout` 杀掉常驻服务，非失败）。
+   → 证明桌面版重启不会再卡在 exit 1。
+
+#### 🔴 防复发（重要）
+- 这次损坏是**环境性**的（进程崩溃 / 杀软拦截 / 更新写盘被打断，导致文件被截断成 36 字节 NUL），**无法从外部改 .exe 根治**。
+- 复发征兆 = `data\update-activity\activity.json` 又变成全 NUL 或非法 JSON → 重跑上面「修法」脚本 → 重开桌面版即可。
+- 已把 `activity.json.corrupt.bak`（也是 36 NUL）一并视为坏文件，新写入会重建；如再生成 `.corrupt.bak` 是正常的 app 自救备份，不影响启动。
+- 桌面版本体能起，**唯一能卡 exit 1 的已知点就是此文件**；若日后又 exit 1，第一反应查这个文件，不要去动 web_dist / spawn-ledger。
+
+#### 自愈守卫（防复发，已部署，2026-09-28 晚）
+- 已加一层**登录自启自愈**：每次 Windows 登录自动校验 `activity.json`，损坏则无声修好，用户不会再看到 exit 1。
+- 守卫脚本：`C:\Users\29537\AppData\Local\hermes\scripts\guard-hermes-desktop-activity.ps1`
+  （幂等：仅当文件缺失/空/全 NUL/非法 JSON/缺 `entries` 键时才重写；正常文件零改动）。
+- 登录启动项：`C:\Users\29537\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\HermesDesktopActivityGuard.vbs`
+  （`powershell -WindowStyle Hidden` 静默运行，与 `Hermes_Gateway.vbs` 同机制）。
+- 日志：`C:\Users\29537\AppData\Local\hermes\scripts\guard-hermes-desktop-activity.log`（仅修复/失败时落盘）。
+- 实测：① 对当前合法文件运行 → 无改动（no-op）；② 对 36 字节 NUL 副本 → 修复为 `{"entries": []}` 且可解析、含 `entries` 键。两层均通过。
+
+### 🖥️ 桌面版真实位置（更正，2026-09-28 晚）
+| 项 | 真实路径 |
+|---|---|
+| 桌面安装根 | `E:\Program Files\Hermes Agent CN Desktop\` |
+| 桌面 exe | `E:\Program Files\Hermes Agent CN Desktop\hermes-agent-cn-desktop.exe` |
+| 自带 runtime | `E:\Program Files\Hermes Agent CN Desktop\data\versions\0.21.0-cn.18\hermes-agent-cn-runtime-win32-x64.exe` |
+| HERMES_HOME | `E:\Program Files\Hermes Agent CN Desktop\data\hermes-home\` |
+| 日志 | `E:\Program Files\Hermes Agent CN Desktop\data\hermes-home\logs\`（errors.log / gui.log / agent.log） |
+| 后端形态 | headless `hermes serve`（`serveBackendArgs()` 实测） |
+⚠️ 沙箱不能开 GUI、后台进程随命令结束被回收 —— 我只能验证「runtime serve 能起 + 状态文件干净」，**最终请你自己重开桌面版确认 UI**。本次修复后预期一次启动成功。
+
+### `scan-morning-radar` 已改每周
+
+`hermes cron edit 33d3b61a59e9 --schedule "0 8 * * 1"` → `Next run: 2026-10-05T08:00`（周一 08:00）。
+⚠️ `cron list` 里它那条 `error: Script exited with code 127` 是**改脚本/改周期之前的旧记录**，不是"改完还失败"——新脚本（`scan-morning-radar.py`）尚未到触发点，验证要等 10-05。

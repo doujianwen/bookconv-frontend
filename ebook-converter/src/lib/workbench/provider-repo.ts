@@ -667,6 +667,7 @@ export const repoProvider: WorkbenchProvider = {
           {
             title: '最近反馈（最多 50 条）',
             columns: [
+              { key: 'flag', label: '送达', width: '70px', asDot: true },
               { key: 'at', label: 'Time', width: '150px' },
               { key: 'message', label: 'Message' },
               { key: 'pair', label: 'Format', width: '130px' },
@@ -676,6 +677,7 @@ export const repoProvider: WorkbenchProvider = {
             rows: stats.recent.map((r) => ({
               id: r.id,
               cells: {
+                flag: r.delivered ? 'healthy' : 'critical',
                 at: r.createdAt.slice(0, 16).replace('T', ' '),
                 message: r.message.replace(/\s+/g, ' ').slice(0, 180),
                 pair: r.sourceFormat && r.targetFormat ? `${r.sourceFormat} → ${r.targetFormat}` : '—',

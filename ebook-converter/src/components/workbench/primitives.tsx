@@ -45,9 +45,28 @@ export function StatusChip({ level, label, detail }: { level: HealthLevel; label
   );
 }
 
-/** Renders a raw cell value as a chip when the column asks for it. */
-function CellValue({ value, asPill }: { value: string | number | null; asPill?: boolean }) {
+/** Renders a raw cell value as a chip/dot when the column asks for it. */
+function CellValue({
+  value,
+  asPill,
+  asDot,
+}: {
+  value: string | number | null;
+  asPill?: boolean;
+  asDot?: boolean;
+}) {
   if (value === null || value === '') return <span className="text-gray-400">—</span>;
+  if (asDot) {
+    const level = String(value) as HealthLevel;
+    if (level in LEVEL_STYLES) {
+      const dotTitle = level === 'critical' ? '未送达飞书' : '已送达飞书';
+      return (
+        <span className="inline-flex items-center" title={dotTitle}>
+          <span className={cn('h-2.5 w-2.5 rounded-full', LEVEL_STYLES[level].dot)} aria-hidden />
+        </span>
+      );
+    }
+  }
   if (asPill) {
     const level = String(value) as HealthLevel;
     if (level in LEVEL_STYLES) return <StatusChip level={level} label={level} />;
@@ -162,7 +181,7 @@ export function DataTable({ table }: { table: WorkbenchTable }) {
                     i === 0 && 'font-medium text-gray-900 dark:text-gray-100'
                   )}
                 >
-                  <CellValue value={row.cells[c.key] ?? null} asPill={c.asPill} />
+                  <CellValue value={row.cells[c.key] ?? null} asPill={c.asPill} asDot={c.asDot} />
                 </td>
               ))}
             </tr>

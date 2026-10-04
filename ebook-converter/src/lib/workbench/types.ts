@@ -99,6 +99,8 @@ export interface TableColumn {
   align?: 'left' | 'right' | 'center';
   /** Render as a status pill rather than plain text. */
   asPill?: boolean;
+  /** Render as a lone colored status dot (no label) — for at-a-glance flags. */
+  asDot?: boolean;
 }
 
 export interface TableRow {
