@@ -95,6 +95,18 @@ jobs:
       - name: Run content integrity audit (fails on structural defects)
         run: cd ebook-converter && node scripts/audit-content-integrity.mjs
 
+      # 2026-10-04 新增：workflow / 门禁挂载点完整性审查。
+      # 起因：audit.yml 与 weekly-audit.yml 引用未入库的 scripts/audit.sh、
+      # 路径写成 ../../ 越界到仓库外、weekly 还用 | tee 吞掉退出码 ——
+      # 三个 bug 叠加 ⇒ 这道门禁在 CI 上从未真正生效，却一直显示「有门禁」。
+      # 本审查专门防这一类「看起来有、其实跑不通」的假门禁。
+      # 清单由 `git ls-files -z` 经 stdin 传入：Windows 下 Node fork git 恒 EBUSY，
+      # 且非 -z 会把中文路径输出成八进制转义。拿不到清单时脚本显式 exit 2（不算通过）。
+      # 注意 `git -C ..`：上一行已 cd 进 ebook-converter，不加 -C 则 ls-files 以子目录为基准，
+      # 得到的相对路径不含 ebook-converter/ 前缀 ⇒ I3 全部误报未入库（假失败）。
+      - name: Run workflow integrity audit (fails on fake gates)
+        run: cd ebook-converter && node scripts/audit-workflow-integrity.mjs --tracked-from-stdin < <(git -C .. ls-files -z)
+
       # GEO compliance: convert pages (7 mandatory elements, 0-7 graded score).
       # 31/31 PASS is the baseline (9/25 calibration). Any new page missing a
       # GEO element demotes the rating and blocks deployment.

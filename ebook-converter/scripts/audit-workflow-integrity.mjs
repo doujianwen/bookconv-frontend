@@ -98,23 +98,52 @@ add(
 //   **单一数据源 = git ls-files 实读已入库清单**（Windows 上非 -z 会把中文路径八进制转义，必须 -z），
 //   且同时接受「仓库根基准」与「ebook-converter 基准」两种前缀，任一命中即视为已入库。
 //   判据仍只测不变量（引用的脚本必须能取到），不测绝对数量。
+//
+// 2026-10-04 二次修正：Windows 下 Node fork git 恒 EBUSY（execFileSync status=null），
+//   故 git ls-files 的原始清单改由【外部传入】：
+//     node scripts/audit-workflow-integrity.mjs --tracked-from-stdin < <(git ls-files -z)
+//   拿不到清单时显式 exit 2（判据无法执行 ≠ 通过），绝不把「取不到」静默当成「没入库」。
 const missing = [];
 const checked = new Set();
-let TRACKED = new Set();
-try {
-  const { execFileSync } = await import('node:child_process');
-  const out = execFileSync('git', ['ls-files', '-z'], {
-    cwd: REPO_ROOT,
-    encoding: 'utf8',
-    maxBuffer: 64 * 1024 * 1024,
-  });
-  TRACKED = new Set(out.split('\0').filter(Boolean));
-} catch (e) {
-  console.error('⛔ 判据无法执行：git ls-files 失败 ⇒ 显式失败（不静默当通过）');
-  process.exit(2);
+
+function loadTracked() {
+  const argv = process.argv.slice(2);
+  const i = argv.indexOf('--tracked-from-stdin');
+  if (i >= 0) {
+    // 从 stdin 读 NUL 分隔清单（由 shell 的 `git ls-files -z` 提供）
+    const chunks = [];
+    const buf = Buffer.alloc(1 << 16);
+    const fd = 0;
+    while (true) {
+      let n;
+      try {
+        n = fs.readSync(fd, buf, 0, buf.length, null);
+      } catch (e) {
+        if (e.code === 'EAGAIN') continue;
+        if (e.code === 'EOF') break;
+        throw e;
+      }
+      if (n === 0) break;
+      chunks.push(Buffer.from(buf.slice(0, n)));
+    }
+    return new Set(
+      Buffer.concat(chunks)
+        .toString('utf8')
+        .split('\0')
+        .filter(Boolean)
+    );
+  }
+  return null;
 }
-if (TRACKED.size === 0) {
-  console.error('⛔ 判据无法执行：git ls-files 返回空 ⇒ 显式失败');
+
+const TRACKED = loadTracked();
+if (!TRACKED || TRACKED.size === 0) {
+  console.error(
+    '⛔ 判据无法执行：拿不到 git ls-files 清单。\n' +
+      '   本脚本在 Windows 下不 fork git（恒 EBUSY），请这样调用：\n' +
+      '     node scripts/audit-workflow-integrity.mjs --tracked-from-stdin < <(git ls-files -z)\n' +
+      '   （显式 exit 2，不静默当通过）'
+  );
   process.exit(2);
 }
 
