@@ -68,7 +68,7 @@ The practical distinction: you can make an AZW3 file; you generally can't make a
 - **Old devices open it partially** — pre-2015 Kindles show the text but drop the styling AZW3 carries.
 - **Three ways to load it** — USB, Send to Kindle email, or convert from EPUB first.
 - **AZW3 is KF8** — Amazon's consumer name for the format the hardware expects.
-- **KFX is different** — a newer store-side format you usually don't generate yourself.`
+- **KFX is different** — a newer store-side format you usually don't generate yourself. If you want the format-level detail — what AZW3 actually carries and what it drops — the [AZW3 format reference](/formats/azw3) walks through the structure.`
     }
   ]
 };
