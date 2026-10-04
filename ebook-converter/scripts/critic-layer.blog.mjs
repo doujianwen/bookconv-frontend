@@ -118,14 +118,25 @@ function parsePost(src, file) {
   let sm;
   while ((sm = secRe.exec(src))) sections.push({ heading: sm[2], body: sm[4] });
 
-  // FAQ 计数：在 faqs 块内数 `question:` 出现次数（稳健，不受 answer 内含反引号/花括号干扰）
+  // FAQ 计数：在 faqs 块内数 question 字段出现次数（稳健，不受 answer 内含反引号/花括号干扰）
+  //
+  // ⚠️ 2026-10-04 修复（纪律 10：「跑通一次」≠ 判据完整）：
+  // 原来只数 `question:`（反引号形式），而 4 篇 JSON 风格文件用双引号形式 `"question":`
+  // ⇒ faqCount 恒为 0 ⇒ 被误判成「无 FAQ 段落」BLOCK，把这 4 篇的 push 全拦了。
+  // 实测证据：_wb_tmp/resolve-faq-paradox.py 打印出这 4 篇的 faqs 块内
+  // 「critic 判据可匹配，块内 question 数 = 0」——判据能匹配到块，却数不出条目。
+  // 这类缺陷比没判据更坏：内容明明合规，门禁却报 BLOCK。
+  // 现在两种引号风格都认（可选用字符类，字符类写法实测配对为 0）。
   const faqBlockM = src.match(/export const faqs\s*=\s*\[([\s\S]*?)\n\];/);
   const faqBlock = faqBlockM ? faqBlockM[1] : '';
-  const faqCount = (faqBlock.match(/question:/g) || []).length;
+  const faqCount = (faqBlock.match(/["']?question["']?\s*:/g) || []).length;
   const faqs = [];
-  const faqRe = /question:\s*`([^`]*?)`,\s*answer:\s*`([\s\S]*?)`\s*\}/g;
+  // 同样兼容双引号与反引号两种值写法
+  const faqRe = /["']?question["']?\s*:\s*(?:"([^"]*?)"|`([^`]*?)`)\s*,\s*["']?answer["']?\s*:\s*(?:"([\s\S]*?)"|`([\s\S]*?)`)\s*\}/g;
   let fm;
-  while ((fm = faqRe.exec(faqBlock))) faqs.push({ question: fm[1], answer: fm[2] });
+  while ((fm = faqRe.exec(faqBlock))) {
+    faqs.push({ question: fm[1] ?? fm[2] ?? '', answer: fm[3] ?? fm[4] ?? '' });
+  }
 
   // 派生指标
   const bodyText = intro + '\n' + sections.map((s) => s.body).join('\n');

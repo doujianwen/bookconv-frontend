@@ -283,6 +283,52 @@ add(
   i4Problems.length === 0 ? i4Lines.join('\n') : i4Problems.join('\n')
 );
 
+// ── I5：解析型判据的「写法覆盖率」自检（防「跑通一次」≠ 判据完整）──
+//
+// 2026-10-04 实测事故：critic-layer.blog.mjs 的 FAQ 计数只数 `question:`（反引号形式），
+// 而 4 篇 JSON 风格文件用 `"question":` ⇒ faqCount 恒 0 ⇒ 被误判成「无 FAQ 段落」
+// 报 BLOCK，把这 4 篇的 push 全拦了。内容明明合规，门禁却报 BLOCK ——
+// 这类缺陷比没门禁更坏（训练人忽略输出）。
+//
+// 判据形态（不变量，不是绝对数量）：
+//   对每个「从数据文件里取字段」的判据正则，它所依赖的字段名必须用字符类写成
+//   同时匹配带引号与不带引号两种形态；只写裸字段名 ⇒ 一旦数据文件出现另一种
+//   引号风格就静默漏判。
+//   检测方式：扫 scripts/ 里形如 /(?:^|[^\w"])field(?:[^"]*?[:=])/ 的裸字段名匹配，
+//   若该正则在同一段代码里没有对应的 ["']?field["']? 变体 ⇒ 报 FAIL。
+// 不 fork 任何二进制（纪律：本机 spawnSync 恒 EBUSY），纯 fs + 正则。
+const criticSrc = (() => {
+  try { return fs.readFileSync(path.join(APP, 'scripts/critic-layer.blog.mjs'), 'utf8'); }
+  catch { return null; }
+})();
+if (criticSrc === null) {
+  add(false, 'I5 判据写法覆盖率（防「跑通一次」≠ 判据完整）',
+    '❌ 读不到 scripts/critic-layer.blog.mjs ⇒ 判据不可执行');
+} else {
+  const i5Problems = [];
+  const i5Lines = [];
+  // 已知的解析型字段 → 必须在同一文件里存在兼容引号的写法
+  const FIELDS = ['question', 'answer', 'heading', 'body'];
+  for (const f of FIELDS) {
+    // 找「裸字段名」出现：前面不是引号、后面不是引号
+    const bareRe = new RegExp('(?<![\\\\w"\'])' + f + '(?![\\\\w"\'])', 'g');
+    const bare = (criticSrc.match(bareRe) || []).length;
+    // 找「兼容引号」写法
+    const safeRe = new RegExp('["\']\\?' + f + '["\']\\?');
+    const safe = criticSrc.includes('["\']?' + f) || new RegExp(safeRe).test(criticSrc);
+    if (bare > 0 && !safe) {
+      i5Problems.push(`字段 ${f} 只在判据里以裸名出现（${bare} 处），没有兼容引号的写法 ⇒ 数据文件换引号风格就会静默漏判`);
+    } else {
+      i5Lines.push(`${f}: ${bare > 0 ? '裸名+引号兼容' : '仅引号形式'} ✓`);
+    }
+  }
+  add(
+    i5Problems.length === 0,
+    'I5 判据写法覆盖率（防「跑通一次」≠ 判据完整）',
+    i5Problems.length === 0 ? i5Lines.join('\n') : i5Lines.concat(i5Problems).join('\n')
+  );
+}
+
 // ── 输出 ──
 console.log('==========================================');
 console.log('  执行纪律门禁（把重复错误固化成可执行判据）');

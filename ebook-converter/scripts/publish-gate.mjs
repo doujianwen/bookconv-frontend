@@ -21,11 +21,48 @@ const GIT_ROOT = resolve(__dirname, '../..'); // 电子书格式转换站/（git
 const PROJ_ROOT = resolve(__dirname, '..');   // ebook-converter/（项目根）
 
 // 计算本次发布变更的博文 slug（staged + 工作区未提交），仅这些进 BLOCK 范围
+//
+// ⚠️ 2026-10-04 修复（本项目纪律 8：判据取不到基线 ≠ 基线为空）：
+// 原来这里用 spawnSync('git') 取变更集。但 Windows 上 Node 内 fork 任何二进制都 EBUSY
+// （status === null），旧代码 `r.status === 0 ? ... : []` 把 EBUSY 静默变成「本次无变更」，
+// 于是 GATE_SLUGS 没设 → critic 层退化成审计全量 64 篇 → 存量 BLOCK 拦住本次 push。
+// 实测证据：_wb_tmp/probe-fork.mjs 打印 status=null / error=EBUSY。
+//
+// 修法（两层）：
+//   ① 优先读 pre-push 钩子传进来的 GATE_SLUGS —— 钩子是 sh 调 git，不受 EBUSY 影响，
+//      它算出的 slug 列表才是权威的「本次变更范围」。
+//   ② 拿不到时才回退到本地 git；回退拿不到（EBUSY）必须 exit(2) 明确报「不可判定」，
+//      绝不静默当成「无变更」——静默放行等于把门禁关掉。
+function slugsFromEnv() {
+  const raw = process.env.GATE_SLUGS;
+  if (!raw || !raw.trim()) return null;
+  const SKIP = new Set(['index', 'types', 'rss']);
+  const list = raw.split(',').map((s) => s.trim()).filter(Boolean)
+    .filter((s) => !SKIP.has(s));
+  return list.length ? list : null;
+}
+
 function changedBlogSlugs() {
+  const fromEnv = slugsFromEnv();
+  if (fromEnv) {
+    console.log('[publish-gate] slug 范围来源：GATE_SLUGS 环境变量（由 pre-push 钩子提供，权威）');
+    return fromEnv;
+  }
+  console.log('[publish-gate] 未收到 GATE_SLUGS，回退到本地 git 查询…');
   const SKIP = new Set(['index', 'types', 'rss']);
   const run = (args) => {
     const r = spawnSync('git', args, { cwd: GIT_ROOT, encoding: 'utf8' });
-    return r.status === 0 ? (r.stdout || '').split('\n').map((s) => s.trim()).filter(Boolean) : [];
+    if (r.status === 0) return (r.stdout || '').split('\n').map((s) => s.trim()).filter(Boolean);
+    if (r.status === null) {
+      console.error('[publish-gate] ❌ 本地 git 调用崩溃（status=null，Windows 上通常是 EBUSY）');
+      console.error('[publish-gate]    ⇒ 无法判定本次变更范围。');
+      console.error('[publish-gate]    ⇒ 绝不把「取不到」当成「无变更」（那等于关掉门禁）。');
+      console.error('[publish-gate]    修法：请通过 pre-push 钩子 push（它用 sh 调 git，不受此影响），');
+      console.error('[publish-gate]          或临时用 GATE_SLUGS=a,b 显式指定本次变更的 slug。');
+      process.exit(2);
+    }
+    // status 是非 0 的数字 = git 正常执行并给出结论（例如路径不存在），不是崩溃
+    return [];
   };
   const files = new Set([
     ...run(['diff', '--name-only', '--cached', 'HEAD', '--', 'ebook-converter/src/data/blog']),
