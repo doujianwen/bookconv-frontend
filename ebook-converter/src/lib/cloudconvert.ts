@@ -83,8 +83,11 @@ async function ccRequest<T>(
         } catch {
           /* keep raw text */
         }
-        // 402 (too many jobs at once) / 429 (rate limit) 是瞬态限流，需退避重试
-        if ((res.status === 402 || res.status === 429) && attempt < retries) {
+        // 429 = 请求频率限流，瞬态，值得退避重试。
+        // 402 = **账户转换额度耗尽**（CloudConvert 原文 "Your account has run out of
+        // conversion credits"，2026-10-04 飞书告警坐实）—— 退避重试毫无意义，
+        // 只会让每次失败白等 10-18 秒并多打两次 API，因此直接上抛。
+        if (res.status === 429 && attempt < retries) {
           await new Promise((r) => setTimeout(r, 3000 * attempt));
           continue;
         }

@@ -141,8 +141,18 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
       }
     } else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
       const head = await fsp.readFile(inputPath);
-      const sig = head.subarray(0, 4).toString('latin1');
-      if (!(sig === 'BOOK' || sig === 'TEXt')) {
+      // MOBI / AZW3 的格式标识都在**偏移 60**：MOBI="BOOKMOBI"、旧式 PalmDOC="TEXtREPLACE"、
+      // AZW3(KF8)="TPZ3"。偏移 0-59 是**书名**。
+      // 旧实现查 head[0:4] 是否等于 "BOOK"/"TEXt"，只在该书名恰好以这两个词开头时才通过 ——
+      // 绝大多数真实 mobi/azw3 会被本地校验误杀成「not a valid eBook format」，
+      // 根本走不到 CloudConvert（2026-10-04 生产告警 + 实测样本坐实）。
+      // 取 12 字节：最长标识是 TEXtREPLACE（11 字符），切短会永远匹配不上
+      const magic = head.length > 71 ? head.subarray(60, 72).toString('latin1') : '';
+      const isBook = magic.startsWith('BOOKMOBI') || magic.startsWith('TEXtREPLACE');
+      const isKf8 = magic.startsWith('TPZ3');
+      // 兼容极少数把标识放在开头的变体
+      const front = head.subarray(0, 4).toString('latin1');
+      if (!(isBook || isKf8 || front === 'BOOK' || front === 'TEXt')) {
         throw new Error('not a valid eBook format');
       }
     } else if (sourceFormat === 'pdf') {
