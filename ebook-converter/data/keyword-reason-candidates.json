@@ -5,49 +5,8 @@
     "每条候选是 HYPOTHESIS（相关≠因果），需人确认后才写入 data/keyword-reasons.json（真相文件）。",
     "晋升：node scripts/confirm-keyword-reason.mjs \"<query>\" <itemIndex>"
   ],
-  "generatedAt": "2026-09-28T07:32:06.942Z",
+  "generatedAt": "2026-10-05T03:03:38.961Z",
   "d0": "2026-09-27",
   "threshold": 3,
-  "candidates": [
-    {
-      "query": "ebook converter online",
-      "observed": {
-        "prevPos": 10,
-        "latestPos": 6,
-        "delta": 4,
-        "prevDate": "2026-09-11",
-        "latestDate": "2026-09-25"
-      },
-      "items": [
-        {
-          "type": "competitor",
-          "confidence": "high",
-          "text": "「ebook converter online」本词你方排名上升（10→6），同期竞品 Convertio（convertio.co）#3→#2 上升。实测到竞品在此词排名上升，可能与你方排名变动相关（相关≠因果）。建议核对：竞品该页的 schema/FAQ 覆盖、内容新鲜度、外链增长，以及你方对应页面近期是否改动。",
-          "evidence": "competitor-series.json 中该 query 的竞品 latestRank 优于 prevRank（确有上升，非首次观测）；你方 Δ=4。",
-          "source": "competitor-series.json",
-          "relatedNotCausal": true
-        }
-      ]
-    },
-    {
-      "query": "is azw3 compatible with kindle",
-      "observed": {
-        "prevPos": 2,
-        "latestPos": 9,
-        "delta": -7,
-        "prevDate": "2026-09-04",
-        "latestDate": "2026-09-18"
-      },
-      "items": [
-        {
-          "type": "no-competitor",
-          "confidence": "medium",
-          "text": "「is azw3 compatible with kindle」本词你方排名下降（2→9），但已监测的 5 个竞品在本词**均未进入 Top-100**。未见已监测竞品的挤压；不排除未监测竞品、算法更新、季节性或自身页面改动所致。建议人工核对 SERP 实际结果，以及该词对应页面近期是否改动。",
-          "evidence": "competitor-series.json 中该 query 的 5 个竞品 latestRank 全为 null（Top-100 外）；你方 Δ=-7。",
-          "source": "competitor-series.json",
-          "relatedNotCausal": true
-        }
-      ]
-    }
-  ]
+  "candidates": []
 }

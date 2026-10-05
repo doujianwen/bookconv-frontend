@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test": "jest --config jest.config.cjs",
     "test:watch": "jest --watch",
+    "test:vi": "python bookconv_data_asset/_scripts/test_vi_classify.py",
     "test:e2e": "playwright test",
     "coverage": "jest --coverage",
     "start-with-worker": "node -e \"const q = require('./dist/lib/queue'); q.startWorker().then(() => console.log('Worker started')).catch(e => console.error('Worker failed:', e.message)) & npm start\"",

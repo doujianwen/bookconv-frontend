@@ -337,7 +337,8 @@
           "recurring": "weekly-monday",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 三合一实测：Bing 可比词 34（升14/降12/平8），桶升级 top10->top3 = 1（convert kobo books to epub 4->3），Top30->20/20->10 = 0。位移>=1 判定推进，量级小已标注。证据=数据分析/keyword-rank-latest.csv + BIngAPI_Query_2026_10_05.csv"
         },
         {
           "id": "M1-7",
@@ -349,7 +350,8 @@
           "due": "2026-10-05",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 达标：20 词（Bing实测∩PromptSet，表述逐字符一致）>= 验收 15。资产页 20/20 已核实存在。交付=数据分析/M1-7-问题型词回流GEO-映射表-2026-10-05.md。关键发现：5 个故障叙述句全部指向 /blog/why-ebook-wont-open-kindle 一页（25%）。"
         }
       ]
     },
@@ -461,7 +463,8 @@
           "due": "2026-10-20",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。"
         },
         {
           "id": "M2-9",
@@ -693,7 +696,8 @@
           "due": "2026-10-10",
           "priority": "P2",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "todo",
+          "note": "🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。"
         }
       ]
     },
@@ -861,7 +865,8 @@
           "recurring": "weekly",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 三合一实测：3 快照(09-25/09-28/10-05)，129 对 pairs，noData 117(90.7%)。新进 7/掉出 4/降 1/升 0。🔴 覆盖率过低，归因一律降级为待观察。证据=数据分析/competitor-serp-2026-10-05.json"
         },
         {
           "id": "M7-4",
@@ -989,7 +994,8 @@
           "recurring": "monthly-first-week",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "note": "🔴 2026-10-05 新增待复审项：Bing AI VI 由 +147.8% 翻转为 -10.0%，暴露「单窗口 VI 不可作趋势结论」——须以「滚动多窗口 + 7日移动均值」替代单点 VI。证据=数据分析/Bing四份报表核验-2026-10-05.md 🟢 09:35 红队：Google VI 敏感性测试 7 天全零假设符号未翻转（−29.4%~−52.9%）⇒ 方向成立；但仅 37 次曝光，幅度不可作精确结论。"
         }
       ]
     },
@@ -1024,7 +1030,8 @@
           "recurring": "weekly",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 每周三件套已执行（M1-6/M7-3/M9-5 全部 done）；每日单一主线=三合一首跑。"
         },
         {
           "id": "M9-3",
@@ -1037,7 +1044,8 @@
           "recurring": "weekly",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "doing",
+          "note": "2026-10-05 时间配比：分析(拉数+报告+红队) 约 60% / 执行验证约 40%。⚠️ 低于 60% 执行门槛，下周须削减分析项、补执行（M2-9 博客补给 due 10-10 + M2-8 尚未启动）"
         },
         {
           "id": "M9-4",
@@ -1063,7 +1071,8 @@
           "recurring": "weekly-monday",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 三合一实测：GSC 同窗口(10d) 09-25->09-27 全部 29 词持平，无可判定变化；最新 11d 窗口 21 词全 >30 名。Bing 品牌词 bookconv 5->4、ebookconverter 5->4。详见最终报告"
         },
         {
           "id": "M9-6",
@@ -1089,7 +1098,9 @@
           "recurring": "weekly-monday",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "result": "2026-10-05 三合一首跑完成（此前 7 天未跑，因所谓\"已挂自动化\"实为未挂）。VI：Google -27.5% / Bing Web +26.1%（两者均越门槛=反向成立）/ Bing AI -10.0%（未达门槛，不参与判定）。09:00 收到 10-05 新导出后 Bing AI 由 +147.8% 修正为 -10.0%（高位盘整），已同步修正主报告。四份报告已出。同时补挂自动化 13300356(周一07:30 ACTIVE)。顺带修 daily_vi.py 方向性缺陷并加门禁 test:vi",
+          "note": "Bing AI 10-05 新导出补齐 AIPageStats/AISearchQueries；仍缺 CountryReport（地域）⇒ 下次导出务必补。Citation Share 本次 182/182 有值但 Top10 中 5 个 Citations<30，排序须按绝对量。 09:15 第二批三份传统报表已核验：🟢点击三份全=73零差异，曝光 2284/1692/1177（页面74.1%、关键词51.5%为子集）。🟢convert 页 0.3%→1.2% 修正，位置全 Top10(3.0-8.2)但曝光仅21 ⇒ 归因改为「曝光量/索引覆盖」非排名。🟢Bing 675词 99.9% Top10 vs Google 21词全部44-96，分布几乎不重叠。🟢地域 us40.3%/ww32.1%（ww颗粒度不足）。🚫 AI 侧无对等地域报表（09:04 用户纠正 + 归档复核：唯一那份 134 字节/17 展示、被「网络」过滤的切片）⇒ 不列待补项。 🔴 09:35 结论红队审计（10 项独立重算）：抓到 1 处硬错（「Google 21 词全部 44-96」实为 18/21）+ 1 处数字错（Share 小样本 5→6）。4 个结论降级：①「675 词 99.9% Top10」权重下调（97.9% 词曝光<5 次，是尾部小样本必然）②convert「位置全 Top10」归因作废（曝光中位 2-4，且 25/31 页缺席）③AI convert 18.4% 高度集中（Top2 占 96%）④us 40.3% 低估（ww 32.1% 很可能是未归类美国）。🟢 敏感性测试：Google 单日归零符号均未翻转⇒方向判定稳，但幅度精度低只作方向。详见 数据分析/结论红队审计-2026-10-05.md"
         }
       ]
     },
