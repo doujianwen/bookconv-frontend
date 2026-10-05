@@ -1,79 +1,107 @@
 export const slug = "kindle-epub-azw3-mobi";
-export const title = "Azw3/Epub/Mobi Compatibility with Kindle";
+export const title = "Convert AZW3, EPUB & MOBI for Your Kindle: Step-by-Step";
 export const date = "2026-08-26";
 export const author = "BookConv Team";
-export const tags = ["EPUB", "MOBI", "AZW3", "KINDLE", "KOBO", "EBOOK CONVERSION"];
+export const tags = ["KINDLE", "AZW3", "EPUB", "MOBI", "SEND-TO-KINDLE", "EBOOK CONVERSION"];
 
 export const content = {
-  intro: `Navigating the world of e-readers can be a maze of acronyms and incompatible formats. Whether you are a self-published author preparing a manuscript for launch or an avid reader trying to sideload your favorite library books, the question remains: which format actually works best for your device? This guide breaks down the compatibility of AZW3, EPUB, and MOBI for Kindle and Kobo devices, helping you choose the right format and convert your files effortlessly using free tools like BookConv.`,
+  intro: `You already own a Kindle and you have a file — an EPUB from the library, a MOBI you downloaded years ago, or an AZW3 someone sent you. The question is not "which format is best in theory" but "what do I actually do to get this on my device and reading-ready?" This guide is the hands-on walkthrough: how Kindle handles each format, the two ways to deliver a file (Send-to-Kindle vs USB), and the free, no-install steps to convert EPUB or MOBI into the AZW3 your Kindle wants. For the broader "which format fits which device ecosystem" comparison, see our [Kindle & Kobo format guide](/blog/azw3-epub-mobi-kindle-compatibility).`,
   sections: [
     {
-      heading: "Kindle vs. Kobo: Understanding Format Compatibility",
-      body: `Before diving into specific file types, it is essential to understand that Amazon and Kobo have historically operated on different ecosystems. **Kindle** devices natively support Amazon's proprietary formats, primarily **AZW3** and the legacy **MOBI**. Meanwhile, **Kobo**, Nook, and Apple Books rely heavily on the open-standard **EPUB** format.
+      heading: "Which Format Does Your Kindle Actually Want?",
+      body: `Kindle e-ink readers (Paperwhite, Oasis, Basic, Scribe) speak **AZW3** natively. That is the format Amazon itself uses for Kindle Format 8, and it preserves your typography, fonts, and footnotes better than anything else.
 
-While there is some overlap—most notably on Kindle Fire tablets where side-loading EPUBs is possible—dedicated e-ink readers like the Kindle Paperwhite or Kobo Libra require specific formatting to display text correctly. Using the wrong format often results in broken layouts, missing fonts, or the device simply refusing to open the file. Understanding these ecosystem boundaries is the first step in ensuring your eBook reaches your readers without technical glitches.`
+**EPUB** is not read directly by Kindle e-ink devices. You can email it to Send-to-Kindle and Amazon's servers will convert it for you, but that automatic conversion often strips styling, drops images, or mangles tables. Converting to AZW3 yourself first gives you a far cleaner result.
+
+**MOBI** still opens on older Kindles, but Amazon has deprecated it for new uploads. On a modern Kindle it renders with inconsistent spacing and no embedded fonts. Treat MOBI as a legacy input, not a target format.
+
+Bottom line: aim for **AZW3** as the file that lands on your Kindle. EPUB and MOBI are sources you convert from, not formats you sideload as-is.`
     },
     {
-      heading: "AZW3 vs. MOBI: Why AZW3 Wins for Kindle Devices",
-      body: `For years, **MOBI** was the gold standard for Kindle users. It was simple, widely supported, and the default output for many early conversion tools. However, MOBI is largely deprecated on newer Kindle devices. Amazon has moved toward **AZW3**, also known as Kindle Format 8, which offers significantly superior capabilities.
+      heading: "Send-to-Kindle: Email and the App (EPUB Auto-Converts)",
+      body: `The easiest path for most people is Amazon's own delivery service.
 
-**AZW3** supports advanced CSS styling, allowing for precise control over typography, footnotes, and metadata. This makes it the preferred choice for authors who want their books to look professional on high-resolution screens. In contrast, MOBI has limited support for embedded fonts and complex layouts. If you are uploading directly to Amazon Kindle Direct Publishing (KDP) or sending files via the "Send-to-Kindle" feature, converting your source file to AZW3 ensures better readability and preserves the visual integrity of your work. While Amazon still accepts MOBI uploads for KDP, the reading experience on modern devices is noticeably inferior to AZW3.`
+**By email:** send the file as an attachment from your approved address to your Send-to-Kindle address (found under Manage Your Content and Devices). EPUB and MOBI attachments are accepted; Amazon converts EPUB to AZW3 on its servers and pushes the book to your library. PDF is accepted too but is not reflowable.
+
+**By app or website:** the Send to Kindle app (desktop and mobile) and the right-click "Send to Kindle" option on Windows and Mac do the same conversion locally and upload directly.
+
+**The catch:** server-side conversion is convenient but lossy. Complex layouts, sidebars, and images inside an EPUB frequently arrive simplified. If the book looks wrong after delivery, convert to AZW3 yourself before sending (next section) for full control.`
     },
     {
-      heading: "The EPUB Debate: Best Format for Kobo and Non-Amazon E-Readers",
-      body: `If you are writing for the broader market, **EPUB** is non-negotiable. It is the industry standard for Kobo, Barnes & Noble Nook, and Apple Books. EPUB files are reflowable, meaning the text adjusts to fit different screen sizes and font preferences, providing a consistent reading experience across devices.
+      heading: "USB Sideloading AZW3 the Right Way",
+      body: `For maximum fidelity, skip the cloud and copy the file yourself.
 
-For Kobo users, EPUB is the native language. While you can convert EPUB to MOBI or AZW3 for Kindle, starting with a high-quality EPUB ensures that your formatting, table of contents, and metadata are preserved accurately. When converting EPUBs, it is crucial to use tools that validate the code, as poorly structured EPUBs can cause sync issues on Kobo devices. Additionally, note that DRM-free EPUBs can be side-loaded onto Kindle Fire tablets, but Paperwhite and Oasis users will still need to convert these files to AZW3 for optimal compatibility.`
+1. Connect your Kindle to a computer with the USB cable.
+2. It mounts as a drive. Open the **documents** folder.
+3. Copy your **.azw3** file into documents. (AZW3, not EPUB or MOBI, for best results.)
+4. Eject safely and open the book from your library.
+
+USB sideloading bypasses Amazon's converter entirely, so whatever AZW3 you built is exactly what shows up. This is the method to use for books where layout matters — manuals, cookbooks, anything with tables or custom fonts. Note that sideloaded files do not sync progress to the cloud the way purchased books do, so keep that in mind if you read across devices.`
     },
     {
-      heading: "How to Convert eBooks for Free: Tools and Step-by-Step Guide",
-      body: `You do not need expensive software to prepare your eBooks. Two of the best free tools available are **Calibre** and online converters like **BookConv**.
+      heading: "Converting EPUB or MOBI to AZW3 for Free",
+      body: `Two free routes, no subscription required.
 
-**Using Calibre:**
-Calibre is a robust desktop application that handles almost any eBook format. To convert a file:
-1. Add your source file (e.g., DOCX or PDF) to Calibre.
-2. Click "Convert books" and select the output format (AZW3 for Kindle, EPUB for Kobo).
-3. Adjust metadata and page settings in the "Look & Feel" tab.
-4. Click OK to generate your converted file.
+**Online (fastest):** open BookConv, upload your EPUB or MOBI, pick **AZW3** as the output, and download. No install, no account. This is the quickest way to prep a library book or a downloaded file before USB sideloading it.
 
-**Using BookConv:**
-For users who prefer a browser-based solution, BookConv offers a fast and intuitive interface. Simply upload your document, select your target device, and download the converted file. This is particularly useful for quick conversions without installing software.
+**Calibre (most control):** the free desktop app handles batch and fine-grained settings.
+1. Add your source file (EPUB or MOBI).
+2. Click "Convert books" and choose **AZW3** as the output format.
+3. Under "Look & Feel" set fonts and margins; under "Structure Detection" confirm chapter breaks.
+4. Click OK, then copy the resulting .azw3 to your Kindle via USB.
 
-**Troubleshooting Common Conversion Issues:**
-- **Broken Layouts:** Often caused by complex CSS in the source file. Simplify your stylesheet before converting.
-- **Missing Fonts:** Ensure your font files are embedded in the source and the converter is set to embed them in the output.
-- **TOC Errors:** Generate a detailed table of contents in your word processor before conversion to ensure links remain functional.`
+Either way, converting to AZW3 before it touches your Kindle avoids the stripped-styling problems of Send-to-Kindle's automatic EPUB conversion.`
+    },
+    {
+      heading: "Kindle Model Notes: Paperwhite, Oasis, Basic, Fire",
+      body: `All Kindle e-ink models read AZW3 identically well, so the format choice is the same everywhere. The differences are practical, not format-related:
+
+- **Paperwhite / Oasis / Basic / Scribe:** AZW3 is the gold standard. EPUB must be converted first; MOBI opens but looks dated.
+- **Kindle Fire (tablet):** runs Android, so it can side-load and read EPUB directly through a reader app. But if you want the book in your Kindle library alongside your other purchases, convert to AZW3 and use Send-to-Kindle like the e-ink models.
+- **Older 2010s Kindles:** MOBI is the safest legacy bet there, since very old firmware predates AZW3. For any device from roughly 2017 onward, AZW3 wins.
+
+When in doubt, AZW3 covers every current Kindle.`
+    },
+    {
+      heading: "Troubleshooting: Won't Open, Broken Layout, Missing Fonts",
+      body: `**Book won't open after sideloading.** You probably dropped an EPUB or MOBI onto an e-ink Kindle. Convert it to AZW3 and retry over USB.
+
+**Layout looks broken or spacing is wrong.** The source was converted by Send-to-Kindle's server, which simplified it. Re-convert to AZW3 yourself with Calibre or BookConv for control over fonts and margins.
+
+**Fonts missing.** MOBI strips embedded fonts; AZW3 and EPUB keep them. Convert to AZW3 and the typography returns.
+
+**Images or tables vanished.** Often caused by complex EPUB structures the auto-converter flattened. Build the AZW3 locally from a clean source (DOCX or PDF to EPUB to AZW3) so images and tables survive.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **生态边界要先搞清楚。** Kindle 原生 AZW3 与 MOBI，Kobo、Nook、Apple Books 依赖 EPUB；用错格式会得到布局错乱、字体丢失甚至设备拒绝打开。
-- **AZW3 是现代 Kindle 的正确答案。** 支持高级 CSS、精细排版控制、脚注与元数据；MOBI 在新设备上阅读体验明显逊色。
-- **EPUB 是面向广泛市场的必选项。** 从高质量 EPUB 出发，目录和元数据才能准确保留。
-- **代码校验不可省。** 结构不良的 EPUB 会在 Kobo 上引发同步问题。
-- **Kindle Fire 能侧载 EPUB，Paperwhite 和 Oasis 不行。** 后两者仍需转成 AZW3。`
+      body: `- **目标格式是 AZW3。** Kindle 电子墨水屏原生读 AZW3；EPUB 需先转，MOBI 是过时输入。
+- **Send-to-Kindle 方便但会压缩。** 亚马逊服务器把 EPUB 自动转 AZW3 时常丢样式、图、表格；要求高保真就自己先转。
+- **USB 侧载最保真。** 直接把 .azw3 拷进 documents 文件夹，绕过云端转换，排版原样呈现。
+- **免费转换两条路。** BookConv 在线（无需安装）或 Calibre 桌面（可控最强），输出都选 AZW3。
+- **所有现役 Kindle 都读 AZW3。** Paperwhite / Oasis / Basic / Scribe 一致；Fire 平板能直接读 EPUB，但进 Kindle 书库仍需 AZW3。`
     }
   ]
 };
 
 export const faqs = [
   {
-    question: "Can I read EPUB files directly on a Kindle Paperwhite?",
-    answer: "No, the Kindle Paperwhite does not natively support EPUB files. You must convert them to AZW3 or MOBI before sending them to the device. However, Kindle Fire tablets can side-load and read EPUBs directly."
+    question: "Can I put an EPUB directly on a Kindle Paperwhite?",
+    answer: "Not directly. Email it via Send-to-Kindle (Amazon converts it for you) or convert it to AZW3 first with a free tool like BookConv or Calibre, then sideload the AZW3 over USB. The e-ink Kindle will not open a raw EPUB file."
   },
   {
-    question: "Is MOBI still supported on Kindle devices in 2025?",
-    answer: "While older Kindle devices may still open MOBI files, Amazon has deprecated the format for new uploads and recommends AZW3 for better performance and feature support. MOBI lacks advanced typography and font embedding capabilities found in AZW3."
+    question: "Is MOBI still usable on Kindle in 2026?",
+    answer: "MOBI still opens on older Kindles, but Amazon deprecated it for new uploads and it renders with inconsistent spacing and no embedded fonts on modern devices. Convert MOBI to AZW3 for the best result."
   },
   {
-    question: "What is the best free ebook converter for Kindle?",
-    answer: "Calibre is widely considered the best free desktop converter due to its extensive format support and customization options. For online users, BookConv offers a quick, no-installation solution for converting files to AZW3 and EPUB."
+    question: "What is the best free way to convert to AZW3?",
+    answer: "BookConv converts EPUB or MOBI to AZW3 in the browser with no install or account. For batch jobs and fine control over fonts and margins, Calibre is the free desktop standard."
   },
   {
-    question: "Does AZW3 work on all Kindle models including Paperwhite and Oasis?",
-    answer: "Yes, AZW3 is fully supported on all Kindle e-ink devices, including the Paperwhite, Oasis, and Basic Kindle. It provides superior font rendering and layout control compared to the older MOBI format."
+    question: "Does Send-to-Kindle keep my formatting?",
+    answer: "It converts EPUB and MOBI on Amazon's servers, which is convenient but lossy. Complex layouts, images, and tables often arrive simplified. For full fidelity, convert to AZW3 yourself before sending."
   },
   {
-    question: "Can I convert AZW3 to EPUB for Kobo without losing formatting?",
-    answer: "Yes, most modern converters like Calibre and BookConv can convert AZW3 to EPUB while preserving formatting. However, it is always best to start with a high-quality source file, such as a Word document or PDF, to minimize formatting errors during conversion."
+    question: "Which Kindle models read AZW3?",
+    answer: "All current Kindle e-ink models — Paperwhite, Oasis, Basic, and Scribe — read AZW3 natively and with the best quality. The Fire tablet can also read AZW3, and additionally opens EPUB through a reader app."
   }
 ];

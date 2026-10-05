@@ -96,7 +96,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [Ebook Troubleshooting & FAQ | Fix Format Issues Fast](https://www.bookconv.com/blog/ebook-troubleshooting)
 - [How to Convert EPUB to MOBI Free Online](https://www.bookconv.com/blog/epub-to-mobi)
 - [Harry Potter Digital Books: How to Read Across Multiple Devices](https://www.bookconv.com/blog/harry-potter-digital-books-multiple-devices)
-- [Azw3/Epub/Mobi Compatibility with Kindle](https://www.bookconv.com/blog/kindle-epub-azw3-mobi)
+- [Convert AZW3, EPUB & MOBI for Your Kindle: Step-by-Step](https://www.bookconv.com/blog/kindle-epub-azw3-mobi)
 - [Fix PDF to EPUB Layout Issues: Typesetting Tips](https://www.bookconv.com/blog/layout-typesetting-pdf-epub)
 - [Convert Legacy LIT, DJVU, FB2, RTF to EPUB & PDF Free](https://www.bookconv.com/blog/legacy-lit-djvu-fb2-converter)
 - [Learn Lit Format Conversion and Manage Your Ebooks](https://www.bookconv.com/blog/lit-format-conversion-and)
