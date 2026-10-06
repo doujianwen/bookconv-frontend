@@ -1,11 +1,11 @@
 export const slug = `batch-converter`;
-export const title = `Batch Ebook Converter: How to Convert Many Files at Once (and When to Use Calibre)`;
+export const title = `When to Use Calibre for Batch Conversion (Instead of a Browser Tool)`;
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Batch Conversion", "Calibre", "Ebook Formats", "BookConv", "Workflow"];
 
 export const content = {
-  intro: `One book is a one-click job. Twenty books is a workflow. When you need to move a whole shelf from one format to another — a Calibre library export, a box of old PDFs, a stack of MOBI files from a retired Kindle — you want batch conversion, not twenty round trips through a single-file form. This guide covers how batch ebook conversion works, where the limits are, and when desktop Calibre still earns its keep.`,
+  intro: `One book is a one-click job. Twenty books is a workflow. When you need to move a whole shelf from one format to another — a Calibre library export, a box of old PDFs, a stack of MOBI files from a retired Kindle — you want batch conversion, not twenty round trips through a single-file form. This guide focuses on where browser batch conversion stops being enough — and when desktop Calibre's command line is still the right tool for the job.`,
   sections: [
     {
       heading: `What Counts as Batch Conversion?`,
