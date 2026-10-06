@@ -23,6 +23,8 @@
     "audit:geo-content": "node scripts/geo-audit-content.mjs --no-online",
     "audit:geo-guide": "node scripts/geo-audit-guide.mjs --no-online",
     "audit:workbench": "node scripts/audit-workbench-honesty.mjs",
+    "gate:transpile": "node scripts/gate-workbench-transpile.mjs",
+    "gate:transpile:self-test": "node scripts/gate-workbench-transpile.mjs --self-test",
     "audit:top-asset": "node scripts/protect-top-asset.mjs",
     "audit:nojs": "node scripts/verify-nojs-render.mjs",
     "audit:repo": "node scripts/audit-repo-hygiene.mjs",

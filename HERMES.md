@@ -199,8 +199,11 @@ hermes cron status                                                  # 查 gatewa
 
 ### 🔴 GA 自动化 cookie 自恢复机制（关键，2026-09-28 实测确认）
 - 「GA tab 须预开」实为**软前置**：tabbit 浏览器保留有效的 **Google 会话 cookie**，运行期直接 `page.goto` 到 GA URL 即自动落入已登录态，**不需要用户名/密码**，也无需用户手动开 tab。
-- 唯一硬依赖 = **cookie 未过期**。若 Google 因长期闲置/安全事件强制重新认证，导航会落到登录墙，那时才需用户重新登录一次。
-- 结论：日后运行**不必再报"前置异常"**，直接走导航恢复即可；唯一需用户介入 = cookie 过期后的重新登录。建议用户在 tabbit 固定(pin) GA 标签页并偶尔点开以保持 cookie 活跃。
+- **两个硬依赖（任一失效都拉不到数据，须区分根因）**：
+  1. **cookie 未过期**：若 Google 强制重新认证，导航落到**登录墙**（body 含「登录 / Sign in / 选择账号」），需用户重登一次。
+  2. **网络可达 Google（需代理/VPN）**：本机在中国大陆，analytics.google.com 被 GFW 拦截，**无可用代理时浏览器报 `net::ERR_CONNECTION_TIMED_OUT`**（2026-10-05 实测；同源 `curl analytics.google.com` 亦 `http=000`，而 workbuddy.cn 等国内站 `http=200`）。这**不是** cookie 问题、**不是**脚本 bug——是代理/VPN 没开。
+- 诊断口诀：**登录墙 = cookie 过期（用户重登）**；**`ERR_CONNECTION_TIMED_OUT` = 代理/VPN 未开（开代理后重跑）**；两者都 ≠ 数据为空。本机无代理则只能标 PENDING，禁止编造。
+- 结论：日后运行**不必再报"前置异常"**，直接走导航恢复即可；需用户介入的情形有二 = cookie 过期重登 / 开代理重跑。建议用户在 tabbit 固定(pin) GA 标签页并偶尔点开以保持 cookie 活跃，且自动化机器常驻可直连 Google 的代理。
 
 ### tabbit CLI 实操要点（防踩坑）
 - 每条命令前置 `export PATH="/usr/bin:/bin:$PATH"` + `MSYS_NO_PATHCONV=1`。
@@ -219,7 +222,33 @@ hermes cron status                                                  # 查 gatewa
 - **拉"指定非昨天日期"只能用 picker**，且 picker **仅在「从默认加载日改向目标日」时可靠**：实测 9/29(默认)→9/28(目标) 成功返回真实 15 事件；但 9/28→9/29、9/29→9/30 的二次改期**失效**（apply 点完日期不变）。同会话内反复用 picker 改期会卡死 → 须 `clear`+`goto` 重置回默认再改。
 - **picker 填日期要点**：用稳定选择器 `input.mat-datepicker-input`（不要用 `#mat-input-1/2`，Material 给递增顺序 id mat-input-N 会漂移）；填完两字段后**逐字段 Tab 失焦**让 Material 提交解析（值变成 `2026年9月29日` 本地格式才算成功）；点 **`取消`+`应用` 配对按钮**（不要只找第一个 `应用`，可能命中对比段/嵌套弹窗的 apply）。
 - **⚠️ 10/01 实测补充（picker 输入兼容·反面教材）**：合成 `Object.getOwnPropertyDescriptor(HTMLInputElement,'value').set` + `dispatchEvent('input')`、**以及** `page.keyboard.type` 裸键盘输入，**两者都无效**——Material datepicker 不采纳，且裸键盘输入会把日期改写成 `2026年1月1日`（URL 变 `date01=20260101`，报告落"没有可用数据"）。**非默认日期复核失败的根因几乎都是没严格用上一条写法**。今日 10/01 因没严格用 `mat-datepicker-input`+Tab 失焦+取消/应用 配对，9/29 复核受阻；既有 9/30 早(07:00)+晚(22:02)双跑三表面交叉验证已证 9/29=0 为持续异常，故未阻塞结论。→ 下次要自动化复核历史非昨天日期，**必须**走 `clear+goto` 重置默认后单次 picker，且严格用 `mat-datepicker-input` 选择器 + 逐字段 Tab 失焦 + 取消/应用配对，禁止合成 setter / 裸键盘。
-- **来源媒介双维度**：eventName + sessionMedium，设 hash（`seldim=["eventName","sessionMedium"]`）后 **`page.reload()`** 重渲染——reload 会采纳 hash，已实测可用；**禁止硬进"流量获取"报告**（易重定向 /admin）。
+- ✅ **10-05 实测·回补「任意历史日」最稳配方（推荐，优于上方 input-fill 法）**——**顺序铁律：先维度（fresh load）→ 后日期（picker 点选）→ 之后绝不 reload**。三步：① `goto(about:blank)` → `goto(带目标 seldim 的报告 URL)` **全量加载**（维度在此步生效，**设维度禁用 reload**）；② 全量加载后用**日历格子点选**改日期：`page.evaluate` 内 `document.querySelector('button[aria-label="YYYY年M月D日"]').click()` 点「起」→等 1s→ 再点同一 `aria-label` 点「止」（单日区间=同点两次）→ 点文本「完成/应用/确定」按钮 `click()`；③ **直接提取，不再 reload**（reload 会丢内存态日期、回退「昨天」）。10-03 回补实测：设 hash+reload、about:blank+goto、合成 `value` setter+`input` 事件 **三种写法全部失败**（正文恒显示 10-04，即「昨天」），**唯独本配方一次成功**（正文 `10月3日 - 2026年10月3日`）。日历格子是 `button.mat-calendar-body-cell`，`aria-label` 形如 `2026年10月3日`。⚠️ 上述「input-fill+Tab+取消/应用配对」法对**非昨天**日期不可靠（其 10/01 复核即因此连续失败），回补历史日优先用本点选法。
+- **来源媒介双维度**：eventName + sessionMedium，设 hash（`seldim=["eventName","sessionMedium"]`）后 **`page.reload()`** 重渲染——reload 会采纳 hash，已实测可用；**禁止硬进"流量获取"报告**（易重定向 /admin）。⚠️ 但若同时需回补非昨天日期，reload 会回退日期⇒改用上方「先维度 fresh load → 后日期点选 → 不 reload」配方。
+
+### 🔴 tabbit nodejs 脚本运行时坑（2026-10-05 网络恢复后补跑实测·关键）
+- **不支持顶层 `await`**：脚本体含顶层 `await` 时，运行时 24ms 直接 `value:null` 返回、**代码根本不执行**（页面也不跳转）。✅ 正确写法：用 `return (async () => { ... await ...; return {...}; })();` 把异步逻辑包进 async IIFE 并 `return` 出去，运行时才会 `await` 该 promise 并等到真实导航完成（elapsedMs 变数秒）。
+- **脚本内 `fs.writeFileSync` 路径必须 Windows 盘符绝对路径 `E:/...`**：用 `/e/...`（类 Unix）在 Node 里被解析成 `E:\e\...`（缺盘符、相对当前盘），直接抛 `ENOENT` 致脚本中断、结果文件写不出。✅ 一律写 `E:/一人公司/...`。
+- **request-id 命中缓存返回陈旧结果**：复用同一 `--request-id`（如重复用 b02）时 CLI 直接返回上次结果（相同 elapsedMs/时间戳/`value:true` 假成功），导航其实没重跑。✅ 每次 nodejs 必须用**全新递增** id（本次 b04–b08 避缓存）。
+- **`.then()` 回调模式不稳**：`page.goto(...).then(...)` 在 24ms 返回后页面上下文可能回收、回调不触发、结果文件写不出；以 `return (async()=>{})()` 为唯一可靠模式。
+- 合成写法（可直接复用）：
+  ```js
+  const fs = require('fs');
+  const out = 'E:/一人公司/电子书格式转换站/ebook-converter/_wb_tmp/ga_x.txt';
+  return (async () => {
+    try {
+      await page.goto(URL, { waitUntil: 'domcontentloaded', timeout: 35000 });
+      await page.waitForTimeout(7000);
+      const txt = await page.evaluate(() => document.body.innerText || '');
+      fs.writeFileSync(out, JSON.stringify({ ok: true, text: txt }));
+      return { ok: true };
+    } catch (e) {
+      fs.writeFileSync(out, JSON.stringify({ ok: false, error: String(e && e.message || e) }));
+      return { ok: false, error: String(e && e.message || e) };
+    }
+  })();
+  ```
+  - 轮询：Bash `for i in $(seq 1 60); do [ -f "<结果文件>" ] && break; sleep 1; done` 等落盘（导航+等待约 7–35s）。
+  - GA 间歇性超时（`ERR_CONNECTION_TIMED_OUT`，代理并发/限流）时，脚本内对 `page.goto` 加 3 次重试循环，导航后二次校验日期中文（GA SPA 首帧可能未渲染完）。
 
 ### 数据纪律（铁律）
 - 数据不可用即标 unknown/PENDING，绝不编造；小样本（<10 用户）百分比仅方向参考。

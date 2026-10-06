@@ -43,10 +43,32 @@ function transpile(rel) {
     jsc: { parser: { syntax: 'typescript' }, target: 'es2022' },
     module: { type: 'es6' },
   });
-  // Rewrite bare specifiers so Node can resolve the siblings.
-  const code = out.code
-    .replace(/from ['"]\.\/([a-z-]+)['"]/g, "from './$1.mjs'")
-    .replace(/from ['"]@\/(.*?)['"]/g, (_m, p) => `from '${p}.mjs'`);
+  // ── Rewrite 1: JSON imports → readFileSync ────────────────────────────────
+  // @swc/core DROPS the `with { type: 'json' }` attribute when emitting ES6
+  // (verified 2026-10-05: feeding loader.ts through transformSync yields
+  // `import boardJson from '...json';` with no attribute, and neither
+  // module.importAttributes nor verbatimModuleSyntax restores it). Node then
+  // refuses the module with ERR_IMPORT_ATTRIBUTE_MISSING. Rewriting the specifier
+  // to an fs read sidesteps the whole attribute mechanism.
+  // Relative depth is preserved on purpose: the .mjs lives at
+  // .wb-build/lib/board/, so '../../..' still lands on the repo root.
+  let code = out.code.replace(
+    /import\s+(\w+)\s+from\s+['"](\.\.?\/[^'"]+\.json)['"];?/g,
+    (_m, name, p) =>
+      `import { readFileSync as __rf } from 'node:fs';\n` +
+      `const ${name} = JSON.parse(__rf(new URL(${JSON.stringify(p)}, import.meta.url), 'utf8'));`
+  );
+  // ── Rewrite 2: bare specifiers → resolvable siblings ─────────────────────
+  // The relative form must cover BOTH `./sibling` and `../dir/sibling`: the old
+  // `/from ['"]\.\/([a-z-]+)['"]/g` only matched the single-segment `./x` form,
+  // so `../feedback/store` kept its extensionless specifier → ERR_MODULE_NOT_FOUND.
+  // Lazy `[^'"]+?` so the closing quote is the FIRST one, never one inside an
+  // attribute clause. Only extensionless specifiers get the .mjs suffix — a data
+  // import must keep its real extension.
+  const addExt = (p) => (/\.[a-z]+$/i.test(p) ? p : `${p}.mjs`);
+  code = code
+    .replace(/(from\s*)['"](\.\.?\/[^'"]+?)['"]/g, (_m, pre, p) => `${pre}'${addExt(p)}'`)
+    .replace(/(from\s*)['"]@\/(.*?)['"]/g, (_m, pre, p) => `${pre}'${addExt(p)}'`);
   const dest = join(TMP, rel.replace(/^src\//, '').replace(/\.ts$/, '.mjs'));
   mkdirSync(dirname(dest), { recursive: true });
   writeFileSync(dest, code);
@@ -69,8 +91,16 @@ function prepareDataLayer() {
     // (data/keyword-series.json), built by scripts/build-keyword-series.mjs.
     'src/lib/keywords/series.ts',
     'src/lib/keywords/loader.ts',
+    // loader.ts imports candidates as a TYPE-only specifier, which swc elides —
+    // but transpile it anyway so the .mjs sibling exists on disk. Relying on
+    // elision is what let a missing entry go unnoticed until a value import
+    // (feedback/store) blew up the whole build.
+    'src/lib/keywords/candidates.ts',
     // The competitor panel reads data/competitor-series.json.
     'src/lib/keywords/competitor.ts',
+    // provider-repo.ts imports these as VALUES, so they must be present or the
+    // import fails at module-resolution time (ERR_MODULE_NOT_FOUND).
+    'src/lib/feedback/store.ts',
   ];
   for (const f of files) transpile(f);
   return pathToFileURL(join(TMP, 'lib/workbench/provider.mjs')).href;
