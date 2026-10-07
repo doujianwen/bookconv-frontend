@@ -46,6 +46,9 @@ const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/lord-of-the-rings-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
   '/blog/twilight-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
   '/blog/marvel-comics-ebooks-multiple-devices': '/blog/read-epub-on-any-device',
+  // B10 (Batch 4 Day 13): merge near-duplicate reading-groups blog (post61, zero GSC
+  // traffic) into the strategic P1 hub page (post70). Both 0 impressions; hub is canonical.
+  '/blog/sync-ebooks-reading-groups': '/blog/reading-groups-hub',
 };
 
 // Get locale from URL path (e.g., /es/blog -> 'es')
