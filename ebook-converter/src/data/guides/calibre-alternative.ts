@@ -1,7 +1,7 @@
 import { BlogFaq } from '../blog/types'
 
 export const slug = 'calibre-alternative'
-export const title = 'Calibre Alternative: Free Online Ebook Converter, No Install'
+export const title = 'Do You Need a Calibre Alternative? (What You Keep vs Give Up)'
 export const problem = 'Don’t want to install and learn Calibre for a one-off file? Here is what a lightweight Calibre alternative gives you — and where Calibre still wins.'
 export const date = '2026-08-07'
 export const tags = ['calibre alternative', 'online ebook converter', 'no install', 'free converter']
