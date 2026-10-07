@@ -109,6 +109,12 @@ batch-verify.zip
 !/data/keyword-reason-candidates.json
 # …算法更新窗口（data/algorithm-updates.json）是人工维护的监控清单，入库
 !/data/algorithm-updates.json
+# …关键词决策台账（data/keyword-decisions.json）是人工判断层（意图/目标页/差距/
+#   动作/优先级/复查/结果），面板与 export:sheets 都读它，丢了难重建，入库
+!/data/keyword-decisions.json
+# …竞品决策台账（data/competitor-decisions.json）同上（新页/内容差异/AI 提及/
+#   我方差距/动作），人工判断层，入库
+!/data/competitor-decisions.json
 
 # Excel tracking sheets (large binary, not source)
 *.xlsx
@@ -130,3 +136,4 @@ _wb_tmp/
 # 每日垃圾清理备份（cleanup-daily-junk 移动到此，可恢复，不入库）
 .trash/
 .trash-*/
+SEO_BACKUP_PHASE2_TITLE_2026-10-07/
