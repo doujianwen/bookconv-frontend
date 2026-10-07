@@ -1,5 +1,5 @@
 export const slug = 'epub-to-doc';
-export const title = 'Free EPUB to DOC Converter — Extract Text for Legacy Word 97-2003';
+export const title = 'EPUB to DOC Converter — Legacy Word Format | BookConv';
 export const metaDescription = 'Free EPUB to DOC converter. Extract text and formatting from any EPUB into legacy Word 97-2003 .doc format — no sign-up, works with enterprise systems that require old DOC files.';
 export const level = 'B' as const;
 export const wordCount = 820;
