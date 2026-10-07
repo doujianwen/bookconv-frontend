@@ -13,7 +13,7 @@ export const content = {
     },
     {
       heading: `Built for Every Device`,
-      body: `Because there is nothing to install, the same conversion flow works on a laptop, a phone, or a tablet. If you are on a Kindle-bound EPUB, convert to AZW3 on the spot; if you are on Kobo, EPUB is native. Cross-device reading is a common need — see [syncing ebooks across devices](/blog/sync-reading-across-devices) and [syncing for reading groups](/blog/sync-ebooks-reading-groups).`
+      body: `Because there is nothing to install, the same conversion flow works on a laptop, a phone, or a tablet. If you are on a Kindle-bound EPUB, convert to AZW3 on the spot; if you are on Kobo, EPUB is native. Cross-device reading is a common need — see [syncing ebooks across devices](/blog/sync-reading-across-devices) and [syncing for reading groups](/blog/reading-groups-hub).`
     },
     {
       heading: `Free, With No Limits on the Basics`,

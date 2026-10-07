@@ -99,6 +99,6 @@ export const faqs = [
   },
   {
     question: `How to sync ebooks for virtual book clubs?`,
-    answer: `For reading groups, use Google Play Books — one member uploads the EPUB and everyone accesses it from their own account. See our [reading groups sync guide](/blog/sync-ebooks-reading-groups) for details.`
+    answer: `For reading groups, use Google Play Books — one member uploads the EPUB and everyone accesses it from their own account. See our [reading groups sync guide](/blog/reading-groups-hub) for details.`
   }
 ];
