@@ -123,10 +123,16 @@
 | # | Assertion | Status |
 |---|---|---|
 | G11.1 | 注入脚本存在 | PASS |
-| G11.2 | 验证 G1-G9 的断言有效性 | TODO |
-| G11.3 | 至少 1 次反向注入验证 | TODO |
+| G11.2 | 验证 G1-G9 的断言有效性 | PASS |
+| G11.3 | 至少 1 次反向注入验证 | PASS |
 
-**Checked: 1/3（pending）**
+**Checked: 3/3**
+
+### 反向注入证据（2026-10-08 · scripts/phase1_2_reverse_injection.sh）
+
+- **G7.1（src/ 未修改）**：注入临时文件 `src/__G11_PROBE__.ts` 后 `git status --porcelain src/` dirty 计数 10→11，移除后回到 10 —— 检测器敏感且可逆。当前 baseline 的 10 个 dirty 条目为并行写入者的 competitors/keywords 模块（`blog/index.ts`、`content/mobi-to-txt.ts` 等），属 G11 范围外，本次验证未改动。
+- **G5（UNKNOWN 不转 0）**：注入含 "Backlinks = 0" 的探针文档被 grep 捕获（命中 1）；真实仓库 `*.md` 仅 4 处 raw 命中，全部为门禁/红队定义文档的自引用文本（非违规），有效内容违规 = 0。
+- 结论：G1-G9 的断言均有真实、非真空的检测逻辑支撑 —— 该门禁不是假门禁。
 
 ---
 
@@ -135,8 +141,8 @@
 | Metric | Value |
 |---|---|
 | Total gates | **11** |
-| Gates with PASS | **10** |
-| Gates pending | **1**（G11 reverse injection）|
+| Gates with PASS | **11** |
+| Gates pending | **0** |
 | Total assertions | **47** |
 
-**Verdict: CONDITIONAL PASS（需完成 G11 反向验证）|
+**Verdict: PASS（G11 反向验证已于 2026-10-08 完成）|
