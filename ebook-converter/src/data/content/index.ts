@@ -5,13 +5,11 @@ import * as epub_to_jpg from './epub-to-jpg';
 import * as epub_to_html from './epub-to-html';
 import * as epub_to_doc from './epub-to-doc';
 import * as fb2_to_epub from './fb2-to-epub';
-import * as lit_to_epub from './lit-to-epub';
 import * as epub_to_pdf from './epub-to-pdf';
 import * as rtf_to_epub from './rtf-to-epub';
 import * as epub_to_png from './epub-to-png';
 import * as azw3_to_mobi from './azw3-to-mobi';
 import * as mobi_to_txt from './mobi-to-txt';
-import * as epub_to_word from './epub-to-word';
 import * as docx_to_epub from './docx-to-epub';
 import * as txt_to_epub from './txt-to-epub';
 import * as html_to_epub from './html-to-epub';
@@ -27,7 +25,6 @@ import * as epub_to_mobi from './epub-to-mobi';
 import * as epub_to_zip from './epub-to-zip';
 import * as lit_to_mobi from './lit-to-mobi';
 import * as azw_to_mobi from './azw-to-mobi';
-import * as chm_to_mobi from './chm-to-mobi';
 import * as mobi_to_azw3 from './mobi-to-azw3';
 
 /**
@@ -74,13 +71,11 @@ export const CONTENT_MAP: Record<string, ConversionContentModule> = {
   'epub-to-html': epub_to_html,
   'epub-to-doc': epub_to_doc,
   'fb2-to-epub': fb2_to_epub,
-  'lit-to-epub': lit_to_epub,
   'epub-to-pdf': epub_to_pdf,
   'rtf-to-epub': rtf_to_epub,
   'epub-to-png': epub_to_png,
   'azw3-to-mobi': azw3_to_mobi,
   'mobi-to-txt': mobi_to_txt,
-  'epub-to-word': epub_to_word,
   'docx-to-epub': docx_to_epub,
   'txt-to-epub': txt_to_epub,
   'html-to-epub': html_to_epub,
@@ -96,7 +91,6 @@ export const CONTENT_MAP: Record<string, ConversionContentModule> = {
   'epub-to-zip': epub_to_zip,
   'lit-to-mobi': lit_to_mobi,
   'azw-to-mobi': azw_to_mobi,
-  'chm-to-mobi': chm_to_mobi,
   'mobi-to-azw3': mobi_to_azw3,
 };
 

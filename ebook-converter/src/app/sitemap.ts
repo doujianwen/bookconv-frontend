@@ -43,7 +43,6 @@ const CONTENT_DATES: Record<string, string> = {
   'azw3-to-mobi': '2026-08-25',
   'azw3-to-pdf': '2026-08-03',
   'cbr-to-pdf': '2026-08-08',
-  'chm-to-mobi': '2026-08-09',
   'djvu-to-pdf': '2026-08-08',
   'doc-to-epub': '2026-08-08',
   'docx-to-epub': '2026-08-03',
@@ -56,13 +55,9 @@ const CONTENT_DATES: Record<string, string> = {
   'epub-to-png': '2026-08-08',
   'epub-to-rtf': '2026-08-08',
   'epub-to-txt': '2026-08-24',
-  'epub-to-word': '2026-08-08',
   'epub-to-zip': '2026-08-23',
   'fb2-to-epub': '2026-08-08',
   'html-to-epub': '2026-08-09',
-  'lit-to-epub': '2026-08-24',
-  'lit-to-mobi': '2026-08-13',
-  'mobi-to-azw3': '2026-09-20',
   'mobi-to-epub': '2026-08-25',
   'mobi-to-pdf': '2026-08-08',
   'mobi-to-txt': '2026-08-08',
@@ -225,7 +220,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // 3 content (convert) pages have complete, human-grade Spanish translations
       // (hero + sections + faq). Middleware now allows /es/convert/{slug} for these
       // and the [locale] convert page renders the Spanish body. Emit their URLs too.
-      const ESP_CONVERT_SLUGS = ['epub-to-doc', 'epub-to-txt', 'lit-to-epub'];
+      const ESP_CONVERT_SLUGS = ['epub-to-doc', 'epub-to-txt'];
       for (const slug of ESP_CONVERT_SLUGS) {
         allUrls.push({
           url: baseUrl + prefix + '/convert/' + slug,
