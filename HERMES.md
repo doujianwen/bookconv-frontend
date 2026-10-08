@@ -209,7 +209,7 @@ hermes cron status                                                  # 查 gatewa
 - 每条命令前置 `export PATH="/usr/bin:/bin:$PATH"` + `MSYS_NO_PATHCONV=1`。
 - `tabs/claim/nodejs` 均须带 `--task <name>`；`nodejs` 脚本经 **stdin** 传入；`nodejs` 每次带唯一递增 `--request-id`（防缓存假成功）。
 - GA 复用 tab 下**单维度 sessionMedium 不生效**，必须 eventName+sessionMedium 双维度 + 设 hash 后 `page.reload()` 强制重渲染（实测有效）。
-- ⚠️ **「网页和屏幕」报告不能用 URL `r=pages-and-screens` 切换**（2026-10-02 实测会跳到 `reports/intelligenthome` 首页、且日期回退默认区间）。正确做法：先停在已设好单日日期的 top-events 报告，再用 `page.evaluate` **点击左侧"网页和屏幕"链接**（date 继承，不会跳首页、日期保持单日）。
+- ✅ **「网页和屏幕」报告正确路由 = `r=all-pages-and-screens`**（2026-10-07 实测；`r=pages-and-screens` 会被 GA 路由拒绝→回退 `reports/intelligenthome`）。可靠导航：`page.goto('https://analytics.google.com/analytics/web/')` **先建立 host**，再 `page.evaluate(h => window.location.hash = h, HASH)` 设含单日日期参数的 hash（HASH=`/a402294409p547131052/reports/explorer?r=all-pages-and-screens&params=_u..nav%3Dmaui%26_u.dateOption%3Dcustom%26_u.startDate%3D<TARGET>%26_u.endDate%3D<TARGET>%26_u.comparisonOption%3Ddisabled`）→ 单日生效。⚠️ **禁止 `page.goto` 直接带完整 hash URL**（会落 `about:blank`，host 丢失）；⚠️ 点击左侧"网页和屏幕"链接会触发 28 天默认日期回退且依赖侧栏可见，不优先用。TARGET=昨天时 goto-BASE+hash 稳定生效（默认即昨天，与自定义日期重合）。
 - 提取后必校验 body 含目标日期中文（如 `9月27日 - 2026年9月27日`），确认非 stale；admin 页（url 含 /admin）= 导航失败，把 hash 拉回 `r=top-events` 恢复。
 - ⚠️ **GA4 Material 选项用页内 `element.click()` 绕过 actionability 超时**：Playwright 原生 `getByRole/getByText(...).click()` 对 GA4 的 `mat-option` / quick-range 选项（如「昨天」「应用」）会因 actionability 校验**超时并触发 60s 硬截止、task 被终止**（10-03 实测两次踩坑）。可靠做法：在 `page.evaluate` 内对目标元素直接 `element.click()` 派发真实点击事件（Angular 的 `(click)` 会响应）；定位时优先选 `tagName==='MAT-OPTION' || role==='option' || class 含 'option'` 的元素。
 - ✅ **每日单日日期固定配方（昨天=TARGET_DATE）**：① 打开日历 = 点击 `role=combobox` 且 `aria-label="打开日期范围选择器"` 的触发器；② 页内 `click()` 文本精确为「昨天」的元素（选单日 = 昨天 = TARGET_DATE，绕开手写日期的 matcher 坑）；③ 同法对「应用」`click()` 确认。三视图（top-events / 网页和屏幕 / 双维度）各自需重设一次（sidebar 切报告会把日期回退 28 天默认）。
@@ -224,6 +224,13 @@ hermes cron status                                                  # 查 gatewa
 - **⚠️ 10/01 实测补充（picker 输入兼容·反面教材）**：合成 `Object.getOwnPropertyDescriptor(HTMLInputElement,'value').set` + `dispatchEvent('input')`、**以及** `page.keyboard.type` 裸键盘输入，**两者都无效**——Material datepicker 不采纳，且裸键盘输入会把日期改写成 `2026年1月1日`（URL 变 `date01=20260101`，报告落"没有可用数据"）。**非默认日期复核失败的根因几乎都是没严格用上一条写法**。今日 10/01 因没严格用 `mat-datepicker-input`+Tab 失焦+取消/应用 配对，9/29 复核受阻；既有 9/30 早(07:00)+晚(22:02)双跑三表面交叉验证已证 9/29=0 为持续异常，故未阻塞结论。→ 下次要自动化复核历史非昨天日期，**必须**走 `clear+goto` 重置默认后单次 picker，且严格用 `mat-datepicker-input` 选择器 + 逐字段 Tab 失焦 + 取消/应用配对，禁止合成 setter / 裸键盘。
 - ✅ **10-05 实测·回补「任意历史日」最稳配方（推荐，优于上方 input-fill 法）**——**顺序铁律：先维度（fresh load）→ 后日期（picker 点选）→ 之后绝不 reload**。三步：① `goto(about:blank)` → `goto(带目标 seldim 的报告 URL)` **全量加载**（维度在此步生效，**设维度禁用 reload**）；② 全量加载后用**日历格子点选**改日期：`page.evaluate` 内 `document.querySelector('button[aria-label="YYYY年M月D日"]').click()` 点「起」→等 1s→ 再点同一 `aria-label` 点「止」（单日区间=同点两次）→ 点文本「完成/应用/确定」按钮 `click()`；③ **直接提取，不再 reload**（reload 会丢内存态日期、回退「昨天」）。10-03 回补实测：设 hash+reload、about:blank+goto、合成 `value` setter+`input` 事件 **三种写法全部失败**（正文恒显示 10-04，即「昨天」），**唯独本配方一次成功**（正文 `10月3日 - 2026年10月3日`）。日历格子是 `button.mat-calendar-body-cell`，`aria-label` 形如 `2026年10月3日`。⚠️ 上述「input-fill+Tab+取消/应用配对」法对**非昨天**日期不可靠（其 10/01 复核即因此连续失败），回补历史日优先用本点选法。
 - **来源媒介双维度**：eventName + sessionMedium，设 hash（`seldim=["eventName","sessionMedium"]`）后 **`page.reload()`** 重渲染——reload 会采纳 hash，已实测可用；**禁止硬进"流量获取"报告**（易重定向 /admin）。⚠️ 但若同时需回补非昨天日期，reload 会回退日期⇒改用上方「先维度 fresh load → 后日期点选 → 不 reload」配方。
+
+### 🔴 跨报告一致性铁律（2026-10-07 红队审计教训）
+- **写"趋势/连续/单调/正向信号"前，必须回读前 ≥2 日报告原文核对每一个数字**，禁止凭记忆/上一轮摘要拼序列。10-06 报告即因凭记忆把 10/04 写成"成功率 60%"（实为 20%）、把 cn.bing.com 误记成 doubao.com"连续第3日"、并省略 10-05，被红队审计整体推翻（R1/R2/R3）。
+- **"出现 = 监测"，1 用户级样本不构成"正向信号已确认"**：cn.bing.com / doubao.com 各自仅 1 用户/日，红队降级为监测项。
+- **Google organic=0 一律标注"Spam Update 惩罚后遗症（恢复中）"，禁用"战略放弃"措辞**：前者是惩罚，后者是选择，混用会误导战略。
+- **跨日对比先验证是否同一天**：10-04/10-05 数据曾"完全一致（97 事件/10 用户）"，疑似 GA 延迟重复显示同一天；做"连续"叙事前先确认两日独立。
+- 红队审计产物：`数据分析/GA4日报-<TARGET_DATE>-红队审计.md`；修订版：`数据分析/GA4日报-<TARGET_DATE>-审计修订版.md`；印证 GEO 方法论见 `geo/GEO-学习参考与结论.md` §8。
 
 ### 🔴 tabbit nodejs 脚本运行时坑（2026-10-05 网络恢复后补跑实测·关键）
 - **不支持顶层 `await`**：脚本体含顶层 `await` 时，运行时 24ms 直接 `value:null` 返回、**代码根本不执行**（页面也不跳转）。✅ 正确写法：用 `return (async () => { ... await ...; return {...}; })();` 把异步逻辑包进 async IIFE 并 `return` 出去，运行时才会 `await` 该 promise 并等到真实导航完成（elapsedMs 变数秒）。

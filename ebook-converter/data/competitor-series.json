@@ -2,11 +2,11 @@
   "$schema": "competitor-series/v1",
   "_readme": [
     "本文件由 scripts/build-competitor-series.mjs 生成，不要手改。",
-    "matrix 每行 = 一个竞品域名在某目标词上的最新排名 + 上期 + Δ。",
+    "matrix 每行 = 一个竞品域名在某目标词上的最新排名 + 上期 + Δ + 落地 URL。",
     "Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。",
-    "rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）。"
+    "rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）；url 同步为 null。"
   ],
-  "generatedAt": "2026-10-05T14:55:32.987Z",
+  "generatedAt": "2026-10-07T07:38:57.214Z",
   "d0": "2026-09-27",
   "config": {
     "competitors": [
@@ -97,7 +97,8 @@
       "delta": null,
       "trend": "gone",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -108,7 +109,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -119,7 +121,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -130,7 +133,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -141,7 +145,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -152,7 +157,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -163,7 +169,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -174,7 +181,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -185,7 +193,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -196,7 +205,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -207,7 +217,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -218,7 +229,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -229,7 +241,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -240,7 +253,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -251,7 +265,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -262,7 +277,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -273,7 +289,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -284,7 +301,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -295,7 +313,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -306,7 +325,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -317,7 +337,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -328,7 +349,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -339,7 +361,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -350,7 +373,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -361,7 +385,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -372,7 +397,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -383,7 +409,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -394,7 +421,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -405,7 +433,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -416,7 +445,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -427,7 +457,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -438,7 +469,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -449,7 +481,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -460,7 +493,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -471,7 +505,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -482,7 +517,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -493,7 +529,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -504,7 +541,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -515,7 +553,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -526,7 +565,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -537,7 +577,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -548,7 +589,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -559,7 +601,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -570,7 +613,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -581,7 +625,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -592,7 +637,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -603,7 +649,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -614,7 +661,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -625,7 +673,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -636,7 +685,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": "https://convertio.co/fr/epub-azw3/"
     },
     {
       "domain": "onlineconvert.com",
@@ -647,7 +697,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -658,7 +709,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -669,7 +721,8 @@
       "delta": null,
       "trend": "gone",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -680,7 +733,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -691,7 +745,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -702,7 +757,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": "https://cloudconvert.com/pdf-to-azw3"
     },
     {
       "domain": "convertio.co",
@@ -713,7 +769,8 @@
       "delta": null,
       "trend": "gone",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -724,7 +781,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -735,7 +793,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -746,7 +805,8 @@
       "delta": null,
       "trend": "gone",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -757,7 +817,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -768,7 +829,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -779,7 +841,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -790,7 +853,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -801,7 +865,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -812,7 +877,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -823,7 +889,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -834,7 +901,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -845,7 +913,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -856,7 +925,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -867,7 +937,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -878,7 +949,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -889,7 +961,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -900,7 +973,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -911,7 +985,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -922,7 +997,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -933,7 +1009,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -944,7 +1021,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -955,7 +1033,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -966,7 +1045,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -977,7 +1057,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -988,7 +1069,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -999,7 +1081,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": "https://calibre-ebook.com/demo"
     },
     {
       "domain": "cloudconvert.com",
@@ -1010,7 +1093,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -1021,7 +1105,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -1032,7 +1117,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1043,7 +1129,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -1054,7 +1141,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -1065,7 +1153,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1076,7 +1165,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1087,7 +1177,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": "https://cloudconvert.com/azw3-converter"
     },
     {
       "domain": "convertio.co",
@@ -1098,7 +1189,8 @@
       "delta": null,
       "trend": "gone",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -1109,7 +1201,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1120,7 +1213,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": "https://www.zamzar.com/converters/ebook/epub/"
     },
     {
       "domain": "freeconvert.com",
@@ -1131,7 +1225,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -1142,7 +1237,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1153,7 +1249,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1164,7 +1261,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -1175,7 +1273,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": "https://convertio.co/mobi-azw3/"
     },
     {
       "domain": "onlineconvert.com",
@@ -1186,7 +1285,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1197,7 +1297,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -1208,7 +1309,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -1219,7 +1321,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1230,7 +1333,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1241,7 +1345,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": "https://cloudconvert.com/azw3-to-mobi"
     },
     {
       "domain": "convertio.co",
@@ -1252,7 +1357,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -1263,7 +1369,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1274,7 +1381,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": "https://www.zamzar.com/de/convert/pages.zip-to-epub/"
     },
     {
       "domain": "freeconvert.com",
@@ -1285,7 +1393,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -1296,7 +1405,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1307,7 +1417,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1318,7 +1429,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -1329,7 +1441,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "onlineconvert.com",
@@ -1340,7 +1453,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1351,7 +1465,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -1362,7 +1477,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": "2026-09-28"
+      "prevDate": "2026-09-28",
+      "url": null
     },
     {
       "domain": "anyconv.com",
@@ -1373,7 +1489,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-09-28",
-      "prevDate": "2026-09-27"
+      "prevDate": "2026-09-27",
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1384,7 +1501,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1395,7 +1513,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1406,7 +1525,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "convertio.co",
@@ -1417,7 +1537,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1428,7 +1549,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -1439,7 +1561,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1450,7 +1573,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "calibre-ebook.com",
@@ -1461,7 +1585,8 @@
       "delta": null,
       "trend": "new",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": "https://calibre-ebook.com/about"
     },
     {
       "domain": "convertio.co",
@@ -1472,7 +1597,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "zamzar.com",
@@ -1483,7 +1609,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "freeconvert.com",
@@ -1494,7 +1621,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     },
     {
       "domain": "cloudconvert.com",
@@ -1505,7 +1633,8 @@
       "delta": null,
       "trend": "no-data",
       "latestDate": "2026-10-05",
-      "prevDate": null
+      "prevDate": null,
+      "url": null
     }
   ],
   "totals": {

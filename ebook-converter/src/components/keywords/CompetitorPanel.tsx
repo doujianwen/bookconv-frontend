@@ -15,7 +15,22 @@ import {
   type CompSortKey,
   type CompSortDir,
 } from '@/lib/keywords/competitor';
-import { Callout, Card, Chip, Stat } from '@/components/board/primitives';
+import {
+  latestCompetitorDecisionByKey,
+  competitorDecisionKey,
+  type CompetitorDecision,
+} from '@/lib/keywords/decisions';
+import { Callout, Stat } from '@/components/board/primitives';
+
+/** A judgement cell: shows the ledger value, or a muted dash when unset. */
+function DecisionCell({ value }: { value?: string | null }) {
+  if (!value) return <span className="text-gray-300 dark:text-gray-600">—</span>;
+  return (
+    <span className="text-xs text-gray-600 dark:text-gray-300" title={value}>
+      {value}
+    </span>
+  );
+}
 
 function rankTone(p: number | null): string {
   if (p === null) return 'text-gray-400 dark:text-gray-500';
@@ -48,11 +63,20 @@ function fmt(p: number | null): string {
   return p === null ? '—' : String(p);
 }
 
-export function CompetitorPanel({ data }: { data: CompetitorSeriesData }) {
+export function CompetitorPanel({
+  data,
+  decisions = [],
+}: {
+  data: CompetitorSeriesData;
+  /** Human judgement ledger (New Page / Content Diff / AI Mention / Our Gap / Action). */
+  decisions?: CompetitorDecision[];
+}) {
   const [comp, setComp] = React.useState<string>('all');
   const [q, setQ] = React.useState('');
   const [sortKey, setSortKey] = React.useState<CompSortKey>('delta');
   const [sortDir, setSortDir] = React.useState<CompSortDir>('desc');
+
+  const decisionMap = React.useMemo(() => latestCompetitorDecisionByKey(decisions), [decisions]);
 
   const rows = React.useMemo(() => {
     let out = data.matrix;
@@ -137,26 +161,43 @@ npm run build:competitor        # 合并成 data/competitor-series.json`}
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
-        <table className="w-full border-collapse text-sm">
+        <table className="w-full min-w-[1500px] border-collapse text-sm">
           <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500 dark:bg-white/5 dark:text-gray-400">
             <tr>
               <th className="cursor-pointer px-3 py-2 hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('name')}>竞品 {sortKey === 'name' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</th>
               <th className="cursor-pointer px-3 py-2 hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('query')}>目标词 {sortKey === 'query' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</th>
+              <th className="px-3 py-2">落地页</th>
               <th className="cursor-pointer px-3 py-2 text-right hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('latestRank')}>最新排名 {sortKey === 'latestRank' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</th>
               <th className="px-3 py-2 text-right">上期</th>
               <th className="cursor-pointer px-3 py-2 text-right hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('delta')}>Δ {sortKey === 'delta' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</th>
               <th className="px-3 py-2">趋势</th>
               <th className="px-3 py-2 text-right">日期</th>
+              <th className="px-3 py-2">新页·更新</th>
+              <th className="px-3 py-2">内容差异</th>
+              <th className="px-3 py-2">AI 提及</th>
+              <th className="px-3 py-2">我方差距</th>
+              <th className="px-3 py-2">动作</th>
             </tr>
           </thead>
           <tbody>
-            {rows.slice(0, 400).map((r) => (
+            {rows.slice(0, 400).map((r) => {
+              const d = decisionMap.get(competitorDecisionKey(r.domain, r.query));
+              return (
               <tr key={`${r.domain}|${r.query}`} className="border-t border-gray-100 align-top hover:bg-gray-50/70 dark:border-white/5 dark:hover:bg-white/[0.03]">
                 <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">
                   {r.name}
                   <span className="ml-1 text-[10px] text-gray-400 dark:text-gray-500">{r.domain}</span>
                 </td>
                 <td className="px-3 py-2 text-gray-700 dark:text-gray-300">{r.query}</td>
+                <td className="max-w-[220px] px-3 py-2 text-xs">
+                  {r.url ? (
+                    <a href={r.url} target="_blank" rel="noreferrer" className="block truncate font-mono text-blue-600 hover:underline dark:text-blue-400" title={r.url}>
+                      {r.url}
+                    </a>
+                  ) : (
+                    <span className="text-gray-300 dark:text-gray-600">—</span>
+                  )}
+                </td>
                 <td className={'whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums ' + rankTone(r.latestRank)}>{fmt(r.latestRank)}</td>
                 <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums text-gray-500 dark:text-gray-400">{fmt(r.prevRank)}</td>
                 <td className="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums">
@@ -164,14 +205,21 @@ npm run build:competitor        # 合并成 data/competitor-series.json`}
                 </td>
                 <td className="px-3 py-2"><TrendCell r={r} /></td>
                 <td className="whitespace-nowrap px-3 py-2 text-right text-xs tabular-nums text-gray-400 dark:text-gray-500">{r.latestDate ?? '—'}</td>
+                <td className="px-3 py-2"><DecisionCell value={d?.newPage} /></td>
+                <td className="px-3 py-2"><DecisionCell value={d?.contentDiff} /></td>
+                <td className="px-3 py-2"><DecisionCell value={d?.aiMention} /></td>
+                <td className="px-3 py-2"><DecisionCell value={d?.ourGap} /></td>
+                <td className="px-3 py-2"><DecisionCell value={d?.action} /></td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
 
       <footer className="border-t border-gray-200 pt-4 text-xs leading-relaxed text-gray-400 dark:border-white/10 dark:text-gray-500">
-        <p>Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。rank 为 — 表示该日未进 Top-100。</p>
+        <p>Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。rank 为 — 表示该日未进 Top-100，落地页同步为空。</p>
+        <p className="mt-1">「落地页 / 排名 / Δ / 趋势 / 日期」自动抓取；「新页·更新 / 内容差异 / AI 提及 / 我方差距 / 动作」来自决策台账 <code className="rounded bg-gray-100 px-1 dark:bg-white/10">data/competitor-decisions.json</code>。</p>
         <p className="mt-1">抓取配置在 <code className="rounded bg-gray-100 px-1 dark:bg-white/10">data/competitor-config.json</code>（盯哪些竞品 / 哪些词）。</p>
       </footer>
     </div>

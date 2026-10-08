@@ -47,10 +47,14 @@ function read(p) {
 const panelsSrc = read('src/lib/workbench/panels.ts');
 const panelEntries = panelsSrc.split(/\{\s*\n\s*key:/).slice(1);
 
-// 10 provider-backed panels + 2 self-sourced ones (the SEO/GEO board, which
-// reads data/seo-geo-board.json, and the keyword panel, which reads
-// data/keyword-series.json).
-const EXPECTED_PANELS = 13;
+// 11 provider-backed panels + 3 self-sourced ones, which answer themselves
+// from a local data file instead of a provider getter:
+//   board       -> data/seo-geo-board.json      (src/lib/board/)
+//   keywords    -> data/keyword-series.json     (src/lib/keywords/)
+//   competitors -> data/competitor-series.json  (src/lib/keywords/)
+// Keep this in sync with SELF_SOURCED_PANELS in src/lib/workbench/types.ts —
+// that list is the authority on which panels are self-sourced.
+const EXPECTED_PANELS = 14;
 check(
   'P1.1',
   panelEntries.length === EXPECTED_PANELS,

@@ -109,6 +109,9 @@ function main() {
         trend,
         latestDate: latest.date,
         prevDate: prev ? prev.date : null,
+        // Landing URL from the latest snapshot. null when the rival was not in
+        // the Top-100 that day — an honest blank, not a stale URL.
+        url: latest.url ?? null,
       });
       totals.pairs++;
       if (trend === 'up') totals.up++;
@@ -123,9 +126,9 @@ function main() {
     $schema: 'competitor-series/v1',
     _readme: [
       '本文件由 scripts/build-competitor-series.mjs 生成，不要手改。',
-      'matrix 每行 = 一个竞品域名在某目标词上的最新排名 + 上期 + Δ。',
+      'matrix 每行 = 一个竞品域名在某目标词上的最新排名 + 上期 + Δ + 落地 URL。',
       'Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。',
-      'rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）。',
+      'rank 为 null 表示该日未进 Top-100（trend=gone/new/no-data）；url 同步为 null。',
     ],
     generatedAt: new Date().toISOString(),
     d0: D0,

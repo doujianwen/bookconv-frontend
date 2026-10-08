@@ -1,0 +1,64 @@
+{
+  "$schema": "keyword-decisions/v1",
+  "_readme": [
+    "人工判断层（Keyword Optimization Sheet 的判断列）。数据本身只给排名/展示/点击，不给人做的决定。",
+    "本文件与 data/keyword-reasons.json 分工：reasons 记「为什么涨跌」（已有 add/confirm 脚本），本文件记「意图/目标页/主要差距/动作/优先级/复查/结果」。",
+    "面板与导出（npm run export:sheets）按 query 取最新一条（updatedAt 倒序）。",
+    "意图/目标页若留空，面板与导出会用 src/lib/keywords/meta.ts 自动派生；此处填了则以人工为准。",
+    "本文件是人工沉淀，已纳入 git，丢了很难重建。",
+    "—— 下列种子条目系从项目既有文档转写（非新判断），用于让台账机制立即可用，provenance 见每条 note：",
+    "  · mobi to epub / best ebook converter ← geo/GEO-学习参考与结论.md §6、docs/SEO-GEO-V2.0 拆解表 M2-5",
+    "  · calibre alternative ← 数据分析/GEO三平台长尾业务词覆盖率报告-20260927.md §五 P0-3",
+    "  · is azw3 compatible with kindle ← 数据分析/Bing-Google双渠道周报-2026-10-05.md 关键词模块"
+  ],
+  "entries": [
+    {
+      "query": "mobi to epub",
+      "intent": "转换需求",
+      "targetUrl": "/convert/mobi-to-epub",
+      "mainGap": "域名权威（该簇 61 展示占全站 47%，但位置 68.9；属权威度问题非页面问题）",
+      "action": "深化本页：补事实密度句式 + 外链主攻此页（P0）",
+      "priority": "P0",
+      "recheck": "2026-11-10",
+      "result": "",
+      "updatedAt": "2026-10-07",
+      "note": "转写自 GEO-学习参考与结论 §6 / 待执行计划 v3 N2"
+    },
+    {
+      "query": "best ebook converter",
+      "intent": "对比工具",
+      "targetUrl": "/guide/best-ebook-converter",
+      "mainGap": "全场唯一「无品牌场景」AI 引用来源，是头号资产",
+      "action": "硬保护：禁 robots 屏蔽 / 禁改 URL / 禁大幅改写正文结构",
+      "priority": "P0",
+      "recheck": "2026-10-20",
+      "result": "",
+      "updatedAt": "2026-10-07",
+      "note": "转写自 docs/SEO-GEO-V2.0-执行拆解表-2026-09-27.md M2-5"
+    },
+    {
+      "query": "calibre alternative",
+      "intent": "对比工具",
+      "targetUrl": "/guide/calibre-alternatives-online",
+      "mainGap": "Calibre 在 7 个类别全面被引（转换类 19 次），垄断 AI 默认答案",
+      "action": "新建 /guide/calibre-alternatives-online 对比页，直接对抗默认答案地位（P0-3）",
+      "priority": "P1",
+      "recheck": "2026-10-15",
+      "result": "",
+      "updatedAt": "2026-10-07",
+      "note": "转写自 GEO三平台长尾业务词覆盖率报告-20260927 §五 P0-3"
+    },
+    {
+      "query": "is azw3 compatible with kindle",
+      "intent": "格式对比",
+      "targetUrl": "",
+      "mainGap": "单周 −7（2→9），为当周最大跌幅；归因待观察，不作因果",
+      "action": "进观察区，2 周期限内不改站",
+      "priority": "P2",
+      "recheck": "2026-10-19",
+      "result": "",
+      "updatedAt": "2026-10-07",
+      "note": "转写自 Bing-Google双渠道周报-2026-10-05 关键词模块（降 Top3）"
+    }
+  ]
+}

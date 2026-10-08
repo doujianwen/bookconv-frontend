@@ -183,10 +183,13 @@ export type ProviderGetterName = Exclude<keyof WorkbenchProvider, 'id' | 'label'
  * Panels that answer themselves from a local data file instead of a provider
  * getter. Adding a getter for these would imply a data source they do not have.
  *
- *   board    -> data/seo-geo-board.json      (src/lib/board/)
- *   keywords -> data/keyword-series.json     (src/lib/keywords/)
+ *   board       -> data/seo-geo-board.json      (src/lib/board/)
+ *   keywords    -> data/keyword-series.json     (src/lib/keywords/)
+ *   competitors -> data/competitor-series.json  (src/lib/keywords/)
  *
  * Declared as one list so a new self-sourced panel only has to be added here.
+ * The P1.1 workbench-honesty gate counts PANELS against a literal; if that
+ * number ever fails, fix the count there rather than bending this list.
  */
 export const SELF_SOURCED_PANELS = ['board', 'keywords', 'competitors'] as const;
 

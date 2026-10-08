@@ -84,7 +84,7 @@ import * as post76 from "./which-kindle-books-can-you-convert-drm-free-checklist
 // 2026-08-27: Fixed 7 articles with double-brace escaping; removed 4 broken files (azw3-epub-mobi-kindle,
 //   layout-typesetting-pdf-epub, lit-format-conversion-and, selection-intercept-converter) due to truncated
 //   template literals. Remaining 8 new articles are functional.
-// 2026-08-28: Added sync-ebooks-reading-groups (post61) — 深化 "多设备同步" 主题，乘 Bing AI 高 Share
+// 2026-08-28: Added reading-groups-hub (post61) — 深化 "多设备同步" 主题，乘 Bing AI 高 Share
 //   机会词 "ebook syncing virtual reading groups" (42.86%) 与 "romance books sync" (45%)。
 // 2026-09-18: Added reading-groups-hub (post70) — P1 hub page for virtual reading groups per Bing AI opportunity analysis — Phase 2 IP expansion:
 //   Twilight vampire saga multi-device guide, targeting "Twilight ebooks Kindle Kobo" queries.

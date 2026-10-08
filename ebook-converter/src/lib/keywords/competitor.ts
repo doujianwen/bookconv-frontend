@@ -6,7 +6,14 @@
 // CLIENT component, so it must stay free of node:fs — the disk read lives in
 // ../keywords/loader.ts.
 export interface CompetitorConfig {
-  competitors: { domain: string; name: string }[];
+  competitors: {
+    domain: string;
+    name: string;
+    /** Keywords this rival overlaps with ours — used to fill the keyword
+     *  sheet's "Competitors" column. Present in the committed config. */
+    overlapKeywords?: string[];
+    evidence?: string;
+  }[];
   keywords: string[];
 }
 
@@ -22,6 +29,10 @@ export interface CompetitorRow {
   trend: CompetitorTrend;
   latestDate: string | null;
   prevDate: string | null;
+  /** The competitor's landing URL in the latest snapshot — null when it was
+   *  not in the Top-100 that day. Optional so hand-built rows in tests and
+   *  older series files still type-check. */
+  url?: string | null;
 }
 
 export interface CompetitorSeriesData {

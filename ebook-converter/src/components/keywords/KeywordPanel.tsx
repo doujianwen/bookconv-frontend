@@ -19,6 +19,13 @@ import {
   latestCandidateByQuery,
   type CandidateEntry,
 } from '@/lib/keywords/candidates';
+import {
+  deriveIntent,
+  deriveTargetUrl,
+  competitorsForQuery,
+  type CompetitorOverlapSource,
+} from '@/lib/keywords/meta';
+import { type KeywordDecision, latestDecisionByQuery } from '@/lib/keywords/decisions';
 import { Callout, Card, Chip, Stat } from '@/components/board/primitives';
 
 type View = 'all' | 'moving' | 'top20' | 'single';
@@ -69,8 +76,46 @@ function DeltaCell({ k }: { k: KeywordRow }) {
   );
 }
 
-function Row({ k, reason, candidate }: { k: KeywordRow; reason?: KeywordReason; candidate?: CandidateEntry }) {
+/** A judgement cell: shows the ledger value, or a muted dash when unset. */
+function DecisionCell({ value }: { value?: string | null }) {
+  if (!value) return <span className="text-gray-300 dark:text-gray-600">—</span>;
+  return (
+    <span className="text-xs text-gray-600 dark:text-gray-300" title={value}>
+      {value}
+    </span>
+  );
+}
+
+function PriorityCell({ p }: { p?: string }) {
+  if (!p) return <span className="text-gray-300 dark:text-gray-600">—</span>;
+  const tone: Record<string, string> = {
+    P0: 'bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-500/30',
+    P1: 'bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:ring-amber-500/30',
+    P2: 'bg-blue-50 text-blue-700 ring-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:ring-blue-500/30',
+    P3: 'bg-gray-100 text-gray-600 ring-gray-200 dark:bg-white/10 dark:text-gray-300 dark:ring-white/15',
+  };
+  return <Chip className={tone[p] ?? tone.P3}>{p}</Chip>;
+}
+
+function Row({
+  k,
+  reason,
+  candidate,
+  convertSlugs,
+  competitors,
+  decision,
+}: {
+  k: KeywordRow;
+  reason?: KeywordReason;
+  candidate?: CandidateEntry;
+  convertSlugs: string[];
+  competitors: CompetitorOverlapSource[] | null;
+  decision?: KeywordDecision;
+}) {
   const moving = isMoving(k);
+  const intent = decision?.intent || deriveIntent(k.query);
+  const targetUrl = decision?.targetUrl || deriveTargetUrl(k.query, convertSlugs);
+  const overlaps = competitorsForQuery(k.query, competitors);
   return (
     <tr
       className={
@@ -83,6 +128,21 @@ function Row({ k, reason, candidate }: { k: KeywordRow; reason?: KeywordReason; 
         {k.observations < 2 ? (
           <span className="ml-2 text-[10px] text-gray-400 dark:text-gray-500">单点</span>
         ) : null}
+      </td>
+      <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">{intent}</td>
+      <td className="whitespace-nowrap px-3 py-2 text-xs">
+        {targetUrl ? (
+          <a
+            href={targetUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-blue-600 hover:underline dark:text-blue-400"
+          >
+            {targetUrl}
+          </a>
+        ) : (
+          <span className="text-gray-300 dark:text-gray-600">—</span>
+        )}
       </td>
       <td className={'whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums ' + posTone(k.latest?.impressionPosition ?? null)}>
         {fmtPos(k.latest?.impressionPosition)}
@@ -99,9 +159,21 @@ function Row({ k, reason, candidate }: { k: KeywordRow; reason?: KeywordReason; 
       <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums text-gray-600 dark:text-gray-300">
         {k.latest?.clicks ?? '—'}
       </td>
-      <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums text-xs text-gray-400 dark:text-gray-500">
-        {k.observations}
+      <td className="px-3 py-2 text-xs">
+        {overlaps.length ? (
+          <span className="text-gray-600 dark:text-gray-300">{overlaps.join('、')}</span>
+        ) : (
+          <span className="text-gray-300 dark:text-gray-600">—</span>
+        )}
       </td>
+      <td className="px-3 py-2"><DecisionCell value={decision?.mainGap} /></td>
+      <td className="px-3 py-2"><DecisionCell value={decision?.action} /></td>
+      <td className="whitespace-nowrap px-3 py-2"><PriorityCell p={decision?.priority} /></td>
+      <td className="whitespace-nowrap px-3 py-2 text-right text-xs tabular-nums text-gray-400 dark:text-gray-500">
+        {k.latest?.date ?? '—'}
+      </td>
+      <td className="whitespace-nowrap px-3 py-2 text-xs"><DecisionCell value={decision?.recheck} /></td>
+      <td className="px-3 py-2"><DecisionCell value={decision?.result} /></td>
       <td className="px-3 py-2 text-xs text-gray-600 dark:text-gray-300">
         {reason ? (
           <span title={`${reason.date} 记录`}>{reason.reason}</span>
@@ -124,10 +196,20 @@ export function KeywordPanel({
   data,
   reasons = [],
   candidates = [],
+  convertSlugs = [],
+  competitors = null,
+  decisions = [],
 }: {
   data: KeywordSeriesData;
   reasons?: KeywordReason[];
   candidates?: CandidateEntry[];
+  /** Object.keys(CONTENT_MAP) — passed from the server page so Target URL only
+   *  ever points at a page that really ships. */
+  convertSlugs?: string[];
+  /** Monitored competitors with their overlap keywords (Target-URL join). */
+  competitors?: CompetitorOverlapSource[] | null;
+  /** Human judgement ledger (Intent / Main Gap / Action / Priority / Recheck / Result). */
+  decisions?: KeywordDecision[];
 }) {
   const [view, setView] = React.useState<View>('moving');
   const [sortKey, setSortKey] = React.useState<SortKey>('delta');
@@ -138,6 +220,7 @@ export function KeywordPanel({
   const gsc = data.gsc;
   const reasonMap = React.useMemo(() => latestReasonByQuery(reasons), [reasons]);
   const candidateMap = React.useMemo(() => latestCandidateByQuery(candidates), [candidates]);
+  const decisionMap = React.useMemo(() => latestDecisionByQuery(decisions), [decisions]);
 
   const rows = React.useMemo(() => {
     if (!bing) return [];
@@ -231,12 +314,14 @@ export function KeywordPanel({
           </div>
 
           <div className="mt-3 overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
-            <table className="w-full min-w-[760px] border-collapse text-sm">
+            <table className="w-full min-w-[1500px] border-collapse text-sm">
               <thead>
                 <tr className="bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:bg-white/[0.04] dark:text-gray-400">
                   <th className="cursor-pointer px-3 py-2 hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('query')}>
                     关键词 {sortKey === 'query' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
+                  <th className="px-3 py-2">意图</th>
+                  <th className="px-3 py-2">目标页</th>
                   <th className="cursor-pointer px-3 py-2 text-right hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('position')}>
                     最新排名 {sortKey === 'position' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
@@ -248,22 +333,34 @@ export function KeywordPanel({
                     展示 {sortKey === 'impressions' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
                   <th className="px-3 py-2 text-right">点击</th>
-                  <th className="cursor-pointer px-3 py-2 text-right hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('observations')}>
-                    观测 {sortKey === 'observations' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
-                  </th>
+                  <th className="px-3 py-2">竞品</th>
+                  <th className="px-3 py-2">主要差距</th>
+                  <th className="px-3 py-2">动作</th>
+                  <th className="px-3 py-2">优先级</th>
+                  <th className="px-3 py-2 text-right">日期</th>
+                  <th className="px-3 py-2">复查</th>
+                  <th className="px-3 py-2">结果</th>
                   <th className="px-3 py-2">原因</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-white/[0.06]">
                 {rows.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-3 py-6 text-center text-sm text-gray-400 dark:text-gray-500">
+                    <td colSpan={16} className="px-3 py-6 text-center text-sm text-gray-400 dark:text-gray-500">
                       当前筛选下没有关键词。
                     </td>
                   </tr>
                 ) : (
                   rows.slice(0, 300).map((k) => (
-                    <Row key={k.query} k={k} reason={reasonMap.get(k.query)} candidate={candidateMap.get(k.query)} />
+                    <Row
+                      key={k.query}
+                      k={k}
+                      reason={reasonMap.get(k.query)}
+                      candidate={candidateMap.get(k.query)}
+                      convertSlugs={convertSlugs}
+                      competitors={competitors}
+                      decision={decisionMap.get(k.query)}
+                    />
                   ))
                 )}
               </tbody>
@@ -273,7 +370,8 @@ export function KeywordPanel({
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
             显示 {Math.min(rows.length, 300)} / {rows.length} 条
             {rows.length > 300 ? '（已截断，用搜索缩小范围）' : ''} ·
-            Δ 为正 = 名次上升（数字变小）· 行底色标黄 = 名次发生变动
+            Δ 为正 = 名次上升（数字变小）· 行底色标黄 = 名次发生变动 ·
+            意图 / 目标页 / 竞品 为自动派生，其余判断列来自决策台账
           </p>
         </Card>
       ) : null}
@@ -350,7 +448,7 @@ export function KeywordPanel({
         </p>
         <p className="mt-1">
           生成候选：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/suggest-keyword-reasons.mjs</code> ·
-          确认晋升：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/confirm-keyword-reason.mjs "&lt;词&gt;" &lt;index&gt;</code>
+          确认晋升：<code className="rounded bg-gray-100 px-1 dark:bg-white/10">node scripts/confirm-keyword-reason.mjs &quot;&lt;词&gt;&quot; &lt;index&gt;</code>
         </p>
       </footer>
     </div>

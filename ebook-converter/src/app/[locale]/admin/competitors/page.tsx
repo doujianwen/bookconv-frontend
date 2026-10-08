@@ -1,12 +1,13 @@
 // src/app/[locale]/admin/competitors/page.tsx
 // Competitor keyword-ranking panel — table ③ (竞品关键词变化).
 import { CompetitorPanel } from '@/components/keywords/CompetitorPanel';
-import { loadCompetitorSeries } from '@/lib/keywords/loader';
+import { loadCompetitorSeries, loadCompetitorDecisions } from '@/lib/keywords/loader';
 
 export const dynamic = 'force-dynamic';
 
 export default async function CompetitorsPage() {
   const data = loadCompetitorSeries();
+  const decisions = loadCompetitorDecisions();
   if (!data) {
     return (
       <div className="space-y-4">
@@ -23,5 +24,5 @@ npm run build:competitor      # 合并成序列`}
       </div>
     );
   }
-  return <CompetitorPanel data={data} />;
+  return <CompetitorPanel data={data} decisions={decisions} />;
 }

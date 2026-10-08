@@ -19,13 +19,17 @@ import {
 
 describe('workbench panel registry', () => {
   it('registers the operational panels plus the self-sourced ones', () => {
-    // 10 operational panels + 3 self-sourced (board, keywords, competitors) = 13.
-    // The self-sourced panels are registered here so they appear in navigation,
-    // but they are NOT provider-backed (see SELF_SOURCED_PANELS / ProviderPanelKey).
-    expect(PANELS).toHaveLength(13);
+    // Derive the expected count from the two authorities instead of a literal:
+    // every provider-backed panel (PANEL_TO_GETTER) plus every self-sourced one
+    // (SELF_SOURCED_PANELS). A hand-maintained number here silently rots the
+    // moment a panel is added — which is exactly what happened when `feedback`
+    // shipped (the gate still said 13 while the registry had 14).
+    expect(PANELS).toHaveLength(
+      Object.keys(PANEL_TO_GETTER).length + SELF_SOURCED_PANELS.length,
+    );
     const keys = PANELS.map((p) => p.key).sort();
     expect(keys).toEqual(
-      ['analytics', 'board', 'competitors', 'content', 'deploy', 'domain', 'extensions', 'keywords', 'notifications', 'overview', 'security', 'seo', 'users'].sort()
+      ['analytics', 'board', 'competitors', 'content', 'deploy', 'domain', 'extensions', 'feedback', 'keywords', 'notifications', 'overview', 'security', 'seo', 'users'].sort()
     );
   });
 
@@ -64,8 +68,11 @@ describe('workbench panel registry', () => {
 
   it('maps every panel to a distinct provider getter', () => {
     const getters = Object.values(PANEL_TO_GETTER);
-    expect(getters).toHaveLength(10);
-    expect(new Set(getters).size).toBe(10);
+    // Count derived from the map itself, so adding a provider getter cannot
+    // leave a stale number behind — the invariant under test is "one distinct
+    // getter per provider-backed panel", not a fixed registry size.
+    expect(getters).toHaveLength(Object.keys(PANEL_TO_GETTER).length);
+    expect(new Set(getters).size).toBe(getters.length);
   });
 
   it('resolves paths, including the locale prefix, to the right panel', () => {
@@ -207,7 +214,7 @@ describe('provider payload contract', () => {
 
   it('returns all provider-backed panels from the bulk fetch', async () => {
     const all = await getAllWorkbenchPayloads();
-    expect(Object.keys(all)).toHaveLength(10);
+    expect(Object.keys(all)).toHaveLength(expected.length);
     for (const key of expected) expect(all[key]).toBeDefined();
   });
 });

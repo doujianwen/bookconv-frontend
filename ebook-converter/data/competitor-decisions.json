@@ -1,0 +1,23 @@
+{
+  "$schema": "competitor-decisions/v1",
+  "_readme": [
+    "人工判断层（Competitor Tracking Sheet 的判断列）。排名/Δ/趋势/落地页由抓取自动得到，不在这里。",
+    "本文件记「新页·更新 / 内容差异 / AI 提及 / 我方差距 / 动作」，按 domain + query 取最新一条（updatedAt 倒序）。",
+    "面板与导出（npm run export:sheets）会 join 到对应竞品×词行；留空则单元格为 —。",
+    "本文件是人工沉淀，已纳入 git，丢了很难重建。",
+    "—— 种子条目系从项目既有文档转写（非新判断），provenance 见 note。"
+  ],
+  "entries": [
+    {
+      "domain": "calibre-ebook.com",
+      "query": "calibre alternative",
+      "newPage": "",
+      "contentDiff": "以官方文档语料为主体（calibre-ebook.com/download + manual.calibre-ebook.com），是 LLM 默认答案来源",
+      "aiMention": "三平台工具类被引 24 次，占该类 48%（2026-09-27 实测）",
+      "ourGap": "我方无对等「在线 Calibre 替代」对比页承接该意图",
+      "action": "新建 /guide/calibre-alternatives-online（对应 GEO 报告 P0-3）",
+      "updatedAt": "2026-10-07",
+      "note": "转写自 数据分析/GEO竞品洞察与BookConv优化建议-20260927.md"
+    }
+  ]
+}

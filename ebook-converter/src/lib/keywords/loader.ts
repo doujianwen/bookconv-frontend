@@ -16,6 +16,12 @@ import {
   type CompetitorSeriesData,
   type CompetitorConfig,
 } from './competitor';
+import {
+  KEYWORD_DECISIONS_PATH,
+  COMPETITOR_DECISIONS_PATH,
+  type KeywordDecision,
+  type CompetitorDecision,
+} from './decisions';
 
 /**
  * Read the generated series. Returns null when the file has not been built yet
@@ -88,5 +94,32 @@ export function loadKeywordReasonCandidates(root: string = process.cwd()): Candi
   } catch {
     return [];
   }
+}
+
+/** Generic reader for a hand-curated ledger: returns the `entries` array, or []
+ *  when the file is missing / malformed. Never throws — a ledger is optional. */
+function readLedger<T>(fp: string): T[] {
+  if (!existsSync(fp)) return [];
+  try {
+    const parsed = JSON.parse(readFileSync(fp, 'utf8')) as { entries?: T[] };
+    return Array.isArray(parsed.entries) ? parsed.entries : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Read the human keyword decision ledger (Intent / Main Gap / Action /
+ * Priority / Recheck / Result). Curated by hand and committed, so a missing
+ * file is normal — return [] so the panel can always join without special-casing.
+ */
+export function loadKeywordDecisions(root: string = process.cwd()): KeywordDecision[] {
+  return readLedger<KeywordDecision>(join(root, KEYWORD_DECISIONS_PATH));
+}
+
+/** Read the human competitor decision ledger (New Page / Content Diff /
+ *  AI Mention / Our Gap / Action). Same contract as loadKeywordDecisions. */
+export function loadCompetitorDecisions(root: string = process.cwd()): CompetitorDecision[] {
+  return readLedger<CompetitorDecision>(join(root, COMPETITOR_DECISIONS_PATH));
 }
 

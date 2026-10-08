@@ -10,7 +10,8 @@
     "owner: O=站长裁决 / A=AI执行 / S=脚本门禁 / T=第三方工具",
     "recurring 取值：daily(每日) / weekly(每周) / weekly-monday(每周一) / every-2-days(隔日) / monthly(每月) / monthly-first-week(每月首周) / monthly-end(每月末) / quarterly(每季) / continuous(持续) / per-change(每次变更) / per-round(每轮)",
     "⚠️ continuous / per-change / per-round 是「常驻纪律」——它们每天均适用、没有完成状态，所以作战台把它们单列在折叠区，不混进「今日工作」有期清单（否则 8 条常驻会淹掉真正要出货的 5 条有期任务）。要改动这个分组，改 src/lib/board/types.ts 的 STANDING_CADENCES。",
-    "🔴 工作节奏（2026-09-28 用户铁律，详见 meta.cadencePolicy）：分析类任务（关键词处理 / 竞品变化 / GEO 监测）已由 daily、every-2-days 改为 weekly，竞品深度对比 monthly。降频只针对分析，不针对交付与验收——故障监控、内容/代码改动后的门禁与两层审计照旧每次执行。"
+    "🔴 工作节奏（2026-09-28 用户铁律，详见 meta.cadencePolicy）：分析类任务（关键词处理 / 竞品变化 / GEO 监测）已由 daily、every-2-days 改为 weekly，竞品深度对比 monthly。降频只针对分析，不针对交付与验收——故障监控、内容/代码改动后的门禁与两层审计照旧每次执行。",
+    "- 2026-10-07 Phase 2 Title-First 部署完成（FROZEN + LIVE）；Batch 4 Day12/13 推进；Phase 1 诊断设计锁定，P0 补 81 页超长 description。详见 docs/SEO_PHASE2_TITLE_FIRST_CLOSURE_V1.md"
   ],
   "meta": {
     "project": "BookConv.com",
@@ -268,8 +269,8 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "产物 数据分析/keyword-rank-series.csv + keyword-reason-candidates-2026-09-27.md + /admin/keywords 面板",
-          "statusAudited": "2026-10-03"
+          "statusNote": "产物 数据分析/keyword-rank-series.csv + keyword-reason-candidates-2026-09-27.md + /admin/keywords 面板。2026-10-07 补齐规范表：`npm run export:sheets` 由 keyword-series + keyword-decisions 生成 数据分析/keyword-optimization-sheet.csv（前 15 列=规范，第 16 列 Source 标渠道；996 行 = Bing 594 + GSC 402，双渠道不合并行内数据）；面板同步扩列（意图/目标页/竞品 自动派生，主要差距/动作/优先级/复查/结果 读 data/keyword-decisions.json）",
+          "statusAudited": "2026-10-07"
         },
         {
           "id": "M1-2",
@@ -451,7 +452,8 @@
           "recurring": "per-change",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "\n[2026-10-07 实测] Phase 2 Title-First 部署通过完整闸门链：\n  audit-content-integrity 0/0 · find-duplicate-headings 0 · tsc --noEmit 0 error\n  pre-commit 5 道快门禁 · next build exit 0\n  publish-gate blog-content 层 + seo-critic 双层通过\n  （push 前修 6 处 sync-ebooks-reading-groups → reading-groups-hub 死链阻塞）"
         },
         {
           "id": "M2-8",
@@ -464,7 +466,8 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "todo",
-          "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。"
+          "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。",
+          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/"
         },
         {
           "id": "M2-9",
@@ -837,8 +840,8 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "产物 data/competitor-series.json + competitor-serp-2026-09-27/28.json + /admin/competitors 面板",
-          "statusAudited": "2026-10-03"
+          "statusNote": "产物 data/competitor-series.json + competitor-serp-2026-09-27/28/10-05.json + /admin/competitors 面板。2026-10-07 补齐规范表：`npm run export:sheets` 生成 数据分析/competitor-tracking.csv（11 列 / 129 行，含 Competitor URL）；build-competitor-series 现把落地 URL 写入 matrix；面板同步扩列（落地页 自动，新页·更新/内容差异/AI 提及/我方差距/动作 读 data/competitor-decisions.json）",
+          "statusAudited": "2026-10-07"
         },
         {
           "id": "M7-2",
@@ -913,7 +916,8 @@
           "recurring": "continuous",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "\n[2026-10-07 新增证据] 用 GSC URL Inspection API 实测 18 个零曝光页收录状态：\n  14/18 Discovered-but-not-indexed · 3/18 Submitted-and-indexed · 1/18 unknown\n  「0 impressions = 未收录」假设被推翻（收录率 16.7%）\n  API 凭据：scripts/gsc-service-account.json · 配额 2000/天\n  U_MANUAL_ACTION = RESOLVED（无处置）✅ — 2026-10-07 人工截图确认「未检测到任何问题」\n[2026-10-07 更新] U3 搜索量 = RESOLVED ✅ — GSC API 实测 90 天窗口（2026-07-07→2026-10-05）：403 词 / 1472 曝光 / 4 点击。数据落盘：数据分析/GSC_API_query_2026-10-05.json。constants.ts 50 条历史数据全部降为 HISTORICAL。"
         },
         {
           "id": "M8-2",
@@ -1090,7 +1094,7 @@
         {
           "id": "M9-7",
           "action": "周一三合一分析（执行计划 M14，已挂自动化）",
-          "detail": "每周一 07:30 自动化运行：① 关键词排名（build-keyword-series.mjs 刷新 /admin/keywords 数据源 + 升降 Top10 + 品牌词走势）；② 竞品（fetch-competitor-serp → build-competitor-series 刷新 /admin/competitors，对照 09-25 基线 diff）；③ GEO 对照（vs GEO三平台长尾业务词覆盖率报告-20260927 基线）。结果并入双渠道最终报告，不单独建文档。全量 25 词三平台重采仍按 M6 系列排期（11-01）。",
+          "detail": "每周一 07:30 自动化运行：① 关键词排名（build-keyword-series.mjs 刷新 /admin/keywords 数据源 + 升降 Top10 + 品牌词走势）；② 竞品（fetch-competitor-serp → build-competitor-series 刷新 /admin/competitors，对照 09-25 基线 diff）；③ GEO 对照（vs GEO三平台长尾业务词覆盖率报告-20260927 基线）。结果并入双渠道最终报告，不单独建文档。全量 25 词三平台重采仍按 M6 系列排期（11-01）。 2026-10-07 起把 export:sheets 挂进该自动化（新增第 7 步：生成 数据分析/keyword-optimization-sheet.csv 与 competitor-tracking.csv 两张规范表），全链 7 步为：fetch:bing → build:keywords → fetch:competitor → build:competitor → suggest-keyword-reasons → export:sheets；两张 CSV 是下游派生视图，须在前 6 步全部成功后再导出。",
           "owner": "S+A",
           "deliverable": "数据分析/Bing-Google双渠道最终报告-<日期>.md（含三合一模块）",
           "accept": "四报告产出且标证据等级；失败模块标 PENDING 并写明原因，绝不编造",
@@ -1100,7 +1104,8 @@
           "tier": "CORE",
           "status": "done",
           "result": "2026-10-05 三合一首跑完成（此前 7 天未跑，因所谓\"已挂自动化\"实为未挂）。VI：Google -27.5% / Bing Web +26.1%（两者均越门槛=反向成立）/ Bing AI -10.0%（未达门槛，不参与判定）。09:00 收到 10-05 新导出后 Bing AI 由 +147.8% 修正为 -10.0%（高位盘整），已同步修正主报告。四份报告已出。同时补挂自动化 13300356(周一07:30 ACTIVE)。顺带修 daily_vi.py 方向性缺陷并加门禁 test:vi",
-          "note": "Bing AI 10-05 新导出补齐 AIPageStats/AISearchQueries；仍缺 CountryReport（地域）⇒ 下次导出务必补。Citation Share 本次 182/182 有值但 Top10 中 5 个 Citations<30，排序须按绝对量。 09:15 第二批三份传统报表已核验：🟢点击三份全=73零差异，曝光 2284/1692/1177（页面74.1%、关键词51.5%为子集）。🟢convert 页 0.3%→1.2% 修正，位置全 Top10(3.0-8.2)但曝光仅21 ⇒ 归因改为「曝光量/索引覆盖」非排名。🟢Bing 675词 99.9% Top10 vs Google 21词全部44-96，分布几乎不重叠。🟢地域 us40.3%/ww32.1%（ww颗粒度不足）。🚫 AI 侧无对等地域报表（09:04 用户纠正 + 归档复核：唯一那份 134 字节/17 展示、被「网络」过滤的切片）⇒ 不列待补项。 🔴 09:35 结论红队审计（10 项独立重算）：抓到 1 处硬错（「Google 21 词全部 44-96」实为 18/21）+ 1 处数字错（Share 小样本 5→6）。4 个结论降级：①「675 词 99.9% Top10」权重下调（97.9% 词曝光<5 次，是尾部小样本必然）②convert「位置全 Top10」归因作废（曝光中位 2-4，且 25/31 页缺席）③AI convert 18.4% 高度集中（Top2 占 96%）④us 40.3% 低估（ww 32.1% 很可能是未归类美国）。🟢 敏感性测试：Google 单日归零符号均未翻转⇒方向判定稳，但幅度精度低只作方向。详见 数据分析/结论红队审计-2026-10-05.md"
+          "note": "Bing AI 10-05 新导出补齐 AIPageStats/AISearchQueries；仍缺 CountryReport（地域）⇒ 下次导出务必补。Citation Share 本次 182/182 有值但 Top10 中 5 个 Citations<30，排序须按绝对量。 09:15 第二批三份传统报表已核验：🟢点击三份全=73零差异，曝光 2284/1692/1177（页面74.1%、关键词51.5%为子集）。🟢convert 页 0.3%→1.2% 修正，位置全 Top10(3.0-8.2)但曝光仅21 ⇒ 归因改为「曝光量/索引覆盖」非排名。🟢Bing 675词 99.9% Top10 vs Google 21词全部44-96，分布几乎不重叠。🟢地域 us40.3%/ww32.1%（ww颗粒度不足）。🚫 AI 侧无对等地域报表（09:04 用户纠正 + 归档复核：唯一那份 134 字节/17 展示、被「网络」过滤的切片）⇒ 不列待补项。 🔴 09:35 结论红队审计（10 项独立重算）：抓到 1 处硬错（「Google 21 词全部 44-96」实为 18/21）+ 1 处数字错（Share 小样本 5→6）。4 个结论降级：①「675 词 99.9% Top10」权重下调（97.9% 词曝光<5 次，是尾部小样本必然）②convert「位置全 Top10」归因作废（曝光中位 2-4，且 25/31 页缺席）③AI convert 18.4% 高度集中（Top2 占 96%）④us 40.3% 低估（ww 32.1% 很可能是未归类美国）。🟢 敏感性测试：Google 单日归零符号均未翻转⇒方向判定稳，但幅度精度低只作方向。详见 数据分析/结论红队审计-2026-10-05.md",
+          "statusAudited": "2026-10-07"
         }
       ]
     },
