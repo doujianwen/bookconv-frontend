@@ -32,6 +32,9 @@ const PUBLIC_DIR = join(ROOT, 'public');
 const findings = [];
 const add = (severity, id, message, where) => findings.push({ severity, id, message, where });
 
+// 指向 301 重定向源 slug 的内链计数（用于 WARN 提示，非阻塞）
+let blogRedirectLinkHits = 0;
+
 // ── 工具 ──────────────────────────────────────────────────
 function read(p) {
   try { return readFileSync(p, 'utf8'); } catch { return null; }
@@ -182,7 +185,8 @@ function checkLlmsTxt(registeredSlugs, conversionMapSize, guideSlugSet) {
 }
 
 // ── 检查 c：内部死链 ────────────────────────────────────
-function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats, guideSlugs) {
+function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats, guideSlugs, blogRedirectSources) {
+  blogRedirectLinkHits = 0;
   const dirs = [BLOG_DIR, CONTENT_DIR].filter(existsSync);
   const files = dirs.flatMap((d) => listTs(d).map((f) => join(d, f)));
   const KNOWN = new Set(['/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
@@ -206,6 +210,7 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
       const blogM = url.match(/^\/blog\/([a-z0-9-]+)$/);
       if (blogM) {
         if (registeredSlugs.has(blogM[1])) ok = true;
+        else if (blogRedirectSources.has(blogM[1])) { ok = true; blogRedirectLinkHits++; } // 301 源 slug，非死链
         else reason = `博文 slug 未注册：${blogM[1]}`;
       } else if (url.startsWith('/convert/')) {
         const slug = url.slice('/convert/'.length);
@@ -280,12 +285,31 @@ function getConversionMapSize() {
   };
 }
 
+// 从 src/middleware.ts 的 BLOG_REDIRECTS 提取 /blog/ 301 重定向「源 slug」。
+// 已 301 合并到规范页的博文会主动取消注册，其内链靠中间件 301 兜底，
+// 不应被判为死链。仅提取 /blog/ 源 key（排除 /formats、/guide 等非 blog 条目），
+// 精确豁免，避免误判真正缺失的链接。
+function getBlogRedirectSources() {
+  const mw = read(join(ROOT, 'src', 'middleware.ts')) || '';
+  const block = mw.match(/const BLOG_REDIRECTS[\s\S]*?=\s*\{([\s\S]*?)\n\};/);
+  const sources = new Set();
+  if (!block) return sources;
+  const re = /\/blog\/([a-z0-9-]+)'\s*:/g; // 仅匹配 '/blog/xxx': 形式的源 key
+  let m;
+  while ((m = re.exec(block[1]))) sources.add(m[1]);
+  return sources;
+}
+
 function main() {
   const reg = checkBlogRegistration();
   const guides = checkGuideRegistration();
   const cm = getConversionMapSize();
+  const blogRedirectSources = getBlogRedirectSources();
   checkLlmsTxt(reg.registeredSlugs, cm.size, guides);
-  checkInternalLinks(reg.registeredSlugs, cm.validConvertSlugs, cm.supportedFormats, guides);
+  checkInternalLinks(reg.registeredSlugs, cm.validConvertSlugs, cm.supportedFormats, guides, blogRedirectSources);
+  if (blogRedirectLinkHits > 0) {
+    add('warn', 'internal-link-via-301', `有 ${blogRedirectLinkHits} 处内部链接指向 301 重定向源 slug（非死链，已豁免 critical；建议后续改为规范 slug 以消除链式重定向）`, 'src/data/blog/*.ts');
+  }
   checkI18nParity();
   checkEnRedirects();
 
