@@ -12,6 +12,16 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert DjVu to PDF on the Desktop with djvulibre',
+      body: `When a file exceeds the 10MB upload limit, or you want to script a whole archive, the standard desktop tool is djvulibre. Its ddjvu command renders pages to PDF:
+
+ddjvu -format=pdf input.djvu output.pdf
+
+ddjvu keeps each scanned page at its original resolution, just like the online converter, and handles multi-page books in one pass. For a searchable result, run OCR separately, for example with Tesseract, because the format shift alone does not add hidden text.
+
+Note that Calibre does not read DjVu, so this is one conversion the browser tool and djvulibre cover where a general ebook library manager does not.`
+    },
+    {
       heading: 'What is DjVu Format?',
       body: `DjVu (pronounced "déjà vu") came out of AT&T Labs in the mid-1990s with one goal: make scanned pages small enough to download over a dial-up modem. It worked. A 300-page scanned technical manual that would balloon to 200MB as a PDF might sit at 15MB in DjVu — sometimes less.
 
@@ -129,6 +139,7 @@ None of these mean the tool failed. They mean the source had an issue the conver
   ],
 
   faq: [
+    { q: 'Can I convert DjVu to PDF with djvulibre instead of uploading?', a: 'Yes. The command ddjvu -format=pdf input.djvu output.pdf renders every page at its original resolution and handles multi-page books in one pass. Calibre does not read DjVu, so djvulibre is the desktop path for files over the 10MB limit or bulk jobs; the online converter covers everything under the limit.' },
     { q: 'Will the text be searchable in my converted PDF?', a: 'Only if the original DjVu file already had an OCR text layer — the converter carries that layer through into the PDF. If the DjVu is pure images with no hidden text, the PDF will be pure images too, and you would need a separate OCR step to make it searchable.' },
     { q: 'Why is my PDF so much bigger than the DjVu?', a: 'DjVu uses a specialized layered compression built specifically for scanned pages, and PDF has no direct equivalent. A 3-6x size increase is completely normal, and for very image-heavy documents it can be more.' },
     { q: 'Can I convert a multi-page DjVu book?', a: 'Yes. Entire multi-page documents convert into a single PDF with pages in the original order. Long books with hundreds of scanned pages take a few minutes because every page image has to be decoded and re-encoded.' },

@@ -12,6 +12,16 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert MOBI to TXT with Calibre on the Command Line',
+      body: `If you would rather keep a copy on your own machine, Calibre’s command-line tool does the same job as the browser converter. The command is short:
+
+ebook-convert book.mobi book.txt
+
+Calibre reads the MOBI record structure, drops the HTML markup, and writes plain UTF-8 text with paragraph breaks preserved. The result matches what the online tool produces, so you can batch a whole folder with a simple shell loop and never upload a file.
+
+One caveat worth knowing: DRM-locked AZW3 or KFX files must be unlocked before any tool, including Calibre, can read them. DRM-free MOBI, author exports, and Gutenberg titles all convert cleanly.`
+    },
+    {
       heading: 'What MOBI Is and Why Text Extraction Is Possible',
       body: `MOBI started life as Mobipocket, a French ebook format from the early 2000s. Amazon bought the company in 2005 and made MOBI the foundation of the Kindle ecosystem for well over a decade.
 
@@ -115,6 +125,7 @@ The converter decompresses the MOBI, strips HTML tags, and rebuilds clean paragr
   ],
 
   faq: [
+    { q: 'Can Calibre convert MOBI to TXT on my computer?', a: 'Yes. The command ebook-convert book.mobi book.txt strips the markup and writes UTF-8 text, matching the online converter. It works on DRM-free files; encrypted AZW3 or KFX must be unlocked first, which no converter can do on its own.' },
     { q: 'Will images be preserved?', a: 'No. TXT is pure text and cannot hold images at all. If the illustrations matter, keep the MOBI or convert it to EPUB instead.' },
     { q: 'What character encoding does the output use?', a: 'UTF-8, so Chinese, Japanese, Korean, Cyrillic, Arabic, and accented European text all come through correctly. Curly quotes and em dashes are preserved rather than mangled into question marks.' },
     { q: 'My Kindle book will not convert. Why?', a: 'Books bought from the Kindle Store carry DRM, which encrypts the content and blocks any conversion. DRM-free MOBI files — Gutenberg downloads, author-direct copies, your own exports — work fine.' },

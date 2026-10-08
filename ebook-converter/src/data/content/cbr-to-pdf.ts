@@ -12,6 +12,17 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert CBR to PDF from the Command Line',
+      body: `If you prefer a local workflow, the same steps the online converter runs are a two-command job. First unpack the archive, then assemble the pages into a PDF:
+
+unrar x book.cbr pages/
+convert pages/*.jpg out.pdf
+
+ImageMagick’s convert reads the unpacked JPGs in filename order and writes a single PDF. The catch is the same as the browser tool: sorting depends on zero-padded names, so rename pages to 001.jpg, 002.jpg if your extractor produced page1.jpg, page2.jpg, page10.jpg.
+
+Calibre can also manage comic archives through its content server, but it routes them through the same image-to-PDF path, so the command line above is the most direct route for bulk work.`
+    },
+    {
       heading: 'What is CBR Format?',
       body: `A CBR file is one of the simplest formats you'll ever encounter — it's a RAR archive full of images, renamed with a .cbr extension. That's it. No metadata standard, no page-layout engine, no DRM. Just page001.jpg, page002.jpg, and so on, zipped up in reading order.
 
@@ -144,6 +155,7 @@ This means the source scans were low resolution to begin with. Conversion cannot
   ],
 
   faq: [
+    { q: 'Can I convert CBR to PDF from the command line instead of uploading?', a: 'Yes. Unpack with unrar x book.cbr pages/ then run convert pages/*.jpg out.pdf (ImageMagick) to build the PDF in page order. Use zero-padded filenames so page10 sorts after page9, not page1. This is the same image-to-PDF path the online converter uses, just on your own machine.' },
     { q: 'What is the difference between CBR and CBZ?', a: 'CBR is a RAR archive of page images; CBZ is a ZIP archive of the same thing. There is no difference in image quality or reading experience, and our converter accepts both interchangeably.' },
     { q: 'How large will my PDF be?', a: 'Expect roughly the same size as your source archive plus some overhead — a 24-page issue typically lands at 30-80MB, and a 200-page graphic novel can run 150-400MB. PDF cannot compress already-compressed comic scans much further.' },
     { q: 'Will my pages come out in the right order?', a: 'Pages are sorted by their filenames inside the archive, which works correctly for the vast majority of CBR files since most use zero-padded numbering. If a comic was packed with names like page1, page2, page10, the sorting may place page10 too early.' },
