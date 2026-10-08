@@ -98,11 +98,11 @@ For a step-by-step guide to using Calibre, see our [Calibre free batch conversio
 
 **Where Convertio falls short:**
 
-- **Limited free tier**: The free plan restricts file size to 100 MB and limits daily conversions. Large files or frequent users will need a paid plan.
+- **Limited free tier**: Convertio's free plan restricts file size to 100 MB and limits daily conversions. Large files or frequent users will need a paid plan.
 - **Ads in the free version**: The free tier displays advertisements, which can be distracting during conversion.
 - **No advanced features**: Convertio lacks metadata editing, batch conversion on the free tier, and accessibility checks. It is designed for simple tasks, not complex workflows.
 
-**Pricing**: Free tier includes 100 MB file size limit and daily conversion caps. Paid plans start at \$10/month for higher limits and ad-free use.
+**Pricing**: Convertio's free tier includes a 100 MB file size limit and daily conversion caps. Paid plans start at \$10/month for higher limits and ad-free use.
 
 **Who should use Convertio:** Casual users who need to convert a few files occasionally, mobile users who prefer apps over desktop software, and anyone who values simplicity over advanced features.
 

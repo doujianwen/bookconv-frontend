@@ -78,7 +78,7 @@ const TIER =
 
 /** The limit belongs to someone else. */
 const THIRD_PARTY =
-  /Kindle|Amazon|Send to Kindle|Apple Books|Kobo|Google Play Books|Nook|Calibre|Adobe|Dropbox|Idpf|EPUBCheck|Wikipedia|Librivox|Project Gutenberg/i;
+  /Kindle|Amazon|Send to Kindle|Apple Books|Kobo|Google Play Books|Nook|Calibre|Adobe|Dropbox|Idpf|EPUBCheck|Wikipedia|Librivox|Project Gutenberg|Convertio/i;
 
 /** A competitor comparison table row — our column is on the same line. */
 const COMPARISON_ROW = /^\s*\|.*\|.*\|/;
