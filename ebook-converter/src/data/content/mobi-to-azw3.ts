@@ -12,6 +12,22 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert MOBI to AZW3 from the Command Line (Calibre)',
+      body: `If you are converting many files at once or prefer working from a terminal, Calibre's ebook-convert command does the same MOBI → AZW3 transformation that this web tool performs — just without the browser round-trip.
+
+Install Calibre (free, cross-platform) first, then run:
+
+ebook-convert input.mobi output.azw3
+
+That single line handles the full pipeline: it unpacks the MOBI record structure, rebuilds HTML5/CSS3 content, embeds fonts if present in the source, and packages everything as Kindle Format 8. For batch jobs, wrap it in a loop:
+
+for f in *.mobi; do ebook-convert "$f" "\${f%.mobi}.azw3"; done
+
+Key Calibre flags you may find useful: --enable-heuristics repairs minor formatting issues automatically, --extra-css lets you inject custom styles, and --page-breaks-before adds manual page breaks at chapter boundaries. If your MOBI has embedded fonts you want to preserve, add --preserve-cover-aspect-ratio to keep the original cover layout intact.
+
+The web converter above is better for one-off conversions where you don't want to install software. Calibre is the right choice when you have dozens of files, need consistent batch settings, or want to automate the conversion as part of a larger ebook workflow.`
+    },
+    {
       heading: 'What MOBI Is and Why You Might Upgrade Instead',
       body: `MOBI started life as the Mobipocket format in the early 2000s, built on an even older standard called PalmDOC. Amazon acquired Mobipocket in 2005 and made MOBI the foundation of the original Kindle.\n\nIt's a simple format, and that simplicity is both its weakness and its entire remaining value:/n/n- **Basic HTML only** — a small subset, roughly what browsers supported in 1999\n- **No embedded fonts** — you get whatever typefaces the device has\n- **Minimal CSS** — most styling is ignored outright\n- **No fixed layout** — everything reflows, always\n- **Larger files** — the older compression is less efficient\n- **Runs on literally every Kindle ever made** — including the 2007 original\n\nAmazon officially stopped accepting MOBI uploads to Kindle Direct Publishing in 2021 and dropped MOBI from Send to Kindle in 2022. As a distribution format, it's finished.\n\nBut hardware outlives file formats. There are still working Kindle Keyboards, Kindle DXs, and Kindle 2s in daily use — devices that have never received a firmware update capable of reading AZW3. For those, MOBI isn't legacy. It's the only option.`
     },
@@ -74,6 +90,7 @@ If the file passes all three and the conversion still misbehaves, the problem is
   ],
 
   faq: [
+    { q: 'Can I convert MOBI to AZW3 using Calibre command line?', a: 'Yes. Install Calibre (free), then run: ebook-convert input.mobi output.azw3. For batches, loop through your directory. This produces the same AZW3 output as the web converter, with additional flags for heuristics, custom CSS, and page breaks.' },
     { q: 'Should I convert my MOBI to AZW3?', a: 'Yes, if your Kindle was made after 2011 and you want better typography, embedded fonts, and smaller files. If you\'re still using a pre-2011 Kindle (Kindle 1, 2, DX, or Kindle Keyboard), stay on MOBI — AZW3 won\'t run on those devices.' },
     { q: 'Will converting MOBI to AZW3 lose any content?', a: 'No — all text survives the conversion intact. What you gain is better formatting: embedded fonts, CSS styling, improved images, and tighter file compression. Nothing gets truncated or lost.' },
     { q: 'Why is my AZW3 file smaller than the MOBI?', a: 'AZW3 uses modern compression that\'s roughly 20-40% more efficient than MOBI\'s older algorithm. Same content, smaller file — which means faster downloads and less storage on your Kindle.' },

@@ -12,6 +12,24 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert FB2 to EPUB from the Command Line (Calibre)',
+      body: `Calibre handles FB2 → EPUB conversion natively and is the best tool when you need to process entire FictionBook libraries at once — something the web converter isn't designed for.
+
+After installing Calibre, run:
+
+ebook-convert input.fb2 output.epub
+
+Calibre parses FB2's semantic XML tags such as section, title, epigraph, and poem, and maps them to EPUB's HTML structure: sections become chapters, epigraphs become styled blockquotes, and base64-encoded images are decoded into real image files inside the EPUB package.
+
+For batch processing an entire FB2 collection:
+
+for f in *.fb2; do ebook-convert "$f" "\${f%.fb2}.epub"; done
+
+Useful flags: --add-meta-tag helps preserve FB2's rich metadata (series name, series number, genre) in the EPUB's Dublin Core fields, --chapter marks a heuristic for detecting chapter boundaries when FB2 section tags are inconsistent, and --chapter-no-top-level forces chapter detection even in flat FB2 files.
+
+FB2 is already one of the cleanest formats to convert because its XML structure is highly semantic — Calibre rarely needs heuristics for well-formed files. The web converter above is convenient for single files; Calibre is the right choice when you are migrating a library.`
+    },
+    {
       heading: 'What is FB2 Format?',
       body: `FB2 — FictionBook 2.0 — is an XML ebook format that came out of the Russian ebook scene around 2004. Unlike most formats, it wasn't designed by a company trying to lock in customers. It was designed by readers who wanted novels stored in a way that made structural sense.
 
@@ -135,6 +153,7 @@ Unlike most formats, FB2 files are essentially never DRM-protected, so you will 
   ],
 
   faq: [
+    { q: 'Can I convert FB2 to EPUB using Calibre command line?', a: 'Yes. Run: ebook-convert input.fb2 output.epub. Calibre maps FB2 semantic tags directly to EPUB structure — sections become chapters, epigraphs become blockquotes, and embedded images are extracted automatically. Use --add-meta-tag to preserve series metadata.' },
     { q: 'Does FB2 support images and illustrations?', a: 'Yes — FB2 stores images as base64 data embedded directly in the XML file, covering covers, illustrations, and diagrams. The converter decodes these back into real image files inside the EPUB.' },
     { q: 'Will my converted book work on a Kindle?', a: 'Yes. Amazon\'s Send to Kindle service accepts EPUB files directly now, so you can email the converted file to your Kindle address and it will appear on the device. Kindle has never supported FB2 natively, which is exactly why this conversion is needed.' },
     { q: 'Are FB2 files ever DRM-protected?', a: 'Essentially never. The FB2 specification includes no encryption or DRM mechanism, which is part of why it stayed popular among readers who dislike locked files, so conversions rarely fail for rights reasons.' },
