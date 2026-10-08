@@ -12,6 +12,16 @@ export const content = {
 
   sections: [
     {
+      heading: 'Converting in Reverse: MOBI to EPUB',
+      body: `Most people search this page going EPUB-first, but the reverse trip is just as common - and this converter handles both directions of the pairing.
+
+Going MOBI to EPUB makes sense when you are leaving the Kindle ecosystem. EPUB opens in Apple Books, Google Play Books, Kobo, Nook, and every mainstream Android reader, while MOBI stays locked to Kindle hardware. If you are migrating a personal library off old Kindle backups, EPUB is the destination format.
+
+The dedicated [MOBI to EPUB converter](/convert/mobi-to-epub) runs the same Calibre engine in the opposite direction: it unpacks the MOBI record structure, rebuilds the HTML/CSS skeleton, and repackages everything as a standards-compliant EPUB 3 file with chapters, images, and metadata intact.
+
+One orientation tip: whichever direction you convert, keep the original file. EPUB to MOBI sheds typography, and MOBI to EPUB cannot recover styling that MOBI never stored - so the richer format is always the one worth archiving.`
+    },
+    {
       heading: 'About EPUB: What MOBI Conversion Gains and Loses',
       body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS.
 
@@ -275,6 +285,7 @@ For more on choosing between online and desktop tools, see our [Calibre vs Onlin
   ],
 
   faq: [
+    { q: 'Do you also support converting MOBI back to EPUB?', a: 'Yes. The same engine runs both directions: the MOBI to EPUB converter rebuilds Kindle files as standards-compliant EPUB 3 with chapters, images, and metadata. Keep your richer original - neither direction recovers styling the source format never stored.' },
     { q: 'Will my EPUB convert perfectly to MOBI?', a: 'Most EPUB files convert successfully. Text content, basic formatting, and chapter structure are preserved. However, complex layouts and custom fonts may be simplified due to MOBI format limitations.' },
     { q: 'Can I read MOBI files on my Kindle?', a: 'Yes! MOBI is natively supported by all Kindle devices, especially older models (pre-2012). If you have a modern Kindle (2022+), consider using AZW3 or EPUB for better features.' },
     { q: 'Is there a file size limit?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },

@@ -12,6 +12,16 @@ export const content = {
 
   sections: [
     {
+      heading: 'Quick Tool vs Full Guide: Which Do You Need',
+      body: `This converter page and our [EPUB to AZW3 guide for Kindle](/guide/epub-to-azw3-for-kindle) cover the same format from two angles, and picking the right entry point saves you time.
+
+Use this page when you already know what you want: drop in the EPUB, get the AZW3, sideload it. There is no reading required - the whole job is upload, convert, download, and it finishes in seconds for typical novels.
+
+Use the full guide when the decision is not made yet: it walks through when AZW3 beats MOBI, how Send to Kindle compares with local conversion, which Kindle generations accept which formats, and how to fix books that will not load. It is the long-form version of the decision this page assumes.
+
+A quick heuristic: one known book and a known target device - this tool. A whole library, an unfamiliar Kindle model, or a file that keeps failing - the guide first, then the tool.`
+    },
+    {
       heading: 'About EPUB: What AZW3 Conversion Gains and Costs',
       body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size.
 
@@ -151,6 +161,7 @@ The conversion process has been validated through tens of thousands of successfu
   ],
 
   faq: [
+    { q: 'Should I use this converter or the full EPUB to AZW3 guide?', a: 'Use this converter when you already know you need an AZW3 file - upload, convert, download in seconds. Use the guide when you are still deciding between AZW3 and MOBI, troubleshooting a rejected file, or converting a whole library across Kindle generations.' },
     { q: 'What is the difference between AZW3 and MOBI?', a: 'AZW3 (Kindle Format 8) is MOBI successor supporting better typography font embedding CSS styling and table rendering. MOBI is an older format with limited capabilities. Unless your Kindle is very old (pre-2012) AZW3 is recommended.' },
     { q: 'Can the converted AZW3 be used on non-Kindle devices?', a: 'AZW3 is an Amazon proprietary format primarily used on Kindle devices and Kindle apps. If you need to read on other devices keep the EPUB format.' },
     { q: 'Will formatting be preserved during conversion?', a: 'Yes. Our converter carefully maps EPUB typography to AZW3 equivalents. Most formatting including fonts spacing images and layout is preserved. Complex layouts may require minor adjustments.' },
