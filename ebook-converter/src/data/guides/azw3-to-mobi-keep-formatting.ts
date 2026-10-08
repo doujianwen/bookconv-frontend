@@ -41,6 +41,50 @@ For most novels this is invisible. For heavily designed books it means a plainer
       heading: 'Check the result before you trust it',
       body: `Load the MOBI on your target device and confirm the **chapters** are in order, the **images** appear, and the **text reflows** instead of overflowing. If your device still rejects the file, it may only accept the oldest MOBI variant, which Calibre can target under **MOBI output → mobi7**.`,
     },
+    {
+      heading: 'Which Kindles Actually Need MOBI',
+      body: `MOBI is a legacy format, but a meaningful number of devices still depend on it:
+
+- First- and second-generation Kindles (2007 to 2010) read only MOBI.
+- The Kindle Keyboard, Kindle Touch, and early basic e-ink readers predate AZW3 support.
+- Many budget e-ink devices sold under generic brands accept only MOBI.
+
+If you bought your Kindle after roughly 2016, it almost certainly reads AZW3 natively and you do not need this conversion. The tell-tale sign you need MOBI: you sideload an AZW3 and the device either rejects the file or shows it as corrupted. When in doubt, check the device's supported formats in its settings, or simply try AZW3 first - it loads on anything modern.`,
+    },
+    {
+      heading: 'Preserving As Much Formatting As Possible',
+      body: `MOBI is an older spec, so some polish is simplified no matter which tool you use. You can still protect the essentials:
+
+- Build your source with real paragraph and heading styles rather than manual spacing, so the converter maps structure correctly.
+- Avoid fixed-layout or page-locked designs; MOBI reflows, and complex layouts flatten.
+- Keep images at a reasonable resolution. They carry over, but huge images bloat the file.
+- In Calibre, set MOBI output to mobi7 only if an ancient device demands the oldest variant; otherwise the newer MOBI format keeps more.
+
+For most novels the result is indistinguishable from AZW3. For richly designed books, expect a plainer but fully readable file.`,
+    },
+    {
+      heading: 'AZW3 to MOBI: Step-by-Step',
+      body: `The conversion itself takes seconds:
+
+1. Open BookConv or Calibre and load the AZW3.
+2. Choose MOBI as the output format.
+3. Leave default settings unless your device is very old, in which case pick the mobi7 variant.
+4. Start the conversion and download the result.
+5. Sideload the MOBI onto the target device and confirm chapters and images appear.
+
+If the device still refuses the file, it may require the oldest MOBI variant, which Calibre exposes under MOBI output settings. A format overview is in our AZW3 vs MOBI guide.`,
+    },
+    {
+      heading: 'Troubleshooting MOBI on Old Kindles',
+      body: `When an old Kindle rejects the MOBI:
+
+- Confirm the extension is .mobi and the file is DRM-free.
+- Try the mobi7 variant in Calibre if the default MOBI still will not open.
+- Check the device's supported formats in its settings; some very early models need the oldest Mobipocket variant.
+- Reconvert from the original AZW3 rather than from an already-converted file to avoid compounding errors.
+
+Most 2009-and-later readers open a standard MOBI without trouble; the issues cluster on the first two Kindle generations.`,
+    }
   ],
 }
 export const faqs: BlogFaq[] = [

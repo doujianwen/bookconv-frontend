@@ -55,6 +55,48 @@ For the MOBI path (very old Kindles only): [/guide/epub-to-mobi-keep-formatting]
 - **Every e-ink Kindle since the Paperwhite 3 (2015) reads AZW3 natively** (source: Amazon Paperwhite release timeline, 2012–2024).
 - **BookConv's converter runs on a Calibre-derived engine and deletes uploaded files within 1 hour** (source: BookConv privacy note on this page).`,
     },
+    {
+      heading: 'Step-by-Step: Sideload AZW3 to Your Kindle',
+      body: `Once you have the AZW3 file, getting it onto your Kindle takes about a minute.
+
+1. USB copy - Plug your Kindle into your computer. It mounts as a removable drive. Drop the .azw3 file into the documents folder, eject safely, and the book shows up in your library.
+2. Send to Kindle email - Email the AZW3 as an attachment to your device's @kindle.com address. Amazon delivers it over Wi-Fi and keeps a copy in your cloud library.
+3. Send to Kindle app - Drag the file into the desktop or mobile app and choose the target device.
+
+If the book does not appear, confirm the extension is .azw3 (not .mobi) and that the Kindle is registered to the same Amazon account you used to convert. Calibre users can also right-click the book and send it to the device over USB.`,
+    },
+    {
+      heading: 'When AZW3 Is the Right Call',
+      body: `Use AZW3 when your reader is a Kindle. It is the format Amazon's firmware renders with the most fidelity, and every e-ink Kindle released in the last decade reads it natively, so fonts, images, and chapter structure all survive.
+
+Reach for a different format in these cases:
+
+- Kobo, Apple Books, or most phone reading apps - keep EPUB. Those platforms do not read AZW3, and EPUB is their native open standard. See EPUB vs MOBI vs AZW3 for the full landscape.
+- A very old Kindle that rejects AZW3 - convert to MOBI instead with our AZW3 to MOBI converter.
+- Sharing with a non-Kindle friend - EPUB travels much further than AZW3.
+
+In short: AZW3 for Kindle, EPUB for nearly everything else. If you publish wide, keep master files in EPUB and generate AZW3 per-Kindle on demand.`,
+    },
+    {
+      heading: 'Common EPUB to AZW3 Mistakes',
+      body: `A few avoidable mistakes produce a broken AZW3:
+
+- Converting a DRM-locked EPUB - Amazon DRM prevents Calibre and web tools from opening the file, so the conversion fails before it starts.
+- Skipping heading styles - if your EPUB used manual spacing instead of Heading 1 or Heading 2, chapters collapse into one block.
+- Relying on Send to Kindle for layout - it converts, but you lose control over fonts and spacing.
+- Forgetting the cover - some sources strip the cover; re-add it in the converter before downloading.
+
+Fix the source first, then convert, and the AZW3 comes out clean.`,
+    },
+    {
+      heading: 'AZW3 vs KFX: Which Format for Your Kindle',
+      body: `AZW3 and KFX are both Amazon formats, but they come from different paths:
+
+- AZW3 - the format standard converters produce. Works on every Kindle since 2015 and keeps your styling.
+- KFX - Amazon's newer format with enhanced typography, generated only when you buy from Amazon or use Send to Kindle. Third-party tools generally do not create it.
+
+For a file you control, AZW3 is the practical choice. If you want KFX features, send the EPUB via Send to Kindle and let Amazon generate it. See our AZW3 vs MOBI comparison for the older-format side of the decision.`,
+    }
   ],
 }
 export const faqs: BlogFaq[] = [

@@ -41,6 +41,43 @@ Without these, you simply get a scrollable TXT with a different extension.`,
       heading: 'Check the result before you trust it',
       body: `Open the EPUB in a reader and confirm the **table of contents** lists your chapters and tapping one jumps to the right place. If everything is still one scroll, the converter did not detect your headings and you should set chapter markers before reconverting.`,
     },
+    {
+      heading: 'Preparing Your TXT for a Clean Conversion',
+      body: `A little cleanup before you convert saves a lot of fixing afterward:
+
+- Use clear, consistent chapter markers such as Chapter 1 or Part One on their own line, so the converter can build the table of contents.
+- Separate paragraphs with a blank line, not just a line break, so the EPUB keeps proper paragraph spacing.
+- Save the file as UTF-8. A wrong encoding turns accented characters and quotes into garbage.
+- Avoid tabs and fixed-width spacing for indentation; EPUB reflows text and ignores column layouts.
+- Strip headers, footers, and page numbers if the TXT came from a scanned PDF, since they become noise in the ebook.
+
+A well-structured TXT converts to an EPUB that reads like a real book instead of a formatted scroll.`,
+    },
+    {
+      heading: 'What to Do When the Table of Contents Is Wrong',
+      body: `If the EPUB comes out as one long scroll, the converter did not find your chapter breaks. Fix it at the source:
+
+- Reopen the TXT and make sure every chapter heading sits on its own line with a consistent pattern.
+- In Calibre, open Structure detection and set a regular expression that matches your marker, for example chapters that start with the word Chapter, then reconvert.
+- In BookConv, confirm the chapter style is detected before downloading; re-upload if the preview shows a flat file.
+- After reconverting, open the EPUB in a reader and tap through the table of contents to confirm each entry jumps to the right place.
+
+Getting the TOC right is what turns a text dump into a navigable ebook.`,
+    },
+    {
+      heading: 'Should You Convert TXT to EPUB at All?',
+      body: `TXT to EPUB is the right move for plain prose: manuscripts, public-domain novels, notes, and drafts. It is the wrong tool in a few cases:
+
+- Illustrated or layout-heavy books - TXT has no images or positioning, so you would lose everything. Start from the original source format instead.
+- Documents with tables, footnotes, or sidebars - those structures do not survive a flat text file; convert from DOCX or PDF when that is available.
+- Final published editions - if you already have a retail EPUB, reconverting from a TXT export only throws away quality.
+
+For everything else, turning a plain TXT into an EPUB is the fastest way to make a wall of text readable on a real device.`,
+    },
+    {
+      heading: 'A 10-Second Pre-Conversion Checklist',
+      body: `Before you convert, glance at three things: your file is saved as UTF-8, chapter titles sit on their own lines, and paragraphs are separated by blank lines. Ten seconds of cleanup now prevents a flat, broken EPUB later, and it means the converter can build a real table of contents instead of guessing.`,
+    }
   ],
 }
 export const faqs: BlogFaq[] = [
