@@ -12,6 +12,22 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert TXT to EPUB from the Command Line (Calibre)',
+      body: `Calibre handles TXT → EPUB conversion natively, and it is the best tool when you need to process large text archives or add sophisticated chapter detection that the web converter does not expose.
+
+After installing Calibre, run:
+
+ebook-convert input.txt output.epub
+
+Calibre parses the plain text file, detects paragraph structure, and builds an EPUB with proper chapter navigation. For batch processing an entire TXT collection:
+
+for f in *.txt; do ebook-convert "$f" "\${f%.txt}.epub"; done
+
+Useful flags for TXT conversion: --chapter marks a regex pattern for detecting chapter boundaries (default: lines matching Chapter\s+\d+), --chapter-no-top-level forces chapter detection even in flat text files, and --encoding lets you specify the source encoding when autodetect fails. For files with unusual separator patterns, --smarten-punctuation improves quotation marks and dashes.
+
+TXT is one of the simplest source formats because it carries no structural metadata — Calibre relies entirely on heuristics to detect chapters and paragraphs. The web converter above handles single files well; Calibre is the right choice when you are migrating a whole text library and need consistent settings.`
+    },
+    {
       heading: 'The Problem with TXT Format',
       body: `TXT (plain text) is the most basic format — no formatting, no table of contents, no metadata. Putting a 500,000-word novel in TXT is like stacking all furniture in a warehouse — everything is there, but you cannot live in it.
 
@@ -80,6 +96,7 @@ If your file uses unusual separators, you can specify them manually for more acc
   ],
 
   faq: [
+    { q: 'Can I convert TXT to EPUB using Calibre command line?', a: 'Yes. Run: ebook-convert input.txt output.epub. Calibre detects paragraph structure and chapter boundaries automatically, then builds a navigable EPUB. Use --chapter to specify custom regex patterns for chapter detection.' },
     { q: 'What if TXT file has no table of contents?', a: 'Converter automatically detects chapter markers (such as "Chapter X", "Chapter X", "---" separator lines) to generate TOC. You can also manually specify chapter separators.' },
     { q: 'Will converted file be much larger?', a: 'EPUB is essentially a ZIP package containing metadata and navigation info. Compared to TXT, it usually increases only 5-10% in size — completely acceptable.' },
     { q: 'How many words of TXT file are supported?', a: 'Theoretically unlimited. We have tested 5-million-word TXT files that convert normally.' },

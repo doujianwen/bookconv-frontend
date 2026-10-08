@@ -12,6 +12,16 @@ export const content = {
 
   sections: [
     {
+      heading: 'Converting in Reverse: EPUB to MOBI',
+      body: `This page covers MOBI to EPUB, but the reverse direction answers a very different user need — and it is just as common.
+
+Going EPUB to MOBI is the move when you are sending a book to an older Kindle that only accepts MOBI. It is the standard path for sharing ebooks with family members who have legacy Kindles, or for sideloading books that your library app cannot push via Send to Kindle.
+
+The dedicated [EPUB to MOBI converter](/convert/epub-to-mobi) runs the same Calibre engine in the opposite direction: it takes the reflowable EPUB structure, extracts text and images, and repackages them as a MOBI file that older Kindles understand. Typography may flatten, but all content survives.
+
+A practical rule: convert MOBI to EPUB when you want to preserve and enhance your library; convert EPUB to MOBI when you have a specific older-Kindle destination. Keep both formats if you are unsure which device your reader will end up on.`
+    },
+    {
       heading: 'About EPUB: The Format You Are Converting To',
       body: `EPUB (Electronic Publication) is the international standard for ebooks, maintained by the W3C. Currently at version 3.3 (2023), EPUB is a reflowable format based on XHTML/CSS — meaning text automatically adapts to any screen size, from phone to tablet to e-ink reader.
 
@@ -282,6 +292,7 @@ Knowing the limits saves a wasted conversion — pick the route that matches whe
   ],
 
   faq: [
+    { q: 'Can you also convert EPUB to MOBI?', a: 'Yes. The EPUB to MOBI converter runs the same Calibre engine in reverse — it takes your reflowable EPUB and packages it as a MOBI file for older Kindles. Typography may simplify, but all text and images survive.' },
     { q: 'How do I convert MOBI to EPUB for free?', a: 'Upload your .mobi file in the converter above, wait a few seconds, and download the converted .epub. No sign-up, no watermark, and no cost — the tool runs entirely in your browser session.' },
     { q: 'Do I need Calibre to convert MOBI to EPUB?', a: 'No. The converter above runs the same Calibre engine on our server, so you get professional conversion quality without installing anything. Your file is processed in the browser session and deleted afterward.' },
     { q: 'Is converting MOBI to EPUB safe and private?', a: 'Yes. Your file is uploaded only to be converted, processed in a single request, and deleted immediately after — it is never stored, shared, or used for anything else. No account or email is required.' },

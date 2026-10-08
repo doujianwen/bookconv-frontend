@@ -12,6 +12,22 @@ export const content = {
 
   sections: [
     {
+      heading: 'Convert DOC to EPUB from the Command Line (Calibre)',
+      body: `If you are converting many Word documents at once or prefer terminal workflows, Calibre's ebook-convert command handles DOC → EPUB just as reliably as the web tool above.
+
+After installing Calibre (free, cross-platform), run:
+
+ebook-convert input.doc output.epub
+
+Calibre parses the DOC structure — headings, paragraphs, images, tables — and rebuilds them as EPUB 3 with proper navigation, semantic markup, and reflowable text. For batch jobs across a whole archive:
+
+for f in *.doc; do ebook-convert "$f" "\${f%.doc}.epub"; done
+
+Useful Calibre flags: --chapter detects chapter boundaries from heading styles, --toc-filter limits the table of contents to top-level headings, and --extra-css lets you inject custom styling for headings and lists. If your DOC has scanned images, Calibre can run OCR automatically with --enable-heuristics.
+
+The web converter above is better for single files where you do not want to install software. Calibre is the right choice when you have dozens of documents, need consistent batch settings, or want to automate conversion as part of a larger digitization workflow.`
+    },
+    {
       heading: 'What is DOC Format?',
       body: `DOC is the original Microsoft Word format — the one that ruled from Word 97 all the way to Word 2003, before DOCX replaced it in 2007.
 
@@ -131,6 +147,7 @@ The converter handles the rest, including recovering documents Word itself refus
   ],
 
   faq: [
+    { q: 'Can I convert DOC to EPUB using Calibre command line?', a: 'Yes. Run: ebook-convert input.doc output.epub. Calibre parses DOC headings, images, and tables, then rebuilds them as EPUB 3 with proper navigation. Use --chapter and --toc-filter to control table of contents depth.' },
     { q: 'Can corrupted DOC files be recovered?', a: 'Often, yes. LibreOffice handles damaged DOC files considerably better than Word does, and severely corrupted documents frequently still yield readable content. It is not guaranteed, but it is worth trying before you give up on a file.' },
     { q: 'Will my formatting be preserved?', a: 'Headings, bold, italic, lists, tables, footnotes, and images all come through. Page-bound elements like headers, footers, and manual page breaks are dropped, because a reflowable ebook has no fixed pages to attach them to.' },
     { q: 'Does it work with password-protected documents?', a: 'No. You need to remove the password in Word or LibreOffice first — the converter cannot read encrypted content.' },
