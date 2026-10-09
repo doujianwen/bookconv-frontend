@@ -19,11 +19,9 @@ export const content = {
       heading: 'Converting in Reverse: Zip To Epub',
       body: `This page covers Epub To Zip, but the reverse direction answers a very different user need — and it is just as common.
 
-Going zip to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+Going zip to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another. In practice, you rebuild the EPUB from the extracted XHTML, CSS and images inside the ZIP — the same byte-exact archive, reassembled into a readable e-book file.
 
-The dedicated [Zip To Epub converter](/convert/zip-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
-
-A practical rule: convert Epub To Zip when you want the source format as your master archive; convert Zip To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+A practical rule: convert EPUB to ZIP when you want the source files as your master archive; reassemble them back into an EPUB when you have a specific destination that requires a packaged book. Keep both forms if you are unsure which device or use case you will need next.`
     },
     {
       heading: 'What Is an EPUB, Really?',
