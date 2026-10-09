@@ -39,6 +39,16 @@ export const content = {
 - [Adobe PDF Reference](https://www.adobe.com/devnet/pdf.html)`
     },
     {
+      heading: 'Converting in Reverse: Epub To Pdf',
+      body: `This page covers Pdf To Epub, but the reverse direction answers a very different user need — and it is just as common.
+
+Going epub to pdf is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Epub To Pdf converter](/convert/epub-to-pdf) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Pdf To Epub when you want the source format as your master archive; convert Epub To Pdf when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+    },
+    {
       heading: 'Why PDF Is Not Suitable for E-Reading',
       body: `PDF (Portable Document Format) was designed to be print-friendly — ensuring documents look exactly the same on any device. This is perfect for contracts, invoices, academic papers, and other formal scenarios. But for daily reading, it is a disaster.
 

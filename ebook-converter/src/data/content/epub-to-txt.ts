@@ -37,6 +37,16 @@ export const content = {
 - [IDPF Official Site](https://idpf.org/)  If plain text is not the target, the same EPUB can leave as a browsable page through [EPUB to HTML](/convert/epub-to-html).`
     },
     {
+      heading: 'Converting in Reverse: Txt To Epub',
+      body: `This page covers Epub To Txt, but the reverse direction answers a very different user need — and it is just as common.
+
+Going txt to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Txt To Epub converter](/convert/txt-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Epub To Txt when you want the source format as your master archive; convert Txt To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+    },
+    {
       heading: 'About TXT Format',
       body: `TXT (plain text) is the simplest digital text format, with no markup, styling, or structural overhead. It has been the universal text exchange format since the early days of computing.
 

@@ -25,6 +25,16 @@ That design gives EPUB its defining trait: **reflowable text**. There are no fix
 The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in. The same pipeline runs the other direction too: an old Word file becomes a reflowable book with [DOC to EPUB](/convert/doc-to-epub).`
     },
     {
+      heading: 'Converting in Reverse: Doc To Epub',
+      body: `This page covers Epub To Doc, but the reverse direction answers a very different user need — and it is just as common.
+
+Going doc to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Doc To Epub converter](/convert/doc-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Epub To Doc when you want the source format as your master archive; convert Doc To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+    },
+    {
       heading: 'What is DOC Format?',
       body: `DOC is the binary file format Microsoft Word used from the early 1990s through Word 2003. It's a proprietary compound-document structure — essentially a miniature filesystem inside one file, holding text streams, formatting tables, and embedded objects.
 

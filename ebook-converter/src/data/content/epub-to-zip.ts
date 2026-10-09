@@ -16,6 +16,16 @@ export const content = {
       body: 'An EPUB file is already a ZIP archive in disguise — converting it just renames the same file so any tool can open it. To convert EPUB to ZIP: upload your .epub, wait one second (a byte-exact copy, no re-encoding), then download the .zip and open it with any archive viewer. No software or sign-up needed.'
     },
     {
+      heading: 'Converting in Reverse: Zip To Epub',
+      body: `This page covers Epub To Zip, but the reverse direction answers a very different user need — and it is just as common.
+
+Going zip to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Zip To Epub converter](/convert/zip-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Epub To Zip when you want the source format as your master archive; convert Zip To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+    },
+    {
       heading: 'What Is an EPUB, Really?',
       body: 'When you convert EPUB to ZIP, you are not changing your book — you are simply renaming the same archive so any tool can open it. An EPUB file is not a single opaque document; it is a ZIP archive with a specific internal structure. Open one and you will find XHTML chapters, a CSS stylesheet, embedded images, and an OPF metadata file wired together by META-INF/container.xml. Because the container is standard ZIP, converting EPUB to ZIP does not transform your content at all: it just re-presents the same bytes under a .zip extension that every operating system can open natively.'
     },

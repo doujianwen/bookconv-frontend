@@ -27,6 +27,16 @@ What EPUB layers on top of plain HTML:
 - **Optional DRM**, which is the one thing that stops a conversion cold  Packing those chapters back into a readable book is a single step away with [HTML to EPUB](/convert/html-to-epub).`
     },
     {
+      heading: 'Converting in Reverse: Html To Epub',
+      body: `This page covers Epub To Html, but the reverse direction answers a very different user need — and it is just as common.
+
+Going html to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Html To Epub converter](/convert/html-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Epub To Html when you want the source format as your master archive; convert Html To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
+    },
+    {
       heading: 'What is HTML Format?',
       body: `HTML is the markup language every web page is built from. Heading tags, paragraphs, lists, images, links — they describe what the content *is*, and CSS decides how it looks.
 
