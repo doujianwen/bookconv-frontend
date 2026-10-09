@@ -194,11 +194,11 @@
             }
           },
           "413": {
-            "description": "File too large (default max 10 MB)",
+            "description": "File too large (max 4 MB — Vercel Hobby edges reject larger request bodies)",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" },
-                "example": { "error": "File too large. Max 10MB" }
+                "example": { "error": "File too large. Max 4MB per upload.", "code": "FILE_TOO_LARGE" }
               }
             }
           },

@@ -65,7 +65,7 @@ But hardware outlives file formats. There are still working Kindle Keyboards, Ki
     },
     {
       heading: 'How to Convert AZW3 to MOBI',
-      body: `**1. Upload your AZW3.** Drag the file in or browse for it. Free accounts handle files up to 10MB — most Kindle books are 1-5MB, so you'd need something unusually image-heavy to hit that.
+      body: `**1. Upload your AZW3.** Drag the file in or browse for it. Free accounts handle files up to 4MB — most Kindle books are 1-5MB, so you'd need something unusually image-heavy to hit that.
 
 **2. Conversion runs.** The AZW3 structure is parsed, HTML and CSS are simplified down to what MOBI's renderer understands, images are re-packaged, and navigation gets rebuilt. Usually done in under 30 seconds.
 
@@ -174,7 +174,7 @@ heading: 'Before You Convert: Check Your AZW3',
 
 - **The file is really AZW3** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
@@ -186,7 +186,7 @@ If the file passes all three and the conversion still misbehaves, the problem is
     { q: 'Why is my MOBI file larger than the AZW3?', a: 'MOBI uses older, less efficient compression, so the same book typically grows 20-40% during conversion. It feels backwards for a downgrade, but you are moving content from a modern container into a twenty-year-old one.' },
     { q: 'My Kindle Store book will not convert — why?', a: 'Books bought from the Kindle Store carry Amazon DRM, and encrypted files cannot be read by any converter. The conversion works on DRM-free AZW3 files such as your own Calibre exports, Project Gutenberg titles, or purchases from DRM-free publishers.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'No — Amazon removed MOBI support from Send to Kindle in 2022, so email delivery will be rejected. Sideload it over USB by copying the file into the documents folder on your Kindle instead.' },
-    { q: 'How many files can I convert at once?', a: 'Free accounts process one file at a time up to 10MB, which is well beyond what a typical Kindle book needs. Pro accounts add batch conversion, which is the practical choice if you are migrating a whole library to an older device.' },
+    { q: 'How many files can I convert at once?', a: 'Free accounts process one file at a time up to 4MB, which is well beyond what a typical Kindle book needs. Pro accounts add batch conversion, which is the practical choice if you are migrating a whole library to an older device.' },
     { q: 'How do I migrate my whole library to an old Kindle?', a: 'Convert your DRM-free AZW3 files in small batches of around a dozen, keep the original AZW3 as your master copy, name each .mobi as "Author - Title" so old devices sort it cleanly, and sideload over USB to the documents folder. Books from the Kindle Store will not convert because of DRM, so separate those out first.' }
   ]
 ,

@@ -43,7 +43,7 @@ If you specifically need the ancient DOC format for some legacy system, use our 
     },
     {
       heading: 'How to Convert EPUB to Word',
-      body: `**1. Upload the EPUB.** Drag it onto the drop zone or click to browse. Free accounts handle files up to 10MB, which is far more than any text ebook needs — most novels are 1-3MB, and only heavily illustrated books get large.
+      body: `**1. Upload the EPUB.** Drag it onto the drop zone or click to browse. Free accounts handle files up to 4MB, which is far more than any text ebook needs — most novels are 1-3MB, and only heavily illustrated books get large.
 
 **2. Conversion runs.** The EPUB's XHTML chapters are parsed and merged into one document flow, heading tags map onto Word's built-in heading styles, images are extracted and embedded, and metadata lands in the document properties. Most books finish in well under a minute.
 
@@ -133,7 +133,7 @@ heading: 'Before You Convert: Check Your EPUB',
 
 - **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
@@ -144,7 +144,7 @@ If the file passes all three and the conversion still misbehaves, the problem is
     { q: 'Will the formatting be preserved?', a: 'Text, heading hierarchy, bold and italic, lists, blockquotes, images, and basic tables all carry over reliably. Custom embedded fonts and CSS-driven layout get normalized to standard Word formatting, since Word has no equivalent for much of EPUB\'s styling model.' },
     { q: 'My EPUB will not convert — what is going on?', a: 'DRM is almost always the reason. Books from Kobo, Google Play Books, or Barnes & Noble are encrypted and unreadable to any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without trouble.' },
     { q: 'Can I convert the Word file back to EPUB afterward?', a: 'Yes — our DOCX to EPUB converter handles the return trip, which is the normal workflow for authors who edit in Word and republish as an ebook. Expect the styling to be regenerated rather than restored to the original CSS.' },
-    { q: 'How many books can I convert at once?', a: 'Free accounts process one file at a time, up to 10MB each, which is generous given most ebooks are only a few megabytes. Pro accounts add batch conversion and larger file limits for working through a full library.' },
+    { q: 'How many books can I convert at once?', a: 'Free accounts process one file at a time, up to 4MB each, which is generous given most ebooks are only a few megabytes. Pro accounts add batch conversion and larger file limits for working through a full library.' },
     { q: 'Will tables and images survive the conversion?', a: 'Basic tables and inline images carry over reliably, with tables keeping their structure and images placed at their original resolution. Complex CSS layout and embedded fonts get normalized to standard Word styling, which is usually what you want for editing.' },
   ]
 ,

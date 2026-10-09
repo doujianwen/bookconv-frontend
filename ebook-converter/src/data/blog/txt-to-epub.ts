@@ -24,7 +24,7 @@ You don't have to build any of that by hand. The converter infers it from the te
 2. BookConv scans the text, detects chapter breaks, and wraps each section in proper EPUB markup with a generated table of contents.
 3. Download the .epub and send it to your reader. It opens on Kindle, Kobo, Apple Books, and most apps.
 
-The free tier handles files up to 10 MB — enough for a long novel several times over.
+The free tier handles files up to 4 MB — enough for a long novel several times over.
 
 ### Two things to know before you upload
 
@@ -65,7 +65,7 @@ If you later want a Kindle-native file from the same text, convert the EPUB onwa
     {
       heading: `Key Takeaways`,
       body: `- **TXT has no structure; EPUB adds it.** Chapters and a table of contents come from the conversion, not from you hand-coding.
-- **Three steps on BookConv.** Upload, convert, download — no install, no account, 10 MB free tier.
+- **Three steps on BookConv.** Upload, convert, download — no install, no account, 4 MB free tier.
 - **Pre-format for clean chapters.** Blank-line breaks and consistent "Chapter N" headings get the best TOC.
 - **Save as UTF-8.** Old code pages produce garbled characters.
 - **Save immediately.** Download links are temporary and files are deleted after a period. The [TXT format reference](/formats/txt) covers the encoding and metadata limits worth knowing before you convert.`

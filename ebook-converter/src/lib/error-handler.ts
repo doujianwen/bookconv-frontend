@@ -11,7 +11,8 @@ export type ErrorCode =
   | "INTERNAL_ERROR"
   | "CORRUPT_INPUT"
   | "MEMORY_LIMIT"
-  | "VERIFICATION_FAILED";
+  | "VERIFICATION_FAILED"
+  | "FILE_TOO_LARGE";
 
 export interface ErrorResponse {
   code: ErrorCode;
@@ -83,6 +84,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
   'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
+  'FILE_TOO_LARGE': { message: 'File exceeds the 4MB upload limit. Compress or split the file, then try again.', retryable: false },
 };
 
 /** Get a friendly, user-facing message from an error code */

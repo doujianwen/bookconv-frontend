@@ -18,6 +18,7 @@ import {
 import { cn, formatBytes } from "@/lib/utils"
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { extractEbookMetadata, estimatePageCount, type EbookMetadata } from "@/lib/ebook-metadata"
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 
 interface FileDropZoneProps {
   onFileSelect: (file: File) => void
@@ -36,9 +37,6 @@ interface FileInfo {
   isTooLarge: boolean
   error?: string
 }
-
-const MAX_FILE_SIZE_MB = 10
-const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 
 function getFormatIcon(format: string) {
   const lower = format.toLowerCase()
@@ -68,7 +66,7 @@ function parseFileInfo(file: File): FileInfo {
   if (!isValidFormat && ext !== "") {
     error = "Unsupported format: ." + ext
   } else if (isTooLarge) {
-    error = "File too large. Max " + MAX_FILE_SIZE_MB + "MB allowed."
+    error = "File too large — the free plan accepts files up to " + MAX_FILE_SIZE_MB + "MB per upload."
   }
 
   return {
@@ -253,7 +251,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
               <span className="rounded bg-gray-100 px-1.5 py-0.5">DOCX</span>
               <span className="rounded bg-gray-100 px-1.5 py-0.5">RTF</span>
               <span className="rounded bg-gray-100 px-1.5 py-0.5">FB2</span>
-              <span className="text-xs">• Max {MAX_FILE_SIZE_MB}MB</span>
+              <span className="text-xs">• Max {MAX_FILE_SIZE_MB}MB per file</span>
             </div>
           </>
         )}
@@ -331,5 +329,5 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   )
 }
 
-export { SUPPORTED_FORMATS, MAX_FILE_SIZE_MB }
+export { SUPPORTED_FORMATS }
 export type { FileInfo }

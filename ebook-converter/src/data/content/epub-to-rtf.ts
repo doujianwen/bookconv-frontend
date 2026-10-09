@@ -46,7 +46,7 @@ It is deliberately modest. Microsoft stopped developing it in 2008, so RTF will 
     },
     {
       heading: 'How to Convert EPUB to RTF',
-      body: `**1. Upload your EPUB.** Drag it onto the upload area or browse for it. Uploads are capped at 10MB, which covers virtually every text-led ebook. Illustrated and full-colour titles can exceed it.
+      body: `**1. Upload your EPUB.** Drag it onto the upload area or browse for it. Uploads are capped at 4MB, which covers virtually every text-led ebook. Illustrated and full-colour titles can exceed it.
 
 **2. We unpack and rebuild.** The converter reads the OPF spine to get correct chapter order, merges the XHTML chapters into a single flowing document, translates HTML structure into RTF control codes, and embeds images inline.
 

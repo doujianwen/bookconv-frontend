@@ -28,7 +28,7 @@ export const content = {
       body: `Converting on BookConv takes three steps and runs entirely in your browser:
 
 **Step 1 — Upload your AZW3 file**
-Drag your .azw3 file into the upload zone, or click to pick it from your computer. Files up to 10 MB are accepted on the free plan. No account is required, so you can start immediately.
+Drag your .azw3 file into the upload zone, or click to pick it from your computer. Files up to 4 MB are accepted on the free plan. No account is required, so you can start immediately.
 
 **Step 2 — Let the engine render**
 Our Calibre-based engine reads the AZW3 container, extracts the embedded fonts and images, and lays the book out as fixed pages. Most novels finish in a few seconds; image-heavy illustrated books take a little longer.

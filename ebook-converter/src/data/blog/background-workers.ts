@@ -11,7 +11,7 @@ export const content = {
       heading: `Why BookConv doesn't convert inside your upload`,
       body: `When you convert a file on BookConv, the bytes you send are validated and handed off almost immediately. The noticeable wait isn't in the upload — it's in the conversion, and BookConv deliberately runs that part somewhere else.
 
-A small EPUB might finish in a blink, but a 10 MB scanned PDF can take a minute or more. Trying to do that inside the same request that uploaded the file would leave your tab spinning on an open connection, and it would let fifty simultaneous uploads fight over the same CPU until everything crawled.
+A small EPUB might finish in a blink, but a 4 MB scanned PDF can take a minute or more. Trying to do that inside the same request that uploaded the file would leave your tab spinning on an open connection, and it would let fifty simultaneous uploads fight over the same CPU until everything crawled.
 
 So BookConv checks your upload, blocks DRM-protected files on the spot, and drops the real work onto a background queue. You get a job ID right away, and the heavy lifting happens off to the side, on its own schedule.
 
@@ -23,7 +23,7 @@ Upload, validate, enqueue, respond with a job ID. Everything expensive happens *
       heading: `Inside the BookConv queue: Redis and BullMQ`,
       body: `The queue is [BullMQ](https://docs.bullmq.io/), a job queue that keeps its state in [Redis](https://redis.io/docs/latest/). BookConv runs a single queue for every conversion. When you submit a file, one job is created carrying the source format, the target format, and a job ID you'll use to check progress.
 
-Redis does double duty. Besides holding the queue, it backs BookConv's rate limiter. On the hosted service the free tier allows 10 MB per file and 20 conversion requests per minute per IP, which stops one script from flooding the system with jobs. If Redis is briefly unreachable at submit time, the API still returns a job ID instead of failing — so you always get something you can poll. Both the Redis connection and the rate limits are set through environment variables, covered in the [environment variables setup guide](/blog/env-variables-setup).`
+Redis does double duty. Besides holding the queue, it backs BookConv's rate limiter. On the hosted service the free tier allows 4 MB per file and 20 conversion requests per minute per IP, which stops one script from flooding the system with jobs. If Redis is briefly unreachable at submit time, the API still returns a job ID instead of failing — so you always get something you can poll. Both the Redis connection and the rate limits are set through environment variables, covered in the [environment variables setup guide](/blog/env-variables-setup).`
     },
     {
       heading: `The worker: where Calibre actually runs`,
@@ -90,7 +90,7 @@ export const faqs = [
   },
   {
     question: `What are the BookConv free-tier limits?`,
-    answer: `Free accounts get 10 MB per file and 20 conversion requests per minute per IP. The same 10 MB cap applies to every plan. When you self-host, those ceilings come from your own environment variables.`,
+    answer: `Free accounts get 4 MB per file and 20 conversion requests per minute per IP. The same 4 MB cap applies to every plan. When you self-host, those ceilings come from your own environment variables.`,
   },
   {
     question: `Are my converted files kept forever?`,

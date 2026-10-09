@@ -42,7 +42,7 @@ And once a book is EPUB, it can become anything else. [Convert EPUB to AZW3](/co
       body: `If you have a handful of LIT files and don't want to install anything, BookConv is the fastest route. The conversion uses the same Calibre engine as the desktop app, but runs in your browser.
 
 ### Upload the LIT file
-Go to the [LIT to EPUB converter](/convert/lit-to-epub). Drag the file onto the upload area or click to browse. The uploader checks the file size immediately — free conversions accept up to 10MB, which covers almost every LIT novel.
+Go to the [LIT to EPUB converter](/convert/lit-to-epub). Drag the file onto the upload area or click to browse. The uploader checks the file size immediately — free conversions accept up to 4MB, which covers almost every LIT novel.
 
 ### Check the preview
 BookConv reads the metadata and shows the detected title and author before you start. LIT files often have messy metadata, so this is your chance to spot problems before they land in your library.
@@ -183,7 +183,7 @@ Y una vez que un libro es EPUB, puede volverse cualquier otra cosa. [Convierte E
         body: `Si tienes un puñado de archivos LIT y no quieres instalar nada, BookConv es la ruta más rápida. La conversión usa el mismo motor Calibre que la app de escritorio, pero corre en tu navegador.
 
 ### Sube el archivo LIT
-Ve al [conversor de LIT a EPUB](/convert/lit-to-epub). Arrastra el archivo al área de subida o haz clic para buscarlo. El cargador comprueba el tamaño de inmediato: las conversiones gratis aceptan hasta 10 MB, lo que cubre casi cualquier novela LIT.
+Ve al [conversor de LIT a EPUB](/convert/lit-to-epub). Arrastra el archivo al área de subida o haz clic para buscarlo. El cargador comprueba el tamaño de inmediato: las conversiones gratis aceptan hasta 4 MB, lo que cubre casi cualquier novela LIT.
 
 ### Revisa la vista previa
 BookConv lee los metadatos y muestra el título y autor detectados antes de empezar. Los archivos LIT suelen tener metadatos desordenados, así que esta es tu oportunidad de ver problemas antes de que lleguen a tu biblioteca.

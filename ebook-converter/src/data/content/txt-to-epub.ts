@@ -73,7 +73,7 @@ Keep TXT only for piping into scripts, AI tools, or translation engines where ra
       heading: 'How to Convert TXT to EPUB: Step by Step',
       body: `Three steps, nothing to install:
 
-**Step 1 — Upload your TXT.** Drag it in or click to browse. Free accounts handle files up to 10MB; we have tested multi-million-word files that convert normally.
+**Step 1 — Upload your TXT.** Drag it in or click to browse. Free accounts handle files up to 4MB; we have tested multi-million-word files that convert normally.
 
 **Step 2 — Let the engine structure it.** The converter detects chapter separators (common patterns like "Chapter X" or "---"), applies smart paragraph detection, and auto-detects encoding such as UTF-8, GBK, or ISO-8859-1.
 

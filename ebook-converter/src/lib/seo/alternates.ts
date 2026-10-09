@@ -3,7 +3,7 @@
  *
  * 设计原则：
  * - 首页 / 列表页（homepage / list）：永远只输出 en + x-default，不输出 es
- *   （伪翻译没有意义，输出 es: 是错误信号，会让 Google 误以为存在双向语言对）
+ *   （无真实西语译文的页面输出 es 是错误信号，会让 Google 误以为存在双向语言对）
  * - convert / guide leaf page：当且仅当 hasEsVersion=true 时才输出完整三件套
  *   （目前只有 3 个 convert 页有真实 es 翻译；guide 全部无 es）
  * - blog leaf page：条件输出——真西语 blog（5 篇）输出三件套，其余 54 篇只输出 en + x-default

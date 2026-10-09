@@ -43,13 +43,13 @@
   },
   "faq": {
     "q1": "¿Es BookConv gratuito?",
-    "a1": "¡Sí! BookConv es completamente gratuito y no requiere registro. Los archivos están limitados a 10 MB por archivo.",
+    "a1": "¡Sí! BookConv es completamente gratuito y no requiere registro. Los archivos están limitados a 4 MB por archivo.",
     "q2": "¿Qué formatos soporta BookConv?",
     "a2": "BookConv soporta más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y documentos Word.",
     "q3": "¿Mis datos están seguros al subir archivos?",
     "a3": "Absolutamente. Todos los archivos se transfieren mediante conexiones HTTPS cifradas y se eliminan automáticamente dentro de 1 hora después de la conversión. Nunca leemos, almacenamos ni compartimos tu contenido.",
     "q4": "¿Necesito instalar algún software?",
-    "a4": "¡No! BookConv funciona completamente en tu navegador. Simplemente sube tu archivo, selecciona el formato de salida y descarga tu archivo convertido —no se necesita instalación de software.",
+    "a4": "¡No! BookConv funciona en nuestros servidores con el mismo motor Calibre que la app de escritorio. Sube tu archivo, elige el formato de salida y descarga el resultado —no se necesita instalar software. Tu archivo se cifra en tránsito y se elimina automáticamente dentro de 1 hora después de la conversión.",
     "q5": "¿Puedo convertir libros Kindle a EPUB?",
     "a5": "¡Sí! BookConv soporta la conversión de AZW3 y MOBI (formatos Kindle) a EPUB y otros formatos. Simplemente sube tu archivo Kindle y elige el formato de salida deseado."
   },
@@ -180,7 +180,7 @@
       "title": "Referencia de Códigos de Error",
       "codes": {
         "CONVERSION_FAILED": "El proceso de conversión falló. Intenta de nuevo o contacta a soporte con los detalles del error.",
-        "FILE_TOO_LARGE": "Tu archivo excede el límite de 10 MB. Intenta comprimirlo, dividirlo en partes o convertirlo con software de escritorio como Calibre.",
+        "FILE_TOO_LARGE": "Tu archivo excede el límite de 4 MB. Intenta comprimirlo, dividirlo en partes o convertirlo con software de escritorio como Calibre.",
         "RATE_LIMIT": "Demasiadas solicitudes. El límite es de 20 conversiones por minuto. Espera un momento e inténtalo de nuevo.",
         "DRM_PROTECTED": "El archivo fuente está protegido por DRM. No podemos convertir archivos protegidos.",
         "CORRUPT_INPUT": "El archivo subido está corrupto o es inválido. Por favor verifica el archivo fuente."
@@ -228,7 +228,7 @@
     "step5Title": "Descarga el resultado",
     "step5Desc": "Cuando termine la conversión, haz clic en el botón de descarga para guardar tu archivo",
     "tipsTitle": "Consejos",
-    "tip1": "Tamaño máximo de archivo admitido: 10 MB",
+    "tip1": "Tamaño máximo de archivo admitido: 4 MB",
     "tip2": "Todos los archivos se eliminan automáticamente después de 1 hora para proteger tu privacidad",
     "tip3": "Compatible con subida por arrastrar y soltar para mayor comodidad",
     "tip4": "Para cualquier duda, contacta al servicio de atención en línea o consulta la documentación de ayuda en cualquier momento",

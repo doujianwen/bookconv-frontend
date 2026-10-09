@@ -32,7 +32,7 @@ Only one variable is genuinely load-bearing: **REDIS_URL**. Storage, auth, payme
 
 **UPLOAD_DIR** is the local directory where each conversion gets a scratch folder. It defaults to /tmp/ebook-uploads. The process needs write access, and on ephemeral filesystems /tmp may be wiped between deploys — fine for in-flight jobs, not for anything you expect to persist.
 
-**MAX_FILE_SIZE_MB** caps upload size, defaulting to 10. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv every plan allows 10 MB; self-hosting, that ceiling comes from this variable.
+**MAX_FILE_SIZE_MB** caps upload size, defaulting to 4. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv every plan allows 4 MB; self-hosting, that ceiling comes from this variable.
 
 **CALIBRE_PATH** points at the ebook-convert binary. The Docker image installs Calibre, so you rarely need to change this — but on a bare-metal host with a non-standard install, set the absolute path here.
 

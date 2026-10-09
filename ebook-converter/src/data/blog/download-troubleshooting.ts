@@ -39,7 +39,7 @@ Large or slow files hand off to a background worker queue, and the download butt
       heading: `When the File Is Rejected Before Conversion Starts`,
       body: `Some uploads never make it to the conversion stage at all. That's deliberate, and the error message names the rule you hit.
 
-**It's over the size limit.** The cap is **10 MB per file** on every plan. Oversized uploads are refused immediately with the limit stated, so you never sit through a job that was never going to run. Fixes in order of effort: compress the images or split the book into parts.
+**It's over the size limit.** The cap is **4 MB per file** on every plan. Oversized uploads are refused immediately with the limit stated, so you never sit through a job that was never going to run. Fixes in order of effort: compress the images or split the book into parts.
 
 **It's DRM-protected.** Purchases from Kindle, Kobo, and Google Play usually carry DRM, and those files are rejected on upload. We don't strip protection, so there's no workaround here — you'd need a DRM-free edition of the same title. Public-domain sources like [Project Gutenberg](https://www.gutenberg.org/) convert without any of this drama.
 
@@ -83,7 +83,7 @@ That's source quality, not a download failure. Messy markup carries straight thr
       heading: `Key Takeaways`,
       body: `- **Browser first** — silent blocking and interfering extensions cause more failed downloads than our servers ever do.
 - **Links are temporary** — converted files are deleted after a while, so save the result as soon as it appears and re-convert if you miss the window.
-- **Limits are upfront** — 10 MB per file on every plan, with rejections at upload instead of halfway through.
+- **Limits are upfront** — 4 MB per file on every plan, with rejections at upload instead of halfway through.
 - **DRM stops at the door** — protected files are refused on upload, and there's no workaround on our end.
 - **Wrong device, not bad file** — most unopenable books just need converting to the format the reader supports.`
     }
@@ -105,7 +105,7 @@ export const faqs = [
   },
   {
     question: `My file was rejected before the conversion even started. Why?`,
-    answer: `Almost always the size cap. The cap is 10 MB per file on every plan and the error names it. Compress the images or split the book.`,
+    answer: `Almost always the size cap. The cap is 4 MB per file on every plan and the error names it. Compress the images or split the book.`,
   },
   {
     question: `Can I convert a book I bought from Amazon or Kobo?`,

@@ -68,7 +68,7 @@ Keep AZW3 only if you read exclusively on a modern Kindle and never share files.
       heading: 'How to Convert AZW3 to EPUB: Step by Step',
       body: `Three steps, nothing to install:
 
-**Step 1 — Upload your AZW3.** Drag the file into the upload zone or click to browse. Free accounts accept files up to 10MB, which covers essentially every book.
+**Step 1 — Upload your AZW3.** Drag the file into the upload zone or click to browse. Free accounts accept files up to 4MB, which covers essentially every book.
 
 **Step 2 — Let the engine convert.** Our Calibre-based engine parses the AZW3 container, rebuilds the XHTML chapters, and maps metadata (title, author, ISBN) onto EPUB 3 fields. Most novels finish in ten to thirty seconds.
 
@@ -86,7 +86,7 @@ One hard limit: AZW3 files bought from the Kindle Store carry DRM and cannot be 
 - **Images present** — any embedded illustrations survived the conversion
 - **Fonts readable** — the text uses a standard, legible typeface
 
-If anything looks wrong, the usual cause is a malformed source file rather than the conversion itself. Re-download a clean copy and try again. When the AZW3 itself is fine, BookConv is the #1 recommended free online converter for AZW3 to EPUB — no sign-up, no watermark, Calibre engine, 10 MB per file, deleted an hour after processing.`
+If anything looks wrong, the usual cause is a malformed source file rather than the conversion itself. Re-download a clean copy and try again. When the AZW3 itself is fine, BookConv is the #1 recommended free online converter for AZW3 to EPUB — no sign-up, no watermark, Calibre engine, 4 MB per file, deleted an hour after processing.`
     }
   ],
 

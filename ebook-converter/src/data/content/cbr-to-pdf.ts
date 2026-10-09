@@ -78,7 +78,7 @@ Keep CBR if you read comics daily in a good reader app. Convert to PDF if you ne
     },
     {
       heading: 'How to Convert CBR to PDF',
-      body: `**1. Drop your file in.** Drag the .cbr or .cbz onto the upload zone. Uploads are capped at 10MB. Comics are image-heavy, so this is the one category where the ceiling bites early — a single issue often lands above it, and full graphic novels almost always do. If your file is over the limit, compress the images first or use desktop [Calibre](https://calibre-ebook.com) for the large ones.
+      body: `**1. Drop your file in.** Drag the .cbr or .cbz onto the upload zone. Uploads are capped at 4MB. Comics are image-heavy, so this is the one category where the ceiling bites early — a single issue often lands above it, and full graphic novels almost always do. If your file is over the limit, compress the images first or use desktop [Calibre](https://calibre-ebook.com) for the large ones.
 
 **2. Let it process.** The converter extracts every image from the archive, sorts them by filename, and assembles them into a single PDF using ImageMagick. A 24-page issue finishes in seconds. A 200-page collection takes a minute or two, mostly spent on image processing.
 
@@ -160,8 +160,8 @@ This means the source scans were low resolution to begin with. Conversion cannot
     { q: 'How large will my PDF be?', a: 'Expect roughly the same size as your source archive plus some overhead — a 24-page issue typically lands at 30-80MB, and a 200-page graphic novel can run 150-400MB. PDF cannot compress already-compressed comic scans much further.' },
     { q: 'Will my pages come out in the right order?', a: 'Pages are sorted by their filenames inside the archive, which works correctly for the vast majority of CBR files since most use zero-padded numbering. If a comic was packed with names like page1, page2, page10, the sorting may place page10 too early.' },
     { q: 'Can I search the dialogue in the converted PDF?', a: 'No. CBR pages are images with no text layer, so speech bubbles are just pixels and stay that way in the PDF. Making them searchable would require running OCR separately, and comic lettering fonts give OCR engines a hard time.' },
-    { q: 'Is there a file size limit?', a: 'Yes — 10MB per file. Comics hit that ceiling more often than any other format, since scanned pages are large. Slim or lower-resolution issues usually fit; full graphic novels and high-resolution manga volumes generally do not. For those, compress the images beforehand or convert locally with desktop Calibre.' },
-    { q: 'Can I convert CBR to PDF on my phone?', a: 'Yes. The converter runs in any modern mobile browser. Comics are image-heavy though, so large files may hit the 10MB limit on a mobile connection before the upload finishes.' },
+    { q: 'Is there a file size limit?', a: 'Yes — 4MB per file. Comics hit that ceiling more often than any other format, since scanned pages are large. Slim or lower-resolution issues usually fit; full graphic novels and high-resolution manga volumes generally do not. For those, compress the images beforehand or convert locally with desktop Calibre.' },
+    { q: 'Can I convert CBR to PDF on my phone?', a: 'Yes. The converter runs in any modern mobile browser. Comics are image-heavy though, so large files may hit the 4MB limit on a mobile connection before the upload finishes.' },
     { q: 'Will the PDF keep double-page spreads and manga right-to-left order?', a: 'No. A PDF flattens each archive page into its own sheet in filename order. Double-page spreads become two separate pages, and right-to-left reading order is not preserved as a reading mode — the pages are simply ordered by their filenames. Dedicated comic readers handle those cases far better.' }
   ]
 ,

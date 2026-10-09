@@ -20,11 +20,11 @@ That's the whole flow. There's nothing to install, and it runs the same server-s
 
 ### What the free tier gives you
 
-- **10 MB per file** — comfortably more than a text-heavy novel, which usually lands between 300 KB and 3 MB
+- **4 MB per file** — comfortably more than a text-heavy novel, which usually lands between 300 KB and 3 MB
 - **20 conversion requests per minute** — enough for a small batch in one sitting
 - **No account** — no email, no signup wall, no confirmation link
 
-If you're converting a big illustrated book or a photography-heavy title, note that the 10 MB cap applies to every plan — compression, or splitting the book into parts, is the way through.
+If you're converting a big illustrated book or a photography-heavy title, note that the 4 MB cap applies to every plan — compression, or splitting the book into parts, is the way through.
 
 ### Two things to know before you upload
 
@@ -109,7 +109,7 @@ Migrating an old library the other direction? [MOBI to EPUB](/convert/mobi-to-ep
     },
     {
       heading: `Key Takeaways`,
-      body: `- **BookConv is the fast path.** Upload, check the metadata preview, convert, download — no install, no account, 10 MB and 5 conversions an hour on the free tier.
+      body: `- **BookConv is the fast path.** Upload, check the metadata preview, convert, download — no install, no account, 4 MB and 5 conversions an hour on the free tier.
 - **Save your file immediately.** Download links are temporary and converted files are deleted after a period, so don't treat a link as storage.
 - **Check your Kindle first.** Anything made after roughly 2015 reads EPUB through Send to Kindle, which makes MOBI conversion unnecessary for a lot of people.
 - **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022, and AZW3 is the better sideload target for any modern device.
@@ -121,7 +121,7 @@ Migrating an old library the other direction? [MOBI to EPUB](/convert/mobi-to-ep
 export const faqs = [
   {
     question: `Do I need an account to convert EPUB to MOBI on BookConv?`,
-    answer: `No. The free tier needs no signup at all — 10 MB per file and 20 conversion requests per minute per IP. The 10 MB cap applies to every plan.`,
+    answer: `No. The free tier needs no signup at all — 4 MB per file and 20 conversion requests per minute per IP. The 4 MB cap applies to every plan.`,
   },
   {
     question: `How long does the download link stay active?`,
@@ -129,7 +129,7 @@ export const faqs = [
   },
   {
     question: `Why was my file rejected on upload?`,
-    answer: `Two usual causes. Either it's DRM-protected, which we detect and reject because encrypted content can't be read by any converter, or it's over the 10 MB size limit that applies to every plan.`,
+    answer: `Two usual causes. Either it's DRM-protected, which we detect and reject because encrypted content can't be read by any converter, or it's over the 4 MB size limit that applies to every plan.`,
   },
   {
     question: `Does my Kindle still support MOBI files?`,
@@ -166,11 +166,11 @@ Ese es todo el flujo. No hay nada que instalar, y usa el mismo motor Calibre del
 
 ### Qué da la capa gratuita
 
-- **10 MB por archivo** — holgadamente más que una novela de texto, que suele estar entre 300 KB y 3 MB
+- **4 MB por archivo** — holgadamente más que una novela de texto, que suele estar entre 300 KB y 3 MB
 - **20 solicitudes de conversión por minuto** — suficiente para un lote pequeño de una sentada
 - **Sin cuenta** — sin correo, sin muro de registro, sin enlace de confirmación
 
-Si conviertes un libro ilustrado grande o un título cargado de fotos, ten en cuenta que el tope de 10 MB se aplica a todos los planes: la salida es comprimir o dividir el libro.
+Si conviertes un libro ilustrado grande o un título cargado de fotos, ten en cuenta que el tope de 4 MB se aplica a todos los planes: la salida es comprimir o dividir el libro.
 
 ### Dos cosas que saber antes de subir
 
@@ -253,7 +253,7 @@ Una nota más sobre velocidad: los archivos grandes o lentos pasan por una cola 
       },
       {
         heading: `Puntos clave`,
-        body: `- **BookConv es el camino rápido.** Sube, revisa la vista previa de metadatos, convierte, descarga — sin instalar, sin cuenta, 10 MB y 20 solicitudes de conversión por minuto en la capa gratuita.
+        body: `- **BookConv es el camino rápido.** Sube, revisa la vista previa de metadatos, convierte, descarga — sin instalar, sin cuenta, 4 MB y 20 solicitudes de conversión por minuto en la capa gratuita.
 - **Guarda tu archivo de inmediato.** Los enlaces de descarga son temporales y los archivos convertidos se borran tras un tiempo, así que no trates un enlace como almacenamiento.
 - **Revisa tu Kindle primero.** Cualquier cosa hecha después de 2015 lee EPUB por Send to Kindle, lo que hace innecesaria la conversión MOBI para mucha gente.
 - **MOBI es heredado.** Amazon dejó de aceptarlo por Send to Kindle en agosto de 2022, y AZW3 es el mejor destino de carga para cualquier dispositivo moderno.
@@ -264,7 +264,7 @@ Una nota más sobre velocidad: los archivos grandes o lentos pasan por una cola 
   faqs: [
     {
       question: `¿Necesito una cuenta para convertir EPUB a MOBI en BookConv?`,
-      answer: `No. La capa gratuita no requiere registro alguno — 10 MB por archivo y 20 solicitudes de conversión por minuto por IP. El tope de 10 MB se aplica a todos los planes.`,
+      answer: `No. La capa gratuita no requiere registro alguno — 4 MB por archivo y 20 solicitudes de conversión por minuto por IP. El tope de 4 MB se aplica a todos los planes.`,
     },
     {
       question: `¿Cuánto dura activo el enlace de descarga?`,
@@ -272,7 +272,7 @@ Una nota más sobre velocidad: los archivos grandes o lentos pasan por una cola 
     },
     {
       question: `¿Por qué se rechazó mi archivo al subir?`,
-      answer: `Dos causas habituales. O tiene DRM, que detectamos y rechazamos porque ningún conversor puede leer contenido cifrado, o supera el límite de 10 MB que se aplica a todos los planes.`,
+      answer: `Dos causas habituales. O tiene DRM, que detectamos y rechazamos porque ningún conversor puede leer contenido cifrado, o supera el límite de 4 MB que se aplica a todos los planes.`,
     },
     {
       question: `¿Mi Kindle sigue soportando archivos MOBI?`,

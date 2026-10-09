@@ -1,5 +1,5 @@
 export const slug = 'epub-to-azw3';
-export const title = 'EPUB to AZW3 Converter — Kindle Format | BookConv';
+export const title = 'EPUB to AZW3 Converter — Kindle Format';
 export const metaDescription = 'Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.';
 export const level = 'A' as const;
 export const wordCount = 690;
@@ -80,7 +80,7 @@ Converting EPUB to AZW3 moves a modern, open-standard file into Amazon's proprie
     },
     {
       heading: 'How to Convert EPUB to AZW3: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or sign-up is needed. The cap is 10 MB; books with embedded custom fonts are the ones most likely to come close to it.
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or sign-up is needed. The cap is 4 MB; books with embedded custom fonts are the ones most likely to come close to it.
 
 **Step 2 — Wait for processing.** The Calibre AZW3 output engine maps your styles, fonts, and images onto Kindle Format 8 and shows live status. Most books finish in 10-30 seconds; books with custom fonts take a little longer because the fonts are embedded.
 
@@ -115,7 +115,7 @@ Converting EPUB to AZW3 moves a modern, open-standard file into Amazon's proprie
 **Issue 5: Conversion Takes Too Long**
 - *Symptom*: Processing hangs or takes minutes
 - *Cause*: Large file with many images or complex structure
-- *Fix*: Split large books into smaller chapters. Check file size (10 MB limit).`
+- *Fix*: Split large books into smaller chapters. Check file size (4 MB limit).`
     },
     {
       heading: 'Which Kindle Devices Read AZW3',

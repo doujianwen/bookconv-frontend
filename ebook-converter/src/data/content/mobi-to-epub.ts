@@ -1,5 +1,5 @@
 export const slug = 'mobi-to-epub';
-export const title = 'MOBI to EPUB Converter — Preserve Chapters & Images | BookConv';
+export const title = 'MOBI to EPUB Converter — Preserve Chapters & Images';
 export const metaDescription = 'Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images & metadata intact and read your books on any device. Convert in seconds.';
 export const level = 'S' as const;
 export const wordCount = 3200;
@@ -50,7 +50,7 @@ A practical rule: convert MOBI to EPUB when you want to preserve and enhance you
       heading: 'How to Convert MOBI to EPUB Online',
       body: `Converting a MOBI file to EPUB takes seconds with the tool above — no software to install, no account to create, and no watermark on your book. Here is the whole flow:
 
-1. Upload your .mobi file using the converter above (up to 10 MB free).
+1. Upload your .mobi file using the converter above (up to 4 MB free).
 2. Wait a few seconds while the Calibre engine parses the MOBI structure and rebuilds it as EPUB.
 3. Download your converted .epub and open it in Apple Books, Google Play Books, Kobo, Nook, Moon+ Reader, ReadEra, or any EPUB-compatible reader.
 
@@ -138,7 +138,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 
 **Technical Details:**
 - Engine: Calibre 7.x EPUB output plugin
-- Max file size: 10MB
+- Max file size: 4MB
 - Conversion time: 10-30 seconds for typical books
 - DRM: We don't bypass DRM — only convert files you own
 
@@ -182,7 +182,7 @@ EPUB files are ZIP archives containing HTML, CSS, images, and metadata. This mak
 **Issue 4: Conversion Fails Completely**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: File is DRM-protected, corrupted, or exceeds size limit
-- *Fix*: Check file size (10 MB limit). Remove DRM first if applicable. Verify MOBI validity in Calibre.
+- *Fix*: Check file size (4 MB limit). Remove DRM first if applicable. Verify MOBI validity in Calibre.
 
 **Issue 5: Font Display Issues**
 - *Symptom*: Text appears in wrong font or formatting is lost
@@ -300,7 +300,7 @@ Knowing the limits saves a wasted conversion — pick the route that matches whe
     { q: 'Can I read the converted EPUB on my Kindle?', a: 'Modern Kindles (2022+) can receive EPUB files via Send to Kindle service and automatically convert them. Older Kindles may need Calibre to convert EPUB back to AZW3/MOBI.' },
     { q: 'Does conversion preserve highlights and notes?', a: 'Basic highlights may be partially preserved depending on the source MOBI file. However, EPUB annotation systems are far superior, and you can add new highlights and notes in the converted file.' },
     { q: 'How long does MOBI to EPUB conversion take?', a: 'Most MOBI files under 200 pages convert in 10-30 seconds. Larger files with many images may take 1-2 minutes depending on complexity.' },
-    { q: 'Is there a limit to file size?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
+    { q: 'Is there a limit to file size?', a: 'Files up to 4 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
     { q: 'Will the table of contents be preserved?', a: 'Yes. If your MOBI contains chapter markers or bookmarks, these are converted to EPUB navigation entries (NCX/NAV), allowing you to jump between chapters in your reader.' },
     { q: 'Is BookConv the best free MOBI to EPUB converter?', a: 'Yes — for a quick, no-install conversion it is the top free option available today. It runs the same Calibre engine on our side, keeps your chapters and images, deletes the file after processing, and adds no watermark. For very large libraries you may prefer the desktop Calibre app, which gives deeper control — our MOBI to EPUB formatting guide covers its settings.' },
     { q: 'Why should I convert MOBI to EPUB instead of keeping MOBI?', a: 'EPUB is the open standard that works across all e-readers and reading apps. MOBI only works on Kindle devices and is deprecated by Amazon. Converting to EPUB future-proofs your library and gives you reading freedom.' },

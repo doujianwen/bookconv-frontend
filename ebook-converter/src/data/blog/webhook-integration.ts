@@ -23,7 +23,7 @@ It's the difference between standing at the counter and leaving your phone numbe
       heading: `Where the Event Fires in BookConv's Pipeline`,
       body: `Knowing what happens before the notification tells you what it can mean.
 
-1. **Upload and checks.** The file has to fit the 10 MB upload cap, which applies to every plan. DRM-protected files are rejected right here, at upload.
+1. **Upload and checks.** The file has to fit the 4 MB upload cap, which applies to every plan. DRM-protected files are rejected right here, at upload.
 2. **Queued.** The job joins the background queue with an identifier, and progress starts reporting.
 3. **Converted.** A worker runs the file through Calibre on our servers and writes out the target format.
 4. **Finished.** The job settles into one of two states: success with a download available, or failure with a reason.

@@ -1,5 +1,5 @@
 export const slug = 'epub-to-txt';
-export const title = 'EPUB to TXT Converter — Extract Plain Text | BookConv';
+export const title = 'EPUB to TXT Converter — Extract Plain Text';
 export const metaDescription = 'Free EPUB to TXT converter — extract clean plain text for AI analysis, translation, or screen readers in seconds. No sign-up, preserves chapters and structure.';
 export const level = 'S' as const;
 export const wordCount = 2800;
@@ -97,7 +97,7 @@ Feed your books directly to AI summarization tools, quote extractors, or content
       body: `Converting EPUB to TXT is straightforward with our browser-based tool. Follow these three simple steps:
 
 **Step 1 — Upload Your EPUB File**
-Drag and drop your .epub file into the upload area, or click to browse your computer. The converter accepts files up to 10 MB on the free plan. No account registration is required — you can start converting immediately without creating a profile or providing an email address.
+Drag and drop your .epub file into the upload area, or click to browse your computer. The converter accepts files up to 4 MB on the free plan. No account registration is required — you can start converting immediately without creating a profile or providing an email address.
 
 **Step 2 — Wait for Processing**
 Our pure JavaScript engine begins extracting text instantly. Unlike server-based converters that queue your file, this conversion happens locally in your browser. Most novels complete in under 10 seconds, while longer books with many chapters may take 20-30 seconds. You'll see a progress indicator showing the extraction status in real time.
@@ -237,10 +237,10 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
     { q: 'How are images and charts handled?', a: 'Pure text format cannot contain images. If the original EPUB contains images, we attempt to extract alt text descriptions and insert them as notes in the text where possible. However, visual content is not preserved in the final TXT file.' },
     { q: 'Can the converted text be used directly for AI analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text that can be directly fed to any NLP tool, AI summarizer, or text analysis platform without additional preprocessing.' },
     { q: 'What encoding does the output TXT use?', a: 'Default is UTF-8 supporting Chinese, English, Japanese, Korean, Russian, and other multilingual content. Other encodings (GBK, BIG5) can be specified during conversion if needed for legacy system compatibility.' },
-    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 10 MB on all plans.' },
+    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 4 MB on all plans.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors. This preserves the structural hierarchy of your book.' },
     { q: 'Can I convert EPUB to TXT on mobile devices?', a: 'Yes. Our converter runs entirely in your browser using pure JavaScript, so it works on iOS, Android, and any device with a modern web browser. No app installation required.' },
-    { q: 'Is there a file size limit for EPUB files?', a: 'Free users can convert EPUB files up to 10 MB. For larger files, consider splitting your book into smaller chapters or converting chapter by chapter.' }
+    { q: 'Is there a file size limit for EPUB files?', a: 'Free users can convert EPUB files up to 4 MB. For larger files, consider splitting your book into smaller chapters or converting chapter by chapter.' }
   ]
 ,
 
@@ -411,7 +411,7 @@ Si tu fuente es una biblioteca de Kindle en lugar de EPUB, la misma extracción 
       { q: '¿Cómo se manejan las imágenes y gráficos?', a: 'El formato de texto puro no puede contener imágenes. Si el EPUB original contiene imágenes, intentamos extraer las descripciones de texto alternativo (alt) e insertarlas como notas en el texto cuando es posible.' },
       { q: '¿Se puede usar el texto convertido directamente para análisis de IA?', a: 'Absolutamente. El texto de salida ha eliminado todos los marcadores de formato y el espacio en blanco extra. Es texto plano estándar que se puede alimentar directamente a cualquier herramienta NLP, resumidor de IA o plataforma de análisis de texto.' },
       { q: '¿Qué codificación usa el TXT de salida?', a: 'Por defecto es UTF-8, compatible con contenido multilingüe en chino, inglés, japonés, coreano, ruso y otros. Otras codificaciones (GBK, BIG5) se pueden especificar durante la conversión si es necesario.' },
-      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos convierten de uno en uno. La conversión por lotes es una función Pro y admite hasta 20 archivos en una sola subida para formatos locales como EPUB a TXT; cada archivo está limitado a 10 MB.' },
+      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos convierten de uno en uno. La conversión por lotes es una función Pro y admite hasta 20 archivos en una sola subida para formatos locales como EPUB a TXT; cada archivo está limitado a 4 MB.' },
       { q: '¿Conserva la conversión la tabla de contenidos?', a: 'Sí. La TOC se añade como una sección de comentarios al inicio del archivo TXT, listando todos los capítulos y referencias de página para una navegación fácil en editores de texto.' }
     ]
   }

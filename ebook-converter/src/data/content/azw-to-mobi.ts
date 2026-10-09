@@ -54,7 +54,7 @@ If your file is .azw3, use the AZW3 to MOBI converter instead — this page is s
     },
     {
       heading: 'How to Convert AZW to MOBI',
-      body: `**1. Upload your AZW file.** Drag it in or browse. Free accounts accept files up to 10MB, which covers virtually all AZW books.
+      body: `**1. Upload your AZW file.** Drag it in or browse. Free accounts accept files up to 4MB, which covers virtually all AZW books.
 
 **2. Conversion runs.** The AZW container is read, its content is simplified to MOBI-compatible HTML and CSS, and the chapter structure is rebuilt. Most files convert in well under a minute.
 
@@ -110,7 +110,7 @@ heading: 'Before You Convert: Check Your AZW',
 
 - **The file is really AZW** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     },
@@ -134,7 +134,7 @@ None of these mean the tool failed. They mean the source had an issue the conver
     { q: 'Why bother converting AZW to MOBI?', a: 'MOBI is the one format every Kindle reads, including the oldest models. If you want a file that opens on any Kindle without question, MOBI is the safest target.' },
     { q: 'Will my chapters survive?', a: 'Yes. AZW stores chapters as heading-based structure, and that maps directly to MOBI chapters, so reading order and breaks are preserved.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI from Send to Kindle in 2022, so email delivery is rejected. Copy the file into the documents folder over USB instead.' },
-    { q: 'How large are AZW files?', a: 'Typical AZW books are 1-5MB, well within the 10MB free-account limit. Only image-heavy books risk hitting the cap.' }
+    { q: 'How large are AZW files?', a: 'Typical AZW books are 1-5MB, well within the 4MB free-account limit. Only image-heavy books risk hitting the cap.' }
   ]
 ,
 

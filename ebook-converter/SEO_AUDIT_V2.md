@@ -119,7 +119,7 @@ description = intro 全文，而 intro 的写法是「背景铺垫 → 才讲结
 ⚠️ 两条必须记住：
 
 1. `/convert/epub-to-lrf` pos 15.0 排 Top20 第 3，但**它不在 CONTENT_MAP ⇒ 真 404**。**position 好看 ≠ 页面存在**。
-2. `/es/blog/azw3-vs-mobi` **pos 13.7 是全站最佳**，且是**西语页** ⇒ 与项目记忆「/es 伪翻译遭 Spam Update」的认知**冲突，需人工核实**。
+2. `/es/blog/azw3-vs-mobi` **pos 13.7 是全站最佳**，且是**西语页** ⇒ 与项目记忆「/es 内容信号遭 Spam Update」的认知**冲突，需人工核实**。
 
 ## 五、Seed List 重建（已剔除 301/404/Tag/Archive）
 

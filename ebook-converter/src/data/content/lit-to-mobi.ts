@@ -46,7 +46,7 @@ Because every Kindle reads MOBI natively, it remains the safest universal target
     },
     {
       heading: 'How to Convert LIT to MOBI',
-      body: `**1. Upload your LIT file.** Drag it in or browse. Free accounts handle files up to 10MB, which covers essentially every LIT book — they are text-heavy and small.
+      body: `**1. Upload your LIT file.** Drag it in or browse. Free accounts handle files up to 4MB, which covers essentially every LIT book — they are text-heavy and small.
 
 **2. Conversion runs.** The LIT container is unpacked, its HTML is simplified to what MOBI's renderer understands, images are re-packaged, and the chapter structure is rebuilt. Most files finish in under 30 seconds.
 
@@ -122,7 +122,7 @@ heading: 'Before You Convert: Check Your LIT',
 
 - **The file is really LIT** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
@@ -132,7 +132,7 @@ If the file passes all three and the conversion still misbehaves, the problem is
     { q: 'Can I convert DRM-protected LIT files?', a: 'No. Microsoft Reader DRM depends on activation servers Microsoft shut down, so encrypted LIT files cannot be opened by any converter. This tool works only on DRM-free LIT files such as public-domain titles or books you created yourself.' },
     { q: 'Will my chapters and table of contents survive?', a: 'Yes. LIT stores its content as HTML with heading-based structure, and that maps directly to MOBI chapters. A standard novel keeps its chapter breaks and reading order intact.' },
     { q: 'Why convert LIT to MOBI instead of EPUB?', a: 'If your goal is reading on a Kindle, MOBI is the universal choice — every Kindle model opens it. EPUB is better for non-Kindle readers and preserves more styling, so choose EPUB if you read on Kobo, Apple Books, or a phone app instead.' },
-    { q: 'How big are LIT files and will they fit?', a: 'LIT books are almost always well under 10MB since they are text with a few images. Free accounts handle files up to 10MB, so size is rarely a concern.' },
+    { q: 'How big are LIT files and will they fit?', a: 'LIT books are almost always well under 4MB since they are text with a few images. Free accounts handle files up to 4MB, so size is rarely a concern.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI support from Send to Kindle in 2022, so email delivery is rejected. Sideload it over USB by copying the file into the documents folder on your Kindle.' },
     { q: 'What if my LIT file will not upload?', a: 'A file that will not open is usually DRM-protected or truncated. Confirm it is a DRM-free .lit and that the download was not interrupted. DRM-protected files cannot be converted by any tool.' }
   ]

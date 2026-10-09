@@ -1164,6 +1164,14 @@
       "suggestion": "维持现状至 10/20 Google 重评估（A3 锚点，kind=read，只读数不改站）。依据已从「先观察内链效果」推进为「已有初步读数」：1/17 页（epub）证明内链供血路径有效，故 D1 的真问题已收敛为「剩余 16 页是补内链还是有意排除」，而非「sitemap 是否补入」。10/20 后二选一 —— A = 差异化 formats 页争取索引（注意 §7.2 规模化风险：17 页同模板，疑似 Scaled Content）；B = 有意排除（noindex/瘦身）。⚠️ 决策前置提醒：D1 标注 blocks=M2-8，但 M2-8（13 个零抓取页差异化，P0，due 10-20）当前仍为 todo。若 10/20 前 M2-8 未启动，formats 页的差异化投入应与之合并排期，避免两条线同时改 48 个程序化页。",
       "blocks": "M2-8",
       "owner": "O"
+    },
+    {
+      "id": "D2",
+      "title": "10/20 锚点统一裁决：4 个 convert 残留页的最终去向（差异化保留 / 降级 noindex / 301 合并）",
+      "context": "A 类差异化 b1–b7 已收口（覆盖 22/28 非 noindex convert 页）。B 类降级已完成 P0（10 页 301，commit 758e994）+ P1（4 页 noindex，commit 78d54bd），均上线。余 4 个非 noindex convert 页性质不同但都依赖 10/20 Google 重评估（A3）读数后再定夺，故统一挂 10/20 锚点一次性裁决：① azw3-to-pdf / mobi-to-pdf —— 原 B 类 P2 观察项（低需求、暂观察，未纳入 b1–b7 差异化）；② lit-to-mobi / azw-to-mobi —— 遗留淘汰格式（LIT/AZW），b7 已补 CLI 段差异化（commit 7dc3dce），但「是否改判 B 类降级」悬而未决。两批合计 4 页。",
+      "suggestion": "10/20 锚点（A3 Google 重评估读数）后按实测二选一：保留并差异化（继续供血）或降级（noindex / 301 合并代表页）。🔴 10/20 前禁止改动这 4 页的索引状态（noindex/robots）或大规模改写，避免污染 A3 基线读数。若 10/20 决定保留差异化，则 azw3-to-pdf/mobi-to-pdf 补入 b 系列收口（复用 ≤3 页/日纪律）；若决定降级，则并入 B 类 P0/P1 流程。",
+      "anchor": "A3",
+      "owner": "O"
     }
   ]
 }

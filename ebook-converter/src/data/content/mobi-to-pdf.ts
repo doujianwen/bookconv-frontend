@@ -44,7 +44,7 @@ The trade-off is the mirror image of MOBI's: PDF gives up flexibility to gain pe
     },
     {
       heading: 'How to Convert MOBI to PDF',
-      body: `**1. Upload your MOBI.** Drag it in or click to browse. Uploads are capped at 10MB, which suits most MOBI files — a full-length novel typically lands between 300KB and 2MB. Heavily illustrated titles are the ones that can run past the limit.
+      body: `**1. Upload your MOBI.** Drag it in or click to browse. Uploads are capped at 4MB, which suits most MOBI files — a full-length novel typically lands between 300KB and 2MB. Heavily illustrated titles are the ones that can run past the limit.
 
 **2. We render it to pages.** The converter unpacks the MOBI, rebuilds the HTML content, and lays it out onto real pages with sensible margins and readable type. Navigation points become PDF bookmarks so you can still jump between chapters.
 
@@ -119,7 +119,7 @@ If the file will not convert, it is almost certainly a DRM-protected Kindle Stor
       body: `A couple of checks avoid a dead end:
 
 - **Confirm it is DRM-free** — Kindle Store purchases are encrypted and cannot be opened; Gutenberg downloads, author-direct copies, and your own files work
-- **Note the size** — a 300-page novel is usually 300KB to 2MB, well under the 10MB limit; heavily illustrated titles can exceed it
+- **Note the size** — a 300-page novel is usually 300KB to 2MB, well under the 4MB limit; heavily illustrated titles can exceed it
 - **Pick a page size** — A4 or Letter is fixed at render time, so decide before converting
 - **Expect larger output** — PDFs run 3 to 8MB for a typical novel, larger for illustrated books
 

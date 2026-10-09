@@ -54,7 +54,7 @@ The trade is honest and obvious: you keep every word and lose every visual detai
     },
     {
       heading: 'How to Convert MOBI to TXT',
-      body: `**1. Upload the MOBI.** Drag it in or browse for it. Free accounts handle files up to 10MB — MOBI files are rarely anywhere near that, since a full-length novel usually lands between 300KB and 2MB.
+      body: `**1. Upload the MOBI.** Drag it in or browse for it. Free accounts handle files up to 4MB — MOBI files are rarely anywhere near that, since a full-length novel usually lands between 300KB and 2MB.
 
 **2. We unpack and strip.** The converter decompresses the MOBI record structure, removes the HTML tags, and rebuilds the text with sensible paragraph breaks. Chapters get separated by blank lines instead of vanishing into one endless wall of prose.
 
@@ -117,7 +117,7 @@ If the text looks like one block, the source MOBI likely had no chapter markers;
 
 - **Confirm it is DRM-free** — Kindle Store purchases are encrypted and cannot be read; Gutenberg, author-direct, and your own files work
 - **Expect image loss** — if illustrations matter, convert to EPUB instead and keep the pictures
-- **Check the size** — MOBI files are small, so the 10MB limit is rarely a concern
+- **Check the size** — MOBI files are small, so the 4MB limit is rarely a concern
 - **Keep the original** — TXT discards formatting permanently; you cannot get it back from the text file
 
 The converter decompresses the MOBI, strips HTML tags, and rebuilds clean paragraphs.`

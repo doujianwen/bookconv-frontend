@@ -17,7 +17,7 @@ export const content = {
     {
       heading: `Key Takeaways`,
       body: `- **EPUB 与 MOBI 的定位不同。** EPUB 是 IDPF 开放标准、可回流；MOBI 最初为低算力手持设备设计，文件更重、支持的格式特性更少。
-- **免费版没有文件和次数陷阱。** 单文件 10 MB、每 IP 每分钟 20 次请求，10 MB 上限对所有套餐一致。
+- **免费版没有文件和次数陷阱。** 单文件 4 MB、每 IP 每分钟 20 次请求，4 MB 上限对所有套餐一致。
 - **下载链接是临时的。** 转换完成的文件会在一段时间后删除，别把链接当存储。
 - **转换后立刻下载。** 进度条走完就存下来，不要留着链接等下次。
 - **排版变简单是格式限制不是出错。** MOBI 对复杂 CSS 支持有限；想要现代排版就转 AZW3。
@@ -31,6 +31,6 @@ export const faqs = [
   { question: "Will I lose my bookmarks after conversion?", answer: "No. Bookmarks and highlights are stored locally on your Kindle device, not within the ebook file itself. Converting the file format does not affect your existing reading progress." },
   { question: "Why does my converted MOBI look different?", answer: "MOBI is an older format with limited styling capabilities compared to EPUB. Complex layouts, custom fonts, and advanced CSS features may be simplified or lost during the conversion process due to hardware limitations." },
   { question: "Can I convert EPUB to MOBI on my phone?", answer: "Absolutely. BookConv is a web-based tool accessible from any browser on iOS, Android, or desktop. Simply upload the file, convert, and download the MOBI to transfer it to your Kindle." },
-  { question: "What is the maximum file size for conversion?", answer: "Files are capped at 10 MB. Larger textbooks or image-heavy comics need compression, or splitting into smaller parts, before they will upload." },
+  { question: "What is the maximum file size for conversion?", answer: "Files are capped at 4 MB. Larger textbooks or image-heavy comics need compression, or splitting into smaller parts, before they will upload." },
   { question: "Does BookConv store my personal data?", answer: "No. We prioritize user privacy. Uploaded files are processed in real-time and immediately deleted from our servers after you complete the download. We do not read, share, or analyze the content of your ebooks." }
 ];

@@ -52,13 +52,13 @@
 | `/` | 380 | 86 | 首页 | 不属页面级外链范畴 |
 | `/blog/mobi-or-azw3-for-kindle` | 20 | 45.8 | 301 重定向旧页 | 外链权重浪费在跳转链路上 |
 | `/blog/how-to-convert-epub-to-mobi` | 2 | 47 | 301 重定向旧页 | 外链权重浪费在跳转链路上 |
-| `/es/blog/epub-to-azw3` | 1 | 40 | /es/ 但无西语译文 | 伪西语（英文正文 + lang=es），项目已判为 spam 信号 |
-| `/es/blog/txt-to-epub` | 3 | 74 | /es/ 但无西语译文 | 伪西语（英文正文 + lang=es），项目已判为 spam 信号 |
+| `/es/blog/epub-to-azw3` | 1 | 40 | /es/ 但无西语译文 | 英文兜底（英文正文 + lang=es），属 i18n 完整性问题（M5-2 补译文），非 spam 惩罚 |
+| `/es/blog/txt-to-epub` | 3 | 74 | /es/ 但无西语译文 | 英文兜底（英文正文 + lang=es），属 i18n 完整性问题（M5-2 补译文），非 spam 惩罚 |
 | `/convert/epub-to-docx` | 11 | 49.1 | 301 重定向旧页 | 外链权重浪费在跳转链路上 |
 | `/es` | 1 | 73 | 首页 | 不属页面级外链范畴 |
 | `/convert/epub-to-lrf` | 1 | 15 | 真 404（不在 CONTENT_MAP） | **position 好看但页面不存在**（如 epub-to-lrf pos 15.0） |
 | `/blog/tag/kindle` | 4 | 52.8 | tag 聚合页 | 聚合页非内容页，权重不传递到具体页 |
-| `/es/blog/tag/fb2` | 3 | 30.7 | /es/ 但无西语译文 | 伪西语（英文正文 + lang=es），项目已判为 spam 信号 |
+| `/es/blog/tag/fb2` | 3 | 30.7 | /es/ 但无西语译文 | 英文兜底（英文正文 + lang=es），属 i18n 完整性问题（M5-2 补译文），非 spam 惩罚 |
 
 ### 2.1 Seed List（27 个资产页，按曝光降序）
 

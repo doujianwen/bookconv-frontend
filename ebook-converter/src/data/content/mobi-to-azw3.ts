@@ -37,7 +37,7 @@ The web converter above is better for one-off conversions where you don't want t
     },
     {
       heading: 'How to Convert MOBI to AZW3',
-      body: `**1. Upload your MOBI.** Drag the file in or browse for it. Free accounts handle files up to 10MB — most Kindle books are 1-5MB, so you'd need something unusually image-heavy to hit that.\n\n**2. Conversion runs.** The MOBI structure is parsed, text and images are extracted, and the content is re-packaged into AZW3's modern HTML5/CSS3 container. Navigation gets rebuilt with proper chapter headings. Usually done in under 30 seconds.\n\n**3. Download and read.** The .azw3 file opens natively on any Kindle from 2011 onward — Paperwhite, Oasis, Voyage, basic Kindle, Kindle Scribe, and Kindle Colorsoft.\n\n**Important: DRM will stop this cold.** Books purchased from the Kindle Store carry Amazon's DRM, and encrypted files can't be read by any converter — you'll get an error. This works on DRM-free MOBI files: books you made yourself in Calibre or Kindle Create, titles from DRM-free publishers, Project Gutenberg downloads, and StoryBundle or Humble Bundle purchases.\n\nAlso note that if you're converting a MOBI specifically to upload to Amazon KDP or use Send to Kindle, consider [converting MOBI to EPUB](/convert/mobi-to-epub) instead — EPUB is now Amazon's preferred format.`
+      body: `**1. Upload your MOBI.** Drag the file in or browse for it. Free accounts handle files up to 4MB — most Kindle books are 1-5MB, so you'd need something unusually image-heavy to hit that.\n\n**2. Conversion runs.** The MOBI structure is parsed, text and images are extracted, and the content is re-packaged into AZW3's modern HTML5/CSS3 container. Navigation gets rebuilt with proper chapter headings. Usually done in under 30 seconds.\n\n**3. Download and read.** The .azw3 file opens natively on any Kindle from 2011 onward — Paperwhite, Oasis, Voyage, basic Kindle, Kindle Scribe, and Kindle Colorsoft.\n\n**Important: DRM will stop this cold.** Books purchased from the Kindle Store carry Amazon's DRM, and encrypted files can't be read by any converter — you'll get an error. This works on DRM-free MOBI files: books you made yourself in Calibre or Kindle Create, titles from DRM-free publishers, Project Gutenberg downloads, and StoryBundle or Humble Bundle purchases.\n\nAlso note that if you're converting a MOBI specifically to upload to Amazon KDP or use Send to Kindle, consider [converting MOBI to EPUB](/convert/mobi-to-epub) instead — EPUB is now Amazon's preferred format.`
     },
     {
       heading: 'When Upgrading MOBI to AZW3 Is Worth It',
@@ -83,7 +83,7 @@ heading: 'Before You Convert: Check Your MOBI',
 
 - **The file is really MOBI** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }

@@ -43,7 +43,7 @@ That structure is what gives you **reflowable text**. Bump the font size and the
 - Opens in Apple Books, Kobo, Nook, Google Play Books, and dozens of desktop and mobile apps
 - Reflows cleanly across screen sizes, orientations, and font settings
 - Supports embedded fonts, real CSS styling, and proper chapter navigation
-- Compresses well, so most text-only novels land far under 10 MB
+- Compresses well, so most text-only novels land far under 4 MB
 
 **Where it falls short:**
 - Kindle hardware won't display EPUB directly. Amazon converts one you send in, but you don't control the result.
@@ -93,12 +93,12 @@ Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-e
 Upload the file, pick the target format, watch the progress bar, download the result. Conversion runs server-side on a Calibre engine, so you get desktop-grade output without maintaining a desktop app or waiting on an installer.
 
 **What the free tier gives you:**
-- Up to **10 MB per file**, which covers nearly every text-only novel
+- Up to **4 MB per file**, which covers nearly every text-only novel
 - **20 conversion requests per minute**, with no account and no sign-up
 - A **metadata preview** before you commit, so you can check the title and author were read correctly
 - A **live progress bar** — heavy files hand off to a background worker queue instead of stalling your tab
 
-**When you need more room:** every plan stops at **10 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
+**When you need more room:** every plan stops at **4 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
 
 Two things worth knowing before you upload. **DRM-protected files are rejected on upload** — we don't strip protection, so there's nothing to work around. And **download links are temporary**: converted files are deleted after a while, so save the result when it's ready instead of bookmarking the page.
 
@@ -149,8 +149,8 @@ export const faqs = [
     answer: `No. BookConv runs a Calibre engine server-side, so the conversion quality is the same with nothing on your machine. Install the desktop app only if you want a full library manager — its [conversion documentation](https://manual.calibre-ebook.com/conversion.html) explains every setting.`,
   },
   {
-    question: `My book is bigger than 10 MB. What now?`,
-    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images or split the book — the 10 MB cap applies to every plan.`,
+    question: `My book is bigger than 4 MB. What now?`,
+    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images or split the book — the 4 MB cap applies to every plan.`,
   },
   {
     question: `What about DRM-protected purchases?`,
@@ -207,7 +207,7 @@ Esa estructura es lo que te da **texto refulible**. Sube el tamaño de fuente y 
 - Abre en Apple Books, Kobo, Nook, Google Play Books y decenas de apps de escritorio y móvil
 - Se reacomoda limpiamente entre tamaños de pantalla, orientaciones y ajustes de fuente
 - Soporta fuentes embebidas, CSS real y navegación de capítulos adecuada
-- Comprime bien, así que la mayoría de las novelas solo de texto quedan muy por debajo de 10 MB
+- Comprime bien, así que la mayoría de las novelas solo de texto quedan muy por debajo de 4 MB
 
 **Dónde flojea:**
 - El hardware Kindle no muestra EPUB directamente. Amazon convierte uno que envías, pero no controlas el resultado.
@@ -257,12 +257,12 @@ Amazon lo ha venido retirando poco a poco. Send to Kindle dejó de aceptar subid
 Sube el archivo, elige el formato destino, mira la barra de progreso, descarga el resultado. La conversión corre del lado del servidor en un motor Calibre, así obtienes salida de grado de escritorio sin mantener una app de escritorio ni esperar un instalador.
 
 **Qué da la capa gratuita:**
-- Hasta **10 MB por archivo**, lo que cubre casi todas las novelas solo de texto
+- Hasta **4 MB por archivo**, lo que cubre casi todas las novelas solo de texto
 - **20 solicitudes de conversión por minuto**, sin cuenta ni registro
 - Una **vista previa de metadatos** antes de comprometerte, así compruebas que el título y el autor se leyeron bien
 - Una **barra de progreso en vivo** — los archivos pesados pasan a una cola de trabajadores en segundo plano en vez de bloquear tu pestaña
 
-**Cuando necesitas más espacio:** todos los planes se detienen en **10 MB por archivo**, así que los libros ilustrados y los PDF escaneados necesitan compresión o división, no un plan mayor.
+**Cuando necesitas más espacio:** todos los planes se detienen en **4 MB por archivo**, así que los libros ilustrados y los PDF escaneados necesitan compresión o división, no un plan mayor.
 
 Dos cosas que vale la pena saber antes de subir. **Los archivos con DRM se rechazan al subir** — no quitamos protección, así que no hay nada que rodear. Y **los enlaces de descarga son temporales**: los archivos convertidos se borran tras un rato, así que guarda el resultado cuando esté listo en vez de guardar la página en marcadores.
 
@@ -305,8 +305,8 @@ Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, edita
       answer: `No. BookConv corre un motor Calibre del lado del servidor, así la calidad de conversión es la misma sin nada en tu máquina. Instala la app de escritorio solo si quieres un gestor de biblioteca completo — su [documentación de conversión](https://manual.calibre-ebook.com/conversion.html) explica cada ajuste.`,
     },
     {
-      question: `¿Mi libro es mayor de 10 MB. Qué ahora?`,
-      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes o divide el libro: el tope de 10 MB se aplica a todos los planes.`,
+      question: `¿Mi libro es mayor de 4 MB. Qué ahora?`,
+      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes o divide el libro: el tope de 4 MB se aplica a todos los planes.`,
     },
     {
       question: `¿Y las compras con DRM?`,

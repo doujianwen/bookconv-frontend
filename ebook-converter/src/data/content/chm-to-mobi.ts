@@ -33,7 +33,7 @@ The converter unpacks the CHM, reads its internal HTML pages and linked images, 
     },
     {
       heading: 'How to Convert CHM to MOBI',
-      body: `**1. Upload your CHM file.** Drag it in or browse. Free accounts handle files up to 10MB, enough for almost every manual or reference.
+      body: `**1. Upload your CHM file.** Drag it in or browse. Free accounts handle files up to 4MB, enough for almost every manual or reference.
 
 **2. Conversion runs.** The CHM is unpacked, its HTML is simplified to MOBI-compatible markup, and the table of contents becomes MOBI chapters. Most files finish in under a minute.
 
@@ -104,7 +104,7 @@ heading: 'Before You Convert: Check Your CHM',
 
 - **The file is really CHM** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     }
@@ -115,7 +115,7 @@ If the file passes all three and the conversion still misbehaves, the problem is
     { q: 'Are CHM files DRM-protected?', a: 'No. CHM is a documentation format with no rights-management layer, so a valid .chm converts without the DRM issues that block Kindle Store books.' },
     { q: 'Will the table of contents become chapters?', a: 'Yes. The CHM help system’s table of contents maps directly to MOBI chapters, so you keep navigable sections instead of one long scroll.' },
     { q: 'Do images and screenshots survive?', a: 'Inline images and diagrams are carried through. Precise screenshot layout may reflow, but the pictures themselves remain in the book.' },
-    { q: 'How big are CHM files?', a: 'Documentation CHM files are usually a few MB, well under the 10MB free-account limit. Only very large reference sets risk exceeding it.' },
+    { q: 'How big are CHM files?', a: 'Documentation CHM files are usually a few MB, well under the 4MB free-account limit. Only very large reference sets risk exceeding it.' },
     { q: 'Can I email the MOBI to my Kindle?', a: 'Amazon removed MOBI from Send to Kindle in 2022, so email delivery is rejected. Copy the file into the documents folder over USB instead.' }
   ]
 ,

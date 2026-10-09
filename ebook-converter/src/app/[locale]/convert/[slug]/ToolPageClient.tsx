@@ -18,6 +18,7 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
@@ -105,6 +106,16 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const handleFileSelect = useCallback(
     async (file: File) => {
+      // Defense-in-depth: block oversized uploads before any network call.
+      // Vercel Hobby rejects >4.5MB request bodies at the edge with a 413 that
+      // our code never sees — without this guard the doomed request would still
+      // fire and surface as a confusing conversion failure.
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        setErrorMessage(`File too large — the free plan accepts files up to ${MAX_FILE_SIZE_MB}MB per upload. Compress or split the file, then try again.`)
+        setErrorCode("FILE_TOO_LARGE")
+        setStatus("error")
+        return
+      }
       setStatus("uploading")
       setProgress(10)
       setErrorMessage("")
@@ -159,6 +170,7 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
           source_format: source,
           target_format: target,
           error: (errObj?.message || "unknown").slice(0, 100),
+          file_size: file.size,
         })
       }
     },

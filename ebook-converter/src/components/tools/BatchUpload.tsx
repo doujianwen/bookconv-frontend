@@ -24,15 +24,15 @@ import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map";
 import { Button } from "@/components/ui/button";
 import { extractApiError } from "@/lib/api-error";
 import { trackGAEvent } from "@/lib/ga";
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
 
 // ── Limits ────────────────────────────────────────────────────
 // Defaults are deliberately aligned with what the backend actually enforces:
-//   - /api/convert rejects files above MAX_FILE_SIZE_MB (server default 10MB)
+//   - /api/convert rejects files above the client cap (see file-size-limit.ts,
+//     default 4MB — Vercel Hobby edges reject >4.5MB request bodies)
 //   - /api/convert is rate limited to 20 requests / 60s per IP
 // Keeping the batch cap at or below that window avoids guaranteed 429 storms.
 const BATCH_MAX_FILES = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILES || "20", 10);
-const MAX_FILE_SIZE_MB = parseInt(process.env.NEXT_PUBLIC_BATCH_MAX_FILE_SIZE_MB || "10", 10);
-const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 // ── Metered vs local conversions ──────────────────────────────
 // Calibre is not installed on the serverless runtime, so only two conversions
@@ -330,6 +330,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: "quota_exceeded",
+            file_size: item.size,
           });
           markStatus(item.index, "failed", QUOTA_MESSAGE);
           resultFiles.push({
@@ -380,6 +381,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: (msg || "unknown").slice(0, 100),
+            file_size: item.size,
           });
           markStatus(item.index, "failed", msg);
           resultFiles.push({

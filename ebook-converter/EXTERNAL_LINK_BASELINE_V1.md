@@ -120,7 +120,7 @@
 | 真 404 | 1 | `/convert/epub-to-lrf` | 页面不存在（如 pos 15.0 但已 404）|
 | tag 聚合页 | 1 | `/blog/tag/kindle` | 聚合页权重不传递到具体页 |
 | homepage | 2 | `/`、`/es` | 不属页面级外链范畴（除非单独作品牌资产）|
-| /es/ 无西语译文 | 3 | `/es/blog/epub-to-azw3`、`/es/blog/txt-to-epub`、`/es/blog/tag/fb2` | 伪西语（英文正文 + lang=es），项目已判为 spam 信号 |
+| /es/ 无西语译文 | 3 | `/es/blog/epub-to-azw3`、`/es/blog/txt-to-epub`、`/es/blog/tag/fb2` | 英文兜底（英文正文 + lang=es），属 i18n 完整性问题（M5-2 补译文），非 spam 惩罚 |
 | **合计排除** | **10** | | |
 
 ## 六、附带发现：seed 池的索引状态

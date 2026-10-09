@@ -13,8 +13,9 @@ import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 import { runConversion } from "@/lib/conversion";
 import { notifyConversionFailure } from "@/lib/alerts";
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
 
-const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_MB || "10", 10) * 1024 * 1024;
+const MAX_FILE_SIZE = MAX_FILE_SIZE_BYTES;
 
 export async function convertAndStream(
   formData: FormData,
@@ -46,7 +47,7 @@ export async function convertAndStream(
 
   if (file.size > MAX_FILE_SIZE) {
     return NextResponse.json(
-      { error: `File too large. Max ${process.env.MAX_FILE_SIZE_MB || "10"}MB` },
+      { error: `File too large. Max ${MAX_FILE_SIZE_MB}MB per upload.`, code: "FILE_TOO_LARGE" },
       { status: 413, headers: rateHeaders },
     );
   }

@@ -107,7 +107,7 @@ Keep PDF if:
     },
     {
       heading: 'How to Convert PDF to EPUB: Step by Step',
-      body: `**Step 1 — Upload your PDF.** Drag the .pdf file into the upload area or click to browse. No account is required for text-based PDFs. The cap is 10 MB on every plan — scanned documents are by far the most likely to hit it, since a full-page scan is many times larger than the text it yields.
+      body: `**Step 1 — Upload your PDF.** Drag the .pdf file into the upload area or click to browse. No account is required for text-based PDFs. The cap is 4 MB on every plan — scanned documents are by far the most likely to hit it, since a full-page scan is many times larger than the text it yields.
 
 **Step 2 — Wait for processing.** The pipeline extracts the text layer, rebuilds paragraphs and headings, and generates a navigable table of contents, showing live status throughout. Text-based PDFs finish in 10-30 seconds; scanned PDFs take considerably longer because OCR has to recognise each page first.
 
@@ -142,7 +142,7 @@ Keep PDF if:
 **Issue 5: Conversion Fails or Takes Too Long**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: Large file, complex layout, or corrupted PDF
-- *Fix*: Check file size (10 MB limit). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
+- *Fix*: Check file size (4 MB limit). For scanned PDFs, expect longer processing. Try splitting into smaller files.`
     },
     {
       heading: 'Which Devices Read EPUB After PDF Export',
@@ -199,7 +199,7 @@ Our converter uses Calibre engine combined with custom preprocessing pipeline to
     { q: 'Will table of contents be lost in PDF to EPUB conversion?', a: 'No. If the original PDF contains bookmarks or outline the converted EPUB generates corresponding navigation document (NCX/NAV). You can click the table of contents in your reader to jump to specific chapters and sections.' },
     { q: 'Can the converted EPUB be used on mobile phones?', a: 'Absolutely! This is one of EPUB biggest advantages over PDF. The converted file can be opened on any EPUB reader on your phone such as Apple Books, Google Play Books, Moon+ Reader, ReadEra etc. and automatically reflows text based on screen size and your preferred font settings.' },
     { q: 'How long does PDF to EPUB conversion take?', a: 'For text-based PDF under 100 pages conversion typically takes 10-30 seconds. Scanned PDFs requiring OCR may take several minutes depending on page count, image quality, and your plan tier.' },
-    { q: 'What is the maximum file size for PDF conversion?', a: 'Files up to 10 MB are accepted on every plan. Larger PDFs may need to be split into smaller files first. For very large documents consider converting chapter by chapter.' },
+    { q: 'What is the maximum file size for PDF conversion?', a: 'Files up to 4 MB are accepted on every plan. Larger PDFs may need to be split into smaller files first. For very large documents consider converting chapter by chapter.' },
     { q: 'Will images be preserved in the EPUB?', a: 'Yes. All embedded images are extracted and included in the EPUB file. Images are optimized for screen reading while maintaining reasonable quality. Vector graphics and charts are preserved with higher fidelity than raster images.' },
     { q: 'Can I add annotations to the converted EPUB?', a: 'Yes. One of EPUB advantages over PDF is better annotation support. You can add highlights, notes, and bookmarks in most EPUB readers. Some advanced features like form filling may not be available in all readers.' }
   ],

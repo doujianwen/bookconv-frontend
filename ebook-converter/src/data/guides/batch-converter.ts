@@ -49,7 +49,7 @@ For most people, BookConv batch covers the pile of files you actually have today
 }
 export const faqs: BlogFaq[] = [
   { question: 'Does BookConv support batch conversion?', answer: 'Yes. BookConv’s batch converter lets you upload several ebooks, choose one target format, and download the converted files as a single ZIP. It is free while BookConv is in open beta.' },
-  { question: 'How many files can I convert in a batch?', answer: 'It depends on the format: local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files, while other formats are limited to a few per batch during the free beta. Every file can be up to 10 MB.' },
+  { question: 'How many files can I convert in a batch?', answer: 'It depends on the format: local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files, while other formats are limited to a few per batch during the free beta. Every file can be up to 4 MB.' },
   { question: 'How do I batch convert ebooks for free?', answer: 'BookConv batch conversion is free during open beta. For very large free bulk work beyond the per-batch limits, Calibre’s command-line tools on your machine are a strong alternative.' },
   { question: 'Can I automate ebook conversion?', answer: 'BookConv batch handles a one-time pile of up to 20 files in the browser. For recurring automation over many files, Calibre’s command-line tools let you script conversions.' },
   { question: 'What formats can I batch convert?', answer: 'The same formats as the single-file converter — EPUB, PDF, MOBI, AZW3, TXT, DOCX, RTF, FB2, DJVU and more — with every file in the batch converting to the target format you choose.' },

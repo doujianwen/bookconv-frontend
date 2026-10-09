@@ -18,7 +18,7 @@ export const content = {
     {
       heading: `How to Convert CBR to PDF`,
       body: `1. Open [BookConv's CBR to PDF converter](/convert/cbr-to-pdf).
-2. Upload the .cbr (or .cbz — we accept both) up to 10 MB on the free tier.
+2. Upload the .cbr (or .cbz — we accept both) up to 4 MB on the free tier.
 3. The converter uses ImageMagick to stitch the images into a single PDF.
 4. Download it.
 
@@ -36,7 +36,7 @@ Most issues come down to page order, which we cover next.`
 - A 200-page graphic novel: 150–400 MB
 - Hi-DPI manga: often over 500 MB
 
-The 10 MB cap is the real constraint here — comic scans are large, so anything beyond a slim issue tends to exceed it. Compress the images first, or use desktop [Calibre](https://calibre-ebook.com) for full volumes.`
+The 4 MB cap is the real constraint here — comic scans are large, so anything beyond a slim issue tends to exceed it. Compress the images first, or use desktop [Calibre](https://calibre-ebook.com) for full volumes.`
     },
     {
       heading: `Key Takeaways`,
@@ -45,7 +45,7 @@ The 10 MB cap is the real constraint here — comic scans are large, so anything
 - **PDF opens everywhere** — your portable fallback for print and share.
 - **Page order follows filenames** — zero-pad them to avoid scrambles.
 - **Expect source-size output** — 24 pages ≈ 30–80 MB.
-- **10 MB per file** — the tightest constraint for comics; compress images or convert locally for full volumes. The [CBR format reference](/formats/cbr) explains what the archive actually contains and why ordering sometimes breaks.`
+- **4 MB per file** — the tightest constraint for comics; compress images or convert locally for full volumes. The [CBR format reference](/formats/cbr) explains what the archive actually contains and why ordering sometimes breaks.`
     }
   ]
 };
@@ -69,7 +69,7 @@ export const faqs = [
   },
   {
     question: `Is there a file size limit?`,
-    answer: `Uploads are capped at 10 MB. Comics reach that ceiling faster than other formats because scanned pages are large — slim or lower-resolution issues usually fit, while full graphic novels and high-resolution manga volumes generally do not. Compress the images first, or convert those locally with desktop Calibre.`,
+    answer: `Uploads are capped at 4 MB. Comics reach that ceiling faster than other formats because scanned pages are large — slim or lower-resolution issues usually fit, while full graphic novels and high-resolution manga volumes generally do not. Compress the images first, or convert those locally with desktop Calibre.`,
   },
   {
     question: `Can I convert CBZ to PDF the same way?`,

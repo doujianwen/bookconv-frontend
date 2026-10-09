@@ -52,7 +52,7 @@ If you want the text to stay adjustable, don't convert to images. Convert to PDF
     },
     {
       heading: 'How to Convert EPUB to PNG',
-      body: `**1. Upload your EPUB.** Drag and drop, or browse. Uploads are capped at 10MB. Text ebooks are nowhere near that, though image-heavy titles can exceed it.
+      body: `**1. Upload your EPUB.** Drag and drop, or browse. Uploads are capped at 4MB. Text ebooks are nowhere near that, though image-heavy titles can exceed it.
 
 **2. Processing runs.** Calibre lays the book out, then every page is rasterized at 300 DPI. This step is heavier than most conversions — you're generating hundreds of images. A short book takes under a minute; a long one takes several.
 
@@ -120,7 +120,7 @@ heading: 'Before You Convert: Check Your EPUB',
 
 - **The file is really EPUB** — a wrong extension or a corrupted download is the most common cause of a failed conversion.
 - **It is DRM-free** — files locked by a store or rights system cannot be read by any converter; you need the original unlocked copy.
-- **It is under the size limit** — free accounts accept files up to 10MB, which covers most books; very large or image-heavy files may need a desktop tool.
+- **It is under the size limit** — free accounts accept files up to 4MB, which covers most books; very large or image-heavy files may need a desktop tool.
 
 If the file passes all three and the conversion still misbehaves, the problem is almost always the source, not the tool.`
     },

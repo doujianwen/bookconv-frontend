@@ -9,7 +9,7 @@ export const content = {
   sections: [
     {
       heading: `When Conversion Fails Before It Starts`,
-      body: `The upload endpoint rejects your file immediately. This is usually one of three things:\n\n**File too large.** The cap is 10 MB per file on every plan. If your file exceeds the limit, the error names the cap and you won't waste time waiting for a job that was never going to run.\n\n**DRM-protected.** Books purchased from Kindle, Kobo, or Google Play often carry DRM. We reject them on upload because we don't strip protection. Look for a DRM-free edition of the same title.\n\n**Corrupted or truncated.** A half-downloaded EPUB or PDF that ends mid-file gets refused. Open the source file in your normal reader. If it fails there, no converter will repair it.`
+      body: `The upload endpoint rejects your file immediately. This is usually one of three things:\n\n**File too large.** The cap is 4 MB per file on every plan. If your file exceeds the limit, the error names the cap and you won't waste time waiting for a job that was never going to run.\n\n**DRM-protected.** Books purchased from Kindle, Kobo, or Google Play often carry DRM. We reject them on upload because we don't strip protection. Look for a DRM-free edition of the same title.\n\n**Corrupted or truncated.** A half-downloaded EPUB or PDF that ends mid-file gets refused. Open the source file in your normal reader. If it fails there, no converter will repair it.`
     },
     {
       heading: `When Conversion Starts but Doesn't Finish`,
@@ -41,7 +41,7 @@ export const faqs = [
   },
   {
     question: `I got "FILE_TOO_LARGE". How do I reduce the file size?`,
-    answer: `Free tier accepts files up to 10 MB. To reduce size, remove unnecessary images, compress the EPUB.`
+    answer: `Free tier accepts files up to 4 MB. To reduce size, remove unnecessary images, compress the EPUB.`
   },
   {
     question: `Can I convert a book I bought from Amazon or Kobo?`,

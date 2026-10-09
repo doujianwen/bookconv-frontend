@@ -68,7 +68,7 @@ If you want someone to read your writing like a book — on a commute, on an e-r
     },
     {
       heading: 'How to Convert HTML to EPUB',
-      body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to 10MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
+      body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to 4MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
 
 **2. We parse and restructure.** The converter reads your heading hierarchy to work out chapters, pulls the title and author from the document head where they exist, downloads any externally linked images so the book works offline, and rewrites inline styles into EPUB-safe CSS.
 
@@ -144,7 +144,7 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'Will images hosted on the web still show up?', a: 'Yes. Externally linked images are downloaded during conversion and packaged inside the EPUB, so your book keeps working offline even if the original site goes down.' },
     { q: 'What happens to buttons, forms, and JavaScript?', a: 'They do not survive as interactive elements. EPUB readers deliberately restrict scripting, so dynamic content is flattened into its static equivalent or removed.' },
     { q: 'How does the table of contents get built?', a: 'From your heading hierarchy. If your document uses real heading tags in a sensible order, you will get clean chapter navigation. Pages that fake headings with styled text will produce a flat, single-entry TOC.' },
-    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
+    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 4MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
     { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' },
     { q: 'Can you also convert EPUB back to HTML?', a: 'Yes. The [EPUB to HTML converter](/convert/epub-to-html) unpacks the book into standalone chapter pages with a linked stylesheet, rebuilds the table of contents as an index, and extracts images into a hostable folder.' }
   ]

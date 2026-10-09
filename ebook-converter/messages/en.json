@@ -43,13 +43,13 @@
   },
   "faq": {
     "q1": "Is BookConv free to use?",
-    "a1": "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 10 MB per file.",
+    "a1": "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 4 MB per file.",
     "q2": "What formats does BookConv support?",
     "a2": "BookConv supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents.",
     "q3": "Is my data safe when I upload files?",
     "a3": "Absolutely. All files are transferred over encrypted HTTPS connections and automatically deleted within 1 hour after conversion. We never read, store, or share your content.",
     "q4": "Do I need to install any software?",
-    "a4": "No! BookConv runs entirely in your browser. Simply upload your file, select the output format, and download your converted file — no software installation needed.",
+    "a4": "No! BookConv runs on our servers using the same Calibre engine as the desktop app. Upload your file, pick the output format, and download the result — no software installation needed. Your file is encrypted in transit and automatically deleted within 1 hour after conversion.",
     "q5": "Can I convert Kindle books to EPUB?",
     "a5": "Yes! BookConv supports converting AZW3 and MOBI (Kindle formats) to EPUB and other formats. Simply upload your Kindle file and choose your desired output format."
   },
@@ -180,7 +180,7 @@
       "title": "Error Code Reference",
       "codes": {
         "CONVERSION_FAILED": "The conversion process failed. Try again or contact support with the error details.",
-        "FILE_TOO_LARGE": "Your file exceeds the 10 MB size limit. Try compressing it, splitting it into parts, or converting it with desktop software such as Calibre.",
+        "FILE_TOO_LARGE": "Your file exceeds the 4 MB size limit. Try compressing it, splitting it into parts, or converting it with desktop software such as Calibre.",
         "RATE_LIMIT": "Too many requests. The limit is 20 conversions per minute. Wait a moment and try again.",
         "DRM_PROTECTED": "The source file is DRM-protected. We cannot convert protected files.",
         "CORRUPT_INPUT": "The uploaded file is corrupted or invalid. Please check the source file."
@@ -228,7 +228,7 @@
     "step5Title": "Download result",
     "step5Desc": "After conversion completes, click the download button to save your file",
     "tipsTitle": "Tips",
-    "tip1": "Maximum file size supported: 10MB",
+    "tip1": "Maximum file size supported: 4MB",
     "tip2": "All files are automatically deleted after 1 hour to protect privacy",
     "tip3": "Drag-and-drop upload supported for convenience",
     "tip4": "For any questions, contact online customer service or view help documentation at any time",

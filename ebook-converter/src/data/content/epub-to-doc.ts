@@ -1,5 +1,5 @@
 export const slug = 'epub-to-doc';
-export const title = 'EPUB to DOC Converter — Legacy Word Format | BookConv';
+export const title = 'EPUB to DOC Converter — Legacy Word Format';
 export const metaDescription = 'Free EPUB to DOC converter. Extract text and formatting from any EPUB into legacy Word 97-2003 .doc format — no sign-up, works with enterprise systems that require old DOC files.';
 export const level = 'B' as const;
 export const wordCount = 820;
@@ -52,7 +52,7 @@ If nobody is specifically demanding DOC, use our EPUB to DOCX converter instead.
     },
     {
       heading: 'How to Convert EPUB to DOC',
-      body: `**1. Upload your EPUB.** Drag and drop, or click to browse. Free accounts handle files up to 10MB — that covers essentially any text ebook, since even a 900-page novel rarely exceeds 5MB. Only illustration-heavy books get close to the limit.
+      body: `**1. Upload your EPUB.** Drag and drop, or click to browse. Free accounts handle files up to 4MB — that covers essentially any text ebook, since even a 900-page novel rarely exceeds 5MB. Only illustration-heavy books get close to the limit.
 
 **2. Conversion runs automatically.** The EPUB's HTML structure is parsed, chapters are merged into a single document flow, heading tags become Word heading styles, and images get embedded. Most books finish in under 30 seconds.
 
@@ -146,7 +146,7 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
     { q: 'Can I edit the converted DOC file?', a: 'Yes, fully. It opens and edits in Microsoft Word, LibreOffice Writer, WPS Office, Google Docs, and Apple Pages, though modern Word will show a compatibility-mode notice.' },
     { q: 'Will images survive the conversion?', a: 'Standard raster images like JPG and PNG are extracted and embedded in the document. SVG vector graphics and images positioned with CSS may be simplified or repositioned since DOC has no equivalent layout model.' },
     { q: 'My EPUB will not convert — what is wrong?', a: 'The most common cause is DRM. Books purchased from Kobo, Google Play Books, or similar stores are encrypted and cannot be read by any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without issue.' },
-    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 10MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' },
+    { q: 'How many books can I convert at once?', a: 'Free accounts handle one file at a time, up to 4MB each — plenty for text ebooks, which are rarely above a few megabytes. Pro accounts add batch conversion and larger file limits for processing an entire library.' },
     { q: 'Why did my table or sidebar come out wrong?', a: 'DOC has no layout engine for CSS-positioned sidebars or nested tables, so they flatten into a single text flow. If precise layout matters, convert to DOCX or PDF instead, where those structures survive.' },
     { q: 'Should I convert to DOC or DOCX?', a: 'Almost always DOCX. It is smaller, more resilient, and holds far more formatting. Choose DOC only when a submission portal, grant system, or legacy Word install explicitly rejects DOCX — that is the one situation where the older format earns its keep.' }
   ]
@@ -200,7 +200,7 @@ Si nadie exige DOC específicamente, usa nuestro conversor de EPUB a DOCX. En se
       },
       {
         heading: 'Cómo convertir EPUB a DOC',
-        body: `**1. Sube tu EPUB.** Arrastra y suelta, o haz clic para explorar. Las cuentas gratuitas manejan archivos de hasta 10 MB, lo que cubre prácticamente cualquier libro de texto electrónico, ya que incluso una novela de 900 páginas rara vez supera los 5 MB. Solo los libros con muchas ilustraciones se acercan al límite.
+        body: `**1. Sube tu EPUB.** Arrastra y suelta, o haz clic para explorar. Las cuentas gratuitas manejan archivos de hasta 4 MB, lo que cubre prácticamente cualquier libro de texto electrónico, ya que incluso una novela de 900 páginas rara vez supera los 5 MB. Solo los libros con muchas ilustraciones se acercan al límite.
 
 **2. La conversión se ejecuta automáticamente.** Se analiza la estructura HTML del EPUB, los capítulos se fusionan en un flujo de documento único, las etiquetas de encabezado se convierten en estilos de encabezado de Word y las imágenes se incrustan. La mayoría de los libros terminan en menos de 30 segundos.
 
@@ -251,7 +251,7 @@ Nada de esto es una limitación del conversor. DOC es un formato de 1993 al que 
       { q: '¿Puedo editar el archivo DOC convertido?', a: 'Sí, totalmente. Se abre y edita en Microsoft Word, LibreOffice Writer, WPS Office, Google Docs y Apple Pages, aunque Word moderno mostrará un aviso de modo de compatibilidad.' },
       { q: '¿Sobreviven las imágenes a la conversión?', a: 'Las imágenes raster estándar como JPG y PNG se extraen y se incrustan en el documento. Los gráficos vectoriales SVG y las imágenes posicionadas con CSS pueden simplificarse o reposicionarse, ya que DOC no tiene un modelo de diseño equivalente.' },
       { q: 'Mi EPUB no se convierte, ¿qué pasa?', a: 'La causa más común es el DRM. Los libros comprados en Kobo, Google Play Books o tiendas similares están cifrados y ningún conversor puede leerlos, mientras que los archivos sin DRM de Project Gutenberg, autores independientes o tus propias exportaciones se convierten sin problema.' },
-      { q: '¿Cuántos libros puedo convertir a la vez?', a: 'Las cuentas gratuitas manejan un archivo a la vez, de hasta 10 MB cada uno, más que suficiente para libros de texto, que rara vez superan unos pocos megabytes. Las cuentas Pro añaden conversión por lotes y límites de archivo mayores para procesar una biblioteca completa.' }
+      { q: '¿Cuántos libros puedo convertir a la vez?', a: 'Las cuentas gratuitas manejan un archivo a la vez, de hasta 4 MB cada uno, más que suficiente para libros de texto, que rara vez superan unos pocos megabytes. Las cuentas Pro añaden conversión por lotes y límites de archivo mayores para procesar una biblioteca completa.' }
     ]
   }
 };

@@ -82,7 +82,7 @@ V1 写「Top20 仅 1 页」且「/convert/epub-to-zip 是唯一 Top20」。**实
 | 观察 | 含义 |
 |---|---|
 | `/convert/epub-to-lrf` pos 15.0（Top20 第 3）| **它不在 CONTENT_MAP ⇒ `dynamicParams=false` ⇒ 真 404**。position 好看 ≠ 页面存在 |
-| `/es/blog/azw3-vs-mobi` pos **13.7 是全站最佳** | **西语页排第一**，与项目记忆「/es 伪翻译遭 Spam Update」的认知**冲突**，需人工核实该页当前状态 |
+| `/es/blog/azw3-vs-mobi` pos **13.7 是全站最佳** | **西语页排第一**，与项目记忆「/es 内容信号遭 Spam Update」的认知**冲突**，需人工核实该页当前状态 |
 | 5 个 Top20 曝光合计仅 137 | pos 好 ≠ 量级够 |
 
 ## 四、🔴 重点核实：「52% Convert 页零曝光」

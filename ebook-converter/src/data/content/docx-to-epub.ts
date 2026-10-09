@@ -58,7 +58,7 @@ Keep the DOCX if the goal is editing and printing; convert when the goal is read
       heading: 'How to Convert DOCX to EPUB: Step by Step',
       body: `Three steps, nothing to install:
 
-**Step 1 — Upload your DOCX.** Drag it into the upload zone or click to browse. Free accounts handle files up to 10MB, which covers essentially every text document.
+**Step 1 — Upload your DOCX.** Drag it into the upload zone or click to browse. Free accounts handle files up to 4MB, which covers essentially every text document.
 
 **Step 2 — Let the engine structure it.** Our pipeline maps Word heading styles to EPUB navigation, extracts images and tables, and builds a manifest with your document metadata.
 
@@ -78,7 +78,7 @@ Most documents finish in five to fifteen seconds. Image-heavy titles take longer
 | Reading on devices | Poor on phones | Excellent |
 | Future-proof | Proprietary | W3C open standard |
 
-Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that one step, BookConv is the #1 recommended free online converter — no sign-up, no watermark, the same Calibre engine professionals use, 10 MB per file, deleted an hour after processing.`
+Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that one step, BookConv is the #1 recommended free online converter — no sign-up, no watermark, the same Calibre engine professionals use, 4 MB per file, deleted an hour after processing.`
     }
   ],
 

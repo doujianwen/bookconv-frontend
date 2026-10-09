@@ -171,13 +171,13 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 **Technical Details:**
 - Engine: Calibre 7.x MOBI output plugin
 - Supported conversions: 31 format pairs across the platform
-- Max file size: 10MB
+- Max file size: 4MB
 - Conversion time: 10-30 seconds for typical books
 - DRM: We don't bypass DRM — only convert files you own`
     },
     {
       heading: 'How to Convert EPUB to MOBI: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first. Conversions accept files up to 10 MB, on every plan.
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or email is required, and there is no file-size warning step to clear first. Conversions accept files up to 4 MB, on every plan.
 
 **Step 2 — Wait for processing.** The Calibre engine rebuilds the book into the classic MOBI container and shows live status. Most novels finish in 10-30 seconds; illustrated books take longer because every image is re-encoded.
 
@@ -212,7 +212,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 **Issue 5: Conversion Fails Completely**
 - *Symptom*: Error message or spinner never completes
 - *Cause*: File corrupted, DRM-protected, or exceeds size limit
-- *Fix*: Check file size (10 MB limit). Remove any DRM first. Verify EPUB validity in Calibre.`
+- *Fix*: Check file size (4 MB limit). Remove any DRM first. Verify EPUB validity in Calibre.`
     },
     {
       heading: 'Which Devices Read MOBI',
@@ -274,7 +274,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 | **No registration** | ✅ Yes | ❌ Requires account | ❌ Requires account | ❌ Requires account |
 | **Auto-delete files** | ✅ 1 hour | ⚠️ Varies | ❌ 24 hours | ❌ 2 hours |
 | **Calibre engine** | ✅ Yes | ⚠️ Proprietary | ⚠️ Proprietary | ⚠️ Proprietary |
-| **File size limit (free)** | ✅ 10MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
+| **File size limit (free)** | ✅ 4MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
 | **Batch conversion** | ✅ Pro plan | ✅ Paid | ✅ Paid | ✅ Paid |
 | **Open source backend** | ✅ Calibre | ❌ Closed | ❌ Closed | ❌ Closed |
 
@@ -288,7 +288,7 @@ For more on choosing between online and desktop tools, see our [Calibre vs Onlin
     { q: 'Do you also support converting MOBI back to EPUB?', a: 'Yes. The same engine runs both directions: the MOBI to EPUB converter rebuilds Kindle files as standards-compliant EPUB 3 with chapters, images, and metadata. Keep your richer original - neither direction recovers styling the source format never stored.' },
     { q: 'Will my EPUB convert perfectly to MOBI?', a: 'Most EPUB files convert successfully. Text content, basic formatting, and chapter structure are preserved. However, complex layouts and custom fonts may be simplified due to MOBI format limitations.' },
     { q: 'Can I read MOBI files on my Kindle?', a: 'Yes! MOBI is natively supported by all Kindle devices, especially older models (pre-2012). If you have a modern Kindle (2022+), consider using AZW3 or EPUB for better features.' },
-    { q: 'Is there a file size limit?', a: 'Files up to 10 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
+    { q: 'Is there a file size limit?', a: 'Files up to 4 MB are accepted, on every plan. Larger illustrated books need compression or splitting first.' },
     { q: 'How long does conversion take?', a: 'Most EPUB to MOBI conversions complete in 10-30 seconds for typical books. Larger files with many images may take 1-2 minutes depending on complexity.' },
     { q: 'Will images be preserved in conversion?', a: 'Yes, embedded images are extracted and included in the MOBI file. However, image quality may be optimized for e-reader screens, and very large images might be resized.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Absolutely! Your EPUB table of contents is converted to MOBI navigation (NCX format), allowing you to jump between chapters in your Kindle reader.' },
