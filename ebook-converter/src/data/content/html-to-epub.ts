@@ -12,6 +12,17 @@ export const content = {
 
   sections: [
     {
+      heading: 'Converting in Reverse: EPUB to HTML',
+      body: `This page packages web content into an ebook. Plenty of people need the opposite, and it is the more common job of the two.
+
+Going EPUB to HTML makes sense when you want to put a book back on the web, migrate an EPUB site to a CMS, or feed chapters into a documentation pipeline. An EPUB is a ZIP of XHTML and CSS, so extracting readable HTML out of one is mostly unpacking rather than rebuilding — but the navigation document has to be turned into something a browser understands, and images have to be repointed at real paths instead of living inside the archive.
+
+The dedicated [EPUB to HTML converter](/convert/epub-to-html) runs the same Calibre engine in the opposite direction: it unpacks the container, writes each chapter out as a standalone page with a linked stylesheet, rebuilds the table of contents as an index page, and extracts the images into a folder you can host.
+
+One direction caveat worth knowing: HTML to EPUB adds reading affordances the web does not have — reflow, saved position, bookmarks. Going back to HTML gives you portable content, not those features. If you only need the text, EPUB to TXT is the lighter option.
+`
+    },
+    {
       heading: 'What is HTML Format?',
       body: `HTML is the markup that every web page is made of. Headings, paragraphs, lists, tables, images, links — each one is a tag that says what a piece of content is, while CSS handles how it looks.
 
@@ -134,7 +145,8 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'What happens to buttons, forms, and JavaScript?', a: 'They do not survive as interactive elements. EPUB readers deliberately restrict scripting, so dynamic content is flattened into its static equivalent or removed.' },
     { q: 'How does the table of contents get built?', a: 'From your heading hierarchy. If your document uses real heading tags in a sensible order, you will get clean chapter navigation. Pages that fake headings with styled text will produce a flat, single-entry TOC.' },
     { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 10MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
-    { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' }
+    { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' },
+    { q: 'Can you also convert EPUB back to HTML?', a: 'Yes. The [EPUB to HTML converter](/convert/epub-to-html) unpacks the book into standalone chapter pages with a linked stylesheet, rebuilds the table of contents as an index, and extracts images into a hostable folder.' }
   ]
 ,
 

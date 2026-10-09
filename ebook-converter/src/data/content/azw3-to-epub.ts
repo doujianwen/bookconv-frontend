@@ -12,6 +12,17 @@ export const content = {
 
   sections: [
     {
+      heading: 'Converting in Reverse: EPUB to AZW3',
+      body: `This page converts AZW3 into EPUB so the book can leave the Kindle ecosystem. The opposite trip happens constantly too, and it solves a different problem.
+
+Going EPUB to AZW3 is what you want when a book is headed back onto a modern Kindle. EPUB is the universal reading format; AZW3 (KF8) is the one Kindle treats as native, with embedded fonts, refined CSS, and better handling of fixed-layout pages and tables. Amazon stopped accepting MOBI uploads in 2022, so AZW3 is what current Kindle tooling expects.
+
+The dedicated [EPUB to AZW3 converter](/convert/epub-to-azw3) runs the same Calibre engine in the opposite direction: it takes your reflowable EPUB, maps the XHTML chapters onto the Kindle container, embeds fonts where licensing allows, and rebuilds the navigation so Send to Kindle and USB sideloading both behave.
+
+One rule of thumb: EPUB is the safer master copy and AZW3 is the delivery format for a specific device. Convert back to AZW3 when the destination is a current Kindle; keep the EPUB as the archive.
+`
+    },
+    {
       heading: 'What AZW3 Is and What It Replaced',
       body: 'AZW3 (Amazon Kindle Format 8) is an ebook format launched by Amazon in 2011 to replace the aging MOBI format. It supports better typography, font embedding, CSS styling, and table rendering — making it the native format for Kindle Paperwhite, Kindle Oasis, and other modern Kindle devices. However, AZW3 biggest problem is that it only works within Amazon ecosystem. If you want to read AZW3 files on Apple Books, Google Play Books, Kobo, or any third-party reader, you need to convert it to the universal EPUB format.'
     },
@@ -85,7 +96,8 @@ If anything looks wrong, the usual cause is a malformed source file rather than 
     { q: 'Which is better: AZW3 or EPUB?', a: 'EPUB is more versatile and open standard. AZW3 is optimized for Kindle devices with better typography. Choose based on your reading platform.' },
     { q: 'How long does AZW3 to EPUB conversion take?', a: 'For most AZW3 files under 50 pages, conversion takes 10-30 seconds. Complex files with numerous images may take 1-2 minutes.' },
     { q: 'Does conversion preserve bookmarks?', a: 'Yes. If your AZW3 contains bookmarks or chapter markers, these are converted to EPUB navigation entries (NCX/NAV), allowing chapter jumping in your reader.' },
-    { q: 'Can I convert a DRM-protected AZW3 file?', a: 'No. AZW3 files purchased from the Kindle Store carry Amazon DRM that no converter can open. For books you own, desktop Calibre with the DeDRM plugin is the common route, but that is outside this browser tool.' }
+    { q: 'Can I convert a DRM-protected AZW3 file?', a: 'No. AZW3 files purchased from the Kindle Store carry Amazon DRM that no converter can open. For books you own, desktop Calibre with the DeDRM plugin is the common route, but that is outside this browser tool.' },
+    { q: 'Can you also convert EPUB to AZW3?', a: 'Yes. The [EPUB to AZW3 converter](/convert/epub-to-azw3) runs the same engine in reverse, embedding fonts and rebuilding Kindle navigation so the file behaves natively on modern Kindle devices.' }
   ]
 ,
 

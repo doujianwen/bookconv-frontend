@@ -12,6 +12,17 @@ export const content = {
 
   sections: [
     {
+      heading: 'Converting in Reverse: EPUB to DOCX',
+      body: `This page takes a Word document and turns it into a book. The reverse direction is the one writers hit every time they want their ebook back as an editable manuscript.
+
+Going EPUB to DOCX makes sense when you have published or drafted a book and now need to revise it, hand it to an editor who works in Word, or repackage it for print. EPUB stores chapters as XHTML inside a ZIP, which reads beautifully on a Kobo and edits terribly in Word. DOCX puts the same text into a structure Word, LibreOffice Writer, Google Docs, and Pages all understand.
+
+The dedicated [EPUB to DOCX converter](/convert/epub-to-doc) runs the same Calibre engine in the opposite direction: it unpacks the EPUB, flattens the reflowable chapters into a single continuous document, converts headings into real Word heading styles so the navigation pane works, and inlines the images.
+
+A practical caveat for the round trip: neither direction recovers what its format never stored. EPUB drops fixed page layout, so converting back to DOCX gives you clean flowing text, not the exact pages a print edition would have used.
+`
+    },
+    {
       heading: 'Why Convert DOCX to EPUB?',
       body: 'Word documents (DOCX) are the most common tool for creating ebooks, but they are not true ebook formats. Converting to EPUB enables: Cross-Platform Reading — read on any device without Word. Reflowable Text — adjusts to screen size automatically. Smaller File Size — EPUB uses ZIP compression. Better Navigation — table of contents with clickable links.'
     },
@@ -77,7 +88,8 @@ Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that on
     { q: 'Does conversion preserve Word comments?', a: 'Comments are converted to EPUB annotations if supported by your reader. Some older e-readers may not display annotations.' },
     { q: 'How long does DOCX to EPUB conversion take?', a: 'For documents under 100 pages, conversion typically takes 5-15 seconds. Larger documents with many images may take 1-2 minutes.' },
     { q: 'Can I edit the converted EPUB?', a: 'Yes. EPUB files can be edited with any EPUB editor like Sigil, Calibre Editor, or online tools. The converted file maintains clean, valid structure.' },
-    { q: 'Will my Word heading styles become the table of contents?', a: 'Yes. The converter reads your Heading 1 and Heading 2 styles to build EPUB navigation. Documents that fake headings with big bold text get a flat table of contents, so apply real styles for the best result.' }
+    { q: 'Will my Word heading styles become the table of contents?', a: 'Yes. The converter reads your Heading 1 and Heading 2 styles to build EPUB navigation. Documents that fake headings with big bold text get a flat table of contents, so apply real styles for the best result.' },
+    { q: 'Can you also convert EPUB back to DOCX?', a: 'Yes. The [EPUB to DOCX converter](/convert/epub-to-doc) unpacks the book, flattens the chapters into one document, and maps headings to real Word heading styles so the navigation pane works.' }
   ]
 ,
 
