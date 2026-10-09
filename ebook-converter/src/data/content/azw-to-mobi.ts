@@ -19,6 +19,23 @@ A few years later Amazon moved on to AZW3 (Kindle Format 8), a much richer forma
 
 The practical upshot: if you have an old .azw that is DRM-free, converting it to MOBI is often close to a repackaging exercise, because the two formats share the same underlying structure.`
     },
+
+    {
+      heading: 'Convert AZW to MOBI from the Command Line (Calibre)',
+      body: `If you are converting many files at once or prefer working from a terminal, Calibre's ebook-convert command does the same AZW → MOBI transformation that this web tool performs — just without the browser round-trip.
+
+Install Calibre (free, cross-platform) first, then run:
+
+ebook-convert input.azw output.mobi
+
+That single line handles the full pipeline: it unpacks the legacy AZW container, rebuilds the content, and packages it as a plain MOBI file that older Kindles and a wide range of readers can open. For batch jobs, wrap it in a loop:
+
+for f in *.azw; do ebook-convert "$f" "\${f%.azw}.mobi"; done
+
+Key Calibre flags you may find useful: --enable-heuristics repairs minor formatting issues automatically, and --extra-css lets you inject custom styles. Older AZW files were sometimes bound to a device PID; strip that first with the appropriate tool so Calibre can read the book.
+
+The web converter above is better for one-off conversions where you do not want to install software. Calibre is the right choice when you have dozens of files, need consistent batch settings, or want to automate the conversion as part of a larger ebook workflow.`
+    },
     {
       heading: 'What MOBI Is and Why Older Kindles Need It',
       body: `MOBI is the foundational Kindle format. Every Kindle ever made reads it, from the 2007 original to the latest Paperwhite. It is simple, predictable, and maximally compatible.

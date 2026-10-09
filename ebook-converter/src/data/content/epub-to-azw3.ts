@@ -21,6 +21,17 @@ Use the full guide when the decision is not made yet: it walks through when AZW3
 
 A quick heuristic: one known book and a known target device - this tool. A whole library, an unfamiliar Kindle model, or a file that keeps failing - the guide first, then the tool.`
     },
+
+    {
+      heading: 'Converting in Reverse: Azw3 To Epub',
+      body: `This page covers Epub To Azw3, but the reverse direction answers a very different user need — and it is just as common.
+
+Going azw3 to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+
+The dedicated [Azw3 To Epub converter](/convert/azw3-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+
+A practical rule: convert Epub To Azw3 when you want the newer Kindle Format 8 features (embedded fonts, CSS3); convert Azw3 To Epub when you have a specific destination that requires an open, universally readable file. Keep both formats if you are unsure which device or use case you will need next.`
+    },
     {
       heading: 'About EPUB: What AZW3 Conversion Gains and Costs',
       body: `EPUB (Electronic Publication) is an open ebook standard maintained by the W3C, currently at version 3.3 (released 2023-05). It is a reflowable format based on XHTML/CSS, meaning text automatically adjusts to screen size.

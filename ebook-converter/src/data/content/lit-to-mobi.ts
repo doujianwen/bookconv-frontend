@@ -19,6 +19,23 @@ Technically LIT is a compressed HTML container: HTML pages, a small image set, a
 
 The catch is rights management. Many commercial LIT files carried Microsoft's DRM, and those encrypted files cannot be opened or converted by any tool today — Microsoft retired the activation servers years ago. This converter works only on DRM-free LIT files: personal exports, public-domain titles, and books you created yourself.`
     },
+
+    {
+      heading: 'Convert LIT to MOBI from the Command Line (Calibre)',
+      body: `If you are converting many files at once or prefer working from a terminal, Calibre's ebook-convert command does the same LIT → MOBI transformation that this web tool performs — just without the browser round-trip.
+
+Install Calibre (free, cross-platform) first, then run:
+
+ebook-convert input.lit output.mobi
+
+That single line handles the full pipeline: it unpacks the LIT container, rebuilds the HTML/CSS content, and packages everything as a MOBI file that Kindle devices and a wide range of readers can open. For batch jobs, wrap it in a loop:
+
+for f in *.lit; do ebook-convert "$f" "\${f%.lit}.mobi"; done
+
+Key Calibre flags you may find useful: --enable-heuristics repairs minor formatting issues automatically, and --extra-css lets you inject custom styles. Note that LIT files were frequently DRM-protected; remove the protection with the appropriate tool first, or Calibre will not be able to read the book.
+
+The web converter above is better for one-off conversions where you do not want to install software. Calibre is the right choice when you have dozens of files, need consistent batch settings, or want to automate the conversion as part of a larger ebook workflow.`
+    },
     {
       heading: 'What MOBI Is and Why It Replaces DRM-Bound LIT',
       body: `MOBI is the format Amazon built the original Kindle around. It is a simple, widely compatible container that every Kindle ever made can open, including the 2007 original.
