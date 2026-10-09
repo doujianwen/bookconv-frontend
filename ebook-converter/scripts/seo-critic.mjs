@@ -330,4 +330,10 @@ function main() {
   process.exit(critical.length > 0 ? 1 : 0);
 }
 
-main();
+try {
+  main();
+} catch (err) {
+  console.error('[seo-critic] ❌ 门禁脚本自身异常（判据无法执行，降级 UNKNOWN）：');
+  console.error(err);
+  process.exit(2);
+}

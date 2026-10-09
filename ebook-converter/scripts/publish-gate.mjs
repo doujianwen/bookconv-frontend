@@ -100,7 +100,31 @@ for (const layer of layers) {
     stdio: 'inherit',
     env,
   });
-  const code = r.status ?? 1;
+  // 区分「子进程正常退出（status 为数字）」与「门禁自身故障」：
+  //   - r.status === null：进程崩溃 / 无法启动（Windows 上 Node fork 自身偶发 EBUSY）；
+  //   - r.signal 非空：子进程被子信号杀死；
+  //   - r.error 存在：spawn 本身出错（如 EBUSY）。
+  // 这些都属于「门禁判据无法执行」，绝不能伪装成「内容有 BLOCK」误导人以为
+  // 代码有问题。纪律：判据无法执行降级为 UNKNOWN（exit 2），fail-closed 拦截，
+  // 但诚实标注根因，便于定位，而非逼人去修根本没问题的代码。
+  if (r.status === null || r.signal || r.error) {
+    const why = r.error
+      ? `spawn 失败（${r.error.code}）`
+      : r.signal
+        ? `被子信号 ${r.signal} 杀死`
+        : '进程崩溃（status=null）';
+    console.error(`[publish-gate] ❌ ${layer.name} 门禁子进程故障：${why}，判据无法执行。`);
+    console.error(`[publish-gate]    ⇒ 降级为 UNKNOWN（exit 2），fail-closed 拦截。`);
+    console.error(`[publish-gate]    ⇒ 这是门禁自身故障，不是内容 BLOCK；请确认 Node 环境正常后重试。`);
+    process.exit(2);
+  }
+  const code = r.status;
+  // 子脚本显式报告「判据无法执行」（main 包裹 try/catch 后 process.exit(2)）
+  // 也走 UNKNOWN 分支，与 spawn 故障一视同仁。
+  if (code === 2) {
+    console.error(`[publish-gate] ⚠️ ${layer.name} 报告判据无法执行（exit 2，UNKNOWN）。`);
+    process.exit(2);
+  }
   if (code !== 0) {
     failed = true;
     console.log(`❌ ${layer.name} 未放行（exit ${code}）\n`);
