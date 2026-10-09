@@ -93,6 +93,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       description,
       images: [`https://www.bookconv.com/og-image.svg`],
     },
+    robots: contentData?.noindex ? "noindex, follow" : undefined,
   }
 }
 

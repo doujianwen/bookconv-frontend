@@ -52,6 +52,8 @@ export interface ConversionContentModule extends ConversionContentBody {
   metaDescription?: string;
   level: string;
   wordCount: number;
+  /** When true, the page is excluded from sitemap and emits robots=noindex. Used for zero-demand B-class pages. */
+  noindex?: boolean;
   content: ConversionContentBody;
   /** The three translated pages (epub-to-doc, epub-to-txt, lit-to-epub). */
   es?: ConversionContentBody & {

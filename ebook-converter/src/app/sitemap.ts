@@ -20,7 +20,7 @@ const COMPAT_LASTMOD = '2026-08-20'
 // in the convert route uses the same map). Using CONTENT_MAP keys directly
 // avoids the single-hyphen CONVERSION_MAP bug where "epub-docx" was turned
 // into the wrong slug "epub-to-docx" instead of the real "epub-to-word".
-const CONVERSION_PAGES = Object.keys(CONTENT_MAP)
+const CONVERSION_PAGES = Object.keys(CONTENT_MAP).filter((key) => !CONTENT_MAP[key].noindex)
 
 const BLOG_POSTS = getAllPosts()
 // Exclude noindex posts (e.g. dev/internal docs) from the sitemap so they
