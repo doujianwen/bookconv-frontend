@@ -1106,6 +1106,19 @@
           "result": "2026-10-05 三合一首跑完成（此前 7 天未跑，因所谓\"已挂自动化\"实为未挂）。VI：Google -27.5% / Bing Web +26.1%（两者均越门槛=反向成立）/ Bing AI -10.0%（未达门槛，不参与判定）。09:00 收到 10-05 新导出后 Bing AI 由 +147.8% 修正为 -10.0%（高位盘整），已同步修正主报告。四份报告已出。同时补挂自动化 13300356(周一07:30 ACTIVE)。顺带修 daily_vi.py 方向性缺陷并加门禁 test:vi",
           "note": "Bing AI 10-05 新导出补齐 AIPageStats/AISearchQueries；仍缺 CountryReport（地域）⇒ 下次导出务必补。Citation Share 本次 182/182 有值但 Top10 中 5 个 Citations<30，排序须按绝对量。 09:15 第二批三份传统报表已核验：🟢点击三份全=73零差异，曝光 2284/1692/1177（页面74.1%、关键词51.5%为子集）。🟢convert 页 0.3%→1.2% 修正，位置全 Top10(3.0-8.2)但曝光仅21 ⇒ 归因改为「曝光量/索引覆盖」非排名。🟢Bing 675词 99.9% Top10 vs Google 21词全部44-96，分布几乎不重叠。🟢地域 us40.3%/ww32.1%（ww颗粒度不足）。🚫 AI 侧无对等地域报表（09:04 用户纠正 + 归档复核：唯一那份 134 字节/17 展示、被「网络」过滤的切片）⇒ 不列待补项。 🔴 09:35 结论红队审计（10 项独立重算）：抓到 1 处硬错（「Google 21 词全部 44-96」实为 18/21）+ 1 处数字错（Share 小样本 5→6）。4 个结论降级：①「675 词 99.9% Top10」权重下调（97.9% 词曝光<5 次，是尾部小样本必然）②convert「位置全 Top10」归因作废（曝光中位 2-4，且 25/31 页缺席）③AI convert 18.4% 高度集中（Top2 占 96%）④us 40.3% 低估（ww 32.1% 很可能是未归类美国）。🟢 敏感性测试：Google 单日归零符号均未翻转⇒方向判定稳，但幅度精度低只作方向。详见 数据分析/结论红队审计-2026-10-05.md",
           "statusAudited": "2026-10-07"
+        },
+        {
+          "id": "M9-8",
+          "action": "GA4 巡检迁移 hermes：3 天对拍（10-11~10-13）→ cutover",
+          "detail": "迁移背景：GA4 每日巡检 happy path 已 100% 脚本化，从 WorkBuddy 自动化 5fc7733d（每日烧一个 AI 会话）迁至 hermes no-agent cron 5deefeb00084（每日 07:30 纯脚本零额度）。wrapper=C:/Users/29537/AppData/Local/hermes/scripts/run-ga-daily.py（自产门禁 JSON，解析失败显式 FAIL 不静默）。对拍期安排：① 10-11/10-12/10-13 每日 WorkBuddy 5fc7733d 09:00 照常巡检发飞书，并读 _wb_tmp/ga-hermes-daily.log 最后一个对拍条目逐项比对（数据日期 + 六指标 + 三门禁结论方向；syntax 文件数差 1-3 属时点差可容忍），飞书末尾追加「对拍(hermes 07:30): 一致✅/不一致⚠️」；② 3 天全一致后经用户确认切换：创建 _wb_tmp/ga-hermes-send.flag（wrapper 转发送模式）+ 将 5fc7733d 置 PAUSED 保留作异常备份；③ 监控兜底：飞书连续 2 天未收到 → 先查 hermes cron status（gateway 存活是唯一依赖）。",
+          "owner": "S+A",
+          "deliverable": "_wb_tmp/ga-hermes-daily.log（每日对拍条目）+ 飞书每日对拍结论行 + HERMES.md 迁移章节（已落档）",
+          "accept": "3 天对拍结论全「一致」方可 cutover；任一天「不一致」即暂停切换并排查根因，不得带病切换；cutover 后次日飞书由 hermes 侧发出且内容与对拍期格式一致",
+          "due": "2026-10-13",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "note": "迁移决策 2026-10-10：分层原则=确定性脚本迁 hermes、判断型任务（22:00 夜间同步需 AI 判断 stage 范围、21:00 热文监测依赖 tabbit）留 WorkBuddy。对拍纪律：不裸切，flag 文件控制双模式（无 flag=--no-send 落日志；有 flag=发飞书），cutover 零改脚本。"
         }
       ]
     },

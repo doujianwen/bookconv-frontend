@@ -459,3 +459,26 @@ PY
 - ❌ 把「现象真实」直接当「某归因框架成立」的证据。
 - ❌ 引用自己的上轮摘要当数据（尤其排名/计数/趋势），必须重拉原始 + 标样本量。
 - ❌ 诊断「系统坏了」不反向验证（注入故障实跑）就下 P0 结论。
+
+---
+
+## GA4 每日巡检迁移 hermes（2026-10-10）
+
+### Job
+- cron `5deefeb00084` [active]，`30 7 * * *`，no-agent 纯脚本，workdir=`E:\一人公司\电子书格式转换站\ebook-converter`，deliver=local
+- 脚本：`AppData\Local\hermes\scripts\run-ga-daily.py`（活动 home，非 `~/.hermes`）
+- 流程：fetch-ga4-daily.mjs --write（GA4 API 实时，昨日数据，带 1 次重试）→ syntax-sweep → geo-audit-guide --no-online → ga-inspection（发飞书，[bookconv] 关键词）
+- 验证：手动实跑 exit 0；`cron status` gateway 存活（PID 2300）；`cron run ga-daily-inspection` → "Ran now: succeeded"
+
+### 设计要点（坑位）
+- 🔴 **python 直调 node.exe 绝对路径**，不用 .sh（绕开 WSL bash exit-127 事故同款）；node 候选：managed 22.22.2-6 → 系统 node → PATH
+- 🔴 **wrapper 自产门禁 JSON**（ga-syntax.json / ga-geo.json）：从脚本 stdout 解析，解析失败=写 ok:false 显式 FAIL，绝不静默当 0 文件（假门禁纪律）
+- 🔴 **对拍期 flag 控制**：`_wb_tmp/ga-hermes-send.flag` 不存在=对拍模式（ga-inspection --no-send，报告追加 `_wb_tmp/ga-hermes-daily.log`）；创建 flag 即转发送模式，无需改脚本
+- 对拍比对方：WorkBuddy 自动化 `5fc7733d`（每日 09:00，读对拍日志末条逐项比对，飞书上报"对拍: 一致✅/不一致⚠️"）
+
+### cutover 流程（对拍 3 天全一致后）
+1. 创建 `_wb_tmp/ga-hermes-send.flag`（hermes 侧转发送）
+2. Pause WorkBuddy 自动化 5fc7733d（**保留不删**，gateway 死亡时的手动备份：重启用它跑一轮）
+3. 次日确认飞书只收到一条 07:30 hermes 版巡检
+- ⚠️ hermes 侧依赖 gateway 存活（同所有 cron job）：WorkBuddy 后台拉起的 gateway 随会话结束可能死亡，靠登录 VBS 自起；飞书巡检**连续 2 天没收到**=先查 `hermes cron status`
+- ⚠️ 对拍期 syntax 文件数允许 1-3 差异（07:30 vs 09:00 时点差），门禁结论方向必须一致
