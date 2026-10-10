@@ -34,12 +34,14 @@ const PROJ_ROOT = resolve(__dirname, '..');   // ebook-converter/（项目根）
 //   ② 拿不到时才回退到本地 git；回退拿不到（EBUSY）必须 exit(2) 明确报「不可判定」，
 //      绝不静默当成「无变更」——静默放行等于把门禁关掉。
 function slugsFromEnv() {
-  const raw = process.env.GATE_SLUGS;
-  if (!raw || !raw.trim()) return null;
+  // 区分「钩子未提供 GATE_SLUGS」（回退本地 git）与「钩子明确给了空串」
+  // （= 钩子用 sh-git 权威判定「本次无博文变更」，直接采信，绝不能回退——
+  //   回退会在 Windows 上 spawnSync git EBUSY → exit 2，误拦纯文档/配置 push）。
+  // 修复前：空串与未提供不可区分，.gitignore/docs-only push 被门禁自身故障拦死。
+  if (!('GATE_SLUGS' in process.env)) return null;
   const SKIP = new Set(['index', 'types', 'rss']);
-  const list = raw.split(',').map((s) => s.trim()).filter(Boolean)
+  return (process.env.GATE_SLUGS || '').split(',').map((s) => s.trim()).filter(Boolean)
     .filter((s) => !SKIP.has(s));
-  return list.length ? list : null;
 }
 
 function changedBlogSlugs() {
