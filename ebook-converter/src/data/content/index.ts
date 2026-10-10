@@ -36,6 +36,10 @@ export interface ConversionContentBody {
   hero?: { title?: string; subtitle?: string };
   sections?: Array<{ heading: string; body: string }>;
   faq?: Array<{ q: string; a: string }>;
+  /** Structured format facts rendered as a fact-grid near the top of the page (GEO / AI reference). */
+  keyFacts?: Array<{ label: string; value: string }>;
+  /** 3–5 high-signal bullet points surfaced by AI engines as the "answer" (M13-10 + M16-1). */
+  keyTakeaways?: string[];
 }
 
 /**

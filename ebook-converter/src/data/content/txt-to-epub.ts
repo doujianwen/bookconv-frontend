@@ -9,6 +9,20 @@ export const content = {
     title: 'TXT to EPUB - Dress Plain Text in Ebook Clothing',
     subtitle: 'Free TXT to EPUB converter. No sign-up — turn plain text into structured ebooks with table of contents and metadata.'
   },
+  keyFacts: [
+    { label: 'Full name', value: 'Plain Text' },
+    { label: 'Extension', value: '.txt' },
+    { label: 'MIME type', value: 'text/plain' },
+    { label: 'Developer', value: 'Universal (no single developer)' },
+    { label: 'Initial release', value: '1960s (early computing)' },
+  ],
+  keyTakeaways: [
+    'Plain text files contain no formatting or structure, but EPUB conversion adds chapters, metadata, and navigation.',
+    'Calibre detects paragraph breaks and optional chapter markers in TXT files to create a structured EPUB with TOC.',
+    'TXT to EPUB is ideal for manuscripts, poems, or any text archive you want to read on an e-reader with proper pagination.',
+    'Use the --chapter flag in Calibre to define custom regex patterns for detecting chapter boundaries in plain text.',
+    'Encoding matters: specify --encoding (UTF-8, ASCII, GBK) if your text file uses a non-standard character set.',
+  ],
 
   sections: [
     {

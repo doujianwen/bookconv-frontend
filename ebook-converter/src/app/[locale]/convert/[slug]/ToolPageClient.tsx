@@ -20,10 +20,14 @@ import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
+import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
+import { KeyTakeawaysSection } from "@/components/tools/KeyTakeawaysSection"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
   faq?: Array<{ q: string; a: string }>
+  keyFacts?: Array<{ label: string; value: string }>
+  keyTakeaways?: string[]
 }
 interface ToolPageClientProps {
   source: string
@@ -211,6 +215,14 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         </div>
         {/* Trust proofs above the fold — P0: surface privacy/quality promise at top for GEO */}
         <TrustBar />
+        {/* M16-1: Key Facts — format metadata for AI/SEO extraction */}
+        {contentData?.keyFacts && contentData.keyFacts.length > 0 && (
+          <KeyFactsSection keyFacts={contentData.keyFacts} />
+        )}
+        {/* M13-10: Key Takeaways — high-signal bullet points for AI answer extraction */}
+        {contentData?.keyTakeaways && contentData.keyTakeaways.length >= 3 && (
+          <KeyTakeawaysSection keyTakeaways={contentData.keyTakeaways} />
+        )}
         <div className="space-y-4">
           <FileDropZone
             onFileSelect={handleFileSelect}

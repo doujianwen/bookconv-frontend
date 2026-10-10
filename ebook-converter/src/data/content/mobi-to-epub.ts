@@ -9,6 +9,20 @@ export const content = {
     title: 'Convert MOBI to EPUB Free — Read Your Books on Any Device',
     subtitle: 'Free MOBI to EPUB converter. No sign-up, no watermarks — keeps your chapters, images, and metadata intact. Convert MOBI to EPUB in seconds.'
   },
+  keyFacts: [
+    { label: 'Full name', value: 'Mobipocket' },
+    { label: 'Extension', value: '.mobi' },
+    { label: 'MIME type', value: 'application/x-mobipocket-ebook' },
+    { label: 'Developer', value: 'Mobipocket S.A. / Amazon' },
+    { label: 'Initial release', value: '1998' },
+  ],
+  keyTakeaways: [
+    'MOBI is a legacy Kindle format; EPUB is the modern open standard supported by all e-readers except older Kindles.',
+    'Converting MOBI to EPUB unlocks cross-platform reading on Apple Books, Kobo, Nook, Google Play Books, and Android apps.',
+    'EPUB preserves better typography with CSS styling, embedded fonts, and flexible layouts that MOBI cannot support.',
+    'Our converter uses the Calibre engine to extract text, images, and chapter structure from MOBI and rebuild them as EPUB 3.',
+    'Keep your original MOBI file as a backup; conversion is one-way and some MOBI formatting will not survive the process.',
+  ],
 
   sections: [
     {

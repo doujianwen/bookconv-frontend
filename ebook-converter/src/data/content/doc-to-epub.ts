@@ -9,6 +9,20 @@ export const content = {
     title: 'DOC to EPUB - Bring Old Word Files Back to Life',
     subtitle: 'Free DOC to EPUB converter. No sign-up — bring legacy Word .doc files back to life as ebooks for any reader.'
   },
+  keyFacts: [
+    { label: 'Full name', value: 'Microsoft Word Document' },
+    { label: 'Extension', value: '.doc' },
+    { label: 'MIME type', value: 'application/msword' },
+    { label: 'Developer', value: 'Microsoft Corporation' },
+    { label: 'Initial release', value: '1983' },
+  ],
+  keyTakeaways: [
+    'Legacy .doc files from old Word versions can be converted to EPUB for reading on modern e-readers and apps.',
+    'The Calibre engine parses DOC structure including headings, paragraphs, images, and tables into reflowable EPUB 3.',
+    'Converting DOC to EPUB gives you chapter navigation, semantic markup, and compatibility with all major e-readers.',
+    'For batch processing multiple DOC files, use Calibre command line with --chapter and --encoding flags for best results.',
+    'Scanned or image-based DOC files may need OCR enabled; plain text DOCs convert cleanly without additional steps.',
+  ],
 
   sections: [
     {
