@@ -49,7 +49,7 @@ const FAQ = [
   },
   {
     q: "What is the maximum file size per file?",
-    a: "Each file in a batch can be up to 10 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
+    a: "Each file in a batch can be up to 4 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
   },
   {
     q: "What if one file in my batch fails?",

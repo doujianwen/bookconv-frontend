@@ -112,9 +112,9 @@ function defaultFaqsFor(source: string, target: string): FAQItem[] {
   const s = source.toUpperCase();
   const t = target.toUpperCase();
   return [
-    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 10 MB limit per file.` },
+    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 4 MB limit per file.` },
     { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${s} and ${t} format capabilities. The result is optimized for readability on your target device.` },
-    { question: 'What is the file size limit?', answer: 'Every plan accepts files up to 10 MB. Pro adds batch conversion, which lets you process several books in a single upload.' },
+    { question: 'What is the file size limit?', answer: 'Every plan accepts files up to 4 MB. Pro adds batch conversion, which lets you process several books in a single upload.' },
     { question: 'Can I batch convert multiple files?', answer: 'Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.' },
   ];
 }

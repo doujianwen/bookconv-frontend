@@ -36,7 +36,7 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'one_time',
     features: [
-      'Up to 10MB file size',
+      'Up to 4MB file size',
       'All standard formats',
       'No watermark',
     ],
