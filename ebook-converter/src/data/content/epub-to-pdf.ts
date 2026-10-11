@@ -10,6 +10,14 @@ export const content = {
     subtitle: 'Free EPUB to PDF converter. No sign-up — turn reflowable ebooks into print-ready PDFs for sharing and citation.'
   },
 
+  keyTakeaways: [
+    'EPUB reflows to fit any screen, but PDF locks content onto fixed pages — use EPUB-to-PDF when the layout must survive printing or sharing.',
+    'The conversion preserves fonts, embedded images, page numbers, and metadata (title, author, ISBN) so the PDF looks identical on every device.',
+    'Most text-only books finish in 15-45 seconds; heavily illustrated titles can take 1-3 minutes.',
+    'PDF is the standard for academic citation, formal submissions, and long-term archival (PDF/A, ISO 19005) — use EPUB for daily reading.',
+    'If you need the reverse direction, the PDF-to-EPUB converter extracts the text layer and rebuilds reflowable chapters where the source has real text.'
+  ],
+
   sections: [
     {
       heading: 'Converting in Reverse: PDF to EPUB',

@@ -2,13 +2,21 @@ export const slug = 'epub-to-zip';
 export const title = 'Free EPUB to ZIP Converter — Extract XHTML, CSS & Images in Seconds';
 export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS, images and fonts from any e-book. No sign-up, no re-encoding, byte-exact copy, your file stays private.';
 export const level = 'A' as const;
-export const wordCount = 530;
+export const wordCount = 590;
 
 export const content = {
   hero: {
     title: 'Convert EPUB to ZIP Free — Unlock the Files Inside Your E-book',
     subtitle: 'Free EPUB to ZIP converter. No sign-up — extract the raw XHTML, CSS, images, and fonts from any e-book in seconds. Your file is never stored.'
   },
+
+  keyTakeaways: [
+    'EPUB files are ZIP archives in disguise — converting EPUB to ZIP is a byte-exact copy, not a format transformation.',
+    'The ZIP contains XHTML chapters, CSS stylesheets, embedded images, and OPF metadata files wired by META-INF/container.xml.',
+    'Use EPUB to ZIP when you need to extract reusable assets (cover images, fonts, CSS) for presentations or redesigns.',
+    'The conversion takes seconds, requires no software, and works on Windows, macOS, and Linux alike.',
+    'Repack the ZIP back into a valid EPUB by zipping the folder and renaming it to .epub — as long as META-INF/ is intact.'
+  ],
 
   sections: [
     {

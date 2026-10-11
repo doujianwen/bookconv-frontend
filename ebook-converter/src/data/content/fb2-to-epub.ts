@@ -10,6 +10,14 @@ export const content = {
     subtitle: 'Free FB2 to EPUB converter. No sign-up — turn FictionBook files into EPUB for maximum device compatibility.'
   },
 
+  keyTakeaways: [
+    'FB2 (FictionBook 2.0) is a single-file XML format that dominated Russian-language ebooks; EPUB is the W3C international standard accepted by every mainstream reader and publisher.',
+    'FB2 files are essentially never DRM-protected, so conversion rarely fails for rights reasons — most failures are just malformed XML in old scanned files.',
+    'Chapter structure, table of contents, metadata (series, genre, author), footnotes, and embedded images all carry over cleanly into the EPUB.',
+    'Convert when you want your books on Kobo, Apple Books, or Kindle — Amazon\'s Send to Kindle accepts EPUB but has never supported FB2.',
+    'For batch conversion of a whole library, Calibre\'s command line (ebook-convert input.fb2 output.epub) is the right tool; BookConv handles single files.'
+  ],
+
   sections: [
     {
       heading: 'Convert FB2 to EPUB from the Command Line (Calibre)',

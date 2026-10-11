@@ -34,7 +34,9 @@
     "build:keywords": "node scripts/build-keyword-series.mjs",
     "fetch:competitor": "node scripts/fetch-competitor-serp.mjs",
     "build:competitor": "node scripts/build-competitor-series.mjs",
-    "export:sheets": "node scripts/export-sheets.mjs"
+    "export:sheets": "node scripts/export-sheets.mjs",
+    "topics:derive": "node scripts/derive-topics.mjs",
+    "audit:sync": "node scripts/audit-hermes-context-sync.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

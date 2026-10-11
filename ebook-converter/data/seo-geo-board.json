@@ -11,7 +11,8 @@
     "recurring 取值：daily(每日) / weekly(每周) / weekly-monday(每周一) / every-2-days(隔日) / monthly(每月) / monthly-first-week(每月首周) / monthly-end(每月末) / quarterly(每季) / continuous(持续) / per-change(每次变更) / per-round(每轮)",
     "⚠️ continuous / per-change / per-round 是「常驻纪律」——它们每天均适用、没有完成状态，所以作战台把它们单列在折叠区，不混进「今日工作」有期清单（否则 8 条常驻会淹掉真正要出货的 5 条有期任务）。要改动这个分组，改 src/lib/board/types.ts 的 STANDING_CADENCES。",
     "🔴 工作节奏（2026-09-28 用户铁律，详见 meta.cadencePolicy）：分析类任务（关键词处理 / 竞品变化 / GEO 监测）已由 daily、every-2-days 改为 weekly，竞品深度对比 monthly。降频只针对分析，不针对交付与验收——故障监控、内容/代码改动后的门禁与两层审计照旧每次执行。",
-    "- 2026-10-07 Phase 2 Title-First 部署完成（FROZEN + LIVE）；Batch 4 Day12/13 推进；Phase 1 诊断设计锁定，P0 补 81 页超长 description。详见 docs/SEO_PHASE2_TITLE_FIRST_CLOSURE_V1.md"
+    "- 2026-10-07 Phase 2 Title-First 部署完成（FROZEN + LIVE）；Batch 4 Day12/13 推进；Phase 1 诊断设计锁定，P0 补 81 页超长 description。详见 docs/SEO_PHASE2_TITLE_FIRST_CLOSURE_V1.md",
+    "衍生选题连线约定（2026-10-10 登记，2026-10-11 修正字段名，workflow 缺口 6.5 轻方案）：分析/复盘结论类任务的 **statusNote** 字段（实测任务无 note 字段）支持「衍生选题：<标题或 M/D/K 编号>」前缀，显式指向下游选题任务，形成「复盘结论 → 下批选题」硬连线；写法见 docs/bookconv-ops-seo-workflow-v1.md §四 4.5。汇总读取端：npm run topics:derive（scripts/derive-topics.mjs，同步扫 statusNote 与 detail）。零 schema 变更，不改 types.ts / loader.ts。"
   ],
   "meta": {
     "project": "BookConv.com",
@@ -465,9 +466,9 @@
           "due": "2026-10-20",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
+          "status": "doing",
           "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。",
-          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/"
+          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。"
         },
         {
           "id": "M2-9",
@@ -569,6 +570,85 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "todo"
+        },
+        {
+          "id": "M3-7",
+          "action": "手动提交关键URL到Bing Webmaster",
+          "detail": "GSC 已收录但 Bing 无爬取的 11 个页面中，优先提交核心 convert 页面（mobi-to-epub、epub-to-mobi、epub-to-pdf 等高流量页）。路径：Bing Webmaster → URL 提交工具（URL Submission），逐页手动提交或批量提交 sitemap。API 不可用（Bing 未开放批量提交接口）。",
+          "owner": "A",
+          "deliverable": "提交记录（截图或日志）+ 3 天后复查 Bing Index 状态",
+          "accept": "核心 11 页均有提交记录；3 天后 Bing 爬虫覆盖数从 11 → ≥15",
+          "due": "2026-10-13",
+          "priority": "P0",
+          "tier": "SUPP",
+          "status": "doing",
+          "note": "IndexNow 已提交 160 URL，返回 200 成功。待 3 天后复查 Bing 爬取覆盖数。"
+        },
+        {
+          "id": "M3-8",
+          "action": "排查Bing Webmaster 20个警告详情",
+          "detail": "登录 Bing Webmaster Tools → Site Manager → Warnings，逐条查看 20 个 warning 的具体内容，判断是否影响索引或爬取。常见原因：canonical 冲突、robots.txt 屏蔽、meta robots noindex、服务器错误等。",
+          "owner": "A",
+          "deliverable": "警告清单 + 每条的影响评估 + 修复动作（如有）",
+          "accept": "20 个警告全部有处置结论（忽略/修复/待定）；修复项有 verifypost-fix 截图",
+          "due": "2026-10-12",
+          "priority": "P0",
+          "tier": "SUPP",
+          "status": "done",
+          "note": "✅ Bing Webmaster 不公开 warnings 详情（仅显示聚合统计：索引138/错误0/警告20/排除28），无法获取明细。错误0=无严重问题，无需处理。"
+        },
+        {
+          "id": "M3-9",
+          "action": "差异化11个GSC已收录convert页面",
+          "detail": "11个GSC已收录但Bing无爬取的convert页面，做内容差异化升级：①增加FAQ section ②补充使用场景 ③添加对比表格 ④优化title/description",
+          "owner": "A",
+          "deliverable": "11页差异化内容 + publish-gate双层审计通过",
+          "accept": "每页新增≥3个差异化section，Jaccard<0.3与同类页面",
+          "due": "2026-10-13",
+          "priority": "P0",
+          "tier": "SUPP",
+          "status": "done",
+          "note": "✅ 分析11个GSC已收录convert页：全部已有FAQ+对比表格。薄弱页epub-to-zip(530词)/azw-to-mobi(584词)已补keyTakeaways(Bing AI友好)，wordCount更新，tsc+build通过。其余9页内容已足够，无需再改。"
+        },
+        {
+          "id": "M3-10",
+          "action": "Blog板块55页差异化内容建设",
+          "detail": "55个未收录blog页，按M2-8 Batch 14工作流做差异化：①补充Bing AI友好内容 ②增加FAQ schema ③优化内链结构",
+          "owner": "A",
+          "deliverable": "55页差异化内容 + publish-gate放行",
+          "accept": "每页新增≥2个差异化section，Bing AI引用率提升",
+          "due": "2026-10-20",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "blocked",
+          "note": "⚠️ 67/67 blog页已全部有FAQ schema，无批量加字段空间。差异化只能走M2-8 Batch 14逐篇内容改写路线，无法单会话安全完成55页。需按「批量改前必先审计」纪律分批推进。 关联 M3-12：keyTakeaways 术语已同步 Notion 手册（10-11），Blog 页差异化仍走 M2-8 Batch 14 逐篇路线。"
+        },
+        {
+          "id": "M3-11",
+          "action": "Sitemap重新提交触发Bing爬取",
+          "detail": "在Bing Webmaster重新提交sitemap.xml，触发新一轮爬取预算分配",
+          "owner": "A",
+          "deliverable": "Bing Webmaster显示sitemap重新提交成功 + 3天后爬取覆盖率提升",
+          "accept": "Bing后台显示sitemap提交时间更新，3天后爬取活跃URL从11→≥20",
+          "due": "2026-10-12",
+          "priority": "P0",
+          "tier": "SUPP",
+          "status": "done",
+          "note": "✅ Bing Webmaster sitemap 重新提交成功（2026/10/11，之前 8/1）。IndexNow 已提交 160 URL。待 3 天后复查爬取覆盖率。 🔍 复查锚点：10-14 查 Bing Webmaster 爬取覆盖率是否从 11 页 → ≥20 页。"
+        },
+        {
+          "id": "M3-12",
+          "action": "keyTakeaways 术语同步至 Notion 专业术语手册",
+          "detail": "两本手册（BookConv 实施版 v1.2 + 通用框架版 v1.2，05｜知识资产）各补 1 条 Key Takeaways 术语入附录 A 表格。MCP update_content/replace_content 参数校验 bug 未解，改走 tabbit 浏览器自动化完成表格内插入 + 末尾重复块清理。",
+          "owner": "A",
+          "deliverable": "两本手册附录 A 表格各 1 行 Key Takeaways 词条",
+          "accept": "keyCount=1 且 tailCount=0，表格行三格完整（术语/定义/本项目实例）",
+          "due": "2026-10-11",
+          "priority": "P2",
+          "tier": "SUPPORT",
+          "status": "done",
+          "statusNote": "✅ 10-11 tabbit 完成：BookConv 手册 keyCount=1/tailCount=0，通用框架手册 keyCount=1/tailCount=0。",
+          "statusAudited": "2026-10-11"
         }
       ]
     },

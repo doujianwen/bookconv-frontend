@@ -2,13 +2,21 @@ export const slug = 'azw-to-mobi';
 export const title = 'Free AZW to MOBI Converter — No Sign-up';
 export const metaDescription = 'Make old Amazon AZW files readable on any Kindle — free AZW to MOBI converter, no sign-up. Fast, private, DRM-free files only.';
 export const level = 'B' as const;
-export const wordCount = 584;
+export const wordCount = 640;
 
 export const content = {
   hero: {
     title: 'AZW to MOBI - Repackage Older Amazon Books for Any Kindle',
     subtitle: 'Free AZW to MOBI converter. No sign-up — turn older Amazon AZW files into plain MOBI that opens on every Kindle.'
   },
+
+  keyTakeaways: [
+    'AZW is Amazon’s 2007 format — essentially MOBI with Amazon’s DRM layer. AZW3 (KF8, 2011) is a different, richer format; do not confuse the two.',
+    'DRM-free AZW files convert to MOBI with near-zero loss: text, chapter structure, and metadata survive. Only embedded fonts and advanced CSS are dropped.',
+    'MOBI is the one format every Kindle reads — from 2007 to present. It is the safest target when the destination device is unknown or older.',
+    'Files from the Kindle Store are DRM-locked and cannot be read by any converter; this tool works only on DRM-free AZW files.',
+    'Amazon removed MOBI from Send-to-Kindle email in 2022. After converting, sideload the .mobi by USB into the Kindle’s documents folder.'
+  ],
 
   sections: [
     {

@@ -10,6 +10,14 @@ export const content = {
     subtitle: 'Free EPUB to HTML converter. No sign-up — extract clean, editable HTML you can publish, restyle, or paste into a CMS.'
   },
 
+  keyTakeaways: [
+    'An EPUB file is already a website in disguise — it is a ZIP of XHTML, CSS, and images, so extracting HTML is a clean unwrap, not a format translation.',
+    'The download is a ZIP containing index.html, one HTML file per chapter, and an images/ folder you can open in any browser offline.',
+    'Convert to HTML when you need to publish chapters to a CMS, make content indexable by search engines, or edit at scale.',
+    'DRM-locked books will not convert; store purchases encrypt their content, but self-written or public-domain titles work without trouble.',
+    'Pagination does not survive — EPUB has no fixed pages; if you need page numbers, convert to PDF instead.'
+  ],
+
   sections: [
     {
       heading: 'What EPUB Is and Why It Is Already a Website',

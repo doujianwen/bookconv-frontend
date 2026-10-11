@@ -364,6 +364,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 2026-10-08 (auto·Day 14·b1) | **Batch 4 Day 14·b1 完成（A 差异化·第1批）**：31 个 convert 薄模板页中首 3 个零抓取页（`mobi-to-txt` / `djvu-to-pdf` / `cbr-to-pdf`）各补 1 个格式特有 section（真实 CLI 命令 / 桌面替代工具）+ 1 FAQ，作为数组首位插入，降跨页模板相似度、满足 A1 验收。内容均为可验证事实（Calibre `ebook-convert`、djvulibre `ddjvu`、unrar+ImageMagick），非填充；CRLF 保持、正文无尖括号标签、无裸反引号。⚠️ 本次曾被并行写入者（hermes）对 3 个 guide 文件的暂存破损（`Expected ',', got '}'`）阻断 build，其修复推送 `1aa8401` 后 build 转绿、本批重跑闭环。门禁 audit-content-integrity 0/0 + find-duplicate-headings 0 + syntax-sweep 313 文件 0 失败 + 5 道 pre-commit 快门禁全过 + `npm run build` exit 0 | 75ce218 + 50c1ab6（已 push，线上验证 3 页 HTTP 200 + 新内容渲染） |
 | 2026-10-08 (auto·Day 14·b2) | **Batch 4 Day 14·b2 完成（A 差异化·第2批·策略转向）**：Bing 10-8 数据逐簇归因证实「一簇一代表」——Bing AI 每个转换话题簇只引用 1-2 个代表页，簇内其余恒 0 引用且与页面质量无关（mobi-to-epub 结构指标全面超过被引的 epub-to-pdf 仍 0 引用）；b1 的 3 页处理后仍 0 引用 ⇒ 「让零引用页被 AI 引用」KPI 不成立。b2 转向：给簇内代表页补双向承接内容——`epub-to-mobi` +「Converting in Reverse: MOBI to EPUB」（反向 query 需求 614 cites）、`epub-to-pdf` +「Converting in Reverse: PDF to EPUB」、`epub-to-azw3` +「Quick Tool vs Full Guide」（与 guide 代表页 915 cites 分工互链），各含 1 FAQ + markdown 内链。EOL 自适应脚本（b1 文件 CRLF / 本批探测同为 CRLF；Python `open()` universal-newlines 探针曾误判 LF，Node readFileSync 探到真相）。门禁同 b1 全绿 + tsc 0 + build exit 0（⚠️ 本 turn 沙箱 safe-delete 守卫按 turn 累计阈值 50 拦删 `.next/trace`，对该命令以 `CODEBUDDY_SAFE_DELETE_ENABLED=0` 单独放行——删除对象全为构建产物） | d979647（未 push，待人工复核） |
 | 2026-10-08 (auto·Day 14·b3) | **Batch 4 Day 14·b3 完成（A 差异化·第3批）**：A 类低需求簇 3 页——`mobi-to-azw3`（簇需求 91 cites，非代表页）/ `azw3-to-mobi`（簇需求 182 cites）/ `fb2-to-epub`（簇需求 77 cites）各补 1 个 Calibre CLI section + 1 FAQ（数组首位插入）。依据「一簇一代表」结论，此类非代表页不以 Bing 引用为 KPI，内容为真实桌面批量转换价值。⚠️ 新增环境坑：模板字符串内 shell `${var%pattern}` 语法需转义为 `\${var%pattern}` 否则 tsc 报 `Expression expected`（L24/L26），已在提交后通过 post-hoc 转义修复 | d7cc7ba（未 push，待人工复核） |
+| 2026-10-10 | **M 系列索引表新增（workflow 缺口 6.7）+ 运维文档两件**：① §十 开头新增「M 系列索引表」小节（按内容锚点自建映射，显式区分作战台 M0-M10 与本文档两套编号体系）；**最小侵入边界**：§七 changelog 乱序（10-09 b6 行位于 10-08 b1 行之前）与 M3-5 表格错位 B7 行仅登记不重排。② 新增 `docs/feishu-alert-sop-v1.md`（飞书告警 SOP + ga-inspection.mjs retry 三路径实测，缺口 6.3）。③ 新增 `docs/critic-design-v1.md`（双层 critic 设计说明，代码反推成文，缺口 6.1）。副本同步 hermes-context/ | 未提交（本地变更，待用户「发布」） |
 
 ---
 
@@ -472,6 +473,23 @@ D1/D2 的**真实验收**应为：
 > 与 §一–§九 的内容差异化/权威主线互补，属**双渠道监测与转化优化**支线。
 > 🔴 **收口纪律（2026-09-27 用户铁律）**：本类"下一步行动"**只并入本文档**，禁止单独建文档；由 **hermes** 负责执行，副本同步 `hermes-context/`。本轮 GSC 误判已回滚、审计 #7 来源判定铁律已固化，二者不计入待办。
 > 任务系统同步跟踪：Task #1–#8。
+
+### M 系列索引表（2026-10-10 新增，workflow 缺口 6.7）
+
+| 编号 | 内容 | 位置（内容锚点） | 状态锚点 |
+|---|---|---|---|
+| M1 | Google Tier-1 五页差异化首读评估 | §十 P0 表「**M1**」行 | ✅ 2026-10-01 完成 |
+| M1-E | 13 零抓取页 = Tier-2 差异化前置子集 | §十 P0 表「**M1-E**」行 | ⏳ |
+| M2 | 品牌词 `bookconv` 日常监控 | §十 P0 表「**M2**」行 | ⏳ |
+| M3–M8 | 双渠道监测各待办 | §十 P0/P1/P2 表行（M1 行所在表格区段） | 见各行 |
+| M3-5 | 抓取与渲染可解析性 | §十 专属小节「### M3-5」 | ✅ 2026-10-04 收口 done |
+| M10–M12 | 无独立小节；历史追溯，实际以 M13 为准 | 仅 §七 changelog（2026-10-03 21:5x 行提及） | 归档口径 |
+| M13-1~14 | GEO 三平台长尾采集（v4 严谨版） | §十 小节「### GEO 三平台长尾采集」 | 见小节 |
+| M14 / M15 | 周一三合一分析 / 博客内容补给 | §十 小节「### M14 … M15」 | 持续（M14 自动化周一 07:30） |
+| M16-1~5 | 竞品结构缺口批次 | §十 小节「### M16」 | 见小节 |
+
+> 🔴 **两套编号体系**：作战台 `data/seo-geo-board.json` modules 的 M0–M10 与本文档 §十 M 系列是**不同体系**，勿混引。
+> 🔴 **已知文档瑕疵（2026-10-10 登记，最小侵入不重排）**：① §七 changelog 存在乱序——10-09 的 b6 行（`9446a9b`）插在 10-08 的 b1 行（`75ce218`）之前；② M3-5 小节表格中混入 1 行 B7 日期行（2026-10-05 Day 10），属错位待归位。
 
 **P0（瓶颈监测）**
 
