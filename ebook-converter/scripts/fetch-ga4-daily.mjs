@@ -128,12 +128,64 @@ try {
   const failed = events.conversion_failed || 0
   const conversionRate = upload > 0 ? Math.round((complete / upload) * 100) + '%' : '—'
 
+  // ③ 工具页用户数（上传率的正确分母；红队审计 R4：全站活跃用户会污染工具页比率）
+  //    先按 pageLocation 明细拉取再本地聚合——CONTAINS 过滤需先看返回全集，防误命中（判据先测再采信）
+  let toolPageUsers = null
+  let toolPageSessions = null
+  let toolPageUrls = []
+  try {
+    const toolReport = await runReport(token, {
+      dateRanges: [{ startDate: DATE, endDate: DATE }],
+      dimensions: [{ name: 'pageLocation' }],
+      metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+      limit: 500,
+    })
+    const seenUsers = new Set()
+    let isToolPage = false
+    for (const row of toolReport.rows || []) {
+      const loc = row.dimensionValues?.[0]?.value || ''
+      if (!isToolPage) {
+        // 判据：URL 路径部分含 /convert/（忽略 query/hash）
+        const pathOnly = loc.split('?')[0]
+        isToolPage = /\/convert\/|\/en\/convert\/|\/es\/convert\//.test(pathOnly)
+      }
+      if (/\/convert\//.test(loc.split('?')[0])) {
+        toolPageUrls.push(loc.split('?')[0])
+        seenUsers.add(loc) // pageLocation 级 activeUsers 不可跨页去重，下面改用总口径
+      }
+    }
+    // 服务端去重的总口径查询（无维度）—— pagePath 级多行 activeUsers 无法本地去重
+    if (isToolPage) {
+      const toolTotalsNoDim = await runReport(token, {
+        dateRanges: [{ startDate: DATE, endDate: DATE }],
+        metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+        dimensionFilter: {
+          filter: {
+            fieldName: 'pagePath',
+            stringFilter: { matchType: 'CONTAINS', value: '/convert/' },
+          },
+        },
+      })
+      toolPageUsers = Number(toolTotalsNoDim.rows?.[0]?.metricValues?.[0]?.value) || 0
+      toolPageSessions = Number(toolTotalsNoDim.rows?.[0]?.metricValues?.[1]?.value) || 0
+    }
+  } catch (e) {
+    console.error('⚠️ 工具页用户数查询失败（不影响主流程）: ' + (e.message || e).slice(0, 200))
+  }
+  const uploadRateProxy = toolPageSessions > 0 ? Math.round((upload / toolPageSessions) * 100) + '%' : '—'
+
   const result = {
     date: DATE,
     activeUsers,
     eventCount,
     events: { file_upload: upload, conversion_complete: complete, conversion_failed: failed },
     conversionRate,
+    toolPage: {
+      users: toolPageUsers,
+      sessions: toolPageSessions,
+      uploadRateProxy, // 近似口径：上传事件数/工具页会话数（免费版无法直接查"触发过事件的用户数"）
+      urlCount: toolPageUrls.length,
+    },
     source: 'ga4-data-api',
   }
 

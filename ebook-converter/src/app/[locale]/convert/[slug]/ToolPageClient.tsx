@@ -173,6 +173,7 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         trackGAEvent("conversion_failed", {
           source_format: source,
           target_format: target,
+          error_code: mappedCode || "UNKNOWN",
           error: (errObj?.message || "unknown").slice(0, 100),
           file_size: file.size,
         })
