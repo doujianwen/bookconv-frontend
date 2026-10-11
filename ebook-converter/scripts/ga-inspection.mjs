@@ -201,7 +201,12 @@ function buildReport(basic, syntax, geo, adv) {
     const srcTag = basic.source === 'ga4-data-api' ? '🔴 实时(GA4 API)' : '📄 回退(GA4日报md)';
     lines.push(`【基础分析 · ${basic.date} · ${srcTag}】`);
     lines.push(`• 活跃用户: ${basic.metrics.users} | 事件: ${basic.metrics.events}`);
-    lines.push(`• 转化完成: ${basic.metrics.complete} | 失败: ${basic.metrics.failed} | 成功率: ${basic.metrics.rate}`);
+    // 口径说明：完成率 = conversion_complete / file_upload；失败率 = conversion_failed / file_upload（分母均为上传数）
+    const u = Number(basic.metrics.upload), c = Number(basic.metrics.complete), f = Number(basic.metrics.failed);
+    const ratesLine = (Number.isFinite(u) && u > 0 && Number.isFinite(c) && Number.isFinite(f))
+      ? `• 转换事件: 上传 ${u} 次 → 完成 ${c} 次 | 失败 ${f} 次 | 完成率(完成/上传) ${Math.round(c / u * 100)}% | 失败率(失败/上传) ${Math.round(f / u * 100)}%`
+      : `• 转换事件: 上传 ${basic.metrics.upload ?? '—'} | 完成 ${basic.metrics.complete} | 失败 ${basic.metrics.failed} | 比率不可计算（缺上传数）`;
+    lines.push(ratesLine);
     if (basic.undecided) lines.push('• 转化失败率：⚠️ 不可判定（缺上传数据）');
     else if (basic.abnormal) lines.push(`• ⚠️ 转化失败率偏高（${basic.convReason}；疑似 CloudConvert 免费额度耗尽，需人工核查）`);
     else lines.push('• 转化失败率：正常');
