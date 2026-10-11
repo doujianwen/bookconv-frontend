@@ -63,8 +63,10 @@ function basicFromLive(live) {
       events: String(live.eventCount),
       complete: String(complete),
       failed: String(failed),
+      upload: String(upload),
       rate: live.conversionRate ?? '—',
     },
+    batch: evalBatchAnomaly(failed, upload),
   };
 }
 
@@ -95,7 +97,8 @@ function basicFromReport(report) {
     abnormal: conv.abnormal,
     undecided: conv.undecided,
     convReason: conv.reason,
-    metrics: { users, events, complete, failed, rate },
+    metrics: { users, events, complete, failed, upload, rate },
+    batch: evalBatchAnomaly(failed, upload),
   };
 }
 
@@ -116,6 +119,23 @@ function evalConversion(complete, failed, upload) {
     reason: abnormal
       ? `失败${f} > 完成${c} 或 成功率${Math.round(rate * 100)}% < 50%`
       : '',
+  };
+}
+
+// ── ①-c 批量异常告警（2026-10-11 P1-4，v2 手册模块 7）─────────────────
+// 判据（测不变量）：单日 file_upload≥5 且 失败率(失败/上传)>60% ⇒ 批量异常。
+//   上传<5 视为样本不足→不可判定（不报异常，符合门禁纪律#6：不可判定项不报 FAIL）
+function evalBatchAnomaly(failed, upload) {
+  const f = Number(failed), u = Number(upload);
+  if (!Number.isFinite(f) || !Number.isFinite(u) || u < 5) {
+    return { decided: false, triggered: false, reason: '上传<5，样本不足不可判定' };
+  }
+  const ratio = f / u;
+  const triggered = ratio > 0.6;
+  return {
+    decided: true,
+    triggered,
+    reason: triggered ? `上传${u}、失败${f}，失败率${Math.round(ratio * 100)}% > 60%` : '',
   };
 }
 
@@ -185,6 +205,9 @@ function buildReport(basic, syntax, geo, adv) {
     if (basic.undecided) lines.push('• 转化失败率：⚠️ 不可判定（缺上传数据）');
     else if (basic.abnormal) lines.push(`• ⚠️ 转化失败率偏高（${basic.convReason}；疑似 CloudConvert 免费额度耗尽，需人工核查）`);
     else lines.push('• 转化失败率：正常');
+    // P1-4 批量异常告警（v2 手册模块 7）
+    const b = basic.batch;
+    if (b?.decided && b.triggered) lines.push(`• 🚨 批量异常：${b.reason}（引擎/额度根因需人工分流，衔接 error_code 维度）`);
     if (basic.source === 'ga4-report-md') lines.push(`• 结论: ${basic.conclusion}`);
   } else {
     lines.push('【基础分析】⚠️ ' + basic.note);
@@ -199,7 +222,7 @@ function buildReport(basic, syntax, geo, adv) {
   lines.push(`• geo-audit-guide: ${geoMark} ${geo.detail}`);
   lines.push(`• 埋点待办: ${adv.ok ? '✅' : '❌'} ${adv.note}`);
 
-  const basicBad = basic.abnormal === true;
+  const basicBad = basic.abnormal === true || basic.batch?.triggered === true;
   const basicUndecided = basic.undecided === true;
   const hasFail = syntax.ok === false || geo.ok === false || !basic.ok || !adv.ok || basicBad;
   const notRun = syntax.ok === null || geo.ok === null;
@@ -211,9 +234,16 @@ function buildReport(basic, syntax, geo, adv) {
   return lines.join('\n');
 }
 
-// ── ④ 发送飞书 ────────────────────────────────────────────────────────
+// ── ④ 发送飞书（2026-10-10：结构化判定 + 3 次退避重试，workflow 缺口 6.3）──
+// 设计说明（详见 docs/feishu-alert-sop-v1.md）：
+//   - 成功判据改为 JSON 解析 code 字段（旧 includes('"code":0') 字符串匹配脆弱）
+//   - 仅 网络错误/超时/HTTP 5xx/非JSON响应 可重试（3 次退避 2s/4s/8s）；
+//     确定性错误（如 code 19024 关键词拦截）不重试，重试无用
+//   - 恒 exit 0，结论以 stdout 为准（调用方 WorkBuddy 自动化读 stdout，不依赖退出码）
+//   - 消息必须含 [bookconv] 关键词，否则被机器人拦截（code 19024）
 function getWebhook() {
   if (process.env.FEISHU_WEBHOOK_URL) return process.env.FEISHU_WEBHOOK_URL;
+  if (process.env.FEISHU_WEBHOOK) return process.env.FEISHU_WEBHOOK; // ai-audit.js 惯例，兼容不重构
   try {
     const p = join(ROOT, '.feishu-webhook');
     const c = readFileSync(p, 'utf8').trim();
@@ -222,25 +252,63 @@ function getWebhook() {
   return null;
 }
 
-function sendFeishu(text) {
-  const webhook = getWebhook();
-  if (!webhook) {
-    console.log('⚠️ 未配置 FEISHU_WEBHOOK_URL / .feishu-webhook，跳过发送');
-    return false;
-  }
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+// 单次发送：返回 { ok, retryable, code, msg, raw, error }
+function sendOnce(webhook, text) {
   const body = JSON.stringify({ msg_type: 'text', content: { text } });
   const url = new URL(webhook);
   return new Promise((resolve) => {
+    let settled = false;
+    const finish = (r) => { if (!settled) { settled = true; resolve(r); } };
     const req = https.request({
       hostname: url.hostname, path: url.pathname, method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+      timeout: 5000,
     }, (res) => {
       let d = ''; res.on('data', c => d += c);
-      res.on('end', () => { console.log('飞书响应:', d); resolve(d.includes('"code":0') || d.includes('success')); });
+      res.on('end', () => {
+        const raw = d.slice(0, 500);
+        if (res.statusCode >= 500) {
+          return finish({ ok: false, retryable: true, error: `HTTP ${res.statusCode}`, raw });
+        }
+        let parsed = null;
+        try { parsed = JSON.parse(d); } catch {}
+        if (parsed && typeof parsed.code === 'number') {
+          if (parsed.code === 0) return finish({ ok: true, retryable: false, code: 0, msg: parsed.msg || '', raw });
+          return finish({ ok: false, retryable: false, code: parsed.code, msg: parsed.msg || '', raw });
+        }
+        // HTTP 200 但响应体非 JSON（网关异常等）→ 按可重试处理
+        finish({ ok: false, retryable: true, error: `非JSON响应(HTTP ${res.statusCode})`, raw });
+      });
     });
-    req.on('error', (e) => { console.log('飞书发送失败:', e.message); resolve(false); });
+    req.on('timeout', () => req.destroy(new Error('timeout(5s)')));
+    req.on('error', (e) => finish({ ok: false, retryable: true, error: String(e.message || e), raw: '' }));
     req.write(body); req.end();
   });
+}
+
+// 带重试：最多 3 次，退避 2s/4s/8s（仅可重试类错误）。恒 exit 0，结论以 stdout 为准。
+async function sendFeishu(text) {
+  const webhook = getWebhook();
+  if (!webhook) {
+    console.log('⚠️ 未配置 FEISHU_WEBHOOK_URL / FEISHU_WEBHOOK / .feishu-webhook，跳过发送');
+    return { ok: false, skipped: true };
+  }
+  const backoffs = [2000, 4000, 8000];
+  let last = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    last = await sendOnce(webhook, text);
+    if (last.ok) {
+      console.log(`✅ 飞书通知已送达（第 ${attempt} 次尝试）`);
+      return last;
+    }
+    console.log(`⚠️ 飞书发送失败（第 ${attempt}/3 次）：${last.error || `code=${last.code} msg=${last.msg}`}${last.raw ? ` | 响应: ${last.raw}` : ''}`);
+    if (!last.retryable) break; // 确定性错误，重试无用
+    if (attempt < 3) await sleep(backoffs[attempt - 1]);
+  }
+  console.log('❌ 最终结论：飞书通知未送达（3 次尝试失败或命中确定性错误）——本行即权威结果，请勿误判为发送成功');
+  return last;
 }
 
 // ── main ───────────────────────────────────────────────────────────────
