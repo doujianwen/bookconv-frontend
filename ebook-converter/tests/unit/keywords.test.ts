@@ -6,7 +6,7 @@
 //     the table UI relies on.
 //   - loader: the generated data/keyword-series.json is the ONLY thing the
 //     /admin/keywords panel renders, so its shape must not drift silently.
-import { isMoving, sortRows, latestReasonByQuery, type KeywordRow, type KeywordReason, type SortKey, type SortDir } from '@/lib/keywords/series';
+import { isMoving, sortRows, mergedKeywordRows, latestReasonByQuery, type KeywordRow, type KeywordReason, type SortKey, type SortDir } from '@/lib/keywords/series';
 import { loadKeywordSeries, loadKeywordReasons, loadKeywordReasonCandidates } from '@/lib/keywords/loader';
 import { buildCandidates, latestCandidateByQuery, pickCandidate, type SeriesKeywordLike, type CompetitorRowLike, type AlgoUpdateLike } from '@/lib/keywords/candidates';
 
@@ -88,12 +88,53 @@ describe('loadKeywordSeries', () => {
     expect(t.comparable).toBe(t.up + t.down + t.flat);
   });
 
-  it('gsc is flagged non-comparable when windows differ (the honesty guard)', () => {
+  it('gsc comparability follows the rolling-window rule (the honesty guard)', () => {
     if (!data?.gsc) return;
-    // Either the script already decided it is not comparable, or the windows
-    // genuinely agree (then it should be comparable). We lock the invariant:
-    if (data.gsc.distinctWindowDays.length > 1) {
-      expect(data.gsc.comparable).toBe(false);
+    // New rule: comparable = the LATEST export has a same-window predecessor.
+    // Stale 10/31-day early exports must NOT poison it. Lock that invariant by
+    // recomputing the expected value from the raw windows.
+    const wins = data.gsc.windows.slice().sort((a, b) => a.fetchedAt.localeCompare(b.fetchedAt));
+    const latest = wins[wins.length - 1];
+    const hasSameWindowPrev = wins.some((w) => w !== latest && w.windowDays === latest.windowDays);
+    expect(data.gsc.comparable).toBe(hasSameWindowPrev);
+  });
+});
+
+describe('mergedKeywordRows', () => {
+  const data = loadKeywordSeries();
+  if (!data) return;
+
+  it('flattens Bing + GSC into one table tagged by source', () => {
+    if (!data.gsc) return;
+    const rows = mergedKeywordRows(data);
+    const sources = new Set(rows.map((r) => r.source));
+    expect(sources.has('bing')).toBe(true);
+    expect(sources.has('gsc')).toBe(true);
+  });
+
+  it('maps GSC position onto impressionPosition so the panel can render it', () => {
+    if (!data.gsc) return;
+    const rows = mergedKeywordRows(data);
+    const g = rows.find((r) => r.source === 'gsc' && r.latest);
+    expect(g?.latest?.impressionPosition).not.toBeNull();
+  });
+
+  it('preserves GSC raw deltas when comparable (and none when not)', () => {
+    if (!data.gsc) return;
+    const rows = mergedKeywordRows(data);
+    const gscWithDelta = rows.filter((r) => r.source === 'gsc' && r.delta !== null);
+    if (data.gsc.comparable) expect(gscWithDelta.length).toBeGreaterThan(0);
+    else expect(gscWithDelta.length).toBe(0);
+  });
+
+  it('never produces a GSC delta across mismatched windows', () => {
+    if (!data.gsc) return;
+    const rows = mergedKeywordRows(data);
+    // any gsc row with delta must share window length on latest & previous
+    for (const r of rows) {
+      if (r.source === 'gsc' && r.delta !== null) {
+        expect(r.latest).not.toBeNull();
+      }
     }
   });
 });

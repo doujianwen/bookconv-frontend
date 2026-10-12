@@ -8,6 +8,7 @@ import * as React from 'react';
 import {
   isMoving,
   sortRows,
+  mergedKeywordRows,
   latestReasonByQuery,
   type KeywordRow,
   type KeywordReason,
@@ -58,10 +59,17 @@ function DeltaCell({ k }: { k: KeywordRow }) {
       </span>
     );
   }
-  if (k.delta === 0) {
-    return <span className="text-xs text-gray-400 dark:text-gray-500">持平</span>;
+  // Sub-1 moves are within GSC's 91-day-average noise — show as ≈0, not a fake
+  // arrow. Whole-rank moves display as integers; fractional moves (Bing) as 1dp.
+  if (Math.abs(k.delta) < 1) {
+    return (
+      <span className="text-xs text-gray-400 dark:text-gray-500" title="变化小于 1 名，视为持平（含 GSC 91 天均值噪声）">
+        ≈0
+      </span>
+    );
   }
   const up = k.delta > 0;
+  const txt = Math.abs(k.delta) % 1 === 0 ? String(Math.abs(k.delta)) : Math.abs(k.delta).toFixed(1);
   return (
     <span
       className={
@@ -71,7 +79,7 @@ function DeltaCell({ k }: { k: KeywordRow }) {
       title={`${k.previous?.date} → ${k.latest?.date}，间隔 ${k.spanDays} 天`}
     >
       {up ? '↑' : '↓'}
-      {Math.abs(k.delta)}
+      {txt}
     </span>
   );
 }
@@ -95,6 +103,20 @@ function PriorityCell({ p }: { p?: string }) {
     P3: 'bg-gray-100 text-gray-600 ring-gray-200 dark:bg-white/10 dark:text-gray-300 dark:ring-white/15',
   };
   return <Chip className={tone[p] ?? tone.P3}>{p}</Chip>;
+}
+
+function SourceChip({ source }: { source?: 'bing' | 'gsc' }) {
+  if (source === 'gsc')
+    return (
+      <Chip className="bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-500/10 dark:text-sky-300 dark:ring-sky-500/30">
+        GSC
+      </Chip>
+    );
+  return (
+    <Chip className="bg-violet-50 text-violet-700 ring-violet-200 dark:bg-violet-500/10 dark:text-violet-300 dark:ring-violet-500/30">
+      Bing
+    </Chip>
+  );
 }
 
 function Row({
@@ -129,6 +151,7 @@ function Row({
           <span className="ml-2 text-[10px] text-gray-400 dark:text-gray-500">单点</span>
         ) : null}
       </td>
+      <td className="whitespace-nowrap px-3 py-2"><SourceChip source={k.source} /></td>
       <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">{intent}</td>
       <td className="whitespace-nowrap px-3 py-2 text-xs">
         {targetUrl ? (
@@ -212,6 +235,7 @@ export function KeywordPanel({
   decisions?: KeywordDecision[];
 }) {
   const [view, setView] = React.useState<View>('moving');
+  const [sourceFilter, setSourceFilter] = React.useState<'all' | 'bing' | 'gsc'>('all');
   const [sortKey, setSortKey] = React.useState<SortKey>('delta');
   const [sortDir, setSortDir] = React.useState<SortDir>('desc');
   const [q, setQ] = React.useState('');
@@ -222,9 +246,14 @@ export function KeywordPanel({
   const candidateMap = React.useMemo(() => latestCandidateByQuery(candidates), [candidates]);
   const decisionMap = React.useMemo(() => latestDecisionByQuery(decisions), [decisions]);
 
+  // One table, both channels. Bing + GSC are flattened so the panel never keeps
+  // two divergent grids; the Source column / filter tell them apart.
+  const allRows = React.useMemo(() => mergedKeywordRows(data), [data]);
+
   const rows = React.useMemo(() => {
-    if (!bing) return [];
-    let out = bing.keywords;
+    let out = allRows;
+    if (sourceFilter === 'bing') out = out.filter((k) => k.source === 'bing');
+    else if (sourceFilter === 'gsc') out = out.filter((k) => k.source === 'gsc');
     if (view === 'moving') out = out.filter(isMoving);
     else if (view === 'top20') out = out.filter((k) => (k.latest?.impressionPosition ?? 999) <= 20);
     else if (view === 'single') out = out.filter((k) => k.observations < 2);
@@ -233,7 +262,7 @@ export function KeywordPanel({
       out = out.filter((k) => k.query.toLowerCase().includes(needle));
     }
     return sortRows(out, sortKey, sortDir);
-  }, [bing, view, sortKey, sortDir, q]);
+  }, [allRows, sourceFilter, view, sortKey, sortDir, q]);
 
   const toggleSort = (key: SortKey) => {
     if (key === sortKey) setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
@@ -276,6 +305,22 @@ export function KeywordPanel({
         </div>
       ) : null}
 
+      {gsc ? (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <Stat label="GSC 唯一词" value={gsc.totals.keywords} hint={`${gsc.snapshots} 次导出`} />
+          <Stat
+            label="GSC 可比"
+            value={gsc.totals.comparable}
+            tone={gsc.comparable ? 'warning' : 'critical'}
+            hint={gsc.comparable ? '同窗口可算 Δ' : '窗口不一致'}
+          />
+          <Stat label="GSC 上升" value={gsc.totals.up} tone="good" />
+          <Stat label="GSC 下降" value={gsc.totals.down} tone={gsc.totals.down > 0 ? 'critical' : 'good'} />
+          <Stat label="GSC 持平" value={gsc.totals.flat} />
+          <Stat label="GSC 单点" value={gsc.totals.singlePoint} hint="无基准" />
+        </div>
+      ) : null}
+
       {bing?.caveats?.length ? (
         <Callout tone="warn" title="读数前必须知道的三件事">
           <ul className="mt-1 list-disc space-y-1 pl-4">
@@ -305,6 +350,23 @@ export function KeywordPanel({
                 {v.label}
               </button>
             ))}
+            <span className="mx-1 h-4 w-px bg-gray-200 dark:bg-white/10" />
+            <span className="text-[10px] font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">来源</span>
+            {(['all', 'bing', 'gsc'] as const).map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setSourceFilter(s)}
+                className={
+                  'rounded-full border px-3 py-1 text-xs font-medium transition ' +
+                  (sourceFilter === s
+                    ? 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-300'
+                    : 'border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-white/10 dark:text-gray-300 dark:hover:bg-white/[0.04]')
+                }
+              >
+                {s === 'all' ? '全部' : s === 'bing' ? 'Bing' : 'GSC'}
+              </button>
+            ))}
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
@@ -320,6 +382,7 @@ export function KeywordPanel({
                   <th className="cursor-pointer px-3 py-2 hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('query')}>
                     关键词 {sortKey === 'query' ? (sortDir === 'asc' ? '↑' : '↓') : ''}
                   </th>
+                  <th className="px-3 py-2">来源</th>
                   <th className="px-3 py-2">意图</th>
                   <th className="px-3 py-2">目标页</th>
                   <th className="cursor-pointer px-3 py-2 text-right hover:text-gray-900 dark:hover:text-gray-100" onClick={() => toggleSort('position')}>
@@ -351,7 +414,7 @@ export function KeywordPanel({
                     </td>
                   </tr>
                 ) : (
-                  rows.slice(0, 300).map((k) => (
+                  rows.slice(0, 500).map((k) => (
                     <Row
                       key={k.query}
                       k={k}
@@ -368,10 +431,10 @@ export function KeywordPanel({
           </div>
 
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            显示 {Math.min(rows.length, 300)} / {rows.length} 条
-            {rows.length > 300 ? '（已截断，用搜索缩小范围）' : ''} ·
-            Δ 为正 = 名次上升（数字变小）· 行底色标黄 = 名次发生变动 ·
-            意图 / 目标页 / 竞品 为自动派生，其余判断列来自决策台账
+            显示 {Math.min(rows.length, 500)} / {rows.length} 条
+            {rows.length > 500 ? '（已截断，用搜索/来源筛选缩小范围）' : ''} ·
+            Δ 为正 = 名次上升（数字变小）· 行底色标黄 = 名次发生变动（≥1 名）·
+            来源列区分 Bing / GSC · 意图 / 目标页 / 竞品 为自动派生，其余判断列来自决策台账
           </p>
         </Card>
       ) : null}
@@ -382,7 +445,7 @@ export function KeywordPanel({
             <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{gsc.label}</span>
             {gsc.comparable ? (
               <Chip className="bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30">
-                窗口一致
+                可比（同窗口 Δ 已算）
               </Chip>
             ) : (
               <Chip className="bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-500/30">
@@ -390,7 +453,8 @@ export function KeywordPanel({
               </Chip>
             )}
             <span className="text-xs text-gray-500 dark:text-gray-400">
-              {gsc.snapshots} 次导出 · {gsc.totals.keywords} 个词
+              {gsc.snapshots} 次导出 · {gsc.totals.keywords} 个词 · 其中 {gsc.totals.comparable} 个有同窗口 Δ
+              （↑{gsc.totals.up} / ↓{gsc.totals.down} / 持平{gsc.totals.flat}）
             </span>
           </div>
           {!gsc.comparable ? (
@@ -407,33 +471,12 @@ export function KeywordPanel({
                 </p>
               </Callout>
             </div>
-          ) : null}
-          <div className="mt-3 overflow-x-auto rounded-xl border border-gray-200 dark:border-white/10">
-            <table className="w-full min-w-[520px] border-collapse text-sm">
-              <thead>
-                <tr className="bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:bg-white/[0.04] dark:text-gray-400">
-                  <th className="px-3 py-2">导出日</th>
-                  <th className="px-3 py-2">区间</th>
-                  <th className="px-3 py-2 text-right">窗口</th>
-                  <th className="px-3 py-2 text-right">行数</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-white/[0.06]">
-                {gsc.windows.map((w) => (
-                  <tr key={w.fetchedAt}>
-                    <td className="whitespace-nowrap px-3 py-2 font-mono text-xs text-gray-600 dark:text-gray-300">{w.fetchedAt}</td>
-                    <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
-                      {w.start} → {w.end}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums text-xs text-gray-600 dark:text-gray-300">
-                      {w.windowDays} 天
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums text-xs text-gray-600 dark:text-gray-300">{w.rows}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          ) : (
+            <p className="mt-3 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+              GSC 关键词已并入上方主表：点「来源 → GSC」即可只看 Google 有排名词，列含最新排名 / 前一期 / Δ / 展示 / 点击。
+              {gsc.caveats.length ? <span className="mt-1 block">· {gsc.caveats.join(' ')}</span> : null}
+            </p>
+          )}
         </Card>
       ) : null}
 

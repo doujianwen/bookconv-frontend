@@ -213,8 +213,10 @@ function buildBing() {
 }
 
 // ────────────────────────────────────────────────────────────── GSC
-// Kept deliberately separate: the windows are inconsistent, so a naive merge
-// would compare a 30-day average against a 9-day average.
+// GSC exports are now taken with a FIXED 90-day window (see fetch-gsc-webmaster.mjs
+// --days 90), so two consecutive exports ARE comparable and we compute a real Δ.
+// When an older mismatched-window export is still in 数据分析/, `comparable` flips
+// to false and we deliberately stop emitting Δ rather than averaging apples/oranges.
 function buildGsc() {
   if (!existsSync(DATA_DIR)) return null;
   const files = readdirSync(DATA_DIR)
@@ -257,16 +259,47 @@ function buildGsc() {
     }
   }
 
+  const distinctWindows = [...new Set(windows.map((w) => w.windowDays).filter((n) => n !== null))].sort((a, b) => a - b);
+  // Comparability is judged on the LATEST export, not the whole history: if any
+  // earlier snapshot shares the latest export's window length, the latest-vs-that
+  // comparison is sound. Stale 10/31-day early exports must not poison it, so
+  // per-row `previous` is chosen by matching window length (see below).
+  const sortedWindows = windows.slice().sort((a, b) => a.fetchedAt.localeCompare(b.fetchedAt));
+  const latestWindow = sortedWindows.length ? sortedWindows[sortedWindows.length - 1].windowDays : null;
+  const comparable =
+    latestWindow !== null &&
+    sortedWindows.some(
+      (w) => w !== sortedWindows[sortedWindows.length - 1] && w.windowDays === latestWindow
+    );
+
   const keywords = [...byQuery.entries()].map(([query, points]) => {
     const sorted = points.slice().sort((a, b) => a.date.localeCompare(b.date));
     const latest = sorted[sorted.length - 1] ?? null;
-    return { query, points: sorted, latest, observations: sorted.length };
+    // previous = most recent earlier point sharing latest's window length. This
+    // skips interleaved stale short-window exports so a real Δ survives, and
+    // yields null (no false Δ) when no same-window history exists.
+    let previous = null;
+    if (latest) {
+      for (let i = sorted.length - 2; i >= 0; i--) {
+        if (sorted[i].windowDays !== null && sorted[i].windowDays === latest.windowDays) {
+          previous = sorted[i];
+          break;
+        }
+      }
+    }
+    const delta =
+      latest && previous && latest.position !== null && previous.position !== null
+        ? previous.position - latest.position
+        : null;
+    const spanDays =
+      latest && previous
+        ? Math.round((Date.parse(latest.date + 'T00:00:00Z') - Date.parse(previous.date + 'T00:00:00Z')) / 86400000)
+        : null;
+    return { query, points: sorted, latest, previous, delta, spanDays, observations: sorted.length };
   });
   keywords.sort((a, b) => b.observations - a.observations || a.query.localeCompare(b.query));
 
-  const distinctWindows = [...new Set(windows.map((w) => w.windowDays).filter((n) => n !== null))].sort((a, b) => a - b);
-  const comparable = distinctWindows.length === 1;
-
+  const comparableRows = keywords.filter((k) => k.delta !== null);
   return {
     label: 'Google Search Console · query',
     snapshots: windows.length,
@@ -277,12 +310,21 @@ function buildGsc() {
     totals: {
       keywords: keywords.length,
       multiPoint: keywords.filter((k) => k.observations > 1).length,
+      comparable: comparableRows.length,
+      up: comparableRows.filter((k) => k.delta > 0).length,
+      down: comparableRows.filter((k) => k.delta < 0).length,
+      flat: comparableRows.filter((k) => k.delta === 0).length,
+      singlePoint: keywords.filter((k) => k.observations < 2).length,
     },
     caveats: comparable
-      ? ['窗口一致，跨日可比。']
+      ? [
+          `最新两次同窗口导出（${latestWindow} 天滚动窗口）可比，Δ 已计算。`,
+          'GSC 的 position 是该窗口内的平均排名；两次 91 天窗口起点各相差约 7 天，跨窗口对比近似有效。',
+          '早期 10/31 天的零散导出已自动绕开，不参与 Δ 计算（避免把不同跨度平均值相减）。',
+        ]
       : [
-          `各次导出的窗口长度不一致（${distinctWindows.join(' / ')} 天），position 是不同跨度的平均值。`,
-          '在窗口统一之前，GSC 的跨日对比不可用 —— 需要固定参数重新采集。',
+          `最新导出（${latestWindow} 天窗口）没有同窗口的历史快照可对比，Δ 暂不可用。`,
+          '修法：用相同 --days 参数重跑 npm run fetch:gsc，积累第二个同窗口快照后即可算 Δ。',
         ],
   };
 }
@@ -306,20 +348,38 @@ function main() {
   }
 
   // ── long series CSV ──
-  if (bing) {
+  {
     const rows = [];
-    for (const k of bing.keywords) {
-      for (const p of k.points) {
-        rows.push({
-          Query: k.query,
-          Date: p.date,
-          Clicks: p.clicks,
-          Impressions: p.impressions,
-          AvgClickPosition: p.clickPosition ?? '',
-          AvgImpressionPosition: p.impressionPosition ?? '',
-          Source: 'bing',
-          FetchedAt: p.fetchedAt,
-        });
+    if (bing) {
+      for (const k of bing.keywords) {
+        for (const p of k.points) {
+          rows.push({
+            Query: k.query,
+            Date: p.date,
+            Clicks: p.clicks,
+            Impressions: p.impressions,
+            AvgClickPosition: p.clickPosition ?? '',
+            AvgImpressionPosition: p.impressionPosition ?? '',
+            Source: 'bing',
+            FetchedAt: p.fetchedAt,
+          });
+        }
+      }
+    }
+    if (gsc) {
+      for (const k of gsc.keywords) {
+        for (const p of k.points) {
+          rows.push({
+            Query: k.query,
+            Date: p.date,
+            Clicks: p.clicks,
+            Impressions: p.impressions,
+            AvgClickPosition: '',
+            AvgImpressionPosition: p.position ?? '',
+            Source: 'gsc',
+            FetchedAt: p.date,
+          });
+        }
       }
     }
     rows.sort((a, b) => a.Query.localeCompare(b.Query) || a.Date.localeCompare(b.Date));
@@ -349,28 +409,55 @@ function main() {
       return new Map();
     }
   })();
-  if (bing) {
-    const rows = bing.keywords.map((k) => ({
-      Query: k.query,
-      LatestDate: k.latest?.date ?? '',
-      LatestPos: k.latest?.impressionPosition ?? '',
-      PrevDate: k.previous?.date ?? '',
-      PrevPos: k.previous?.impressionPosition ?? '',
-      SpanDays: k.spanDays ?? '',
-      Delta: k.delta === null ? '' : k.delta,
-      Trend: k.delta === null ? 'no-baseline' : k.delta > 0 ? 'up' : k.delta < 0 ? 'down' : 'flat',
-      Impressions: k.latest?.impressions ?? '',
-      Clicks: k.latest?.clicks ?? '',
-      Observations: k.observations,
-      Reasons: reasonMap.get(k.query) ?? '',
-    }));
+  {
+    const rows = [];
+    if (bing) {
+      for (const k of bing.keywords) {
+        rows.push({
+          Source: 'bing',
+          Query: k.query,
+          LatestDate: k.latest?.date ?? '',
+          LatestPos: k.latest?.impressionPosition ?? '',
+          PrevDate: k.previous?.date ?? '',
+          PrevPos: k.previous?.impressionPosition ?? '',
+          SpanDays: k.spanDays ?? '',
+          Delta: k.delta === null ? '' : k.delta,
+          Trend: k.delta === null ? 'no-baseline' : k.delta > 0 ? 'up' : k.delta < 0 ? 'down' : 'flat',
+          Impressions: k.latest?.impressions ?? '',
+          Clicks: k.latest?.clicks ?? '',
+          Observations: k.observations,
+          Reasons: reasonMap.get(k.query) ?? '',
+        });
+      }
+    }
+    if (gsc) {
+      for (const k of gsc.keywords) {
+        const hasDelta = gsc.comparable && k.delta !== null;
+        rows.push({
+          Source: 'gsc',
+          Query: k.query,
+          LatestDate: k.latest?.date ?? '',
+          LatestPos: k.latest?.position ?? '',
+          PrevDate: k.previous?.date ?? '',
+          PrevPos: k.previous?.position ?? '',
+          SpanDays: k.spanDays ?? '',
+          Delta: hasDelta ? k.delta : '',
+          Trend: !gsc.comparable ? 'n-a' : k.delta === null ? 'no-baseline' : k.delta > 0 ? 'up' : k.delta < 0 ? 'down' : 'flat',
+          Impressions: k.latest?.impressions ?? '',
+          Clicks: k.latest?.clicks ?? '',
+          Observations: k.observations,
+          Reasons: reasonMap.get(k.query) ?? '',
+        });
+      }
+    }
+    rows.sort((a, b) => a.Source.localeCompare(b.Source) || a.Query.localeCompare(b.Query));
     const fp = join(DATA_DIR, 'keyword-rank-latest.csv');
     writeFileSync(
       fp,
-      toCsv(rows, ['Query', 'LatestDate', 'LatestPos', 'PrevDate', 'PrevPos', 'SpanDays', 'Delta', 'Trend', 'Impressions', 'Clicks', 'Observations', 'Reasons']),
+      toCsv(rows, ['Source', 'Query', 'LatestDate', 'LatestPos', 'PrevDate', 'PrevPos', 'SpanDays', 'Delta', 'Trend', 'Impressions', 'Clicks', 'Observations', 'Reasons']),
       'utf8'
     );
-    console.log(`  wrote ${fp}  (${rows.length} rows)`);
+    console.log(`  wrote ${fp}  (${rows.length} rows · bing ${bing ? bing.keywords.length : 0} · gsc ${gsc ? gsc.keywords.length : 0})`);
   }
 
   // ── JSON for the workbench ──
@@ -402,8 +489,12 @@ function main() {
     console.log(`        单点词 ${t.singlePoint}（无法判断趋势）`);
   }
   if (gsc) {
-    console.log(`  GSC   快照 ${gsc.snapshots} 个 · 唯一词 ${gsc.totals.keywords} · 多点词 ${gsc.totals.multiPoint}`);
+    const gt = gsc.totals;
+    console.log(`  GSC   快照 ${gsc.snapshots} 个 · 唯一词 ${gt.keywords} · 多点词 ${gt.multiPoint}`);
     console.log(`        窗口长度：${gsc.distinctWindowDays.join(' / ')} 天 → 可比性 = ${gsc.comparable ? '是' : '否'}`);
+    if (gsc.comparable) {
+      console.log(`        可比 ${gt.comparable} → 上升 ${gt.up} / 下降 ${gt.down} / 持平 ${gt.flat} · 单点词 ${gt.singlePoint}`);
+    }
   }
   console.log('─'.repeat(64));
 }

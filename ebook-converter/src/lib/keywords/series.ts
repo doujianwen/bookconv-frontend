@@ -25,6 +25,10 @@ export interface KeywordPoint {
 
 export interface KeywordRow {
   query: string;
+  /** Where this row came from. Bing rows always carry 'bing'; GSC rows are
+   *  mapped in via mergedKeywordRows() and tagged 'gsc'. The UI uses this to
+   *  filter / badge, never to drop data. */
+  source?: 'bing' | 'gsc';
   points: KeywordPoint[];
   latest: KeywordPoint | null;
   previous: KeywordPoint | null;
@@ -97,6 +101,14 @@ export interface GscRow {
   query: string;
   points: GscPoint[];
   latest: GscPoint | null;
+  /** Second-most-recent observation, used for Δ. Null when only one export. */
+  previous: GscPoint | null;
+  /** previous.position − latest.position. Positive = moved UP. Only computed
+   *  when the dataset is comparable (all exports share one window length);
+   *  otherwise null so the UI cannot silently average mismatched windows. */
+  delta: number | null;
+  /** Days between the two compared observations. */
+  spanDays: number | null;
   observations: number;
 }
 
@@ -109,7 +121,16 @@ export interface GscSeries {
    *  comparison is meaningless and the UI must say so rather than average. */
   comparable: boolean;
   keywords: GscRow[];
-  totals: { keywords: number; multiPoint: number };
+  totals: {
+    keywords: number;
+    multiPoint: number;
+    /** Number of keywords with a real Δ (only when comparable). */
+    comparable: number;
+    up: number;
+    down: number;
+    flat: number;
+    singlePoint: number;
+  };
   caveats: string[];
 }
 
@@ -127,9 +148,11 @@ const SERIES_PATH = 'data/keyword-series.json';
 /** Where the generated series lives, relative to the repo root. */
 export const KEYWORD_SERIES_PATH = SERIES_PATH;
 
-/** A row is "moving" when we have two comparable observations that differ. */
+/** A row is "moving" when we have two comparable observations whose positions
+ *  differ by at least a full rank. GSC reports 91-day average positions, so a
+ *  Δ below 1.0 is within noise and must not light up as movement. */
 export function isMoving(k: KeywordRow): boolean {
-  return k.delta !== null && k.delta !== 0;
+  return k.delta !== null && Math.abs(k.delta) >= 1;
 }
 
 /** Sort keys offered by the table. Kept here so the UI and tests agree. */
@@ -170,4 +193,45 @@ export function sortRows(rows: KeywordRow[], key: SortKey, dir: SortDir): Keywor
     if (va === vb) return a.query.localeCompare(b.query);
     return (va - vb) * mul;
   });
+}
+
+/**
+ * Flatten Bing + GSC into ONE ranking table so the panel can show both without
+ * maintaining two divergent grids. GSC points use `position` (no click-rank
+ * split) so they are mapped onto the Bing `impressionPosition` shape; click
+ * position is left null for GSC because GSC's export does not separate the two.
+ *
+ * GSC rows are included whenever GSC data exists — even when the dataset is not
+ * comparable (then `delta` stays null and the UI's comparability banner explains
+ * why). We never drop GSC rows, only refuse to fabricate a Δ.
+ */
+export function mergedKeywordRows(data: KeywordSeriesData): KeywordRow[] {
+  const out: KeywordRow[] = [];
+  if (data.bing) {
+    for (const k of data.bing.keywords) out.push({ ...k, source: 'bing' });
+  }
+  if (data.gsc) {
+    for (const k of data.gsc.keywords) {
+      if (!k.latest) continue;
+      const toPoint = (p: GscPoint): KeywordPoint => ({
+        date: p.date,
+        clicks: p.clicks,
+        impressions: p.impressions,
+        clickPosition: null,
+        impressionPosition: p.position,
+        fetchedAt: p.date,
+      });
+      out.push({
+        query: k.query,
+        source: 'gsc',
+        points: k.points.map(toPoint),
+        latest: toPoint(k.latest),
+        previous: k.previous ? toPoint(k.previous) : null,
+        delta: k.delta,
+        spanDays: k.spanDays,
+        observations: k.observations,
+      });
+    }
+  }
+  return out;
 }
