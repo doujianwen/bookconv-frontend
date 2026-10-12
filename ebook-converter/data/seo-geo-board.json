@@ -493,6 +493,19 @@
           "priority": "P3",
           "tier": "SUPP",
           "status": "todo"
+        },
+        {
+          "id": "M2-11",
+          "action": "GSC自动分析改善落地（P0 Title/P1排名/P2内容）",
+          "detail": "基于2026-10-12 GSC数据（91天窗口，404查询/1493展示/5点击/CTR 0.33%），按优先级执行改善：\n\nP0（立即）: 6个位4-10零点击查询的Title优化（mobi vs azw3/convert epub to zip等）\nP1（本周）: 4个位11-20查询的排名突破（epub to zip重点）\nP2（本月）: 5个位21-50高展示查询的内容强化（epub para doc 104展优先）\n\n详细建议见：数据分析/GSC改善建议-2026-10-13.md",
+          "owner": "A",
+          "deliverable": "6个Title优化 + 1个排名突破页面 + 5个内容强化页面",
+          "accept": "2周后GSC复跑验证：P0查询CTR>0，P1查询进入Top10，P2查询展示转化率提升",
+          "due": "2026-10-27",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。"
         }
       ]
     },
