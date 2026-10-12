@@ -645,7 +645,7 @@
           "accept": "keyCount=1 且 tailCount=0，表格行三格完整（术语/定义/本项目实例）",
           "due": "2026-10-11",
           "priority": "P2",
-          "tier": "SUPPORT",
+          "tier": "SUPP",
           "status": "done",
           "statusNote": "✅ 10-11 tabbit 完成：BookConv 手册 keyCount=1/tailCount=0，通用框架手册 keyCount=1/tailCount=0。",
           "statusAudited": "2026-10-11"
