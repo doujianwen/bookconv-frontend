@@ -359,8 +359,15 @@ export async function convertWithCloudConvert(
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       trail.push(`${label}: ${msg}`);
+      // DRM 失败是永久性的：Calibre 拒转 DRM 是合规设计，换引擎必然同样失败，
+      // 降级重试只会白烧一次 job 创建+上传+轮询（2026-10-12 ce307283 告警实证：
+      // calibre 报 "This ebook is DRM encrypted" 后 auto 引擎同样失败）。
+      const permanentFailure = /DRM/i.test(msg);
       const retryable =
-        err instanceof CloudConvertJobFailure && err.convertTaskFailed && attempt < maxAttempts - 1;
+        err instanceof CloudConvertJobFailure &&
+        err.convertTaskFailed &&
+        attempt < maxAttempts - 1 &&
+        !permanentFailure;
       if (!retryable) break;
       console.warn('[CloudConvert] convert task failed; retrying without engine', {
         sourceFormat,

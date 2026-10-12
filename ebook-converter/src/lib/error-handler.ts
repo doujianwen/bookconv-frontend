@@ -92,6 +92,18 @@ export function getFriendlyMessage(code: ErrorCode): string {
   return ERROR_MESSAGES[code]?.message ?? ERROR_MESSAGES['INTERNAL_ERROR'].message;
 }
 
+/**
+ * Runtime guard: is this value one of our ErrorCode strings?
+ *
+ * Single source of truth = ERROR_MESSAGES keys. Clients previously hand-maintained
+ * a whitelist regex of "acceptable" codes, which silently drifted (quota /
+ * CloudConvert errors fell out and were reported as UNKNOWN in GA4). Any new
+ * code added to ERROR_MESSAGES is automatically accepted here.
+ */
+export function isErrorCode(value: unknown): value is ErrorCode {
+  return typeof value === 'string' && Object.prototype.hasOwnProperty.call(ERROR_MESSAGES, value);
+}
+
 /** Check if an error is retriable (server-side/transient vs permanent) */
 export function isRetryable(code: ErrorCode): boolean {
   return ERROR_MESSAGES[code]?.retryable ?? true;

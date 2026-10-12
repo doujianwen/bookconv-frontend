@@ -7,7 +7,7 @@ import type { RelatedPostRef, RelatedGuideRef } from "@/lib/internal-links"
 import { FileDropZone } from "@/components/tools/FileDropZone"
 import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
-import type { ErrorCode } from "@/lib/error-handler"
+import { isErrorCode, type ErrorCode } from "@/lib/error-handler"
 import { extractApiError } from "@/lib/api-error"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { SECURITY_FAQ } from "@/lib/seo/securityFaq"
@@ -164,9 +164,10 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         const errObj = err as { cause?: { errorCode?: string; code?: string }; message?: string } | undefined
         const cause = errObj?.cause
         const rawCode = cause?.errorCode || cause?.code
-        const mappedCode = rawCode && !/^(FILE_NOT_FOUND|PERMISSION_DENIED|CONVERSION_TIMEOUT|TOO_MANY_OPEN_FILES|DRM_PROTECTED|CONVERSION_FAILED|INTERNAL_ERROR|CORRUPT_INPUT|MEMORY_LIMIT)$/.test(rawCode)
-          ? undefined
-          : (rawCode as ErrorCode | undefined)
+        // 单一事实源校验（isErrorCode 派生自 error-handler 的 ErrorCode 全集），
+        // 替换旧的手写白名单正则——后者已静默漂移：配额/CloudConvert 类错误码
+        // 不在白名单里，被丢成 undefined，GA4 里只能看到 UNKNOWN。
+        const mappedCode = isErrorCode(rawCode) ? rawCode : undefined
         setErrorCode(mappedCode)
         setErrorMessage(errObj?.message || "Conversion failed")
         setStatus("error")

@@ -23,6 +23,7 @@ import { cn, formatBytes } from "@/lib/utils";
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map";
 import { Button } from "@/components/ui/button";
 import { extractApiError } from "@/lib/api-error";
+import { isErrorCode } from "@/lib/error-handler";
 import { trackGAEvent } from "@/lib/ga";
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
 
@@ -330,6 +331,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: "quota_exceeded",
+            error_code: "CONVERSION_QUOTA_EXCEEDED",
             file_size: item.size,
           });
           markStatus(item.index, "failed", QUOTA_MESSAGE);
@@ -381,6 +383,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: (msg || "unknown").slice(0, 100),
+            error_code: isErrorCode(errObj?.code) ? errObj.code : "UNKNOWN",
             file_size: item.size,
           });
           markStatus(item.index, "failed", msg);

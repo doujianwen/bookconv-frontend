@@ -67,8 +67,13 @@ export async function convertAndStream(
   } catch (convErr) {
     // DEBUG: Log the actual error for diagnosis
     const convMsg = convErr instanceof Error ? convErr.message : String(convErr);
-    console.error('[DEBUG] Conversion error:', convMsg);
-    const errorCode = mapErrorCode(sanitizeError(convErr));
+    console.error('[DEBUG] Conversion error:', sanitizeError(convErr));
+    // 映射必须吃**原始**消息：sanitizeError 会截断到 200 字符，而 CloudConvert
+    // 的失败签名（如 "This ebook is DRM encrypted"）可能落在更后面——
+    // 2026-10-12 审计发现该错误串恰好 200 字符、'DRM' 在第 100 位纯属运气；
+    // 若 DRM 字样被截掉，错误码会静默降级为 CLOUD_CONVERT_ERROR（"请重试"），
+    // 用户会对一个永久失败的文件反复重试。
+    const errorCode = mapErrorCode(convMsg);
     // 实时 Feishu 告警（节流 + 3s 超时，内部消化异常）：生产同步路径此前无任何
     // 失败告警，2026-10-01 转换 100% 失败直到 T+1 才被 GA4 日报发现。
     await notifyConversionFailure({
