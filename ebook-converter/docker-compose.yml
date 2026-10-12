@@ -9,7 +9,7 @@ services:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379
       - UPLOAD_DIR=/tmp/ebook-uploads
-      - MAX_FILE_SIZE_MB=10
+      - NEXT_PUBLIC_MAX_FILE_SIZE_MB=4
       - CALIBRE_PATH=ebook-convert
       - NEXT_PUBLIC_APP_URL=http://localhost:3000
       # 运营审计飞书推送（从 .env 读，未设则 ai-audit.js 跳过推送）

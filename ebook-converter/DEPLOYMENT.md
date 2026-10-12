@@ -73,7 +73,7 @@ docker-compose up -d
 |------|-----|------|
 | `REDIS_URL` | `redis://localhost:6379` | Vercel 上不生效，仅作模板 |
 | `UPLOAD_DIR` | `/tmp/ebook-uploads` | 临时文件目录 |
-| `MAX_FILE_SIZE_MB` | `10` | 最大上传文件大小 |
+| `NEXT_PUBLIC_MAX_FILE_SIZE_MB` | `4` | 客户端上传大小上限（MB）。前端/服务端同源常量，默认 4；Vercel Hobby 边缘对 >4.5MB 请求体返回 413，故默认 4MB 留余量。Pro/自托管可调高 |
 | `CALIBRE_PATH` | `ebook-convert` | Docker 部署时才需要 |
 | `NEXT_PUBLIC_APP_URL` | `https://bookconv.com` | 生产域名 |
 | `CORS_ORIGINS` | `https://bookconv.com` | 允许的来源 |
@@ -83,7 +83,7 @@ docker-compose up -d
 
 ### 2. 注意事项
 
-- Vercel Serverless 限制：无常驻进程，maxDuration=60s（Pro）
+- Vercel Serverless 限制：无常驻进程，`maxDuration=300s`（**Pro 计划生效**；Hobby 计划上被静默忽略为 60s 硬上限）
 - `api/health` 会超时（Redis 不可达），但不影响转换功能
 - Calibre 格式转换目前走 CloudConvert fallback（受额度与 60s 超时双重限制，见文末「已知限制」）
 
@@ -336,13 +336,13 @@ VPS Calibre 后端已到期关闭后，转换能力受两条**互相独立**的�
 | 限制 | 判据 | 影响 | 花钱能否解决 |
 |------|------|------|--------------|
 | **CloudConvert 额度** | 402 `Your account has run out of conversion credits`；免费档 10 credits/日 | 除 epub→txt、epub→zip 外的格式全部失败 | ✅ 充值可解（Package $17 / 1000 credits，不过期） |
-| **Vercel Hobby 60s 硬上限** | 唯一生产锚点：`epub→mobi @ 2MB = 55098ms` | 余量仅 5s；线性外推 3MB≈83s✗ / 10MB≈275s✗ | ❌ **不可解** —— `maxDuration=300` 在 Hobby 上被静默忽略 |
+| **Vercel Hobby 60s 硬上限** | 唯一生产锚点：`epub→mobi @ 2MB = 55098ms` | 余量仅 5s；线性外推 3MB≈83s✗ / 10MB≈275s✗ | ❌ 仅 **Hobby 计划**受限；**当前生产为 Pro，`maxDuration=300` 生效**，故 60s 上限不适用于本站点 |
 
-**因此充值只能解 402，解不了超时。** 站点 `MAX_FILE_SIZE_MB = 10` 与 60s 上限互相矛盾，
+**因此充值只能解 402；超时问题在 Pro 计划下已由 `maxDuration=300` 解决。** 站点客户端上限实际为 `NEXT_PUBLIC_MAX_FILE_SIZE_MB = 4`（旧文档误写 `MAX_FILE_SIZE_MB = 10`，变量名也对不上），与 Pro 300s 预算无矛盾；4MB 是规避 Hobby 边缘 413 的保守默认值，Pro/自托管可上调。
 大文件必然超时。若要支持大文件，只有三条路：升 Vercel Pro（$20/月）、换无平台上限的机器、
 或改为异步 webhook（基础设施具备：`.env.production` 含 `SUPABASE_*`、`src/lib/queue.ts` 存在）。
 
-⚠️ `MAX_POLL_ATTEMPTS = 55 × 2s = 110s` 的轮询设计永远等不到 50s 预算之外的结果。
+⚠️ 轮询预算已提升至 `MAX_POLL_ATTEMPTS = 135 × 2s = 270s`，对齐 Pro 300s（留 ~30s 给创建 job+上传+下载）；单次转换若仍需更久，只能改异步 webhook 或升配。
 
 ## 成本估算
 

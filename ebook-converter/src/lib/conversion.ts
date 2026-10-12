@@ -102,7 +102,13 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         const validZip =
           buf[0] === 0x50 && buf[1] === 0x4b && (buf[2] === 0x03 || buf[2] === 0x05 || buf[2] === 0x07);
         if (!validZip) {
-          throw new Error('not a valid eBook format');
+          // 把前 4 字节魔数带进告警，便于一眼确认「用户传的是非 EPUB」（误改名/下载截断/伪 epub）
+          const magicHex = buf.toString('hex');
+          log.conversion.error('EPUB input failed ZIP magic-byte check', { magicHex, sourceFormat });
+          throw new Error(
+            `not a valid eBook format: an EPUB is a ZIP archive whose first bytes are PK\\x03\\x04. ` +
+            `The uploaded file starts with 0x${magicHex}. Please upload a real .epub file (not a renamed .pdf/.txt/.html).`,
+          );
         }
       } catch (_err) {
         await fd.close().catch(() => {});
@@ -158,7 +164,12 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
     } else if (sourceFormat === 'pdf') {
       const head = await fsp.readFile(inputPath);
       if (head.subarray(0, 4).toString('latin1') !== '%PDF') {
-        throw new Error('not a valid eBook format');
+        const magicHex = head.subarray(0, 4).toString('hex');
+        log.conversion.error('PDF input failed %PDF magic-byte check', { magicHex, sourceFormat });
+        throw new Error(
+          `not a valid eBook format: a PDF must start with "%PDF". ` +
+          `The uploaded file starts with 0x${magicHex}. Please upload a real PDF.`,
+        );
       }
     } else if (['txt', 'rtf', 'docx'].includes(sourceFormat)) {
       if (sourceFormat === 'txt' || sourceFormat === 'rtf') {

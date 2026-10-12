@@ -13,7 +13,7 @@
 
 const API_BASE = 'https://api.cloudconvert.com/v2';
 const API_KEY = process.env.CLOUD_CONVERT_API_KEY;
-const MAX_POLL_ATTEMPTS = 55; // 55 * 2s = 110s，适配大文件（50+页EPUB→PDF需Calibre渲染60-90s）；route maxDuration=120s，留10s给创建job+上传+下载开销
+const MAX_POLL_ATTEMPTS = 135; // 135 * 2s = 270s，对齐 route.ts 的 maxDuration=300s（Vercel Pro 生效）；留 ~30s 给创建 job + 上传 + 下载开销，避免临近 300s 被平台强杀
 const POLL_INTERVAL_MS = 2000;
 
 /**
@@ -184,10 +184,12 @@ interface CCJobResponse {
  */
 class CloudConvertJobFailure extends Error {
   readonly convertTaskFailed: boolean;
-  constructor(message: string, convertTaskFailed: boolean) {
+  readonly importTaskFailed: boolean;
+  constructor(message: string, convertTaskFailed = false, importTaskFailed = false) {
     super(message);
     this.name = 'CloudConvertJobFailure';
     this.convertTaskFailed = convertTaskFailed;
+    this.importTaskFailed = importTaskFailed;
   }
 }
 
@@ -282,9 +284,11 @@ async function pollUntilDone(job: CCJobResponse): Promise<CCJobResponse> {
           })),
         ),
       );
+      const failedOp = failed?.operation;
       throw new CloudConvertJobFailure(
         `CloudConvert job failed: ${detail}`,
-        failed?.operation === 'convert',
+        failedOp === 'convert',
+        failedOp === 'import/upload',
       );
     }
   }
@@ -343,9 +347,13 @@ export async function convertWithCloudConvert(
     throw new Error('CloudConvert API key is not configured');
   }
 
-  // 只有首选 calibre 的组合才值得降级重试（白名单外的输入本来就用默认引擎）
+  // 两类瞬态失败都值得换一个全新 job 重试（2026-10-12 新增 import 重试，救 B 类「Input task has failed」）：
+  //   ① convert 任务失败且首选 calibre → 省掉 engine 让 CloudConvert 自选引擎（原逻辑）
+  //   ② import/upload 任务失败 → 上传/导入侧瞬态抖动，新建 job + 重新上传常能救回
+  // 永久失败（DRM，换引擎必同样失败）与超时（status=processing，convertTaskFailed/importTaskFailed
+  // 均为 false）不重试，避免白烧 CC 额度与 270s 轮询预算。
   const calibreFirst = isCalibreInput(sourceFormat);
-  const maxAttempts = calibreFirst ? 2 : 1;
+  const maxAttempts = 2; // 预留 1 次重试槽；非 calibre 格式虽无引擎可降级，但 import 瞬态重试同样受益
   const trail: string[] = [];
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
@@ -363,15 +371,19 @@ export async function convertWithCloudConvert(
       // 降级重试只会白烧一次 job 创建+上传+轮询（2026-10-12 ce307283 告警实证：
       // calibre 报 "This ebook is DRM encrypted" 后 auto 引擎同样失败）。
       const permanentFailure = /DRM/i.test(msg);
+      const isTransientImport =
+        err instanceof CloudConvertJobFailure && err.importTaskFailed;
+      const isEngineDowngrade =
+        err instanceof CloudConvertJobFailure && err.convertTaskFailed;
       const retryable =
-        err instanceof CloudConvertJobFailure &&
-        err.convertTaskFailed &&
+        !permanentFailure &&
         attempt < maxAttempts - 1 &&
-        !permanentFailure;
+        (isEngineDowngrade || isTransientImport);
       if (!retryable) break;
-      console.warn('[CloudConvert] convert task failed; retrying without engine', {
+      console.warn('[CloudConvert] transient failure; retrying with a fresh job', {
         sourceFormat,
         targetFormat,
+        reason: isTransientImport ? 'import/upload task failed' : 'convert task failed',
         firstAttempt: msg,
       });
     }
