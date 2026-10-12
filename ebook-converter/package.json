@@ -36,7 +36,8 @@
     "build:competitor": "node scripts/build-competitor-series.mjs",
     "export:sheets": "node scripts/export-sheets.mjs",
     "topics:derive": "node scripts/derive-topics.mjs",
-    "audit:sync": "node scripts/audit-hermes-context-sync.mjs"
+    "audit:sync": "node scripts/audit-hermes-context-sync.mjs",
+    "test:board": "node --experimental-strip-types scripts/check-board-json.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",
