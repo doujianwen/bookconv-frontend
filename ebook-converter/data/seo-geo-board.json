@@ -481,6 +481,18 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "todo"
+        },
+        {
+          "id": "M2-10",
+          "action": "DRM_PROTECTED 错误提示关联站内 DRM 指南（错误页变内链）",
+          "detail": "背景=2026-10-12 DRM 告警审计建议 #5：DRM 提示现为 Please remove DRM before converting，用户无后续出路。站内已有 which-kindle-books-can-you-convert-drm-free-checklist 博文。实施：前端错误态（ToolPageClient/ConversionProgress）在 error_code=DRM_PROTECTED 时渲染指向该博文的内链与解释块；只改前端展示层，不动 API 文案契约。",
+          "owner": "A",
+          "deliverable": "DRM 错误态内链组件（指向 which-kindle-books DRM 免费转换清单博文）",
+          "accept": "线上 DRM 场景可见内链；目标 slug 经 internal-links 集合校验非死链；非 DRM 错误的展示不受影响",
+          "due": "2026-10-31",
+          "priority": "P3",
+          "tier": "SUPP",
+          "status": "todo"
         }
       ]
     },
@@ -649,6 +661,18 @@
           "status": "done",
           "statusNote": "✅ 10-11 tabbit 完成：BookConv 手册 keyCount=1/tailCount=0，通用框架手册 keyCount=1/tailCount=0。",
           "statusAudited": "2026-10-11"
+        },
+        {
+          "id": "M3-13",
+          "action": "azw3/mobi 上传前本地 DRM 预检（挂起：等 GA4 error_code 数据）",
+          "detail": "背景=2026-10-12 审计建议 #6：本地解析 MOBI/AZW3 头部加密标记，DRM 文件上传前直接拒，省 CloudConvert 调用。前置条件：GA4 后台注册 error_code 自定义维度（2026-10-12 后台核实未注册，现有维度仅 error/file_size/source_format/target_format）并积累 2-4 周数据。决策规则：DRM_PROTECTED 占 conversion_failed ≥5% 则立项，否则永久挂起。",
+          "owner": "A",
+          "deliverable": "预检立项/不立项决策备忘（附 GA4 真实数据证据）",
+          "accept": "有明确立项/不立项结论且引用 error_code 维度真实数据；不立项也须记录证据",
+          "due": "2026-11-15",
+          "priority": "P3",
+          "tier": "SUPP",
+          "status": "todo"
         }
       ]
     },
@@ -1080,6 +1104,18 @@
           "tier": "CORE",
           "status": "todo",
           "note": "🔴 2026-10-05 新增待复审项：Bing AI VI 由 +147.8% 翻转为 -10.0%，暴露「单窗口 VI 不可作趋势结论」——须以「滚动多窗口 + 7日移动均值」替代单点 VI。证据=数据分析/Bing四份报表核验-2026-10-05.md 🟢 09:35 红队：Google VI 敏感性测试 7 天全零假设符号未翻转（−29.4%~−52.9%）⇒ 方向成立；但仅 37 次曝光，幅度不可作精确结论。"
+        },
+        {
+          "id": "M8-8",
+          "action": "转换失败告警分级：系统故障红卡 / 用户输入错误灰卡",
+          "detail": "背景=2026-10-12 DRM 告警审计 Layer 4：DRM/损坏/超限属用户侧可预期错误，若常见会稀释 10-01 建立的告警通道信噪比（10 分钟节流只挡同签名，不同签名仍刷屏）。实施：src/lib/alerts.ts 按错误码分两级——系统侧（CONVERSION_QUOTA_EXCEEDED/CONVERSION_TIMEOUT/CONVERSION_UNAVAILABLE/backend-unavailable）红卡🚨；用户侧（DRM_PROTECTED/CORRUPT_INPUT/FILE_TOO_LARGE/VERIFICATION_FAILED）灰卡ℹ️，标题与卡片模板色区分。",
+          "owner": "A",
+          "deliverable": "alerts.ts 双模板分级告警（红卡=系统侧 / 灰卡=用户侧）",
+          "accept": "注入两类错误各实测送达飞书（响应 code=0）；转换主流程不受影响；同类节流逻辑保留",
+          "due": "2026-10-20",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo"
         }
       ]
     },
