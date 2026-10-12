@@ -39,15 +39,14 @@ docker-compose up -d
 
 ---
 
-## VPS 部署（荧光云，实例已到期 — 当前不可用）
+## VPS 部署（荧光云 — 已到期，本节仅作历史存档）
 
-> ❌ **状态：已到期、未续费，实例当前不可用**（2026-10-05 用户核实）。
+> ⚠️ **实例已到期未续费**（2026-10-05 用户核实），以下 SSH/安装/配置命令**一律无效**。
+> 现行生产路径：**网站与 API 完全运行在 Vercel**；Calibre 类格式依赖 CloudConvert fallback（额度有限，见文末「已知限制」）。
 >
-> 本节保留为**历史方案存档**，供将来重新采购时复用。**不要**把下列步骤当作现行可执行方案：`docker compose up`、`ssh root@149.104.69.126` 等命令在实例续费并重装前一律无效。
->
-> 现行生产路径：网站与 API **完全运行在 Vercel**；Calibre 类格式依赖 CloudConvert fallback（额度有限，见文末「已知限制」）。
+> 本节保留仅供将来重新采购 VPS 时参考，**不作为可执行方案**。
 
-### VPS 信息（荧光云控制台 · 历史存档）
+### VPS 信息（历史存档）
 
 | 项目 | 值 |
 |------|-----|
@@ -55,116 +54,9 @@ docker-compose up -d
 | IP 地址 | `149.104.69.126`（**已到期，地址不再分配**） |
 | 实例 ID | `ecs-di00005bwn85`（**已到期，实例不可用**） |
 | 机房 | SoftBank 日本节点 |
-| SSH 端口 | 22 |
-| 状态 | ❌ **已到期未续费，实例不可用**（此前误记为「已购待部署」） |
+| 状态 | ❌ **已到期未续费，实例不可用** |
 
-### SSH 密钥注入（**仅在重新采购并续费后**才需要执行）
-
-> 原实例已到期，荧光云控制台已无法操作。以下步骤仅在**重新采购新实例**后适用，届时请把新实例 ID 与 IP 一并更新本表。
-
-在荧光云控制台 → 新实例 → **重置密钥**，注入以下公钥（⚠️ 原实例已到期，当前无法执行）：
-
-```
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+6weQvfTbp63GiuwTZb2bAj57pxWfhAEtzvF3vNLxS 7701484@qq.com
-```
-
-注入成功后即可 SSH 登录 —— ⚠️ **原实例已到期，以下命令当前无效**：
-```bash
-# ❌ 实例已到期未续费，此地址不再分配，不要执行
-ssh root@149.104.69.126
-```
-
-### 1. 服务器初始化（SSH 登录后执行）
-
-```bash
-# 更新系统
-apt update && apt upgrade -y
-
-# 创建普通用户
-useradd -m -s /bin/bash ebook
-usermod -aG sudo ebook
-su - ebook
-```
-
-### 2. 安装依赖
-
-```bash
-# Node.js 20 LTS
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-node --version  # v20.x
-
-# Calibre（转换引擎核心）
-apt install -y calibre
-ebook-convert --version  # 验证安装
-
-# Docker
-curl -fsSL https://get.docker.com | sh
-usermod -aG docker ebook
-newgrp docker
-
-# Git
-apt install -y git
-```
-
-### 3. 克隆项目
-
-```bash
-git clone https://github.com/doujianwen/ebook-converter.git
-cd ebook-converter
-```
-
-### 4. 配置环境变量
-
-```bash
-cp .env.example .env.production
-nano .env.production
-```
-
-**必须修改的配置：**
-```env
-# Redis 连接（Docker 部署时可用 redis://redis:6379）
-REDIS_URL=redis://localhost:6379
-
-# 上传目录
-UPLOAD_DIR=/tmp/ebook-uploads
-MAX_FILE_SIZE_MB=10
-
-# Calibre 路径
-CALIBRE_PATH=ebook-convert
-
-# 应用地址（域名）
-NEXT_PUBLIC_APP_URL=https://bookconv.com
-
-# Cloudflare R2（可选，不配则用本地存储）
-# R2_ENDPOINT=https://account-id.r2.cloudflarestorage.com
-# R2_ACCESS_KEY_ID=xxx
-# R2_SECRET_ACCESS_KEY=xxx
-# R2_BUCKET_NAME=ebook-temp
-
-# Supabase（可选，用户系统）
-# NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-# NEXT_PUBLIC_SUPABASE_ANON_KEY=xxx
-```
-
-### 5. 构建和部署
-
-```bash
-# 安装依赖
-npm ci --production
-
-# 构建生产版本
-npm run build
-
-# 使用 PM2 管理进程
-npm install -g pm2
-pm2 start npm --name "ebook-converter" -- start
-pm2 save
-pm2 startup systemd
-
-# 或者使用 Docker
-docker-compose up -d --build
-```
+> 如需重新部署，请购买新实例后将上述 IP 和实例 ID 一并更新到此表。
 
 ---
 
@@ -193,13 +85,13 @@ docker-compose up -d --build
 
 - Vercel Serverless 限制：无常驻进程，maxDuration=60s（Pro）
 - `api/health` 会超时（Redis 不可达），但不影响转换功能
-- Calibre 格式转换（25 个）在 Vercel 上仍返回 500，需接入 VPS 后端
+- Calibre 格式转换目前走 CloudConvert fallback（受额度与 60s 超时双重限制，见文末「已知限制」）
 
 ---
 
 ## Nginx 反向代理 + SSL
 
-> **Vercel 部署无需此步骤**，SSL 由 Vercel 自动配置。以下仅适用于 VPS 部署。
+> ⚠️ **仅适用于 VPS 部署（实例已到期，本节作废）**。Vercel 部署无需此步骤，SSL 由 Vercel 自动配置。
 
 ### 1. 安装 Nginx
 
@@ -306,7 +198,7 @@ certbot renew --dry-run
 
 ## 运维命令
 
-### Docker 管理
+### Docker 管理（仅适用于 VPS 部署，已到期）
 
 ```bash
 cd /opt/ebook-converter
@@ -336,7 +228,7 @@ scp config-backup-*.tar.gz user@backup-server:/backups/
 
 ## 故障排查
 
-### 问题 1: 转换失败
+### 问题 1: 转换失败（VPS 已到期，以下检查命令无效）
 
 ```bash
 # 检查 Calibre 是否安装
@@ -349,7 +241,7 @@ ls -la /tmp/ebook-uploads/
 ebook-convert test.epub test.pdf
 ```
 
-### 问题 2: Redis 连接失败
+### 问题 2: Redis 连接失败（VPS 已到期，以下检查命令无效）
 
 ```bash
 # 检查 Redis 状态
@@ -362,7 +254,7 @@ netstat -tlnp | grep 6379
 systemctl restart redis
 ```
 
-### 问题 3: 内存不足
+### 问题 3: 内存不足（VPS 已到期，以下操作无效）
 
 ```bash
 # 检查内存
@@ -378,9 +270,9 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 ---
 
-## Vercel 与 VPS 转换后端接线（Calibre 委派）
+## Vercel 与 VPS 转换后端接线（Calibre 委派 — 已作废，仅作历史存档）
 
-> ❌ **当前状态：此路径已不可用**（2026-10-05）。VPS 实例已到期未续费，不存在可委派的 Calibre 后端。
+> ❌ **此路径已不可用**（2026-10-05）。VPS 实例已到期未续费，不存在可委派的 Calibre 后端。
 >
 > 下文三步接线方案**仅作历史存档**。若将来重新采购 VPS，需先确认 CloudConvert 额度与 Vercel Hobby 60s 超时上限这两个已知限制是否已解决 —— 详见文末「已知限制」。
 >
@@ -468,7 +360,7 @@ VPS Calibre 后端已到期关闭后，转换能力受两条**互相独立**的�
 
 ## 下一步优化
 
-1. ~~**启用 VPS Calibre 后端**~~ ❌ 已作废：荧光云实例已到期未续费。Calibre 类格式现走 CloudConvert fallback，受额度与 60s 超时双重限制（见文末「已知限制」）
+1. ~~**启用 VPS Calibre 后端**~~ ❌ **已作废**：荧光云实例已到期未续费。Calibre 类格式现走 CloudConvert fallback，受额度与 60s 超时双重限制（见「已知限制」）
 2. **CI/CD 自动化** — GitHub Actions 自动构建部署
 3. **日志聚合** — 接入 Sentry 错误追踪
 4. **性能监控** — 接入 Plausible 或自建 Statsig

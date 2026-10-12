@@ -6,15 +6,15 @@
     "Δ 的定义：上一期排名 − 本期排名。正数 = 名次上升（数字变小），负数 = 下降。",
     "只有 ≥2 个观测点的词才有 Δ；单点词无法判断趋势，已标 observations=1。"
   ],
-  "generatedAt": "2026-10-12T00:05:24.551Z",
+  "generatedAt": "2026-10-12T01:09:06.631Z",
   "d0": "2026-09-27",
   "bing": {
     "label": "Bing Webmaster API · GetQueryStats",
     "snapshots": 13,
     "firstFetch": "2026-09-19",
     "lastFetch": "2026-10-12",
-    "observations": 6586,
-    "droppedJunk": 35,
+    "observations": 6587,
+    "droppedJunk": 34,
     "weeks": [
       "2026-08-07",
       "2026-08-14",
@@ -621,7 +621,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           },
           {
             "date": "2026-10-09",
@@ -646,10 +646,58 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "delta": 1,
         "spanDays": 14,
+        "observations": 3
+      },
+      {
+        "query": "notebookconvert.com",
+        "points": [
+          {
+            "date": "2026-09-25",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 6,
+            "fetchedAt": "2026-10-12"
+          },
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 9,
+            "fetchedAt": "2026-10-12"
+          },
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 5,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 5,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 9,
+          "fetchedAt": "2026-10-12"
+        },
+        "delta": 4,
+        "spanDays": 7,
         "observations": 3
       },
       {
@@ -885,7 +933,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           },
           {
             "date": "2026-10-02",
@@ -910,7 +958,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "delta": 1,
         "spanDays": 7,
@@ -1517,6 +1565,46 @@
         "observations": 2
       },
       {
+        "query": "which format does kindle use",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 6,
+            "fetchedAt": "2026-10-12"
+          },
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 6,
+          "fetchedAt": "2026-10-12"
+        },
+        "delta": -1,
+        "spanDays": 7,
+        "observations": 2
+      },
+      {
         "query": "convertidos online a ebook",
         "points": [
           {
@@ -1565,7 +1653,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           },
           {
             "date": "2026-10-02",
@@ -1573,7 +1661,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -1582,7 +1670,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": {
           "date": "2026-09-18",
@@ -1590,7 +1678,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "delta": -2,
         "spanDays": 14,
@@ -1613,7 +1701,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -1622,7 +1710,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": {
           "date": "2026-09-11",
@@ -1674,46 +1762,6 @@
         },
         "delta": -7,
         "spanDays": 14,
-        "observations": 2
-      },
-      {
-        "query": "notebookconvert.com",
-        "points": [
-          {
-            "date": "2026-09-25",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 6,
-            "fetchedAt": "2026-10-11"
-          },
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 9,
-            "fetchedAt": "2026-10-11"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 9,
-          "fetchedAt": "2026-10-11"
-        },
-        "previous": {
-          "date": "2026-09-25",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 6,
-          "fetchedAt": "2026-10-11"
-        },
-        "delta": -3,
-        "spanDays": 7,
         "observations": 2
       },
       {
@@ -1855,7 +1903,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 1,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -1864,7 +1912,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -1997,10 +2045,10 @@
         "observations": 1
       },
       {
-        "query": "best epub readers android no ads",
+        "query": "best epub reader android 2026 free no ads moon+ reader readera librera",
         "points": [
           {
-            "date": "2026-10-02",
+            "date": "2026-10-09",
             "clicks": 0,
             "impressions": 1,
             "clickPosition": null,
@@ -2009,12 +2057,37 @@
           }
         ],
         "latest": {
-          "date": "2026-10-02",
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
           "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "best epub readers android no ads",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 1,
+            "fetchedAt": "2026-10-11"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 1,
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -2080,7 +2153,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 1,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -2089,7 +2162,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -2161,6 +2234,31 @@
         "latest": {
           "date": "2026-08-28",
           "clicks": 1,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 1,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "can i read mobi book with kobo?",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 1,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
@@ -2547,6 +2645,31 @@
         "observations": 1
       },
       {
+        "query": "good epub reader free for iphone",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 1,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 1,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "how to covert kobo books to ebup",
         "points": [
           {
@@ -2855,7 +2978,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 1,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -2864,7 +2987,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3105,7 +3228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 1,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3114,7 +3237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3130,7 +3253,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 1,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3139,7 +3262,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 1,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3330,7 +3453,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -3339,7 +3462,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -3355,7 +3478,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3364,7 +3487,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3505,7 +3628,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3514,7 +3637,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3622,31 +3745,6 @@
         "observations": 1
       },
       {
-        "query": "do kobo accept mobi or epub",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
         "query": "does kindle and kobo have the same format",
         "points": [
           {
@@ -3705,7 +3803,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           }
         ],
         "latest": {
@@ -3714,7 +3812,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "previous": null,
         "delta": null,
@@ -3780,7 +3878,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3789,7 +3887,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3812,6 +3910,31 @@
           "date": "2026-09-18",
           "clicks": 0,
           "impressions": 4,
+          "clickPosition": null,
+          "impressionPosition": 2,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "epub reader android dictionary",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 2,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
           "fetchedAt": "2026-10-12"
@@ -3880,7 +4003,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -3889,7 +4012,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -3940,31 +4063,6 @@
           "clickPosition": null,
           "impressionPosition": 2,
           "fetchedAt": "2026-10-11"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "how can i convert kobo acsm books to epuc",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -4055,7 +4153,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -4064,7 +4162,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -4880,7 +4978,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -4889,7 +4987,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -5280,7 +5378,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -5289,7 +5387,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -5305,7 +5403,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 2,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -5314,7 +5412,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 2,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -5755,7 +5853,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -5764,7 +5862,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -5955,7 +6053,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -5964,7 +6062,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6130,7 +6228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -6139,7 +6237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -6197,31 +6295,6 @@
         "observations": 1
       },
       {
-        "query": "epub reader ios ipad alternatives kindle tolino",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
         "query": "file mobi kobo",
         "points": [
           {
@@ -6230,7 +6303,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -6239,7 +6312,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6397,6 +6470,31 @@
         "observations": 1
       },
       {
+        "query": "i converted it into an epub but theres the bing logo onit and everytime i click on it it goes to the converter not the image",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 3,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 3,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "if i am trying to out my kidnle books.on my kobo will they just look like odf?",
         "points": [
           {
@@ -6430,7 +6528,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           }
         ],
         "latest": {
@@ -6439,7 +6537,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "previous": null,
         "delta": null,
@@ -6505,7 +6603,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -6514,7 +6612,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6530,11 +6628,36 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
           "date": "2026-09-25",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 3,
+          "fetchedAt": "2026-10-11"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "kindle how to sync an epub file across devices",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 3,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -6830,7 +6953,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -6839,7 +6962,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6855,7 +6978,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -6864,7 +6987,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6880,7 +7003,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -6889,7 +7012,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -6955,7 +7078,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 3,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -6964,7 +7087,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 3,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7105,7 +7228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -7114,7 +7237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7155,7 +7278,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -7164,7 +7287,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -7330,7 +7453,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-09-29"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -7339,7 +7462,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-09-29"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7455,7 +7578,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -7464,7 +7587,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7480,7 +7603,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -7489,7 +7612,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -7530,7 +7653,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -7539,7 +7662,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7580,7 +7703,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -7589,7 +7712,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -7760,6 +7883,31 @@
         ],
         "latest": {
           "date": "2026-09-11",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 4,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "converts book",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 4,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -8111,56 +8259,6 @@
         "latest": {
           "date": "2026-10-09",
           "clicks": 1,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "epub mobi azw",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "epub to ebok",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
-          "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
@@ -8535,6 +8633,31 @@
         ],
         "latest": {
           "date": "2026-08-21",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 4,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "integrated file conversion for self published authors",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 4,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -9105,7 +9228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -9114,7 +9237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -9472,31 +9595,6 @@
         "observations": 1
       },
       {
-        "query": "why does my kindle book download but not open",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
         "query": "why doesn't my kindle book open",
         "points": [
           {
@@ -9505,7 +9603,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 4,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -9514,7 +9612,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 4,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -9705,7 +9803,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -9714,7 +9812,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -9847,56 +9945,6 @@
         "observations": 1
       },
       {
-        "query": "cannot open library on kindle",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "como convertir de epub a mobi",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
         "query": "conversio book",
         "points": [
           {
@@ -9960,6 +10008,31 @@
         ],
         "latest": {
           "date": "2026-09-04",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 5,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "convert kindle to mobi",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 5,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -10230,7 +10303,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           }
         ],
         "latest": {
@@ -10239,7 +10312,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "previous": null,
         "delta": null,
@@ -10280,7 +10353,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -10289,7 +10362,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -10405,7 +10478,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -10414,7 +10487,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -10747,6 +10820,31 @@
         "observations": 1
       },
       {
+        "query": "kindle file format current amazon kfx azw3",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 5,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 5,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "kindle ver 7 extension what is the file extension azw3 or mobi for older version",
         "points": [
           {
@@ -10830,7 +10928,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -10839,7 +10937,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -10897,6 +10995,31 @@
         "observations": 1
       },
       {
+        "query": "ocean of pdf not opening on my kindle",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 5,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 5,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "que es el formato azw3 - epub",
         "points": [
           {
@@ -10930,7 +11053,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -10939,7 +11062,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -11105,7 +11228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 5,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -11114,7 +11237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 5,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -11180,7 +11303,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           }
         ],
         "latest": {
@@ -11189,7 +11312,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "previous": null,
         "delta": null,
@@ -11262,31 +11385,6 @@
           "date": "2026-09-04",
           "clicks": 0,
           "impressions": 2,
-          "clickPosition": null,
-          "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "azw9 kindle kfx resource file meaning",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
           "fetchedAt": "2026-10-12"
@@ -11530,7 +11628,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -11539,7 +11637,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -11555,36 +11653,11 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-11"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 6,
-          "fetchedAt": "2026-10-11"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "convert audio book to mobi",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 6,
             "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
-          "date": "2026-10-09",
+          "date": "2026-10-02",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -11680,7 +11753,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -11689,7 +11762,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -12055,7 +12128,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -12064,7 +12137,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -12087,6 +12160,31 @@
           "date": "2026-09-25",
           "clicks": 0,
           "impressions": 3,
+          "clickPosition": null,
+          "impressionPosition": 6,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "ebook.online‑convert.com/convert‑to‑mobi",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 6,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
           "fetchedAt": "2026-10-12"
@@ -12180,7 +12278,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -12189,7 +12287,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -12430,7 +12528,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -12439,7 +12537,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -12505,7 +12603,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-09-27"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -12514,7 +12612,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-09-27"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -12980,7 +13078,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -12989,7 +13087,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -13230,7 +13328,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 6,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -13239,7 +13337,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 6,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -13315,31 +13413,6 @@
           "clickPosition": null,
           "impressionPosition": 6,
           "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "which format does kindle use",
-        "points": [
-          {
-            "date": "2026-10-02",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 6,
-            "fetchedAt": "2026-10-11"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-02",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 6,
-          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -13430,7 +13503,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -13439,7 +13512,32 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "azw, fb2, mobi, epub y cba, que son en bibliotecas",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -13460,6 +13558,31 @@
         ],
         "latest": {
           "date": "2026-09-04",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "azw3 in kindle?",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -13548,6 +13671,31 @@
       },
       {
         "query": "book not opening on kindle",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-11"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-11"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "book.mobi",
         "points": [
           {
             "date": "2026-10-02",
@@ -13822,31 +13970,6 @@
         "observations": 1
       },
       {
-        "query": "convert real books to epub",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 7,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 7,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
         "query": "converter mobi",
         "points": [
           {
@@ -13980,7 +14103,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-05"
           }
         ],
         "latest": {
@@ -13989,7 +14112,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-05"
         },
         "previous": null,
         "delta": null,
@@ -14180,7 +14303,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14189,7 +14312,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14260,6 +14383,31 @@
         ],
         "latest": {
           "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "epus mobi converter",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -14405,7 +14553,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14414,7 +14562,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14430,7 +14578,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -14439,7 +14587,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -14480,7 +14628,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14489,7 +14637,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14505,7 +14653,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -14514,7 +14662,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -14622,7 +14770,7 @@
         "observations": 1
       },
       {
-        "query": "kindle book won't open on web",
+        "query": "kindle book won't open",
         "points": [
           {
             "date": "2026-10-02",
@@ -14630,7 +14778,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14639,7 +14787,32 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "kindle book won't open on web",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14705,7 +14878,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14714,7 +14887,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14830,7 +15003,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14839,7 +15012,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -14955,7 +15128,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -14964,7 +15137,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -15010,6 +15183,31 @@
         ],
         "latest": {
           "date": "2026-08-21",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "pdf e pub e mobi",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -15097,6 +15295,31 @@
         "observations": 1
       },
       {
+        "query": "what file extension does kindle use",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "what format is kindle",
         "points": [
           {
@@ -15112,6 +15335,31 @@
           "date": "2026-10-09",
           "clicks": 0,
           "impressions": 2,
+          "clickPosition": null,
+          "impressionPosition": 7,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "what format is used in kindle books",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 7,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
           "fetchedAt": "2026-10-12"
@@ -15180,7 +15428,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 7,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -15189,7 +15437,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 7,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -15272,6 +15520,31 @@
         "observations": 1
       },
       {
+        "query": "[https://ebook.online](https://ebook.online)‑[convert.com/convert/txt](https://convert.com/convert/txt)‑to‑mobi",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 8,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 8,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "a ebook i pad",
         "points": [
           {
@@ -15310,6 +15583,31 @@
         ],
         "latest": {
           "date": "2026-08-28",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 8,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "azw3 vs epub vs mobi vs pdf whats best to read on ipad",
+        "points": [
+          {
+            "date": "2026-10-02",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 8,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-02",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -15380,7 +15678,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -15389,7 +15687,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -15555,7 +15853,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -15564,7 +15862,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -15655,7 +15953,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -15664,7 +15962,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -15680,7 +15978,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -15689,7 +15987,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -15755,7 +16053,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -15764,7 +16062,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -15785,31 +16083,6 @@
         ],
         "latest": {
           "date": "2026-08-21",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 8,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "epub vs azw3",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 8,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -16055,7 +16328,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -16064,7 +16337,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -16480,7 +16753,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 8,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -16489,7 +16762,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 8,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -16755,7 +17028,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -16764,7 +17037,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -16780,7 +17053,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -16789,7 +17062,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -17055,7 +17328,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -17064,7 +17337,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -17180,7 +17453,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -17189,7 +17462,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -17197,7 +17470,7 @@
         "observations": 1
       },
       {
-        "query": "how to read an epub on amazon fire",
+        "query": "how to read an epub on iphone",
         "points": [
           {
             "date": "2026-10-09",
@@ -17355,7 +17628,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -17364,7 +17637,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -17380,7 +17653,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -17389,7 +17662,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -17455,7 +17728,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 9,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -17464,7 +17737,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 9,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -17622,7 +17895,7 @@
         "observations": 1
       },
       {
-        "query": "[https://www.xconvert.com/convert-mobi-to-epub](https://www.xconvert.com/convert-mobi-to-epub)xconvert",
+        "query": "：https://www.aconvert.com/cn/ebook/mobi-to-epub/",
         "points": [
           {
             "date": "2026-10-09",
@@ -17640,6 +17913,31 @@
           "clickPosition": null,
           "impressionPosition": 10,
           "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "[https://www.xconvert.com/convert-mobi-to-epub](https://www.xconvert.com/convert-mobi-to-epub)xconvert",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 10,
+            "fetchedAt": "2026-10-11"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 10,
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -17747,10 +18045,10 @@
         "observations": 1
       },
       {
-        "query": "cambiar de formato de epub a mobi",
+        "query": "book app for ipad",
         "points": [
           {
-            "date": "2026-10-09",
+            "date": "2026-10-02",
             "clicks": 0,
             "impressions": 1,
             "clickPosition": null,
@@ -17759,7 +18057,7 @@
           }
         ],
         "latest": {
-          "date": "2026-10-09",
+          "date": "2026-10-02",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -18030,7 +18328,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -18039,7 +18337,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -18055,7 +18353,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -18064,7 +18362,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -18197,6 +18495,31 @@
         "observations": 1
       },
       {
+        "query": "does epub work on ipad",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 10,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 10,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
         "query": "download epub from kobo",
         "points": [
           {
@@ -18230,7 +18553,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -18239,7 +18562,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -18305,7 +18628,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -18314,7 +18637,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -18330,7 +18653,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -18339,7 +18662,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -18510,6 +18833,31 @@
         ],
         "latest": {
           "date": "2026-09-04",
+          "clicks": 0,
+          "impressions": 1,
+          "clickPosition": null,
+          "impressionPosition": 10,
+          "fetchedAt": "2026-10-12"
+        },
+        "previous": null,
+        "delta": null,
+        "spanDays": null,
+        "observations": 1
+      },
+      {
+        "query": "format .lit ke mobi",
+        "points": [
+          {
+            "date": "2026-10-09",
+            "clicks": 0,
+            "impressions": 1,
+            "clickPosition": null,
+            "impressionPosition": 10,
+            "fetchedAt": "2026-10-12"
+          }
+        ],
+        "latest": {
+          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -18705,7 +19053,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-10-11"
           }
         ],
         "latest": {
@@ -18714,7 +19062,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-10-11"
         },
         "previous": null,
         "delta": null,
@@ -18735,31 +19083,6 @@
         ],
         "latest": {
           "date": "2026-09-04",
-          "clicks": 0,
-          "impressions": 1,
-          "clickPosition": null,
-          "impressionPosition": 10,
-          "fetchedAt": "2026-10-12"
-        },
-        "previous": null,
-        "delta": null,
-        "spanDays": null,
-        "observations": 1
-      },
-      {
-        "query": "kindle not opening books",
-        "points": [
-          {
-            "date": "2026-10-09",
-            "clicks": 0,
-            "impressions": 1,
-            "clickPosition": null,
-            "impressionPosition": 10,
-            "fetchedAt": "2026-10-12"
-          }
-        ],
-        "latest": {
-          "date": "2026-10-09",
           "clicks": 0,
           "impressions": 1,
           "clickPosition": null,
@@ -18830,7 +19153,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-05"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -18839,7 +19162,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-05"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -18905,7 +19228,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-12"
+            "fetchedAt": "2026-09-29"
           }
         ],
         "latest": {
@@ -18914,7 +19237,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-12"
+          "fetchedAt": "2026-09-29"
         },
         "previous": null,
         "delta": null,
@@ -19030,7 +19353,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -19039,7 +19362,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -19055,7 +19378,7 @@
             "impressions": 1,
             "clickPosition": null,
             "impressionPosition": 10,
-            "fetchedAt": "2026-10-11"
+            "fetchedAt": "2026-10-12"
           }
         ],
         "latest": {
@@ -19064,7 +19387,7 @@
           "impressions": 1,
           "clickPosition": null,
           "impressionPosition": 10,
-          "fetchedAt": "2026-10-11"
+          "fetchedAt": "2026-10-12"
         },
         "previous": null,
         "delta": null,
@@ -19098,20 +19421,20 @@
       }
     ],
     "totals": {
-      "keywords": 730,
-      "comparable": 38,
-      "up": 12,
+      "keywords": 742,
+      "comparable": 39,
+      "up": 13,
       "down": 19,
       "flat": 7,
-      "singlePoint": 692,
-      "droppedJunk": 35
+      "singlePoint": 703,
+      "droppedJunk": 34
     },
     "caveats": [
       "Bing 的 GetQueryStats 只返回 Top 100 查询、且不接受日期参数（实测窗口约 7 天）。",
       "因此「历史」不是一次调用能拿到的 —— 必须每天跑一次并在此拼接。当前只有 7 次抓取（09-19→09-26），历史很短。",
       "排名变化 Δ = 该词「最近两次观测」之差，不是「最近两周」之差；两点的间隔见 spanDays（可能是 7 天，也可能是 14 天以上）。",
       "只有 ≥2 个观测点的词才有 Δ；单点词无法判断趋势，已标 observations=1。",
-      "已丢弃 35 条抓取残留（含 #R##N# 等页面标记，不是搜索词）。"
+      "已丢弃 34 条抓取残留（含 #R##N# 等页面标记，不是搜索词）。"
     ]
   },
   "gsc": {

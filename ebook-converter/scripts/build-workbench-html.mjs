@@ -96,6 +96,11 @@ function prepareDataLayer() {
     // elision is what let a missing entry go unnoticed until a value import
     // (feedback/store) blew up the whole build.
     'src/lib/keywords/candidates.ts',
+    // loader.ts imports KEYWORD_DECISIONS_PATH / COMPETITOR_DECISIONS_PATH from
+    // './decisions' as VALUES (not just types), so the .mjs sibling must exist or
+    // module resolution fails (ERR_MODULE_NOT_FOUND) — same failure mode as
+    // feedback/store and candidates above.
+    'src/lib/keywords/decisions.ts',
     // The competitor panel reads data/competitor-series.json.
     'src/lib/keywords/competitor.ts',
     // provider-repo.ts imports these as VALUES, so they must be present or the
