@@ -505,7 +505,59 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。"
+          "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。\n\n子任务已拆分：M2-12(P0 Title优化)/M2-13(P1排名突破)/M2-14(P2 epub para doc)/M2-15(P2其余4页)。"
+        },
+        {
+          "id": "M2-12",
+          "action": "P0: 优化6个位4-10零点击查询的Title标签",
+          "detail": "基于GSC数据2026-10-12：\n1. mobi vs azw3（位9.6，19展）→ title补对比语义\n2. convert epub to zip（位8.2，5展）→ title补epub to zip converter\n3. azw3 vs mobi for kindle（位9.4，5展）→ meta description补Kindle兼容性说明\n4. mobi vs azw3 for kindle（位9.8，4展）→ 同上\n5. can kindle read azw3 files（位8.0，3展）→ 页面首段直接回答此问题\n6. azw3 or mobi for kindle（位9.3，3展）→ 增加Kindle格式对比section\n详细建议见：数据分析/GSC改善建议-2026-10-13.md §P0部分",
+          "owner": "A",
+          "deliverable": "6个页面的title/meta/内容优化",
+          "accept": "2周后GSC复跑：这6个查询CTR>0",
+          "due": "2026-10-17",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "来源：GSC自动化分析 2026-10-13，P0优先级。与M2-8并行不冲突。"
+        },
+        {
+          "id": "M2-13",
+          "action": "P1: epub to zip页面排名突破（位12→Top10）",
+          "detail": "当前：位12.1，27展示，0点击。策略：\n- 标题优化：确保含epub to zip / epub to zip converter\n- 补充FAQ section（3-5条）提升Bing AI可引用性\n- 补充转换步骤对比表格\n参考：M2-8批量差异化先例（title-first阶段成功）",
+          "owner": "A",
+          "deliverable": "/convert/epub-to-zip页面优化",
+          "accept": "2周后GSC复跑：进入Top10且有点击",
+          "due": "2026-10-20",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "来源：GSC自动化分析 2026-10-13，P1优先级。epub to zip是最有机会突破的查询。"
+        },
+        {
+          "id": "M2-14",
+          "action": "P2: epub para doc高展示低排名优化（104展位45）",
+          "detail": "当前：位45.4，104展示，0点击——最大曝光但最低转化。\n策略选项：\nA. 强化现有/convert/epub-to-doc页面（补充FAQ、对比表格、更多关键词变体）\nB. 创建独立landing page targeting 'epub to doc converter'\nC. 在blog写一篇epub转doc指南文章\n建议：选A（成本最低，复用现有页面）+ B（长期流量池）\n详细数据见：数据分析/GSC改善建议-2026-10-13.md §P2部分",
+          "owner": "A",
+          "deliverable": "epub-to-doc页面内容强化 + 可选独立landing page",
+          "accept": "4周后GSC复跑：排名进入Top30或CTR>0",
+          "due": "2026-10-27",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。104展示是最高曝光，ROI最高。"
+        },
+        {
+          "id": "M2-15",
+          "action": "P2: 其余4个高展示低排名页面内容强化",
+          "detail": "待优化页面：\n1. epub to azw3（位47.5，29展）→ 补充Azw3格式说明+转换步骤\n2. lit to epub（位22.7，24展）→ 页面内容扩展\n3. epub para txt（位49.5，15展）→ 检查是否存在对应convert页面\n4. azw3 to mobi（位49.8，11展）→ 补充内容\n详细建议见：数据分析/GSC改善建议-2026-10-13.md §P2部分",
+          "owner": "A",
+          "deliverable": "4个页面内容强化",
+          "accept": "4周后GSC复跑：展示转化率提升",
+          "due": "2026-10-27",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。与M2-14同批次执行。"
         }
       ]
     },
