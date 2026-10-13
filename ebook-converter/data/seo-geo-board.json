@@ -480,7 +480,8 @@
           "due": "2026-10-10",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "2026-10-13 完成（本周 2 篇已发布 commit 46d3d41）：/guide/how-to-send-epub-to-kindle（p27/p28/p32 簇，与 how-to-read-epub-on-kindle 错位=交付机制视角）+ /blog/kfx-vs-azw3（p42 对比类 0/4）。publish-gate 双层放行（0 BLOCK），geo-guide 7.0 PASS，线上 200+内容断言过。内链：guide→/formats/epub+/formats/azw3+/convert/epub-to-azw3 等；blog→/formats/azw3+/convert/epub-to-mobi+/blog/which-kindle-books-can-you-convert-drm-free-checklist 等，另含 W3C EPUB3/Amazon 官方权威外链。持续动作（每周 2 篇）转入日常节奏。"
         },
         {
           "id": "M2-10",
