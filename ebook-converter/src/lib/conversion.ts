@@ -315,6 +315,15 @@ async function epubToTxt(inputPath: string): Promise<string> {
 // RTF is a plain-text markup format. We wrap the extracted chapters in a
 // minimal valid RTF 1.6 document (UTF-8 codepage 65001) so EPUB → RTF no
 // longer routes through CloudConvert and is immune to its 402 quota errors.
+function xmlEscape(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 function rtfEscape(s: string): string {
   return s.replace(/\\/g, '\\\\').replace(/\{/g, '\\{').replace(/\}/g, '\\}');
 }
@@ -340,6 +349,89 @@ function buildRtf(chapters: string[]): string {
 async function epubToRtf(inputPath: string): Promise<string> {
   const chapters = await extractEpubTextChapters(inputPath);
   return buildRtf(chapters);
+}
+
+// --- Pure-JS EPUB → FB2 (FictionBook 2.1, plain XML) ---
+//
+// FB2 is a single XML document. We wrap the extracted chapters in a minimal
+// valid FictionBook 2.1 body. No Calibre / no CloudConvert → immune to 402.
+async function epubToFb2(inputPath: string): Promise<string> {
+  const chapters = await extractEpubTextChapters(inputPath);
+  const sections = chapters
+    .map((ch) => {
+      const paras = ch
+        .split(/\n{2,}/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+        .map((p) => `      <p>${xmlEscape(p)}</p>`)
+        .join('\n');
+      return `    <section>\n${paras}\n    </section>`;
+    })
+    .join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.1">
+  <description>
+    <title-info>
+      <book-title>Converted Document</book-title>
+    </title-info>
+  </description>
+  <body>
+${sections}
+  </body>
+</FictionBook>`;
+}
+
+// --- Pure-JS EPUB → DOCX (minimal OOXML, zip of XML parts) ---
+//
+// A DOCX is just a ZIP of well-known XML parts. We build the smallest valid
+// set (content-types, relationships, word/document.xml) with jszip so Word can
+// open it. No Calibre / no CloudConvert → immune to 402.
+async function epubToDocx(inputPath: string): Promise<Buffer> {
+  const JSZip = (await import('jszip')).default;
+  const chapters = await extractEpubTextChapters(inputPath);
+  const paragraphs = chapters
+    .flatMap((ch) =>
+      ch
+        .split(/\n{2,}/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+        .map(
+          (p) =>
+            `        <w:p><w:r><w:t xml:space="preserve">${xmlEscape(p)}</w:t></w:r></w:p>`,
+        ),
+    )
+    .join('\n');
+
+  const documentXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+${paragraphs}
+  </w:body>
+</w:document>`;
+
+  const contentTypes = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`;
+
+  const rootRels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+</Relationships>`;
+
+  const docRels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+</Relationships>`;
+
+  const zip = new JSZip();
+  zip.file('[Content_Types].xml', contentTypes);
+  zip.file('_rels/.rels', rootRels);
+  zip.file('word/document.xml', documentXml);
+  zip.file('word/_rels/document.xml.rels', docRels);
+  return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 }
 
 /**
@@ -392,6 +484,11 @@ export async function executeConversion(
   // extraction, wrapped in a minimal RTF document. Avoids the 402 quota wall.
   const isEpubToRtf = sourceFormat === 'epub' && targetFormat === 'rtf';
 
+  // EPUB → FB2 (FictionBook XML) and EPUB → DOCX (OOXML) are also pure-JS:
+  // both are text-derived formats we can synthesize without CloudConvert.
+  const isEpubToFb2 = sourceFormat === 'epub' && targetFormat === 'fb2';
+  const isEpubToDocx = sourceFormat === 'epub' && targetFormat === 'docx';
+
   try {
     await validateInputFile(inputPath, sourceFormat);
 
@@ -403,6 +500,12 @@ export async function executeConversion(
     } else if (isEpubToRtf) {
       const rtf = await epubToRtf(inputPath);
       writeFileSync(outputPath, rtf, 'utf8');
+    } else if (isEpubToFb2) {
+      const fb2 = await epubToFb2(inputPath);
+      writeFileSync(outputPath, fb2, 'utf8');
+    } else if (isEpubToDocx) {
+      const docx = await epubToDocx(inputPath);
+      writeFileSync(outputPath, docx);
     } else {
       // Check if Calibre is available
       let calibreAvailable = false;
