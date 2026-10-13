@@ -43,7 +43,26 @@ function argOf(flag, fallback) {
 
 const SITE = argOf('--site', DEFAULT_SITE)
 const DAYS = Number(argOf('--days', '30'))
-const DIMENSION = argOf('--dimension', 'query') // query | page | country | device
+
+// Accepts one dimension or several, comma-separated:
+//   --dimension query            → ["query"]            (default, unchanged)
+//   --dimension query,page       → ["query","page"]     (M17: landing-page map)
+//
+// Why two dimensions matter: `query` alone tells you a query's average position
+// but NOT which URL earned it. `["query","page"]` is the only GSC shape that
+// answers "this query ranks THIS page" — verified live 2026-10-13 (489 rows,
+// every one carrying a landing URL). Bing's GetPageStats is page-level only and
+// cannot substitute; see scripts/build-page-series.mjs for that distinction.
+//
+// A single dimension keeps the historical output filename and shape, so existing
+// snapshots in 数据分析/ stay valid.
+const DIMENSIONS = argOf('--dimension', 'query')
+  .split(',')
+  .map((d) => d.trim())
+  .filter(Boolean)
+// Filename token: comma would break the GSC_API_query_page_*.json matchers that
+// build-keyword-series.mjs and build-page-attribution.mjs use, so join with '_'.
+const DIMENSION = DIMENSIONS.join('_')
 
 if (!fs.existsSync(SA_PATH)) {
   console.error(`Missing service account: ${SA_PATH}`)
@@ -115,7 +134,7 @@ async function main() {
     body: JSON.stringify({
       startDate,
       endDate,
-      dimensions: [DIMENSION],
+      dimensions: DIMENSIONS,
       rowLimit: 25000,
       type: 'web',
     }),

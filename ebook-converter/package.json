@@ -32,6 +32,8 @@
     "fetch:bing": "node scripts/fetch-bing-webmaster.mjs",
     "fetch:gsc": "node scripts/fetch-gsc-webmaster.mjs",
     "build:keywords": "node scripts/build-keyword-series.mjs",
+    "build:pages": "node scripts/build-page-series.mjs",
+    "build:attribution": "node scripts/build-page-attribution.mjs",
     "fetch:competitor": "node scripts/fetch-competitor-serp.mjs",
     "build:competitor": "node scripts/build-competitor-series.mjs",
     "export:sheets": "node scripts/export-sheets.mjs",
