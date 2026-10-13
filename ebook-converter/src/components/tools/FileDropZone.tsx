@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   BookMarked,
   Loader2,
+  AlertTriangle,
 } from "lucide-react"
 import { cn, formatBytes } from "@/lib/utils"
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
@@ -36,6 +37,7 @@ interface FileInfo {
   isValidFormat: boolean
   isTooLarge: boolean
   error?: string
+  warning?: string
 }
 
 function getFormatIcon(format: string) {
@@ -55,6 +57,12 @@ function getFormatIcon(format: string) {
   }
 }
 
+// Soft warning when a valid file is close to the hard cap. Files near the
+// 4MB limit (or with heavy images / complex layout) can still blow the Vercel
+// Hobby 60s function timeout even though they pass the size check — surface it
+// before the user waits 50s for a 500.
+const LARGE_FILE_WARN_BYTES = MAX_FILE_SIZE_BYTES * 0.75
+
 function parseFileInfo(file: File): FileInfo {
   const name = file.name
   const ext = name.split(".").pop()?.toLowerCase() || ""
@@ -69,6 +77,15 @@ function parseFileInfo(file: File): FileInfo {
     error = "File too large — the free plan accepts files up to " + MAX_FILE_SIZE_MB + "MB per upload."
   }
 
+  // Non-blocking heads-up for valid-but-heavy files.
+  let warning: string | undefined
+  if (!error && file.size > LARGE_FILE_WARN_BYTES) {
+    warning =
+      "This file is close to the " +
+      MAX_FILE_SIZE_MB +
+      "MB limit. Large or image-heavy files may convert slowly or exceed the free plan's processing time."
+  }
+
   return {
     name,
     size: file.size,
@@ -78,6 +95,7 @@ function parseFileInfo(file: File): FileInfo {
     isValidFormat,
     isTooLarge,
     error,
+    warning,
   }
 }
 
@@ -231,6 +249,12 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
                 ) : (
                   <p className="text-xs text-gray-400">No metadata found</p>
                 )}
+                {fileInfo.warning && (
+                  <div className="flex items-start gap-1.5 rounded-md bg-amber-50 px-2.5 py-1.5 text-xs leading-snug text-amber-700">
+                    <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                    <span>{fileInfo.warning}</span>
+                  </div>
+                )}
                 <CheckCircle2 className="h-4 w-4 text-green-500" />
               </>
             )}
@@ -253,6 +277,9 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
               <span className="rounded bg-gray-100 px-1.5 py-0.5">FB2</span>
               <span className="text-xs">• Max {MAX_FILE_SIZE_MB}MB per file</span>
             </div>
+            <p className="mt-1 max-w-sm text-center text-[11px] leading-relaxed text-amber-600">
+              Files near the limit or with many images may convert slowly or exceed the free plan's processing time.
+            </p>
           </>
         )}
         <input
