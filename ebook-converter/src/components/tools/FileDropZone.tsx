@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useCallback, useState, useRef } from "react"
+import { useLocale } from "next-intl"
 import {
   Upload,
   File as FileIcon,
@@ -63,7 +64,31 @@ function getFormatIcon(format: string) {
 // before the user waits 50s for a 500.
 const LARGE_FILE_WARN_BYTES = MAX_FILE_SIZE_BYTES * 0.75
 
-function parseFileInfo(file: File): FileInfo {
+// The component is otherwise English-hardcoded; we localize just these two
+// user-facing strings so the free-plan timeout heads-up also shows on the
+// Spanish (/es/) pages. Keep en as the safe fallback for any unknown locale.
+type UiLocale = "en" | "es"
+
+const UPLOAD_HINTS: Record<UiLocale, string> = {
+  en: "Files near the limit or with many images may convert slowly or exceed the free plan's processing time.",
+  es: "Los archivos cerca del límite o con muchas imágenes pueden convertirse lentamente o superar el tiempo de procesamiento del plan gratuito.",
+}
+
+const LARGE_FILE_WARNINGS: Record<UiLocale, string> = {
+  en: "This file is close to the {mb}MB limit. Large or image-heavy files may convert slowly or exceed the free plan's processing time.",
+  es: "Este archivo está cerca del límite de {mb} MB. Los archivos grandes o con muchas imágenes pueden convertirse lentamente o superar el tiempo de procesamiento del plan gratuito.",
+}
+
+function hintFor(locale: string): string {
+  return UPLOAD_HINTS[locale as UiLocale] ?? UPLOAD_HINTS.en
+}
+
+function warningFor(locale: string, mb: number): string {
+  const template = LARGE_FILE_WARNINGS[locale as UiLocale] ?? LARGE_FILE_WARNINGS.en
+  return template.replace("{mb}", String(mb))
+}
+
+function parseFileInfo(file: File, warningMsg: string): FileInfo {
   const name = file.name
   const ext = name.split(".").pop()?.toLowerCase() || ""
   const displayName = FORMAT_DISPLAY_NAMES[ext] || ext.toUpperCase()
@@ -77,13 +102,11 @@ function parseFileInfo(file: File): FileInfo {
     error = "File too large — the free plan accepts files up to " + MAX_FILE_SIZE_MB + "MB per upload."
   }
 
-  // Non-blocking heads-up for valid-but-heavy files.
+  // Non-blocking heads-up for valid-but-heavy files. The copy is passed in
+  // pre-localized (en/es) so the same warning shows on /es/ pages.
   let warning: string | undefined
   if (!error && file.size > LARGE_FILE_WARN_BYTES) {
-    warning =
-      "This file is close to the " +
-      MAX_FILE_SIZE_MB +
-      "MB limit. Large or image-heavy files may convert slowly or exceed the free plan's processing time."
+    warning = warningMsg
   }
 
   return {
@@ -106,6 +129,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   const [metaLoading, setMetaLoading] = useState(false)
   const [metaError, setMetaError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const locale = useLocale()
 
   const extractMetadata = useCallback(async (file: File) => {
     if (!showMetadata) return
@@ -122,11 +146,11 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   }, [showMetadata])
 
   const handleFile = useCallback((file: File) => {
-    const info = parseFileInfo(file)
+    const info = parseFileInfo(file, warningFor(locale, MAX_FILE_SIZE_MB))
     setFileInfo(info)
     extractMetadata(file)
     onFileSelect(file)
-  }, [extractMetadata, onFileSelect])
+  }, [extractMetadata, onFileSelect, locale])
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -278,7 +302,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
               <span className="text-xs">• Max {MAX_FILE_SIZE_MB}MB per file</span>
             </div>
             <p className="mt-1 max-w-sm text-center text-[11px] leading-relaxed text-amber-600">
-              Files near the limit or with many images may convert slowly or exceed the free plan's processing time.
+              {hintFor(locale)}
             </p>
           </>
         )}
