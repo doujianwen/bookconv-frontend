@@ -1,5 +1,5 @@
 export const slug = 'epub-to-txt';
-export const title = 'EPUB to TXT Converter — Extract Plain Text';
+export const title = 'EPUB to TXT Converter — Extract Plain Text Free Online';
 export const metaDescription = 'Free EPUB to TXT converter — extract clean plain text for AI analysis, translation, or screen readers in seconds. No sign-up, preserves chapters and structure.';
 export const level = 'S' as const;
 export const wordCount = 2800;

@@ -1,5 +1,5 @@
 export const slug = 'epub-to-doc';
-export const title = 'EPUB to DOC Converter — Legacy Word Format';
+export const title = 'EPUB to DOC Converter — Legacy Word Format (Word 97-2003)';
 export const metaDescription = 'Free EPUB to DOC converter. Extract text and formatting from any EPUB into legacy Word 97-2003 .doc format — no sign-up, works with enterprise systems that require old DOC files.';
 export const level = 'B' as const;
 export const wordCount = 820;
@@ -21,6 +21,8 @@ That design gives EPUB its defining trait: **reflowable text**. There are no fix
 - **Reflowable** — adapts to any screen, any font size
 - **Structured** — chapters, headings, and navigation are semantic, not visual guesses
 - **Universally supported** — Apple Books, Kobo, Google Play Books, and now Kindle
+
+Not sure whether EPUB or MOBI is the right source format for your reader? Our [EPUB vs MOBI comparison](/blog/epub-vs-mobi) breaks it down by device and feature.
 
 The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in. The same pipeline runs the other direction too: an old Word file becomes a reflowable book with [DOC to EPUB](/convert/doc-to-epub).`
     },
