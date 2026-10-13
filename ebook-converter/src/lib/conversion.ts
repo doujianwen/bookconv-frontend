@@ -207,13 +207,14 @@ export type ConversionJobResult = {
   fileSize?: number;
 };
 
-// --- Pure-JS EPUB → TXT (no Calibre required) ---
+// --- Shared EPUB text extraction (no Calibre required) ---
 //
 // EPUB is a ZIP containing XHTML/HTML files. We parse container.xml → OPF
 // to find the spine (reading order), extract each chapter's HTML, strip
-// tags, and concatenate into plain text with chapter separators.
-
-async function epubToTxt(inputPath: string): Promise<string> {
+// tags, and return an array of plain-text chapters in reading order.
+// Reused by both the TXT and RTF pure-JS paths so neither depends on
+// CloudConvert (which returns 402 once conversion credits are exhausted).
+async function extractEpubTextChapters(inputPath: string): Promise<string[]> {
   const JSZip = (await import('jszip')).default;
   const data = readFileSync(inputPath);
   const zip = await JSZip.loadAsync(data);
@@ -300,7 +301,45 @@ async function epubToTxt(inputPath: string): Promise<string> {
     throw new Error('Conversion failed: no text content could be extracted from EPUB');
   }
 
-  return parts.join('\n\n---\n\n');
+  return parts;
+}
+
+// --- Pure-JS EPUB → TXT (no Calibre required) ---
+async function epubToTxt(inputPath: string): Promise<string> {
+  const chapters = await extractEpubTextChapters(inputPath);
+  return chapters.join('\n\n---\n\n');
+}
+
+// --- Pure-JS EPUB → RTF (no Calibre / no CloudConvert required) ---
+//
+// RTF is a plain-text markup format. We wrap the extracted chapters in a
+// minimal valid RTF 1.6 document (UTF-8 codepage 65001) so EPUB → RTF no
+// longer routes through CloudConvert and is immune to its 402 quota errors.
+function rtfEscape(s: string): string {
+  return s.replace(/\\/g, '\\\\').replace(/\{/g, '\\{').replace(/\}/g, '\\}');
+}
+
+function plainTextToRtfBody(text: string): string {
+  return rtfEscape(text)
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .replace(/\n/g, '\\par ');
+}
+
+function buildRtf(chapters: string[]): string {
+  const body = chapters.map(plainTextToRtfBody).join('\\par\\par ---\\par\\par ');
+  return (
+    '{\\rtf1\\ansi\\ansicpg65001\\uc1\\deff0' +
+    '{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}' +
+    '\\viewkind4\\pard\\lang1033\\f0\\fs24 ' +
+    body +
+    '\\par }'
+  );
+}
+
+async function epubToRtf(inputPath: string): Promise<string> {
+  const chapters = await extractEpubTextChapters(inputPath);
+  return buildRtf(chapters);
 }
 
 /**
@@ -349,6 +388,10 @@ export async function executeConversion(
   // HTML/XHTML content files, strip tags → plain text. Works on Vercel.
   const isEpubToTxt = sourceFormat === 'epub' && targetFormat === 'txt';
 
+  // EPUB → RTF also done in pure JS (no Calibre / no CloudConvert): same
+  // extraction, wrapped in a minimal RTF document. Avoids the 402 quota wall.
+  const isEpubToRtf = sourceFormat === 'epub' && targetFormat === 'rtf';
+
   try {
     await validateInputFile(inputPath, sourceFormat);
 
@@ -357,6 +400,9 @@ export async function executeConversion(
     } else if (isEpubToTxt) {
       const txt = await epubToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');
+    } else if (isEpubToRtf) {
+      const rtf = await epubToRtf(inputPath);
+      writeFileSync(outputPath, rtf, 'utf8');
     } else {
       // Check if Calibre is available
       let calibreAvailable = false;
