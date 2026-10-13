@@ -809,7 +809,8 @@
           "due": "2026-10-10",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "2026-10-13 完成：数据分析/竞品外链差距清单-M4-5-2026-10-13.md（19 域：可做13/待定4/不可做2类）。诚实口径=机制级+AI引用级 gap（无 Ahrefs/Semrush，Bing GetLinkCounts 实测返回空）；渠道沿用外链计划-V1，新增 AI 引用域证据（wikipedia/bookfere/everydaytech/amazon）。首个零成本动作：howtoconvert.co K4 草稿邮件待发。"
         }
       ]
     },
@@ -868,8 +869,9 @@
           "due": "2026-10-10",
           "priority": "P2",
           "tier": "SUPP",
-          "status": "todo",
-          "note": "🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。"
+          "status": "done",
+          "note": "🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。",
+          "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。"
         }
       ]
     },
