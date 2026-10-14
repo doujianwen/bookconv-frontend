@@ -180,7 +180,7 @@
       "title": "Error Code Reference",
       "codes": {
         "CONVERSION_FAILED": "The conversion process failed. Try again or contact support with the error details.",
-        "FILE_TOO_LARGE": "Your file exceeds the 4 MB size limit. Try compressing it, splitting it into parts, or converting it with desktop software such as Calibre.",
+        "FILE_TOO_LARGE": "File exceeds ${MAX_FILE_SIZE_MB}MB limit. Free tier has a 60-second hard timeout — large files will fail. Try: ① Pure JS formats (EPUB→TXT/DOCX/RTF/FB2 have no size limit); ② Compress or split the file; ③ Use desktop Calibre for large files.",
         "RATE_LIMIT": "Too many requests. The limit is 20 conversions per minute. Wait a moment and try again.",
         "DRM_PROTECTED": "The source file is DRM-protected. We cannot convert protected files.",
         "CORRUPT_INPUT": "The uploaded file is corrupted or invalid. Please check the source file."

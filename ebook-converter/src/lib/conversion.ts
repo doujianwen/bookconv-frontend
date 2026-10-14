@@ -434,6 +434,232 @@ ${paragraphs}
   return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 }
 
+// --- Pure-JS DOCX → TXT extraction ---
+//
+// DOCX is a ZIP archive containing XML files. We extract word/document.xml
+// and parse it to get the text content, stripping XML tags.
+async function docxToTxt(inputPath: string): Promise<string> {
+  const JSZip = (await import('jszip')).default;
+  const data = readFileSync(inputPath);
+  const zip = await JSZip.loadAsync(data);
+
+  // Find document.xml
+  const docFile = zip.file('word/document.xml');
+  if (!docFile) throw new Error('DOCX: missing word/document.xml');
+
+  const docXml = await docFile.async('text');
+
+  // Extract text from <w:t> tags
+  const textParts: string[] = [];
+  const tTagRegex = /<w:t[^>]*>([^<]*)<\/w:t>/g;
+  let match;
+  while ((match = tTagRegex.exec(docXml)) !== null) {
+    textParts.push(match[1]);
+  }
+
+  // Also handle <w:sep> for paragraph breaks
+  const sepCount = (docXml.match(/<w:sep\b/g) || []).length;
+
+  let text = textParts.join(' ');
+
+  // Add paragraph breaks
+  const pRegex = /<w:p[^>]*>/g;
+  let pMatch;
+  let lastPIndex = -1;
+  while ((pMatch = pRegex.exec(docXml)) !== null) {
+    if (pMatch.index !== lastPIndex) {
+      text += '\n';
+      lastPIndex = pMatch.index;
+    }
+  }
+
+  // Clean up
+  text = text
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+
+  if (!text) throw new Error('DOCX: no text content found');
+  return text;
+}
+
+// --- Pure-JS HTML → TXT extraction ---
+//
+// Simple HTML to plain text conversion. Strips all HTML tags and normalizes whitespace.
+async function htmlToTxt(inputPath: string): Promise<string> {
+  const data = readFileSync(inputPath, 'utf8');
+
+  // Remove script and style blocks
+  let text = data
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+
+  // Convert block-level tags to newlines
+  text = text
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|div|h[1-6]|li|tr|blockquote|pre)>/gi, '\n')
+    .replace(/<li[^>]*>/gi, '  - ')
+    .replace(/<(\/?table|\/?tr|\/?td|\/?th)[^>]*>/gi, '\t');
+
+  // Remove all remaining tags
+  text = text.replace(/<[^>]+>/g, '');
+
+  // Decode HTML entities
+  text = text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+
+  // Normalize whitespace
+  text = text
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+
+  if (!text) throw new Error('HTML: no text content found');
+  return text;
+}
+
+// --- Pure-JS MOBI/AZW3 → TXT extraction ---
+//
+// MOBI (Mobipocket) and AZW3 (Kindle Format 8) are binary formats with
+// embedded text. We parse the header to find the text section and extract
+// raw text content. This is a best-effort implementation that handles
+// common cases but may not preserve all formatting.
+//
+// Key structures:
+//   - MOBI: PalmDOC header + EXTH header + text chunks
+//   - AZW3: HTML-like structure wrapped in custom container
+async function mobiToTxt(inputPath: string): Promise<string> {
+  const data = readFileSync(inputPath);
+
+  // Try to detect if this is AZW3 (KF8) or legacy MOBI
+  const isAzw3 = data.subarray(60, 64).toString('latin1') === 'TPZ3';
+
+  if (isAzw3) {
+    // AZW3/KF8: Look for HTML content
+    // The text is typically embedded in the file after the header
+    let text = '';
+
+    // Scan for <body>...</body> patterns (HTML content)
+    const bodyMatch = data.toString('latin1').match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if (bodyMatch) {
+      let html = bodyMatch[1];
+      // Strip HTML tags
+      html = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+      html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+      html = html.replace(/<br\s*\/?>/gi, '\n');
+      html = html.replace(/<\/(p|div|h[1-6]|li|tr)>/gi, '\n');
+      html = html.replace(/<li[^>]*>/gi, '  - ');
+      html = html.replace(/<[^>]+>/g, '');
+      html = html.replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+        .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+      text = html.replace(/\n{3,}/g, '\n\n').trim();
+    }
+
+    if (text) return text;
+    throw new Error('AZW3: no extractable text content found');
+  }
+
+  // Legacy MOBI (PalmDOC)
+  // Parse EXTH header to find text offsets
+  let textOffset = -1;
+  let textLength = -1;
+
+  // Check for EXTH header (starts at offset 0x80)
+  const exthMarker = data.subarray(0x80, 0x84).toString('utf8');
+  if (exthMarker === 'EXTH') {
+    const exthLength = data.readUInt32BE(0x84);
+    // Scan for known EXTH tags
+    for (let i = 0x88; i < 0x88 + exthLength - 8; i += 8) {
+      const tag = data.readUInt32BE(i);
+      const length = data.readUInt32BE(i + 4);
+      if (tag === 1009 && i + 8 + 4 <= data.length) {
+        textOffset = data.readUInt32BE(i + 8);
+      }
+      if (tag === 1010 && i + 8 + 4 <= data.length) {
+        textLength = data.readUInt32BE(i + 8);
+      }
+    }
+  }
+
+  // Fallback: scan for text region
+  if (textOffset < 0 || textLength <= 0) {
+    // Try to find text after the header (typically after 0x100)
+    const headerEnd = Math.min(0x1000, data.length);
+    const headerStr = data.subarray(0, headerEnd).toString('latin1');
+
+    // Look for <DOCTYPE or <html or <body markers
+    const htmlMatch = headerStr.match(/<(?:DOCTYPE|html|body)[^>]*>/i);
+    if (htmlMatch) {
+      const startIdx = headerStr.indexOf(htmlMatch[0]);
+      const contentStart = startIdx + htmlMatch[0].length;
+      // Extract text until we hit non-text characters
+      let endIdx = contentStart;
+      while (endIdx < data.length && endIdx < contentStart + 10 * 1024 * 1024) {
+        const byte = data[endIdx];
+        // Stop at null bytes or non-printable characters (except common whitespace)
+        if (byte === 0 || (byte < 32 && byte !== 10 && byte !== 13 && byte !== 9)) {
+          break;
+        }
+        endIdx++;
+      }
+
+      if (endIdx > contentStart) {
+        textOffset = contentStart;
+        textLength = endIdx - contentStart;
+      }
+    }
+  }
+
+  if (textOffset < 0 || textLength <= 0) {
+    throw new Error('MOBI: could not locate text content in file');
+  }
+
+  // Extract and decode text
+  const rawText = data.subarray(textOffset, textOffset + textLength).toString('latin1');
+
+  // Try UTF-8 first, fall back to Windows-1252
+  let text: string;
+  try {
+    // Check for BOM
+    if (rawText.startsWith('\ufeff')) {
+      text = rawText.slice(1);
+    } else {
+      // Try to interpret as UTF-8
+      text = Buffer.from(rawText, 'binary').toString('utf8');
+      // Validate - if it contains replacement characters, try Latin1
+      if (text.includes('\ufffd')) {
+        text = rawText;
+      }
+    }
+  } catch {
+    text = rawText;
+  }
+
+  // Strip any remaining markup
+  text = text.replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return text;
+}
+
 /**
  * Execute a single conversion synchronously (no queue / no Redis).
  * Returns the output encoded as base64 so the calling API route can deliver it
@@ -484,10 +710,22 @@ export async function executeConversion(
   // extraction, wrapped in a minimal RTF document. Avoids the 402 quota wall.
   const isEpubToRtf = sourceFormat === 'epub' && targetFormat === 'rtf';
 
-  // EPUB → FB2 (FictionBook XML) and EPUB → DOCX (OOXML) are also pure-JS:
+  // EPUB → DOCX (OOXML) are also pure-JS:
   // both are text-derived formats we can synthesize without CloudConvert.
   const isEpubToFb2 = sourceFormat === 'epub' && targetFormat === 'fb2';
   const isEpubToDocx = sourceFormat === 'epub' && targetFormat === 'docx';
+
+  // MOBI/AZW3 → TXT pure JS path (no CloudConvert, no Calibre)
+  // Parses the MOBI/MOBIPocket header to extract text sections.
+  const isMobiToTxt = (sourceFormat === 'mobi' || sourceFormat === 'azw3') && targetFormat === 'txt';
+
+  // DOCX → TXT pure JS path (no CloudConvert, no Calibre)
+  // Parses OOXML structure ([Content_Types].xml + word/document.xml) to extract text.
+  const isDocxToTxt = sourceFormat === 'docx' && targetFormat === 'txt';
+
+  // HTML → TXT pure JS path (no CloudConvert, no Calibre)
+  // Strips HTML tags directly from the source file.
+  const isHtmlToTxt = sourceFormat === 'html' && targetFormat === 'txt';
 
   try {
     await validateInputFile(inputPath, sourceFormat);
@@ -506,6 +744,15 @@ export async function executeConversion(
     } else if (isEpubToDocx) {
       const docx = await epubToDocx(inputPath);
       writeFileSync(outputPath, docx);
+    } else if (isMobiToTxt) {
+      const txt = await mobiToTxt(inputPath);
+      writeFileSync(outputPath, txt, 'utf8');
+    } else if (isDocxToTxt) {
+      const txt = await docxToTxt(inputPath);
+      writeFileSync(outputPath, txt, 'utf8');
+    } else if (isHtmlToTxt) {
+      const txt = await htmlToTxt(inputPath);
+      writeFileSync(outputPath, txt, 'utf8');
     } else {
       // Check if Calibre is available
       let calibreAvailable = false;

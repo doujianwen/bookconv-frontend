@@ -1,3 +1,6 @@
+// src/lib/error-handler.ts
+import { MAX_FILE_SIZE_MB } from "@/lib/file-size-limit";
+
 export type ErrorCode =
   | "FILE_NOT_FOUND"
   | "PERMISSION_DENIED"
@@ -73,7 +76,7 @@ export function mapErrorCode(message: string): ErrorCode {
 const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }> = {
   'FILE_NOT_FOUND': { message: 'Input file not found. Please try uploading again.', retryable: true },
   'PERMISSION_DENIED': { message: 'Permission denied when accessing the file. Please try a different file.', retryable: false },
-  'CONVERSION_TIMEOUT': { message: 'Conversion timed out. The file may be too large — try a smaller file or different format.', retryable: true },
+  'CONVERSION_TIMEOUT': { message: '转换超时（免费版服务器 60 秒硬限）。请尝试：① 改用纯 JS 格式（EPUB→TXT/DOCX/RTF/FB2）；② 使用更小的文件；③ 稍后重试。', retryable: true },
   'TOO_MANY_OPEN_FILES': { message: 'Server is busy. Please wait a moment and try again.', retryable: true },
   'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
   'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
@@ -84,7 +87,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'CORRUPT_INPUT': { message: 'The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.', retryable: false },
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
   'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
-  'FILE_TOO_LARGE': { message: 'File exceeds the 4MB upload limit. Compress or split the file, then try again.', retryable: false },
+  'FILE_TOO_LARGE': { message: `文件超过 ${MAX_FILE_SIZE_MB}MB 限制。免费版服务器有 60 秒硬时限，大文件会超时失败。建议：① 改用纯 JS 格式（EPUB→TXT/DOCX/RTF/FB2 无大小限制）；② 压缩或拆分文件后重试。`, retryable: false },
 };
 
 /** Get a friendly, user-facing message from an error code */

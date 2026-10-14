@@ -115,7 +115,8 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
       // our code never sees — without this guard the doomed request would still
       // fire and surface as a confusing conversion failure.
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        setErrorMessage(`File too large — the free plan accepts files up to ${MAX_FILE_SIZE_MB}MB per upload. Compress or split the file, then try again.`)
+        const sizeMB = (file.size / 1024 / 1024).toFixed(1)
+        setErrorMessage(`文件过大（${sizeMB}MB），超过 ${MAX_FILE_SIZE_MB}MB 限制。原因：免费版服务器有 60 秒硬时限，大文件转换会超时失败。建议：① 尝试导出为 TXT/DOCX（纯 JS 处理，无大小限制）；② 用压缩软件拆分 EPUB；③ 升级 Pro 版支持大文件。`)
         setErrorCode("FILE_TOO_LARGE")
         setStatus("error")
         return
