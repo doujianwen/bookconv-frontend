@@ -1,0 +1,61 @@
+{
+  "measurement_note": "由真实 Bing Webmaster Tools 导出 CSV 机械转换生成（scripts 仅做字段映射，无任何数值编造）。提取规则：仅保留与冻结 query set（39 条）精确匹配的 grounding query 行。Day0 基线（bing_analysis_2026-09-13.json）为导出 top-15 行，含 6 条非冻结集 query，聚合口径不可直接对比，已在分析文档中声明。",
+  "source_export": "www.bookconv.com_AISearchQueriesReport_2026_9_27.csv",
+  "snapshot_date": "2026-09-27",
+  "checkpoint": "Day14",
+  "window_close_date": "",
+  "csv_total_rows": 137,
+  "query_set_exact_matches": 10,
+  "top_queries": [
+    {
+      "query": "ebook reader app",
+      "cites": 293,
+      "share": "20.04%"
+    },
+    {
+      "query": "djvu to pdf",
+      "cites": 278,
+      "share": "3.56%"
+    },
+    {
+      "query": "convert epub to azw3",
+      "cites": 238,
+      "share": "24.26%"
+    },
+    {
+      "query": "convert mobi to epub",
+      "cites": 193,
+      "share": "17.23%"
+    },
+    {
+      "query": "what format does kindle use",
+      "cites": 118,
+      "share": "32.60%"
+    },
+    {
+      "query": "transfer ebooks between devices",
+      "cites": 82,
+      "share": "46.59%"
+    },
+    {
+      "query": "Harry Potter digital books multiple devices",
+      "cites": 77,
+      "share": "55.40%"
+    },
+    {
+      "query": "best free epub reader",
+      "cites": 74,
+      "share": "15.16%"
+    },
+    {
+      "query": "epub to mobi converter free",
+      "cites": 46,
+      "share": "10.04%"
+    },
+    {
+      "query": "convert epub to pdf",
+      "cites": 8,
+      "share": "0.51%"
+    }
+  ]
+}
