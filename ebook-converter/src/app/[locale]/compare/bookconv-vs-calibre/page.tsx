@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Check, ExternalLink } from "lucide-react"
 import { getLocale } from "@/i18n/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -14,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "BookConv vs Calibre: Which eBook Converter is Right for You?",
-    description: "Compare BookConv (free online converter) vs Calibre (desktop software). Learn which tool is better for your eBook conversion needs.",
+    description: clampMetaDescription("Compare BookConv (free online converter) vs Calibre (desktop software). Learn which tool is better for your eBook conversion needs."),
     keywords: ["bookconv vs calibre", "bookconv vs calibre comparison", "best ebook converter", "online vs desktop ebook converter"],
     alternates: { canonical, languages },
     openGraph: {

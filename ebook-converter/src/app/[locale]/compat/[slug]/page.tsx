@@ -10,6 +10,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { clampMetaDescription } from "@/lib/seo/meta-description";
 import {
   AlertTriangle,
   BookOpen,
@@ -37,7 +38,7 @@ export async function generateMetadata({
   if (!report) return {};
   const title = `${report.sourceFormat.toUpperCase()} to ${report.targetFormat.toUpperCase()} — compatibility report`;
   const passed = report.checks.filter((c) => c.passed).length;
-  const description = `Real-world conversion test: ${report.sourceFormat} to ${report.targetFormat} using ${report.engineVersion}. ${passed}/${report.checks.length} integrity checks passed.`;
+  const description = clampMetaDescription(`Real-world conversion test: ${report.sourceFormat} to ${report.targetFormat} using ${report.engineVersion}. ${passed}/${report.checks.length} integrity checks passed.`);
   const url = `https://www.bookconv.com/compat/${slug}`;
   return {
     title,

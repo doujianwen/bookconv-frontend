@@ -4,6 +4,7 @@ import { KEYWORDS } from "@/lib/constants"
 import { getConversion, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 interface ConvertIndexProps {
   params: Promise<{ locale: string }>
@@ -56,7 +57,7 @@ export default async function ConvertIndexPage() {
         source: k.source,
         target: k.target,
         label: `${formatLabel(k.source)} to ${formatLabel(k.target)}`,
-        description: conversion?.description,
+        description: clampMetaDescription(conversion?.description),
       }
     })
 

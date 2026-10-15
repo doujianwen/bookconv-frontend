@@ -5,6 +5,7 @@ import { Calendar, Tag } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"
 
 const PAGE_SIZE = 8
@@ -36,7 +37,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
   return {
     title: pageTitle,
-    description: t("blog.subtitle") || "Expert guides on ebook conversion.",
+    description: clampMetaDescription(t("blog.subtitle") || "Expert guides on ebook conversion."),
     alternates: { canonical, languages },
     robots,
     openGraph: {

@@ -3,6 +3,7 @@ import Link from "next/link"
 import { BookOpen, Shield, Zap, Globe, GitBranch } from "lucide-react"
 import { getLocale } from "@/i18n/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -14,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "About BookConv — Free Online eBook Converter",
-    description: "Learn about BookConv's mission to make eBook conversion accessible, secure, and free for everyone. Powered by Calibre, trusted by readers worldwide.",
+    description: clampMetaDescription("Learn about BookConv's mission to make eBook conversion accessible, secure, and free for everyone. Powered by Calibre, trusted by readers worldwide."),
     keywords: ["about", "bookconv", "ebook converter", "calibre", "open source", "privacy"],
     alternates: { canonical, languages },
     openGraph: {

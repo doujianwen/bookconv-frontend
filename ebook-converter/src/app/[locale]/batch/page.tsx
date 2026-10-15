@@ -6,6 +6,7 @@ import { BatchUpload } from "@/components/tools/BatchUpload";
 import { getSession } from "@/lib/auth/session";
 import { getPlanByEmail } from "@/lib/subscription";
 import { getPlanById } from "@/lib/payments/service";
+import { clampMetaDescription } from "@/lib/seo/meta-description";
 import UpgradeButton from "@/components/pricing/UpgradeButton";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const prefix = locale === "es" ? "/es" : "";
   const title = "Batch Ebook Converter — Convert Multiple Files at Once";
   const description =
-    "Convert several ebooks to one format in a single batch on BookConv. Free during open beta — upload your files, get a ZIP of converted ebooks, no software install.";
+    clampMetaDescription("Convert several ebooks to one format in a single batch on BookConv. Free during open beta — upload your files, get a ZIP of converted ebooks, no software install.");
   return {
     title,
     description,

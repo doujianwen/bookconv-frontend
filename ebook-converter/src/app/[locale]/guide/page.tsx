@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { getAllGuides } from "@/data/guides"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 export function generateMetadata(): Metadata {
   const { canonical, languages } = buildAlternates({
@@ -11,7 +12,7 @@ export function generateMetadata(): Metadata {
   })
   return {
     title: "Guides",
-    description: "Troubleshooting and how-to guides for ebook format conversion: fix broken layouts, keep images, and choose the right tool for the job.",
+    description: clampMetaDescription("Troubleshooting and how-to guides for ebook format conversion: fix broken layouts, keep images, and choose the right tool for the job."),
     alternates: { canonical, languages },
     openGraph: {
       title: "Guides | BookConv",

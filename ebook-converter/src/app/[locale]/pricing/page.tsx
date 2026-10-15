@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Check, X } from "lucide-react"
 import { PLANS, formatPrice } from "@/lib/payments/service"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
+import { clampMetaDescription } from '@/lib/seo/meta-description'
 import UpgradeButton from "@/components/pricing/UpgradeButton"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: t('pricing.title'),
-    description: t('seo.defaultDescription') || 'Start converting ebooks for free.',
+    description: clampMetaDescription(t('seo.defaultDescription') || 'Start converting ebooks for free.'),
     alternates: {
       canonical: `https://www.bookconv.com/pricing`,
       languages: { en: '/pricing', 'x-default': '/pricing' },

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import { clampMetaDescription } from '@/lib/seo/meta-description'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -8,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const prefix = locale === 'es' ? '/es' : ''
   return {
     title: t('metaTitle'),
-    description: t('metaDescription'),
+    description: clampMetaDescription(t('metaDescription')),
     alternates: {
       canonical: `https://www.bookconv.com${prefix}/tutorial`,
       languages: {

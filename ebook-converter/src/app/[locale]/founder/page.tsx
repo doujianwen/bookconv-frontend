@@ -3,6 +3,7 @@ import Link from "next/link"
 import { User, BookOpen, Brain, TrendingUp, Zap } from "lucide-react"
 import { getLocale } from "@/i18n/utils"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "About the Founder — Hongjian Dou (Andy) | SEO & AI Visibility Expert",
     description:
-      "Meet Hongjian Dou (Andy), founder of BookConv. 20+ years in internet growth, SEO, digital operations, and AI visibility. Now researching how AI search changes content discovery.",
+      clampMetaDescription("Meet Hongjian Dou (Andy), founder of BookConv. 20+ years in internet growth, SEO, digital operations, and AI visibility. Now researching how AI search changes content discovery."),
     keywords: [
       "hongjian dou",
       "andy dou",

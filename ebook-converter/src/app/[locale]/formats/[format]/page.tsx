@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getFormatData, SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { FORMAT_DISPLAY_NAMES } from '@/lib/conversion-map'
 import { buildAlternates } from '@/lib/seo/alternates'
+import { clampMetaDescription } from '@/lib/seo/meta-description'
 import dynamic from 'next/dynamic'
 
 
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: FormatPageProps): Promise<Met
   }
   const display = FORMAT_DISPLAY_NAMES[format] || format.toUpperCase()
   const title = `${display} Format Guide: Pros, Cons & Use Cases`
-  const description = `${display} is a widely used ebook format. Learn its strengths and weaknesses, best use cases, and how to convert it to and from other formats.`
+  const description = clampMetaDescription(`${display} is a widely used ebook format. Learn its strengths and weaknesses, best use cases, and how to convert it to and from other formats.`)
   // M5-1 修复（2026-10-03）：此前手写 languages 硬编码了 /es/formats/* 回指，
   // 但 middleware P3-C 对 /es/formats/* 一律 404 → es 回指全部指向死页。
   // 回归 buildAlternates 单一权威点：formats 无 es 版本 → 只输出 en + x-default。
