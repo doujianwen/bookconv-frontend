@@ -222,8 +222,11 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - sitemap.xml, robots.txt (metadata files — must bypass i18n rewrite)
-     */
-    '/((?!api|auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|manifest.json|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html)$).*)',
+   * - sitemap.xml, robots.txt (metadata files — must bypass i18n rewrite)
+   * - M4-2 (2026-10-15): *.csv (public/data/ downloadable datasets — the
+   *   extension list below omitted csv, so /data/*.csv was rewritten to
+   *   /en/data/*.csv and 404'd into the SPA fallback; verified live)
+   */
+  '/((?!api|auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt|rss.xml|manifest.json|.*\\.(?:svg|png|jpg|jpeg|gif|webp|txt|html|csv)$).*)',
   ],
 };
