@@ -6,6 +6,7 @@ import { getAllGuides } from "@/data/guides"
 import { renderMarkdownToHtml, stripMarkdown, type BlogFaq } from "@/data/blog/types"
 import { getRelatedGuides, getRelatedBlogPostsForGuide } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 interface GuideData {
   slug: string
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   const g = GUIDES[slug]
   if (!g) return {}
 
-  const description = g.problem || g.content.intro || g.title
+  const description = clampMetaDescription(g.problem || g.content.intro || g.title)
 
   const { canonical, languages } = buildAlternates({
     locale: locale,

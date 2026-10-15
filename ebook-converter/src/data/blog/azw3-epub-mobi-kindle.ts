@@ -6,7 +6,7 @@ export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "KINDLE", "PDF", "CONVERT", "AZW3", "KOBO"];
 
 export const content = {
-  "intro": "If you are an avid reader or self-published author, the biggest hurdle is often format compatibility. The short answer is: **Kindle users should use AZW3**, while **Kobo and other e-readers prefer EPUB**. MOBI is outdated for new devices. Use tools like [bookconv.com](/convert) or Calibre to convert your files instantly. For the head-to-head of the two formats themselves, see our [EPUB vs MOBI comparison](/blog/epub-vs-mobi).",
+  "intro": "If you are an avid reader or self-published author, the biggest hurdle is often format compatibility. The short answer is: Kindle users should use AZW3, while Kobo and other e-readers prefer EPUB. MOBI is outdated for new devices. Use tools like BookConv or Calibre to convert your files instantly. For the head-to-head of the two formats themselves, see our EPUB vs MOBI comparison.",
   "sections": [
     {
       "heading": "Kindle vs. Kobo: Understanding Format Compatibility",

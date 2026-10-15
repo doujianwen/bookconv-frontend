@@ -80,6 +80,7 @@ function changedBlogSlugs() {
 
 const layers = [
   { name: '结构层 (seo-critic)', cmd: 'seo-critic.mjs', scoped: false },
+  { name: 'Meta Description 数据层', cmd: 'audit-meta-descriptions.mjs', scoped: false },
   { name: '内容层 (blog-content)', cmd: 'critic-layer.blog.mjs', scoped: true },
 ];
 

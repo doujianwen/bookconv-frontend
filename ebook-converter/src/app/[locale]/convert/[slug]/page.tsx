@@ -15,6 +15,7 @@ import { CONTENT_MAP } from "@/data/content"
 import { generateConversionPageSchema } from "@/lib/seo/schema"
 import { getRelatedBlogPostsForConversion, getRelatedGuidesForConversion } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
 
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
   const title = isEs ? contentData.es!.title : (contentData?.title || `${source} to ${target} Converter -- Free Online`)
   const subtitle = isEs ? contentData.es!.content.hero.subtitle : (contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`)
-  const description = isEs ? contentData.es!.metaDescription : (contentData?.metaDescription || subtitle)
+  const description = clampMetaDescription(isEs ? contentData.es!.metaDescription : (contentData?.metaDescription || subtitle))
 
   // 3 convert pages have real Spanish translations (epub-to-doc, epub-to-txt, lit-to-epub).
   // Only those pages emit a full en↔es language pair; all others emit en+x-default only.

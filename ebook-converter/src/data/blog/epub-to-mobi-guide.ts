@@ -6,7 +6,7 @@ export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Kindle", "BookConv", "conversion", "guide"];
 
 export const content = {
-  intro: `Upload your EPUB and convert it to MOBI on BookConv in seconds — no Calibre install, no account, no settings to guess at. This guide shows you how to run the conversion cleanly, whether you even need MOBI in 2026, and how to fix the cover, metadata, and table-of-contents problems that quietly ruin most attempts. If you are deciding between EPUB and MOBI for your device, start with our [EPUB vs MOBI comparison](/blog/epub-vs-mobi).`,
+  intro: `Upload your EPUB and convert it to MOBI on BookConv in seconds — no Calibre install, no account, no settings to guess at. This guide shows you how to run the conversion cleanly, whether you even need MOBI in 2026, and how to fix the cover, metadata, and table-of-contents problems that quietly ruin most attempts. If you are deciding between EPUB and MOBI for your device, start with our EPUB vs MOBI comparison.`,
   sections: [
     {
       heading: `Convert EPUB to MOBI on BookConv in Three Steps`,

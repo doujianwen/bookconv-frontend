@@ -6,7 +6,7 @@ export const author = `BookConv Team`;
 export const tags = ["Kindle", "DRM", "MOBI", "AZW3", "EPUB", "BookConv", "Ebook Formats", "Calibre"];
 
 export const content = {
-  intro: `Not every Kindle book can be converted, and the reason has nothing to do with format. About the time you hit Convert, the file turns out to be DRM-wrapped — and no tool, free or paid, can legally open it. This guide gives you the decision rule first: three signals that tell you in seconds whether a file is DRM-free, one free command that confirms it, and what to do in each branch. If you want the step-by-step conversion itself, our [MOBI to EPUB walkthrough](/blog/mobi-to-epub) covers that separately.
+  intro: `Not every Kindle book can be converted, and the reason has nothing to do with format. About the time you hit Convert, the file turns out to be DRM-wrapped — and no tool, free or paid, can legally open it. This guide gives you the decision rule first: three signals that tell you in seconds whether a file is DRM-free, one free command that confirms it, and what to do in each branch. If you want the step-by-step conversion itself, our MOBI to EPUB walkthrough covers that separately.
 
 > BookConv only accepts DRM-free files. Files are processed on our servers and automatically deleted within 1 hour, with no account and no software install.`,
 

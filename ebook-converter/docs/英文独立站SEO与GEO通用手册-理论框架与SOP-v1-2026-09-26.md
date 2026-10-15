@@ -252,9 +252,12 @@
 | 元素 | 规范 | 说明 |
 |------|------|------|
 | Title 长度 | ≤55 字符 | 主流 SERP 展示宽度约束【行业通用】；品牌名由全局模板追加 |
-| Description 长度 | ≤155 字符 | — |
+| Description 长度 | **25–158 字符** | Bing 硬限 160、Google 桌面 ~155-160【2026-10-15 查实】；前 120 字符须承载核心信息（移动端截断点）；过短/超长都会被 Bing SEO 分析器标记 |
+| Description 内容纪律 | 禁 markdown 残留 | `**`/反引号/`[文本](链接)` 等会原样进入 SERP 摘要与页面首段（若首段原样渲染），AI 引用时带噪声 |
 | Title 结构 | `[主关键词前置] + [差异化钩子]` | per-page title **不自带品牌后缀**（防与全局模板叠加成双品牌） |
 | 摩擦词 | 工具页必带 `Free` / `No Sign-up` / `Instant` / `Safe` | 低 CTR 期的优化抓手 |
+
+> **落地纪律【2026-10-15 新增】**：若站点的 meta description 由正文首段（intro/problem）自动生成，必须①渲染层统一截断（单一 helper，如 bookconv 的 `clampMetaDescription`，句末截断 + markdown strip）②数据层门禁扫描全部 description 来源（markdown 残留/过短=ERROR，超长=WARN 或 strict ERROR）③写内容时要求首句可独立成 ≤155 字符摘要。只写文档不建门禁 = 没有标准（bookconv 实测：文档写了 ≤155，线上 100/162 页超标）。
 
 ### 2.5.2 正文结构
 

@@ -14,7 +14,7 @@ export const keyTakeaways = [
   'DRM-protected EPUBs are rejected by every route. Library loans should be delivered through the library app instead.',
 ]
 export const content = {
-  intro: `Sending an EPUB to a Kindle sounds like a one-step task until the book never shows up, arrives without its formatting, or bounces out of your outbox with no explanation. The reason is that "send" actually hides four different delivery routes, and each one handles your file differently. This guide covers the mechanics: which route to use for which situation, the settings that must be right before you press send, and the failure modes that make books vanish. If you are still deciding between the reading methods themselves, start with [How to Read EPUB on Kindle](/guide/how-to-read-epub-on-kindle) — this page picks up where that one ends, at the moment of delivery.`,
+  intro: `Sending an EPUB to a Kindle sounds like a one-step task until the book never shows up, arrives without its formatting, or bounces out of your outbox with no explanation. The reason is that "send" actually hides four different delivery routes, and each one handles your file differently. This guide covers the mechanics: which route to use for which situation, the settings that must be right before you press send, and the failure modes that make books vanish. If you are still deciding between the reading methods themselves, start with How to Read EPUB on Kindle — this page picks up where that one ends, at the moment of delivery.`,
   sections: [
     {
       heading: 'The four delivery routes at a glance',

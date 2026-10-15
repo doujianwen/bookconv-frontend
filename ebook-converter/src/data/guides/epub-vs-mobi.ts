@@ -15,9 +15,9 @@ export const keyTakeaways = [
 export const content = {
   intro: `You have an ebook — maybe a downloaded EPUB from your library, or a MOBI file from an old Kindle purchase — and you need to know which one your device can actually read. The confusion is real: some devices prefer one format, some prefer the other, and a few do not support either without a conversion step.
 
-This guide breaks down **EPUB vs MOBI** in plain terms so you can stop guessing and pick the right file for your reader.
+This guide breaks down EPUB vs MOBI in plain terms so you can stop guessing and pick the right file for your reader.
 
-**Quick answer:** If you have a Kindle from before roughly 2016, convert your EPUB to MOBI. If you have any newer Kindle, convert to AZW3 instead. For Kobo, Apple Books, Google Play, or any non-Amazon reader, EPUB is the correct format.`,
+Quick answer: If you have a Kindle from before roughly 2016, convert your EPUB to MOBI. If you have any newer Kindle, convert to AZW3 instead. For Kobo, Apple Books, Google Play, or any non-Amazon reader, EPUB is the correct format.`,
   sections: [
     {
       heading: 'EPUB at a glance',

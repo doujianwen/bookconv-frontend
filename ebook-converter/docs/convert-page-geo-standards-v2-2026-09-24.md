@@ -66,13 +66,14 @@ Convert Schema: SoftwareApplication + HowTo + FAQPage + BreadcrumbList
 - FAQ 数量 ≥ 6 条
 - 必备章节：When to Use / How to Convert / Format Comparison / Quality Checklist（缺一则扣分）
 - GEO 评分 ≥ 5.0（满分 7）→ PASS；3.0–4.9 → WARN；<3.0 → FAIL
+- 🔴 **metaDescription 25–158 字符**（Bing 硬限 160 / Google ~155-160，2026-10-15 查实）；禁 markdown 残留；es 变体同样遵守。渲染层 `clampMetaDescription` 自动截断兜底，数据层 `npm run audit:meta-desc` 门禁扫描（markdown/过短=ERROR 阻断）
 
 ### 2.3 标准模板（Markdown 格式）
 
 ```typescript
 export const slug = 'epub-to-pdf';
 export const title = 'Free EPUB to PDF Converter — No Sign-up';
-export const metaDescription = 'Convert EPUB to PDF free — no sign-up...';
+export const metaDescription = 'Convert EPUB to PDF free — no sign-up...';  // 25–158 字符，禁 markdown；es 变体同规
 export const level = 'A' as const;
 export const wordCount = 1000;  // 填写真实英文正文词数（审计口径），不再是旧 2000 阈值
 

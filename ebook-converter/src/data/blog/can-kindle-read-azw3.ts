@@ -5,7 +5,7 @@ export const author = "BookConv Team";
 export const tags = ["AZW3", "Kindle", "KF8", "Ebook Formats", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively. The nuance is what happens on the handful of very old devices that predate the format, and how you actually get the file onto the reader. This breaks down exactly which models open AZW3, what to expect on older hardware, and the difference between AZW3 and Amazon's newer KFX. For the full format landscape including when to pick AZW3 over MOBI, see our [Kindle Formats guide](/guide/kindle-formats).`,
+  intro: `Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively. The nuance is what happens on the handful of very old devices that predate the format, and how you actually get the file onto the reader. This breaks down exactly which models open AZW3, what to expect on older hardware, and the difference between AZW3 and Amazon's newer KFX. For the full format landscape including when to pick AZW3 over MOBI, see our Kindle Formats guide.`,
   sections: [
     {
       heading: `Yes — Here's the Direct Answer`,

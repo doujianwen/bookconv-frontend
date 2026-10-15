@@ -19,6 +19,7 @@
     "check:blog": "node scripts/publish-gate.mjs",
     "audit:content": "node scripts/audit-content-integrity.mjs",
     "audit:claims": "node scripts/audit-plan-claims.mjs",
+    "audit:meta-desc": "node scripts/audit-meta-descriptions.mjs",
     "audit:syntax": "node scripts/syntax-sweep.mjs",
     "audit:geo-content": "node scripts/geo-audit-content.mjs --no-online",
     "audit:geo-guide": "node scripts/geo-audit-guide.mjs --no-online",

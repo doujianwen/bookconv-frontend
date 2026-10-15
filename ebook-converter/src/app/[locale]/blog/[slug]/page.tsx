@@ -6,6 +6,7 @@ import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
 import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 
 interface BlogPostData {
@@ -54,7 +55,7 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
   const isEs = locale === "es" && !!post.es
   const displayTitle = isEs ? post.es!.title : post.title
   const displayContent = isEs ? post.es!.content : post.content
-  const description = displayContent.intro || displayTitle
+  const description = clampMetaDescription(displayContent.intro || displayTitle)
   const canonical = `${baseUrl}${isEs ? "/es" : ""}/blog/${slug}`
 
   // 5 blog posts have real Spanish translations. Only those emit en↔es pair;

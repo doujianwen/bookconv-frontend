@@ -5,7 +5,7 @@ export const author = "BookConv Team";
 export const tags = ["KINDLE", "AZW3", "EPUB", "MOBI", "SEND-TO-KINDLE", "EBOOK CONVERSION"];
 
 export const content = {
-  intro: `You already own a Kindle and you have a file — an EPUB from the library, a MOBI you downloaded years ago, or an AZW3 someone sent you. The question is not "which format is best in theory" but "what do I actually do to get this on my device and reading-ready?" This guide is the hands-on walkthrough: how Kindle handles each format, the two ways to deliver a file (Send-to-Kindle vs USB), and the free, no-install steps to convert EPUB or MOBI into the AZW3 your Kindle wants. For the broader "which format fits which device ecosystem" comparison, see our [Kindle & Kobo format guide](/blog/azw3-epub-mobi-kindle-compatibility).`,
+  intro: `You already own a Kindle and you have a file — an EPUB from the library, a MOBI you downloaded years ago, or an AZW3 someone sent you. The question is not "which format is best in theory" but "what do I actually do to get this on my device and reading-ready?" This guide is the hands-on walkthrough: how Kindle handles each format, the two ways to deliver a file (Send-to-Kindle vs USB), and the free, no-install steps to convert EPUB or MOBI into the AZW3 your Kindle wants. For the broader "which format fits which device ecosystem" comparison, see our Kindle & Kobo format guide.`,
   sections: [
     {
       heading: "Which Format Does Your Kindle Actually Want?",

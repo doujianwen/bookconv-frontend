@@ -5,7 +5,7 @@ export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "KINDLE", "PDF", "CONVERT", "LIT", "AZW3"];
 
 export const content = {
-  "intro": "Struggling with older ebook files that won't open on modern devices? Understanding **Lit format conversion** is the key to preserving your digital library. Whether you are dealing with legacy .lit files or need to update them for today's readers, converting your ebooks ensures compatibility without losing your cherished content.",
+  "intro": "Struggling with older ebook files that won't open on modern devices? Understanding Lit format conversion is the key to preserving your digital library. Whether you are dealing with legacy .lit files or need to update them for today's readers, converting your ebooks ensures compatibility without losing your cherished content.",
   "sections": [
     {
       "heading": "Understanding Lit and Other Ebook Formats",

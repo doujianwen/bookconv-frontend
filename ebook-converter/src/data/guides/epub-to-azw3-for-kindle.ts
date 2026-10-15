@@ -18,9 +18,9 @@ export const content = {
 
 You have an EPUB and a Kindle. Emailing the EPUB to Amazon works, but the result is a lottery: covers vanish, spacing shifts, complex layouts flatten. AZW3 is Amazon's premium format that respects your styling.
 
-**Need to convert now?** Use our [free EPUB to AZW3 converter](/convert/epub-to-azw3) — it runs in your browser with no install.
+Need to convert now? Use our free EPUB to AZW3 converter — it runs in your browser with no install.
 
-**Want a detailed walkthrough?** Read our [EPUB to AZW3 tutorial](/blog/epub-to-azw3) for step-by-step instructions covering BookConv, Calibre, and troubleshooting.`,
+Want a detailed walkthrough? Read our EPUB to AZW3 tutorial for step-by-step instructions covering BookConv, Calibre, and troubleshooting.`,
   sections: [
     {
       heading: 'Quick Start: Convert Now',

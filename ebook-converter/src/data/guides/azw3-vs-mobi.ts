@@ -13,7 +13,7 @@ export const keyTakeaways = [
   'If you control the conversion, always prefer AZW3 over MOBI when possible.',
 ]
 export const content = {
-  intro: `Amazon's Kindle ecosystem has two legacy formats — **AZW3** (Kindle Format 8) and **MOBI** — and choosing between them matters if you want your book to look right. AZW3 keeps fonts, layout, and images. MOBI strips most of that away.\n\nThis guide explains the difference so you can convert to the right format and avoid a broken file.`,
+  intro: `Amazon's Kindle ecosystem has two legacy formats — AZW3 (Kindle Format 8) and MOBI — and choosing between them matters if you want your book to look right. AZW3 keeps fonts, layout, and images. MOBI strips most of that away.\n\nThis guide explains the difference so you can convert to the right format and avoid a broken file.`,
   sections: [
     {
       heading: 'Quick comparison',
