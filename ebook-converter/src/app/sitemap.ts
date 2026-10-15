@@ -140,6 +140,11 @@ const STATIC_DATES: Record<string, string> = {
   '/about': '2026-09-18',
   '/founder': '2026-09-25',
   '/compare/bookconv-vs-calibre': '2026-09-18',
+  // M4-2 (2026-10-15): public citable dataset pages under /data/*
+  '/data': '2026-10-15',
+  '/data/bing-ai-citations': '2026-10-15',
+  '/data/google-search-performance': '2026-10-15',
+  '/data/site-event-timeline': '2026-10-15',
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com'
@@ -184,6 +189,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // English-only by design — no /es/ variant (consistent with /about policy).
       { path: '/founder', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/founder'] },
       { path: '/compare/bookconv-vs-calibre', frequency: 'monthly', priority: 0.7, date: STATIC_DATES['/compare/bookconv-vs-calibre'] },
+      // M4-2 (2026-10-15): public dataset pages — en-only (English body, P3-C rule),
+      // each documents source/window/sample-size with a downloadable CSV in public/data/.
+      { path: '/data', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/data'] },
+      { path: '/data/bing-ai-citations', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/data/bing-ai-citations'] },
+      { path: '/data/google-search-performance', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/data/google-search-performance'] },
+      { path: '/data/site-event-timeline', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/data/site-event-timeline'] },
     ]
 
     // /es/* sitemap policy (revised 2026-09-14, supersedes P3-C):

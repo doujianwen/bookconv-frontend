@@ -116,7 +116,10 @@ function gitExec(args, { allowFail = false } = {}) {
   let lastErr = null;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
-      return { ok: true, out: execFileSync('git', args, { cwd: APP_ROOT, encoding: 'utf8' }) };
+      // 🔴 修复（2026-10-15）：成功路径（exit 0）此前不返回 exitCode，导致
+      // H3 的 `res.exitCode === 0` 恒为 false —— 所有真实命中的 ignore 规则
+      // 全被误判为「未命中」（假 FAIL，门禁结构性永远红）。exit 0 必须显式带出。
+      return { ok: true, out: execFileSync('git', args, { cwd: APP_ROOT, encoding: 'utf8' }), exitCode: 0 };
     } catch (e) {
       lastErr = e;
       // 🔴 关键区分（10-04 踩坑）：status 为数字（含非 0）= git 正常执行并给出

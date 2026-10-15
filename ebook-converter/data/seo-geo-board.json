@@ -772,7 +772,8 @@
           "due": "2026-10-15",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。"
         },
         {
           "id": "M4-3",
@@ -1301,8 +1302,9 @@
           "due": "2026-10-13",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "note": "迁移决策 2026-10-10：分层原则=确定性脚本迁 hermes、判断型任务（22:00 夜间同步需 AI 判断 stage 范围、21:00 热文监测依赖 tabbit）留 WorkBuddy。对拍纪律：不裸切，flag 文件控制双模式（无 flag=--no-send 落日志；有 flag=发飞书），cutover 零改脚本。"
+          "status": "done",
+          "note": "迁移决策 2026-10-10：分层原则=确定性脚本迁 hermes、判断型任务（22:00 夜间同步需 AI 判断 stage 范围、21:00 热文监测依赖 tabbit）留 WorkBuddy。对拍纪律：不裸切，flag 文件控制双模式（无 flag=--no-send 落日志；有 flag=发飞书），cutover 零改脚本。",
+          "statusNote": "\n[2026-10-15 板面纠偏 done] 状态与 10-14 实际进度脱节，核实证据后收口：\n① 对拍期 10-11~10-14 共 4 天全部「一致」，用户确认 cutover（10-14 09:15 工作日志在案）；\n② 独立核验（本日 21:0x）：_wb_tmp/ga-hermes-send.flag 存在（mtime 2026-10-14 09:14），_wb_tmp/ga-hermes-daily.log 含 10-14 hermes 运行条目（数据日期 10-12 基础分析，门禁全绿）；\n③ WorkBuddy 自动化 5fc7733d 置 PAUSED 保留作异常备份（10-14 日志记录；本地 automations 目录不存 UUID，状态以日志+服务端为准）。\n验收口径全部满足：3 天对拍全一致才切换 ✅、cutover 零改脚本（flag 双模式）✅、次日飞书由 hermes 发出 ✅。cutover 后监控兜底：飞书连续 2 天未收到先查 hermes cron status。"
         }
       ]
     },
@@ -1335,7 +1337,8 @@
           "due": "2026-10-15",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "\n[2026-10-15 done] docs/new-site-playbook.md 已落盘：10 步齐全，每步含动作/产出物/可勾选完成判据；顶部边界声明禁止复制 BookConv 具体数字；附录给与 BookConv 机制的对应索引（仅流程映射，无数字）。"
         },
         {
           "id": "M10-3",
@@ -1347,6 +1350,131 @@
           "due": "持续",
           "recurring": "continuous",
           "priority": "P0",
+          "tier": "CORE",
+          "status": "todo"
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Bing Topic Portfolio 选题生产",
+      "why": "把 BWT Topic Portfolio(BETA) 的 7 主题 + 50 机会词（竞品被引、bookconv 未被引）转成可测量的 GEO 选题；补齐 geo_collector.db 缺失的 R_pre/R_post 时序与 prompt 哈希锁缺口。词级数据真相源：data/topic-portfolio-opportunities.json（TP-id 唯一计数）；战略文档：docs/bing-topic-portfolio-geo-2026-10-14.md。",
+      "tier": "CORE",
+      "tasks": [
+        {
+          "id": "M11-1",
+          "action": "导出并转录 Topic Portfolio 双表",
+          "detail": "API 404 → 登录态 UI 半自动抓取（tabbit，1M Sep 窗口）。50 词逐条入 data/topic-portfolio-opportunities.json（query=BWT 原样字符串含 zh/ja/fr，禁改写）；源快照归档 bookconv_data_asset/bing/TopicPortfolio_snapshot_2026-10-14.json。",
+          "owner": "A",
+          "deliverable": "data/topic-portfolio-opportunities.json + 归档快照",
+          "accept": "50 词每条含 id/query(BWT原样)/lang/capabilityFit/servableNow/priority/probeEligible；TP-id 唯一计数（P0=2/P1=9/P1-parked=5/P2=33/EXCLUDE=1）",
+          "due": "2026-10-16",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "衍生选题：M11-2",
+          "note": "2026-10-14 实抓完成（1M Sep 窗口）；打标随转录一并完成，矩阵见战略文档 §四 [HEURISTIC]"
+        },
+        {
+          "id": "M11-2",
+          "action": "按 V2 优先级矩阵打标 P0/P1/P1-parked/P2/EXCLUDE",
+          "detail": "矩阵（[HEURISTIC]，按序判定）：Technology=EXCLUDE；capabilityFit=none=P2；guide 型已有承载=P0（send to kindle/amazon send to kindle）；convert 对 servableNow=false（CloudConvert 402）=P1-parked；on-niche blog/guide 承接=P1。",
+          "owner": "A",
+          "deliverable": "data/topic-portfolio-opportunities.json priority 字段 + 战略文档优先级总表",
+          "accept": "50 词 priority 全覆盖；EXCLUDE 仅 Technology 主题；P1-parked 仅 402 波及的 calibre 对",
+          "due": "2026-10-17",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "衍生选题：M11-4",
+          "note": "2026-10-14 随 M11-1 完成"
+        },
+        {
+          "id": "M11-4",
+          "action": "R_pre 基线采集（发布前锁定）",
+          "detail": "geo/topic-portfolio-questions.json 收 11 词（probeEligible=true，BWT 原样 en 字符串，schema 对齐既有 5 字段）；三 key 预检（GEMINI/OPENAI/BRAVE 已确认齐备 2026-10-14）；跑 scripts/topic-portfolio-measure.mjs（sha256(question) 哈希锁，漂移 exit 2 fail-closed；统一编排 probe+brave 两子命令；输出立即归档带日期副本防覆盖）；结果追加 data/topic-portfolio-measurement.json，与 BWT 未被引状态交叉验证。",
+          "owner": "A",
+          "deliverable": "data/topic-portfolio-measurement.json（R_pre 快照 + promptHash）+ geo/topic-portfolio-questions.json",
+          "accept": "11 词每引擎有 R_pre 记录；promptHash 与 question 字符级一致；R_pre 距发布 ≤14 天超期重采；--demo 数据不得充当 R_pre",
+          "due": "2026-10-18",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "衍生选题：2026-10-15 完成真实 R_pre（11 词 × Brave+Gemini = 22 条，全部 cited=false，与 BWT 未被引三角印证；promptHash 全锁定）。ChatGPT 引擎 BLOCKED：web_search_preview 需 OpenAI 付费层 Tier≥1（429），账户升级前该引擎缺测，不补假数据。修复过程：GEMINI_MODEL gemini-2.0-flash 已退役→gemini-2.5-flash（geo-exposure-probe.py 一行）；wrapper 不再静默吞子进程 stderr；is_bookconv 解析改大小写不敏感（Python True/False）。"
+        },
+        {
+          "id": "M11-3",
+          "action": "机会词 → 内容管线分发（≤3 页/批）",
+          "detail": "前置：M2-8（13 零抓取页 P0 due 2026-10-20）完成；首批 ≥2026-10-21；禁止混合测量批次。P0 内容词先行（send to kindle / amazon send to kindle → 强化 guide how-to-send-epub-to-kindle）；P1 词分批（kindle vs kobo 新建 guide / kindle-formats 与 how-to-read-epub-on-kindle 强化 / open epub file 等 blog）；convert 词 P1-parked 挂起（CloudConvert 402，解锁后升级，不新增工作量）；每批 ≤3 页、Gate B（GATE_SLUGS 锁范围）、人工审稿红线、绝不自动 push；与 M2-8 同页不两次触碰。",
+          "owner": "A",
+          "deliverable": "分批 guide/blog 文件 + 注册 index.ts + llms.txt 同步",
+          "accept": "每批门禁全绿；每页 GEO 结构（Key Takeaways/FAQ/schema）达标；≤3 页/批",
+          "due": "2026-10-21",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "衍生选题：M2-8"
+        },
+        {
+          "id": "M11-5",
+          "action": "R_post 跟踪（发布后测量窗口）",
+          "detail": "发布后 8 周×每周（仅 P0 词），P1 词月频；每轮记录调用数（11 词×3 引擎≈33 调用/轮）；cited=true 连续 2 周或 8 周期满停测；cited 变化如实记录含 delta=0，绝不报喜；先手动跑 2 轮验证 key/成本/稳定性，再评估是否定时化。",
+          "owner": "A",
+          "deliverable": "data/topic-portfolio-measurement.json（R_post 追加，append-only）",
+          "accept": "每个已发布词有 ≥1 条 R_post；每轮含调用数与日期；停测条件执行留痕",
+          "due": "2026-10-28",
+          "recurring": "weekly",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo"
+        },
+        {
+          "id": "M11-6",
+          "action": "Bing 侧手工导出印证（三角印证）",
+          "detail": "按 docs/教材-BingAI性能分析工作流.md SOP 手工导出 AISearchQueriesReport/AIPageStatsReport，核对机会词 citations/Citation Share 是否出现 bookconv；与 R_pre/R_post 三角印证，注明 BWT 月粒度与探针周频的口径差；双渠道分别记录绝不合并；BETA 改版容错降级。",
+          "owner": "O",
+          "deliverable": "数据分析/Bing_TopicPortfolio_印证_YYYY-MM-DD.md（append-only）",
+          "accept": "P0 词逐条有 Bing 侧读数或「未出现」明确结论；数据带 BETA+个性化+近似区间限定",
+          "due": "每月首周",
+          "recurring": "monthly",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo"
+        },
+        {
+          "id": "M11-7",
+          "action": "复用方法论章节收口（仅方法论）",
+          "detail": "战略文档 §八 6 小节定稿：资产识别/能力拟合/优先级矩阵/内容映射判定树/测量模板/纪律红线；适用于 geo-distributor 客户与 geocitationblueprint.com 的方法复用，不产出任何外部交付物；所有推断标 [HEURISTIC] + claim tier。",
+          "owner": "O",
+          "deliverable": "docs/bing-topic-portfolio-geo-2026-10-14.md §八定稿",
+          "accept": "6 小节齐全；明确标注「内部优先，外部不产出」；无未标注的推断性结论",
+          "due": "2026-10-24",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo"
+        },
+        {
+          "id": "M11-8",
+          "action": "挂载月度快照自动化（条件任务）",
+          "detail": "前置：(1) 每日 08:00 Bing URL 提交自动化（id 7ecd345e）无人值守稳定运行 1-2 周；(2) 用户批准。设计：每月首周 tabbit 抓 Topic Portfolio → 归档 bookconv_data_asset/bing/TopicPortfolio_snapshot_<date>.json → 与上月对比 delta 报告 → 人工审阅；兜底：Tabbit 未运行/登录失效/BETA 改版 → BLOCKED 如实报告不造假数据。",
+          "owner": "O",
+          "deliverable": "WorkBuddy 月频自动化（M11-6 的数据采集半自动化）",
+          "accept": "前置两项满足后经用户确认创建；创建后首跑留验证记录",
+          "due": "2026-11-01",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "note": "2026-10-15 用户决策提前创建：自动化已建（id f112c8ff，ACTIVE，每月 1 日 10:00，首跑 2026-11-01，本月不执行）；首跑成功并留验证记录后置 done"
+        },
+        {
+          "id": "M11-9",
+          "action": "OpenAI 账户升级 Tier≥1，解锁 ChatGPT 引擎测量",
+          "detail": "web_search_preview 需付费层（429 实证 2026-10-15）；升级后：①重采 11 词 R_pre 的 ChatGPT 记录（node scripts/topic-portfolio-measure.mjs --phase R_pre，只新增引擎记录不覆盖既有）；②M11-5 R_post 起三引擎齐测（11 词×3 引擎≈33 调用/轮）。属付费决策，执行前需用户确认充值。",
+          "owner": "A",
+          "deliverable": "data/topic-portfolio-measurement.json 补齐 ChatGPT 引擎记录",
+          "accept": "ChatGPT 引擎 11 词各有 ≥1 条非 demo R_pre 记录；充值动作留痕（金额/日期）",
+          "due": "2026-11-15",
+          "priority": "P2",
           "tier": "CORE",
           "status": "todo"
         }
