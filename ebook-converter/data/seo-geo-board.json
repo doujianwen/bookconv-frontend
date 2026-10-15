@@ -773,7 +773,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。"
+          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。\n[2026-10-15 已发布，转外部引用观察期] push ffd4ba7 + f9b6b6a（旧账号远端，pre-push 纠察放行）。线上验证全过：4 页 X-Matched-Path 真实命中 + 内容断言；sitemap 含 4 URL；3 份 CSV 200 且行数=830/6877/998（含表头，与台账一致）、零路径泄露。发布实测发现并修复 middleware matcher 漏 csv 扩展名（/data/*.csv 被改写 /en/data/*.csv → 404 兜底，f9b6b6a）。⏳ 验收后半段：30 天内 ≥1 次外部引用，复查节点 2026-11-14；到期核 GSC/外链跟踪表，有引用即 done，无引用如实记录并评估推广动作。"
         },
         {
           "id": "M4-3",
