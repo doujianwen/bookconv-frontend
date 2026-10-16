@@ -1,0 +1,298 @@
+{
+  "topics": [
+    {
+      "topic": "E-Books & Kindle",
+      "topicSize": "10M-50M",
+      "sitesCited": "5K-10K",
+      "queries": "10K-50K "
+    },
+    {
+      "topic": "PDF & Document Software",
+      "topicSize": "100M-500M",
+      "sitesCited": "10K-50K",
+      "queries": "100K-500K "
+    },
+    {
+      "topic": "Books",
+      "topicSize": "10M-50M",
+      "sitesCited": "10K-50K",
+      "queries": "50K-100K "
+    },
+    {
+      "topic": "Audiobooks",
+      "topicSize": "1M-5M",
+      "sitesCited": "1K-5K",
+      "queries": "10K-50K "
+    },
+    {
+      "topic": "Productivity Apps",
+      "topicSize": "50M-100M",
+      "sitesCited": "10K-50K",
+      "queries": "50K-100K "
+    },
+    {
+      "topic": "Technology",
+      "topicSize": "1B-5B",
+      "sitesCited": "100K-500K",
+      "queries": "1M-5M "
+    },
+    {
+      "topic": "Online Utility Tools",
+      "topicSize": "100M-500M",
+      "sitesCited": "10K-50K",
+      "queries": "100K-500K "
+    }
+  ],
+  "opps": [
+    {
+      "query": "image to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "10K-50K"
+    },
+    {
+      "query": "heic jpeg 変換",
+      "topic": "Online Utility Tools",
+      "citationRange": "10K-50K"
+    },
+    {
+      "query": "convert heic to jpg",
+      "topic": "Online Utility Tools",
+      "citationRange": "10K-50K"
+    },
+    {
+      "query": "md转pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "5K-10K"
+    },
+    {
+      "query": "heic to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "5K-10K"
+    },
+    {
+      "query": "image to word",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "epub转mobi",
+      "topic": "E-Books & Kindle",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "pdf to dwg",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "mkv to mp4",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "md to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "mp4 to mov",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "ogg to mp3",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "ogg to mp3 converter",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "odt to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "heic to jpeg",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "pdf to epub",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "heic to png",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "compress pdf online free",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "convertir heic en jpg gratuit",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "open epub file",
+      "topic": "E-Books & Kindle",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "pdf to dxf",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "send to kindle",
+      "topic": "E-Books & Kindle",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "convertisseur heic en jpg gratuit",
+      "topic": "Online Utility Tools",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "best free pdf editor 2026",
+      "topic": "PDF & Document Software",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "epub reader online",
+      "topic": "E-Books & Kindle",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "amazon send to kindle",
+      "topic": "E-Books & Kindle",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "*.mp4 or *.mov or *.avi or *.mkv",
+      "topic": "Technology",
+      "citationRange": "1K-5K"
+    },
+    {
+      "query": "best free pdf editors 2026",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "azw3 to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "jpeg to word converter free",
+      "topic": "Online Utility Tools",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "epub reader",
+      "topic": "E-Books & Kindle",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "dwg to pdf free",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "heic to jpg converter free",
+      "topic": "Online Utility Tools",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "best free pdf editors",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "mobi to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "pdf to pdfa",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "jpg to word free",
+      "topic": "Online Utility Tools",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "dwg to pdf converter free",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "kindle vs kobo",
+      "topic": "E-Books & Kindle",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "convert pdf to epub",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "convert odt to pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "wav to ogg",
+      "topic": "Online Utility Tools",
+      "citationRange": "500-1K"
+    },
+    {
+      "query": "pdf to csv free",
+      "topic": "PDF & Document Software",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "kindle epub",
+      "topic": "E-Books & Kindle",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "e-reader buying considerations",
+      "topic": "E-Books & Kindle",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "pocket book verse pro",
+      "topic": "Books, E-Books & Kindle",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "epub online reader",
+      "topic": "E-Books & Kindle",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "kobo vs kindle",
+      "topic": "E-Books & Kindle",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "convertir md a pdf",
+      "topic": "PDF & Document Software",
+      "citationRange": "101-500"
+    },
+    {
+      "query": "kindle vs kobo, which is the best",
+      "topic": "E-Books & Kindle",
+      "citationRange": "101-500"
+    }
+  ]
+}

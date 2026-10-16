@@ -34,7 +34,7 @@ import urllib.error
 from urllib.parse import urlparse
 from datetime import datetime, timezone
 
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash"
 OPENAI_MODEL = "gpt-4o"
 BOOKCONV_DOMAINS = ("bookconv.com",)
 COMPETITOR_HINTS = ("cloudconvert", "convertio", "zamzar", "online-convert",

@@ -1,0 +1,13 @@
+[
+  { "id": 101, "question": "open epub file", "intent": "intercept", "target_slug": "", "priority": 2 },
+  { "id": 102, "question": "send to kindle", "intent": "intercept", "target_slug": "how-to-send-epub-to-kindle", "priority": 1 },
+  { "id": 103, "question": "epub reader online", "intent": "intercept", "target_slug": "", "priority": 2 },
+  { "id": 104, "question": "amazon send to kindle", "intent": "intercept", "target_slug": "how-to-send-epub-to-kindle", "priority": 1 },
+  { "id": 105, "question": "epub reader", "intent": "intercept", "target_slug": "how-to-read-epub-on-kindle", "priority": 2 },
+  { "id": 106, "question": "kindle vs kobo", "intent": "intercept", "target_slug": "", "priority": 3 },
+  { "id": 107, "question": "kindle epub", "intent": "intercept", "target_slug": "kindle-formats", "priority": 3 },
+  { "id": 108, "question": "e-reader buying considerations", "intent": "ai-feed", "target_slug": "", "priority": 3 },
+  { "id": 109, "question": "epub online reader", "intent": "intercept", "target_slug": "", "priority": 3 },
+  { "id": 110, "question": "kobo vs kindle", "intent": "intercept", "target_slug": "", "priority": 3 },
+  { "id": 111, "question": "kindle vs kobo, which is the best", "intent": "intercept", "target_slug": "", "priority": 3 }
+]
