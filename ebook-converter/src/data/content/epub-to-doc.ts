@@ -1,6 +1,6 @@
 export const slug = 'epub-to-doc';
-export const title = 'EPUB to DOC Converter — Legacy Word Format (Word 97-2003)';
-export const metaDescription = 'Free EPUB to DOC converter. Extract text and formatting from any EPUB into legacy Word 97-2003 .doc format — no sign-up, works with enterprise systems that require old DOC files.';
+export const title = 'EPUB to DOC Converter — Legacy Word 97-2003 Format';
+export const metaDescription = 'Free EPUB to DOC converter. Turn any EPUB into legacy Word 97-2003 .doc files — no sign-up. Built for enterprise systems that still need old DOC.';
 export const level = 'B' as const;
 export const wordCount = 820;
 
@@ -163,8 +163,8 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
 };
 
 export const es = {
-  title: 'Conversor Gratuito de EPUB a DOC — Extrae Texto para Word 97-2003',
-  metaDescription: 'Conversor gratuito de EPUB a DOC. Extrae texto y formato de cualquier EPUB al formato legacy Word 97-2003 .doc — sin registro, compatible con sistemas empresariales que requieren archivos DOC antiguos.',
+  title: 'Conversor de EPUB a DOC — Formato Word 97-2003',
+  metaDescription: 'Conversor gratuito de EPUB a DOC. Convierte cualquier EPUB al formato legacy Word 97-2003 .doc — sin registro. Para sistemas que aún exigen DOC.',
   content: {
     hero: {
       title: 'EPUB a DOC — Convierte Ebooks a Word Legado',
