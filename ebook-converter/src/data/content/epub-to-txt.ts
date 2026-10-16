@@ -1,6 +1,6 @@
 export const slug = 'epub-to-txt';
 export const title = 'EPUB to TXT Converter — Extract Plain Text Free Online';
-export const metaDescription = 'Free EPUB to TXT converter — extract clean plain text for AI analysis, translation, or screen readers in seconds. No sign-up, preserves chapters and structure.';
+export const metaDescription = 'Free EPUB to TXT converter — extract clean plain text for AI, translation, or screen readers in seconds. No sign-up, keeps chapters and structure.';
 export const level = 'S' as const;
 export const wordCount = 2800;
 
@@ -253,8 +253,8 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
 };
 
 export const es = {
-  title: 'Conversor Gratuito de EPUB a TXT — Extrae Texto Plano Limpio en Segundos',
-  metaDescription: 'Conversor gratuito de EPUB a TXT — extrae texto plano limpio para análisis de IA, traducción o lectores de pantalla en segundos. Sin registro, conserva capítulos y estructura.',
+  title: 'Conversor EPUB a TXT — Extrae Texto Plano Gratis',
+  metaDescription: 'Conversor gratuito de EPUB a TXT — extrae texto plano para IA, traducción o lectores de pantalla en segundos. Sin registro, conserva capítulos y estructura.',
   content: {
     hero: {
       title: 'EPUB a TXT — Extrae Texto Puro de Archivos EPUB',

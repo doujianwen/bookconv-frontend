@@ -1,6 +1,6 @@
 export const slug = 'lit-to-epub';
-export const title = 'Free LIT to EPUB Converter — Rescue Old Microsoft Reader Books';
-export const metaDescription = 'Free LIT to EPUB converter — rescue your old Microsoft Reader .LIT files in seconds, no sign-up. Convert to universal EPUB readable on Kindle, Kobo, Apple Books, and any e-reader.';
+export const title = 'Free LIT to EPUB Converter — Rescue Old .LIT Books';
+export const metaDescription = 'Free LIT to EPUB converter — rescue old Microsoft Reader .LIT files in seconds. No sign-up, convert to EPUB for Kindle, Kobo, Apple Books, any e-reader.';
 export const level = 'S' as const;
 export const wordCount = 720;
 
@@ -140,8 +140,8 @@ If the file already opens fine in a LIT reader and you have no plan to change de
 };
 
 export const es = {
-  title: 'Conversor Gratuito de LIT a EPUB — Rescata tus Libros Antiguos de Microsoft Reader',
-  metaDescription: 'Conversor gratuito de LIT a EPUB — rescata tus archivos antiguos de Microsoft Reader .LIT en segundos, sin registro. Convierte a EPUB universal legible en Kindle, Kobo, Apple Books y cualquier dispositivo.',
+  title: 'Conversor LIT a EPUB Gratis — Rescata Libros .LIT',
+  metaDescription: 'Conversor gratuito de LIT a EPUB — rescata tus .LIT en segundos, sin registro. Convierte a EPUB para Kindle, Kobo y cualquier dispositivo.',
   content: {
     hero: {
       title: 'LIT a EPUB — Rescata tus Archivos MS Reader',

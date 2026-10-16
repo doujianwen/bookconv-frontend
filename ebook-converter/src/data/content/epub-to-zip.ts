@@ -1,6 +1,6 @@
 export const slug = 'epub-to-zip';
-export const title = 'Free EPUB to ZIP Converter — Extract XHTML, CSS & Images in Seconds';
-export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS, images and fonts from any e-book. No sign-up, no re-encoding, byte-exact copy, your file stays private.';
+export const title = 'Free EPUB to ZIP Converter — XHTML, CSS & Images';
+export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.';
 export const level = 'A' as const;
 export const wordCount = 590;
 
