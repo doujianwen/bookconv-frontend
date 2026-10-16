@@ -1,5 +1,6 @@
 export const slug = `ebook-formats-explained`;
 export const title = `EPUB vs AZW3 vs MOBI: Which Ebook Format Should You Use?`;
+export const metaTitle = `EPUB vs AZW3 vs MOBI: Which to Use?`
 export const date = `2026-07-12`;
 export const author = `BookConv Team`;
 export const tags = [`Ebook Formats`, `EPUB`, `AZW3`, `MOBI`, `Kindle`, `Convert Ebook`];

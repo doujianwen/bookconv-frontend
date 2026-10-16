@@ -2,6 +2,7 @@ export const slug = `fb2-to-epub`;
 export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const title = `FB2 to EPUB: Convert FictionBook for Any Reader (Including Kindle)`;
+export const metaTitle = `FB2 to EPUB: Convert FictionBook for Any Reader`
 export const tags = ["FB2", "FictionBook", "EPUB", "Kindle", "Ebook Formats", "BookConv"];
 
 export const content = {

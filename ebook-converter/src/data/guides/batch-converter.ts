@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'batch-converter'
 export const title = 'BookConv Batch Converter: Convert Many Files at Once in Your Browser'
+export const metaTitle = 'BookConv Batch Converter: Convert Files in Browser'
 export const problem = 'Need to convert a stack of ebooks at once? Here is the honest split — BookConv now handles batches in the browser, and Calibre CLI is still the stronger fit for hundreds of files.'
 export const date = '2026-08-07'
 export const tags = ['batch ebook converter', 'bulk convert', 'calibre cli', 'automate']

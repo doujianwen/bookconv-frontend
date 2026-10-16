@@ -1,5 +1,6 @@
 export const slug = "ai-feeding-notebooklm-chatgpt";
 export const title = "AI Feeding: Import NotebookLM and ChatGPT Content to Ebook";
+export const metaTitle = "AI Feeding: Import NotebookLM & ChatGPT to Ebook"
 export const date = "2026-08-26";
 export const author = "BookConv Team";
 export const tags = ["NOTEBOOKLM", "CHATGPT", "EPUB", "PDF", "EBOOK", "AI", "IMPORT"];

@@ -1,5 +1,6 @@
 export const slug = `batch-converter`;
 export const title = `When to Use Calibre for Batch Conversion (Instead of a Browser Tool)`;
+export const metaTitle = `When to Use Calibre for Batch Conversion`
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Batch Conversion", "Calibre", "Ebook Formats", "BookConv", "Workflow"];

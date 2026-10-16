@@ -11,6 +11,8 @@ import { clampMetaDescription } from "@/lib/seo/meta-description"
 interface GuideData {
   slug: string
   title: string
+  /** SERP <title> 专用短标题（≤55 字符），不填回退到 title。仅用于搜索引擎结果摘要。 */
+  metaTitle?: string
   problem: string
   date: string
   tags: string[]
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   })
 
   return {
-    title: g.title,
+    title: g.metaTitle ?? g.title,
     description,
     keywords: [...g.tags, "ebook converter", "calibre"],
     alternates: { canonical, languages },

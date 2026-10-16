@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'azw3-to-mobi-keep-formatting'
 export const title = 'AZW3 to MOBI: Convert for Older Kindles Without Losing Your Book'
+export const metaTitle = 'AZW3 to MOBI: Convert for Older Kindles'
 export const problem = 'You have an AZW3 book and an old Kindle that only reads MOBI. A direct AZW3 to MOBI conversion can strip advanced formatting, but a careful one keeps your book readable. Here is how to convert and what to expect.'
 export const date = '2026-08-03'
 export const tags = ['azw3', 'mobi', 'kindle', 'formatting', 'ebook conversion']

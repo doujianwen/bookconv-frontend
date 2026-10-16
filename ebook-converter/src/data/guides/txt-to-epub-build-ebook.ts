@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'txt-to-epub-build-ebook'
 export const title = 'TXT to EPUB: Turn a Plain Text File into a Real Ebook with a TOC'
+export const metaTitle = 'TXT to EPUB: Build a Real Ebook with a TOC'
 export const problem = 'You have a manuscript or public-domain book as a plain TXT file, but reading apps treat it as one endless scroll. A TXT to EPUB conversion adds a table of contents and real structure. Here is how to build a proper EPUB from plain text.'
 export const date = '2026-08-03'
 export const tags = ['txt', 'epub', 'ebook conversion', 'table of contents', 'manuscript']

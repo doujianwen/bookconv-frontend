@@ -1,5 +1,6 @@
 export const slug = `sync-reading-across-devices`;
 export const title = `How to Transfer Ebooks Between Devices & Sync Reading Progress (2026)`;
+export const metaTitle = `Sync Ebooks & Reading Progress Across Devices`
 export const date = `2026-08-15`;
 export const lastUpdated = `2026-09-18`;
 export const author = `BookConv Team`;

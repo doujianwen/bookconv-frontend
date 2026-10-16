@@ -1,5 +1,6 @@
 export const slug = 'harry-potter-digital-books-multiple-devices';
 export const title = 'Harry Potter Digital Books: How to Read Across Multiple Devices';
+export const metaTitle = 'Harry Potter Ebooks: Read on Multiple Devices'
 export const date = '2026-09-07';
 export const lastUpdated = '2026-09-07';
 export const author = 'BookConv Team';

@@ -1,5 +1,6 @@
 export const slug = 'twilight-ebooks-multiple-devices';
 export const title = 'Twilight Ebooks: Read the Saga Across Kindle, Kobo, and More';
+export const metaTitle = 'Twilight Ebooks: Read the Saga Across Devices'
 export const date = '2026-09-12';
 export const lastUpdated = '2026-09-12';
 export const author = 'BookConv Team';

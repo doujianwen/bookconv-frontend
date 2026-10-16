@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'best-ebook-converter'
 export const title = 'Best Ebook Converter in 2026: How to Choose (Not Just a List)'
+export const metaTitle = 'Best Ebook Converter 2026: How to Choose'
 export const problem = '“Best ebook converter” depends on your job — free one-off, bulk, privacy, or AI prep. Here is the honest comparison across the tools people actually use.'
 export const date = '2026-08-07'
 export const updatedAt = '2026-09-25'

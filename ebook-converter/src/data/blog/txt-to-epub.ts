@@ -1,5 +1,6 @@
 export const slug = `txt-to-epub`;
 export const title = `How to Turn a Plain TXT File into an EPUB with a Table of Contents`;
+export const metaTitle = `Turn a TXT File into an EPUB with a TOC`
 export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const tags = ["TXT", "EPUB", "table of contents", "ebook", "BookConv", "conversion", "guide"];

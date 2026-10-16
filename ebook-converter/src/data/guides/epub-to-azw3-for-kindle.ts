@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'epub-to-azw3-for-kindle'
 export const title = 'EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting'
+export const metaTitle = 'EPUB to AZW3: Send to Kindle Without Losing Format'
 export const problem = 'You have an EPUB and a Kindle, and emailing it gives you a broken layout. AZW3 is the format that keeps your styling intact.'
 export const date = '2026-08-02'
 export const updatedAt = '2026-09-10'

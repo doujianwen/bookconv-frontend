@@ -1,5 +1,6 @@
 export const slug = `mobi-to-kobo`;
 export const title = `MOBI to Kobo: How to Read Your MOBI Books on a Kobo Reader`;
+export const metaTitle = `MOBI to Kobo: Read MOBI Books on a Kobo`
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Kobo", "MOBI", "EPUB", "Ebook Formats", "BookConv"];

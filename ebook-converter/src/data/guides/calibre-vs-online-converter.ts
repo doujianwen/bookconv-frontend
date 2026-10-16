@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'calibre-vs-online-converter'
 export const title = 'Calibre vs Online Converters: Which Should You Actually Use?'
+export const metaTitle = 'Calibre vs Online Converters: Which to Use?'
 export const problem = 'Calibre is powerful but heavy. Online converters are instant but raise privacy questions. Here is the honest trade-off — and when each one wins.'
 export const date = '2026-08-02'
 export const tags = ['calibre', 'online converter', 'privacy', 'ebook tools']

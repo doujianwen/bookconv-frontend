@@ -15,6 +15,8 @@ export interface BlogFaq {
 
 export interface BlogPostLocalized {
   title: string;
+  /** 可选的 SERP <title> 专用短标题（≤55 字符），西语页同理。不填回退到 title。 */
+  metaTitle?: string;
   content: BlogPostContent;
   faqs?: BlogFaq[];
 }
@@ -22,6 +24,9 @@ export interface BlogPostLocalized {
 export interface BlogPostMeta {
   slug: string;
   title: string;
+  /** 可选的 SERP <title> 专用短标题（≤55 字符）。不填则回退到 title（同时也是可见 H1）。
+   *  仅用于搜索引擎结果摘要，不影响页面 H1 / OG / 结构化数据。 */
+  metaTitle?: string;
   date: string;
   /** ISO date string of last substantive content update (distinct from initial publish date). Used for freshness signal and human-visible "Last updated" display. */
   lastUpdated?: string;

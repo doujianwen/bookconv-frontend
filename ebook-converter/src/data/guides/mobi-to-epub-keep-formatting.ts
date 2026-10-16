@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'mobi-to-epub-keep-formatting'
 export const title = 'MOBI to EPUB: Keep Formatting and Read Your Kindle Books Anywhere'
+export const metaTitle = 'MOBI to EPUB: Keep Format, Read Anywhere'
 export const problem = 'You bought books in MOBI and now your non-Kindle app will not open them. A sloppy MOBI to EPUB conversion drops your cover and merges chapters. Here is how to convert cleanly and keep your layout.'
 export const date = '2026-08-02'
 export const tags = ['mobi', 'epub', 'kindle', 'formatting', 'ebook conversion']

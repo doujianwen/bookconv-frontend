@@ -1,5 +1,6 @@
 export const slug = `bookconv-vs-calibre`;
 export const title = `BookConv vs Calibre: Which Ebook Converter Should You Use in 2026?`;
+export const metaTitle = `BookConv vs Calibre: Which to Use in 2026?`
 export const date = `2026-09-14`;
 export const author = "BookConv Team";
 export const tags = ["Calibre", "BookConv", "Ebook Converter", "Comparison", "EPUB", "Kindle"];

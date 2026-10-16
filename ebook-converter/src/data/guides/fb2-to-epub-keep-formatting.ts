@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'fb2-to-epub-keep-formatting'
 export const title = 'FB2 to EPUB: Convert FictionBook for Any Reader (Including Kindle)'
+export const metaTitle = 'FB2 to EPUB: Convert FictionBook for Any Reader'
 export const problem = 'You downloaded a book as FB2 from a Russian library or fan site, but your Kobo, Apple Books, or Kindle will not open it. An FB2 to EPUB conversion fixes that, but a careless one drops your cover and mangles Cyrillic text. Here is how to convert cleanly.'
 export const date = '2026-08-03'
 export const tags = ['fb2', 'epub', 'fictionbook', 'ebook conversion', 'cyrillic']

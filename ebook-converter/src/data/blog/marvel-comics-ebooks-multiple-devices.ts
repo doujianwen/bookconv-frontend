@@ -1,5 +1,6 @@
 export const slug = "marvel-comics-ebooks-multiple-devices";
 export const title = "Marvel Comics & Movies: How to Read Digital Books Across Kindle, Kobo, and More";
+export const metaTitle = "Marvel Comics & Movies: Read Digital Books Anywhere"
 export const date = "2026-09-20";
 export const lastUpdated = "2026-09-20";
 export const author = "BookConv Team";

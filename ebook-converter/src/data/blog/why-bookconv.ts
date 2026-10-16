@@ -1,5 +1,6 @@
 export const slug = `why-bookconv`;
 export const title = `Why BookConv: A Free, Private Ebook Converter Built for Every Device`;
+export const metaTitle = `Why BookConv: A Free, Private Ebook Converter`
 export const date = `2026-09-14`;
 export const author = "BookConv Team";
 export const tags = ["BookConv", "Ebook Converter", "Privacy", "Cross-Device", "Free"];

@@ -1,5 +1,6 @@
 export const slug = `env-variables-setup`;
 export const title = `Configuring BookConv: Environment Variables for Self-Hosting`;
+export const metaTitle = `Configuring BookConv: Env Variables for Self-Hosting`
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = [`environment`, `configuration`, `self-hosting`, `technical`];

@@ -1,5 +1,6 @@
 export const slug = `bookconv-faq`;
 export const title = `BookConv FAQ: Is It Safe, Free, and How Does It Compare to Calibre?`;
+export const metaTitle = `BookConv FAQ: Safe, Free, vs Calibre?`
 export const date = `2026-09-14`;
 export const author = "BookConv Team";
 export const tags = ["BookConv", "FAQ", "Ebook Converter", "Privacy", "Calibre"];

@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'ai-ebook-converter'
 export const title = 'AI Ebook Converter: Preparing Ebooks for NotebookLM, ChatGPT & More'
+export const metaTitle = 'AI Ebook Converter: Prep for NotebookLM & ChatGPT'
 export const problem = '“AI ebook converter” usually means one of two things — and only one of them is real. Here is how to get your ebook ready for AI tools without the hype.'
 export const date = '2026-08-07'
 export const tags = ['ai ebook converter', 'notebooklm', 'chatgpt', 'ebook to text']

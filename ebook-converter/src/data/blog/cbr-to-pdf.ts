@@ -2,6 +2,7 @@ export const slug = `cbr-to-pdf`;
 export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const title = `CBR to PDF: Convert Comic Books for Printing and Any Device`;
+export const metaTitle = `CBR to PDF: Convert Comics for Printing`
 export const tags = ["CBR", "CBZ", "PDF", "Comics", "Ebook Formats", "BookConv"];
 
 export const content = {

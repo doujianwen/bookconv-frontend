@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'kindle-formats'
 export const title = 'What Format Does Kindle Use? AZW3, KFX, MOBI & EPUB Explained'
+export const metaTitle = 'What Format Does Kindle Use? AZW3, KFX, MOBI'
 export const problem = 'AZW3, KFX, MOBI, EPUB - Kindle formats confuse everyone. This guide explains what each means, the safest format to convert to today, and how BookConv converts free in your browser with no software to install.'
 export const date = '2026-08-07'
 export const updatedAt = '2026-09-18'

@@ -1,5 +1,6 @@
 export const slug = `webhook-integration`;
 export const title = `BookConv Webhooks: Get a Signed Notification the Second Your Conversion Finishes`;
+export const metaTitle = `BookConv Webhooks: Get a Signed Conversion Alert`
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = ["webhook", "automation", "integration", "bookconv", "technical"];

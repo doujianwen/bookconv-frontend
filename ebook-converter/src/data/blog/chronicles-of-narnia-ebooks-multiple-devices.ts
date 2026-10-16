@@ -1,5 +1,6 @@
 export const slug = 'chronicles-of-narnia-ebooks-multiple-devices';
 export const title = 'Chronicles of Narnia Ebooks: Read the Complete Series on Kindle, Kobo, and More';
+export const metaTitle = 'Chronicles of Narnia Ebooks: Read on Kindle & Kobo'
 export const date = '2026-09-10';
 export const lastUpdated = '2026-09-10';
 export const author = 'BookConv Team';

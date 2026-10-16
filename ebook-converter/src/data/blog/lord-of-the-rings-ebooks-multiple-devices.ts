@@ -1,5 +1,6 @@
 export const slug = 'lord-of-the-rings-ebooks-multiple-devices';
 export const title = 'Lord of the Rings Ebooks: Read the Saga Across Kindle, Kobo, and More';
+export const metaTitle = 'Lord of the Rings Ebooks: Read Across Devices'
 export const date = '2026-09-08';
 export const lastUpdated = '2026-09-08';
 export const author = 'BookConv Team';

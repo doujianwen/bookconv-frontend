@@ -12,6 +12,7 @@ import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 interface BlogPostData {
   slug: string
   title: string
+  metaTitle?: string
   date: string
   lastUpdated?: string
   author?: string
@@ -27,6 +28,7 @@ for (const p of getAllPosts()) {
   BLOG_POSTS[p.slug] = {
     slug: p.slug,
     title: p.title,
+    metaTitle: p.metaTitle,
     date: p.date,
     lastUpdated: p.lastUpdated,
     author: p.author,
@@ -54,6 +56,8 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
   const baseUrl = "https://www.bookconv.com"
   const isEs = locale === "es" && !!post.es
   const displayTitle = isEs ? post.es!.title : post.title
+  // SERP <title> 专用短标题：西语页回退到西语 title，英文页回退到英文 title。
+  const displayMetaTitle = isEs ? (post.es!.metaTitle ?? post.es!.title) : (post.metaTitle ?? post.title)
   const displayContent = isEs ? post.es!.content : post.content
   const description = clampMetaDescription(displayContent.intro || displayTitle)
   const canonical = `${baseUrl}${isEs ? "/es" : ""}/blog/${slug}`
@@ -72,7 +76,8 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
 
   return {
     // No brand suffix: the global title template appends "| BookConv".
-    title: displayTitle,
+    // Only the SERP <title> uses the short displayMetaTitle; OG/Twitter/schema/H1 keep displayTitle.
+    title: displayMetaTitle,
     description,
     keywords: [...post.tags, "ebook converter", "calibre", "epub"],
     alternates: { canonical, languages },

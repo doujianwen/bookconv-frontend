@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'docx-to-epub-self-publish'
 export const title = 'DOCX to EPUB: Turn Your Word Manuscript into a Real Ebook'
+export const metaTitle = 'DOCX to EPUB: Turn a Manuscript into an Ebook'
 export const problem = 'You wrote your book in Word, but stores and e-readers want EPUB. A bad conversion gives you one giant paragraph and broken chapters. Here is how to convert cleanly and self-publish.'
 export const date = '2026-08-02'
 export const tags = ['docx', 'epub', 'word', 'self-publishing', 'ebook conversion']

@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'how-to-send-epub-to-kindle'
 export const title = 'How to Send an EPUB to Your Kindle: Every Delivery Route Compared'
+export const metaTitle = 'How to Send EPUB to Kindle: Every Route Compared'
 export const problem = 'You know the Kindle needs a Kindle format — what you actually need now is the delivery step. Here is every route an EPUB can take to reach your Kindle, what each one does to your file behind the scenes, and which failures silently swallow books.'
 export const date = '2026-10-13'
 export const updatedAt = '2026-10-13'

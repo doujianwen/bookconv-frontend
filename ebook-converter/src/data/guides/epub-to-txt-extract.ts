@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'epub-to-txt-extract'
 export const title = 'EPUB to TXT: Extract Plain Text Without Losing Your Chapter Order'
+export const metaTitle = 'EPUB to TXT: Extract Text, Keep Chapter Order'
 export const problem = 'You need the words out of an EPUB — for quoting, indexing, or pasting into another tool — but a bad EPUB to TXT export dumps everything in one block with no chapter breaks. Here is how to extract clean plain text and keep the order.'
 export const date = '2026-08-02'
 export const tags = ['epub', 'txt', 'plain text', 'extract', 'ebook conversion']

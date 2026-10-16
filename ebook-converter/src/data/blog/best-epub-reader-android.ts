@@ -1,5 +1,6 @@
 export const slug = `best-epub-reader-android`;
 export const title = `Best EPUB Reader Apps for Android (2026): ReadEra, Moon+ Reader, and More`;
+export const metaTitle = `Best EPUB Reader Apps for Android (2026)`
 export const date = `2026-09-24`;
 export const lastUpdated = `2026-09-24`;
 export const author = "BookConv Team";
