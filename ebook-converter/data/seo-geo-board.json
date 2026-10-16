@@ -659,8 +659,8 @@
           "due": "2026-10-13",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "doing",
-          "note": "IndexNow 已提交 160 URL，返回 200 成功。待 3 天后复查 Bing 爬取覆盖数。"
+          "status": "done",
+          "note": "10-14 已用 tabbit 提交 42 个 URL（记录见 数据分析/Bing-URL提交记录-2026-10-14.md，42/42 submitted）；覆盖率验收待 10-17 复查（基线 11 → ≥15）。"
         },
         {
           "id": "M3-8",
@@ -769,7 +769,7 @@
           "owner": "A",
           "deliverable": "2–3 个数据页",
           "accept": "每页含：数据来源、采集时间、样本量、可下载文件；发布后 30 天内至少 1 次外部引用",
-          "due": "2026-10-15",
+          "due": "2026-11-14",
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",

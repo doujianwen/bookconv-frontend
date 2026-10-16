@@ -40,6 +40,10 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const { locale } = await params;
   const { slug } = await params
   const [source, target] = slug.split("-to-")
+  // Dead-link guard: slugs without "-to-" (e.g. /convert/mobi-txt) yield an
+  // undefined target. Bail out with a real 404 BEFORE getDisplayName/
+  // template fallbacks touch it — otherwise the request crashes with a 500.
+  if (!source || !target) notFound()
   const contentData = CONTENT_MAP[slug]
   const isEs = locale === 'es' && !!contentData?.es
 
@@ -101,6 +105,9 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 export default async function ToolPage({ params }: ToolPageProps) {
   const { locale, slug } = await params
   const [source, target] = slug.split("-to-")
+  // Dead-link guard (same as generateMetadata): 404 before KEYWORDS.find /
+  // getConversion call .toLowerCase() on an undefined target (500 otherwise).
+  if (!source || !target) notFound()
   const keyword = KEYWORDS.find(
     (k) =>
       k.source.toLowerCase() === source.toLowerCase() &&
