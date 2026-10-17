@@ -26,6 +26,7 @@ import { extractApiError } from "@/lib/api-error";
 import { isErrorCode } from "@/lib/error-handler";
 import { trackGAEvent } from "@/lib/ga";
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
+import { sniffFileFormat } from "@/lib/file-format-sniffer";
 
 // ── Limits ────────────────────────────────────────────────────
 // Defaults are deliberately aligned with what the backend actually enforces:
@@ -205,7 +206,12 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   const [convertedFiles, setConvertedFiles] = useState<ConvertedFile[]>([]);
 
   // ── File management ───────────────────────────────────────
-  const addFiles = useCallback((newFiles: FileList | File[]) => {
+  // addFiles is now async so it can run the client-side magic-byte sniff on
+  // each dropped file before queueing. Files whose bytes clearly don't match
+  // the declared source format (e.g. a renamed PDF/SQLite/HTML dragged in as
+  // .epub) are marked failed immediately with an actionable message — saving
+  // the doomed 500 + the Feishu alert that used to fire server-side.
+  const addFiles = useCallback(async (newFiles: FileList | File[]) => {
     const existingNames = new Set(files.map((f) => f.name));
     const added: BatchFileItem[] = [];
 
@@ -219,6 +225,22 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         error = `Unsupported format: .${ext}`;
       } else if (file.size > MAX_FILE_SIZE_BYTES) {
         error = `File too large (${(file.size / 1024 / 1024).toFixed(1)}MB > ${MAX_FILE_SIZE_MB}MB)`;
+      }
+
+      // Client-side magic-byte sniff (best-effort; non-blocking on unknown).
+      // Only runs when the format passed the basic checks, and only when the
+      // source format is one the sniffer can reason about.
+      if (!error) {
+        const sniff = await sniffFileFormat(file, ext);
+        if (sniff) {
+          error = sniff.userMessage;
+          trackGAEvent("file_rejected_client", {
+            source_format: ext,
+            target_format: targetFormat,
+            magic_hex: sniff.magicHex,
+            reason: "magic_mismatch",
+          });
+        }
       }
 
       added.push({
@@ -241,7 +263,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
+    if (e.dataTransfer.files?.length) void addFiles(e.dataTransfer.files);
   }, [addFiles]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -250,7 +272,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   }, []);
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) addFiles(e.target.files);
+    if (e.target.files?.length) void addFiles(e.target.files);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [addFiles]);
 

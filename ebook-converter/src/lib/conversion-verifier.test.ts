@@ -78,6 +78,20 @@ describe('verifyConversion', () => {
     });
   });
 
+  it('reverse: offset-0 BOOKMOBI variant is still detected as mobi (not text)', async () => {
+    await withTempDir(async (dir) => {
+      const inPath = path.join(dir, 'in.epub');
+      const outPath = path.join(dir, 'out.mobi');
+      writeFileSync(inPath, await makeEpub(BOOK_TEXT));
+      // 偏移 0 变体：魔数 "BOOKMOBI" 直接放文件头（非 offset 60）。
+      // detectFormat 必须仍判 'mobi'——否则会落文本启发式 → format-mismatch 误杀。
+      writeFileSync(outPath, Buffer.concat([Buffer.from('BOOKMOBI', 'latin1'), Buffer.from('y'.repeat(1024))]));
+      const verdict = await verifyConversion(inPath, outPath, 'epub', 'mobi');
+      expect(verdict.pass).toBe(true);
+      expect(verdict.findings.some((f) => f.id === 'format-mismatch')).toBe(false);
+    });
+  });
+
   it('still vetoes epub -> txt when output is a tiny stub (content-loss intact)', async () => {
     await withTempDir(async (dir) => {
       const inPath = path.join(dir, 'in.epub');

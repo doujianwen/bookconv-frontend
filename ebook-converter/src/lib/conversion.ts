@@ -71,6 +71,47 @@ function isValidFormat(format: string): boolean {
   return /^[a-z0-9]+$/.test(format);
 }
 
+/**
+ * 把未知文件前 4 字节的十六进制魔数翻译成人类可读的猜测，方便报错文案
+ * 直接告诉用户「你上传的看起来其实是 X」。命中已知魔数表则返回对应提示；
+ * 未命中但 4 字节全是可打印 ASCII → 判为文本类；否则落到二进制兜底文案。
+ *
+ * 覆盖线上 2026-10-17 同步路径（epub→txt）实测出现过的 0x8834d0a3
+ * （SQLite 数据库被改名为 .epub）。
+ */
+const KNOWN_MAGIC_HINTS: Record<string, string> = {
+  '8834d0a3': '一个 SQLite 数据库文件（.db/.sqlite）',
+  '53514c69': '一个 SQLite 数据库文件（"SQLite" 开头）',
+  '25504446': '一个 PDF 文件（被改名为 .epub）',
+  '3c444f43': '一段 HTML 网页（<DOC…），不是 EPUB',
+  '3c48544d': '一段 HTML 网页（<HTM…），不是 EPUB',
+  '3c3f786d': '一段 XML 文件（<?xm…）',
+  '0d6a7372': '一个 RAR 压缩文件（Rar! 头）',
+  '52617221': '一个 RAR 压缩文件（Rar! 头）',
+  '1f8b0800': '一个 GZIP 压缩文件（被改名为 .epub）',
+  '425a6800': '一个 BZ2 压缩文件（BZh…）',
+  '377a6264': '一个 7-Zip 压缩文件（7z…）',
+  '89504e47': '一个 PNG 图片文件（被改名为 .epub）',
+  'ffd8ffe0': '一个 JPEG 图片文件（被改名为 .epub）',
+  'ffd8ffe1': '一个 JPEG 图片文件（被改名为 .epub）',
+  '47494638': '一个 GIF 图片文件（被改名为 .epub）',
+};
+
+function describeUnknownMagic(magicHex: string): string {
+  const known = KNOWN_MAGIC_HINTS[magicHex];
+  if (known) return known;
+  // 前 4 字节全是可打印 ASCII → 很可能是纯文本 / HTML / XML
+  const bytes = magicHex.match(/../g) ?? [];
+  if (bytes.length === 4 && bytes.every((b) => {
+    const n = parseInt(b, 16);
+    return n >= 0x20 && n <= 0x7e;
+  })) {
+    const ascii = bytes.map((b) => String.fromCharCode(parseInt(b, 16))).join('');
+    return `一段以「${ascii}」开头的文本文件（可能是 .txt/.html/.xml，被改名为 .epub）`;
+  }
+  return '无法识别的二进制文件（请确认下载的是完整的 .epub）';
+}
+
 function getMimeType(ext: string): string {
   const map = {
     epub: 'application/epub+zip', azw3: 'application/x-mobipocket-ebook',
@@ -102,12 +143,18 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
         const validZip =
           buf[0] === 0x50 && buf[1] === 0x4b && (buf[2] === 0x03 || buf[2] === 0x05 || buf[2] === 0x07);
         if (!validZip) {
-          // 把前 4 字节魔数带进告警，便于一眼确认「用户传的是非 EPUB」（误改名/下载截断/伪 epub）
+          // 把前 4 字节魔数带进告警，便于一眼确认「用户传的是非 EPUB」（误改名/下载截断/伪 epub）。
+          // 并翻译成人类可读猜测（describeUnknownMagic），避免用户面对一串 16 进制。
           const magicHex = buf.toString('hex');
-          log.conversion.error('EPUB input failed ZIP magic-byte check', { magicHex, sourceFormat });
+          log.conversion.error('EPUB input failed ZIP magic-byte check', {
+            magicHex,
+            sourceFormat,
+            guess: describeUnknownMagic(magicHex),
+          });
           throw new Error(
             `not a valid eBook format: an EPUB is a ZIP archive whose first bytes are PK\\x03\\x04. ` +
-            `The uploaded file starts with 0x${magicHex}. Please upload a real .epub file (not a renamed .pdf/.txt/.html).`,
+            `The uploaded file starts with 0x${magicHex}（${describeUnknownMagic(magicHex)}）. ` +
+            `Please upload a real .epub file (not a renamed .pdf/.txt/.html).`,
           );
         }
       } catch (_err) {

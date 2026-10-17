@@ -19,6 +19,7 @@ import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
+import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
 import { KeyTakeawaysSection } from "@/components/tools/KeyTakeawaysSection"
@@ -110,6 +111,21 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const handleFileSelect = useCallback(
     async (file: File) => {
+      // 上传前魔数嗅探：把"重命名的 .pdf/.txt/数据库文件"提前拦在上传前，
+      // 省一次 500 + 一次飞书告警。识别不了就放行（后端 validateInputFile 仍兜底）。
+      const sniff = await sniffFileFormat(file, source)
+      if (sniff) {
+        setErrorMessage(sniff.userMessage)
+        setErrorCode("CORRUPT_INPUT")
+        setStatus("error")
+        trackGAEvent("file_rejected_client", {
+          source_format: source,
+          target_format: target,
+          magic_hex: sniff.magicHex,
+          reason: "magic_mismatch",
+        })
+        return
+      }
       // Defense-in-depth: block oversized uploads before any network call.
       // Vercel Hobby rejects >4.5MB request bodies at the edge with a 413 that
       // our code never sees — without this guard the doomed request would still
@@ -181,7 +197,7 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         })
       }
     },
-    [source, target]
+    [source, target, sniffFileFormat]
   )
   return (
     <>
