@@ -1,0 +1,501 @@
+序号,平台名称,目标域名,预估DR,链接属性,建议动作,执行状态
+1,AlternativeTo,alternativeto.net,82,UGC / NoFollow,注册提交产品并关联为 CloudConvert/Calibre 在线替代品,待处理
+2,SaaSHub,saashub.com,74,DoFollow,提交产品清单并添加 Free 与 Ebook Converter 标签,待处理
+3,Product Hunt,producthunt.com,91,DoFollow,创建产品主页并排期 Launch 发布,待处理
+4,Toolify AI,toolify.ai,76,DoFollow,提交实用在线转换工具分类收录,待处理
+5,Futurepedia,futurepedia.io,71,DoFollow,提交格式转换与文档处理工具,待处理
+6,BetaList,betalist.com,79,DoFollow,提交轻量免注册工具功能上线审核,待处理
+7,SourceForge,sourceforge.net,92,DoFollow,注册开源/免费工具专页提供 Web 版链接,待处理
+8,G2,g2.com,91,NoFollow,申请免费商业软件 Profile 页面收录,待处理
+9,Capterra,capterra.com,90,NoFollow,提报在线文件转换工具基础目录,待处理
+10,Slant,slant.co,76,DoFollow,在最佳电子书/PDF转换器下推荐并填写优缺点,待处理
+11,Microtools,microtools.co,58,DoFollow,提交单一功能轻量在线转换工具,待处理
+12,Theres An AI For That,theresanaiforthat.com,78,DoFollow,提交智能排版/文档格式转换工具,待处理
+13,Feedough,feedough.com,72,DoFollow,申请免费办公实用工具列表推荐,待处理
+14,StartupBase,startupbase.io,65,DoFollow,免费提交 Web 在线产品上线页面,待处理
+15,Dang AI,dang.ai,68,DoFollow,提交日常格式转换生产力工具,待处理
+16,EasyWithAI,easywithai.com,65,DoFollow,提报文档与文本转换在线实用工具,待处理
+17,AllTopStartups,alltopstartups.com,68,DoFollow,提交实用工具型网站评测审核,待处理
+18,WebAppRater,webapprater.com,55,DoFollow,提交实用轻量 Web 应用收录,待处理
+19,KillerStartups,killerstartups.com,71,DoFollow,提交初创在线转换工具评测,待处理
+20,1000 Tools,1000.tools,55,DoFollow,提交独立开发者日常效率工具清单,待处理
+21,MobileRead Forums,mobileread.com,75,DoFollow / UGC,在 E-Book Formats 板块解答 EPUB/AZW3 转换报错,待处理
+22,Reddit r/kindle,reddit.com,93,UGC / NoFollow,回答 Send to Kindle 格式支持及排版报错贴,待处理
+23,Reddit r/ereader,reddit.com,93,UGC / NoFollow,回答墨水屏阅读器跨格式转换技巧,待处理
+24,Reddit r/calibre,reddit.com,93,UGC / NoFollow,针对无电脑安装 Calibre 提供在线免安装方案,待处理
+25,Reddit r/kobo,reddit.com,93,UGC / NoFollow,回答 Kobo 用户如何快速将 MOBI/AZW 转为标准 EPUB,待处理
+26,KBoards,kboards.com,62,UGC,独立出版作者区交流 KDP 电子书排版转换避坑,待处理
+27,Goodreads Kindle Users,goodreads.com,93,UGC / NoFollow,在 Kindle 书友群讨论贴中推荐格式转换工具,待处理
+28,Onyx Boox BBS,bbs.onyx-boox.com,64,UGC,针对大文件 PDF/EPUB 互转排版保真发帖分享,待处理
+29,Ebooks Stack Exchange,ebooks.stackexchange.com,82,DoFollow / UGC,解答 EPUB 规范、排版乱码及字体提取技术问答,待处理
+30,Super User,superuser.com,88,UGC / NoFollow,回答跨系统免装软件转换电子书问题,待处理
+31,Quora,quora.com,89,UGC / NoFollow,撰写高质量排版转换指南并附带功能单页,待处理
+32,GitHub awesome-epub,github.com,96,DoFollow,提 PR 收录至 Utilities / Web Tools 列表,待处理
+33,GitHub awesome-ebook,github.com,96,DoFollow,提 PR 加入免费在线格式处理工具列表,待处理
+34,GitHub awesome-tools,github.com,96,DoFollow,提 PR 到 File Conversion 对应分类,待处理
+35,GitHub free-for-dev,github.com,96,DoFollow,提 PR 加入面向开发者的免费无限制日常在线工具,待处理
+36,Hacker News,news.ycombinator.com,91,UGC / NoFollow,发布免安装、无繁重广告的轻量转换工具展示帖,待处理
+37,Dev.to,dev.to,87,DoFollow,发布技术短文批量在线转换 EPUB 到 PDF,待处理
+38,Hashnode,hashnode.com,85,DoFollow,发布关于格式转换解析效率的经验分享贴,待处理
+39,MakeUseOf,makeuseof.com,86,DoFollow,挖掘历史文章已失效的转换器链接发信建议替换,待处理
+40,TechRadar,techradar.com,91,DoFollow,关注编辑更新旧教程的时机推荐免安装替代工具,待处理
+41,Digital Trends,digitaltrends.com,88,DoFollow,挖掘汇总文中商业化收费或已失效的老牌竞品链接,待处理
+42,Lifewire,lifewire.com,89,DoFollow,检查历史文章中已关停的小众工具联系编辑替换,待处理
+43,How-To Geek,howtogeek.com,89,DoFollow,发信建议在多平台转换方案中补充 Web 免安装方案,待处理
+44,Online Tech Tips,online-tech-tips.com,79,DoFollow,针对其免费转换工具集合页邮件申请加入清单,待处理
+45,Guiding Tech,guidingtech.com,78,DoFollow,针对特定格式转换教程发信推荐更干净的在线方案,待处理
+46,MIT Libraries,libguides.mit.edu,92,DoFollow,检索数字化指南并联系管理员增补推荐,待处理
+47,Stanford University Library,library.stanford.edu,93,DoFollow,针对研究人员数字阅读指南提报免费工具,待处理
+48,Penn State LibGuides,libraries.psu.edu,89,DoFollow,发信给指南维护者推荐学生无障碍转换工具,待处理
+49,University of Michigan,umich.edu,90,DoFollow,推荐作为电子书大字排版互转的辅助工具,待处理
+50,University of Leeds,leeds.ac.uk,88,DoFollow,针对高校学术资源推荐列表发信提供免安装方案,待处理
+51,Softpedia,softpedia.com,91,DoFollow,提交Web工具收录于在线办公与转换分类,待处理
+52,TechJunkie,techjunkie.com,78,DoFollow,挖掘电子书排版与转换教程中的失效链接,待处理
+53,Make Tech Easier,maketecheasier.com,81,DoFollow,在Kindle与电子阅读器格式优化文章中申请增补,待处理
+54,AddictiveTips,addictivetips.com,79,DoFollow,提交免安装文件格式转换评测与推荐,待处理
+55,Uptodown,uptodown.com,89,DoFollow,提交Web应用/独立格式转换工具条目,待处理
+56,Alternative.me,alternative.me,72,DoFollow,申请录入为Calibre/Convertio替代方案,待处理
+57,SimilarSites,similarsites.com,75,NoFollow,关联同类文件转换工具以获取推荐流展示,待处理
+58,AppBrain,appbrain.com,80,DoFollow,提交工具Web版详情介绍与功能特点,待处理
+59,ProductNation,productnation.co,69,DoFollow,参与办公必备免费在线工具榜单评选与推荐,待处理
+60,AllThingsHow,allthings.how,73,DoFollow,在Send to Kindle故障排查教程中发信推荐工具,待处理
+61,Reddit r/selfpublish,reddit.com,93,UGC / NoFollow,解答作者排版EPUB转PDF排版不齐等实操问题,待处理
+62,Reddit r/writing,reddit.com,93,UGC / NoFollow,分享自出版格式转换与排版避坑指南,待处理
+63,Reddit r/productivity,reddit.com,93,UGC / NoFollow,推荐免安装快速转换日常电子书及文档的轻量工具,待处理
+64,Reddit r/opendirectories,reddit.com,93,UGC / NoFollow,回答电子书整理与格式兼容性处理相关讨论,待处理
+65,Reddit r/Piracy,reddit.com,93,UGC / NoFollow,针对无版权公开公版书格式转换提供便捷方案,待处理
+66,Wattpad Community,wattpad.com,84,UGC / NoFollow,在作家讨论区分享将稿件转为EPUB排版工具,待处理
+67,Smashwords Forum,smashwords.com,79,UGC,解答提交自出版平台时EPUB验证报错解决方案,待处理
+68,Royal Road Forum,royalroad.com,74,UGC,网文作者社区推荐免费快速转换阅读格式工具,待处理
+69,LibraryThing,librarything.com,80,UGC / NoFollow,在电子阅读硬件群组中提供格式兼容解决方案,待处理
+70,Archive.org Community,archive.org,94,UGC / NoFollow,在数字化文档互助专区推荐免安装转换方案,待处理
+71,Awesome Piracy Github,github.com,96,DoFollow,提PR至Reading & E-Books相关开源工具列表,待处理
+72,Awesome Selfhosted Github,github.com,96,DoFollow,提供作为免部署在线备选工具参考,待处理
+73,Gitconnected,gitconnected.com,81,DoFollow,发布关于格式转换算法与免损排版经验分享,待处理
+74,Lobste.rs,lobste.rs,73,UGC / NoFollow,参与格式转换开源生态及无损排版话题讨论,待处理
+75,Indie Hackers,indiehackers.com,86,UGC / NoFollow,分享独立工具站出海实操与功能迭代历程,待处理
+76,ProductHunt Discussions,producthunt.com,91,UGC / NoFollow,参与Daily Utilities每日效率工具推荐讨论,待处理
+77,BetaPage,betapage.co,64,DoFollow,提交初创转换工具新版本及核心功能上线,待处理
+78,SideProjectors,sideprojectors.com,65,DoFollow,展示轻量化电子书转换工具项目,待处理
+79,Launching Next,launchingnext.com,63,DoFollow,免费提交初创Web工具站并获取收录,待处理
+80,The Startup Pitch,thestartuppitch.com,60,DoFollow,撰写简短产品介绍并提交工具类推介,待处理
+81,Wired,wired.com,93,DoFollow,挖掘办公效率专栏历史失效转换工具链接,待处理
+82,PCWorld,pcworld.com,91,DoFollow,针对格式转换与阅读器技巧文章发信更新建议,待处理
+83,CNET,cnet.com,93,DoFollow,关注How-To科技板块教程并建议补充纯免安装方案,待处理
+84,Macworld,macworld.com,90,DoFollow,针对Mac用户无需装软件转换EPUB教程发信,待处理
+85,Android Authority,androidauthority.com,90,DoFollow,在安卓平板与阅读器传书指南中建议增补在线方案,待处理
+86,Gizmodo,gizmodo.com,92,DoFollow,扫描生活黑客与效率技巧历史教程中已停服链接,待处理
+87,The Verge,theverge.com,93,DoFollow,关注电子书生态与硬件评测文章的延伸工具推荐,待处理
+88,ZDNet,zdnet.com,91,DoFollow,针对企业/个人轻量办公文档互转推荐无痕工具,待处理
+89,MUO Ebook Guides,makeuseof.com,86,DoFollow,针对Kindle/Kobo专项技巧发信做断链替换,待处理
+90,Tom's Guide,tomsguide.com,90,DoFollow,在最佳免费软件/Web工具集合文章中推荐收录,待处理
+91,Columbia University LibGuides,columbia.edu,92,DoFollow,检索数字出版指导页发信推荐格式转换工具,待处理
+92,Harvard Library Research Guides,harvard.edu,93,DoFollow,检索电子书阅读与开放格式页面申请增补,待处理
+93,UC Berkeley Library,berkeley.edu,91,DoFollow,在数字人文与文档归档资源页发信自荐,待处理
+94,Cornell University LibGuides,cornell.edu,91,DoFollow,针对学生无障碍阅读文档转换指南发信推荐,待处理
+95,University of Washington Libraries,washington.edu,89,DoFollow,针对学术文档与电子书互转工具列表申请收录,待处理
+96,Oxford University Libraries,ox.ac.uk,90,DoFollow,检索LibGuides学术格式转换发信提供免安装方案,待处理
+97,Cambridge University LibGuides,cam.ac.uk,90,DoFollow,向数字学习资源管理员推荐快速转换实用工具,待处理
+98,University of Toronto Libraries,utoronto.ca,88,DoFollow,联系无障碍学习资料支持团队推荐转换平台,待处理
+99,University of Edinburgh,ed.ac.uk,88,DoFollow,针对电子出版与数字文本处理页面建议加入收录,待处理
+100,UCLA Library Guides,ucla.edu,89,DoFollow,检索E-Book Formatting指南发信自荐免安装工具,待处理
+101,ILovePDF Community,ilovepdf.com,88,NoFollow,在格式转换与PDF工具互助专区发帖分享,待处理
+102,Smallpdf Forum,smallpdf.com,86,NoFollow,针对EPUB转PDF排版保真场景推荐轻量在线工具,待处理
+103,PDF Candy Directory,pdfcandy.com,78,DoFollow,申请录入互补型在线文档与电子书处理工具,待处理
+104,Sejda PDF Resources,sejda.com,79,DoFollow,在开源/免费PDF与电子书格式扩展页建议收录,待处理
+105,DocuPub,docupub.com,68,DoFollow,提交免费在线文档转换工具互换推荐,待处理
+106,PDFforge Forum,pdfforge.org,81,UGC / NoFollow,在PDFCreator社区解答电子书格式导出PDF问题,待处理
+107,Online-Convert Alternatives,online-convert.com,84,DoFollow,在竞品替代品目录中申请新增轻量免广告选项,待处理
+108,FileZigZag Reviews,filezigzag.com,67,DoFollow,针对格式互转评测页留言推荐新一代极速工具,待处理
+109,FreeConvert Community,freeconvert.com,76,UGC / NoFollow,解答超大电子书文件转换格式压缩与排版技巧,待处理
+110,Apowersoft Free Online Tools,apowersoft.com,83,DoFollow,在其免费在线工具盘点文章中邮件推荐增补,待处理
+111,Reddit r/CalibreWeb,reddit.com,93,UGC / NoFollow,解答Calibre-Web个人书库自动化转换格式问题,待处理
+112,Reddit r/koboaura,reddit.com,93,UGC / NoFollow,针对老款Kobo电纸书EPUB格式乱码提供免安装转换,待处理
+113,Reddit r/kindlefire,reddit.com,93,UGC / NoFollow,解答Fire平板导入非Amazon格式电子书排版方案,待处理
+114,Reddit r/RemarkableTablet,reddit.com,93,UGC / NoFollow,分享适合reMarkable墨水屏阅读的PDF/EPUB互转工具,待处理
+115,Reddit r/Supernote,reddit.com,93,UGC / NoFollow,解答Supernote笔记设备导入EPUB排版切边与转换,待处理
+116,Reddit r/boox,reddit.com,93,UGC / NoFollow,在文石电纸书专区推荐免安装长篇书籍格式互转方案,待处理
+117,Reddit r/PocketBook,reddit.com,93,UGC / NoFollow,解答PocketBook设备跨格式电子书解析与阅读问题,待处理
+118,Reddit r/selfpublishing,reddit.com,93,UGC / NoFollow,为自出版独立作者提供免排版错乱的EPUB工具,待处理
+119,Reddit r/LibbyApp,reddit.com,93,UGC / NoFollow,解答图书馆借阅导出电子书格式兼容与阅读互转,待处理
+120,Reddit r/OverDrive,reddit.com,93,UGC / NoFollow,在借阅平台书友区解答离线文档转换阅读需求,待处理
+121,GitHub awesome-kindle,github.com,96,DoFollow,提PR至Kindle生态与传书辅助工具推荐列表,待处理
+122,GitHub awesome-ereaders,github.com,96,DoFollow,提PR加入跨设备电子书格式处理开源与在线工具,待处理
+123,GitHub awesome-pkm,github.com,96,DoFollow,提PR至个人知识库管理(PKM)文档互转分类,待处理
+124,GitHub awesome-writing,github.com,96,DoFollow,提PR加入创作者数字出版与排版导出工具箱,待处理
+125,GitHub awesome-selfhosted-reading,github.com,96,DoFollow,在自建数字图书馆项目周边工具中提PR增补,待处理
+126,Calibre Plugin Index,calibre-ebook.com,75,DoFollow,联系插件开发者在常见在线转换替代方案中添加引用,待处理
+127,Sigil Ebook Forum,sigil-ebook.com,71,UGC / DoFollow,在EPUB编辑器社区解答非标准格式快速规整方案,待处理
+128,Jutoh Forum,jutoh.com,62,UGC,在电子书制作软件社区分享无损格式在线互转工具,待处理
+129,Vellum Users Group,vellum.pub,65,UGC / NoFollow,针对Mac独立排版作者推荐免安装跨平台转换,待处理
+130,Atticus Community,atticus.io,68,UGC / NoFollow,在书籍排版工具社区解答EPUB导出与检验痛点,待处理
+131,Smashing Magazine,smashingmagazine.com,89,DoFollow,挖掘前端排版与电子出版物(EPUB3)指南断链,待处理
+132,SitePoint,sitepoint.com,87,DoFollow,针对Web技术生成EPUB教程发信补充最新转换工具,待处理
+133,CSS-Tricks,css-tricks.com,88,DoFollow,在电子书CSS样式与排版历史文章中发信更新工具,待处理
+134,A List Apart,alistapart.com,82,DoFollow,联系数字阅读标准与排版专栏作者申请资源增补,待处理
+135,Hongkiat,hongkiat.com,85,DoFollow,在Top Free Online File Converters文章中发信替换死链,待处理
+136,TechViral,techviral.net,76,DoFollow,提交免安装在线文件与电子书转换工具实测测评,待处理
+137,Twitgoo,twitgoo.com,65,DoFollow,在日常办公与阅读格式转换教程中邮件推荐收录,待处理
+138,Techwiser,techwiser.com,78,DoFollow,针对多平台电子书阅读避坑指南发信推荐工具,待处理
+139,Technadu,technadu.com,75,DoFollow,挖掘电纸书使用技巧与格式转换历史失效链接,待处理
+140,iGeeksBlog,igeeksblog.com,81,DoFollow,在iPhone/iPad阅读EPUB与PDF互转教程中推荐,待处理
+141,Yale University Library Guides,yale.edu,92,DoFollow,针对学术电子出版与格式转换资源列表发信自荐,待处理
+142,Princeton Library Guides,princeton.edu,91,DoFollow,在开放获取论文与电子书阅读页面申请增补工具,待处理
+143,Johns Hopkins LibGuides,jhu.edu,90,DoFollow,面向科研人员数字文献格式整理指南推荐免费工具,待处理
+144,Duke University Libraries,duke.edu,90,DoFollow,针对无障碍阅读与格式转换工具清单发信推荐,待处理
+145,Northwestern University LibGuides,northwestern.edu,89,DoFollow,在数字人文电子文本格式互转页面申请收录,待处理
+146,UBC Library Guides,ubc.ca,88,DoFollow,面向加拿大高校电子书借阅与格式兼容指南发信,待处理
+147,Australian National University Library,anu.edu.au,88,DoFollow,针对澳洲高校学术阅读资料格式互转申请增补,待处理
+148,University of Melbourne LibGuides,unimelb.edu.au,89,DoFollow,联系数字学术支持团队推荐极速免安装转换平台,待处理
+149,NTU Library Guides,ntu.edu.sg,87,DoFollow,在新加坡高校数字文献处理与自学工具页申请收录,待处理
+150,University of Zurich LibGuides,uzh.ch,86,DoFollow,针对欧洲学术电子书格式阅读指南发信推荐工具,待处理
+151,AlternativeTo Ebook Category,alternativeto.net,82,UGC / NoFollow,在E-Book Converter子类目下提交产品并建立独立页面,待处理
+152,StackShare,stackshare.io,79,DoFollow,建立BookConv技术栈与开发工具Profile,待处理
+153,GetApp,getapp.com,88,NoFollow,申请免费在线文档处理分类工具收录,待处理
+154,Software Advice,softwareadvice.com,87,NoFollow,提交办公辅助格式转换工具目录,待处理
+155,TrustRadius,trustradius.com,85,NoFollow,建立独立产品评价与功能清单页,待处理
+156,FinancesOnline,financesonline.com,81,DoFollow,申请SaaS轻量工具库免费评测条目,待处理
+157,Crozdesk,crozdesk.com,77,DoFollow,提报Web文件处理与实用转换工具,待处理
+158,Product Hunt Upcoming,producthunt.com,91,DoFollow,在Upcoming板块预热新版格式转换功能,待处理
+159,PitchWall,pitchwall.co,62,DoFollow,提交产品Pitch并争取社区投票推荐,待处理
+160,Indie Web Tools,indieweb.org,81,DoFollow,在开源与独立Web工具维基目录中添加引用,待处理
+161,Startups.fyi,startups.fyi,63,DoFollow,提交微型独立SaaS工具收录,待处理
+162,CrazyWebStudio Tools,crazywebstudio.com,58,DoFollow,申请收录于免费在线生产力清单,待处理
+163,WebToolsWeekly,webtoolsweekly.com,54,DoFollow,向Newsletter主理人投递轻量转换工具,待处理
+164,SaaS AI Tools,saasaitools.com,67,DoFollow,提交智能文档与排版格式转换条目,待处理
+165,Wachete Tools Directory,wachete.com,61,DoFollow,在效率工具集合中提交收录申请,待处理
+166,TopTools.club,toptools.club,56,DoFollow,提交日常文件转换与办公提效网站,待处理
+167,UsefulWebsites,usefulwebsites.io,59,DoFollow,申请收录于全球实用网站导航,待处理
+168,Tiny-Projects,tinyprojects.dev,64,DoFollow,投稿极简工具出海实战与开发故事,待处理
+169,SideHustleStack,sidehustlestack.co,68,DoFollow,在自出版创作者资源工具栏申请增补,待处理
+170,ToolOwl,toolowl.com,57,DoFollow,提交免费无广告/轻广告在线转换平台,待处理
+171,FreebieSupply,freebiesupply.com,73,DoFollow,申请录入数字创作者免费格式转换资源,待处理
+172,SaaSGenius,saasgenius.com,64,DoFollow,提报免费文件处理与转换Web软件,待处理
+173,SaaSWorthy,saasworthy.com,71,DoFollow,创建独立产品页面并收集初始评分,待处理
+174,Feedbase,feedbase.net,55,DoFollow,提交产品基本信息与在线功能入口,待处理
+175,StartupStash,startupstash.com,76,DoFollow,提交至Productivity & Utilities分类,待处理
+176,Launching.io,launching.io,52,DoFollow,提交新上线免费在线转换工具,待处理
+177,JustFreeTools,justfreetools.com,58,DoFollow,申请录入免注册在线文档工具专区,待处理
+178,Free-Tools.io,free-tools.io,54,DoFollow,提交在线文件转换与排版轻量应用,待处理
+179,OnlineToolsWorld,onlinetoolsworld.com,53,DoFollow,提报EPUB/PDF/MOBI跨格式互转条目,待处理
+180,FreeWebUtils,freewebutils.com,51,DoFollow,提交单功能免安装工具集收录,待处理
+181,ProductLogz,productlogz.com,53,DoFollow,发布BookConv更新日志与格式支持进展,待处理
+182,StartupTracker,startuptracker.io,60,DoFollow,完善独立产品档案并获取权威基础反向链接,待处理
+183,WebDesignRepo,webdesignrepo.com,57,DoFollow,在文档导出与设计排版辅助工具中提报,待处理
+184,UnderTheRadar,undertheradar.co,52,DoFollow,提交初创在线生产力工具清单,待处理
+185,NextDevTools,nextdevtools.com,55,DoFollow,申请录入轻量办公与格式转换Web站,待处理
+186,GreatApps,greatapps.com,59,DoFollow,提报Web版跨平台电子书互转工具,待处理
+187,NoCodeList,nocodelist.co,63,DoFollow,在免代码创作周边工具分类中申请收录,待处理
+188,IndieHackerStacks,indiehackerstacks.com,54,DoFollow,展示独立开发者转换工具站技术栈,待处理
+189,WebToolsFree,webtoolsfree.com,50,DoFollow,提交免费无限制在线转换应用,待处理
+190,ConvertOnlineDirectory,convertonline.org,52,DoFollow,录入垂直电子书与文档互转导航,待处理
+191,BestFreeOnlineTools,bestfreeonlinetools.com,53,DoFollow,申请加入日常必备在线转换神器推荐,待处理
+192,MicroSaaS Directory,microsaas.directory,55,DoFollow,提交面向特定文件格式处理的Micro-SaaS,待处理
+193,UsefulWebTools,usefulwebtools.com,56,DoFollow,提交办公文件与电子书极速互转工具,待处理
+194,OpenTools,opentools.ai,66,DoFollow,提报在线智能格式识别与转换平台,待处理
+195,FoundersBeta,foundersbeta.com,61,DoFollow,在初创资源中心推荐高效办公转换工具,待处理
+196,WebCurator,webcurator.co,54,DoFollow,申请被收录进日常网络精品实用工具集,待处理
+197,TechDirectory,techdirectory.io,57,DoFollow,提交免费Web应用与电子书格式转换条目,待处理
+198,UtilityHub,utilityhub.co,51,DoFollow,提报轻量免登录转换工具并获锚文本,待处理
+199,SaaSLaunchr,saaslaunchr.com,53,DoFollow,提交新版本上线资讯并获取初始外部引流,待处理
+200,QuickToolsDirectory,quicktools.io,56,DoFollow,提交无需安装的快速文件格式转换工具,待处理
+201,University of Oxford LibGuides,ox.ac.uk,92,DoFollow,检索LibGuides电子学术出版与格式互转指南发信,待处理
+202,University of Cambridge Libraries,cam.ac.uk,92,DoFollow,在数字化文献转换与学习辅助页面申请增补,待处理
+203,Harvard Library Guides,harvard.edu,93,DoFollow,针对研究人员数字文献格式整理指南推荐免费工具,待处理
+204,Stanford LibGuides,stanford.edu,93,DoFollow,在Open Access与电子文档借阅指南中自荐,待处理
+205,MIT Libraries Document Guides,mit.edu,92,DoFollow,针对学生数字文档处理与无障碍格式申请收录,待处理
+206,Yale University Library Accessibility,yale.edu,92,DoFollow,向图书馆无障碍支持小组推荐大字版转换,待处理
+207,Columbia University Digital Scholarship,columbia.edu,91,DoFollow,在数字学术出版格式规范页发信推荐免安装工具,待处理
+208,Princeton Library Digital Resources,princeton.edu,91,DoFollow,检索E-text与电子书借阅指南邮件推荐,待处理
+209,UC Berkeley Library LibGuides,berkeley.edu,91,DoFollow,针对数字人文课题组文献格式转换发信增补,待处理
+210,University of Chicago Library,uchicago.edu,90,DoFollow,在学术电子书与论文格式指南中申请加入,待处理
+211,Cornell University Library Guides,cornell.edu,91,DoFollow,针对研究生论文与电子书互转工具推荐自荐,待处理
+212,University of Pennsylvania Libraries,upenn.edu,90,DoFollow,检索LibGuides无障碍格式转换发信建议,待处理
+213,Johns Hopkins University Library,jhu.edu,90,DoFollow,向医学文献与电子图书数字整理组自荐,待处理
+214,Duke University LibGuides,duke.edu,90,DoFollow,在数字出版与EPUB标准辅导页面申请推荐,待处理
+215,Northwestern Library Guides,northwestern.edu,89,DoFollow,针对跨平台阅读格式排版发信提供轻量工具,待处理
+216,University of Michigan Library Guides,umich.edu,90,DoFollow,向无障碍学习中心推荐免安装电子书格式转换,待处理
+217,Carnegie Mellon University Libraries,cmu.edu,89,DoFollow,在计算机与数字人文研究资源中申请增补,待处理
+218,NYU Libraries LibGuides,nyu.edu,90,DoFollow,在电子图书借阅与格式兼容指南中邮件自荐,待处理
+219,UCLA Library Research Guides,ucla.edu,89,DoFollow,联系学科馆员在学生常用工具列表中加入,待处理
+220,University of Washington LibGuides,washington.edu,89,DoFollow,针对西雅图校区数字图书馆辅助工具申请收录,待处理
+221,UT Austin Library Guides,utexas.edu,89,DoFollow,在数字出版与格式处理学习页面发信推荐,待处理
+222,UIUC University Library,illinois.edu,89,DoFollow,针对信息科学学院电子书标准指南推荐工具,待处理
+223,University of Wisconsin-Madison Libraries,wisc.edu,89,DoFollow,在开放教育资源(OER)制作指南中申请加入,待处理
+224,Penn State University LibGuides,psu.edu,89,DoFollow,向图书管理员推荐学生用电子书格式转换站,待处理
+225,UNC Chapel Hill Libraries,unc.edu,88,DoFollow,在数字化文本整理与阅读指南中发信推荐,待处理
+226,University of Virginia Library,virginia.edu,88,DoFollow,针对数字学术中心电子书转换工具申请收录,待处理
+227,University of Colorado Boulder,colorado.edu,88,DoFollow,在无障碍格式转换与电子书借阅页自荐,待处理
+228,Indiana University Libraries,iu.edu,88,DoFollow,检索电子出版物排版指南邮件推荐,待处理
+229,Ohio State University Libraries,osu.edu,88,DoFollow,在学生数字化学习工具集页面申请增补,待处理
+230,University of Florida Libraries,ufl.edu,88,DoFollow,针对移动阅读与电子书格式转换推荐,待处理
+231,University of Toronto LibGuides,utoronto.ca,88,DoFollow,在加拿大顶尖大学数字资源库发信推荐,待处理
+232,UBC Library Research Guides,ubc.ca,88,DoFollow,向不列颠哥伦比亚大学数字馆员自荐工具,待处理
+233,McGill University Library,mcgill.ca,88,DoFollow,在学术阅读器与文档处理指南中申请加入,待处理
+234,University of Edinburgh Library,ed.ac.uk,88,DoFollow,在英国高校电子出版物支持页发信自荐,待处理
+235,King's College London LibGuides,kcl.ac.uk,87,DoFollow,针对学术文档数字化与格式转换申请增补,待处理
+236,UCL Library Services,ucl.ac.uk,89,DoFollow,在开放科学与数字文本指南中邮件推荐,待处理
+237,University of Manchester Library,manchester.ac.uk,87,DoFollow,向学生技能与数字学习支持团队自荐,待处理
+238,Australian National University Library,anu.edu.au,88,DoFollow,针对澳洲国立大学学术格式整理发信推荐,待处理
+239,University of Melbourne LibGuides,unimelb.edu.au,89,DoFollow,在数字学术出版格式指南中申请收录,待处理
+240,University of Sydney Library,sydney.edu.au,88,DoFollow,针对学生移动设备阅读格式转换邮件自荐,待处理
+241,University of Queensland LibGuides,uq.edu.au,87,DoFollow,在无障碍学术文档转换页面申请加入,待处理
+242,Monash University Library,monash.edu,87,DoFollow,向莫纳什大学数字学习中心推荐免安装工具,待处理
+243,UNSW Library Guides,unsw.edu.au,87,DoFollow,针对工程与文学研究资料格式互转自荐,待处理
+244,NTU Singapore Library Guides,ntu.edu.sg,87,DoFollow,在南洋理工大学数字文献指南中申请增补,待处理
+245,NUS Libraries LibGuides,nus.edu.sg,88,DoFollow,向新加坡国立大学学科馆员推荐快速转换平台,待处理
+246,University of Hong Kong Libraries,hku.hk,86,DoFollow,在电子图书借阅与格式兼容指南中邮件自荐,待处理
+247,CUHK Library Guides,cuhk.edu.hk,85,DoFollow,针对数字人文研究工具清单发信申请增补,待处理
+248,Trinity College Dublin Library,tcd.ie,86,DoFollow,向爱尔兰圣三一大学数字学习中心推荐工具,待处理
+249,Auckland University LibGuides,auckland.ac.nz,86,DoFollow,针对新西兰高校电子文献阅读指导发信,待处理
+250,University of Zurich Library,uzh.ch,86,DoFollow,在欧洲学术电子书借阅与格式页面推荐,待处理
+251,Wired UK,wired.co.uk,90,DoFollow,挖掘电子书阅读与格式处理专栏历史断链,待处理
+252,ZDNet Software Guides,zdnet.com,91,DoFollow,发信建议在免费文件转换推荐榜单中增加选项,待处理
+253,Ars Technica Forums,arstechnica.com,91,UGC / NoFollow,在Open Source & Utilities版块探讨格式转换保真度,待处理
+254,Mashable Tech Guides,mashable.com,92,DoFollow,针对Kindle技巧与电子书转换历史教程做死链替换,待处理
+255,Digital Trends Mobile,digitaltrends.com,88,DoFollow,关注移动端传书排版教程并发信建议增补,待处理
+256,PCMag Software Reviews,pcmag.com,92,DoFollow,联系软件评测编辑提交免费在线工具测试,待处理
+257,Engadget How-To,engadget.com,93,DoFollow,挖掘数码阅读与电纸书评测文中的外链机会,待处理
+258,Techlicious,techlicious.com,77,DoFollow,在家庭数码技巧《How to Convert Ebooks》中发信增补,待处理
+259,GroovyPost,groovypost.com,80,DoFollow,针对Windows/Mac电子书技巧发信替换失效软件链接,待处理
+260,MakeTechEasier Ebook Category,maketecheasier.com,81,DoFollow,投稿客座文章《5 Fast Ways to Convert EPUB to PDF》,待处理
+261,Dignited,dignited.com,67,DoFollow,在非洲及新兴市场科技博客推荐免费转换方案,待处理
+262,GadgetHacks,gadgethacks.com,83,DoFollow,在移动设备传书与电子书阅读攻略中留言或发信,待处理
+263,JoyOfAndroid,joyofandroid.com,72,DoFollow,针对安卓阅读器转换EPUB教程发信提供在线选项,待处理
+264,OSXDaily,osxdaily.com,84,DoFollow,挖掘Mac电脑转换电子书教程中的失效工具链接,待处理
+265,Cult of Mac,cultofmac.com,86,DoFollow,在Apple Books与Kindle格式互转技巧中邮件推荐,待处理
+266,iDownloadBlog,idownloadblog.com,83,DoFollow,针对iOS设备阅读无DRM电子书教程发信推荐,待处理
+267,AppAdvice,appadvice.com,81,DoFollow,在电子书辅助阅读工具汇总页中申请收录,待处理
+268,TechPP Utilities,techpp.com,73,DoFollow,针对电子书批处理转换教程邮件申请加入清单,待处理
+269,NaludoTech,naludotech.com,61,DoFollow,提交免费轻量格式转换工具评测,待处理
+270,Windows Central,windowscentral.com,89,DoFollow,在Surface及PC电子书阅读指南中提供免装方案,待处理
+271,Android Police Ereader Guides,androidpolice.com,87,DoFollow,针对文石/墨水屏安卓设备传书技巧发信更新,待处理
+272,SlashGear How-Tos,slashgear.com,87,DoFollow,挖掘智能硬件阅读与格式互转文章断链,待处理
+273,Pocket-lint Ebook Guides,pocket-lint.com,88,DoFollow,针对Kindle vs Kobo格式支持发信推荐免安装方案,待处理
+274,TrustedReviews,trustedreviews.com,88,DoFollow,在电子阅读器评测周边推荐中邮件自荐工具,待处理
+275,Laptop Mag,laptopmag.com,87,DoFollow,针对轻薄本办公常用文件转换工具发信推荐,待处理
+276,Expert Reviews UK,expertreviews.co.uk,84,DoFollow,挖掘英国数码消费电子书攻略历史断链,待处理
+277,TechJury,techjury.net,76,DoFollow,在在线文件转换器统计与盘点文章中申请增补,待处理
+278,Rigorous Themes Guides,rigorousthemes.com,62,DoFollow,在数字出版排版技术博客中发信推荐工具,待处理
+279,TechUntold,techuntold.com,63,DoFollow,针对Send to Kindle失效问题提供转换解决工具,待处理
+280,The Windows Club,thewindowsclub.com,82,DoFollow,在Windows免费电子书转换工具盘点中邮件申请收录,待处理
+281,Gizchina How-To,gizchina.com,81,DoFollow,针对国产墨水屏海外版使用攻略发信推荐,待处理
+282,Neowin Software News,neowin.net,85,DoFollow,在免费软件与Web应用推荐专栏发信自荐,待处理
+283,BetaNews,betanews.com,84,DoFollow,针对效率办公工具上线发布新闻通稿,待处理
+284,Ghacks Technology News,ghacks.net,85,DoFollow,向主编投递评测《A light and fast ebook converter》,待处理
+285,Raymond.cc Blog,raymond.cc,78,DoFollow,在文件批量转换与无损提取教程中发信推荐,待处理
+286,MajorGeeks Off-Topic,majorgeeks.com,81,DoFollow,在免费在线工具推荐专栏申请收录,待处理
+287,BleepingComputer Forums,bleepingcomputer.com,88,UGC / NoFollow,在日常互助求助区解答安全无广告格式转换,待处理
+288,TechSpot Downloads,techspot.com,87,DoFollow,提交Web应用收录与在线转换服务详情,待处理
+289,Geeky Gadgets,geeky-gadgets.com,77,DoFollow,针对日常极客工具推荐投递产品介绍,待处理
+290,Ubergizmo,ubergizmo.com,83,DoFollow,在电子书硬件周边与格式转换技巧中邮件推荐,待处理
+291,TweakTown,tweaktown.com,82,DoFollow,在PC生活黑客专栏中推荐免注册转换平台,待处理
+292,Overclockers Club,overclockersclub.com,71,UGC / NoFollow,在软件与网络工具交流版块分享测试心得,待处理
+293,Tom's Hardware Forum,tomshardware.com,89,UGC / NoFollow,解答用户批量转换文档/电子书排版问题,待处理
+294,AnandTech Forums,anandtech.com,86,UGC / NoFollow,在应用软件讨论区分享极速格式互转网站,待处理
+295,HardForum,hardforum.com,73,UGC / NoFollow,在极客工作流与效率工具帖中自然提及,待处理
+296,Myce Forums,myce.com,72,UGC / NoFollow,在光盘与数字文档备份归档区推荐转换工具,待处理
+297,VideoHelp / FileHelp,videohelp.com,79,UGC / DoFollow,在文件格式互转工具库中申请录入,待处理
+298,Doom9's Forum,doom9.org,75,UGC / NoFollow,在数字编码与封装格式讨论区分享技术见解,待处理
+299,AfterDawn Software,afterdawn.com,79,DoFollow,提交免费文档与电子书在线转换软件条目,待处理
+300,TechSupportGuy,techguy.org,78,UGC / NoFollow,在互助专区解答用户无法打开EPUB格式的求助,待处理
+301,Publishing Perspectives,publishingperspectives.com,73,DoFollow,关注数字出版标准并邮件推荐新格式转换工具,待处理
+302,Alliance of Independent Authors (ALLi),allianceindependentauthors.org,72,DoFollow,申请列入独立作者推荐创作与排版工具库,待处理
+303,Jane Friedman Blog,janefriedman.com,75,DoFollow,在电子书制作与KDP合规指南中发信推荐工具,待处理
+304,The Creative Penn,thecreativepenn.com,71,DoFollow,向知名独立作家Joanna Penn自荐免费自出版工具,待处理
+305,Self-Publishing School Blog,self-publishingschool.com,74,DoFollow,挖掘书籍排版与文件格式导出教程中的断链,待处理
+306,BookBub Partners Blog,bookbub.com,84,DoFollow,在作者推广与格式优化文章中发信推荐免安装方案,待处理
+307,Draft2Digital Blog,draft2digital.com,76,DoFollow,在多平台分发格式规范教程下留言或联系编辑,待处理
+308,Smashwords Smart Author,smashwords.com,79,DoFollow,针对EPUB格式校验报错文章建议补充转换工具,待处理
+309,Write To Done,writetodone.com,68,DoFollow,在作家生产力工具推荐清单中申请增补,待处理
+310,Helping Writers Become Authors,helpingwritersbecomeauthors.com,69,DoFollow,邮件联系K.M. Weiland推荐排版辅助工具,待处理
+311,Just Publishing Advice,justpublishingadvice.com,65,DoFollow,在“How to Convert Word to EPUB/MOBI”文章中做断链替换,待处理
+312,BookBaby Blog,bookbaby.com,73,DoFollow,针对自出版文件格式要求文章发信推荐,待处理
+313,Scribe Media Resources,scribemedia.com,76,DoFollow,在专业书籍制作与排版资源中申请增补,待处理
+314,Writer's Digest,writersdigest.com,79,DoFollow,挖掘作者必备数字工具盘点中的失效链接,待处理
+315,The Write Life,thewritelife.com,73,DoFollow,在自由撰稿人与出书工具合集中发信推荐,待处理
+316,Make a Living Writing,makealivingwriting.com,71,DoFollow,向博主推荐电子书排版与转换利器,待处理
+317,ProWritingAid Blog,prowritingaid.com,78,DoFollow,在书籍制作生态文章中申请互换或工具推荐,待处理
+318,Novlr Writer Resources,novlr.org,62,DoFollow,在写作软件导出格式辅助工具中推荐BookConv,待处理
+319,Dabbler Writers Community,dabblewriter.com,66,DoFollow,在小说写作与格式导出知识库中申请收录,待处理
+320,Plottr Blog,plottr.com,65,DoFollow,在写作大纲与导出电子书指南中推荐轻量工具,待处理
+321,Campfire Technology Resources,campfirewriting.com,67,DoFollow,在世界观创作与电子书导出专栏中自荐,待处理
+322,Kindle Book Review,thekindlebookreview.net,61,DoFollow,联系主编在作者支持工具页面中添加链接,待处理
+323,Author Media Blog,authormedia.com,64,DoFollow,在Thomas Umstattd作者技术播客文章中发信推荐,待处理
+324,David Gaughran Blog,davidgaughran.com,63,DoFollow,向自出版营销专家发信推荐轻量格式转换器,待处理
+325,Self-Publishing Review,selfpublishingreview.com,68,DoFollow,在书籍制作服务与免费工具推荐中申请增补,待处理
+326,LitReactor,litreactor.com,71,DoFollow,在数字出版专栏文章中发信推荐转换解决方案,待处理
+327,Electric Literature,electricliterature.com,76,DoFollow,在独立阅读生态与数字格式讨论中寻找链接机会,待处理
+328,Book Riot Tech,bookriot.com,84,DoFollow,在Kindle/Kobo使用指南与阅读技巧文章中做断链挖掘,待处理
+329,Tor.com / Reactor Mag,reactormag.com,81,DoFollow,在无DRM科幻电子书分发讨论中推荐免安装工具,待处理
+330,Baen Free Library Guides,baen.com,74,DoFollow,在免费公版与科幻电子书格式阅读指南中发信增补,待处理
+331,Standard Ebooks Community,standardebooks.org,78,DoFollow,在排版标准与格式兼容性页面参与讨论并提供工具,待处理
+332,Project Gutenberg Wiki,gutenberg.org,92,DoFollow,在移动设备阅读公版书格式互转维基页提交收录,待处理
+333,Faded Page Ebook Tools,fadedpage.com,63,DoFollow,在加拿大公版书数字化制作工具推荐中申请加入,待处理
+334,ManyBooks Author Central,manybooks.net,76,DoFollow,在电子书格式支持与阅读帮助中心推荐转换工具,待处理
+335,Feedbooks Help Center,feedbooks.com,77,DoFollow,针对不同电子阅读器格式支持页面建议增补,待处理
+336,Smashwords Style Guide,smashwords.com,79,DoFollow,针对EPUB排版规范发信推荐免错在线校验与转换,待处理
+337,Self-Publishing Checklist,selfpublishingchecklist.com,55,DoFollow,在自出版上线前检查清单中加入BookConv,待处理
+338,Author's Tranquility Press,authorstranquilitypress.com,58,DoFollow,在作者格式转换与文件预审专栏发信自荐,待处理
+339,Indie Author Project,indieauthorproject.com,61,DoFollow,在公共图书馆自出版项目工具页申请增补,待处理
+340,IBPA Independent,ibpa-online.org,66,DoFollow,向独立图书出版商协会投稿数字化实用工具,待处理
+341,Publishers Weekly Digital,publishersweekly.com,87,DoFollow,关注数字排版与电子书标准趋势报道,待处理
+342,Bookstat Insights,bookstat.com,62,DoFollow,在数字出版技术与电子书供应链分析中寻找曝光,待处理
+343,WordsRated Research,wordsrated.com,71,DoFollow,在电子书与阅读器统计报告中提供工具引用,待处理
+344,Good E-Reader Forum,goodereader.com,79,UGC / DoFollow,在电子书与阅读器新闻论坛中分享实用在线转换,待处理
+345,E-Reader-Forum.de,e-reader-forum.de,61,UGC,德国主流电纸书社区，解答德语区EPUB转MOBI/PDF,待处理
+346,Lecteurs Ebook France,liseuses.net,62,UGC,法国电子阅读器博客，针对Kindle传书技巧发帖交流,待处理
+347,Zona eReader Spain,zonaereader.com,60,UGC,西语区电子书论坛，解答跨格式转换痛点并推荐,待处理
+348,TuttoAndroid Ereader,tuttoandroid.net,78,DoFollow,意大利科技媒体针对电纸书格式教程发信增补,待处理
+349,Kindle Fórum Brazil,comunidadekindle.com.br,57,UGC,巴西Kindle书友社群，分享免安装在线转换方案,待处理
+350,DobreProgramy Poland,dobreprogramy.pl,80,DoFollow,波兰主流软件下载站提交BookConv在线工具,待处理
+351,GitHub awesome-epub3,github.com,96,DoFollow,提PR收录至现代EPUB3规范支持与在线转换列表,待处理
+352,GitHub awesome-pdf,github.com,96,DoFollow,提PR加入PDF与电子书双向转换工具集合,待处理
+353,GitHub awesome-markdown,github.com,96,DoFollow,在Markdown生成电子书后置处理工具中提PR,待处理
+354,GitHub awesome-pandoc,github.com,96,DoFollow,提PR提供免部署Pandoc在线快速互转替代工具,待处理
+355,GitHub awesome-open-source-utilities,github.com,96,DoFollow,提PR至日常文档与文本免安装工具合集,待处理
+356,GitHub awesome-indie,github.com,96,DoFollow,收录至独立黑客出海实用产品推荐清单,待处理
+357,GitHub awesome-mac-apps,github.com,96,DoFollow,在Web版跨平台辅助转换分类中提交PR,待处理
+358,GitHub awesome-web-tools,github.com,96,DoFollow,提PR至在线文档互转与日常效率工具类目,待处理
+359,GitHub awesome-jamstack,github.com,96,DoFollow,在静态网站电子书构建工具周边中提PR增补,待处理
+360,GitHub awesome-accessibility,github.com,96,DoFollow,提PR作为无障碍电子文档阅读转换工具推荐,待处理
+361,GitLab Awesome Lists,gitlab.com,93,DoFollow,向GitLab开源技术与工具清单提Merge Request,待处理
+362,Bitbucket Community Resources,atlassian.com,93,DoFollow,在Atlassian开发者社区分享文档排版解析实践,待处理
+363,Read the Docs Community,readthedocs.org,91,DoFollow,在技术文档导出电子书格式指南中申请添加引用,待处理
+364,GitBook Community Docs,gitbook.com,89,DoFollow,在知识库导出EPUB/PDF跨格式处理技巧中自荐,待处理
+365,Docusaurus Discord/Forum,docusaurus.io,84,UGC / NoFollow,解答技术文档网站打包电子书排版互转方案,待处理
+366,MkDocs Material Discussions,squidfunk.github.io,78,UGC / DoFollow,分享如何将MkDocs生成的PDF规整为标准EPUB,待处理
+367,Sphinx Doc Community,sphinx-doc.org,86,DoFollow,针对Sphinx输出电子书格式兼容问题提供在线方案,待处理
+368,AsciiDoctor Forum,asciidoctor.org,79,DoFollow,在AsciiDoc转EPUB/PDF工作流中推荐免装工具,待处理
+369,LaTeX Community,latex-community.org,71,UGC / DoFollow,在LaTeX论文转电子书阅读排版讨论中提供工具,待处理
+370,Overleaf Community Blog,overleaf.com,88,DoFollow,在学术论文移动端阅读与格式转换教程中自荐,待处理
+371,Pandoc Discussion Group,groups.google.com,92,UGC / NoFollow,解答非技术用户无法配置命令行时的在线替代方案,待处理
+372,Calibre Official User Forum,mobileread.com,75,DoFollow / UGC,在Recipes与转换报错区提供轻量在线校验对比,待处理
+373,Foliate Ebook Reader Issues,github.com,96,DoFollow,在Linux电子阅读器格式兼容讨论中提供测试,待处理
+374,KOReader Wiki & Issues,github.com,96,DoFollow,在KOReader跨格式解析与切边讨论中推荐BookConv,待处理
+375,FBReader Support Forums,fbreader.org,74,DoFollow,在格式兼容性与图书导入问题解答中推荐工具,待处理
+376,Moon+ Reader User Community,moondownload.com,65,UGC,针对安卓静读天下排版解析报错提供免安装转换,待处理
+377,ReadEra Community,readera.org,64,DoFollow,在阅读器格式互转技巧专栏申请收录,待处理
+378,Thorium Reader Support,edrlab.org,72,DoFollow,向欧洲数字阅读实验室无障碍工具列表自荐,待处理
+379,EPUBZone (IDPF/W3C),w3.org,95,DoFollow,关注W3C EPUB标准工作组并在实现案例中提报,待处理
+380,Daisy Consortium,daisy.org,79,DoFollow,向国际视障无障碍电子书联盟推荐转换平台,待处理
+381,BookKit Open Source,github.com,96,DoFollow,在书籍数字化开源工具链中提PR增补,待处理
+382,EpubPress Community,epub.press,59,DoFollow,在网页文章打包电子书后置转换中邮件推荐,待处理
+383,SingleFile Github,github.com,96,DoFollow,配合网页单文件离线保存提PR推荐转为电子书,待处理
+384,Wallabag Community,wallabag.it,68,DoFollow,在稍后读开源软件导出电子书指南中自荐,待处理
+385,Omnivore Community,omnivore.app,72,UGC / NoFollow,在阅读工作流中分享Kindle排版转换方案,待处理
+386,Shiori Bookmarks,github.com,96,DoFollow,在书签与文章归档格式互转讨论中推荐工具,待处理
+387,ArchiveBox Documentation,archivebox.io,70,DoFollow,在个人网络归档格式导出部分提PR增补,待处理
+388,Obsidian Forum,forum.obsidian.md,83,UGC / NoFollow,在PKM工作流中解答Markdown笔记转EPUB排版,待处理
+389,Logseq Forum,discuss.logseq.com,76,UGC / NoFollow,解答大纲笔记导出电子书并导入阅读器技巧,待处理
+390,Notion Community Reddit,reddit.com,93,UGC / NoFollow,分享Notion页面导出PDF转电子书排版技巧,待处理
+391,Roam Research Slack/Forum,roamresearch.com,77,UGC / NoFollow,解答卡片笔记打包电子书离线阅读痛点,待处理
+392,Zotero Community Forums,zotero.org,88,UGC / DoFollow,在文献管理导出EPUB学术笔记讨论中自荐,待处理
+393,Mendeley User Group,mendeley.com,89,UGC / NoFollow,解答科研人员在阅读器上标注PDF/EPUB互转,待处理
+394,JabRef Community,jabref.org,69,DoFollow,在文献引文与数字出版互转推荐中申请收录,待处理
+395,Calibre-Web Issues & PR,github.com,96,DoFollow,在第三方转换工具集成与备选方案中提交PR,待处理
+396,Kavita Ebook Server,kavitareader.com,63,DoFollow,在个人漫画与电子书服务器格式整理指南中自荐,待处理
+397,Komga Media Server,komga.org,64,DoFollow,在文档格式规范化与自动转换推荐中申请加入,待处理
+398,Audiobookshelf Discussions,audiobookshelf.org,62,UGC / NoFollow,解答伴读电子书与EPUB文本同步格式问题,待处理
+399,Uシェルフ (U-Shelf),github.com,96,DoFollow,在日本开源个人书架项目中提交格式转换工具PR,待处理
+400,Librum Reader Community,librumreader.com,58,DoFollow,在跨平台电子阅读器格式支持专区邮件推荐,待处理
+401,New York Public Library Guides,nypl.org,89,DoFollow,在NYPL借阅格式与个人阅读器适配页面发信自荐,待处理
+402,Brooklyn Public Library Tech Help,bklynlibrary.org,81,DoFollow,向社区数字化辅导员推荐学生免费转换平台,待处理
+403,Chicago Public Library Tech,chipublib.org,80,DoFollow,在数字借阅帮助与电子书格式转换中申请加入,待处理
+404,San Francisco Public Library Help,sfpl.org,80,DoFollow,向电子书硬件读者推荐无需装App的转换工具,待处理
+405,Seattle Public Library Digital,spl.org,81,DoFollow,在移动设备传书指南中发信建议增补BookConv,待处理
+406,Toronto Public Library Digital Help,tpl.ca,83,DoFollow,针对加拿大读者多平台阅读格式互转邮件自荐,待处理
+407,National Library of Australia,nla.gov.au,87,DoFollow,在数字化文献阅览指南中申请录入在线工具,待处理
+408,British Library Digital Scholarship,bl.uk,88,DoFollow,向大英图书馆数字出版与研究工具库发信,待处理
+409,National Library of Scotland,nls.uk,81,DoFollow,在开放文档处理与格式转换资源页面自荐,待处理
+410,State Library of Victoria,slv.vic.gov.au,80,DoFollow,面向公众电子书阅读辅导课程推荐免费工具,待处理
+411,Open University UK Help,open.ac.uk,88,DoFollow,在远程教育学生数字教材多设备阅读指南中发信,待处理
+412,Athabasca University Guides,athabascau.ca,76,DoFollow,针对远程数字学习电子书排版互转申请增补,待处理
+413,Western Governors University,wgu.edu,81,DoFollow,向线上大学生学习技术支持团队推荐轻量工具,待处理
+414,Penn State World Campus,worldcampus.psu.edu,78,DoFollow,在远程学习工具包中申请收录免安装转换,待处理
+415,Arizona State University Digital,asu.edu,90,DoFollow,向数字创新与自适应学习团队推荐格式工具,待处理
+416,University of London Distance Learning,london.ac.uk,86,DoFollow,在国际学生在线阅读材料准备页面邮件推荐,待处理
+417,Coursera Community Forum,coursera.community,82,UGC / NoFollow,在学习资料离线阅读与电子书转换讨论中分享,待处理
+418,edX Student Discussions,edx.org,92,UGC / NoFollow,针对课程教材在Kindle上阅读发帖推荐工具,待处理
+419,Khan Academy Help Forum,khanacademy.org,90,UGC / NoFollow,在教材排版与移动端离线学习贴中自然提及,待处理
+420,FutureLearn Tech Help,futurelearn.com,87,DoFollow,向在线课程辅导老师推荐数字阅读格式平台,待处理
+421,Edutopia Technology Guides,edutopia.org,85,DoFollow,在教师日常数字教学工具盘点文章中邮件推荐,待处理
+422,TeachThought Learning Tools,teachthought.com,77,DoFollow,针对中小学数字化阅读格式互转申请收录,待处理
+423,Classroom 2.0 Community,classroom20.com,63,UGC / DoFollow,在教育信息化论坛分享免费书籍转换利器,待处理
+424,Free Technology for Teachers,freetech4teachers.com,71,DoFollow,向知名博主Richard Byrne投稿推荐BookConv,待处理
+425,Cult of Pedagogy Tech Guide,cultofpedagogy.com,74,DoFollow,在教师高效教学软件清单中发信申请增补,待处理
+426,Ditch That Textbook,ditchthattextbook.com,69,DoFollow,针对无纸化教学与电子书转换发信推荐,待处理
+427,The Edvocate Tools Index,theedadvocate.org,72,DoFollow,在年度最佳教育辅助Web工具榜单中申请收录,待处理
+428,EmergingEdTech,emergingedtech.com,65,DoFollow,挖掘教育技术历史教程中已停服转换工具断链,待处理
+429,Learning in Hand by Tony Vincent,learninginhand.com,62,DoFollow,向教育科技专家推荐免安装极速格式转换,待处理
+430,Shake Up Learning,shakeuplearning.com,66,DoFollow,在Chromebook与云端学习工具合集中邮件自荐,待处理
+431,Chromebook Classroom,chrmbook.com,58,DoFollow,针对Chromebook免装软件转换电子书教程发信,待处理
+432,Book Creator Resources,bookcreator.com,78,DoFollow,在学生制作电子书后置转换导出页面申请增补,待处理
+433,StoryJumper Community,storyjumper.com,73,UGC / NoFollow,在少儿自出版排版社区分享格式转换经验,待处理
+434,BookWidgets Tech Blog,bookwidgets.com,69,DoFollow,在互动教材制作与电子书导出专栏中自荐,待处理
+435,OpenStax Community,openstax.org,83,DoFollow,针对免费开源大学教材Kindle适配发信推荐,待处理
+436,LibreTexts Accessibility,libretexts.org,79,DoFollow,在开放教科书跨平台离线格式转换页申请收录,待处理
+437,MERLOT Higher Ed Repository,merlot.org,78,DoFollow,在高等教育教学软件与工具库提交正式评价,待处理
+438,OER Commons Directory,oercommons.org,79,DoFollow,在开放教育资源制作与转换工具包中登记,待处理
+439,BCcampus Open Education,bccampus.ca,76,DoFollow,针对加拿大开放教材排版与EPUB指南发信推荐,待处理
+440,eCampusOntario Resources,ecampusontario.ca,72,DoFollow,向安大略省数字教育机构推荐格式转换平台,待处理
+441,DOAB (Directory of Open Access Books),doabooks.org,79,DoFollow,在开放获取电子书阅读与借阅指南中寻找引用,待处理
+442,OAPEN Foundation Library,oapen.org,76,DoFollow,在欧洲学术电子书格式适配页面发信申请增补,待处理
+443,Knowledge Unlatched,knowledgeunlatched.org,68,DoFollow,针对OA电子书跨设备阅读提供格式转换工具,待处理
+444,Open Book Publishers Tech,openbookpublishers.com,72,DoFollow,在学术图书数字格式分发与无障碍页面自荐,待处理
+445,Punctum Books Resources,punctumbooks.com,65,DoFollow,向独立学术出版平台推荐无损EPUB转PDF工具,待处理
+446,Ubiquity Press Guides,ubiquitypress.com,69,DoFollow,在开放学术专著出版排版指南中申请收录,待处理
+447,JSTOR Daily Reading Tech,daily.jstor.org,79,DoFollow,在数字阅读体验与学术阅读器技巧文章中发信,待处理
+448,Project MUSE Help Guides,muse.jhu.edu,86,DoFollow,在高校人文社科电子书阅读指南中邮件推荐,待处理
+449,Internet Archive Scholar,scholar.archive.org,94,DoFollow,在文献借阅导出与格式规整工具推荐中寻找收录,待处理
+450,HathiTrust Research Center,hathitrust.org,86,DoFollow,在海量公版数字化图书阅读工具列表中申请增补,待处理
+451,FileFormat.com Ebook Section,fileformat.com,74,DoFollow,在EPUB与MOBI文件格式百科页面中申请外部工具引用,待处理
+452,File-Extensions.org,file-extensions.org,75,DoFollow,在.epub / .mobi / .azw3 格式详情页提交转换工具,待处理
+453,FileInfo.com,fileinfo.com,81,DoFollow,在电子书扩展名页面申请推荐轻量在线处理软件,待处理
+454,WhatIsMyFile.com,whatismyfile.com,58,DoFollow,在文件类型识别与在线转换器列表中提交收录,待处理
+455,CheckFileType.com,checkfiletype.com,54,DoFollow,申请录入免费在线文件格式互转工具库,待处理
+456,OpenWith.org,openwith.org,64,DoFollow,在“如何打开EPUB文件”指南中申请增补BookConv,待处理
+457,DotWhat.net,dotwhat.net,60,DoFollow,在电子书格式关联软件页面提交Web版入口,待处理
+458,FileTypes.net,filetypes.net,59,DoFollow,提交面向Windows/Mac/iOS的免安装格式转换,待处理
+459,FileTypeAdvisor,filetypeadvisor.com,57,DoFollow,在EPUB阅读故障与格式转换方案中邮件推荐,待处理
+460,FilesDirectory.com,filesdirectory.com,55,DoFollow,提交免费无限制在线电子书转换服务,待处理
+461,Softonic Ebook Category,softonic.com,90,DoFollow,在Web应用与办公工具分类中提交收录,待处理
+462,DownloadCrew Online,downloadcrew.com,73,DoFollow,提报免费在线电子书互转工具实测评测,待处理
+463,FileHorse Web Apps,filehorse.com,81,DoFollow,申请录入Web Services办公转换分类,待处理
+464,SnapFiles Web Tools,snapfiles.com,76,DoFollow,在Freeware在线生产力工具栏目提交,待处理
+465,MajorGeeks Tools,majorgeeks.com,81,DoFollow,申请在Web-based Utilities版块收录,待处理
+466,FreewareFiles Online,freewarefiles.com,69,DoFollow,提交免费免安装电子书格式转换工具,待处理
+467,TechSoup Digital Tools,techsoup.org,79,DoFollow,面向非营利组织数字化办公推荐免费无广告工具,待处理
+468,Idealware Software Guides,idealware.org,65,DoFollow,在低成本数字办公软件指南中申请增补,待处理
+469,Nonprofit Tech for Good,nptechforgood.com,71,DoFollow,在实用数字内容制作工具推荐中发信推荐,待处理
+470,Digital Nomad World Tools,digitalnomadworld.com,59,DoFollow,在远程工作者必备轻量在线工具清单中提交,待处理
+471,Nomad List Resources,nomadlist.com,82,UGC / NoFollow,在远程办公与电子书离线阅读讨论中推荐,待处理
+472,Remotive Tools Index,remotive.com,73,DoFollow,在远程工作者效率软件合集中申请收录,待处理
+473,WorkFrom Tech Stack,workfrom.co,66,DoFollow,在移动办公文件快速处理推荐中自荐,待处理
+474,AllWork.Space Tech,allwork.space,68,DoFollow,在未来办公与轻量SaaS工具盘点中邮件推荐,待处理
+475,Zapier Community Forum,community.zapier.com,87,UGC / NoFollow,解答自动化文件流转换与排版处理需求,待处理
+476,Make (Integromat) Community,community.make.com,80,UGC / NoFollow,探讨文档自动转换场景并推荐轻量API/Web端,待处理
+477,IFTTT Ebook Applets,ifttt.com,91,DoFollow,在阅读器传书与文档推送配方说明中添加引用,待处理
+478,Bookmark OS Tools,bookmarkos.com,58,DoFollow,提交到网络收藏夹必备日常实用工具,待处理
+479,Raindrop.io Curated Lists,raindrop.io,79,UGC / DoFollow,在公开的“Awesome E-Reader & Conversion”收藏夹收录,待处理
+480,Pinboard Public Tags,pinboard.in,78,UGC / DoFollow,在ebook+converter高权重标签聚合页沉淀链接,待处理
+481,Diigo Public Lists,diigo.com,86,UGC / DoFollow,加入自出版与学术研究公共工具书签组,待处理
+482,Pearltrees Education Tools,pearltrees.com,83,UGC / DoFollow,在数字出版与格式处理知识树中添加节点,待处理
+483,Wakelet Learning Collections,wakelet.com,84,UGC / DoFollow,在教师与学生的电子书阅读工具集合中收录,待处理
+484,Notion Directory,notionery.com,62,DoFollow,在Notion创作者常用辅助工具库中提交,待处理
+485,SaaS Radar,saasradar.co,55,DoFollow,提报免费轻量转换工具并跟踪产品动态,待处理
+486,ToolHub Online,toolhub.co,56,DoFollow,提交在线文件转换与排版轻量应用,待处理
+487,StartupRanking,startupranking.com,74,DoFollow,注册产品档案并获取全球初创工具权重反向链接,待处理
+488,F6S BookConv Profile,f6s.com,83,DoFollow,建立初创科技项目档案并添加官网认证链接,待处理
+489,Crunchbase Company Page,crunchbase.com,91,NoFollow,创建BookConv公司/产品条目建立实体图谱,待处理
+490,AngelList / Wellfound,wellfound.com,89,DoFollow,建立产品Profile获取高权重科技领域信任度,待处理
+491,AlternativeTo Kindle Category,alternativeto.net,82,UGC / NoFollow,在Send to Kindle替代方案下推荐BookConv在线直转,待处理
+492,AlternativeTo Calibre Category,alternativeto.net,82,UGC / NoFollow,针对不想安装臃肿客户端的用户建立在线版推荐,待处理
+493,AlternativeTo Zamzar Category,alternativeto.net,82,UGC / NoFollow,在Zamzar替代品列表中提交无排队限制的BookConv,待处理
+494,AlternativeTo CloudConvert Category,alternativeto.net,82,UGC / NoFollow,在CloudConvert替代品列表中提交无点数限制优势,待处理
+495,AlternativeTo Convertio Category,alternativeto.net,82,UGC / NoFollow,在Convertio替代品列表中提交专注于电子书无损排版,待处理
+496,LibreOffice Forum,ask.libreoffice.org,84,UGC / NoFollow,解答文档导出EPUB排版报错及在线修复互转,待处理
+497,OpenOffice Community Forum,forum.openoffice.org,81,UGC / NoFollow,在文档转换专区分享免安装电子书格式方案,待处理
+498,AbiWord Resources,abisource.com,72,DoFollow,在轻量字处理软件跨平台格式互转指南中自荐,待处理
+499,WPS Office Community,wps.com,85,UGC / NoFollow,在办公技巧圈分享非标准电子书导出与转PDF方案,待处理
+500,OnlyOffice Tech Community,onlyoffice.com,79,DoFollow,在开源办公套件电子书格式插件与周边推荐中发信,待处理
