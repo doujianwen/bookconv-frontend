@@ -17,6 +17,22 @@ const MAX_POLL_ATTEMPTS = 135; // 135 * 2s = 270s，对齐 route.ts 的 maxDurat
 const POLL_INTERVAL_MS = 2000;
 
 /**
+ * CloudConvert 402 = 账户转换额度耗尽。一旦见到 402，同账单周期内额度都不会恢复，
+ * 后续每个 CloudConvert 任务都会白烧 ~270s 轮询才失败。因此把「额度耗尽」状态在
+ * 本进程（Serverless 即单个 warm 实例）内缓存一小段时间，期间直接快速失败并返回
+ * 清晰的配额错误，省一次 CC API 调用与 270s 轮询预算。TTL 到期自动恢复，充值后
+ * 最多 5 分钟内自愈（2026-10-17 mobi→epub / epub→azw3 双双 402 后新增）。
+ */
+let quotaExhaustedUntil = 0;
+const QUOTA_CACHE_TTL_MS = 5 * 60 * 1000;
+function markQuotaExhausted(): void {
+  quotaExhaustedUntil = Date.now() + QUOTA_CACHE_TTL_MS;
+}
+function isQuotaExhausted(): boolean {
+  return Date.now() < quotaExhaustedUntil;
+}
+
+/**
  * Calibre 引擎能够读取的输入格式（白名单 = Calibre ebook-convert 的 INPUT 全集，
  * 不含 DjVu / PDF 这类扫描图或排版容器）。
  *
@@ -86,7 +102,12 @@ async function ccRequest<T>(
         // 429 = 请求频率限流，瞬态，值得退避重试。
         // 402 = **账户转换额度耗尽**（CloudConvert 原文 "Your account has run out of
         // conversion credits"，2026-10-04 飞书告警坐实）—— 退避重试毫无意义，
-        // 只会让每次失败白等 10-18 秒并多打两次 API，因此直接上抛。
+        // 只会让每次失败白等 10-18 秒并多打两次 API，因此直接上抛并标记额度缓存。
+        if (res.status === 402) {
+          // 标记后本进程内后续 CC 调用在 convertWithCloudConvert 入口直接短路
+          markQuotaExhausted();
+          throw new Error(`CloudConvert client error 402: ${msg}`);
+        }
         if (res.status === 429 && attempt < retries) {
           await new Promise((r) => setTimeout(r, 3000 * attempt));
           continue;
@@ -345,6 +366,14 @@ export async function convertWithCloudConvert(
 }> {
   if (!API_KEY) {
     throw new Error('CloudConvert API key is not configured');
+  }
+
+  // 额度耗尽短路：本进程近期见过 402，直接抛出清晰配额错误，不再创建 job / 上传 /
+  // 轮询（省 ~270s 与一次 CC API 调用）。TTL 到期自动恢复，用户充值后最多 5 分钟内
+  // 自愈。这样 epub→azw3 等 CloudConvert 专属格式在额度耗尽时，失败是快且清晰的，
+  // 而不是甩出令人困惑的 "Input task has failed" 并白等近 5 分钟（2026-10-17 实证）。
+  if (isQuotaExhausted()) {
+    throw new Error('CloudConvert client error 402: account out of conversion credits (cached)');
   }
 
   // 两类瞬态失败都值得换一个全新 job 重试（2026-10-12 新增 import 重试，救 B 类「Input task has failed」）：

@@ -481,6 +481,89 @@ ${paragraphs}
   return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 }
 
+// --- Pure-JS MOBI/AZW3 → EPUB (text-only, no Calibre / no CloudConvert) ---
+//
+// MOBI/AZW3 → EPUB 的目标格式是 EPUB（文本派生格式），无需 CloudConvert 的
+// calibre 引擎即可合成：先用 mobiToTxt 抽正文，再包成一个最小合法 EPUB 3.0
+// （mimetype + META-INF/container.xml + OEBPS/content.opf + content.xhtml + nav）。
+// 这样 mobi/azw3 → epub 与 epub → txt/docx/rtf/fb2 一样**免疫 CloudConvert 402**
+// （2026-10-17 实测 mobi→epub 因额度耗尽 402 全挂），代价是仅保留纯文本、
+// 丢失图片/样式/目录——但比起彻底失败更有用。其余 mobi/* 仍是 CloudConvert 格式。
+function xmlEscapeText(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function uniqueBookId(): string {
+  return 'urn:uuid:' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+
+async function buildEpubFromText(text: string): Promise<Buffer> {
+  const JSZip = (await import('jszip')).default;
+  const title = 'Converted Document';
+  const paras = text
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `    <p>${xmlEscapeText(p)}</p>`)
+    .join('\n');
+
+  const contentXhtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
+<head><meta charset="UTF-8"/><title>${xmlEscapeText(title)}</title></head>
+<body>
+<h1>${xmlEscapeText(title)}</h1>
+${paras}
+</body>
+</html>`;
+
+  const containerXml = `<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`;
+
+  const contentOpf = `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${uniqueBookId()}</dc:identifier>
+    <dc:title>${xmlEscapeText(title)}</dc:title>
+    <dc:language>en</dc:language>
+  </metadata>
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="content" href="content.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine>
+    <itemref idref="content"/>
+  </spine>
+</package>`;
+
+  const navXhtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en">
+<head><title>${xmlEscapeText(title)}</title></head>
+<body>
+<nav epub:type="toc"><ol><li><a href="content.xhtml">${xmlEscapeText(title)}</a></li></ol></nav>
+</body>
+</html>`;
+
+  const zip = new JSZip();
+  // mimetype 必须 STORE（不压缩）且为首条目，多数阅读器才认
+  zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+  zip.file('META-INF/container.xml', containerXml);
+  zip.file('OEBPS/content.opf', contentOpf);
+  zip.file('OEBPS/content.xhtml', contentXhtml);
+  zip.file('OEBPS/nav.xhtml', navXhtml);
+  return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+}
+
 // --- Pure-JS DOCX → TXT extraction ---
 //
 // DOCX is a ZIP archive containing XML files. We extract word/document.xml
@@ -766,6 +849,9 @@ export async function executeConversion(
   // Parses the MOBI/MOBIPocket header to extract text sections.
   const isMobiToTxt = (sourceFormat === 'mobi' || sourceFormat === 'azw3') && targetFormat === 'txt';
 
+  // MOBI/AZW3 → EPUB 纯 JS 路径（抽文本 + 合成 EPUB），绕开 CloudConvert 402。
+  const isMobiToEpub = (sourceFormat === 'mobi' || sourceFormat === 'azw3') && targetFormat === 'epub';
+
   // DOCX → TXT pure JS path (no CloudConvert, no Calibre)
   // Parses OOXML structure ([Content_Types].xml + word/document.xml) to extract text.
   const isDocxToTxt = sourceFormat === 'docx' && targetFormat === 'txt';
@@ -794,6 +880,10 @@ export async function executeConversion(
     } else if (isMobiToTxt) {
       const txt = await mobiToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');
+    } else if (isMobiToEpub) {
+      const txt = await mobiToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
     } else if (isDocxToTxt) {
       const txt = await docxToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');

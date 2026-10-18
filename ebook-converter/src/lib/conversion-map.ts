@@ -25,7 +25,7 @@ const DISPLAY_NAME_TO_REAL: Record<string, string> = {
 
 export const CONVERSION_MAP: ConversionMap = {
   "epub-azw3":  { tool: "calibre", description: "EPUB to AZW3 (Kindle Format 8)" },
-  "azw3-epub":  { tool: "calibre", description: "AZW3 to EPUB (Universal E-book)" },
+  "azw3-epub":  { tool: "js", description: "AZW3 to EPUB (Pure JS, no CloudConvert)" },
   "epub-rtf":   { tool: "calibre", description: "EPUB to RTF (Rich Text)" },
   "epub-jpg":   { tool: "calibre+imagemagick", description: "EPUB to JPG Images (via PDF)" },
   "epub-html":  { tool: "calibre", description: "EPUB to HTMLZ (Zipped Web Pages)" },
@@ -47,7 +47,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "html-epub":  { tool: "calibre", description: "HTML to EPUB" },
   "epub-txt":   { tool: "js", description: "EPUB to TXT (Pure JS, no Calibre)" },
   "azw3-pdf":   { tool: "calibre", description: "AZW3 to PDF" },
-  "mobi-epub":  { tool: "calibre", description: "MOBI to EPUB" },
+  "mobi-epub":  { tool: "js", description: "MOBI to EPUB (Pure JS, no CloudConvert)" },
   "doc-epub":   { tool: "libreoffice+calibre", description: "DOC to EPUB (via LibreOffice)" },
   "cbr-pdf":    { tool: "calibre", description: "CBR to PDF" },
   "mobi-pdf":   { tool: "calibre", description: "MOBI to PDF" },
