@@ -145,6 +145,7 @@ export const faqs = [
 
 export const es = {
   title: `Por qué convertir LIT a EPUB (y cómo hacerlo en BookConv)`,
+  metaTitle: `Por qué convertir LIT a EPUB en BookConv`,
   content: {
     intro: `LIT es el formato de ebook de Microsoft Reader, y Microsoft cerró esa app hace más de una década. Convertir LIT a EPUB es la única forma práctica de seguir leyendo esos libros. Puedes hacerlo en línea con BookConv en menos de un minuto, o usar Calibre si necesitas procesar cientos de archivos a la vez.`,
     sections: [

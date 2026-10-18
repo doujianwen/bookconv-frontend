@@ -102,6 +102,7 @@ export const faqs = [
 
 export const es = {
   title: `¿Puede Kindle leer AZW3? Compatibilidad por modelo, explicada`,
+  metaTitle: `¿Kindle lee AZW3? Compatibilidad por modelo`,
   content: {
     intro: `Respuesta corta: sí — cualquier Kindle de la última década lee AZW3 (KF8) de forma nativa. El matiz está en lo que pasa con los pocos dispositivos muy viejos anteriores al formato, y cómo realmente pones el archivo en el lector. Esto desglosa exactamente qué modelos abren AZW3, qué esperar en hardware antiguo y la diferencia entre AZW3 y el KFX más nuevo de Amazon.`,
     sections: [

@@ -151,6 +151,7 @@ export const faqs = [
 
 export const es = {
   title: `EPUB a MOBI en 2026: ¿Todavía lo necesitas? (Send-to-Kindle y AZW3)`,
+  metaTitle: `EPUB a MOBI en 2026: ¿Todavía lo necesitas?`,
   content: {
     intro: `Sube tu EPUB y conviértelo a MOBI en BookConv en segundos — sin instalar Calibre, sin cuenta, sin ajustes que adivinar. Esta guía te muestra cómo hacer la conversión limpia, si en 2026 sigues necesitando MOBI, y cómo arreglar la portada, los metadatos y la tabla de contenidos que en silencio arruinan la mayoría de los intentos.`,
     sections: [
