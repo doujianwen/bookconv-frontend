@@ -1,5 +1,6 @@
 export const slug = `download-troubleshooting`;
 export const title = `BookConv File Won't Download or Open? Fixes That Actually Work`;
+export const metaTitle = `Ebook Download Troubleshooting Guide`;
 export const date = `2026-07-30`;
 export const author = `BookConv Team`;
 export const tags = [`Download`, `Troubleshooting`, `BookConv`, `Ebook`, `FAQ`];

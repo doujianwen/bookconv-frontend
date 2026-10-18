@@ -1,5 +1,6 @@
 export const slug = `pdf-to-epub-guide`;
 export const title = `How to Convert PDF to EPUB Online (and When You Shouldn't)`;
+export const metaTitle = `PDF to EPUB: Complete Conversion Guide`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = ["PDF", "EPUB", "OCR", "BookConv", "conversion", "guide"];

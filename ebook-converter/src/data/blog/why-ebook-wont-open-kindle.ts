@@ -1,5 +1,6 @@
 export const slug = `why-ebook-wont-open-kindle`;
 export const title = `5 Reasons Your Ebook Won't Open on Kindle (and How to Fix Each One)`;
+export const metaTitle = `Why Your Ebook Won't Open on Kindle`;
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Kindle", "Ebook Formats", "AZW3", "MOBI", "Troubleshooting", "BookConv"];
