@@ -54,6 +54,12 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+const founderFaqs = [
+  { q: 'What is GEO?', a: 'GEO (Generative Engine Optimization) is the practice of making content discoverable and citable by AI search systems like ChatGPT, Gemini, and Bing AI — not just traditional search engines.' },
+  { q: 'Why BookConv?', a: 'BookConv is both a real product serving readers worldwide and a research lab for understanding how AI systems discover and cite content. It gives us first-hand data on what works.' },
+  { q: 'How can I work with you?', a: 'I offer GEO consulting for businesses looking to improve their visibility in AI search. Contact us at hello@bookconv.com or find me on X @GinoTou2024.' },
+];
+
 export default async function FounderPage() {
   return (
     <>
@@ -226,37 +232,28 @@ export default async function FounderPage() {
         <section className="mb-12 mt-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">
-                What is GEO?
-              </summary>
-              <p className="mt-2 text-sm text-gray-600">
-                GEO (Generative Engine Optimization) is the practice of making content discoverable and citable
-                by AI search systems like ChatGPT, Gemini, and Bing AI — not just traditional search engines.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">
-                Why BookConv?
-              </summary>
-              <p className="mt-2 text-sm text-gray-600">
-                BookConv is both a real product serving readers worldwide and a research lab for understanding
-                how AI systems discover and cite content. It gives us first-hand data on what works.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">
-                How can I work with you?
-              </summary>
-              <p className="mt-2 text-sm text-gray-600">
-                I offer GEO consulting for businesses looking to improve their visibility in AI search.
-                Contact us at hello@bookconv.com or find me on X @GinoTou2024.
-              </p>
-            </details>
+            {founderFaqs.map((f, i) => (
+              <details key={i} className="rounded-xl border border-gray-200 bg-white p-4">
+                <summary className="cursor-pointer font-medium text-gray-900">{f.q}</summary>
+                <p className="mt-2 text-sm text-gray-600">{f.a}</p>
+              </details>
+            ))}
           </div>
         </section>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: founderFaqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
       </main>
     </>
   )

@@ -43,6 +43,14 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+const aboutFaqs = [
+  { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. We offer a Pro plan for power users who need batch processing and higher file size limits, but individual conversions are always free with no registration required." },
+  { q: 'How long are my files stored?', a: 'Uploaded files are automatically deleted within 1 hour. We never store your content longer than necessary to complete the conversion and provide you with the download link.' },
+  { q: 'Do you sell my data?', a: "Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion. Your privacy is our priority — that's why we don't even require account creation." },
+  { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },
+  { q: 'Is BookConv the same as BookReverb or BookConvert?', a: 'No. BookConv (bookconv.com) is an independent, free online converter powered by Calibre. It is not affiliated with, related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one of those names, this site is bookconv.com only.' },
+];
+
 export default async function AboutPage() {
   return (
     <>
@@ -245,48 +253,28 @@ export default async function AboutPage() {
         <section className="mb-12 mt-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Is BookConv really free?</summary>
-              <p className="mt-2 text-sm text-gray-600">
-                Yes! BookConv is completely free for personal use. We offer a Pro plan for power users who need batch processing
-                and higher file size limits, but individual conversions are always free with no registration required.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">How long are my files stored?</summary>
-              <p className="mt-2 text-sm text-gray-600">
-                Uploaded files are automatically deleted within 1 hour. We never store your content longer than necessary
-                to complete the conversion and provide you with the download link.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Do you sell my data?</summary>
-              <p className="mt-2 text-sm text-gray-600">
-                Absolutely not. We don&apos;t sell user data, and we don&apos;t use your files for any purpose other than conversion.
-                Your privacy is our priority — that&apos;s why we don&apos;t even require account creation.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">What formats do you support?</summary>
-              <p className="mt-2 text-sm text-gray-600">
-                We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG.
-                New formats are added regularly based on user demand.
-              </p>
-            </details>
-
-            <details className="rounded-xl border border-gray-200 bg-white p-4">
-              <summary className="cursor-pointer font-medium text-gray-900">Is BookConv the same as BookReverb or BookConvert?</summary>
-              <p className="mt-2 text-sm text-gray-600">
-                No. BookConv (bookconv.com) is an independent, free online converter powered by Calibre. It is not affiliated with,
-                related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one
-                of those names, this site is bookconv.com only.
-              </p>
-            </details>
+            {aboutFaqs.map((f, i) => (
+              <details key={i} className="rounded-xl border border-gray-200 bg-white p-4">
+                <summary className="cursor-pointer font-medium text-gray-900">{f.q}</summary>
+                <p className="mt-2 text-sm text-gray-600">{f.a}</p>
+              </details>
+            ))}
           </div>
         </section>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: aboutFaqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
       </main>
     </>
   )
