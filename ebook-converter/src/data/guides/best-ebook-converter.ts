@@ -159,14 +159,14 @@ For device-specific format advice, read [Kindle Formats Explained](/guide/kindle
 
 **Convertio free tier** allows conversions up to 100 MB with a daily cap. Paid plans remove ads and increase limits. At \$10/month, Convertio is competitive, but the free tier is more restrictive than CloudConvert’s.
 
-**BookConv is completely free with no limits.** There are no paid plans, no upgrade prompts, and no feature restrictions. BookConv believes that basic ebook conversion should be accessible to everyone without barriers.
+**BookConv is free for personal use.** Individual files up to 4 MB convert free, and a Pro plan covers batch conversion and larger files. BookConv believes that basic ebook conversion should be accessible to everyone without barriers.
 
 | Tool | Free Tier | Paid Plan | Paid Price | API Access |
 |------|-----------|-----------|------------|------------|
 | Calibre | Unlimited | N/A | Free | N/A |
 | CloudConvert | 25/day, 100 MB | Pro | \$10/mo | ✅ |
 | Convertio | Limited daily | Pro | \$10/mo | ❌ |
-| BookConv | Unlimited | N/A | Free | N/A |
+| BookConv | Free (4 MB/file) | Pro | Free during beta | N/A |
 
 For most users, the free tier of any of these tools is sufficient. Paid plans are only necessary for high-volume converters or developers who need API access.`,
     },
