@@ -91,3 +91,4 @@
 ### 修订日志
 - 2026-10-19：初版建立（1.1）。基于 `src/app/[locale]/about/page.tsx`、`src/app/layout.tsx`、`src/app/api-docs/openapi.json`、`src/data/content/azw3-to-epub.ts` 实测口径提炼。
 - 2026-10-19：§7 新增「免费档与 Pro 计划口径（业主定调）」—— 个人/单文件免费(for personal use)、批量 open beta 期间免费、Pro 面向批量与更大文件；原 §7 使用约定顺延为 §8。配套 1.3 §1.1 代码整改（7 处 "no limits/unlimited" 过度主张修正）与 §2.2 口径确认（代码经核查已合规，无需改动）。
+- 2026-10-19：配套 1.3 §1.2 + §2.1 代码整改——about 页 keywords 移除 "open source"、正文 "Open-source transparency" 改为 "Transparent process"（正确归功 Calibre 开源引擎）；layout.tsx(5 处) + convert/[slug]/page.tsx(1 处) 的 "--" 双连字符全部统一为 em dash "—"。entity-drift-audit §6 状态同步更新。
