@@ -463,12 +463,12 @@
           "owner": "A",
           "deliverable": "13 页逐页差异化改写（基线 = 数据分析/GSC_URLInspection_2026-10-02.csv）",
           "accept": "每页改后门禁全绿；10-20 用 URL Inspection 复评 crawl 时间与 referringUrls 有增量",
-          "due": "2026-10-20",
+          "due": "2026-11-20",
           "priority": "P0",
           "tier": "CORE",
-          "status": "doing",
+          "status": "blocked",
           "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。",
-          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。\n[2026-10-19 10:46 更正] 上述「未 push」已过期：Batch 14 相关提交（758e994/78d54bd/7dc3dce 等）经 git merge-base --is-ancestor 实测均已在 origin/main；本批次余下提交亦于 10-19 10:46 批量发布（e2371ab..c95ef0b）并部署上线（线上 chronicles 页 em dash 新旧串双断言通过）。作战板以本条为准。"
+          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。\n[2026-10-19 10:46 更正] 上述「未 push」已过期：Batch 14 相关提交（758e994/78d54bd/7dc3dce 等）经 git merge-base --is-ancestor 实测均已在 origin/main；本批次余下提交亦于 10-19 10:46 批量发布（e2371ab..c95ef0b）并部署上线（线上 chronicles 页 em dash 新旧串双断言通过）。作战板以本条为准。\n[2026-10-20 复评·转 blocked] M1-E 10-20 复评完成（数据分析/M1-E复评报告-2026-10-20.md + GSC_URLInspection_2026-10-20.csv，15/15 Inspection 成功）：13 零抓取页 crawl 增量=0（无一被抓取，GSC 页面报告交叉验证 0 曝光），referringUrls 净+2；10-02 的 4 个「URL is unknown」页（txt-to-epub/doc-to-epub/mobi-to-txt/djvu-to-pdf）全部进入 Discovered——差异化+内链在发现层有真实但有限进展；azw3-to-pdf/epub-to-jpg/epub-to-png 退化为 unknown（与 referringUrls 归零同步）。验收「crawl 有增量」未达成 ⇒ 用户拍板转 blocked（受制于 Google 抓取配额，非站方可控），复评延至 2026-11-20（due 已同步改 2026-11-20）。诚实口径：转 blocked 不构成「内容质量差」的证据——页面从未进入被评估环节；board.test.ts 基线本已 13F/43P（board 扩到 98 任务/M11 后未同步，既有欠债另立任务修），本变更零新增失败。"
         },
         {
           "id": "M2-9",
