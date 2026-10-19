@@ -145,6 +145,9 @@ export default async function PricingPage() {
           ))}
         </div>
         <p className="mt-6 text-sm text-gray-500 italic">{t('pricing.privacy.footer')}</p>
+        <p className="mt-4 text-sm text-gray-600">
+          Personal single-file conversions are free for personal use with a 4 MB per-file limit; batch conversion is free during open beta.
+        </p>
       </section>
 
       {/* Comparison table */}

@@ -195,8 +195,11 @@ export default function HomePage() {
       {/* Features */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">{t('common.freeOnlineEbookConverter')}</h2>
-          <div className="grid gap-8 md:grid-cols-3">
+            <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">{t('common.freeOnlineEbookConverter')}</h2>
+            <p className="mx-auto mb-10 max-w-3xl text-center text-lg text-gray-600">
+              Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
+            </p>
+            <div className="grid gap-8 md:grid-cols-3">
             {[
               { icon: Zap, title: 'Fast Conversion', desc: 'Powered by Calibre engine for lightning-fast conversions.' },
               { icon: Shield, title: 'Secure & Private', desc: 'Files are encrypted and auto-deleted within 1 hour.' },

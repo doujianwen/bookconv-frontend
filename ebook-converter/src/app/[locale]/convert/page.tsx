@@ -92,6 +92,9 @@ export default async function ConvertIndexPage() {
             Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your
             browser — no account, no installer, Calibre running server-side.
           </p>
+          <p className="mt-4 max-w-2xl text-base text-gray-600">
+            Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
+          </p>
         </header>
 
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
