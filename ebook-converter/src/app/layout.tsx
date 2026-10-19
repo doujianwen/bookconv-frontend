@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('https://www.bookconv.com'),
     title: {
-      default: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
+      default: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
       template: `%s | ${t('common.siteName') || 'BookConv'}`,
     },
     description: clampMetaDescription(t('seo.defaultDescription') || 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, free for personal use. Powered by Calibre.'),
@@ -36,20 +36,20 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: locale === 'es' ? 'es_ES' : 'en_US',
       url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
       siteName: t('common.siteName') || 'BookConv',
-      title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
+      title: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.',
       images: [
         {
           url: "https://www.bookconv.com/og-image.svg",
           width: 1200,
           height: 630,
-          alt: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
+          alt: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter',
+      title: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter',
       description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.',
       images: ['https://www.bookconv.com/og-image.svg'],
       creator: '@GinoTou2024',
@@ -182,7 +182,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </main>
           <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
             <div className='mx-auto max-w-5xl space-y-2 px-4'>
-              <p>{t('common.siteName') || 'BookConv'} -- {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are automatically deleted within 1 hour.'}</p>
+              <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are automatically deleted within 1 hour.'}</p>
               <nav aria-label='Footer navigation' className='flex flex-wrap justify-center gap-4'>
                 <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
                 <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>

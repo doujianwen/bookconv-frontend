@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   const contentData = CONTENT_MAP[slug]
   const isEs = locale === 'es' && !!contentData?.es
 
-  const title = isEs ? contentData.es!.title : (contentData?.title || `${source} to ${target} Converter -- Free Online`)
+  const title = isEs ? contentData.es!.title : (contentData?.title || `${source} to ${target} Converter — Free Online`)
   const subtitle = isEs ? contentData.es!.content.hero.subtitle : (contentData?.content?.hero?.subtitle || `Free online ${getDisplayName(source)} to ${getDisplayName(target)} converter. No registration, no watermarks.`)
   const description = clampMetaDescription(isEs ? contentData.es!.metaDescription : (contentData?.metaDescription || subtitle))
 
