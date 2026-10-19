@@ -189,7 +189,18 @@ throw new CloudConvertJobFailure(
   4. 非 ZIP 伪 .epub → 仍走原浅校验 `not a valid eBook format`，**旧行为不变**。
 - 回归：`reverse-verify-conversion-fixes`（含 §3.4 #1d）+ `conversion-purejs-epub` + `conversion-verifier` 共 **13/13 PASS**；`tsc --noEmit` **exit 0**。
 
-### 7.4 遗留与监控
+### 7.4 发布与线上端到端验证（20:57–21:03，用户指令「发布」）
+- push 前纪律：`git fetch` 确认无并行提交领先；实际推送已由并行会话完成（origin/main == HEAD == `1f916fc`），无需重复 push。
+- **线上验证（www.bookconv.com/api/convert，epub→pdf）**：
+
+| 实验 | 文件 | 结果 | 判读 |
+|---|---|---|---|
+| 事故注入 | 成员 deflate 翻转 1 字节的 EPUB | `500` + `code=CORRUPT_INPUT`，**3.4s** 快速失败 | §3.5 签名行为（旧代码对同类文件返回 `CLOUD_CONVERT_ERROR` 且 ~7s CC 往返，见 §1.1 TEST 2）⇒ 新代码已上线且本地拦截生效 |
+| 正向对照 | 最小合法 EPUB | `200` / 5.7s / 有效 PDF（`%PDF-1.4` 头实读） | **不误杀** |
+
+- **观察项（非本批引入）**：route.ts L92 对所有映射错误硬编码 `{ status: 500 }`，故 CORRUPT_INPUT 也回 500 而非 400。属既有语义（改状态码=全错误面行为变更，需单独决策+测试），已记录不在本批改。
+
+### 7.5 遗留与监控
 1. 明日拉 10-19 GA4 daily 复核当日失败总数（§6.3 的 intraday 全 0 不可信）。
 2. 观察修复后是否再现 "Input task has failed"：若 §3.5 拦截日志（`EPUB failed deep decompression check`）频繁出现 ⇒ 坐实「损坏文件」根因假设；若深度校验放行后 CC 仍报同错 ⇒ 转向 CC import 瞬态/更深层文件问题。
 3. 本轮 §3.5 改动**仅本地提交、未 push**（push=公开发布，待用户指令）。
