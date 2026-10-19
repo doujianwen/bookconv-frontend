@@ -1298,6 +1298,19 @@
           "tier": "SUPP",
           "status": "todo",
           "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。"
+        },
+        {
+          "id": "M8-11",
+          "action": "修复 board.test.ts 与 live board 脱节（13F 既有欠债，board 测试恢复门禁可信度）",
+          "detail": "背景=2026-10-20 07:18 实测 tests/unit/board.test.ts 基线 13 failed / 43 passed：board 已扩至 98 任务 / M0–M11 共 12 模块（M2-8/M2-9/M9-7 加卡后多次扩容 + M11 模块新增），测试仍断言 66 任务 / M0–M10 时代的派生计数（totals.tasks=66、done=30、open=36、M0 模块计数、dueToday/standing 数组长度、L449 getBoardView totals.tasks 等 13 处）。发现时机=M2-8 doing→blocked 变更的改前基线验证（改前已红，非该变更引入）。🔴 铁律：改断言前必须先实测 deriveBoard/loadBoardData 当前输出逐项取证，测试对齐数据而非数据迁就测试；不得为绿而绿——若取证发现派生逻辑真实 bug（如 overdue 不随 status 变化、blocked 计数口径错），修逻辑而非改断言。",
+          "owner": "A",
+          "deliverable": "board.test.ts 56/56 全绿 + 逐断言取证对照表（旧断言值 vs deriveBoard 实测值，登记于 statusNote 或独立报告）",
+          "accept": "npx jest tests/unit/board.test.ts 0 failed；13 处断言变更逐条有实测依据（非猜测值）；不改动 data/seo-geo-board.json 的任务数据本身；若发现 derive 逻辑 bug 则先报告再修",
+          "due": "2026-10-24",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-20 07:30 建卡（用户拍板「单独立项处理」）。动机：门禁长期红会训练人忽略输出（用户级纪律：门禁噪声=不存在），且 M2-8 状态变更类操作失去「零新增失败」的可信基线。P1 定级依据：不影响线上功能，但破坏数据纪律门禁的可信度。"
         }
       ]
     },
