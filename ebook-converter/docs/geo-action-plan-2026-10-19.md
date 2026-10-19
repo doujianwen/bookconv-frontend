@@ -11,7 +11,7 @@
 
 | 模块 | 当前状态 | 优先级 | 验收门槛 |
 |------|---------|--------|---------|
-| 1. 实体一致性 | 🟡 部分（1.1 ENTITY.md 已完成；1.2/1.3 待做） | P1 | 全站实体描述符一致 + 外部 sameAs 闭环 |
+| 1. 实体一致性 | 🟡 部分（1.1 ENTITY.md + 1.2 漂移审计完成；1.3 对齐待做） | P1 | 全站实体描述符一致 + 外部 sameAs 闭环 |
 | 2. FAQ 结构化 | 🟡 部分（bookconv-faq 存在，部分页有 FAQ） | P1 | 关键页 100% 带 FAQPage JSON-LD |
 | 3. 可被 AI 引用的金句 | 🔴 未系统做 | P2 | 10–15 页植入 ≥1 条数据型金句 |
 | 4. 跨平台信源分发 | 🔴 未启动（K3/K6 待建账号） | P2 | ≥3 外部平台一致提及 BookConv |
@@ -25,7 +25,7 @@
 | 步骤 | 动作 | 状态 | 验收指标 | 依赖 |
 |------|------|------|---------|------|
 | 1.1 | 定义**规范实体陈述**（name + tagline + 事实：free / no-signup / no-watermark / browser-based / Calibre engine / 1h auto-delete / 28+ formats） | ✅ 已完成（见 `docs/ENTITY.md`） | `docs/ENTITY.md` 口径文档 | 无 |
-| 1.2 | 审计全站 `src/data` 中 "BookConv" 描述符，**找出漂移**（如有的页写 "open-source" 有的写 "free tool"） | ⏳ 待做 | 漂移清单 0 遗漏 | 1.1 |
+| 1.2 | 审计全站 `src/data` + `src/app` 中 BookConv 描述符，**找出漂移** | ✅ 已完成（见 `docs/entity-drift-audit-2026-10-19.md`） | 漂移清单 0 遗漏 | 1.1 |
 | 1.3 | 在关键页（about / why-bookconv / 首页 / FAQ）统一实体块 | ⏳ 待做 | 4 页口径一致 | 1.2 |
 | 1.4 | 外部 sameAs 闭合：Google Business Profile、Wikidata（若合格）、社交主页互链 | 🟡 K2 已加 sameAs(@GinoTou2024) | 实体信号齐备 | 用户账号 |
 | 1.5 | 防混淆：明确 BookConv vs 同名/近名产品（Kelriva 实测 Gemini 混淆 BookReverb/BookConvert） | ✅ K2 已完成 | about 页实体区分就绪 | 无 |

@@ -33,10 +33,11 @@
 
 ---
 
-## 3. 创始人（Founder）—— 待上线确认
+## 3. 创始人（Founder）—— 已公开（/founder 页）
 
-- **Hongjian Dou（Andy）**，20+ 年 SEO / 数字运营经验。
-- ⚠️ **当前站点未公开创始人信息**。本陈述将其列为 canonical 事实，但在写入 about / 首页前**需用户确认是否公开**。外部分发如需引用，应先确认。
+- **Hongjian Dou（Andy）**，20+ 年互联网增长 / SEO / 数字运营 / AI 可见性经验；职位 Founder & CEO。
+- ✅ **站点已公开**：`src/app/[locale]/founder/page.tsx`（/founder 路由）承载创始人陈述，含 Person schema（`name: Hongjian Dou`、`jobTitle: Founder & CEO`、`url: https://www.bookconv.com/founder`）。本陈述以 /founder 页为 canonical 载体，外部引用与其口径对齐即可。
+- 反混淆：创始人页标题含 "SEO & AI Visibility Expert"，与 BookConv「免费电子书转换」主实体区分清晰，无混淆风险。
 
 ---
 
@@ -51,6 +52,7 @@
 
 - X / Twitter：`https://x.com/GinoTou2024`
 - Reddit：`https://www.reddit.com/r/ebooks/comments/1v8ypvd/`
+- 创始人页（Person 实体）：`https://www.bookconv.com/founder`
 - （待补：Google Business Profile；Wikidata 若符合收录资格）
 
 ---
