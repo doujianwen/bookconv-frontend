@@ -1,7 +1,7 @@
 // P1 Hub page: virtual reading groups — aggregates IP + sync content
 // Created 2026-09-18 per Bing AI opportunity analysis (query: ebook syncing services for virtual reading groups, 30.7% citation share)
 export const slug = "reading-groups-hub";
-export const title = "How to Sync Ebooks for Virtual Book Clubs & Reading Groups (2026)";
+export const title = "How to Sync Ebooks for Virtual Book Clubs";
 export const metaTitle = "Sync Ebooks for Book Clubs & Reading Groups"
 export const date = "2026-09-18";
 export const lastUpdated = "2026-09-18";

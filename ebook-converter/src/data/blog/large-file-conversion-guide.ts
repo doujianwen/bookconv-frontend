@@ -1,5 +1,5 @@
 export const slug = `large-file-conversion-guide`;
-export const title = `How to Convert Large Ebooks (Over 4 MB): Free Methods and When to Upgrade`;
+export const title = `How to Convert Large Ebooks for Free`;
 export const metaTitle = `How to Convert Large Ebooks Over 4 MB (Free)`
 export const date = `2026-08-15`;
 export const author = `BookConv Team`;
