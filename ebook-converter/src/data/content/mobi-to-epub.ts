@@ -33,7 +33,9 @@ Going EPUB to MOBI is the move when you are sending a book to an older Kindle th
 
 The dedicated [EPUB to MOBI converter](/convert/epub-to-mobi) runs the same Calibre engine in the opposite direction: it takes the reflowable EPUB structure, extracts text and images, and repackages them as a MOBI file that older Kindles understand. Typography may flatten, but all content survives.
 
-A practical rule: convert MOBI to EPUB when you want to preserve and enhance your library; convert EPUB to MOBI when you have a specific older-Kindle destination. Keep both formats if you are unsure which device your reader will end up on.`
+A practical rule: convert MOBI to EPUB when you want to preserve and enhance your library; convert EPUB to MOBI when you have a specific older-Kindle destination. Keep both formats if you are unsure which device your reader will end up on.
+
+BookConv runs every conversion through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.`
     },
     {
       heading: 'About EPUB: The Format You Are Converting To',

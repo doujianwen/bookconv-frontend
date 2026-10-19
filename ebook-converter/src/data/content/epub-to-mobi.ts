@@ -19,7 +19,9 @@ Going MOBI to EPUB makes sense when you are leaving the Kindle ecosystem. EPUB o
 
 The dedicated [MOBI to EPUB converter](/convert/mobi-to-epub) runs the same Calibre engine in the opposite direction: it unpacks the MOBI record structure, rebuilds the HTML/CSS skeleton, and repackages everything as a standards-compliant EPUB 3 file with chapters, images, and metadata intact.
 
-One orientation tip: whichever direction you convert, keep the original file. EPUB to MOBI sheds typography, and MOBI to EPUB cannot recover styling that MOBI never stored - so the richer format is always the one worth archiving.`
+One orientation tip: whichever direction you convert, keep the original file. EPUB to MOBI sheds typography, and MOBI to EPUB cannot recover styling that MOBI never stored - so the richer format is always the one worth archiving.
+
+BookConv runs every conversion through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.`
     },
     {
       heading: 'About EPUB: What MOBI Conversion Gains and Loses',

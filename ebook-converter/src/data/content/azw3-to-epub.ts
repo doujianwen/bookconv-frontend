@@ -20,6 +20,8 @@ Going EPUB to AZW3 is what you want when a book is headed back onto a modern Kin
 The dedicated [EPUB to AZW3 converter](/convert/epub-to-azw3) runs the same Calibre engine in the opposite direction: it takes your reflowable EPUB, maps the XHTML chapters onto the Kindle container, embeds fonts where licensing allows, and rebuilds the navigation so Send to Kindle and USB sideloading both behave.
 
 One rule of thumb: EPUB is the safer master copy and AZW3 is the delivery format for a specific device. Convert back to AZW3 when the destination is a current Kindle; keep the EPUB as the archive.
+
+BookConv runs every conversion through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
 `
     },
     {
