@@ -97,7 +97,7 @@ export default async function AboutPage() {
           <ul className="mt-4 space-y-2 text-gray-700">
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span><strong>Free</strong> — No hidden fees, no limits on personal use</span>
+              <span><strong>Free</strong> — No hidden fees; free for personal use</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>

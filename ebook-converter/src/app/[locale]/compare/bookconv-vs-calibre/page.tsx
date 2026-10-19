@@ -143,7 +143,7 @@ export default async function ComparePage() {
             <ul className="mt-4 space-y-2 text-gray-700">
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Browser-based:</strong> Works on any device</span></li>
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> Files auto-delete after 1 hour</span></li>
-              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>No limits:</strong> Free for personal use</span></li>
+              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Free for personal use</strong> — no feature caps on individual conversions</span></li>
             </ul>
           </div>
 

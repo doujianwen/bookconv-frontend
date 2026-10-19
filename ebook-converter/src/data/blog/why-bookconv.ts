@@ -17,7 +17,7 @@ export const content = {
       body: `Because there is nothing to install, the same conversion flow works on a laptop, a phone, or a tablet. If you are on a Kindle-bound EPUB, convert to AZW3 on the spot; if you are on Kobo, EPUB is native. Cross-device reading is a common need — see [syncing ebooks across devices](/blog/sync-reading-across-devices) and [syncing for reading groups](/blog/reading-groups-hub).`
     },
     {
-      heading: `Free, With No Limits on the Basics`,
+      heading: `Free for Personal Use`,
       body: `The core conversion set — EPUB, MOBI, AZW3, PDF, TXT — is free, with no paywall on the formats people use daily. Power users who manage huge libraries may still prefer a desktop manager, but for the usual "this file won't open on my device" moment, BookConv is the fast lane.`
     },
     {
