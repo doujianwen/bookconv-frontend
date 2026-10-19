@@ -202,6 +202,76 @@ describe('reverse-verify: CloudConvert fixes 2026-10-12', () => {
     expect(jobPostCount(fetchMock)).toBe(2);
   });
 
+  // 2026-10-19 新增：真实 CC 排错时 import 不在首位、export 带 "Input task has failed"
+  // 消息——原分类只看首个 error 的 operation，会误判为 non-retryable，本用例覆盖此盲区。
+  //
+  // 关键：POST /v2/jobs 必须返回所有 task 为 waiting（含 result.form），uploadToJob 才能上传。
+  // pollUntilDone 的首次 GET 才返回 error 状态（模拟 CC 服务端处理后才判失败的现实）。
+  it('#1d import failure cascaded to export task is still retried (real-world task ordering)', async () => {
+    let postCount = 0;
+    const fetchMock = jest.fn(async (input: any, init?: any) => {
+      const url = typeof input === 'string' ? input : input?.url;
+      if (url.includes('/v2/jobs') && init?.method === 'POST') {
+        const id = 'job-' + (++postCount);
+        return makeJson({
+          data: {
+            id,
+            status: 'waiting',
+            tasks: [
+              { id: 't1', name: 'import-file', operation: 'import/upload', status: 'waiting',
+                result: { form: { url: 'https://s3.upload.example/put-' + id, parameters: { key: 'k' } } } },
+              { id: 't2', name: 'convert-file', operation: 'convert', status: 'waiting' },
+              { id: 't3', name: 'export-file', operation: 'export/url', status: 'waiting' },
+            ],
+          },
+        });
+      }
+      if (url.startsWith('https://s3.upload.example/')) return makeUpload();
+      if (url.includes('/v2/jobs/') && init?.method !== 'POST') {
+        const id = url.split('/v2/jobs/')[1];
+        const jobIdx = parseInt(id.replace('job-', ''), 10);
+        // 第 1 个 job：首次轮询返回 error，import 在首位
+        if (jobIdx === 1) {
+          return makeJson({
+            data: {
+              id,
+              status: 'error',
+              tasks: [
+                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Input task has failed', code: 'input_failed' } },
+                { id: 't2', name: 'convert-file', operation: 'convert', status: 'pending' },
+                { id: 't3', name: 'export-file', operation: 'export/url', status: 'pending' },
+              ],
+            },
+          });
+        }
+        // 第 2 个 job（重试）：成功
+        return makeJson({
+          data: {
+            id,
+            status: 'finished',
+            tasks: [
+              { id: 't1', name: 'import-file', operation: 'import/upload', status: 'finished', result: {} },
+              { id: 't2', name: 'convert-file', operation: 'convert', status: 'finished', result: {} },
+              { id: 't3', name: 'export-file', operation: 'export/url', status: 'finished', result: { files: [{ filename: 'out.pdf', url: 'https://download.example/out.pdf' }] } },
+            ],
+          },
+        });
+      }
+      if (url.startsWith('https://download.example/')) return makeFile(Buffer.from('%PDF-1.4 fake'));
+      throw new Error('unexpected fetch: ' + url);
+    });
+    (global as any).fetch = fetchMock;
+    const result = await convertWithCloudConvert(
+      'epub',
+      'pdf',
+      Buffer.from('PK\x03\x04 fake epub').toString('base64'),
+      'test.epub',
+    );
+    expect(result.base64Data).toBeDefined();
+    // import error 被正确识别为瞬态，应建 2 个 job
+    expect(jobPostCount(fetchMock)).toBe(2);
+  });
+
   it('#1b convert-task failure (engine downgrade) is still retried and succeeds', async () => {
     const fetchMock = buildFetch('convert');
     (global as any).fetch = fetchMock;

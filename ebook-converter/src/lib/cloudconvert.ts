@@ -306,10 +306,18 @@ async function pollUntilDone(job: CCJobResponse): Promise<CCJobResponse> {
         ),
       );
       const failedOp = failed?.operation;
+      // 2026-10-19 补丁："Input task has failed" 消息可能被 CloudConvert 挂在
+      // 任意下游任务（非 import/upload 首位排序时）。原分类只看首个 error 任务的
+      // operation，产生盲区——import 真正失败却被判成 non-retryable。
+      // 修复：消息签名 + 任意 import 任务 status==='error' 均认定 import 失败。
+      const anyImportErrored = finished.data.tasks.some(
+        (t) => t.operation === 'import/upload' && t.status === 'error',
+      );
+      const inputTaskFailedMsg = /input task has failed/i.test(detail);
       throw new CloudConvertJobFailure(
         `CloudConvert job failed: ${detail}`,
         failedOp === 'convert',
-        failedOp === 'import/upload',
+        anyImportErrored || inputTaskFailedMsg,
       );
     }
   }
