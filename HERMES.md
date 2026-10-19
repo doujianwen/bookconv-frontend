@@ -482,3 +482,30 @@ PY
 3. 次日确认飞书只收到一条 07:30 hermes 版巡检
 - ⚠️ hermes 侧依赖 gateway 存活（同所有 cron job）：WorkBuddy 后台拉起的 gateway 随会话结束可能死亡，靠登录 VBS 自起；飞书巡检**连续 2 天没收到**=先查 `hermes cron status`
 - ⚠️ 对拍期 syntax 文件数允许 1-3 差异（07:30 vs 09:00 时点差），门禁结论方向必须一致
+
+---
+
+## 跨文档一致性验证 + GEO 攻坚族日志同步 hermes（2026-10-20 07:45–07:57）
+
+### 任务
+WorkBuddy 会话执行两项：① 本地文档跨文档一致性验证；② 检查本地已变更未同步文档并同步远程、需上线的发布。用户追加指令「相关日志也同步给 hermes」。
+
+### 一致性验证结论（GEO 四项攻坚族 6 文档 + ENTITY.md 口径源 + execution-plan v2.39 + 文档索引）
+- ✅ **实体口径零冲突**：4MB 单文件上限 / 1h 自动删除 / Calibre 引擎 / 28+ 格式，entity-drift-audit §6「已收口」与 ENTITY.md canon 一致。
+- ✅ **金句事实池与数据源实测吻合**：F8=147/+242%（`数据分析/bing-ai-citations-trend.svg` 第4行实读）、F10=25,406 全量（`数据分析/Bing-Google双渠道周报-2026-10-19.md` 第40行实读）、F1=9,012 子集口径已正确标注禁混用。
+- ✅ **M 编号互锁一致**：M6-9（FAQ）/ M6-10（金句）/ M4-6（跨平台）在 geo-action-plan 与作战板 `data/seo-geo-board.json` 对齐。
+- ✅ **版本时序最新**：execution-plan 已到 v2.39（10-20 Day 17·b3b H1 分诊）。
+- ❌→✅ **发现并修复 1 处一致性缺陷**：`docs/文档索引.md` 约定「新文档入 docs/ 必须登记」，但 10-19/10-20 这批 6 份已入库文档全漏登记 → 补「🔴 GEO 四项攻坚」分组登记 6 份 + 最后更新→10-20，commit `336ce78` 已 push（pre-commit 两层纠察全绿）。
+
+### 同步/发布判断
+- git 根在**父目录** `E:/一人公司/电子书格式转换站`（`ebook-converter/` 是子目录），HEAD==origin/main==`6aec6e9`（0/0）；本轮 docs-only 修复 push 后远端==`336ce78`。
+- 线上 Vercel 已含 §3.5 修复（CORRUPT_INPUT 上线证据），无未上线生产 commit。
+
+### 日志同步 hermes（hermes-context 只读镜像）
+- 已把 7 份文档逐字节镜像入 `hermes-context/`：ENTITY.md / entity-drift-audit-2026-10-19.md / geo-action-plan-2026-10-19.md / faq-audit-2026-10-20.md / golden-sentence-template-2026-10-20.md / incident-2026-10-19-epub-pdf-input-task-failed.md / seo-geo-execution-plan-2026-09-17.md。
+- 🔴 **修复 execution-plan 副本漂移**：`hermes-context/` 副本此前停在 10-09（主 693 行 / 副本 616 行，门禁 FAIL），按「主→副本」单向镜像 `cp` 修复。
+- 已在 `scripts/audit-hermes-context-sync.mjs` PAIRS 登记 7 对；门禁全量 `node scripts/audit-hermes-context-sync.mjs` **exit 0（7 对全绿）**。
+
+### 坑位（固化）
+- 🔴 **`git ls-files --error-unmatch` 相对路径在 git 根目录会误判 [UNTRACKED]**：git 根在父目录时，用 `ebook-converter/` 前缀或 `git cat-file -e HEAD:<path>`（从 git 根）复核；本会话首判 `[UNTRACKED]` 是路径误用假象，已纠正。
+- 🔴 **hermes-context 是只读单向镜像**：修漂移只 `cp 主→副本`，绝不改副本；门禁 PAIRS 新增镜像对时须在脚本登记，否则「看着同步、实际没管」。

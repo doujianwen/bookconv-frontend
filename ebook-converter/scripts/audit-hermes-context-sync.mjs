@@ -11,6 +11,13 @@ const ROOT = resolve(import.meta.dirname, '..');
 // 新增镜像对时在此登记（主文档路径, 副本路径）
 const PAIRS = [
   ['docs/seo-geo-execution-plan-2026-09-17.md', 'hermes-context/seo-geo-execution-plan-2026-09-17.md'],
+  // 2026-10-20 GEO 四项攻坚族 + 事故分析（主 docs/ → 只读镜像 hermes-context/）
+  ['docs/ENTITY.md', 'hermes-context/ENTITY.md'],
+  ['docs/entity-drift-audit-2026-10-19.md', 'hermes-context/entity-drift-audit-2026-10-19.md'],
+  ['docs/geo-action-plan-2026-10-19.md', 'hermes-context/geo-action-plan-2026-10-19.md'],
+  ['docs/faq-audit-2026-10-20.md', 'hermes-context/faq-audit-2026-10-20.md'],
+  ['docs/golden-sentence-template-2026-10-20.md', 'hermes-context/golden-sentence-template-2026-10-20.md'],
+  ['docs/incident-2026-10-19-epub-pdf-input-task-failed.md', 'hermes-context/incident-2026-10-19-epub-pdf-input-task-failed.md'],
 ];
 
 let failed = 0, undecidable = 0;
