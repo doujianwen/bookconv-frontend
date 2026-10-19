@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "About BookConv — Free Online eBook Converter",
     description: clampMetaDescription("Learn about BookConv's mission to make eBook conversion accessible, secure, and free for everyone. Powered by Calibre, trusted by readers worldwide."),
-    keywords: ["about", "bookconv", "ebook converter", "calibre", "open source", "privacy"],
+    keywords: ["about", "bookconv", "ebook converter", "calibre", "privacy"],
     alternates: { canonical, languages },
     openGraph: {
       title: "About BookConv — Free Online eBook Converter",
@@ -174,7 +174,7 @@ export default async function AboutPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span><strong>Open-source transparency</strong> — No black-box algorithms, fully auditable codebase</span>
+              <span><strong>Transparent process</strong> — No black-box algorithms; conversion runs on the auditable Calibre engine</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
