@@ -14,7 +14,7 @@
 // Without a key the script explains what to do and exits 0 — it never fakes data.
 //
 // Output: 数据分析/competitor-serp-<YYYY-MM-DD>.json  (one file per day, overwrites)
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = process.cwd();
@@ -62,10 +62,16 @@ async function serpapiRanks(q, competitors, key) {
   if (!r.ok) throw new Error(`SerpApi ${r.status}`);
   const j = await r.json();
   const organic = Array.isArray(j.organic_results) ? j.organic_results : [];
-  return competitors.map((c) => {
+  const rankings = competitors.map((c) => {
     const idx = organic.findIndex((o) => hostOf(o.link) === c.domain);
     return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? organic[idx].link : null };
   });
+  // MEASURED 2026-10-19: we ask for num=100 but SerpApi returns only 8-10
+  // organic rows for these head queries. So rank=0 does NOT mean "not in the
+  // top 100" — it means "outside the observed window", whose depth we did not
+  // record before. Depth is recorded now so a shallow day is visible instead of
+  // being silently read as a real ranking change.
+  return { rankings, observedDepth: organic.length, requestedDepth: 100 };
 }
 
 async function bingRanks(q, competitors, key) {
@@ -74,10 +80,36 @@ async function bingRanks(q, competitors, key) {
   if (!r.ok) throw new Error(`Bing ${r.status}`);
   const j = await r.json();
   const vals = j.webPages?.value || [];
-  return competitors.map((c) => {
+  const rankings = competitors.map((c) => {
     const idx = vals.findIndex((v) => hostOf(v.url) === c.domain);
     return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? vals[idx].url : null };
   });
+  return { rankings, observedDepth: vals.length, requestedDepth: 100 };
+}
+
+// Historical hit counts from earlier snapshots, so "today found fewer rivals
+// than usual" can be told apart from "today's rivals genuinely moved".
+function priorHitCounts() {
+  if (!existsSync(DATA_DIR)) return [];
+  return readdirSync(DATA_DIR)
+    .filter((f) => /^competitor-serp-\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    .filter((f) => f !==`competitor-serp-${new Date().toISOString().slice(0, 10)}.json`)
+    .map((f) => {
+      try {
+        const s = JSON.parse(readFileSync(join(DATA_DIR, f), 'utf8'));
+        return (s.results || []).reduce((a, x) => a + (x.rankings || []).filter((r) => r.rank > 0).length, 0);
+      } catch {
+        return null;
+      }
+    })
+    .filter((n) => typeof n === 'number')
+    .sort((a, b) => a - b);
+}
+
+function median(xs) {
+  if (!xs.length) return null;
+  const m = Math.floor(xs.length / 2);
+  return xs.length % 2 ? xs[m] : (xs[m - 1] + xs[m]) / 2;
 }
 
 async function main() {
@@ -107,16 +139,55 @@ async function main() {
 
   console.log(`SERP 源：${srcNote} · 词 ${cfg.keywords.length} 个 · 竞品 ${cfg.competitors.length} 个`);
   const results = [];
+  let fetchErrors = 0;
   for (const q of cfg.keywords) {
     try {
-      const rankings = await fetchRanks(q, cfg.competitors, nextKey());
+      const { rankings, observedDepth, requestedDepth } = await fetchRanks(q, cfg.competitors, nextKey());
       const found = rankings.filter((r) => r.rank > 0).map((r) => `${r.name}#${r.rank}`).join(', ') || '无';
-      console.log(`  · ${q} → ${found}`);
-      results.push({ query: q, rankings });
+      console.log(`  · ${q} → ${found}${observedDepth < requestedDepth ? `（观测深度 ${observedDepth}/${requestedDepth}）` : ''}`);
+      results.push({ query: q, rankings, observedDepth, requestedDepth });
     } catch (e) {
+      fetchErrors++;
       console.error(`  ✗ ${q} 抓取失败：${e.message}`);
-      results.push({ query: q, rankings: cfg.competitors.map((c) => ({ ...c, rank: 0, url: null })), error: e.message });
+      results.push({
+        query: q,
+        rankings: cfg.competitors.map((c) => ({ ...c, rank: 0, url: null })),
+        observedDepth: 0,
+        requestedDepth: 100,
+        error: e.message,
+      });
     }
+  }
+
+  // ---- quality gate -------------------------------------------------------
+  // A day where the rivals are absent can mean two very different things:
+  //   (a) they really dropped out of the observed window, or
+  //   (b) the window itself came back shallow / the provider throttled us.
+  // Case (b) silently poisons next week's Δ, because "prevRank = null" then
+  // reads as "new entrant". We cannot always tell them apart, so we refuse to
+  // write a snapshot that is indistinguishable from a provider failure.
+  const totalHits = results.reduce((a, x) => a + x.rankings.filter((r) => r.rank > 0).length, 0);
+  const depths = results.map((r) => r.observedDepth ?? 0);
+  const minDepth = depths.length ? Math.min(...depths) : 0;
+  const prior = priorHitCounts();
+  const priorMedian = median(prior);
+  const reasons = [];
+  if (fetchErrors > 0) reasons.push(`${fetchErrors} 个词抓取报错`);
+  if (results.length > 0 && minDepth === 0) reasons.push('存在观测深度为 0 的词（结果集为空，非「未进 Top-100」）');
+  // Only compare against history once we actually have some; with no prior
+  // snapshots the median is null and this must stay UNKNOWN, never FAIL.
+  if (priorMedian !== null && priorMedian > 0 && totalHits < priorMedian * 0.4) {
+    reasons.push(`命中 ${totalHits} 明显低于历史中位数 ${priorMedian}（前 ${prior.length} 份快照）`);
+  }
+  if (reasons.length) {
+    console.error('');
+    console.error(`✗ 快照质量异常，拒绝写入 ${OUT}：`);
+    for (const r of reasons) console.error(`    - ${r}`);
+    console.error('');
+    console.error('  这很可能是数据源限流/降级，而不是竞品真的集体掉出排名。');
+    console.error('  写入它会让下周的Δ 把「无前期基准」误读成「新进入Top-100」。');
+    console.error('  处理：确认额度与网络后重跑；历史快照不受影响。');
+    process.exit(1);
   }
 
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
@@ -124,10 +195,19 @@ async function main() {
     date: new Date().toISOString().slice(0, 10),
     fetchedAt: new Date().toISOString(),
     source,
+    quality: {
+      hits: totalHits,
+      minObservedDepth: minDepth,
+      maxObservedDepth: depths.length ? Math.max(...depths) : 0,
+      requestedDepth: 100,
+      priorHitMedian: priorMedian,
+      note: '观测深度来自 SerpApi 实际返回的 organic_results 条数，通常远小于 requestedDepth；rank=0 表示「未进入观测窗口」，不等于「未进 Top-100」。',
+    },
     results,
   };
   writeFileSync(OUT, JSON.stringify(snapshot, null, 2) + '\n', 'utf8');
   console.log(`\n✓ 快照已写：${OUT}`);
+  console.log(`  命中 ${totalHits} · 观测深度 ${minDepth}–${Math.max(...depths, 0)} / 100`);
   console.log('  下一步：node scripts/build-competitor-series.mjs');
 }
 
