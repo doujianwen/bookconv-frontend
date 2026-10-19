@@ -1,5 +1,5 @@
 export const slug = `best-epub-reader-iphone-ipad`;
-export const title = `Best EPUB Reader Apps for iPhone and iPad (2026): Apple Books and Beyond`;
+export const title = `Best EPUB Reader Apps for iPhone and iPad`;
 export const metaTitle = `Best EPUB Reader Apps for iPhone & iPad (2026)`
 export const date = `2026-09-24`;
 export const lastUpdated = `2026-09-24`;

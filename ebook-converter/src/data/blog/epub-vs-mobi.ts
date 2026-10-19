@@ -1,5 +1,5 @@
 export const slug = `epub-vs-mobi`;
-export const title = `EPUB vs MOBI: Which Ebook Format Should You Actually Use? (2026)`;
+export const title = `EPUB vs MOBI: Which Format Should You Use?`;
 export const metaTitle = `EPUB vs MOBI: Which Format Should You Use?`
 export const date = `2026-08-09`;
 export const lastUpdated = `2026-09-04`;
