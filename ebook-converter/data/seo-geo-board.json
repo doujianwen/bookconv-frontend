@@ -518,8 +518,9 @@
           "due": "2026-10-17",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13，P0优先级。与M2-8并行不冲突。"
+          "status": "done",
+          "note": "来源：GSC自动化分析 2026-10-13，P0优先级。与M2-8并行不冲突。",
+          "statusNote": "10-19 完成（逾期1天）。经 GSC query×page 双维度映射（91天窗 07-12→10-10）：6 个查询实际落在 4 个活页（非 6 页）。全部为元数据级改动、新 SERP 标题均 ≤55 字符：① /es/blog/azw3-vs-mobi（25 展示/4 查询@9.3-10.0，最大承接页）新增 es.metaTitle「MOBI vs AZW3 para Kindle: ¿cuál conviene?」（西语，沿 10-18 审计模式）；② /blog/azw3-vs-mobi（3 展示/2 查询@9.0-11.0）metaTitle 补 for Kindle；③ /convert/epub-to-zip（5 展示/1 查询@8.2）title 前置「Convert EPUB to ZIP」精确匹配查询；④ /blog/can-kindle-read-azw3（3 展示/1 查询@8.0）metaTitle 补 Files（board 建议的「首段直接回答」已于 10/03 GEO 改造满足，intro 首句即 Short answer: yes）。⑤ /blog/mobi-or-azw3-for-kindle 残余 3 展示=8/11 301 归档后索引残留（M1-4），死页不可优化，将自然衰减。门禁：syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、audit:meta-desc ERROR=0（WARN=112 存量）、tsc --noEmit 真实退出码 0。验收（2 周后 GSC 复跑 6 查询 CTR>0）待发布部署后 ~10-31 复跑；未 push（待用户发布）。P1 残余：西语页承接英语查询的语言错配（P2-6 现象：/es/ 承接查询 100% 为英语）是 CTR=0 的结构性根因，本批以强化英文页为 mitigation，错配本身需单独治理。"
         },
         {
           "id": "M2-13",

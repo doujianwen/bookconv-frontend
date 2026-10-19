@@ -1,6 +1,6 @@
 export const slug = `azw3-vs-mobi`;
 export const title = `MOBI vs AZW3 & AZW3 vs MOBI — Which Kindle Format Wins in 2026`;
-export const metaTitle = `MOBI vs AZW3: Which Kindle Format Wins?`
+export const metaTitle = `MOBI vs AZW3 for Kindle: Which Format Wins?`
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Calibre"];
@@ -211,6 +211,7 @@ export const faqs = [
 
 export const es = {
   title: `MOBI vs AZW3: qué formato de Kindle conviene en 2026`,
+  metaTitle: `MOBI vs AZW3 para Kindle: ¿cuál conviene?`,
   content: {
     intro: `Usa AZW3 en cualquier Kindle de la última década; MOBI solo importa en hardware previo a 2015. Esta guía gratuita elige un ganador claro para AZW3 vs MOBI y muestra cómo convertir en cualquier sentido sin registro, en un clic.`,
     sections: [
