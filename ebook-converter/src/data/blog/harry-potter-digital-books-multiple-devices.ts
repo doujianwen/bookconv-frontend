@@ -7,7 +7,7 @@ export const author = 'BookConv Team';
 export const tags = ['Harry Potter', 'Multi-device', 'Ebook', 'Kindle', 'Kobo', 'EPUB', 'AZW3', 'Digital Books'];
 
 export const content = {
-  intro: 'Harry Potter fans everywhere love having their magical books ready wherever they go. But if you own multiple devices (Kindle, Kobo, phone, tablet), you know the headache: buying a Kindle edition means it only lives on Amazon. Reading it on your Kobo? You need a separate copy. This guide explains how to build a seamless Harry Potter library across all your devices.',
+  intro: 'Harry Potter fans everywhere love having their magical books ready wherever they go. But if you own multiple devices (Kindle, Kobo, phone, tablet), you know the headache: buying a Kindle edition means it only lives on Amazon. Reading it on your Kobo? You need a separate copy. This guide explains how to build a seamless Harry Potter library across all your devices.\n\nThe BookConv page on this exact topic earned a 55–58% Bing AI Citation Share — the highest of any Harry Potter conversion guide — by answering the question readers actually ask.',
   sections: [
     {
       heading: 'Why Harry Potter Fans Need Multi-Device Reading',
