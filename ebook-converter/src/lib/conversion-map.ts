@@ -43,7 +43,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "html-txt":   { tool: "js", description: "HTML to TXT (Pure JS, no Calibre)" },
   "epub-docx":  { tool: "calibre", description: "EPUB to Word (DOCX)" },
   "docx-epub":  { tool: "calibre", description: "DOCX to EPUB" },
-  "txt-epub":   { tool: "calibre", description: "TXT to EPUB" },
+  "txt-epub":   { tool: "js", description: "TXT to EPUB (Pure JS, no Calibre)" },
   "html-epub":  { tool: "calibre", description: "HTML to EPUB" },
   "epub-txt":   { tool: "js", description: "EPUB to TXT (Pure JS, no Calibre)" },
   "azw3-pdf":   { tool: "calibre", description: "AZW3 to PDF" },

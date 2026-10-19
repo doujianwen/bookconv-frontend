@@ -918,6 +918,10 @@ export async function executeConversion(
   // Strips HTML tags directly from the source file.
   const isHtmlToTxt = sourceFormat === 'html' && targetFormat === 'txt';
 
+  // TXT → EPUB 纯 JS 路径（EPUB 本质是 ZIP+XHTML，复用 buildEpubFromText），
+  // 免走 CloudConvert —— 实测 2026-10-18 该路径触发 60s 超时 conversion_failed。
+  const isTxtToEpub = sourceFormat === 'txt' && targetFormat === 'epub';
+
   try {
     await validateInputFile(inputPath, sourceFormat);
 
@@ -945,6 +949,10 @@ export async function executeConversion(
     } else if (isDocxToTxt) {
       const txt = await docxToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');
+    } else if (isTxtToEpub) {
+      const txt = readFileSync(inputPath, 'utf8');
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
     } else if (isHtmlToTxt) {
       const txt = await htmlToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');

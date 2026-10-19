@@ -36,7 +36,10 @@ function targetDate() {
   const arg = process.argv.find(a => /^\d{4}-\d{2}-\d{2}$/.test(a))
   if (arg) return arg
   const y = new Date(Date.now() - 864e5) // 默认昨天（GA4 数据有延迟）
-  return y.toISOString().slice(0, 10)
+  // 按本地时区取日期：toISOString() 走 UTC，GMT+8 早 8 点前跑会把「昨天」
+  // 错算成「前天」（实测 2026-10-20 06:54 拿到 10-18）。先偏移时区再切片。
+  const local = new Date(y.getTime() - y.getTimezoneOffset() * 60000)
+  return local.toISOString().slice(0, 10)
 }
 const DATE = targetDate()
 
