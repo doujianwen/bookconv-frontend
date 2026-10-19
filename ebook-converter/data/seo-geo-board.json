@@ -468,7 +468,7 @@
           "tier": "CORE",
           "status": "doing",
           "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。",
-          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。"
+          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。\n[2026-10-19 10:46 更正] 上述「未 push」已过期：Batch 14 相关提交（758e994/78d54bd/7dc3dce 等）经 git merge-base --is-ancestor 实测均已在 origin/main；本批次余下提交亦于 10-19 10:46 批量发布（e2371ab..c95ef0b）并部署上线（线上 chronicles 页 em dash 新旧串双断言通过）。作战板以本条为准。"
         },
         {
           "id": "M2-9",
@@ -520,7 +520,7 @@
           "tier": "CORE",
           "status": "done",
           "note": "来源：GSC自动化分析 2026-10-13，P0优先级。与M2-8并行不冲突。",
-          "statusNote": "10-19 完成（逾期1天）。经 GSC query×page 双维度映射（91天窗 07-12→10-10）：6 个查询实际落在 4 个活页（非 6 页）。全部为元数据级改动、新 SERP 标题均 ≤55 字符：① /es/blog/azw3-vs-mobi（25 展示/4 查询@9.3-10.0，最大承接页）新增 es.metaTitle「MOBI vs AZW3 para Kindle: ¿cuál conviene?」（西语，沿 10-18 审计模式）；② /blog/azw3-vs-mobi（3 展示/2 查询@9.0-11.0）metaTitle 补 for Kindle；③ /convert/epub-to-zip（5 展示/1 查询@8.2）title 前置「Convert EPUB to ZIP」精确匹配查询；④ /blog/can-kindle-read-azw3（3 展示/1 查询@8.0）metaTitle 补 Files（board 建议的「首段直接回答」已于 10/03 GEO 改造满足，intro 首句即 Short answer: yes）。⑤ /blog/mobi-or-azw3-for-kindle 残余 3 展示=8/11 301 归档后索引残留（M1-4），死页不可优化，将自然衰减。门禁：syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、audit:meta-desc ERROR=0（WARN=112 存量）、tsc --noEmit 真实退出码 0。验收（2 周后 GSC 复跑 6 查询 CTR>0）待发布部署后 ~10-31 复跑；未 push（待用户发布）。P1 残余：西语页承接英语查询的语言错配（P2-6 现象：/es/ 承接查询 100% 为英语）是 CTR=0 的结构性根因，本批以强化英文页为 mitigation，错配本身需单独治理。已于 10-19 单独立项 M5-5（P1, due 10-31）：/es/ 语言错配治理——诊断与处置决策。"
+          "statusNote": "10-19 完成（逾期1天）。经 GSC query×page 双维度映射（91天窗 07-12→10-10）：6 个查询实际落在 4 个活页（非 6 页）。全部为元数据级改动、新 SERP 标题均 ≤55 字符：① /es/blog/azw3-vs-mobi（25 展示/4 查询@9.3-10.0，最大承接页）新增 es.metaTitle「MOBI vs AZW3 para Kindle: ¿cuál conviene?」（西语，沿 10-18 审计模式）；② /blog/azw3-vs-mobi（3 展示/2 查询@9.0-11.0）metaTitle 补 for Kindle；③ /convert/epub-to-zip（5 展示/1 查询@8.2）title 前置「Convert EPUB to ZIP」精确匹配查询；④ /blog/can-kindle-read-azw3（3 展示/1 查询@8.0）metaTitle 补 Files（board 建议的「首段直接回答」已于 10/03 GEO 改造满足，intro 首句即 Short answer: yes）。⑤ /blog/mobi-or-azw3-for-kindle 残余 3 展示=8/11 301 归档后索引残留（M1-4），死页不可优化，将自然衰减。门禁：syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、audit:meta-desc ERROR=0（WARN=112 存量）、tsc --noEmit 真实退出码 0。验收（2 周后 GSC 复跑 6 查询 CTR>0）待发布部署后 ~10-31 复跑；未 push（待用户发布）。P1 残余：西语页承接英语查询的语言错配（P2-6 现象：/es/ 承接查询 100% 为英语）是 CTR=0 的结构性根因，本批以强化英文页为 mitigation，错配本身需单独治理。已于 10-19 单独立项 M5-5（P1, due 10-31）：/es/ 语言错配治理——诊断与处置决策。\n[2026-10-19 10:46 已发布] 上述「未 push（待用户发布）」已过期：commit e77ea19 于 10-19 10:46 推送至 doujianwen/bookconv-frontend 并部署上线（线上验证：X-Matched-Path 真实命中 + em dash 新旧串双断言）。验收「2 周后 6 查询 CTR>0」按原计划 ~10-31 GSC 复跑起算。"
         },
         {
           "id": "M2-13",
@@ -560,6 +560,20 @@
           "tier": "CORE",
           "status": "todo",
           "note": "来源：GSC自动化分析 2026-10-13，P2优先级。与M2-14同批次执行。"
+        },
+        {
+          "id": "M2-16",
+          "action": "博客内容质量存量收口（147 WARN：薄内容/FAQ 不足/缺权威外链/关键词密度/AI 套话/标题超长）",
+          "detail": "【立项来源】2026-10-19 发布门禁内容层 critic-layer.blog 实测：审计 64 篇，PASS_WITH_WARNINGS，0 BLOCK / 147 WARN（存量，不阻断发布；用户指令「残余项同步到待办进度表」）。\n\n【WARN 分布（当日实测）】薄内容（<800 词，指南同类型 ≥800）约 40 篇；无权威外链（指南要求 3-5 条 .gov/.edu/权威媒体）约 40 篇；FAQ <5 条约 10 篇；关键词密度 >3% 约 10 篇；AI 套话（robust/landscape/comprehensive/utilize/realm/it is important to note）约 10 篇；meta title >60 约 8 篇；首 100 词无主关键词/主题词约 6 篇；无任何内链 4 篇；4 个 IP 簇文件 slug 解析失败（chronicles-of-narnia/harry-potter/lord-of-the-rings/twilight-ebooks-multiple-devices，数据完整性/解析失败，非本次变更仅报告）。\n\n【处置分层】① 先修 4 个 slug 解析失败（数据完整性，阻塞其他判据对该簇生效）；② 薄内容与外链按 GEO 价值排序（AI 引用页优先）分批扩写/补链；③ 每批 ≤3 篇，门禁全绿才继续。",
+          "owner": "A",
+          "deliverable": "分层处置记录 + 每批门禁结果 + 复跑 WARN 基线留档",
+          "accept": "① 4 个 slug 解析失败修复且 critic 层不再报该簇解析失败；② WARN 总数有可复现下降（每批留档前后计数）；③ 无新增 BLOCK；④ 复跑 publish-gate 内容层基线（10-19 = 0 BLOCK/147 WARN）留档对比。",
+          "due": "2026-11-14",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令）。当日基线：0 BLOCK / 147 WARN / 0 INFO。",
+          "note": "与 M3-10（Blog 板块 55 页差异化，blocked P1）部分重叠但范围不同——M3-10 防同质（差异化），本任务管质量底线（字数/FAQ/外链/密度/套话）；M3-10 解除 blocked 时须合并排期，避免双线改同批页面。与 M6-9（FAQ 结构化）交界：FAQPage schema 与结构化归 M6-9，FAQ 内容存在性（≥5 Q&A）归本任务。"
         }
       ]
     },
@@ -740,6 +754,20 @@
           "priority": "P3",
           "tier": "SUPP",
           "status": "todo"
+        },
+        {
+          "id": "M3-14",
+          "action": "meta description 超长存量收口（112 处 WARN，渲染层兜底中）",
+          "detail": "【立项来源】2026-10-19 发布门禁 meta-description 数据层实测：154 个 description 来源中 112 处 E2 超长（>158 字符）WARN、ERROR=0（用户指令「残余项同步到待办进度表」）。\n\n【为什么不阻断发布】渲染层 src/lib/seo/meta-description.ts 的 clampMetaDescription 自动句末截断+strip 兜底，故存量超长只报 WARN。但截断是兜底非最优：blog/guide 无独立 description 字段，meta description = intro 首段，而 intro 同时进页面可见首段（原样渲染）与 schema——手写 ≤155 字符自包含首句可同时修复 SERP 摘要与首段质量。\n\n【标准】25–158 字符（Bing 硬限 160 / Google 桌面 ~155-160，2026-10-15 查实），前 120 字符承载核心信息；禁 markdown 残留（**/反引号/[文本](链接)/标题/列表符）。\n\n【范围】112 处分布于 src/data/blog（70 来源）+ src/data/guides（50 来源）+ src/data/content（34 来源）的 intro/problem/content.intro 字段。",
+          "owner": "A",
+          "deliverable": "分批收口记录（≤3 文件/批，沿用内容批纪律：门禁全绿才继续）",
+          "accept": "① npm run audit:meta-desc --strict 的 E2 WARN 数从 112 可复现下降（目标 ≤40，或分批收口且每批有记录）；② 无新增 ERROR；③ 改动页 next build + syntax-sweep 绿，render 层无回归；④ 收口后发布门禁 meta-desc 层 WARN 基线留档。",
+          "due": "2026-11-14",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令「残余项同步到待办进度表」）。当日基线：ERROR=0 / WARN=112。",
+          "note": "与 M2-11（GSC 自动分析 P2 内容项）、M3-10（blocked，Blog 55 页差异化）范围不同：本任务只做 description 长度与首句自包含收口，不改正文结构与页面差异化。与 M2-16 交界：meta description 长度归本任务，正文质量（字数/FAQ/外链/密度）归 M2-16。"
         }
       ]
     },
@@ -814,6 +842,20 @@
           "tier": "CORE",
           "status": "done",
           "statusNote": "2026-10-13 完成：数据分析/竞品外链差距清单-M4-5-2026-10-13.md（19 域：可做13/待定4/不可做2类）。诚实口径=机制级+AI引用级 gap（无 Ahrefs/Semrush，Bing GetLinkCounts 实测返回空）；渠道沿用外链计划-V1，新增 AI 引用域证据（wikipedia/bookfere/everydaytech/amazon）。首个零成本动作：howtoconvert.co K4 草稿邮件待发。"
+        },
+        {
+          "id": "M4-6",
+          "action": "P2: 跨平台信源分发——Trustpilot/G2 等第三方信任源（GEO 四项攻坚④）",
+          "detail": "【立项来源】docs/geo-action-plan-2026-10-19.md §四（GEO 四项攻坚之④；计划表状态 🔴 未启动，K3/K6 待建账号）。用户 10-19 指令入板。\n\n【目标】在外部高权重平台发布一致提及 BookConv 的内容，构建 AI 知识图谱的「多信源印证」；验收 ≥3 外部平台一致提及。\n\n【步骤】4.1 注册 Trustpilot（优先）/G2——⏳ 待用户建账号（K3 待办，owner=O 的主因）；4.2 五层分发矩阵（第三方评测/自媒体[知乎·小红书·公众号]/垂类/官媒/官网）；4.3 发布 GEO 锚点一致的内容（每平台独立改写不复制、隔天错峰）；4.4 争取「best ebook converter」类 listicle 外链（K4/K5 草稿已交付待用户发送）；4.5 全平台实体描述符与 ENTITY.md 口径一致。\n\n【周节奏（计划表）】4.1 待用户；4.2–4.3 第 3–4 周（11-02~11-15）；4.4 随用户外联。",
+          "owner": "O",
+          "deliverable": "Trustpilot/G2 账号 + 五层分发矩阵表 + ≥3 平台一致提及落地记录",
+          "accept": "① Trustpilot/G2 账号开通且基础资料口径与 ENTITY.md 一致；② ≥3 外部平台有一致提及（每平台独立改写）；③ 4.5 对照 ENTITY.md 红线零口径冲突；④ 外联发送记录（K4/K5）留档。",
+          "due": "2026-11-15",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 立项：GEO 四项攻坚④入板（计划表 §四）。4.1/4.4 阻塞在用户动作（建账号/发外联），AI 侧可先做 4.2 矩阵与 4.5 口径清单。",
+          "note": "与 M4-3（社区分发作信号源，todo P1 due 10-23）区别：M4-3 是既有社媒排期执行（X 每 2 天 1 条、Reddit 养号节奏）；本任务是第三方信任/评测平台（Trustpilot/G2/listicle）账号与外联，主阻塞为用户动作，故 owner=O。⚠️ 纪律：禁批量铺量（单平台单平台推进、隔天错峰，防矩阵号识别）；1.1 实体一致性前置已满足（10-19 GEO 1.3 全收口），4.5 可启动。"
         }
       ]
     },
@@ -887,7 +929,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "2026-10-19 诊断报告完成（数据分析/M5-5-es语言错配诊断报告-2026-10-19.md），待用户决策。核心结论：① 错配真实存在但已自行消失——7-8 月 /es/ URL 系统性承接英语查询（21 查询 100% 英语、同查询 es 排名高于 en，如 azw3 vs mobi：es 29 展@9.9 vs en 7 展@12.4），9 月中旬起 /es/ 内容页英语查询展示 77→0 并保持；② 直接原因记 UNKNOWN，但时间线与 09-05 P3-C 白名单（未翻译 /es/ 路由 404→退索引）强相关，当时的错配主体是「英文兜底内容挂 /es/ URL」而非翻译页本身；③ 仍存的设计内错配：/es/guide/* 11 页英文正文+lang=es（M5-2 若翻译则自动消解，长期不翻需 noindex/canonical 单处处置）；④ 当前真问题是全部 /es/ 内容页 0 展示且收录状态不可验证——URL Inspection API 今日 403（服务账号失权限，含 en 页全挂），10-02 历史 Inspection 无 es 页；⑤ 口径澄清：M5-4 的「es 曝光 95/CTR 2.11%」是 Bing CountryReport 地域口径非 GSC 页面级；⑥ 验收③已提前达成（英语查询展示 77→0，信号转移结果已由 P3-C 实现），西语查询 0→0 结合 Bing 侧 95 曝光支持「西语价值在 AI 侧」读法（hedge：样本小）。重构后选项：A 降级常规 SEO / B 建议否决（无问题可解+欺骗性优化风险）/ C1 下架翻译页建议否决（毁 AI 侧资产）/ C2 guide 兜底处置可排队低优先 / D 维持监控=当前默认最优 / E（新）恢复 GSC 服务账号权限验证收录=前置必修（需用户 GSC 后台操作）。推荐路径 E→D+C2 排队→西语战略随 M5-3 定。未 push（连同 e77ea19、9033a90 待发布）。",
+          "statusNote": "2026-10-19 诊断报告完成（数据分析/M5-5-es语言错配诊断报告-2026-10-19.md），待用户决策。核心结论：① 错配真实存在但已自行消失——7-8 月 /es/ URL 系统性承接英语查询（21 查询 100% 英语、同查询 es 排名高于 en，如 azw3 vs mobi：es 29 展@9.9 vs en 7 展@12.4），9 月中旬起 /es/ 内容页英语查询展示 77→0 并保持；② 直接原因记 UNKNOWN，但时间线与 09-05 P3-C 白名单（未翻译 /es/ 路由 404→退索引）强相关，当时的错配主体是「英文兜底内容挂 /es/ URL」而非翻译页本身；③ 仍存的设计内错配：/es/guide/* 11 页英文正文+lang=es（M5-2 若翻译则自动消解，长期不翻需 noindex/canonical 单处处置）；④ 当前真问题是全部 /es/ 内容页 0 展示且收录状态不可验证——URL Inspection API 今日 403（服务账号失权限，含 en 页全挂），10-02 历史 Inspection 无 es 页；⑤ 口径澄清：M5-4 的「es 曝光 95/CTR 2.11%」是 Bing CountryReport 地域口径非 GSC 页面级；⑥ 验收③已提前达成（英语查询展示 77→0，信号转移结果已由 P3-C 实现），西语查询 0→0 结合 Bing 侧 95 曝光支持「西语价值在 AI 侧」读法（hedge：样本小）。重构后选项：A 降级常规 SEO / B 建议否决（无问题可解+欺骗性优化风险）/ C1 下架翻译页建议否决（毁 AI 侧资产）/ C2 guide 兜底处置可排队低优先 / D 维持监控=当前默认最优 / E（新）恢复 GSC 服务账号权限验证收录=前置必修（需用户 GSC 后台操作）。推荐路径 E→D+C2 排队→西语战略随 M5-3 定。未 push（连同 e77ea19、9033a90 待发布）。\n[2026-10-19 10:46 已发布] 上述「未 push（连同 e77ea19、9033a90 待发布）」已过期：9033a90（立项）、32b697f（本任务 doing）、e77ea19（M2-12）、c95ef0b（SERP 观测深度防护+数据重建）等共 21 个提交已推送并部署上线。本任务保持 doing（待用户处置决策，推荐路径 E→D+C2）。",
           "note": "来源：M2-12 P1 残余单独立项（用户 10-19 指令「对P1残余单独立项」）。样本量义务：77 展示/91 天≈0.85 展示/天，任何 CTR 类结论必须带样本量，预期收益上限约 2-4 点击/周——小 ROI 问题，但属程序化页面治理的结构性样本，且为 de/ja 语言扩张的前置探路。与 M5-2（补西语 guide 译文，due 10-20）、M5-3（es 内容扩充，due 11-15）存在方向张力：西语战略需在本任务决策点同步明确。"
         }
       ]
@@ -972,7 +1014,7 @@
         {
           "id": "M6-6",
           "action": "llms.txt 维护（定位为辅助）",
-          "detail": "当前 145 行；随页面增删同步维护，但不作为排名手段、不写进 KPI。",
+          "detail": "当前 145 行；随页面增删同步维护，但不作为排名手段、不写进 KPI。 🔴 条目数必须与 CONVERSION_MAP 一致：2026-10-19 发布门禁结构层实测 llms.txt 转换数(28) ≠ CONVERSION_MAP(34)（WARN llms-conv-out-of-sync）——llms.txt 是 CI 必检项，条目漂移会被门禁抓到，下次维护时收口。",
           "owner": "S",
           "deliverable": "llms.txt diff",
           "accept": "覆盖 sitemap 内全部主要 URL；文档注明「不影响 Google 排名」",
@@ -980,7 +1022,8 @@
           "recurring": "monthly",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "2026-10-19 发布门禁记录：结构层 seo-critic WARN [llms-conv-out-of-sync] llms.txt 转换数(28) ≠ CONVERSION_MAP(34) @ public/llms.txt（0 critical 放行，存量 WARN）。下次 monthly 维护（或转换页增删时）同步收口：llms.txt 转换条目需与 src/lib/conversion-map.ts 一致。当日实测口径：注册博文 68 篇、CONVERSION_MAP 34 条。"
         },
         {
           "id": "M6-7",
@@ -1008,6 +1051,34 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo"
+        },
+        {
+          "id": "M6-9",
+          "action": "P1: FAQ 结构化——关键页 100% 带 FAQPage JSON-LD（GEO 四项攻坚②）",
+          "detail": "【立项来源】docs/geo-action-plan-2026-10-19.md §二（GEO 四项攻坚之②；计划表状态 🟡 部分：bookconv-faq 存在、部分页有 FAQ）。用户 10-19 指令「残余项同步到待办进度表」入板。\n\n【目标】FAQ 是 AI 引用率最高的内容形态；让每篇关键页都有 FAQ + FAQPage JSON-LD。\n\n【步骤】2.1 盘点哪些页有 FAQ 区块、哪些有 FAQPage schema（清单：有/无两维）；2.2 给有 FAQ 区块的 convert/guide 页补 FAQPage JSON-LD（≥20 页）；2.3 金钱页（converter 首页/高展示 convert 页）FAQ 扩充至 ≥5 Q&A（Day 16 已强化 3 blog 至 8+）；2.4 把 bookconv-faq 的问答拆成可被单条引用的「问题—答案」对。\n\n【周节奏（计划表）】第 1–2 周（10-19~11-01）完成 2.1–2.2；2.3 随内容更新穿插。",
+          "owner": "A",
+          "deliverable": "盘点清单（FAQ/schema 两维）+ ≥20 页 FAQPage JSON-LD 落地 + 验证记录",
+          "accept": "① 盘点清单落地；② ≥20 页带合法 FAQPage JSON-LD（schema 校验/Rich Results 验证通过，禁只写不验）；③ 金钱页 FAQ ≥5；④ 复跑发布门禁无新增 BLOCK。",
+          "due": "2026-11-02",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 立项：GEO 四项攻坚②入板（计划表 §二）。依赖：2.1 盘点先行。",
+          "note": "与 M6-7（不做清单）关系：FAQPage JSON-LD 是标准 schema，非 M6-7 黑名单项（禁的是特殊 GEO schema/影子页/强制 chunking），不冲突。与 M2-16 交界：schema 与结构化归本任务，FAQ 内容存在性归 M2-16。"
+        },
+        {
+          "id": "M6-10",
+          "action": "P2: 可被 AI 引用的金句（结论+数据+来源倒金字塔，GEO 四项攻坚③）",
+          "detail": "【立项来源】docs/geo-action-plan-2026-10-19.md §三（GEO 四项攻坚之③；计划表状态 🔴 未系统做）。用户 10-19 指令入板。\n\n【目标】注入「结论句 + 3 数据 + 来源」倒金字塔金句，让 AI 能逐字复制。\n\n【步骤】3.1 定义金句模板（结论+数据+来源，禁空泛营销话术）；3.2 从 数据分析/ 真实资产提取可写数据（≥10 条有据数据，如累计转换次数、支持格式数——必须真实可溯源）；3.3 在 10–15 个高意图页各植入 1–2 条（自包含、可复制、事实驱动）；3.4 复测：Perplexity/ChatGPT 用目标 query 提问验证逐字引用（随月度 Kelriva 重测，每月 26 日）。\n\n【周节奏（计划表）】第 2–3 周（10-26~11-08）3.1–3.3；3.4 随 11-26 Kelriva 重测，故 due 挂 11-26。",
+          "owner": "A",
+          "deliverable": "金句模板文档 + ≥10 条有据数据清单 + 10–15 页植入 + 3.4 复测记录",
+          "accept": "① 模板文档落地；② ≥10 条数据全部有据（禁编造——诚实数据铁律，逐条可溯源到 数据分析/ 资产或格式官方文档）；③ 10–15 页各 ≥1 金句；④ 3.4 复测有记录（命中/未命中都记，禁只记命中）。",
+          "due": "2026-11-26",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 立项：GEO 四项攻坚③入板（计划表 §三）。",
+          "note": "🔴 禁编造数据：所有数字必须来自 数据分析/ 真实资产或格式官方文档。与 M4-2（可引用资产建设，doing，due 11-14）区别：M4-2 把 69 csv 数据集包装成独立可引用页面；本任务在既有高意图页植入句级金句。M 系列监测（M8）为 3.2/3.4 提供数据底座。"
         }
       ]
     },
