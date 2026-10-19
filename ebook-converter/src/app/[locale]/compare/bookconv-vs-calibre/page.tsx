@@ -145,6 +145,9 @@ export default async function ComparePage() {
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> Files auto-delete after 1 hour</span></li>
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Free for personal use</strong> — no feature caps on individual conversions</span></li>
             </ul>
+            <p className="mt-4 text-gray-700 leading-relaxed">
+              BookConv converts 28+ eBook formats through the open-source Calibre engine — free for personal use, no account required.
+            </p>
           </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6">

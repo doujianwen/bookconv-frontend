@@ -120,9 +120,12 @@ export default async function AboutPage() {
               <span><strong>Open</strong> — Powered by Calibre, the industry-standard open-source engine</span>
             </li>
           </ul>
-        </section>
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            BookConv auto-deletes your uploaded files within 1 hour and encrypts them in transit — no account or software install required.
+          </p>
+      </section>
 
-        {/* Features Grid */}
+      {/* Features Grid */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Why Choose BookConv?</h2>
           <div className="grid gap-6 sm:grid-cols-2">

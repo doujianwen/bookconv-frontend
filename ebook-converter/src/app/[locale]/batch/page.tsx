@@ -107,6 +107,9 @@ export default async function BatchPage() {
         <p className="mt-4 text-lg text-gray-600">
           Convert several ebooks to one format and download them as a single ZIP — free while in open beta.
         </p>
+        <p className="mt-3 text-base text-gray-500">
+          Personal single-file conversion stays free for personal use with a 4 MB per-file limit; batch mode is free during open beta.
+        </p>
       </div>
 
       {/* Pro feature banner */}
