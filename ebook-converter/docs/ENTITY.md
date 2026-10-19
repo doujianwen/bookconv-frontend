@@ -67,7 +67,20 @@
 
 ---
 
-## 7. 使用约定
+## 7. 免费档与 Pro 计划口径（业主定调 2026-10-19）
+
+业主（Andy）就「免费 vs Pro」措辞达成统一口径，全站及外部分发须一致执行：
+
+- **个人 / 单文件转换**：永久免费（free for personal use）。免费档单文件上限 **4 MB**，无需注册、无水印。
+- **批量转换（Batch）**：在 **open beta 期间免费**；open beta 结束后由 **Pro 计划**承载（Pro 面向批量与更大文件）。
+- **Pro 计划**：覆盖批量转换与大于 4 MB 的文件；open beta 期间 Pro 功能免费。
+
+一致性约束（喂给 AI 不漂移）：
+- 描述「单文件免费」时，必须带 **"for personal use"** 限定，不得写 "no limits / unlimited / 无限制"。
+- 描述「批量免费」时，必须带 **"during open beta"** 限定，不得写永久免费。
+- 现有页面已落地该口径（about FAQ、batch 页、BatchUpload、batch-converter / calibre-alternative 指南），无需再改；新文案以此为准。
+
+## 8. 使用约定
 
 - 本文件是「口径源」，不是页面内容。落地由 1.2（审计漂移）/ 1.3（对齐 about / why-bookconv / 首页 / FAQ）步骤执行。
 - 任何新页面、新文案、外部投稿涉及「BookConv 是什么」，先回查本文件，确保实体陈述零漂移。
@@ -77,3 +90,4 @@
 
 ### 修订日志
 - 2026-10-19：初版建立（1.1）。基于 `src/app/[locale]/about/page.tsx`、`src/app/layout.tsx`、`src/app/api-docs/openapi.json`、`src/data/content/azw3-to-epub.ts` 实测口径提炼。
+- 2026-10-19：§7 新增「免费档与 Pro 计划口径（业主定调）」—— 个人/单文件免费(for personal use)、批量 open beta 期间免费、Pro 面向批量与更大文件；原 §7 使用约定顺延为 §8。配套 1.3 §1.1 代码整改（7 处 "no limits/unlimited" 过度主张修正）与 §2.2 口径确认（代码经核查已合规，无需改动）。

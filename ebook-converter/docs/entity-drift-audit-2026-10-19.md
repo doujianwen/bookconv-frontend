@@ -83,3 +83,14 @@
 - **优先序**：§1.1（7 处「无限制」）> §1.2（2 处「开源」）> §2.1（7 处「--」）> §2.2（beta 定调，需业主拍板）。
 - **§2.3 blog 正文破折号**并入 H1 整改批次（≤3 页/批）顺手做。
 - 改完任一批，复跑 `node scripts/audit-content-integrity.mjs` + `node scripts/find-duplicate-headings.mjs` + `npm run build` 确认 0 error。
+
+---
+
+## 6. 整改状态（2026-10-19）
+
+- **§1.1（无限制 7 处）**：✅ 已修。commit 分两批（§1.1a 3 文件 / §1.1b 3 文件），门禁 0 error（audit-content-integrity / find-duplicate-headings / build 全过）。
+  - §1.1a：`layout.tsx`、`[locale]/page.tsx`、`ToolPageClient.tsx` 的 "No registration, no watermarks, no limits." → "…free for personal use."
+  - §1.1b：`best-ebook-converter.ts`（正文 "completely free with no limits" + "no paid plans" → "free for personal use" + Pro 说明；对比表 BookConv 行 `Unlimited` → `Free (4 MB/file) | Pro | Free during beta`）、`epub-to-text.ts`、`epub-to-word.ts` 的 "unlimited files" → "your personal files"。
+- **§2.2（beta 口径）**：✅ 无需改动。业主定调「个人/单文件免费（for personal use）；批量 open beta 期间免费；Pro 面向批量与更大文件」。核查代码：about FAQ、batch 页、BatchUpload、batch-converter / calibre-alternative 指南已一致落地；审计所引路径 `src/components/FAQSection.tsx`、`src/data/guides/bookconv-vs-calibre.ts` 经核查不存在（实际 about-FAQ 与 calibre-alternative 已合规）。口径已写入 `ENTITY.md` §7 作为 canon。
+- **遗留待办（非原 §1.1 清单，验证时新发现，建议下一批）**：另有 3 处 "no limits" 框架表述未在原 §1.1 清单——`about/page.tsx:100`（"no limits on personal use"，已带 personal use 限定，合规）、`compare/bookconv-vs-calibre/page.tsx:146`（粗体 "No limits:" 但正文 "Free for personal use"，建议弱化标签）、`blog/why-bookconv.ts:20`（标题 "Free, With No Limits on the Basics"，"on the Basics" 限定）。均带限定语，暂判合规；建议下一批统一弱化为 "free for personal use" 风格以防 AI 误读。
+- **§1.2（开源 2 处）、§2.1（-- 破折号 7 处）**：⏳ 待下一批（本批未做）。
