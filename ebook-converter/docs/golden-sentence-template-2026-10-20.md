@@ -35,8 +35,15 @@
 | F5 | 格式覆盖 | BookConv supports **28+ eBook formats** including EPUB, MOBI, AZW3, PDF | ENTITY.md §2-7 |
 | F6 | 免费档边界 | Free for personal use with a **4 MB** per-file limit; batch conversion free during open beta | ENTITY.md §7 |
 | F7 | 引擎 | Conversions are powered by **Calibre**, the open-source industry-standard engine | ENTITY.md §2-5 |
+| F8 | Bing AI 单日峰值 | On 2026-08-25 Bing AI citations spiked to **147 in a single day (+242%)**, with 23 BookConv pages cited | `数据分析/bing-ai-citations-trend.svg:4` |
+| F9 | GEO 增长信号 | Bing AI Visibility Index rose **+203.7%** (Sep 16–22 vs Sep 9–15: 5,287 vs 1,741 citations) | `数据分析/Bing-Google双渠道最终报告-2026-09-24.md:4` |
+| F10 | Bing AI 全量累计 | BookConv pages drew **25,406 cumulative Bing AI citations** (Overview sum, thru 10-11), **100% from bookconv.com** | `数据分析/Bing-Google双渠道周报-2026-10-19.md:40,52` |
+| F11 | 新站爬坡 | First organic click on **2026-08-18**, ~3 weeks after launch | `数据分析/Bing-Google双渠道对抗式审计报告-2026-09-24.md:65` |
+| F12 | 格式对覆盖 | **28 conversion landing pages** cover the main eBook format pairs | `docs/faq-audit-2026-10-20.md:14` |
 
 > ⚠️ F1 的 9,012 是 **PageStats 子集**（非 Overview 全量 9,795），引用时须注明表源，禁混用两值（口径冲突核查 `2026-09-21.md:13`）。
+> ⚠️ F1(子集 9,012 / 09-25) 与 F10(全量 25,406 / 10-11) 是**两个不同口径**，金句引用须各自注明表源与日期，禁把 F10 当 F1 的最新值或反之。
+> ⚠️ Citation Share 分母 = 该 AI 回答的引用席位（非全站），对外仅记「平台内占比」，禁外推为全站份额。
 > ⚠️ Citation Share 分母 = 该 AI 回答的引用席位（非全站），对外仅记「平台内占比」，禁外推为全站份额。
 
 ---
