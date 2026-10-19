@@ -1271,6 +1271,32 @@
           "priority": "P2",
           "tier": "CORE",
           "status": "todo"
+        },
+        {
+          "id": "M8-9",
+          "action": "复核 10-19 GA4 daily：conversion_failed 当日总数（两次 Input task has failed 是孤立还是成片）",
+          "detail": "背景=2026-10-19 两次同签名告警（job c3beac1b 11:11Z / 96272bbd 12:14Z，epub→pdf，CloudConvert \"Input task has failed\"，重试分类器盲区+疑似损坏文件）。当日 20:20 实拉 GA4 全 0 属 intraday 延迟不可信（docs/incident-2026-10-19-epub-pdf-input-task-failed.md §6.3）。实施：hermes 每日 07:30 GA4 巡检报告直接读，或手动 node scripts/fetch-ga4-daily.mjs 2026-10-19，比对当日 conversion_failed 总数。",
+          "owner": "A",
+          "deliverable": "10-19 失败计数 + 孤立/成片判定，结论回写事故文档 §6.3",
+          "accept": "得出明确结论：孤立（≤2 且签名一致）/成片（≥3 或出现其他签名）；若成片 → 立即升级诊断并回写 M8-10",
+          "due": "2026-10-20",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 20:20 首查全 0（intraday 延迟不可信），待 10-20 daily 数据出数。"
+        },
+        {
+          "id": "M8-10",
+          "action": "监控 §3.5 深度校验上线后的失败签名走向（损坏文件 vs CC import 瞬态）",
+          "detail": "背景=2026-10-19 双修复上线并验证（d33455a 重试分类器盲区修复 + 1f916fc EPUB 本地 jszip 真校验：损坏 EPUB→CORRUPT_INPUT 3.4s 本地拦截、合法 EPUB→200 不误杀）。观察口径：① Vercel 函数日志出现 \"EPUB failed deep decompression check\" 且频次高 ⇒ 坐实「损坏文件」根因，维持现状；② 深度校验放行后 CC 仍报 \"Input task has failed\" ⇒ 转向 CC import 瞬态，核对告警 trail 是否 2 attempts（§3.4 重试命中）。非阻塞观察项：route.ts L92 对所有映射错误硬编码 status 500，CORRUPT_INPUT 回 500 非 400——改状态码=全错误面行为变更，需单独决策+测试，不自动做。",
+          "owner": "A",
+          "deliverable": "一周失败签名分布小结（拦截次数 vs CC 侧复发次数），结论回写事故文档 §7 或立新决策",
+          "accept": "连续 7 天无 \"Input task has failed\" 复发 ⇒ 关闭本任务；复发 ≥2 且均为深度校验放行后 ⇒ 重开诊断（先取 Vercel 日志 failedTask 完整 JSON）",
+          "due": "2026-10-26",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。"
         }
       ]
     },
