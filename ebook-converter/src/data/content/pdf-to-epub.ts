@@ -36,7 +36,9 @@ export const content = {
 
 **Official Resources:**
 - [ISO 32000 PDF Specification](https://www.iso.org/standard/75837.html)
-- [Adobe PDF Reference](https://www.adobe.com/devnet/pdf.html)`
+- [Adobe PDF Reference](https://www.adobe.com/devnet/pdf.html)
+
+BookConv runs every conversion through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.`
     },
     {
       heading: 'Converting in Reverse: Epub To Pdf',
