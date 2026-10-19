@@ -520,7 +520,7 @@
           "tier": "CORE",
           "status": "done",
           "note": "来源：GSC自动化分析 2026-10-13，P0优先级。与M2-8并行不冲突。",
-          "statusNote": "10-19 完成（逾期1天）。经 GSC query×page 双维度映射（91天窗 07-12→10-10）：6 个查询实际落在 4 个活页（非 6 页）。全部为元数据级改动、新 SERP 标题均 ≤55 字符：① /es/blog/azw3-vs-mobi（25 展示/4 查询@9.3-10.0，最大承接页）新增 es.metaTitle「MOBI vs AZW3 para Kindle: ¿cuál conviene?」（西语，沿 10-18 审计模式）；② /blog/azw3-vs-mobi（3 展示/2 查询@9.0-11.0）metaTitle 补 for Kindle；③ /convert/epub-to-zip（5 展示/1 查询@8.2）title 前置「Convert EPUB to ZIP」精确匹配查询；④ /blog/can-kindle-read-azw3（3 展示/1 查询@8.0）metaTitle 补 Files（board 建议的「首段直接回答」已于 10/03 GEO 改造满足，intro 首句即 Short answer: yes）。⑤ /blog/mobi-or-azw3-for-kindle 残余 3 展示=8/11 301 归档后索引残留（M1-4），死页不可优化，将自然衰减。门禁：syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、audit:meta-desc ERROR=0（WARN=112 存量）、tsc --noEmit 真实退出码 0。验收（2 周后 GSC 复跑 6 查询 CTR>0）待发布部署后 ~10-31 复跑；未 push（待用户发布）。P1 残余：西语页承接英语查询的语言错配（P2-6 现象：/es/ 承接查询 100% 为英语）是 CTR=0 的结构性根因，本批以强化英文页为 mitigation，错配本身需单独治理。"
+          "statusNote": "10-19 完成（逾期1天）。经 GSC query×page 双维度映射（91天窗 07-12→10-10）：6 个查询实际落在 4 个活页（非 6 页）。全部为元数据级改动、新 SERP 标题均 ≤55 字符：① /es/blog/azw3-vs-mobi（25 展示/4 查询@9.3-10.0，最大承接页）新增 es.metaTitle「MOBI vs AZW3 para Kindle: ¿cuál conviene?」（西语，沿 10-18 审计模式）；② /blog/azw3-vs-mobi（3 展示/2 查询@9.0-11.0）metaTitle 补 for Kindle；③ /convert/epub-to-zip（5 展示/1 查询@8.2）title 前置「Convert EPUB to ZIP」精确匹配查询；④ /blog/can-kindle-read-azw3（3 展示/1 查询@8.0）metaTitle 补 Files（board 建议的「首段直接回答」已于 10/03 GEO 改造满足，intro 首句即 Short answer: yes）。⑤ /blog/mobi-or-azw3-for-kindle 残余 3 展示=8/11 301 归档后索引残留（M1-4），死页不可优化，将自然衰减。门禁：syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、audit:meta-desc ERROR=0（WARN=112 存量）、tsc --noEmit 真实退出码 0。验收（2 周后 GSC 复跑 6 查询 CTR>0）待发布部署后 ~10-31 复跑；未 push（待用户发布）。P1 残余：西语页承接英语查询的语言错配（P2-6 现象：/es/ 承接查询 100% 为英语）是 CTR=0 的结构性根因，本批以强化英文页为 mitigation，错配本身需单独治理。已于 10-19 单独立项 M5-5（P1, due 10-31）：/es/ 语言错配治理——诊断与处置决策。"
         },
         {
           "id": "M2-13",
@@ -875,6 +875,19 @@
           "status": "done",
           "note": "🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。",
           "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。"
+        },
+        {
+          "id": "M5-5",
+          "action": "P1: /es/ 语言错配治理——西语页承接英语查询的诊断与处置决策",
+          "detail": "【立项来源】M2-12 statusNote 登记的 P1 残余单独立项（用户 2026-10-19 指令）；手册 P2-6（🟡 中）+ §3.1-F 多语言清单 🔴 行动项。\n\n【证据基线（Fact，GSC query×page 双维度，91 天窗 07-12→10-10）】/es/ 全站 21 个查询-页对、77 展示、0 点击；查询语言 100% 为英语（与手册 77/77 结论互证），西语查询 0。集中度：/es/blog/azw3-vs-mobi 69 展/13 查询（位 9.3-15.5，含 M2-12 的 4 个查询 25 展）；其余 /es/blog/txt-to-epub 3 展、/es/blog/tag/fb2 3 展、/es/guide/azw3-to-mobi-keep-formatting 1 展、/es/blog/epub-to-azw3 1 展。同簇英语查询下 es URL 展示量（69）远超 en URL（/blog/azw3-vs-mobi 21）⇒ Google 系统性偏好 es URL 承接英语查询。已排除：hreflang/canonical（M5-1 已复核）、sitemap 收录（正常）、en/es 正文互链（不互链为正常实践，非 bug）。\n\n【待诊断问题】① Google 偏好 es URL 的直接原因（索引时序/历史外链/其他）——可证实则给结论，不可证实则如实记 UNKNOWN，禁强行归因；② /es/guide/* 英文兜底正文（lang=es）是否加剧错配（与 M5-2 交界，需划界）；③ M5-4 实测 es 地域曝光 95 次/CTR 2.11% 实际落在哪些 URL。\n\n【处置选项（供用户决策，不预设立场）】A 信号强化英文页（M2-12 已做 title 层第一步，续做内容/内链层，优点是不动西语资产、缺点是 Google 行为不可控）；B es 页 SERP 标题英语化（es.metaTitle 用英语，风险=违背 10-18「西语页 SERP 标题用西语」模式且标题-正文语言错配接近欺骗性优化）；C 收缩 es 面（该页 noindex/下架，与 M5-3 扩充方向冲突，需先定西语战略）；D 维持现状+监控（机会成本极小）。交叉验证护栏：AI 侧 19 个西语 query 合计 1,265 引用（M5-4）⇒ es 内容有 GEO 价值，不可仅按 GSC 传统搜索判死刑。\n\n【边界】不做西语内容创作（M5-2/M5-3 范畴）；不改 middleware 白名单除非诊断结论明确指向且经用户批准；禁引用已证伪的「/es spam 归因」（claim-tier-register #5）。",
+          "owner": "A",
+          "deliverable": "诊断报告（落 数据分析/，含样本量声明 + Fact/Assumption/Unknown 分级）+ 处置决策记录（docs/ 决策日志 append-only）+ 经用户确认选定方案的实施",
+          "accept": "① 诊断报告落地：偏好原因有已证实结论或明确 UNKNOWN；② 四选项影响/风险/可逆性列明并经用户确认，决策进 append-only 日志；③ 实施后 2 周 GSC 复跑：/es/ 页英语查询展示量有方向性变化（下降=信号转移成功 / 不变=维持现状，两者都算有结论），西语查询 0→≥1 或明确「西语无传统查询、价值在 AI 侧」；④ 多语言纪律入册并闭环手册 §3.1-F 既有 🔴 项：de/ja 上线前必须验证目标语种有真实查询。",
+          "due": "2026-10-31",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "note": "来源：M2-12 P1 残余单独立项（用户 10-19 指令「对P1残余单独立项」）。样本量义务：77 展示/91 天≈0.85 展示/天，任何 CTR 类结论必须带样本量，预期收益上限约 2-4 点击/周——小 ROI 问题，但属程序化页面治理的结构性样本，且为 de/ja 语言扩张的前置探路。与 M5-2（补西语 guide 译文，due 10-20）、M5-3（es 内容扩充，due 11-15）存在方向张力：西语战略需在本任务决策点同步明确。"
         }
       ]
     },
