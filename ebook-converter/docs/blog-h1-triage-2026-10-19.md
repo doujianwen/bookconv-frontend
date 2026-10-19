@@ -73,13 +73,15 @@ Day 17·b3 已补 `metaTitle`（SERP 合规），其 `title` 仍 >55 但只影�
 
 > 执行纪律：H1 改动 = 可见内容，`title` 一改联动 H1/OG/JSON-LD；人工逐页审措辞、禁脚本批量替换；**≤3 页/批**；每批跑 `npm run audit:syntax` + `build`，人工 review 后 commit（不自动 push）。
 
-### 待办队列（按序执行）
-- [ ] **C-1（优先，1 篇）**：`marvel-comics-ebooks-multiple-devices` 重构 → 建议 `Marvel Comics: Read Digital Books on Kindle, Kobo & More`（删 Movies 子意图；或拆独立「Marvel 电影」页）。人工定稿后单页改。
-- [ ] **B-批1（≤3 页）**：`azw3-vs-mobi` + `batch-converter` + `best-epub-reader-android`（删年份/括号填充）
-- [ ] **B-批2（≤3 页）**：`best-epub-reader-iphone-ipad` + `bookconv-vs-calibre` + `epub-vs-mobi`
-- [ ] **B-批3（≤3 页）**：`fb2-to-epub` + `large-file-conversion-guide` + `reading-groups-hub`
-- [ ] **B-批4（≤2 页）**：`selection-intercept-converter` + `sync-reading-across-devices`
-- [ ] **A 桶（15 篇）**：保留，不动（GEO 资产，强行缩短反而丢 query 匹配）。
+### 待办队列（已全部完成 2026-10-19）
+- [x] **C-1（1 篇）**：`marvel-comics-ebooks-multiple-devices` → `Marvel Comics: Read Digital Books on Kindle, Kobo & More`（删 Movies 子意图）。commit `9d60f10`。
+- [x] **B-批1（3 篇）**：`azw3-vs-mobi` + `batch-converter` + `best-epub-reader-android`。commit `f409946`。
+- [x] **B-批2（3 篇）**：`best-epub-reader-iphone-ipad` + `bookconv-vs-calibre` + `epub-vs-mobi`。commit `f19f25d`。
+- [x] **B-批3（3 篇）**：`fb2-to-epub` + `large-file-conversion-guide` + `reading-groups-hub`。commit `fb04446`。
+- [x] **B-批4（2 篇）**：`selection-intercept-converter` + `sync-reading-across-devices`。commit `500161b`。
+- [x] **A 桶（15 篇）**：保留，不动（GEO 资产，强行缩短反而丢 query 匹配）。
+
+> **完成核验**：全部门禁 0 error（syntax-sweep 328/0、content-integrity 0/0、find-duplicate-headings 0、pre-commit 5 道快门禁全过、build EXIT=0）。无 `metaTitle` 的 6 篇（azw3-vs-mobi / bookconv-vs-calibre / epub-vs-mobi / reading-groups-hub / selection-intercept-converter / sync-reading-across-devices）改 `title` 同时改善 SERP（新标题均 ≤55 字符，合规）；有 `metaTitle` 的 6 篇（batch-converter / best-epub-reader-android / best-epub-reader-iphone-ipad / fb2-to-epub / large-file-conversion-guide / marvel-comics）只影响 H1/OG/JSON-LD，SERP 不变。均未 push，待人工复核后推送。
 
 ### 备注
 - B 桶每篇只删冗余、不改语义；建议 H1 见 §二。
