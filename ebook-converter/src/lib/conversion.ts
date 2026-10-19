@@ -19,6 +19,7 @@ import { verifyConversion } from './conversion-verifier';
 import { convertWithCloudConvert, isCloudConvertConfigured } from './cloudconvert';
 import * as fsp from 'node:fs/promises';
 import { errorMessage } from './error-handler';
+import JSZip from 'jszip';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -125,8 +126,11 @@ function getMimeType(ext: string): string {
   return (map as Record<string, string>)[ext] || 'application/octet-stream';
 }
 
-/** Validate input file before sending to Calibre. Throws if the file is clearly corrupted. */
-async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
+/**
+ * Validate input file before sending to Calibre. Throws if the file is clearly corrupted.
+ * exported for reverse-verification tests (tests/reverse-verify-epub-deep-validation.test.ts).
+ */
+export async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
   try {
     const stat = await fsp.stat(inputPath);
     if (stat.size === 0) {
@@ -191,6 +195,60 @@ async function validateInputFile(inputPath: string, sourceFormat: string): Promi
       }
       if (!hasContainer) {
         throw new Error('Invalid or missing opf');
+      }
+
+      // §3.5 深度校验（2026-10-19 新增）：ZIP 外壳完好但成员 deflate 数据损坏的 EPUB
+      // 能通过上面全部浅校验（魔数 + 中央目录 + container.xml 文件名都在），却会在
+      // CloudConvert import 阶段报 "Input task has failed"（10-19 两次生产告警
+      // job c3beac1b / 96272bbd 实证）。这里用 jszip 实际解压成员把这类文件拦在
+      // 本地，直接给用户 CORRUPT_INPUT，不再白烧一个 CC job + 270s 轮询。
+      // 内存护栏：累计解压超过 256MB 即停止（视为通过——超限不是损坏证据），
+      // 避免极端文件把 Serverless 实例打爆；每次只保留一个成员的缓冲。
+      const DEEP_CHECK_BYTE_CAP = 256 * 1024 * 1024;
+      let deepChecked = 0;
+      let firstBrokenMember: string | null = null;
+      try {
+        const zip = await JSZip.loadAsync(data);
+        const members = Object.values(zip.files).filter((f) => !f.dir);
+        if (members.length === 0) {
+          firstBrokenMember = '(archive contains no files)';
+        }
+        for (const member of members) {
+          if (deepChecked > DEEP_CHECK_BYTE_CAP) break;
+          try {
+            const bytes = await member.async('uint8array');
+            deepChecked += bytes.length;
+          } catch {
+            firstBrokenMember = member.name;
+            break;
+          }
+        }
+        // container.xml 必须能解出非空内容（浅校验只看文件名，不看内容）
+        if (!firstBrokenMember) {
+          const containerMember = members.find(
+            (m) => /meta-inf/i.test(m.name) && /container\.xml$/i.test(m.name),
+          );
+          if (containerMember) {
+            const xml = await containerMember.async('string').catch(() => '');
+            if (!xml.trim()) {
+              firstBrokenMember = `${containerMember.name} (empty container.xml)`;
+            }
+          }
+        }
+      } catch (loadErr) {
+        firstBrokenMember = `(zip load failed: ${errorMessage(loadErr) || String(loadErr)})`;
+      }
+      if (firstBrokenMember) {
+        log.conversion.error('EPUB failed deep decompression check', {
+          brokenMember: firstBrokenMember,
+          decompressedSoFar: deepChecked,
+          sourceFormat,
+        });
+        throw new Error(
+          `corrupt epub: ZIP member ${firstBrokenMember} failed to decompress — ` +
+            `the file is damaged (truncated download or broken export). ` +
+            `Please re-download or re-export the EPUB and try again.`,
+        );
       }
     } else if (sourceFormat === 'mobi' || sourceFormat === 'azw3') {
       const head = await fsp.readFile(inputPath);
