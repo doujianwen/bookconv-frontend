@@ -103,7 +103,7 @@ export default function HomePage() {
             <span dangerouslySetInnerHTML={{ __html: (t('home.heroTitle') || 'Free Online Ebook\nFormat Converter').replace('\n', '<br/>') }} />
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, no limits.').replace('\n', '<br/>') }} />
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, free for personal use.').replace('\n', '<br/>') }} />
 
           <div className="mx-auto mt-8 max-w-lg">
             <div className="relative">

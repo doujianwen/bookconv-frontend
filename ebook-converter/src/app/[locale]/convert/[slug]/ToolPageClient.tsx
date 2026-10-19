@@ -207,7 +207,7 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
             {contentData?.hero?.title || sourceDisplay + " to " + targetDisplay + " Converter"}
           </h1>
           <p className="mt-3 text-lg text-gray-500">
-            {contentData?.hero?.subtitle || "Free online tool \u2014 no registration, no watermarks, no limits."}
+            {contentData?.hero?.subtitle || "Free online tool \u2014 no registration, no watermarks, free for personal use."}
           </p>
         </div>
         {/* AI Summary / Quick Answer — GEO optimized */}

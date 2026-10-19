@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: t('seo.defaultTitle') || 'BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
       template: `%s | ${t('common.siteName') || 'BookConv'}`,
     },
-    description: clampMetaDescription(t('seo.defaultDescription') || 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no limits. Powered by Calibre.'),
+    description: clampMetaDescription(t('seo.defaultDescription') || 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, free for personal use. Powered by Calibre.'),
     keywords: [
       'ebook converter', 'epub converter', 'mobi to epub', 'azw3 to epub',
       'pdf to epub', 'free ebook converter', 'online file converter',
