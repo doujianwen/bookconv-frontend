@@ -1,5 +1,5 @@
 export const slug = "selection-intercept-converter";
-export const title = "Selection & Intercept: Best Free Ebook Converters in 2026";
+export const title = "Best Free Ebook Converters: Selection & Intercept";
 export const metaTitle = "Best Free Ebook Converters in 2026"
 export const date = "2026-08-27";
 export const author = "BookConv Team";
