@@ -1270,7 +1270,8 @@
           "due": "2026-10-20",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "todo",
+          "statusNote": "\n2026-10-19 21:30 观察项：Job 75c75593 (CORRUPT_INPUT) 仍走红色 🚨 卡片（alerts.ts 未实现分级），与 M8-8 设计\"用户侧错误=灰卡ℹ️\"不符。M8-8 due 10-20，此次事故可作为验收用例。"
         },
         {
           "id": "M8-9",
@@ -1296,7 +1297,7 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "todo",
-          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。"
+          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。"
         }
       ]
     },
