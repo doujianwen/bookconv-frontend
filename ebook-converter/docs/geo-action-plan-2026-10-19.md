@@ -12,7 +12,7 @@
 | 模块 | 当前状态 | 优先级 | 验收门槛 |
 |------|---------|--------|---------|
 | 1. 实体一致性 | 🟢 已收口（1.1 ENTITY.md + 1.2 漂移审计完成；1.3 代码项全收口：§1.1 无限制 7 处✅、§1.2 开源 2 处✅、§2.1 破折号 7 处✅、§2.2 beta 口径✅、§2.3 blog 正文破折号 41 处✅、遗留 3 处 no-limits✅） | P1 | 全站实体描述符一致 + 外部 sameAs 闭环 |
-| 2. FAQ 结构化 | 🟡 部分（bookconv-faq 存在，部分页有 FAQ） | P1 | 关键页 100% 带 FAQPage JSON-LD |
+| 2. FAQ 结构化 | 🟡 进行中（2.1 审计✅；2.2 批1 about+founder✅ 2026-10-20；pricing 待 i18n 源） | P1 | 关键页 100% 带 FAQPage JSON-LD |
 | 3. 可被 AI 引用的金句 | 🔴 未系统做 | P2 | 10–15 页植入 ≥1 条数据型金句 |
 | 4. 跨平台信源分发 | 🔴 未启动（K3/K6 待建账号） | P2 | ≥3 外部平台一致提及 BookConv |
 
@@ -40,8 +40,8 @@
 
 | 步骤 | 动作 | 状态 | 验收指标 | 依赖 |
 |------|------|------|---------|------|
-| 2.1 | 盘点哪些页有 FAQ 区块、哪些有 `FAQPage` schema | ⏳ 待做 | 清单（有/无 schema） | 无 |
-| 2.2 | 给有 FAQ 区块的 convert/guide 页补 `FAQPage` JSON-LD | ⏳ 待做 | ≥20 页带合法 FAQPage | 2.1 |
+| 2.1 | 盘点哪些页有 FAQ 区块、哪些有 `FAQPage` schema | ✅ 已完成（见 `docs/faq-audit-2026-10-20.md`） | 清单（有/无 schema） | 无 |
+| 2.2 | 给有 FAQ 区块的静态页补 `FAQPage` JSON-LD（convert/blog/guide 已条件化 emit，无需改） | 🟡 进行中（批1 about+founder ✅ 2026-10-20；批2 pricing ⏳ 待 i18n 源） | about/founder/pricing 带合法 FAQPage | 2.1 |
 | 2.3 | 给金钱页（converter 首页 / 高展示 convert 页）扩充 FAQ 至 ≥5 Q&A | 🟡 Day 16 已强化 3 blog 至 8+ | 目标页 FAQ≥5 | 无 |
 | 2.4 | 把 bookconv-faq 的问答拆成可被单条引用的「问题—答案」对 | ⏳ 待做 | FAQ 页逐条可引用 | 无 |
 
