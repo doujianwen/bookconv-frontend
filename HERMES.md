@@ -509,3 +509,35 @@ WorkBuddy 会话执行两项：① 本地文档跨文档一致性验证；② �
 ### 坑位（固化）
 - 🔴 **`git ls-files --error-unmatch` 相对路径在 git 根目录会误判 [UNTRACKED]**：git 根在父目录时，用 `ebook-converter/` 前缀或 `git cat-file -e HEAD:<path>`（从 git 根）复核；本会话首判 `[UNTRACKED]` 是路径误用假象，已纠正。
 - 🔴 **hermes-context 是只读单向镜像**：修漂移只 `cp 主→副本`，绝不改副本；门禁 PAIRS 新增镜像对时须在脚本登记，否则「看着同步、实际没管」。
+
+---
+
+## 2026-10-20 · CloudConvert 402（积分耗尽）故障 + P1 纯 JS 兜底扩展
+
+> 故障诊断（Hermes）与代码修复（人类+主会话）已分轨完成并部署。本节为交接/复盘沉淀。
+
+### 故障（Hermes 诊断）
+- 告警：2026-10-20 上午 2 条飞书 webhook（`epub→azw3` calibre、`pdf→epub` auto），均 `CloudConvert 402: run out of conversion credits`。
+- dashboard 实测：**剩余 credits = 0**（免费档每日 10，已用 15）⇒ 走 CloudConvert 的格式对 100% 失败，非偶发、非后端崩溃。
+- 报告：`ebook-converter/docs/incident-2026-10-20-cloudconvert-402-credits.md`。
+- 系统行为✅：402 短路缓存（`quotaExhaustedUntil` TTL 5min，进程级 cold-start 重置）+ 告警通道（alerts.ts 已修 10-02 静默假成功）均按设计工作，飞书真实送达。
+
+### P1 代码修复（人类拍板，commit 590c704 已 push+部署）
+- **范围界定（关键）**：只扩「目标=EPUB 的文本派生对」——EPUB 可纯 JS 合成 + verifyConversion 可验 + EPUB 阅读器可打开。
+- **新增 6 纯 JS 兜底**：`epub→epub`、`html→epub`、`docx→epub`、`rtf→epub`、`fb2→epub`、`lit→epub`（`src/lib/conversion.ts`）+ 助手 `rtfToTxt`/`fb2ToTxt`；`conversion-map.ts` 6 对 tool→js + 新增 `epub-epub`（CONVERSION_MAP=35）。
+- 降级语义：402 时这些对产出「纯文本 EPUB」（丢图/样式/目录）比全挂可用；未降级行为不变。
+- **不扩**专有二进制目标（`azw3`/`pdf`/`mobi`/`jpeg` 输出）与图片输出——纯 JS 无法产出可靠文件，仍走 CC。本次失败的 `epub→azw3`/`pdf→epub` 恰在此边界外，**靠充值不靠 P1**。
+- 验证全绿：tsc EXIT=0 / conversion-verifier 5 PASS / `npm run build` EXIT=0 / seo-critic 0 critical（llms-conv warn 为既有 28≠35）；pre-commit 5 快门禁全过。
+
+### 交接原则（本例印证 10-19 原则）
+- 🔴 **故障诊断=Hermes 产出事故报告（本例已做）；代码改动/门禁/commit=人类+主会话**。Hermes 无 pre-commit hook 执行上下文，不代跑修复。
+- 🔴 **P1 已上线，但专有格式恢复仍依赖充值**（CC 账号操作，非代码）。
+
+### 待办（未闭环）
+- ⏳ **充值 CloudConvert**（P0，dashboard 充值即时恢复 azw3/pdf 等）；充值后需实测 `epub→azw3`/`pdf→epub` 验收 + curl 线上复核。
+- ⏳ 可选 **P2 预消耗监控**：每日查 CC 余额，低于阈值（如 <10%）飞书提前预警，避免"全挂才发现"。
+- ℹ️ 本批 `git add` 只 stage 3 个文件（conversion.ts / conversion-map.ts / incident 报告），禁 `git add -A`；`_wb_tmp/`/`.codex/` 等未跟踪 junk 不碰。
+
+### 坑位（固化）
+- 🔴 **`github-old` 不是独立 remote，是 `origin` 的 SSH 主机别名**（`git@github-old:` 前缀）——直接 `git push origin main` 即可，别对 `github-old` fetch（会报 "does not appear to be a git repository"）。
+- 🔴 **`verifyConversion` 的 azw3/pdf 输出侧只能验容器魔数**（TARGET_OK：azw3→BOOK、pdf→%PDF），验不了"Kindle 能否打开 / PDF 能否渲染"——这是"Calibre 是唯一能产出可用 azw3/pdf 引擎"的根本原因，纯 JS 兜底不可用于专有二进制输出。

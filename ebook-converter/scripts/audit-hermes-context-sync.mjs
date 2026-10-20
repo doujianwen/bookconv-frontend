@@ -18,6 +18,7 @@ const PAIRS = [
   ['docs/faq-audit-2026-10-20.md', 'hermes-context/faq-audit-2026-10-20.md'],
   ['docs/golden-sentence-template-2026-10-20.md', 'hermes-context/golden-sentence-template-2026-10-20.md'],
   ['docs/incident-2026-10-19-epub-pdf-input-task-failed.md', 'hermes-context/incident-2026-10-19-epub-pdf-input-task-failed.md'],
+  ['docs/incident-2026-10-20-cloudconvert-402-credits.md', 'hermes-context/incident-2026-10-20-cloudconvert-402-credits.md'],
 ];
 
 let failed = 0, undecidable = 0;
