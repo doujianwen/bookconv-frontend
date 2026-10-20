@@ -622,6 +622,74 @@ ${paras}
   return zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 }
 
+// --- Pure-JS RTF → TXT extraction (best-effort, minimal) ---
+//
+// RTF text content is the body after the {\rtf...} control-header line.
+// We strip RTF control words (\par, \b, {\fonttbl...} groups, \fsNN) and
+// keep the literal text. Best-effort: not a full RTF parser, but sufficient
+// to recover readable text for an EPUB-output fallback. Immune to CloudConvert 402.
+async function rtfToTxt(inputPath: string): Promise<string> {
+  const data = readFileSync(inputPath, 'utf8');
+  let text = data;
+  // Drop the RTF header control word up to (not including) the first literal char
+  text = text.replace(/^\{\\rtf[0-9]+\\?/i, '');
+  // Remove nested control groups we do not need (font table, stylesheet, etc.)
+  text = text.replace(/\{\\(fonttbl|stylesheet|colortbl)[\s\S]*?\}/gi, '');
+  // Convert RTF line breaks / paragraph marks
+  text = text.replace(/\\par\b/gi, '\n');
+  text = text.replace(/\\line\b/gi, '\n');
+  text = text.replace(/\\tab\b/gi, '\t');
+  // Bold/italic toggles
+  text = text.replace(/\\[bi]\b/gi, '');
+  // Font / size / language control words (\fs24 \f0 \ansicpg65001 \uc1 ...)
+  text = text.replace(/\\[a-zA-Z]+-?\d*\d?\s?/g, ' ');
+  // Strip remaining braces
+  text = text.replace(/[{}]/g, '');
+  // Decode RTF escapes: \'XX = byte 0xXX (latin-1); \~ = space; \= = =
+  text = text
+    .replace(/\\'([0-9a-fA-F]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/\\~/g, ' ')
+    .replace(/\\=/g, '=');
+  // Decode common HTML entities (some RTF producers embed them)
+  text = text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"');
+  text = text
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+  if (!text) throw new Error('RTF: no text content found');
+  return text;
+}
+
+// --- Pure-JS FB2 (FictionBook) → TXT extraction (best-effort, minimal) ---
+//
+// FictionBook 2.x is single XML with <p>/<section>/<description> elements.
+// We strip all tags and keep literal text. Immune to CloudConvert 402.
+async function fb2ToTxt(inputPath: string): Promise<string> {
+  const data = readFileSync(inputPath, 'utf8');
+  let text = data
+    .replace(/<description[\s\S]*?<\/description>/gi, ' ')
+    .replace(/<style[^>]*\/>/gi, ' ')
+    .replace(/<(p|section|body)[^>]*>/gi, '\n')
+    .replace(/<\/(p|section|body)>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ');
+  text = text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
+  if (!text) throw new Error('FB2: no text content found');
+  return text;
+}
+
 // --- Pure-JS DOCX → TXT extraction ---
 //
 // DOCX is a ZIP archive containing XML files. We extract word/document.xml
@@ -922,6 +990,18 @@ export async function executeConversion(
   // 免走 CloudConvert —— 实测 2026-10-18 该路径触发 60s 超时 conversion_failed。
   const isTxtToEpub = sourceFormat === 'txt' && targetFormat === 'epub';
 
+  // --- P1 兜底扩展（2026-10-20）：文本派生「EPUB 输出族」纯 JS 路径，免疫 CloudConvert 402。
+  // 这些目标都是 EPUB（纯 JS 可合成、verifyConversion 可验证、EPUB 阅读器能打开），
+  // 降级为「纯文本 EPUB」（丢图/样式/目录），比起 402 全挂更有用。
+  // 专有二进制目标（azw3/pdf/mobi/jpeg 等）与图片输出**不在此列**——纯 JS 无法产出
+  // 可靠可用文件，仍走 CloudConvert（额度可用时）。
+  const isEpubToEpub = sourceFormat === 'epub' && targetFormat === 'epub';
+  const isHtmlToEpub = sourceFormat === 'html' && targetFormat === 'epub';
+  const isDocxToEpub = sourceFormat === 'docx' && targetFormat === 'epub';
+  const isRtfToEpub = sourceFormat === 'rtf' && targetFormat === 'epub';
+  const isFb2ToEpub = sourceFormat === 'fb2' && targetFormat === 'epub';
+  const isLitToEpub = sourceFormat === 'lit' && targetFormat === 'epub';
+
   try {
     await validateInputFile(inputPath, sourceFormat);
 
@@ -956,6 +1036,32 @@ export async function executeConversion(
     } else if (isHtmlToTxt) {
       const txt = await htmlToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');
+    } else if (isEpubToEpub) {
+      // EPUB → EPUB pure-JS fallback: re-pack extracted chapters as a minimal
+      // valid EPUB 3.0. Lossy (text-only) but survives CloudConvert 402.
+      const chapters = await extractEpubTextChapters(inputPath);
+      const epub = await buildEpubFromText(chapters.join('\n\n'));
+      writeFileSync(outputPath, epub);
+    } else if (isHtmlToEpub) {
+      const txt = await htmlToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
+    } else if (isDocxToEpub) {
+      const txt = await docxToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
+    } else if (isRtfToEpub) {
+      const txt = await rtfToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
+    } else if (isFb2ToEpub) {
+      const txt = await fb2ToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
+    } else if (isLitToEpub) {
+      const txt = await mobiToTxt(inputPath);
+      const epub = await buildEpubFromText(txt);
+      writeFileSync(outputPath, epub);
     } else {
       // Check if Calibre is available
       let calibreAvailable = false;
