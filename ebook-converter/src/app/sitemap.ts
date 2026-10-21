@@ -4,6 +4,7 @@ import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
 import { SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { COMPAT_MAP } from '@/data/compat'
+import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS } from '@/lib/es-routes'
 
 // M3-2 decision (2026-09-27, per SEO/GEO V2.0 拆解表): admit /formats/* and
 // /compat/* to the sitemap. Both carry independent information increment —
@@ -69,33 +70,14 @@ const CONTENT_DATES: Record<string, string> = {
 // Sitemap P3-C rule (2026-09-05): Do NOT output /es/* for convert or guide.
 // Those routes serve English body with <lang="es"> which is a spam signal.
 // Only 6 blog posts have real Spanish translations; emit /es/* for those.
-// Converting from data files would add build-time dependencies — hardcode.
-const ESP_BLOG_SLUGS: readonly string[] = [
-  'azw3-vs-mobi',
-  'can-kindle-read-azw3',
-  'ebook-formats-explained',
-  'epub-to-mobi-guide',
-  'mobi-to-epub',
-  'why-convert-lit-to-epub',
-]
+// Slug whitelist now lives in @/lib/es-routes (single source of truth, shared
+// with middleware.ts so the two can never drift apart).
 
 // Spanish guide pages (post-fix 2026-09-19): routes now correctly render
 // English body under /es/guide/* with lang="es". Not translated — English
 // fallback — but URL is valid and hreflang/canonical are correct. Prevents
 // persistent 404s in GSC while guide translations are built.
-const ESP_GUIDE_SLUGS: readonly string[] = [
-  'calibre-vs-online-converter',
-  'best-ebook-converter',
-  'epub-vs-mobi',
-  'azw3-vs-mobi',
-  'kindle-formats',
-  'batch-converter',
-  'ai-ebook-converter',
-  'calibre-alternative',
-  'epub-to-azw3-for-kindle',
-  'epub-to-mobi-keep-formatting',
-  'azw3-to-mobi-keep-formatting',
-]
+// Whitelist: @/lib/es-routes (shared with middleware.ts — single source of truth).
 
 // Guide last-modified dates for sitemap (mirrors content file dates)
 const GUIDE_DATES: Record<string, string> = {

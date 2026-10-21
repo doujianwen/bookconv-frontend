@@ -3,10 +3,12 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllGuides } from "@/data/guides"
+import { getAllPosts } from "@/data/blog"
 import { renderMarkdownToHtml, stripMarkdown, type BlogFaq } from "@/data/blog/types"
 import { getRelatedGuides, getRelatedBlogPostsForGuide } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
+import { esBlogHref, esGuideHref, localizeEsInternalLinks } from "@/lib/es-routes"
 
 interface GuideData {
   slug: string
@@ -179,7 +181,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           {c.content.sections.map((s, i) => (
             <section key={i} className="mt-8">
               <h2 className="text-2xl font-bold text-gray-900">{s.heading}</h2>
-              <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(s.body) }} />
+              <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(isEs ? localizeEsInternalLinks(s.body) : s.body) }} />
             </section>
           ))}
         </article>
@@ -193,7 +195,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
                   <h3 className="text-base font-semibold text-gray-900">{f.question}</h3>
                   <div
                     className="mt-2 text-sm text-gray-600 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(f.answer) }}
+                    dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(isEs ? localizeEsInternalLinks(f.answer) : f.answer) }}
                   />
                 </div>
               ))}
@@ -250,8 +252,8 @@ export default async function GuidePage({ params }: GuideSlugProps) {
             <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Artículos relacionados' : 'Related blog posts'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedBlogPostsForGuide.map((rp) => (
-                <Link key={rp.slug} href={rp.href.startsWith('/blog/') && isEs ? `/es${rp.href}` : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
+                <Link key={rp.slug} href={isEs ? esBlogHref(rp.slug) : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllPosts().find((p) => p.slug === rp.slug)?.es?.title ?? rp.title) : rp.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
                 </Link>
               ))}
@@ -264,7 +266,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
             <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Más guías' : 'More guides'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {others.map((o) => (
-                <Link key={o.slug} href={`${isEs ? '/es' : ''}/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <Link key={o.slug} href={isEs ? esGuideHref(o.slug) : `/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
                   <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{getAllGuides().find((g) => g.slug === o.slug)?.es?.title ?? o.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{o.excerpt}</p>
                 </Link>

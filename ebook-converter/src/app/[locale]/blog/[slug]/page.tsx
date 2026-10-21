@@ -3,10 +3,12 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
+import { getAllGuides } from "@/data/guides"
 import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPostLocalized } from "@/data/blog/types"
 import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
+import { esBlogHref, esGuideHref } from "@/lib/es-routes"
 import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 
 interface BlogPostData {
@@ -274,11 +276,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {relatedPosts.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related posts</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Artículos relacionados' : 'Related posts'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedPosts.map((rp) => (
-                <Link key={rp.slug} href={rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
+                <Link key={rp.slug} href={isEs ? esBlogHref(rp.slug) : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllPosts().find((p) => p.slug === rp.slug)?.es?.title ?? rp.title) : rp.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
                 </Link>
               ))}
@@ -288,11 +290,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {relatedGuides.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related Guides</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Guías relacionadas' : 'Related Guides'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedGuides.map((rg) => (
-                <Link key={rg.slug} href={rg.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rg.title}</h3>
+                <Link key={rg.slug} href={isEs ? esGuideHref(rg.slug) : rg.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllGuides().find((g) => g.slug === rg.slug)?.es?.title ?? rg.title) : rg.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rg.excerpt}</p>
                 </Link>
               ))}
@@ -303,7 +305,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
         {(newerPost || olderPost) && (
           <nav aria-label="More posts" className="mt-12 flex items-stretch justify-between gap-4 border-t pt-6">
             {olderPost ? (
-              <Link href={`/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
+              <Link href={isEs ? esBlogHref(olderPost.slug) : `/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
                 <span className="text-xs text-gray-500">← Older</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
               </Link>
@@ -311,7 +313,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
               <span className="flex-1" />
             )}
             {newerPost ? (
-              <Link href={`/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
+              <Link href={isEs ? esBlogHref(newerPost.slug) : `/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
                 <span className="text-xs text-gray-500">Newer →</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
               </Link>
