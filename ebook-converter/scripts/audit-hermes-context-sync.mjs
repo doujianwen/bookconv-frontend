@@ -19,6 +19,8 @@ const PAIRS = [
   ['docs/golden-sentence-template-2026-10-20.md', 'hermes-context/golden-sentence-template-2026-10-20.md'],
   ['docs/incident-2026-10-19-epub-pdf-input-task-failed.md', 'hermes-context/incident-2026-10-19-epub-pdf-input-task-failed.md'],
   ['docs/incident-2026-10-20-cloudconvert-402-credits.md', 'hermes-context/incident-2026-10-20-cloudconvert-402-credits.md'],
+  // 2026-10-20 晚：402 复发权威版（含对上午报告与 Hermes 报告的更正）；-hermes-raw 为 Hermes 原始诊断，不入 PAIRS
+  ['docs/incident-2026-10-20-cloudconvert-402-recurrence-evening.md', 'hermes-context/incident-2026-10-20-cloudconvert-402-recurrence-evening.md'],
 ];
 
 let failed = 0, undecidable = 0;

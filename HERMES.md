@@ -541,3 +541,49 @@ WorkBuddy 会话执行两项：① 本地文档跨文档一致性验证；② �
 ### 坑位（固化）
 - 🔴 **`github-old` 不是独立 remote，是 `origin` 的 SSH 主机别名**（`git@github-old:` 前缀）——直接 `git push origin main` 即可，别对 `github-old` fetch（会报 "does not appear to be a git repository"）。
 - 🔴 **`verifyConversion` 的 azw3/pdf 输出侧只能验容器魔数**（TARGET_OK：azw3→BOOK、pdf→%PDF），验不了"Kindle 能否打开 / PDF 能否渲染"——这是"Calibre 是唯一能产出可用 azw3/pdf 引擎"的根本原因，纯 JS 兜底不可用于专有二进制输出。
+
+---
+
+## 2026-10-20 晚 · 402 复发 → 实为「结构性容量不足」+ 已确认自愈
+
+> 同日上午事故的**晚间复发**。本次结论**改写了上午的定性**：不是「偶发用光」，而是「日用量已顶满免费档上限」。报告：`ebook-converter/docs/incident-2026-10-20-cloudconvert-402-recurrence-evening.md`（权威版）＋ `hermes-context/…-recurrence-evening-hermes-raw.md`（Hermes 原始诊断）。
+
+### 决定性证据（两条，均为主会话实测）
+- 🟢 **Dashboard（23:02 北京）**：`credits remaining = 10`、`Last 24h: 8 成功 / 4 失败 / Credits consumed = 10`。⇒ 套餐 = **Free 档 10/天**，且**日用量恰好顶满上限**。
+- 🟢 **线上反向验证（23:12）**：`POST /api/convert`（最小合法 EPUB 1,327B）→ **HTTP 200 / 10,653B / 6.0s**，offset 60 = `BOOKMOBI`。**未充值即已自愈**。
+
+### 🔴 定性更正（最重要）
+- 上午写「充值是最短路径（P0）」⇒ **充值不是恢复的必要条件**，本次未充值已自愈。
+- 但 **「等日重置」不能算方案**：`consumed=10 = 日上限` ⇒ 每天都会用满 ⇒ 可预测的每日循环故障。真解 = **升级付费档（消除每日上限）**，不是等重置。
+- 因此 P0 从「充值救火」改为「**升级付费档以消除日上限**」，属容量规划而非事故修复。
+
+### 🔴 Hermes 报告纠错（AI 审计也会错，实证第 N 例）
+Hermes 的 Q4 计数与一条「Fact 命令」均错，已由主会话证伪：
+| Hermes 表述 | 实测 |
+|---|---|
+| `grep -c '"tool"'` = 36（标为 Fact） | **该命令返回 0**（源码键为 `tool:` 无引号）⇒ 不可复现 |
+| CONVERSION_MAP = 36 对 | **35 对** |
+| 纯 JS 免疫 = 18 对 | **15 对 js + 1 对 passthrough = 16 对** |
+| `epub→rtf`、`epub→fb2` 属纯 JS | `epub-rtf` 实为 calibre；**`epub-fb2` 键不存在** |
+| CC 依赖 = 18 对 | **19 对** |
+
+- **固化教训**：Hermes 会自造「看似可执行」的 grep 命令并给出不可复现数字。**凡引用他人计数，必须自己重跑命令**；计数一律用「按字段分组统计」（`grep -oE 'tool: "[^"]+"' | sort | uniq -c`），禁用单点 grep 断言总数。
+
+### 精确影响面（实测，替代上午的模糊表）
+`conversion-map.ts` 35 对 = `js` 15 + `passthrough` 1（epub→zip，免疫）+ `calibre` 16 + `calibre+imagemagick` 2 + `libreoffice+calibre` 1。
+⇒ **免疫 16 对 / 依赖 CC 19 对（402 时全失败）**。
+
+### 坑位（新增）
+- 🔴 **AZW3 魔数在 offset 60（`BOOKMOBI`），不在 offset 0**。PalmDB 前 32 字节是数据库名（常为书名），直接看首字节会误判成非 AZW3。
+- 🔴 **告警节流按设计工作**：`ALERT_COOLDOWN_MS=10min`，本案两条 error 前 80 字符**完全相同**（都 `engine=calibre`），间隔 19min > 10min ⇒ 各发一次。**不要误判为「节流失效」**。
+- 🔴 **`hermes-context` 只读镜像新增对**：已在 `scripts/audit-hermes-context-sync.mjs` PAIRS 登记第 9 对，门禁 `9 对全部一致 / exit 0`。
+
+### 待办（修订）
+- ⏳ **P0（容量，非救火）**：升级 CC 付费档（Package 1000 credits 不过期 / Subscription 1000 月），消除 10/天上限。价格 $17 与 $18 两源冲突，以官网结算页为准。
+- ⏳ P2 预消耗监控：每日查 `/v2/users/me` 余额，<20% 飞书预警（比猜 reset 时刻更可靠）。
+- ✅ 已验：线上 epub→azw3 恢复；`epub→pdf` 未单独补验（为省当日额度，见下条）。
+- 🔴 **验证也消耗生产额度**：免费档 10/天时，探针每次消耗 1/10 当日配额，可能挤掉真实用户 —— 做线上验证前先看 dashboard 余额。
+
+### 交接原则（再次印证）
+- 故障诊断可交 Hermes，但**其报告必须经主会话独立复核后才能作为结论**（本例 5 处计数错误）。
+- 代码/门禁/commit 仍由人类+主会话执行；Hermes 不代跑修复。
