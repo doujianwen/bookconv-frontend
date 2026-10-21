@@ -135,6 +135,15 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         setErrorMessage(`文件过大（${sizeMB}MB），超过 ${MAX_FILE_SIZE_MB}MB 限制。原因：免费版服务器有 60 秒硬时限，大文件转换会超时失败。建议：① 尝试导出为 TXT/DOCX（纯 JS 处理，无大小限制）；② 用压缩软件拆分 EPUB；③ 升级 Pro 版支持大文件。`)
         setErrorCode("FILE_TOO_LARGE")
         setStatus("error")
+        // 关闭盲区：超大文件被客户端拦截也属于"用户发起的转换失败"，此前静默无事件，
+        // GA4 里完全不可见。补发 conversion_failed 带上 error_code，使失败根因分流覆盖 100% 路径。
+        trackGAEvent("conversion_failed", {
+          source_format: source,
+          target_format: target,
+          error_code: "FILE_TOO_LARGE",
+          error: "file too large",
+          file_size: file.size,
+        })
         return
       }
       setStatus("uploading")
