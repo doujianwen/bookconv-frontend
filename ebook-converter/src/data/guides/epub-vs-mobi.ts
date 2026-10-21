@@ -4,7 +4,7 @@ export const slug = 'epub-vs-mobi'
 export const title = 'EPUB vs MOBI: Device Compatibility Guide'
 export const problem = 'EPUB and MOBI both hold ebooks, but they serve different purposes. One is the modern open standard; the other is the legacy Kindle format. Here is how they compare and which one your device actually needs.'
 export const date = '2026-09-10'
-export const updatedAt = '2026-09-10'
+export const updatedAt = '2026-10-21'
 export const tags = ['epub', 'mobi', 'ebook format', 'kindle', 'comparison']
 export const keyTakeaways = [
   'EPUB is the open standard — used by Kobo, Apple Books, Google Play, and most readers except Kindle.',
@@ -60,7 +60,61 @@ export const faqs: BlogFaq[] = [
 // E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
 export const authorship = {
   author: 'BookConv Team',
-  lastVerified: '2026-09-12',
+  lastVerified: '2026-10-21',
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }
+
+// M5-2（2026-10-21）：真实西语译文（首篇，人工审稿批次 1/11）
+export const es = {
+  title: 'EPUB vs MOBI: guía de compatibilidad por dispositivo',
+  problem: 'EPUB y MOBI contienen ambos libros electrónicos, pero sirven para cosas distintas: uno es el estándar abierto moderno; el otro, el formato legacy de Kindle. Aquí tienes la comparación y el formato que tu dispositivo necesita de verdad.',
+  keyTakeaways: [
+    'EPUB es el estándar abierto: lo usan Kobo, Apple Books, Google Play y casi todos los lectores, excepto Kindle.',
+    'MOBI es el formato legacy de Amazon: los Kindle antiguos aún lo exigen, pero está siendo sustituido por AZW3.',
+    'Si tienes un Kindle, convierte a MOBI o AZW3; los modelos antiguos no abren EPUB de forma nativa.',
+    'EPUB conserva más formato y fuentes incrustadas; MOBI es más simple y más tolerante con archivos de origen dañados.',
+  ],
+  content: {
+    intro: `Tienes un libro electrónico —quizás un EPUB descargado de tu biblioteca o un MOBI de una compra antigua en Kindle— y necesitas saber cuál puede leer tu dispositivo. La confusión es real: algunos dispositivos prefieren un formato, otros el contrario, y unos cuantos no soportan ninguno sin un paso de conversión.
+
+Esta guía desglosa EPUB vs MOBI en términos sencillos para que dejes de adivinar y elijas el archivo correcto para tu lector.
+
+Respuesta rápida: si tienes un Kindle de antes de 2016 aproximadamente, convierte tu EPUB a MOBI. Si tienes un Kindle más nuevo, convierte a AZW3. Para Kobo, Apple Books, Google Play o cualquier lector que no sea de Amazon, EPUB es el formato correcto.`,
+    sections: [
+      {
+        heading: 'EPUB de un vistazo',
+        body: `**EPUB** (de Electronic Publication) es el formato de libro electrónico abierto y estándar de la industria, mantenido por el International Digital Publishing Forum (IDPF). Es compatible de forma nativa con:\n\n- **Kobo** (todos los modelos)\n- **Apple Books** (iPhone, iPad, Mac)\n- **Google Play Books**\n- **Barnes & Noble Nook**\n- **La mayoría de los demás lectores**, excepto Kindle\n\nEPUB admite texto reflowable, fuentes incrustadas, estilos CSS, libros de maquetación fija e imágenes. Es el formato que usan prácticamente todas las bibliotecas públicas (vía OverDrive/Libby) y las grandes librerías fuera de Amazon.\n\nLa pega: **Kindle no lee EPUB de forma nativa** en la mayoría de modelos lanzados antes de 2024. Amazon introdujo soporte limitado de EPUB en su última cadena de Send to Kindle, pero la conversión es poco fiable y pierdes el control sobre el formato.`,
+      },
+      {
+        heading: 'MOBI de un vistazo',
+        body: `**MOBI** (originalmente formato Mobipocket) es un formato propietario antiguo que Amazon adoptó y usó como predeterminado de Kindle durante muchos años. Es compatible de forma nativa con:\n\n- **Dispositivos Kindle de aproximadamente 2007 a 2015** (era previa a AZW3)\n- **Apps de Kindle en algunos smartphones antiguos**\n\nMOBI es un formato más simple: admite texto básico, imágenes y estilos limitados. **No** admite fuentes personalizadas incrustadas, CSS avanzado ni funciones complejas de maquetación. Eso significa:\n\n- Las opciones de fuente se limitan a las que ofrece Kindle.\n- Las imágenes pueden degradarse o perderse durante la conversión.\n- Los saltos de capítulo pueden colapsarse si el conversor no lee los estilos de encabezado.\n\nAmazon sustituyó efectivamente MOBI por **AZW3 (Kindle Format 8)** a partir de 2011, y los Kindle nuevos ya no recomiendan MOBI.`,
+      },
+      {
+        heading: 'Comparación lado a lado',
+        body: `| Característica | EPUB | MOBI |\n|---|---|---|\n| Estándar abierto | ✅ Sí (IDPF) | ❌ Propietario (legacy de Amazon) |\n| Soporte nativo en Kindle | ❌ No (excepto el último Send to Kindle) | ✅ Sí (Kindles antiguos) |\n| Kobo / Apple Books / Nook | ✅ Sí | ❌ No |\n| Fuentes incrustadas | ✅ Sí | ❌ Limitado / no |\n| Estilos CSS avanzados | ✅ Sí | ❌ No |\n| Manejo de imágenes | ✅ Bueno (SVG + raster) | ⚠️ Regular (suele degradarse) |\n| Compatible con bibliotecas / librerías | ✅ Amplio | ❌ Solo Amazon |\n| Tamaño de archivo | ⚠️ Mayor (más funciones) | ✅ Menor (estructura simple) |\n\n**En resumen:** EPUB es el mejor formato en calidad y compatibilidad con la mayoría de dispositivos. MOBI solo es necesario si tienes un Kindle antiguo que no puede leer AZW3.`,
+      },
+      {
+        heading: '¿Qué formato deberías usar?',
+        body: `Usa este árbol de decisión para elegir el formato correcto:\n\n**1. ¿En qué dispositivo lees?**\n- **Kindle (cualquier modelo)** → convierte a AZW3 (preferido) o MOBI (si tu Kindle es muy antiguo, anterior a 2016)\n- **Kobo** → EPUB es nativo; no hace falta convertir\n- **Apple Books / iPhone / iPad** → EPUB es nativo; no hace falta convertir\n- **Nook / Google Play Books** → EPUB es nativo; no hace falta convertir\n- **Varios dispositivos** → quédate con EPUB y convierte a formatos específicos solo cuando lo necesites\n\n**2. ¿Necesitas convertir?**\n- Si tu origen es EPUB y tu destino es Kindle → usa un conversor como [el EPUB a AZW3 de BookConv](/convert/epub-to-azw3) o [EPUB a MOBI](/convert/epub-to-mobi)\n- Si tu origen es MOBI y quieres pasar a un dispositivo que no es Kindle → convierte a EPUB con [MOBI a EPUB de BookConv](/convert/mobi-to-epub)\n\n**3. ¿Qué importa más: comodidad o calidad?**\n- Comodidad primero (un archivo suelto, sin instalar nada) → conversor online\n- Calidad y privacidad primero (trabajo por lotes, manuscrito sensible) → Calibre en tu ordenador`,
+      },
+      {
+        heading: 'Convertir entre EPUB y MOBI',
+        body: `Si necesitas pasar de EPUB a MOBI o al revés, [BookConv](https://www.bookconv.com) ofrece conversores online gratuitos en ambas direcciones:\n\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — para Kindles antiguos\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — para Kindle modernos (recomendado)\n- **MOBI → EPUB**: [/convert/mobi-to-epub](/convert/mobi-to-epub) — para salir del ecosistema Kindle\n\nTodas las conversiones se ejecutan en tu navegador. Los archivos se eliminan automáticamente en menos de una hora. Sin instalación de software.`,
+      },
+      {
+        heading: '¿Merece la pena convertir?',
+        body: `No siempre. Si ya tienes un EPUB y tu dispositivo lo lee de forma nativa (Kobo, Apple Books, etc.), déjalo en EPUB. Convertir solo añade riesgo: cada conversión puede degradar imágenes, perder fuentes o estropear la estructura de capítulos.\n\nConvierte solo cuando tu dispositivo exija otro formato. Para usuarios de Kindle, eso significa convertir EPUB a AZW3 (o MOBI en dispositivos muy antiguos). Para todos los demás, quédate con EPUB y evita el paso extra. Para consejos de configuración específicos de Kobo y otros lectores que no son Kindle, consulta [Leer EPUB en cualquier dispositivo](/blog/read-epub-on-any-device). Y si tienes archivos FB2 o Lit en tu biblioteca, [FB2 vs EPUB](/blog/fb2-vs-epub) y [guía de conversión del formato Lit](/blog/lit-format-conversion-and) explican esos ecosistemas.`,
+      },
+    ],
+  },
+  faqs: [
+    { question: '¿Puede Kindle leer archivos EPUB?', answer: 'La mayoría de los dispositivos Kindle no pueden leer EPUB de forma nativa. La última cadena de Send to Kindle de Amazon acepta EPUB, pero la conversión automática es poco fiable y el formato suele romperse. Lo recomendable es convertir tú mismo el EPUB a AZW3 o MOBI antes de enviarlo al Kindle.' },
+    { question: '¿Es MOBI mejor que EPUB para Kindle?', answer: 'No. MOBI es un formato legacy con soporte de estilos limitado. Para los Kindle desde 2016 en adelante, AZW3 es la mejor opción porque conserva más maquetación, fuentes e imágenes. Usa MOBI solo si tu Kindle es demasiado antiguo para soportar AZW3.' },
+    { question: '¿Qué formato es mejor en general, EPUB o MOBI?', answer: 'EPUB es el mejor formato en casi todos los sentidos: es abierto, está ampliamante soportado y conserva el formato enriquecido. MOBI solo es útil si tienes un Kindle antiguo que no puede leer AZW3 ni EPUB.' },
+    { question: '¿Necesito convertir mi EPUB si tengo un Kobo?', answer: 'No. Los lectores Kobo soportan EPUB de forma nativa. Convertir solo arriesgaría degradar el archivo. Conserva tu EPUB y cárgalo directamente en el Kobo.' },
+    { question: '¿Cómo convierto EPUB a MOBI gratis?', answer: 'Usa un conversor online gratuito como BookConv en [/convert/epub-to-mobi](/convert/epub-to-mobi). Sube tu EPUB, elige MOBI y descarga el archivo convertido. Sin instalación.' },
+    { question: '¿Puedo convertir MOBI de vuelta a EPUB?', answer: 'Sí. Si quieres pasar tus archivos MOBI a un dispositivo que no es Kindle, usa [el conversor de MOBI a EPUB de BookConv](/convert/mobi-to-epub). Ten en cuenta que el formato puede simplificarse, ya que MOBI contiene menos información que EPUB.' },
+    { question: '¿Y otros formatos como FB2 o Lit?', answer: 'FB2 es común en las bibliotecas de libros electrónicos rusas; consulta [FB2 vs EPUB](/blog/fb2-vs-epub). Los archivos Lit son formatos legacy de Microsoft; nuestra [guía de conversión del formato Lit](/blog/lit-format-conversion-and) explica cómo pasarlos a EPUB.' },
+  ],
+} satisfies import('./types').GuideEs

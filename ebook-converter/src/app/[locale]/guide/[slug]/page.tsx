@@ -20,6 +20,14 @@ interface GuideData {
   keyTakeaways: string[]
   content: { intro?: string; sections: { heading: string; body: string }[] }
   faqs: BlogFaq[]
+  /** M5-2：真实西语译文（存在时 /es 渲染此内容，缺省英文兜底） */
+  es?: {
+    title: string
+    problem: string
+    keyTakeaways: string[]
+    content: { intro?: string; sections: { heading: string; body: string }[] }
+    faqs: BlogFaq[]
+  }
 }
 
 const GUIDES: Record<string, GuideData> = {}
@@ -40,7 +48,11 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   const g = GUIDES[slug]
   if (!g) return {}
 
-  const description = clampMetaDescription(g.problem || g.content.intro || g.title)
+  // M5-2：西语真实译文存在时用 es 内容，否则英文兜底（与 blog es 先例同模式）
+  const esActive = locale === 'es' && !!g.es
+  const c = esActive ? g.es! : g
+
+  const description = clampMetaDescription(c.problem || c.content.intro || c.title)
 
   const { canonical, languages } = buildAlternates({
     locale: locale,
@@ -49,12 +61,12 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   })
 
   return {
-    title: g.metaTitle ?? g.title,
+    title: esActive ? c.title : (g.metaTitle ?? g.title),
     description,
     keywords: [...g.tags, "ebook converter", "calibre"],
     alternates: { canonical, languages },
     openGraph: {
-      title: g.title,
+      title: c.title,
       description,
       type: "article",
       publishedTime: g.date,
@@ -65,7 +77,7 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
     },
     twitter: {
       card: "summary_large_image",
-      title: g.title,
+      title: c.title,
       description,
     },
   }
@@ -79,6 +91,9 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
   const baseUrl = "https://www.bookconv.com"
   const isEs = locale === 'es'
+  // M5-2：展示内容用 es 译文（存在时），URL/canonical/hreflang 逻辑不变
+  const esActive = isEs && !!g.es
+  const c = esActive ? g.es! : g
   const guideUrl = `${baseUrl}${isEs ? '/es' : ''}/guide/${g.slug}`
   const others = getRelatedGuides(slug, 5)
   const relatedBlogPostsForGuide = getRelatedBlogPostsForGuide(g.formats, g.tags, 3)
@@ -91,8 +106,8 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            headline: g.title,
-            description: g.problem || g.content.intro || "",
+            headline: c.title,
+            description: c.problem || c.content.intro || "",
             datePublished: g.date,
             dateModified: g.date,
             author: {
@@ -106,7 +121,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
               logo: { "@type": "ImageObject", url: baseUrl + "/icon.svg" },
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": guideUrl },
-            inLanguage: "en-US",
+            inLanguage: esActive ? "es-ES" : "en-US",
             keywords: g.tags.join(", "),
             image: baseUrl + "/og-image.svg",
           }),
@@ -120,13 +135,13 @@ export default async function GuidePage({ params }: GuideSlugProps) {
             <li>/</li>
             <li><Link href="/guide" className="hover:text-blue-600">Guides</Link></li>
             <li>/</li>
-            <li aria-current="page" className="font-medium text-gray-900 truncate">{g.title}</li>
+            <li aria-current="page" className="font-medium text-gray-900 truncate">{c.title}</li>
           </ol>
         </nav>
 
         <header className="mb-10">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">{g.title}</h1>
-          <p className="text-lg text-gray-600 mb-4">{g.problem}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">{c.title}</h1>
+          <p className="text-lg text-gray-600 mb-4">{c.problem}</p>
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
@@ -143,11 +158,11 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           </div>
         </header>
 
-        {g.keyTakeaways?.length > 0 && (
+        {c.keyTakeaways?.length > 0 && (
           <div className="mb-10 rounded-xl border-l-4 border-blue-500 bg-blue-50 p-5">
             <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-700">Key Takeaways</h2>
             <ul className="space-y-1.5 text-sm text-gray-700">
-              {g.keyTakeaways.map((t, i) => (
+              {c.keyTakeaways.map((t, i) => (
                 <li key={i} className="flex gap-2">
                   <span className="text-blue-500">•</span>
                   <span>{t}</span>
@@ -158,10 +173,10 @@ export default async function GuidePage({ params }: GuideSlugProps) {
         )}
 
         <article className="prose prose-gray max-w-none">
-          {g.content.intro && (
-            <p className="text-lg text-gray-700 leading-relaxed border-l-4 border-blue-500 pl-4 italic">{g.content.intro}</p>
+          {c.content.intro && (
+            <p className="text-lg text-gray-700 leading-relaxed border-l-4 border-blue-500 pl-4 italic">{c.content.intro}</p>
           )}
-          {g.content.sections.map((s, i) => (
+          {c.content.sections.map((s, i) => (
             <section key={i} className="mt-8">
               <h2 className="text-2xl font-bold text-gray-900">{s.heading}</h2>
               <div dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(s.body) }} />
@@ -169,11 +184,11 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           ))}
         </article>
 
-        {g.faqs?.length > 0 && (
+        {c.faqs?.length > 0 && (
           <section className="mt-12" aria-labelledby="faq-heading">
             <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              {g.faqs.map((f, i) => (
+              {c.faqs.map((f, i) => (
                 <div key={i} className="rounded-xl border bg-white p-5">
                   <h3 className="text-base font-semibold text-gray-900">{f.question}</h3>
                   <div
@@ -189,7 +204,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "FAQPage",
-                  mainEntity: g.faqs.map((f) => ({
+                  mainEntity: c.faqs.map((f) => ({
                     "@type": "Question",
                     name: f.question,
                     acceptedAnswer: {

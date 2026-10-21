@@ -22,6 +22,7 @@
 
 import { createHmac } from 'node:crypto';
 import { loggers as log } from './logger';
+import { mapErrorCode, type ErrorCode } from './error-handler';
 
 /** 同类告警节流窗口：10 分钟内同一错误签名只发一次，防 webhook 风暴 */
 const ALERT_COOLDOWN_MS = 10 * 60 * 1000;
@@ -50,6 +51,66 @@ export interface ConversionFailureAlert {
   sourceFormat?: string;
   targetFormat?: string;
   error: string;
+}
+
+// ---------------------------------------------------------------------------
+// M8-8 告警分级（2026-10-21）
+//
+// 背景 = 2026-10-12 DRM 告警审计 Layer 4：DRM/损坏/超限属用户侧可预期错误，
+// 常见且与系统健康无关，若全部走红卡🚨会稀释 10-01 建立的告警通道信噪比
+// （10 分钟节流只挡同签名，不同签名仍刷屏）。实测案例：2026-10-19 21:30
+// Job 75c75593 (CORRUPT_INPUT) 仍走红色 🚨 卡片。
+//
+// 分级判据（单一来源 = error-handler 的 mapErrorCode，避免第二套模式漂移）：
+//   系统侧 → 红卡 🚨：backend-unavailable / CONVERSION_QUOTA_EXCEEDED /
+//           CONVERSION_TIMEOUT / CONVERSION_UNAVAILABLE
+//   用户侧 → 灰卡 ℹ️：DRM_PROTECTED / CORRUPT_INPUT / FILE_TOO_LARGE /
+//           VERIFICATION_FAILED
+//   未识别 → 红卡（fail-closed：宁可多报，绝不漏报系统故障）
+// ---------------------------------------------------------------------------
+
+const USER_SIDE_ERROR_CODES: ReadonlySet<ErrorCode> = new Set<ErrorCode>([
+  'DRM_PROTECTED',
+  'CORRUPT_INPUT',
+  'FILE_TOO_LARGE',
+  'VERIFICATION_FAILED',
+]);
+
+/**
+ * 显式用户侧模式兜底（在 mapErrorCode 之前匹配）。
+ * mapErrorCode 的覆盖盲区：①原始消息可能直接含错误码字符串（如
+ * "CORRUPT_INPUT: ..."）；②FILE_TOO_LARGE 在 ERROR_CODE_MAP 无任何映射模式
+ * （该 code 只在文件大小预检时直接产生，实测 2026-10-21 反向测试抓出）。
+ * 注意模式选词：「exceeds」不会误伤配额消息「exceeded」（子串不同）。
+ */
+const USER_SIDE_PATTERNS = [
+  'drm_protected',
+  'corrupt_input',
+  'file_too_large',
+  'verification_failed',
+  'drm',
+  'corrupt',
+  'too large',
+  'size limit',
+  'exceeds',
+  'failed verification',
+];
+
+export type AlertSeverity = 'system' | 'user';
+
+/**
+ * 按失败种类 + 原始错误消息判定告警级别。
+ * 判据顺序：显式用户侧模式 → mapErrorCode 派生 code（与 API 响应同源）。
+ * 两层都未命中 user 侧 ⇒ 红卡（fail-closed）。
+ */
+export function classifyAlertSeverity(
+  kind: ConversionFailureKind,
+  rawError: string,
+): AlertSeverity {
+  if (kind === 'backend-unavailable') return 'system';
+  const text = (rawError || '').toLowerCase();
+  if (USER_SIDE_PATTERNS.some((p) => text.includes(p))) return 'user';
+  return USER_SIDE_ERROR_CODES.has(mapErrorCode(rawError || '')) ? 'user' : 'system';
 }
 
 /**
@@ -148,16 +209,24 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
   if (now - (lastSentAt.get(signature) ?? 0) < ALERT_COOLDOWN_MS) return false;
   lastSentAt.set(signature, now);
 
+  const severity = classifyAlertSeverity(payload.kind, payload.error);
+  const isUserSide = severity === 'user';
   const title =
     payload.kind === 'backend-unavailable'
       ? '🚨 Conversion Backend Unavailable'
-      : '🚨 Conversion Failed';
+      : isUserSide
+        ? 'ℹ️ Conversion Failed (User Input)'
+        : '🚨 Conversion Failed';
   const pathLabel =
     payload.kind === 'backend-unavailable'
       ? '/api/convert → backend forward (503)'
       : '/api/convert (sync path)';
+  const severityLabel = isUserSide
+    ? 'User input error (expected) — no action unless frequency spikes'
+    : 'System-side fault — investigate now';
   const body = [
     '**Path:**', pathLabel, '\n',
+    '**Severity:**', severityLabel, '\n',
     '**Job:**', payload.jobId || 'n/a', '\n',
     '**Format:**', `${payload.sourceFormat || '?'} → ${payload.targetFormat || '?'}`, '\n',
     '**Error:**', (payload.error || 'unknown').slice(0, 200), '\n',
@@ -169,7 +238,7 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
       config: { wide_screen_mode: true },
       header: {
         title: { tag: 'plain_text', content: withKeyword(title) },
-        template: 'red',
+        template: isUserSide ? 'grey' : 'red',
       },
       elements: [
         { tag: 'div', text: { tag: 'lark_md', content: withKeyword(body) } },

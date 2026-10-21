@@ -5,18 +5,27 @@ export const title = 'How to Send an EPUB to Your Kindle: Every Delivery Route C
 export const metaTitle = 'How to Send EPUB to Kindle: Every Route Compared'
 export const problem = 'You know the Kindle needs a Kindle format — what you actually need now is the delivery step. Here is every route an EPUB can take to reach your Kindle, what each one does to your file behind the scenes, and which failures silently swallow books.'
 export const date = '2026-10-13'
-export const updatedAt = '2026-10-13'
+export const updatedAt = '2026-10-21'
 export const tags = ['epub', 'kindle', 'send to kindle', 'ebook delivery', 'how to']
 export const formats = { source: 'epub', target: 'azw3' }
 export const keyTakeaways = [
   'An EPUB reaches your Kindle through four routes: the Send to Kindle web uploader, the mobile or desktop app, email to your Kindle address, or a USB copy after you convert it yourself.',
   'Every Amazon-run route converts your EPUB on Amazon servers. A USB copy after converting to AZW3 is the only route where the file arrives exactly as you prepared it.',
+  'Amazon\'s Send to Kindle service accepts 13 file types — PDF, DOC, DOCX, TXT, RTF, HTM, HTML, PNG, GIF, JPG, JPEG, BMP, and EPUB — up to 200 MB per file, converting everything server-side.',
   'Email delivery fails silently most often: the sender must be on your Approved Personal Document E-mail List, and the attachment caps are tighter than the app routes.',
   'DRM-protected EPUBs are rejected by every route. Library loans should be delivered through the library app instead.',
 ]
 export const content = {
   intro: `Sending an EPUB to a Kindle sounds like a one-step task until the book never shows up, arrives without its formatting, or bounces out of your outbox with no explanation. The reason is that "send" actually hides four different delivery routes, and each one handles your file differently. This guide covers the mechanics: which route to use for which situation, the settings that must be right before you press send, and the failure modes that make books vanish. If you are still deciding between the reading methods themselves, start with How to Read EPUB on Kindle — this page picks up where that one ends, at the moment of delivery.`,
   sections: [
+    {
+      heading: 'What is Send to Kindle?',
+      body: `Send to Kindle is Amazon's official delivery service: you hand it a document or ebook, and Amazon converts it and delivers the finished book to your Kindle library or to a specific device linked to your account. It is not a separate purchase from Amazon — it is the built-in "send" layer behind the web uploader, the Kindle mobile and desktop apps, and the email-to-Kindle address.
+
+The service runs at [amazon.com/sendtokindle](https://www.amazon.com/sendtokindle) and accepts 13 file types: PDF, DOC, DOCX, TXT, RTF, HTM, HTML, PNG, GIF, JPG, JPEG, BMP, and EPUB, with a 200 MB ceiling per file. Everything on this list is converted on Amazon's servers before it reaches the device — including EPUB, which is why a sent book is never your original file. Two restrictions apply across the board: files must be DRM-free, and Amazon's conversion favors straight text over complex layouts.
+
+That combination — wide format support, generous size cap, server-side conversion — is exactly why Send to Kindle is the right default for novels and documents, and exactly why styled or layout-sensitive books need the USB route described below.`,
+    },
     {
       heading: 'The four delivery routes at a glance',
       body: `Every route ends with a Kindle-format book on your device, but the intermediate steps differ in who converts the file and what survives the trip:
@@ -90,6 +99,8 @@ Once the delivery route is decided, the rest is routine: DRM-free files go strai
   ],
 }
 export const faqs: BlogFaq[] = [
+  { question: 'What is Amazon Send to Kindle?', answer: 'Send to Kindle is Amazon\'s official service for delivering documents and ebooks to your Kindle library or a linked device. It runs at amazon.com/sendtokindle and is also built into the Kindle mobile and desktop apps and the email-to-Kindle route. It accepts 13 file types including EPUB and PDF, up to 200 MB per file, and converts everything on Amazon\'s servers before delivery.' },
+  { question: 'What file types does Send to Kindle support?', answer: 'Send to Kindle accepts PDF, DOC, DOCX, TXT, RTF, HTM, HTML, PNG, GIF, JPG, JPEG, BMP, and EPUB. All of them are converted to a Kindle format on Amazon\'s servers, files must be DRM-free, and complex layouts such as tables and custom fonts often get flattened — convert styled books to AZW3 yourself and copy them over USB instead.' },
   { question: 'Why did my emailed EPUB never arrive on the Kindle?', answer: 'Almost always because the sending address is not on your Approved Personal Document E-mail List in Amazon settings. Unapproved senders are dropped silently with no bounce message. Add the address, resend, and delivery usually completes within a few minutes.' },
   { question: 'Does Send to Kindle change my EPUB file?', answer: 'Yes. Amazon converts the EPUB to a Kindle format on their servers and delivers that converted copy; your original EPUB never lands on the device. Simple novels survive this fine, but custom fonts, tables, and complex layouts are frequently flattened.' },
   { question: 'Can I avoid Amazon converting my file?', answer: 'Only by converting the EPUB to AZW3 yourself and copying the finished file to the Kindle over USB. That is the one route where the file arrives exactly as you prepared and verified it.' },
@@ -100,7 +111,7 @@ export const faqs: BlogFaq[] = [
 // E-E-A-T authorship block
 export const authorship = {
   author: 'BookConv Team',
-  lastVerified: '2026-10-13',
+  lastVerified: '2026-10-21',
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }

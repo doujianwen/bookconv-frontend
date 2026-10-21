@@ -1,8 +1,8 @@
 export const slug = 'epub-to-zip';
-export const title = 'Convert EPUB to ZIP Free — XHTML, CSS & Images';
+export const title = 'EPUB to ZIP Converter — Free, Byte-Exact, No Sign-Up';
 export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.';
 export const level = 'A' as const;
-export const wordCount = 590;
+export const wordCount = 730;
 
 export const content = {
   hero: {
@@ -38,6 +38,19 @@ A practical rule: convert EPUB to ZIP when you want the source files as your mas
     {
       heading: 'How to Convert EPUB to ZIP Online',
       body: 'The fastest way to convert EPUB to ZIP is a browser-based tool — no Calibre install, no command line, no sign-up. Steps:\n- Upload your .epub file using the converter above.\n- Wait a second while the server copies the archive (no re-encoding).\n- Download the resulting .zip and open it with any archive viewer.\nBecause the conversion is a byte-exact copy, the whole process takes seconds and works on Windows, macOS, and Linux alike.'
+    },
+    {
+      heading: 'EPUB to ZIP: Every Method Compared',
+      body: `There are four ways to get a ZIP out of an EPUB, and because the format is already a ZIP archive, all four are byte-exact — pick by workflow, not by output quality:
+
+| Method | Steps | Time | Best for |
+|--------|-------|------|----------|
+| Online converter (above) | Upload the .epub, download the .zip | ~1 second | One-off extractions, no software, works on any device |
+| Rename the extension | Right-click, rename .epub to .zip | Seconds | Quick local access on your own machine |
+| Archive tool extract | Right-click the .epub in 7-Zip, choose Extract Here | Seconds | Going straight to a folder, skipping the ZIP file |
+| Command line | unzip book.epub -d out/ (or copy with a .zip name) | Seconds | Scripts, batch jobs, repeatable pipelines |
+
+All four produce identical content because none of them re-encode anything. The online converter earns its keep when the file is not on your computer (phone, work machine, someone else's archive) or when you want a clean download without touching system settings; the local methods win when you will immediately edit the extracted files anyway.`
     },
     {
       heading: 'When Should You Convert EPUB to ZIP?',
@@ -108,7 +121,7 @@ If the ZIP will not open at all, the source EPUB was likely truncated during dow
 
   authorship: {
     author: 'BookConv Team',
-    lastVerified: '2026-09-05',
+    lastVerified: '2026-10-21',
     credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
     estimatedConversions: '10,000+ monthly'
   }

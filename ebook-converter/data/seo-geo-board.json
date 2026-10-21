@@ -400,7 +400,8 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "验收已满足：实测 0 篇 <400 词（板基线 20 篇为 9-27 旧数据），无需无谓扩容。2026-10-21"
         },
         {
           "id": "M2-4",
@@ -412,7 +413,8 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "done",
+          "statusNote": "暗页清单+处置记录落盘 docs/dark-page-inventory-2026-10-21.md（convert 58%/blog 93%/guide 96%，GSC 28d 曝光=0 口径）；处置随 M2-8/M11-3 批次推进。基线 10-21，复测 11-20"
         },
         {
           "id": "M2-5",
@@ -532,8 +534,9 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13，P1优先级。epub to zip是最有机会突破的查询。"
+          "status": "done",
+          "note": "来源：GSC自动化分析 2026-10-13，P1优先级。epub to zip是最有机会突破的查询。",
+          "statusNote": "epub-to-zip SERP title 加 Converter + 新增四方法对比表；GSC 2 周后复跑验收 Top10。2026-10-21"
         },
         {
           "id": "M2-14",
@@ -889,8 +892,9 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释"
+          "status": "doing",
+          "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
+          "statusNote": "guide es schema additive 扩展 + 首篇西语译文 epub-vs-mobi 完成（三向渲染验证通过）；剩余 10 篇分批 ≤3 篇/批。2026-10-21"
         },
         {
           "id": "M5-3",
@@ -1270,8 +1274,8 @@
           "due": "2026-10-20",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "\n2026-10-19 21:30 观察项：Job 75c75593 (CORRUPT_INPUT) 仍走红色 🚨 卡片（alerts.ts 未实现分级），与 M8-8 设计\"用户侧错误=灰卡ℹ️\"不符。M8-8 due 10-20，此次事故可作为验收用例。"
+          "status": "done",
+          "statusNote": "alerts.ts 告警分级落地（红卡🚨系统侧/灰卡ℹ️用户侧，fail-closed）；18/18 断言测试 + 双卡实测送达飞书 BOTH-DELIVERED。2026-10-21"
         },
         {
           "id": "M8-9",
@@ -1283,8 +1287,8 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "2026-10-19 20:20 首查全 0（intraday 延迟不可信），待 10-20 daily 数据出数。"
+          "status": "done",
+          "statusNote": "10-19 终值 conversion_failed=1 → 判定孤立，不升级；GA4 T+1 晨间未结算已 append-only 回写事故文档 §6.3。2026-10-21"
         },
         {
           "id": "M8-10",
@@ -1538,8 +1542,8 @@
           "due": "2026-10-21",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "衍生选题：M2-8"
+          "status": "doing",
+          "statusNote": "首批 1 页 how-to-send-epub-to-kindle 强化（承接 send to kindle / amazon send to kindle，事实经 Amazon 官方验证）；后续批次 ≤3 页/批 + Gate B + 人工审稿。2026-10-21"
         },
         {
           "id": "M11-5",

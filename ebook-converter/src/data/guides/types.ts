@@ -5,6 +5,23 @@ export interface GuideSection {
   body: string
 }
 
+/**
+ * 西语本地化内容（M5-2，2026-10-21 起）。
+ * 存在时 /es/guide/* 渲染本字段；缺省回退英文（既有英文兜底行为不变）。
+ * 字段与 GuideMeta 的展示子集同名，页面侧用同一 display 变量消费——
+ * 与 blog 的 `es` 字段先例（azw3-vs-mobi 等 6 篇）保持同一模式。
+ */
+export interface GuideEs {
+  title: string
+  problem: string
+  keyTakeaways: string[]
+  content: {
+    intro?: string
+    sections: GuideSection[]
+  }
+  faqs: BlogFaq[]
+}
+
 export interface GuideMeta {
   slug: string
   title: string
@@ -30,4 +47,6 @@ export interface GuideMeta {
     sections: GuideSection[]
   }
   faqs: BlogFaq[]
+  /** 真实西语译文（M5-2）。未提供的 /es/guide/* 页继续英文兜底（不删页） */
+  es?: GuideEs
 }
