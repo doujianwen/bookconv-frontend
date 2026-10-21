@@ -894,7 +894,7 @@
           "tier": "SUPP",
           "status": "doing",
           "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
-          "statusNote": "guide es schema additive 扩展 + 首篇西语译文 epub-vs-mobi 完成（三向渲染验证通过）；剩余 10 篇分批 ≤3 篇/批。2026-10-21"
+          "statusNote": "guide es schema additive 扩展 + 西语译文 4 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）；剩余 7 篇分批 ≤3 篇/批。2026-10-21"
         },
         {
           "id": "M5-3",

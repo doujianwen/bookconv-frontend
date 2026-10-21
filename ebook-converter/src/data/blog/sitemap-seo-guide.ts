@@ -4,6 +4,9 @@ export const metaTitle = `Sitemap SEO Guide for Ebook Sites`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = ["SEO", "sitemap", "search-console", "bookconv", "technical"];
+// Engineering/internal reference doc — keep reachable for operators but out of
+// Google's index so it doesn't burn crawl budget meant for money pages.
+export const noindex = true;
 
 export const content = {
   intro: `BookConv publishes a sitemap at /sitemap.xml that's generated from the same data the site renders, so every conversion page and blog post is listed the moment it ships. Here's what's inside it, how to submit a sitemap to Google Search Console, and the mistakes that quietly keep pages out of the index.`,

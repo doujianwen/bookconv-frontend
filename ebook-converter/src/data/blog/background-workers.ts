@@ -3,6 +3,9 @@ export const title = `How BookConv Runs Your Conversions in the Background`;
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = [`architecture`, `worker`, `queue`, `technical`];
+// Engineering/internal reference doc — keep reachable for operators but out of
+// Google's index so it doesn't burn crawl budget meant for money pages.
+export const noindex = true;
 
 export const content = {
   intro: `When you convert a file on BookConv, the upload finishes in a second or two — long before your book is actually ready. Here's what happens behind that live progress bar, and why a background worker is the reason big conversions never hold up your browser.`,

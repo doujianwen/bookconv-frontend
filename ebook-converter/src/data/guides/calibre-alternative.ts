@@ -66,3 +66,55 @@ export const authorship = {
   estimatedConversions: '10,000+ monthly',
 }
 
+// M5-2（2026-10-21）：真实西语译文（人工审稿批次 2a/11）
+export const updatedAt = '2026-10-21'
+export const es = {
+  title: '¿Necesitas una alternativa a Calibre? (qué conservas y qué pierdes)',
+  problem: '¿No quieres instalar y aprender Calibre para un solo archivo? Esto es lo que te da una alternativa ligera a Calibre — y dónde Calibre sigue ganando.',
+  keyTakeaways: [
+    'Un conversor basado en navegador cubre la mayoría de necesidades de conversión puntual sin instalar Calibre.',
+    'Calibre sigue ganando en trabajos por lotes, privacidad offline y ajustes específicos de dispositivo.',
+    'BookConv está construido sobre el motor de Calibre, así que obtienes su soporte de formatos en el navegador.',
+    'Elige por volumen y privacidad, no por cuál herramienta es "mejor" en abstracto.',
+    'CloudConvert es un conversor general potente, pero para ebooks una herramienta enfocada y gratuita como BookConv cubre los pares comunes sin límites de uso durante la beta abierta.',
+  ],
+  content: {
+    intro: 'Casi todos los hilos de conversión terminan con "solo instala Calibre". Pero para un solo archivo, instalar un gestor de biblioteca completo es excesivo. Una alternativa a Calibre es simplemente una forma más ligera de obtener el mismo resultado — normalmente un conversor gratuito que funciona en el navegador. Esta página muestra qué conservas, qué pierdes y cómo decidir.',
+    sections: [
+      {
+        heading: 'Cuándo realmente quieres una alternativa a Calibre',
+        body: 'Probablemente no necesitas Calibre si:\n\n- El archivo es **puntual** — conviértelo y sigue adelante.\n- Estás en un **dispositivo compartido o bloqueado** donde instalar software es un incordio.\n- Quieres un resultado **ya**, sin aprender los menús de una app de escritorio.\n- El archivo **no es tan sensible** como para preocuparte por subirlo brevemente.\n\nEn esos casos un conversor online gratuito como [BookConv](https://www.bookconv.com) hace el trabajo en tres pasos.',
+      },
+      {
+        heading: 'BookConv vs Calibre de un vistazo',
+        body: '**Instalación requerida:** BookConv — no. Calibre — sí (app de escritorio).\n\n**Cuenta requerida:** BookConv — no. Calibre — no.\n\n**Pares de formato:** BookConv — 27 (EPUB, MOBI, PDF, AZW3, TXT y más). Calibre — muy amplio, incluidos formatos de nicho.\n\n**Mejor para:** BookConv — archivos únicos rápidos en el navegador. Calibre — lotes, offline, perfiles de dispositivo.\n\n**Privacidad:** BookConv — transferencia HTTPS cifrada, archivo eliminado automáticamente en 1 hora. Calibre — totalmente offline, el archivo nunca sale de tu máquina.\n\n**Motor:** BookConv — construido sobre el motor de conversión de código abierto de Calibre.',
+      },
+      {
+        heading: 'Qué pierdes sin Calibre',
+        body: 'Una alternativa online no es un reemplazo completo:\n\n- **Sin automatización por lotes** — conviertes un archivo a la vez.\n- **Sin modo offline** — el archivo se procesa en un servidor.\n- **Menos control fino** sobre márgenes, fuentes y salida específica de dispositivo.\n\nSi conviertes constantemente o manejas manuscritos privados, mantén Calibre instalado.',
+      },
+      {
+        heading: 'Qué ganas con una alternativa online',
+        body: 'El intercambio suele valer la pena para archivos cotidianos:\n\n- **Cero configuración** — abre la página, suelta el archivo, descarga el resultado.\n- **Manejo automático** de imágenes, portadas SVG y peculiaridades de formato que rompen EPUB↔PDF.\n- **El mismo motor** — como BookConv funciona con el conversor de Calibre, el soporte de formatos se mantiene.\n\nEmpieza aquí: [Convertir EPUB a PDF](/convert/epub-to-pdf).',
+      },
+      {
+        heading: 'CloudConvert y otros conversores online',
+        body: 'CloudConvert aparece en casi toda búsqueda de "alternativa", y es un conversor general de archivos genuinamente potente — maneja cientos de formatos, ebooks incluidos. El intercambio honesto para trabajo con ebooks:\n\n- **Amplitud vs enfoque** — CloudConvert cubre de vídeo a hojas de cálculo; BookConv se centra en ebooks y documentos, así que la interfaz y los valores por defecto giran en torno a formatos de lectura.\n- **Precio** — CloudConvert es medido: una capa gratuita con límites estrictos y planes de pago más allá. BookConv es gratis durante la beta abierta, incluidos lotes, sin cuenta.\n- **Motor** — BookConv funciona con el motor de código abierto de Calibre, así que el soporte de formatos ebook es de primera clase, no una función secundaria.\n\nSi conviertes el ebook ocasional, una herramienta enfocada y gratuita es el camino más ligero. Recurre a un conversor amplio cuando también necesites formatos no ebook en el mismo flujo. Para un trabajo ebook puntual, empieza en [Convertir EPUB a PDF](/convert/epub-to-pdf).',
+      },
+      {
+        heading: 'Cómo elegir',
+        body: '**Usa una alternativa a Calibre (BookConv) cuando:** es un archivo puntual, estás en un dispositivo sin Calibre, o quieres el resultado ya.\n\n**Usa Calibre cuando:** conviertes por lotes, necesitas salida específica de dispositivo, o el archivo es lo bastante privado como para que cualquier subida sea inaceptable.\n\nLa mayoría mantiene Calibre instalado pero rara vez lo abre — y guarda un conversor online rápido para todo lo demás. Para consejos de formato específicos de dispositivo, consulta [Formatos Kindle explicados](/guide/kindle-formats). Para comparar herramientas lado a lado, consulta [Mejor conversor de ebooks en 2026](/guide/best-ebook-converter). Para bibliotecas grandes, consulta también [Guía de conversión por lotes gratis de Calibre](/blog/calibre-free-batch) y [Guía de conversor por lotes](/guide/batch-converter).',
+      },
+    ],
+  },
+  faqs: [
+    { question: '¿Hay una alternativa gratuita a Calibre?', answer: 'Sí. BookConv es un conversor de ebooks gratuito y sin cuenta que funciona en el navegador y cubre 27 pares de formato, incluidos EPUB, MOBI, PDF, AZW3 y TXT.' },
+    { question: '¿BookConv usa Calibre?', answer: 'Sí. BookConv está construido sobre el motor de conversión de código abierto de Calibre, así que hereda su soporte de formatos mientras añade una interfaz de navegador y manejo automático de imágenes y portadas.' },
+    { question: '¿Puede un conversor online reemplazar Calibre por completo?', answer: 'Para archivos puntuales, mayormente sí. Para automatización por lotes, privacidad offline y control fino de dispositivo, Calibre sigue siendo la mejor herramienta. Son complementarios, no estrictamente competidores.' },
+    { question: '¿Es segura una alternativa online a Calibre para archivos privados?', answer: 'Los conversores fiables usan HTTPS cifrado y eliminan archivos en 1 hora, pero el archivo sí toca un servidor. Para documentos sensibles, el modo totalmente offline de Calibre es más seguro.' },
+    { question: '¿Qué formatos puedo convertir sin instalar Calibre?', answer: 'Con BookConv puedes convertir 27 pares de formato — EPUB, MOBI, PDF, AZW3, TXT y más — directamente en el navegador sin instalar nada.' },
+    { question: '¿Necesito instalar algo para convertir un ebook?', answer: 'No. Un conversor online como BookConv funciona enteramente en el navegador. Calibre solo tiene sentido si conviertes a menudo o necesitas privacidad offline.' },
+    { question: '¿Hay una alternativa gratuita a CloudConvert para ebooks?', answer: 'Sí. BookConv es un conversor de ebooks gratuito y sin cuenta basado en el motor de Calibre, y se mantiene gratis durante la beta abierta — incluidos lotes. CloudConvert también funciona para ebooks, pero es un conversor general medido con límites de capa gratuita más estrictos, así que una herramienta enfocada como BookConv es la opción más ligera para trabajos ebook cotidianos.' },
+  ],
+} satisfies import('./types').GuideEs
+

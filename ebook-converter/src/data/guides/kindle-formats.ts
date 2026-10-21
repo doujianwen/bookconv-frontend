@@ -5,7 +5,7 @@ export const title = 'What Format Does Kindle Use? AZW3, KFX, MOBI & EPUB Explai
 export const metaTitle = 'What Format Does Kindle Use? AZW3, KFX, MOBI'
 export const problem = 'AZW3, KFX, MOBI, EPUB - Kindle formats confuse everyone. This guide explains what each means, the safest format to convert to today, and how BookConv converts free in your browser with no software to install.'
 export const date = '2026-08-07'
-export const updatedAt = '2026-09-18'
+export const updatedAt = '2026-10-21'
 export const tags = ['kindle formats', 'what format does kindle use', 'azw3', 'kfx', 'mobi', 'send to kindle', 'epub vs kindle']
 export const keyTakeaways = [
   'Amazon’s Send to Kindle accepts EPUB and AZW3 and converts them for your device.',
@@ -123,4 +123,88 @@ export const authorship = {
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }
+
+// M5-2（2026-10-21）：真实西语译文（人工审稿批次 2c/11）
+export const es = {
+  title: '¿Qué formato usa Kindle? AZW3, KFX, MOBI y EPUB explicados',
+  problem: 'AZW3, KFX, MOBI, EPUB: los formatos de Kindle confunden a cualquiera. Esta guía explica qué significa cada uno, el formato más seguro a que convertir hoy y cómo BookConv convierte gratis en tu navegador sin instalar nada.',
+  keyTakeaways: [
+    'El Send to Kindle de Amazon acepta EPUB y AZW3 y los convierte para tu dispositivo.',
+    'La carga lateral de MOBI está retirada; no conviertas libros nuevos a MOBI para Kindle.',
+    'KFX es el formato propietario de Amazon: no puedes crearlo fácilmente tú mismo.',
+    'Para carga lateral, AZW3 es el formato más compatible que BookConv puede generar.',
+  ],
+  content: {
+    intro: 'Los lectores Kindle no aceptan "cualquier ebook". Con los años Amazon pasó de MOBI a AZW3 y ahora a KFX, mientras Send to Kindle añadió soporte EPUB. Esta página desenreda los formatos para que conviertas al correcto en lugar de a un archivo que tu Kindle rechaza.\n\n> BookConv procesa tu archivo en nuestros servidores y lo elimina automáticamente en menos de 1 hora. Los archivos viajan cifrados y no se requiere cuenta ni instalación de software.',
+    sections: [
+      {
+        heading: 'El panorama de formatos de Kindle',
+        body: '**MOBI:** el estándar antiguo. Amazon retiró la carga lateral de MOBI, así que los nuevos envíos en MOBI ya no son el camino recomendado.\n\n**AZW3:** el formato moderno de Amazon con mejor tipografía y funciones; compatible con la mayoría de dispositivos Kindle.\n\n**KFX:** el formato propietario actual de Amazon con maquetación avanzada; creado por la propia cadena de Amazon, no se produce fácilmente con conversores de terceros.\n\n**EPUB:** el estándar abierto. Send to Kindle ahora acepta EPUB y lo convierte para tu dispositivo.',
+      },
+      {
+        heading: 'Tabla comparativa de formatos Kindle',
+        body: '| Formato | Carga lateral | Funciones modernas | Legible por terceros | BookConv puede generarlo |\n|---|---|---|---|---|\n| AZW3 | Sí (todos los Kindle) | Sí (CSS, fuentes, tablas) | No (solo Kindle) | Sí |\n| KFX | No (solo Amazon) | Sí (maquetación avanzada) | No | No |\n| MOBI | Sí (USB legacy) | No | Parcial | Sí (a EPUB o AZW3) |\n| EPUB | Vía Send to Kindle | Sí (estándar abierto) | Sí (la mayoría de lectores) | Formato origen |\n\nPara cargar tu propio archivo por USB, AZW3 es el formato más compatible que BookConv puede generar. KFX es exclusivo de Amazon, así que convierte a AZW3 en su lugar.',
+      },
+      {
+        heading: '¿Qué es AZW3?',
+        body: 'AZW3 es el formato **KF8** de Amazon, introducido en 2011 para reemplazar el AZW original: una fina capa sobre el antiguo motor Mobipocket. Por dentro es HTML y CSS empaquetados casi como EPUB, pero sellados dentro del contenedor de la compañía, por lo que solo el hardware y las apps de Kindle lo leen.\n\nLo que te aporta frente a la línea antigua MOBI/AZW1:\n- Fuentes incrustadas y CSS real, para que la tipografía sobreviva al viaje\n- Tablas, capitulares y páginas de maquetación fija para títulos ilustrados\n- Mejor control de espaciado y márgenes que Mobipocket\n\nNo es un formato abierto, así que Kobo, Nook y la mayoría de lectores de terceros lo ignoran. Piensa en AZW3 como el mejor formato *dentro del jardín vallado de Amazon*, y en EPUB como el que viaja a todas partes.\n\nMoverte adentro o afuera es simple: [EPUB a AZW3](/convert/epub-to-azw3) para un Kindle moderno, o [AZW a MOBI](/convert/azw-to-mobi) si un dispositivo legacy no lee AZW3.',
+      },
+      {
+        heading: 'A qué convertir (regla práctica)',
+        body: '**Para cargar tu propio archivo por USB:** convierte a **AZW3** — BookConv puede generarlo y los Kindle lo leen bien.\n\n**Para Send to Kindle:** sube **EPUB o AZW3** y deja que Amazon convierta.\n\n**Evita:** convertir libros nuevos a MOBI e intentar generar KFX tú mismo.',
+      },
+      {
+        heading: 'Rutas de conversión Kindle comunes',
+        body: '**EPUB → AZW3** para carga lateral: [EPUB a AZW3](/convert/epub-to-azw3).\n\n**AZW3 → PDF** si necesitas un impreso de maquetación fija: [AZW3 a PDF](/convert/azw3-to-pdf).\n\n**MOBI → EPUB/AZW3** para modernizar una biblioteca antigua: [Mobi a EPUB](/convert/mobi-to-epub).\n\n**AZW → MOBI** solo si un Kindle legacy no lee AZW3: [AZW a MOBI](/convert/azw-to-mobi).',
+      },
+      {
+        heading: '¿Por qué no simplemente usar MOBI?',
+        body: 'MOBI es legacy. El Send to Kindle de Amazon ya no lo prioriza, y las funciones nuevas solo existen en AZW3/KFX. Convertir contenido nuevo a MOBI arriesga un archivo que tu dispositivo maneja mal.\n\nSi ya tienes archivos MOBI, conviértelos hacia delante a AZW3 en lugar de mantener el formato antiguo.\n\nUn detalle importante: los archivos MOBI de antes de 2011 a menudo contienen DRM propietario y codificación con los que las herramientas modernas tienen problemas. Aunque se abran, la tipografía y la maquetación pueden verse rotas en los Kindle nuevos. Esta es otra razón para migrar tu biblioteca a AZW3 o EPUB como prioridad.',
+      },
+      {
+        heading: 'Qué es KFX y por qué no puedes crearlo',
+        body: 'KFX es el formato propietario más nuevo de Amazon, introducido hacia 2017 como sucesor de AZW3 para las compras de la tienda. Usa funciones de autoedición avanzadas: mejor tipografía, manejo de imágenes y control de maquetación que superan a AZW3.\n\nLa limitación crítica: **KFX lo genera exclusivamente la propia cadena de conversión de Amazon**. Cuando compras un libro en la Kindle Store, Amazon crea la versión KFX en el servidor. Los conversores de terceros como BookConv no pueden producir archivos KFX reales.\n\nQué significa esto para ti:\n- No puedes cargar KFX a tu Kindle por USB\n- Si una herramienta de terceros afirma producir KFX, probablemente esté produciendo un AZW3 con la extensión renombrada\n- Para carga lateral, **AZW3 sigue siendo tu mejor opción** — tiene casi todas las funciones visuales de KFX\n\nKFX no es un formato del que debas preocuparte como usuario. Es el formato de entrega interno de Amazon para los libros comprados. Tu trabajo es asegurar que tus archivos cargados sean AZW3 o que uses Send to Kindle para subir EPUB.',
+      },
+      {
+        heading: 'Matriz de compatibilidad por dispositivo Kindle',
+        body: 'No todos los Kindle admiten todos los formatos por igual. Aquí tienes la tabla definitiva de compatibilidad:\n\n| Modelo Kindle | AZW3 | KFX | MOBI | EPUB (Send to Kindle) |\n|---|---|---|---|---|\n| Kindle (1.ª–4.ª gen) | ❌ | ❌ | ✅ | ❌ |\n| Kindle Touch | ❌ | ❌ | ✅ | ❌ |\n| Kindle Paperwhite 1.ª gen | ❌ | ❌ | ✅ | ❌ |\n| Kindle Paperwhite 2.ª–4.ª gen | ✅ | ✅ | ✅ | ✅ |\n| Kindle Voyage | ✅ | ✅ | ✅ | ✅ |\n| Kindle Oasis (todas las gen) | ✅ | ✅ | ✅ | ✅ |\n| Kindle Scribe | ✅ | ✅ | ✅ | ✅ |\n| Tablets Kindle Fire | ✅ | ✅ | ✅ | ✅ |\n| Kindle Kids (2019+) | ✅ | ✅ | ✅ | ✅ |\n\n**En resumen:** todo Kindle lanzado después de 2015 admite AZW3. Si tienes un Kindle anterior a 2015, quédate con MOBI o considera actualizar el dispositivo. Para el desglose modelo por modelo más completo, consulta nuestra guía de si-Kindle-lee-AZW3.',
+      },
+      {
+        heading: 'Comparativa de motores de renderizado: cómo funcionan los formatos',
+        body: 'Entender el motor de renderizado detrás de cada formato te ayuda a predecir qué funcionará y qué no:\n\n**Motor Mobipocket (MOBI/AZW):** el motor Kindle original. Admite flujo de texto básico e imágenes simples. Sin CSS, sin fuentes incrustadas, control de maquetación limitado. Por eso los archivos MOBI se ven simples y no pueden llevar tipografía rica.\n\n**Motor KF8 (AZW3):** el motor de segunda generación de Amazon. Soporte CSS completo, fuentes incrustadas, tablas, capitulares y mejor manejo de imágenes. Los archivos AZW3 se renderizan mucho más cerca de su diseño previsto. Es el motor que usan la mayoría de Kindle lanzados tras 2011.\n\n**Motor KFX:** el motor propietario actual de Amazon. Amplía KF8 con mejor compresión de imágenes, tipografía avanzada y mejor manejo de maquetaciones complejas. KFX está optimizado para la cadena propia de Amazon y no se puede generar externamente.\n\n**Por qué importa para la conversión:** cuando conviertes EPUB a AZW3, pasas de un estándar abierto (EPUB, que usa motores de renderizado de navegador web) al motor KF8 de Amazon. La mayoría del contenido se convierte fielmente. Las maquetaciones complejas pueden perder algo de estilo, pero el texto e imágenes centrales sobreviven. Para libros muy estilizados como libros de texto o recetas, previsualiza siempre el archivo convertido antes de confiar en él.',
+      },
+      {
+        heading: 'Tendencias futuras: ¿qué viene después de KFX?',
+        body: 'Amazon no ha anunciado un sucesor público de KFX, pero varias tendencias están dando forma al futuro de la lectura en Kindle:\n\n**Send to Kindle se vuelve el camino principal.** Amazon empuja cada vez más a los usuarios hacia Send to Kindle en lugar de la carga lateral. Esto significa que EPUB es el formato de subida preferido y Amazon maneja la conversión a KFX en sus servidores. Para la mayoría, este es el flujo más simple y fiable.\n\n**AZW3 sigue siendo relevante para carga lateral.** Mientras los usuarios quieran cargar archivos por USB, AZW3 seguirá siendo el formato de elección. Está bien soportado, da buenos resultados y no requiere la cadena de Amazon.\n\n**Las restricciones DRM se endurecen.** Amazon ha estado eliminando el soporte de carga lateral de MOBI, lo que sugiere que eventualmente podría deprecar otros formatos de carga lateral. Si esto ocurre, Send to Kindle (EPUB) será el único camino viable para transferir archivos personales.\n\n**Qué hacer ahora:** convierte tu biblioteca MOBI existente a AZW3 o EPUB. Usa Send to Kindle para nuevas adquisiciones. Mantén AZW3 como tu formato de carga lateral de respaldo. Esta estrategia cubre todos los comportamientos actuales y previsibles de Kindle.',
+      },
+      {
+        heading: '¿Puede Kindle Fire leer MOBI?',
+        body: 'Las tablets Kindle Fire ejecutan la app de Kindle en Fire OS y leen los mismos formatos que otros Kindle: MOBI, AZW3, KFX y EPUB mediante Send to Kindle. Así que sí, un Fire puede abrir archivos MOBI.\n\nUna salvedad: los archivos MOBI antiguos creados con herramientas no estándar a veces fallan al abrir en un Fire y muestran el familiar error de que el archivo no se abre. Si un MOBI no se abre, conviértelo a AZW3 — BookConv lo hace — o reenvíalo por Send to Kindle, que recodifica el archivo. Para ver modelo por modelo qué formatos lee cada Kindle, consulta nuestra guía de si-Kindle-lee-AZW3.',
+      },
+      {
+        heading: 'Guías relacionadas para tu situación concreta',
+        body: 'Si no estás seguro de qué formato encaja en tu dispositivo o caso de uso, estas guías más profundas ayudan:\n- **¿Puede mi Kindle leer AZW3?** — tabla de compatibilidad modelo por modelo. [/blog/can-kindle-read-azw3](/blog/can-kindle-read-azw3)\n- **¿Tu ebook no se abre en Kindle?** — cinco causas comunes y soluciones. [/blog/why-ebook-wont-open-kindle](/blog/why-ebook-wont-open-kindle)\n- **EPUB a AZW3 paso a paso** — convierte sin perder formato. [/guide/epub-to-azw3-for-kindle](/guide/epub-to-azw3-for-kindle)\n- **¿Pasas de Kindle a Kobo?** — por qué EPUB es el destino correcto. [/blog/mobi-to-kobo](/blog/mobi-to-kobo)\n- **Actualizar AZW3 a MOBI para dispositivos antiguos** — guía de compatibilidad. [/blog/azw3-to-mobi](/blog/azw3-to-mobi)\n- **Referencia de formatos FB2 y Lit** — formatos de biblioteca no Amazon explicados. [/blog/fb2-vs-epub](/blog/fb2-vs-epub) y [/blog/lit-format-conversion-and](/blog/lit-format-conversion-and)\n- **Solución de problemas de lectores que no son Kindle** — consejos Kobo, Apple Books y Android. [/blog/kobo-to-epub](/blog/kobo-to-epub) y [/blog/read-epub-on-any-device](/blog/read-epub-on-any-device)',
+      },
+      {
+        heading: 'Empieza a convertir ahora',
+        body: '¿Listo para convertir? Ve al [conversor EPUB a AZW3](/convert/epub-to-azw3) para un Kindle moderno, o a [MOBI a EPUB](/convert/mobi-to-epub) si quieres salir del ecosistema Amazon por completo. Ambos funcionan en el navegador sin instalar nada. Para el detalle a nivel de formato detrás de esta página, la [referencia del formato AZW3](/formats/azw3) expone sus capacidades y límites.',
+      },
+    ],
+  },
+  faqs: [
+    { question: '¿Qué formato usa Kindle?', answer: 'Kindle usa principalmente AZW3 y KFX. Para carga lateral, AZW3 es el formato más compatible que BookConv puede generar. Send to Kindle también acepta EPUB y lo convierte automáticamente.' },
+    { question: '¿A qué formato debo convertir para Kindle?', answer: 'Para carga lateral, AZW3 es el formato más compatible que BookConv puede generar. Para Send to Kindle, sube EPUB o AZW3 y Amazon los convierte.' },
+    { question: '¿Sigue soportado MOBI en Kindle?', answer: 'Amazon retiró la carga lateral de MOBI; Send to Kindle ahora favorece EPUB y AZW3. Convertir libros nuevos a MOBI ya no se recomienda.' },
+    { question: '¿Qué es KFX y puedo crearlo?', answer: 'KFX es un formato propietario de Amazon con maquetación avanzada. Lo genera la propia cadena de la compañía, así que los conversores de terceros generalmente no pueden crear KFX real. Convierte a AZW3 en su lugar.' },
+    { question: '¿Puede BookConv convertir EPUB a un formato Kindle?', answer: 'Sí. BookConv convierte EPUB a AZW3, que los Kindle leen bien, y también puedes enviar EPUB a Kindle vía el Send to Kindle de Amazon.' },
+    { question: '¿Cómo modernizo una biblioteca MOBI antigua?', answer: 'Convierte MOBI hacia delante a AZW3 (o EPUB) con BookConv para que tus archivos usen un formato actual y bien soportado.' },
+    { question: '¿Puede Kindle Fire abrir archivos MOBI?', answer: 'Sí. La app de Kindle en Fire OS lee MOBI, AZW3, KFX y EPUB vía Send to Kindle. Si un MOBI antiguo no se abre, conviértelo a AZW3 o reenvíalo por Send to Kindle.' },
+    { question: '¿Puedo leer libros Kindle en Kobo?', answer: 'Solo si son libres de DRM. Convierte los libros Kindle protegidos a EPUB con BookConv y luego transfiérelos a tu Kobo.' },
+    { question: '¿Cómo transfiero ebooks entre Kindle y otros dispositivos?', answer: 'Convierte los libros Kindle a EPUB (solo libres de DRM) con BookConv y luego sincroniza vía USB, email o almacenamiento en nube. Consulta nuestra guía de sincronización multi-dispositivo para más detalles.' },
+    { question: '¿Cuál es la diferencia entre AZW3 y KFX?', answer: 'AZW3 (KF8) es el formato que tú mismo puedes producir y que los conversores aceptan. KFX es el formato propietario aún más nuevo de Amazon con autoedición mejorada, usado para compras de la tienda. No puedes crear KFX real — convierte a AZW3 en su lugar.' },
+    { question: '¿Qué modelos de Kindle admiten AZW3?', answer: 'Todo Kindle desde 2015 admite AZW3: Paperwhite 3 y posteriores, Oasis, Voyage, Kindle Scribe y todos los modelos actuales. Los dispositivos anteriores a 2015 pueden no mostrar el estilo AZW3 correctamente.' },
+    { question: '¿Cómo compruebo qué formatos admite mi Kindle?', answer: 'Ve a Ajustes > Opciones de dispositivo en tu Kindle. Si ves "Send to Kindle" y "Ajustes de documentos personales", admite AZW3 y EPUB. Para modelos antiguos, consulta la tabla oficial de compatibilidad de Amazon.' },
+    { question: '¿Puedo convertir KFX de vuelta a EPUB o AZW3?', answer: 'Los archivos KFX de la Kindle Store están protegidos con DRM y no se pueden convertir. Sin embargo, si tienes un KFX libre de DRM (raro), puedes usar Calibre o BookConv para convertirlo a EPUB o AZW3.' },
+  ],
+} satisfies import('./types').GuideEs
 
