@@ -894,7 +894,7 @@
           "tier": "SUPP",
           "status": "doing",
           "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
-          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现】2026-10-21 部署核验发现西语 guide 页「More guides/Related blog posts」相关卡片用英文标题(如 Calibre Alternative)且链接回非/es英文页——属系统性 i18n 缺口；已修复卡片标题本地化+链接/es前缀+区块西语标题(指南页)。全局 chrome(面包屑/Key Takeaways/日期en-US/博客卡标题)留待独立 i18n 任务。"
+          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现并已修复】2026-10-21 部署核验发现西语 guide/blog 页「More guides/Related posts/Related Guides」卡片用英文标题且链接回非/es英文页、正文内联链接指英文页——已修（提交 b9efb47）：新增 src/lib/es-routes.ts 单一真相模块，middleware×2+sitemap×2 重复硬编码改 import 同一份，链接按白名单判定（内走/es、白名单外回退英文）杜绝 404 死链；线上复验 52 条唯一站内链接零 404。\n【chrome 层已拆出为 M5-6】面包屑/Key Takeaways/日期 en-US/blog 索引页等全局 chrome 西语化不在本任务范围，见 M5-6（due 2026-10-22）。"
         },
         {
           "id": "M5-3",
@@ -935,6 +935,20 @@
           "status": "doing",
           "statusNote": "2026-10-19 诊断报告完成（数据分析/M5-5-es语言错配诊断报告-2026-10-19.md），待用户决策。核心结论：① 错配真实存在但已自行消失——7-8 月 /es/ URL 系统性承接英语查询（21 查询 100% 英语、同查询 es 排名高于 en，如 azw3 vs mobi：es 29 展@9.9 vs en 7 展@12.4），9 月中旬起 /es/ 内容页英语查询展示 77→0 并保持；② 直接原因记 UNKNOWN，但时间线与 09-05 P3-C 白名单（未翻译 /es/ 路由 404→退索引）强相关，当时的错配主体是「英文兜底内容挂 /es/ URL」而非翻译页本身；③ 仍存的设计内错配：/es/guide/* 11 页英文正文+lang=es（M5-2 若翻译则自动消解，长期不翻需 noindex/canonical 单处处置）；④ 当前真问题是全部 /es/ 内容页 0 展示且收录状态不可验证——URL Inspection API 今日 403（服务账号失权限，含 en 页全挂），10-02 历史 Inspection 无 es 页；⑤ 口径澄清：M5-4 的「es 曝光 95/CTR 2.11%」是 Bing CountryReport 地域口径非 GSC 页面级；⑥ 验收③已提前达成（英语查询展示 77→0，信号转移结果已由 P3-C 实现），西语查询 0→0 结合 Bing 侧 95 曝光支持「西语价值在 AI 侧」读法（hedge：样本小）。重构后选项：A 降级常规 SEO / B 建议否决（无问题可解+欺骗性优化风险）/ C1 下架翻译页建议否决（毁 AI 侧资产）/ C2 guide 兜底处置可排队低优先 / D 维持监控=当前默认最优 / E（新）恢复 GSC 服务账号权限验证收录=前置必修（需用户 GSC 后台操作）。推荐路径 E→D+C2 排队→西语战略随 M5-3 定。未 push（连同 e77ea19、9033a90 待发布）。\n[2026-10-19 10:46 已发布] 上述「未 push（连同 e77ea19、9033a90 待发布）」已过期：9033a90（立项）、32b697f（本任务 doing）、e77ea19（M2-12）、c95ef0b（SERP 观测深度防护+数据重建）等共 21 个提交已推送并部署上线。本任务保持 doing（待用户处置决策，推荐路径 E→D+C2）。",
           "note": "来源：M2-12 P1 残余单独立项（用户 10-19 指令「对P1残余单独立项」）。样本量义务：77 展示/91 天≈0.85 展示/天，任何 CTR 类结论必须带样本量，预期收益上限约 2-4 点击/周——小 ROI 问题，但属程序化页面治理的结构性样本，且为 de/ja 语言扩张的前置探路。与 M5-2（补西语 guide 译文，due 10-20）、M5-3（es 内容扩充，due 11-15）存在方向张力：西语战略需在本任务决策点同步明确。"
+        },
+        {
+          "id": "M5-6",
+          "action": "西语页 chrome 层本地化（面包屑/Key Takeaways/日期格式/blog 索引页）",
+          "detail": "M5-2 译文的正文/卡片已西语化，但全局 chrome 仍是英文：面包屑 Home/Guides、Key Takeaways 小标题、日期 toLocaleDateString(\"en-US\")、blog 索引页与 Back to all guides 等固定文案。范围：src/app/[locale]/guide/[slug]/page.tsx、src/app/[locale]/blog/[slug]/page.tsx、src/app/[locale]/blog/page.tsx、src/app/[locale]/guide/page.tsx（以及 convert 页若含同类 chrome）。约束：只加 es 分支不回退英文既有渲染；所有新链接一律走 src/lib/es-routes.ts 的 esGuideHref/esBlogHref（白名单外回退英文路由，禁裸加 /es 前缀——那会撞 middleware P3-C 白名单产生 404 死链，2026-10-21 已踩过一次）。",
+          "owner": "A",
+          "deliverable": "4 类 chrome 文案西语化 + 日期 es-ES 格式 + 门禁与线上复验",
+          "accept": "① 4 个西语页（guide ×2 + blog ×2）面包屑/小标题/日期全西语，英文页无回归；② 页内所有站内链接逐条 HTTP 200（301 需跟随后 200），零 404 死链；③ /es 链接全部经 es-routes 白名单判定；④ tsc 0 error + 内容门禁 0/0 + next build 成功 + 线上复验通过。",
+          "due": "2026-10-22",
+          "priority": "P1",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "2026-10-21 线上核验发现并从 M5-2 拆出（原 M5-2 状态说明标记「留待独立 i18n 任务」）。安排 10-22 执行，与 M5-2 批次3 同日不同任务。",
+          "note": "承接 M5-2 线上核验发现的 chrome 层 i18n 缺口；与 M5-5（/es 语言错配治理）相邻但不同：M5-5 治查询/语言错配，本任务治页面固定文案。"
         }
       ]
     },
