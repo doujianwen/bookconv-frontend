@@ -247,10 +247,10 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {relatedBlogPostsForGuide.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">Related blog posts</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Artículos relacionados' : 'Related blog posts'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedBlogPostsForGuide.map((rp) => (
-                <Link key={rp.slug} href={rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                <Link key={rp.slug} href={rp.href.startsWith('/blog/') && isEs ? `/es${rp.href}` : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
                   <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{rp.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
                 </Link>
@@ -261,11 +261,11 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {others.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">More guides</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Más guías' : 'More guides'}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {others.map((o) => (
-                <Link key={o.slug} href={`/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{o.title}</h3>
+                <Link key={o.slug} href={`${isEs ? '/es' : ''}/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{getAllGuides().find((g) => g.slug === o.slug)?.es?.title ?? o.title}</h3>
                   <p className="mt-1 text-sm text-gray-500 leading-relaxed">{o.excerpt}</p>
                 </Link>
               ))}

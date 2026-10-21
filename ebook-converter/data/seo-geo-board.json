@@ -894,7 +894,7 @@
           "tier": "SUPP",
           "status": "doing",
           "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
-          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇: calibre-vs-online-converter / batch-converter / ai-ebook-converter) / 批次4→2026-10-24(3篇: epub-to-azw3-for-kindle / epub-to-mobi-keep-formatting / azw3-to-mobi-keep-formatting)。整体 due 2026-10-24。（注：此前状态说明误写剩余 7 篇，实测为 6 篇）"
+          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现】2026-10-21 部署核验发现西语 guide 页「More guides/Related blog posts」相关卡片用英文标题(如 Calibre Alternative)且链接回非/es英文页——属系统性 i18n 缺口；已修复卡片标题本地化+链接/es前缀+区块西语标题(指南页)。全局 chrome(面包屑/Key Takeaways/日期en-US/博客卡标题)留待独立 i18n 任务。"
         },
         {
           "id": "M5-3",
