@@ -889,12 +889,12 @@
           "owner": "A→O",
           "deliverable": "11 篇西语译文",
           "accept": "每篇：正文西语率 100%、H1 与 title 已译、hreflang 仍正确",
-          "due": "2026-10-20",
+          "due": "2026-10-24",
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
           "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
-          "statusNote": "guide es schema additive 扩展 + 西语译文 4 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）；剩余 7 篇分批 ≤3 篇/批。2026-10-21"
+          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇: calibre-vs-online-converter / batch-converter / ai-ebook-converter) / 批次4→2026-10-24(3篇: epub-to-azw3-for-kindle / epub-to-mobi-keep-formatting / azw3-to-mobi-keep-formatting)。整体 due 2026-10-24。（注：此前状态说明误写剩余 7 篇，实测为 6 篇）"
         },
         {
           "id": "M5-3",
