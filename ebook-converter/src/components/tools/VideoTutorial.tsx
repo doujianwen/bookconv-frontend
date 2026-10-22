@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Play } from "lucide-react"
+import { chrome } from "@/lib/ui-chrome"
 
 interface VideoTutorialProps {
   videoUrl: string
@@ -9,9 +10,11 @@ interface VideoTutorialProps {
   title: string
   description?: string
   steps?: Array<{ title: string; description: string }>
+  /** M5-6：西语页 chrome 本地化开关 */
+  isEs?: boolean
 }
 
-export function VideoTutorial({ videoUrl, thumbnailUrl, title, description, steps }: VideoTutorialProps) {
+export function VideoTutorial({ videoUrl, thumbnailUrl, title, description, steps, isEs = false }: VideoTutorialProps) {
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
@@ -53,7 +56,7 @@ export function VideoTutorial({ videoUrl, thumbnailUrl, title, description, step
       {/* Steps */}
       {steps && steps.length > 0 && (
         <div className="rounded-xl border bg-gray-50 p-4">
-          <h4 className="mb-3 text-sm font-medium text-gray-700">Steps</h4>
+          <h4 className="mb-3 text-sm font-medium text-gray-700">{chrome('stepsLabel', isEs)}</h4>
           <ol className="space-y-2">
             {steps.map((step, i) => (
               <li key={i} className="flex gap-2 text-sm">

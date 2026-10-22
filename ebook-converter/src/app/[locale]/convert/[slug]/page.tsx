@@ -153,6 +153,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         tool={conversion.tool}
         description={conversion.description}
         contentData={content}
+        isEs={isEs}
         relatedBlogPosts={relatedBlogPosts}
         relatedGuides={relatedGuides}
       />

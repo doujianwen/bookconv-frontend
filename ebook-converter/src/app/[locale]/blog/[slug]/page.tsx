@@ -9,6 +9,7 @@ import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } fr
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { esBlogHref, esGuideHref } from "@/lib/es-routes"
+import { chrome, dateLocale } from "@/lib/ui-chrome"
 import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 
 interface BlogPostData {
@@ -159,11 +160,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
       />
 
       <main className="mx-auto max-w-3xl px-4 py-16">
-        <nav aria-label="Breadcrumb" className="mb-8">
+        <nav aria-label={isEs ? 'Migas de pan' : 'Breadcrumb'} className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
-            <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
             <li>/</li>
-            <li><Link href="/blog" className="hover:text-blue-600">Blog</Link></li>
+            <li><Link href="/blog" className="hover:text-blue-600">{chrome('blog', isEs)}</Link></li>
             <li>/</li>
             <li aria-current="page" className="font-medium text-gray-900 truncate">{displayTitle}</li>
           </ol>
@@ -174,11 +175,11 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              {new Date(post.date).toLocaleDateString(dateLocale(isEs), { year: "numeric", month: "long", day: "numeric" })}
             </span>
             {post.lastUpdated && post.lastUpdated !== post.date && (
-              <span className="text-xs text-gray-500" title={`Last updated: ${post.lastUpdated}`}>
-                · Updated {new Date(post.lastUpdated).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              <span className="text-xs text-gray-500" title={`${isEs ? 'Última actualización' : 'Last updated'}: ${post.lastUpdated}`}>
+                · {chrome('updated', isEs)} {new Date(post.lastUpdated).toLocaleDateString(dateLocale(isEs), { year: "numeric", month: "long", day: "numeric" })}
               </span>
             )}
             <span>{post.author || "BookConv Team"}</span>
@@ -216,7 +217,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {displayFaqs && displayFaqs.length > 0 && (
           <section className="mt-12" aria-labelledby="faq-heading">
-            <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">{chrome('faq', isEs)}</h2>
             <div className="space-y-4">
               {displayFaqs!.map((f, i) => (
                 <div key={i} className="rounded-xl border bg-white p-5">
@@ -263,11 +264,10 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
                 </Link>
               )}
               {source && (
-                <Link
-                  href="/convert"
+                <Link href="/convert"
                   className="inline-flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50"
                 >
-                  Browse All Converters
+                  {chrome('browseAllConverters', isEs)}
                 </Link>
               )}
             </div>
@@ -276,7 +276,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {relatedPosts.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Artículos relacionados' : 'Related posts'}</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{chrome('relatedPosts', isEs)}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedPosts.map((rp) => (
                 <Link key={rp.slug} href={isEs ? esBlogHref(rp.slug) : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -290,7 +290,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {relatedGuides.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Guías relacionadas' : 'Related Guides'}</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{chrome('relatedGuides', isEs)}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedGuides.map((rg) => (
                 <Link key={rg.slug} href={isEs ? esGuideHref(rg.slug) : rg.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -306,7 +306,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
           <nav aria-label="More posts" className="mt-12 flex items-stretch justify-between gap-4 border-t pt-6">
             {olderPost ? (
               <Link href={isEs ? esBlogHref(olderPost.slug) : `/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                <span className="text-xs text-gray-500">← Older</span>
+                <span className="text-xs text-gray-500">{chrome('older', isEs)}</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
               </Link>
             ) : (
@@ -314,7 +314,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             )}
             {newerPost ? (
               <Link href={isEs ? esBlogHref(newerPost.slug) : `/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
-                <span className="text-xs text-gray-500">Newer →</span>
+                <span className="text-xs text-gray-500">{chrome('newer', isEs)}</span>
                 <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
               </Link>
             ) : (
@@ -326,7 +326,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
         <div className="mt-12 pt-6 border-t">
           <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
             <ArrowLeft className="h-4 w-4" />
-            Back to all posts
+            {chrome('backToAllPosts', isEs)}
           </Link>
         </div>
       </main>

@@ -2,6 +2,7 @@
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
+import { chrome } from "@/lib/ui-chrome"
 
 // Only link to pairs that are actually supported (present in CONVERSION_MAP
 // via getConversion). Pairs absent from CONVERSION_MAP (e.g. epub-to-lrf,
@@ -13,9 +14,11 @@ interface RelatedConversionsProps {
   currentSource: string
   currentTarget: string
   max?: number
+  /** M5-6：西语页 chrome 本地化开关 */
+  isEs?: boolean
 }
 
-export function RelatedConversions({ currentSource, currentTarget, max = 6 }: RelatedConversionsProps) {
+export function RelatedConversions({ currentSource, currentTarget, max = 6, isEs = false }: RelatedConversionsProps) {
   const currentKey = `${currentSource}-${currentTarget}`
 
   const related = SUPPORTED_KEYWORDS
@@ -31,16 +34,16 @@ export function RelatedConversions({ currentSource, currentTarget, max = 6 }: Re
     const others = SUPPORTED_KEYWORDS
       .filter((k) => `${k.source}-${k.target}` !== currentKey)
       .slice(0, max)
-    return <RelatedLinks keywords={others} />
+    return <RelatedLinks keywords={others} isEs={isEs} />
   }
 
-  return <RelatedLinks keywords={related} />
+  return <RelatedLinks keywords={related} isEs={isEs} />
 }
 
-function RelatedLinks({ keywords }: { keywords: typeof KEYWORDS }) {
+function RelatedLinks({ keywords, isEs }: { keywords: typeof KEYWORDS; isEs: boolean }) {
   return (
     <section>
-      <h2 className="mb-4 text-2xl font-bold text-gray-900">Other Useful Conversions</h2>
+      <h2 className="mb-4 text-2xl font-bold text-gray-900">{chrome('otherUsefulConversions', isEs)}</h2>
       <div className="grid gap-2 sm:grid-cols-2">
         {keywords.map((k) => {
           const slug = getSlug(k.source, k.target)
@@ -50,7 +53,7 @@ function RelatedLinks({ keywords }: { keywords: typeof KEYWORDS }) {
               href={`/convert/${slug}`}
               className="rounded-lg border bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:text-blue-600"
             >
-              {k.source.toUpperCase()} to {k.target.toUpperCase()}
+              {isEs ? `${k.source.toUpperCase()} a ${k.target.toUpperCase()}` : `${k.source.toUpperCase()} to ${k.target.toUpperCase()}`}
             </Link>
           )
         })}

@@ -3,6 +3,21 @@ import type { NextRequest } from 'next/server';
 import { applySecurityHeaders } from './middleware/security';
 import { ESP_BLOG_SLUGS, ESP_CONVERT_SLUGS, ESP_GUIDE_SLUGS } from './lib/es-routes';
 
+/**
+ * M5-6（2026-10-22）：放行 /es 路径时注入请求头 x-bookconv-locale=es。
+ * 根因：Set-Cookie 只对下一请求生效，同请求内根 layout 的 getLocale() 读不到 ⇒
+ * 直访 /es/guide/* 首访时 <html lang> 与 Header/页脚 chrome 回落英文。
+ * NextResponse.next({ request: { headers } }) 覆写的请求头对同请求的下游渲染可见，
+ * 是 Next 官方机制；src/i18n/utils.ts getLocale() 消费该头。
+ */
+function esPassThrough(request: NextRequest): NextResponse {
+  const headers = new Headers(request.headers);
+  headers.set('x-bookconv-locale', 'es');
+  const response = NextResponse.next({ request: { headers } });
+  response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
+  return applySecurityHeaders(request, response);
+}
+
 const locales = ['en', 'es'];
 const defaultLocale = 'en';
 
@@ -117,9 +132,7 @@ export async function middleware(request: NextRequest) {
       const slug = pathname.replace('/es/blog/', '');
       // Validate slug is one of the 6 real Spanish blog posts
       if (ESP_BLOG_SLUGS.includes(slug)) {
-        const response = NextResponse.next();
-        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-        return applySecurityHeaders(request, response);
+        return esPassThrough(request);
       }
       // Slug not in whitelist → 404
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
@@ -132,9 +145,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/es/convert/')) {
       const slug = pathname.replace('/es/convert/', '');
       if (ESP_CONVERT_SLUGS.includes(slug)) {
-        const response = NextResponse.next();
-        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-        return applySecurityHeaders(request, response);
+        return esPassThrough(request);
       }
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
@@ -145,9 +156,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/es/guide/')) {
       const slug = pathname.replace('/es/guide/', '');
       if (ESP_GUIDE_SLUGS.includes(slug)) {
-        const response = NextResponse.next();
-        response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-        return applySecurityHeaders(request, response);
+        return esPassThrough(request);
       }
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
@@ -157,9 +166,7 @@ export async function middleware(request: NextRequest) {
     // robots noindex,nofollow. Allowed here because the P3-C whitelist below
     // would otherwise 404 the entire Spanish-prefixed workbench.
     if (pathname === '/es/admin' || pathname.startsWith('/es/admin/')) {
-      const response = NextResponse.next();
-      response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-      return applySecurityHeaders(request, response);
+      return esPassThrough(request);
     }
     // /es/auth — localized sign-in page (2026-10-03). Same reasoning as the
     // workbench above: an auth page is not indexable content (it sets
@@ -169,9 +176,7 @@ export async function middleware(request: NextRequest) {
     // the catch-all 404 below, while the workbench it unlocks lives at
     // /es/admin. The page now exists at src/app/[locale]/auth/page.tsx.
     if (pathname === '/es/auth' || pathname.startsWith('/es/auth/')) {
-      const response = NextResponse.next();
-      response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
-      return applySecurityHeaders(request, response);
+      return esPassThrough(request);
     }
 
     // All other /es/* paths → 404 (static pages, blog without es version)

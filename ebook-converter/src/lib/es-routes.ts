@@ -53,6 +53,14 @@ export function esBlogHref(slug: string): string {
   return ESP_BLOG_SLUGS.includes(slug) ? `/es/blog/${slug}` : `/blog/${slug}`
 }
 
+/** convert 的西语路由链接；不在白名单内回退英文路由（避免 404）。M5-6 新增：
+ *  guide 详情页 CTA 与 convert 索引页在 /es 下按白名单判定，白名单外回退英文路由。
+ *  注意：/es/convert（索引页）与 /es/guide、/es/blog 索引路由本身未在 middleware
+ *  白名单开放（P3-C 只放行白名单 slug 详情页）⇒ 索引页链接一律回退英文路由。 */
+export function esConvertHref(slug: string): string {
+  return ESP_CONVERT_SLUGS.includes(slug) ? `/es/convert/${slug}` : `/convert/${slug}`
+}
+
 /**
  * 把西语页面正文里的站内 markdown 链接改写为西语路由。
  * 仅改写白名单内的目标；白名单外的链接保持英文路由（其 /es 版本会 404）。

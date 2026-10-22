@@ -717,8 +717,9 @@
           "due": "2026-10-20",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "blocked",
-          "note": "⚠️ 67/67 blog页已全部有FAQ schema，无批量加字段空间。差异化只能走M2-8 Batch 14逐篇内容改写路线，无法单会话安全完成55页。需按「批量改前必先审计」纪律分批推进。 关联 M3-12：keyTakeaways 术语已同步 Notion 手册（10-11），Blog 页差异化仍走 M2-8 Batch 14 逐篇路线。"
+          "status": "doing",
+          "note": "⚠️ 67/67 blog页已全部有FAQ schema，无批量加字段空间。差异化只能走M2-8 Batch 14逐篇内容改写路线，无法单会话安全完成55页。需按「批量改前必先审计」纪律分批推进。 关联 M3-12：keyTakeaways 术语已同步 Notion 手册（10-11），Blog 页差异化仍走 M2-8 Batch 14 逐篇路线。",
+          "statusNote": "[2026-10-22 逾期处理] 复核确认 blocked 判定成立（67/67 已有 FAQ schema；55 页无法单会话安全完成，既有审计结论未被推翻）。解阻提案（2026-10-22 18:34 用户拍板 A，已落地，状态转 doing）：A) 挂靠 M11-3 机会词批次——M11-3 P1 清单已含 open epub file 等 blog 词，blog 页差异化随批次顺带覆盖，零新增排期面（已选）；B) 独立周更批次（未选）。【落地机制】M3-10 转 doing，blog 差异化不再作为独立卡点，改为挂靠 M11-3 机会词批次逐批推进（≤3页/批 + Gate B + 人工审稿），每批交付后从 55 页中消项；不触碰 M2-8 既有 13 零抓取 convert 页。首批 blog 差异化页随 M11-3 后续机会词批次启动（须先确认目标页未被并行对话占用）。"
         },
         {
           "id": "M3-11",
@@ -894,34 +895,8 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释",
-          "statusNote": "guide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现并已修复】2026-10-21 部署核验发现西语 guide/blog 页「More guides/Related posts/Related Guides」卡片用英文标题且链接回非/es英文页、正文内联链接指英文页——已修（提交 b9efb47）：新增 src/lib/es-routes.ts 单一真相模块，middleware×2+sitemap×2 重复硬编码改 import 同一份，链接按白名单判定（内走/es、白名单外回退英文）杜绝 404 死链；线上复验 52 条唯一站内链接零 404。\n【chrome 层已拆出为 M5-6】面包屑/Key Takeaways/日期 en-US/blog 索引页等全局 chrome 西语化不在本任务范围，见 M5-6（due 2026-10-22）。"
-        },
-        {
-          "id": "M5-3",
-          "action": "es 内容层覆盖扩充",
-          "detail": "当前西语内容仅 9 页（blog 6 + convert 3）；按流量潜力补 convert 页西语版，每周 ≤10 页。",
-          "owner": "A",
-          "deliverable": "扩充清单",
-          "accept": "es 内容页从 9 → ≥20；sitemap 中 es URL 同步更新",
-          "due": "2026-11-15",
-          "priority": "P2",
-          "tier": "SUPP",
-          "status": "todo"
-        },
-        {
-          "id": "M5-4",
-          "action": "西语独立关键词台账",
-          "detail": "西语词表独立建立，不照搬英文词直译（西语搜索意图与词形不同）。",
-          "owner": "A",
-          "deliverable": "keyword-sheet-es.csv",
-          "accept": "≥15 个西语词，每个含本地搜索量来源与 Target URL",
-          "due": "2026-10-10",
-          "priority": "P2",
-          "tier": "SUPP",
-          "status": "done",
-          "note": "🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。",
-          "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。"
+          "note": "方向是补译文，不是删页 —— 见 sitemap.ts:75-91 注释 ｜ 🟢 可用本轮 AI 侧西语证据起底：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部。来源=AISearchQueriesReport_2026_10_5.csv 🟢 第二份证据：传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。双源已就位（AI 侧 1,265 引用 + 传统 es 曝光 95）。",
+          "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。\nguide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现并已修复】2026-10-21 部署核验发现西语 guide/blog 页「More guides/Related posts/Related Guides」卡片用英文标题且链接回非/es英文页、正文内联链接指英文页——已修（提交 b9efb47）：新增 src/lib/es-routes.ts 单一真相模块，middleware×2+sitemap×2 重复硬编码改 import 同一份，链接按白名单判定（内走/es、白名单外回退英文）杜绝 404 死链；线上复验 52 条唯一站内链接零 404。\n【chrome 层已拆出为 M5-6】面包屑/Key Takeaways/日期 en-US/blog 索引页等全局 chrome 西语化不在本任务范围，见 M5-6（due 2026-10-22）。\n[2026-10-22 批次3 完成] 实测 7/10 篇有真实 es 块（磁盘核验：epub-vs-mobi / kindle-formats / best-ebook-converter / calibre-alternative / calibre-vs-online-converter / batch-converter / ai-ebook-converter）；本轮批次3 新增 3 篇（calibre-vs-online-converter / batch-converter / ai-ebook-converter，全文真实西语、英文功能词 0 命中、updatedAt bump 2026-10-22、git diff 纯新增英文零改动），剩余 3 篇排批次4→2026-10-24，整体 due 2026-10-24。⚠️ 口径说明：任务书要求记「6/10」，但板面上一条 statusNote 记为 4/10（含 kindle-formats），4+3=7 且 7 已完成+3 剩余=10 总数自洽 ⇒ 按磁盘实测记 7/10；与任务书 6/10 的 1 篇差为 kindle-formats 计入问题，留待人工核对。azw3-vs-mobi 与已有西语 blog 同题冲突，已跳过不动（不在 10 篇内）。批次3 验证：本地 next start 端到端 3 页 HTTP 200 + lang=es + chrome 全西语 + 页内站内链接零 404；门禁 tsc 0 / content-integrity 0/0 / dup-headings 0 / meta-desc ERROR=0 / build exit 0 / board-json PASS。"
         },
         {
           "id": "M5-5",
@@ -947,8 +922,8 @@
           "due": "2026-10-22",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "2026-10-21 线上核验发现并从 M5-2 拆出（原 M5-2 状态说明标记「留待独立 i18n 任务」）。安排 10-22 执行，与 M5-2 批次3 同日不同任务。",
+          "status": "done",
+          "statusNote": "2026-10-22 完成（本轮）。chrome 改动清单：① 新增 src/lib/ui-chrome.ts 单一文案字典（chrome()/dateLocale()，覆盖面包屑/Key Takeaways/FAQ/相关区块/Back to/索引页/convert 工具页共 40+ 键，en/es 双语）；② guide/[slug] 详情页：面包屑、日期 es-ES、Key Takeaways、FAQ、相关区块、Try It Yourself CTA（含 esConvertHref 白名单链接）全西语化；③ blog/[slug] 详情页：面包屑、日期/Updated、FAQ、Browse All Converters、Related posts/Guides、Older/Newer、Back to all posts 全西语化；④ guide/blog/convert 三个索引页：加 locale 参数 + isEs chrome（H1/导语/aria-label/JSON-LD description）+ 白名单链接路由；⑤ convert 工具页（ToolPageClient + TrustBar/KeyFactsSection/KeyTakeawaysSection/FAQSection/RelatedConversions/BatchConversionGuide/VideoTutorial 七组件）：Quick Answer/Calibre 背书/Key Takeaways/FAQ/相关区块/Video Tutorial/信任条等固定文案经 isEs prop 西语化；⑥ es-routes.ts 新增 esConvertHref；⑦ src/i18n/utils.ts getLocale() 增加 middleware 注入的 x-bookconv-locale 请求头回退（修直访 /es 首访 lang=en 错配），middleware.ts 5 处 es 放行分支改 esPassThrough 注入该头；⑧ src/app/layout.tsx 头部/页脚裸 /es 前缀链接（/es/convert、/es/blog、/es/guide、/es/pricing 等 15 处）改英文路由回退——那些 /es 索引/静态路由不在 P3-C 白名单会 404。验证：tsc 0 error；audit-content-integrity 0/0；find-duplicate-headings 0；audit:meta-desc ERROR=0（WARN 127 存量）；next build --webpack exit 0；check-board-json PASS；本地 next start 端到端 22 页（10 西语+12 英文对照）全 200、lang 全对、chrome 断言全过、234 条站内 guide/blog 链接 0 个 404（229×200 + 5×301 跟随后 200）。⚠️ 已知约束（非本轮引入）：/es/blog、/es/guide、/es/convert 索引页与 /es 静态页在 middleware P3-C 层 404，索引页 isEs 分支为路由开放后即生效的正确实现；/es/blog/{marvel,twilight,lord-of-the-rings} 301 目标 /es/blog/read-epub-on-any-device 未白名单（09-29 B11a 既有行为，无站内链接指向该链）。未 push，待人工复核。",
           "note": "承接 M5-2 线上核验发现的 chrome 层 i18n 缺口；与 M5-5（/es 语言错配治理）相邻但不同：M5-5 治查询/语言错配，本任务治页面固定文案。"
         }
       ]
@@ -1558,7 +1533,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "首批 1 页 how-to-send-epub-to-kindle 强化（承接 send to kindle / amazon send to kindle，事实经 Amazon 官方验证）；后续批次 ≤3 页/批 + Gate B + 人工审稿。2026-10-21"
+          "statusNote": "首批 1 页 how-to-send-epub-to-kindle 强化（承接 send to kindle / amazon send to kindle，事实经 Amazon 官方验证）；后续批次 ≤3 页/批 + Gate B + 人工审稿。2026-10-21\n[批次 2 · 2026-10-22] 新建 guide kindle-vs-kobo（承接 kindle vs kobo 机会词，1 页 ≤3 上限；仅动新文件——kindle-formats/how-to-read-epub-on-kindle 属存量文件且正被并行对话 M5-2 触碰，parallel writer 纪律下批次 3 顺延）：GEO 结构达标（5 keyTakeaways / 8 FAQ / authorship / metaTitle 46 字 ≤55 / updatedAt 2026-10-22），index.ts 注册 + llms.txt Troubleshooting Guides 同步（26/26）；门禁：publish-gate 锁 kindle-vs-kobo（GATE_SLUGS）0 BLOCK / 0 critical / 1 存量 WARN（llms-conv-out-of-sync 28≠60，非本次） + meta-desc 全量 WARN=121 为 P2 积压（非 Gate B 输出） + audit-content 0/0 + 标题唯一性 0 + tsc 0 + next build exit 0。未 push，待人工审稿后由用户发布。｜存量积压：① llms-conv-out-of-sync（llms.txt 转换数 28 ≠ CONVERSION_MAP 60）待 backlog 修复；② kindle-vs-kobo 对比事实已于 2026-10-22 外部核验并修正——Kobo MOBI 误称「逐步淘汰」→ 原生支持、Kindle CBZ/CBR 误称「机型和型号而异」→ 不支持（转 EPUB/PDF）、补图书馆借阅区域限定（Kobo 多地区 / Libby→Kindle 主 US/UK）；另 Kobo FB2 官方文档未列（与官方一致）留待人工确证。E-E-A-T 风险已闭环。"
         },
         {
           "id": "M11-5",

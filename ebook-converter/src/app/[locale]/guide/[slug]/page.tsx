@@ -8,7 +8,8 @@ import { renderMarkdownToHtml, stripMarkdown, type BlogFaq } from "@/data/blog/t
 import { getRelatedGuides, getRelatedBlogPostsForGuide } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
-import { esBlogHref, esGuideHref, localizeEsInternalLinks } from "@/lib/es-routes"
+import { esBlogHref, esConvertHref, esGuideHref, localizeEsInternalLinks } from "@/lib/es-routes"
+import { chrome, dateLocale } from "@/lib/ui-chrome"
 
 interface GuideData {
   slug: string
@@ -131,11 +132,11 @@ export default async function GuidePage({ params }: GuideSlugProps) {
       />
 
       <main className="mx-auto max-w-3xl px-4 py-16">
-        <nav aria-label="Breadcrumb" className="mb-8">
+        <nav aria-label={isEs ? 'Migas de pan' : 'Breadcrumb'} className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
-            <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
             <li>/</li>
-            <li><Link href="/guide" className="hover:text-blue-600">Guides</Link></li>
+            <li><Link href="/guide" className="hover:text-blue-600">{chrome('guides', isEs)}</Link></li>
             <li>/</li>
             <li aria-current="page" className="font-medium text-gray-900 truncate">{c.title}</li>
           </ol>
@@ -147,7 +148,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              {new Date(g.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              {new Date(g.date).toLocaleDateString(dateLocale(isEs), { year: "numeric", month: "long", day: "numeric" })}
             </span>
             <div className="flex items-center gap-1.5">
               {g.tags.map((tag) => (
@@ -162,7 +163,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {c.keyTakeaways?.length > 0 && (
           <div className="mb-10 rounded-xl border-l-4 border-blue-500 bg-blue-50 p-5">
-            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-700">Key Takeaways</h2>
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-blue-700">{chrome('keyTakeaways', isEs)}</h2>
             <ul className="space-y-1.5 text-sm text-gray-700">
               {c.keyTakeaways.map((t, i) => (
                 <li key={i} className="flex gap-2">
@@ -188,7 +189,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {c.faqs?.length > 0 && (
           <section className="mt-12" aria-labelledby="faq-heading">
-            <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <h2 id="faq-heading" className="mb-4 text-2xl font-bold text-gray-900">{chrome('faq', isEs)}</h2>
             <div className="space-y-4">
               {c.faqs.map((f, i) => (
                 <div key={i} className="rounded-xl border bg-white p-5">
@@ -221,27 +222,33 @@ export default async function GuidePage({ params }: GuideSlugProps) {
         )}
 
         <section className="mt-12 rounded-xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
-          <h2 className="mb-2 text-lg font-semibold text-gray-900">Try It Yourself</h2>
+          <h2 className="mb-2 text-lg font-semibold text-gray-900">{chrome('tryItYourself', isEs)}</h2>
           {g.formats ? (
             <>
-              <p className="mb-4 text-sm text-gray-600">Convert {g.formats.source.toUpperCase()} to {g.formats.target.toUpperCase()} for free:</p>
+              <p className="mb-4 text-sm text-gray-600">
+                {isEs
+                  ? `Convierte ${g.formats.source.toUpperCase()} a ${g.formats.target.toUpperCase()} gratis:`
+                  : `Convert ${g.formats.source.toUpperCase()} to ${g.formats.target.toUpperCase()} for free:`}
+              </p>
               <Link
-                href={`/convert/${g.formats.source.toLowerCase()}-to-${g.formats.target.toLowerCase()}`}
+                href={isEs ? esConvertHref(`${g.formats.source.toLowerCase()}-to-${g.formats.target.toLowerCase()}`) : `/convert/${g.formats.source.toLowerCase()}-to-${g.formats.target.toLowerCase()}`}
                 className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
               >
                 <BookOpen className="h-4 w-4" />
-                Convert {g.formats.source.toUpperCase()} to {g.formats.target.toUpperCase()}
+                {isEs
+                  ? `Convertir ${g.formats.source.toUpperCase()} a ${g.formats.target.toUpperCase()}`
+                  : `Convert ${g.formats.source.toUpperCase()} to ${g.formats.target.toUpperCase()}`}
               </Link>
             </>
           ) : (
             <>
-              <p className="mb-4 text-sm text-gray-600">Pick a format pair and convert it free:</p>
+              <p className="mb-4 text-sm text-gray-600">{chrome('pickFormatFree', isEs)}</p>
               <Link
                 href="/convert"
                 className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
               >
                 <BookOpen className="h-4 w-4" />
-                Browse All Converters
+                {chrome('browseAllConverters', isEs)}
               </Link>
             </>
           )}
@@ -249,7 +256,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {relatedBlogPostsForGuide.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Artículos relacionados' : 'Related blog posts'}</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{chrome('relatedBlogPosts', isEs)}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedBlogPostsForGuide.map((rp) => (
                 <Link key={rp.slug} href={isEs ? esBlogHref(rp.slug) : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -263,7 +270,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
 
         {others.length > 0 && (
           <section className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900">{isEs ? 'Más guías' : 'More guides'}</h2>
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">{chrome('moreGuides', isEs)}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {others.map((o) => (
                 <Link key={o.slug} href={isEs ? esGuideHref(o.slug) : `/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -278,7 +285,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
         <div className="mt-12 pt-6 border-t">
           <Link href="/guide" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
             <ArrowLeft className="h-4 w-4" />
-            Back to all guides
+            {chrome('backToAllGuides', isEs)}
           </Link>
         </div>
       </main>

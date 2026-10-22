@@ -7,6 +7,7 @@ import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"
+import { chrome } from "@/lib/ui-chrome"
 
 const PAGE_SIZE = 8
 
@@ -64,6 +65,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
   const allPosts = getAllPosts()
   const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
+  const isEs = locale === 'es'
 
   if (currentPage > totalPages && totalPages > 0) {
     redirect(`${prefix}/blog${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
@@ -90,7 +92,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
             "@context": "https://schema.org",
             "@type": "Blog",
             name: t("blog.title"),
-            description: "Expert guides on ebook format conversion.",
+            description: isEs ? "Guías expertas sobre conversión de formatos de libros electrónicos." : "Expert guides on ebook format conversion.",
             url: `https://www.bookconv.com${prefix}/blog`,
             publisher: { "@id": "https://www.bookconv.com/#organization" },
             blogPost: pagedPosts.map((p) => ({
@@ -107,7 +109,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
         <p className="text-lg text-gray-600">{t("blog.subtitle")}</p>
       </div>
 
-      <nav aria-label="Breadcrumb" className="mb-8">
+      <nav aria-label={chrome('breadcrumbLabel', isEs)} className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-gray-500">
           <li><Link href={prefix || "/"} className="hover:text-blue-600">{t("common.home")}</Link></li>
           <li>/</li>
@@ -154,7 +156,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
       </div>
 
       {totalPages > 1 && (
-        <nav aria-label="Blog pagination" className="mt-10 flex justify-center gap-2 flex-wrap">
+        <nav aria-label={chrome('paginationLabel', isEs)} className="mt-10 flex justify-center gap-2 flex-wrap">
           {currentPage > 1 && (
             <Link
               href={pagHref(currentPage - 1)}

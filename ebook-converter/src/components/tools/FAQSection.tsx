@@ -1,4 +1,6 @@
-﻿interface FAQ {
+﻿import { chrome } from "@/lib/ui-chrome"
+
+interface FAQ {
   question: string
   answer: string
 }
@@ -7,12 +9,14 @@ interface FAQSectionProps {
   faqs: FAQ[]
   sourceFormat: string
   targetFormat: string
+  /** M5-6：西语页 chrome 本地化开关 */
+  isEs?: boolean
 }
 
-export function FAQSection({ faqs }: FAQSectionProps) {
+export function FAQSection({ faqs, isEs = false }: FAQSectionProps) {
   return (
     <section className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+      <h2 className="text-2xl font-bold text-gray-900">{chrome('faq', isEs)}</h2>
       <div className="divide-y rounded-xl border bg-white">
         {faqs.map((faq, i) => (
           <details key={i} className="group p-4">

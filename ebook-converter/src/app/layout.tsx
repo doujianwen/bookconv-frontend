@@ -159,19 +159,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </a>
           <header className='border-b bg-white' role='banner'>
             <div className='mx-auto flex max-w-5xl items-center justify-between px-4 py-3'>
-              <Link href={locale === 'es' ? '/es' : '/'} className='flex items-center gap-2 font-bold text-blue-600' aria-label={`${t('common.siteName') || 'BookConv'} Home`}>
+              {/* M5-6（2026-10-22）：/es 索引页与静态页（/es/convert、/es/blog、/es/guide、
+                  /es/pricing 等）不在 middleware P3-C 白名单（只放行白名单 slug 详情页）⇒ 裸 /es 前缀会 404。
+                  西语会话下头部/页脚导航一律回退英文路由（白名单外回退，与 es-routes.ts 同纪律）；
+                  locale='en' 时行为与链接逐字不变。 */}
+              <Link href='/' className='flex items-center gap-2 font-bold text-blue-600' aria-label={`${t('common.siteName') || 'BookConv'} Home`}>
                 <BookOpen className='h-6 w-6' />
                 <span>{t('common.siteName') || 'BookConv'}</span>
               </Link>
-              <nav aria-label='Primary navigation' className='flex items-center gap-3 text-sm text-gray-600'>
-                <Link href={locale === 'es' ? '/es' : '/'} className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
-                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
-                <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
-                <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
-                <Link href={locale === 'es' ? '/es/pricing' : '/pricing'} className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
-                <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
-                <Link href={locale === 'es' ? '/es/about' : '/about'} className='hover:text-blue-600'>{t('common.about') || 'About'}</Link>
-                <Link href={locale === 'es' ? '/es/founder' : '/founder'} className='hover:text-blue-600'>{t('common.founder') || 'Founder'}</Link>
+              <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'} className='flex items-center gap-3 text-sm text-gray-600'>
+                <Link href='/' className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
+                <Link href='/convert' className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
+                <Link href='/blog' className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
+                <Link href='/guide' className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
+                <Link href='/pricing' className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
+                <Link href='/help' className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
+                <Link href='/about' className='hover:text-blue-600'>{t('common.about') || 'About'}</Link>
+                <Link href='/founder' className='hover:text-blue-600'>{t('common.founder') || 'Founder'}</Link>
                 <LocaleSwitcher />
                 <LoginButton />
               </nav>
@@ -183,13 +187,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
             <div className='mx-auto max-w-5xl space-y-2 px-4'>
               <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are automatically deleted within 1 hour.'}</p>
-              <nav aria-label='Footer navigation' className='flex flex-wrap justify-center gap-4'>
-                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
-                <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
-                <Link href={locale === 'es' ? '/es/guide' : '/guide'} className='hover:text-gray-700'>{t('common.guide') || 'Guides'}</Link>
-                <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
-                <Link href={locale === 'es' ? '/es/help' : '/help'} className='hover:text-gray-700'>{t('common.help') || 'Help'}</Link>
-                <Link href={locale === 'es' ? '/es/terms' : '/terms'} className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
+              <nav aria-label={locale === 'es' ? 'Navegación del pie de página' : 'Footer navigation'} className='flex flex-wrap justify-center gap-4'>
+                <Link href='/convert' className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
+                <Link href='/blog' className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
+                <Link href='/guide' className='hover:text-gray-700'>{t('common.guide') || 'Guides'}</Link>
+                <Link href='/privacy' className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
+                <Link href='/help' className='hover:text-gray-700'>{t('common.help') || 'Help'}</Link>
+                <Link href='/terms' className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
               </nav>
               <div className='flex flex-wrap justify-center gap-4 text-xs'>
                 <a href='mailto:hello@bookconv.com' className='flex items-center gap-1 text-gray-500 hover:text-gray-700' aria-label={t('common.contact') || 'Contact'}>

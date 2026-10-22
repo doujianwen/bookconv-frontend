@@ -23,6 +23,7 @@ import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
 import { KeyTakeawaysSection } from "@/components/tools/KeyTakeawaysSection"
+import { chrome } from "@/lib/ui-chrome"
 interface ContentData {
   hero?: { title?: string; subtitle?: string }
   sections?: Array<{ heading: string; body: string }>
@@ -37,6 +38,8 @@ interface ToolPageClientProps {
   tool: string
   description: string
   contentData?: ContentData | null
+  /** M5-6：西语页 chrome 本地化开关（服务端按 locale+es 译文存在性判定后传入） */
+  isEs?: boolean
   relatedBlogPosts?: RelatedPostRef[]
   relatedGuides?: RelatedGuideRef[]
 }
@@ -77,7 +80,7 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
   },
 }
 
-export function ToolPageClient({ source, target, contentData, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, contentData, isEs = false, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
@@ -222,34 +225,48 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         {/* AI Summary / Quick Answer — GEO optimized */}
         <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
           <h2 className="mb-3 text-lg font-semibold text-blue-900">
-            Quick Answer
+            {chrome('quickAnswer', isEs)}
           </h2>
           <p className="text-sm text-blue-800 leading-relaxed">
-            To convert <strong>{sourceDisplay}</strong> to <strong>{targetDisplay}</strong>:
-            upload your file using the form below, select <strong>{targetDisplay}</strong> as the output format, and click Convert.
-            Our Calibre-powered engine processes the conversion in seconds with no registration required.
-            The converter preserves text content, chapter structure, images, and metadata.
-            For batch conversions of up to 50 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
+            {isEs ? (
+              <>
+                Para convertir <strong>{sourceDisplay}</strong> a <strong>{targetDisplay}</strong>:
+                sube tu archivo con el formulario de abajo, elige <strong>{targetDisplay}</strong> como formato de salida y pulsa Convertir.
+                Nuestro motor basado en Calibre procesa la conversión en segundos y no requiere registro.
+                El conversor conserva el contenido de texto, la estructura de capítulos, las imágenes y los metadatos.
+                Si necesitas convertir varios archivos a la vez, <Link href="/pricing" className="underline hover:text-blue-600">mejora a Pro</Link>.
+              </>
+            ) : (
+              <>
+                To convert <strong>{sourceDisplay}</strong> to <strong>{targetDisplay}</strong>:
+                upload your file using the form below, select <strong>{targetDisplay}</strong> as the output format, and click Convert.
+                Our Calibre-powered engine processes the conversion in seconds with no registration required.
+                The converter preserves text content, chapter structure, images, and metadata.
+                For batch conversions of up to 50 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
+              </>
+            )}
           </p>
         </div>
         {/* Calibre engine endorsement — explicit GEO trust / entity signal */}
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
           <h2 className="mb-2 text-lg font-semibold text-emerald-900">
-            Powered by the Calibre engine
+            {chrome('calibreEngine', isEs)}
           </h2>
           <p className="text-sm text-emerald-800 leading-relaxed">
-            Every {sourceDisplay} to {targetDisplay} conversion runs on the Calibre engine — the industry-standard open-source ebook library trusted by readers and tools worldwide. Calibre preserves fonts, chapter structure, and metadata far more faithfully than converters that rebuild files from scratch.
+            {isEs
+              ? `Cada conversión de ${sourceDisplay} a ${targetDisplay} se ejecuta con el motor de Calibre, la biblioteca de ebooks de código abierto estándar del sector, en la que confían lectores y herramientas de todo el mundo. Calibre conserva fuentes, estructura de capítulos y metadatos con mucha más fidelidad que los conversores que reconstruyen los archivos desde cero.`
+              : `Every ${sourceDisplay} to ${targetDisplay} conversion runs on the Calibre engine — the industry-standard open-source ebook library trusted by readers and tools worldwide. Calibre preserves fonts, chapter structure, and metadata far more faithfully than converters that rebuild files from scratch.`}
           </p>
         </div>
         {/* Trust proofs above the fold — P0: surface privacy/quality promise at top for GEO */}
-        <TrustBar />
+        <TrustBar isEs={isEs} />
         {/* M16-1: Key Facts — format metadata for AI/SEO extraction */}
         {contentData?.keyFacts && contentData.keyFacts.length > 0 && (
-          <KeyFactsSection keyFacts={contentData.keyFacts} />
+          <KeyFactsSection keyFacts={contentData.keyFacts} isEs={isEs} />
         )}
         {/* M13-10: Key Takeaways — high-signal bullet points for AI answer extraction */}
         {contentData?.keyTakeaways && contentData.keyTakeaways.length >= 3 && (
-          <KeyTakeawaysSection keyTakeaways={contentData.keyTakeaways} />
+          <KeyTakeawaysSection keyTakeaways={contentData.keyTakeaways} isEs={isEs} />
         )}
         <div className="space-y-4">
           <FileDropZone
@@ -290,8 +307,12 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
           {/* Next steps CTA — lift retention at the conversion-complete moment */}
           {status === "done" && relatedBlogPosts && relatedBlogPosts.length > 0 && (
             <section className="rounded-xl border border-indigo-200 bg-indigo-50 p-6">
-              <h2 className="text-lg font-semibold text-indigo-900">Your {targetDisplay} file is ready — what&apos;s next?</h2>
-              <p className="mt-1 text-sm text-indigo-800">Make the most of your converted file:</p>
+              <h2 className="text-lg font-semibold text-indigo-900">
+                {isEs
+                  ? `Tu archivo ${targetDisplay} está listo — ¿qué hacer ahora?`
+                  : `Your ${targetDisplay} file is ready — what's next?`}
+              </h2>
+              <p className="mt-1 text-sm text-indigo-800">{chrome('makeTheMost', isEs)}</p>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {relatedBlogPosts.slice(0, 2).map((post) => (
                   <Link key={post.slug} href={post.href} className="group block rounded-lg border border-indigo-200 bg-white px-4 py-3 transition-colors hover:border-indigo-400 hover:bg-indigo-100">
@@ -301,17 +322,29 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
                 ))}
               </div>
               <p className="mt-4 text-sm text-indigo-800">
-                Or learn how to{" "}
-                <Link href="/blog/sync-reading-across-devices" className="font-semibold underline hover:text-indigo-700">
-                  sync reading progress across all your devices
-                </Link>
-                .
+                {isEs ? (
+                  <>
+                    O aprende a{" "}
+                    <Link href="/blog/sync-reading-across-devices" className="font-semibold underline hover:text-indigo-700">
+                      sincronizar tu progreso de lectura en todos tus dispositivos
+                    </Link>
+                    .
+                  </>
+                ) : (
+                  <>
+                    Or learn how to{" "}
+                    <Link href="/blog/sync-reading-across-devices" className="font-semibold underline hover:text-indigo-700">
+                      sync reading progress across all your devices
+                    </Link>
+                    .
+                  </>
+                )}
               </p>
             </section>
           )}
         </div>
         {/* FAQ with Schema */}
-        <BatchConversionGuide sourceFormat={source} targetFormat={target} />
+        <BatchConversionGuide sourceFormat={source} targetFormat={target} isEs={isEs} />
         {/* Custom content sections */}
         {contentData?.sections ?
           contentData.sections.map((section, index) => (
@@ -410,12 +443,12 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
           </>
         )}
         {/* FAQ with Schema */}
-        <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} />
+        <FAQSection faqs={faqs} sourceFormat={source} targetFormat={target} isEs={isEs} />
         {/* Related blog posts (mislabeled as "Guides & Tutorials" before) */}
         {relatedBlogPosts && relatedBlogPosts.length > 0 && (
         <section className="rounded-xl border bg-gray-50 p-6">
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">Related Articles</h2>
-          <p className="mb-4 text-sm text-gray-600">Deepen your understanding with expert conversion guides:</p>
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">{chrome('relatedArticles', isEs)}</h2>
+          <p className="mb-4 text-sm text-gray-600">{chrome('deepenUnderstanding', isEs)}</p>
           <div className="grid gap-3 sm:grid-cols-2">
             {relatedBlogPosts.map((post) => (
               <Link key={post.slug} href={post.href} className="group block rounded-lg border bg-white px-4 py-3 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -429,8 +462,8 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         {/* Related guides (real hub guides matched by format) */}
         {relatedGuides && relatedGuides.length > 0 && (
         <section className="rounded-xl border border-blue-200 bg-blue-50 p-6">
-          <h2 className="mb-3 text-lg font-semibold text-blue-900">Related Guides</h2>
-          <p className="mb-4 text-sm text-blue-700">Format explainers and in-depth comparisons:</p>
+          <h2 className="mb-3 text-lg font-semibold text-blue-900">{chrome('relatedGuides', isEs)}</h2>
+          <p className="mb-4 text-sm text-blue-700">{chrome('formatExplainers', isEs)}</p>
           <div className="grid gap-3 sm:grid-cols-2">
             {relatedGuides.map((guide) => (
               <Link key={guide.slug} href={guide.href} className="group block rounded-lg border bg-white px-4 py-3 transition-colors hover:border-blue-300 hover:bg-blue-50">
@@ -443,20 +476,21 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
         )}
         {/* Video Tutorial for S-tier conversions */}
         <section className="mb-12 rounded-xl border bg-gray-50 p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Video Tutorial</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{chrome('videoTutorial', isEs)}</h2>
           {videoTutorial && (
             <VideoTutorial
               videoUrl={videoTutorial.videoUrl}
               title={videoTutorial.title}
               description={videoTutorial.description}
               steps={videoTutorial.steps}
+              isEs={isEs}
             />
           )}
         </section>
 
         {/* Social Proof -- Testimonials */}
         <section className="mt-12 rounded-xl border bg-gray-50 p-6">
-          <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">Trusted by thousands of readers worldwide</h3>
+          <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">{chrome('trustedBy', isEs)}</h3>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.slice(0, 3).map((t, i) => (
               <TestimonialCard key={i} name={t.name} role={t.role} rating={t.rating} text={t.text} />
@@ -464,7 +498,7 @@ export function ToolPageClient({ source, target, contentData, relatedBlogPosts, 
           </div>
         </section>
         {/* Related conversions */}
-        <RelatedConversions currentSource={source} currentTarget={target} />
+        <RelatedConversions currentSource={source} currentTarget={target} isEs={isEs} />
       </main>
     </>
   )
