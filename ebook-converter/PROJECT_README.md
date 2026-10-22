@@ -4,7 +4,7 @@
 > 本文件曾长期未随代码更新，以下描述已**失效**，请勿作为依据：
 > - ❌「BullMQ + Redis 异步队列」→ 实际为**请求内同步转换**。异步队列在 Vercel serverless 上 100% 504（见 `诊断_转换管线生产故障_2026-08-04.md`），已刻意废弃
 > - ❌「Supabase Auth」→ 实际为**手写 HS256 JWT + scrypt**（`src/lib/auth`），Supabase 已移除（见 `src/lib/auth.ts:4` 注释）
-> - ❌「28+ 种格式 / 26 种转换路径」→ 实际 **31 个转换对**，涉及 **18 种格式标识**
+> - ❌「28+ 种格式 / 26 种转换路径」→ 实际 **60 个转换对**（2026-09-26 实测 31，2026-10-22 纯 JS 文本族补齐后增至 60），涉及 **18 种格式标识**
 > - ❌「`GET /api/convert/:jobId/status|result` 可用」→ 这两个端点查的是一个永不入队的空队列，属**孤儿端点**
 > - ❌「`lib/storage/` R2 已接线」→ 代码存在但主链路**零引用**，仅 `api/download` 直连
 >
@@ -17,6 +17,7 @@
 - [技术栈](#技术栈)
 - [项目结构](#项目结构)
 - [功能列表](#功能列表)
+- [转换架构 · 纯JS 兜底](#转换架构-纯js-兜底)
 - [开发环境搭建](#开发环境搭建)
 - [本地运行](#本地运行)
 - [测试](#测试)
@@ -30,7 +31,7 @@
 
 ## 项目概述
 
-BookConv 是一个基于 Next.js 的在线电子书格式转换平台，支持 **31 个格式转换对**（涉及 18 种格式标识），包括 EPUB、PDF、MOBI、AZW3、TXT、DOCX、FB2、LIT、RTF 等。
+BookConv 是一个基于 Next.js 的在线电子书格式转换平台，支持 **60 个格式转换对**（涉及 18 种格式标识），包括 EPUB、PDF、MOBI、AZW3、TXT、DOCX、FB2、LIT、RTF 等。
 
 核心转换引擎使用 Calibre (`ebook-convert`)，**在请求内同步执行**并直接流式回吐文件字节（无队列、无落盘、无 jobId）。Vercel 侧无 Calibre，需通过 `CONVERSION_BACKEND_URL` 转发到具备 Calibre 的 Docker/VPS 后端（`POST /api/convert-internal`）。批量转换 `/batch` 有 Pro 门禁。
 
@@ -38,7 +39,7 @@ BookConv 是一个基于 Next.js 的在线电子书格式转换平台，支持 *
 |------|------|
 | 源代码文件 | 246 个（196 ts + 50 tsx） |
 | 测试文件 | 10 个单元（`tests/unit/`）+ 边界 + 性能 + Playwright E2E |
-| 支持的格式对 | **31 个**（`CONVERSION_MAP`） |
+| 支持的格式对 | **60 个**（`CONVERSION_MAP`，其中文本派生族 40 对走纯 JS） |
 | 涉及格式标识 | **18 种** |
 | sitemap URL 数 | **150 个**（en 129 + es 21）— 2026-09-26 运行 `sitemap.ts` 实测 |
 | 各路由页面数 | convert **31** · formats **17** · guide **22** · blog **66**（其中 65 入 sitemap，1 篇 noindex）· compat **1** |
@@ -105,7 +106,7 @@ ebook-converter/
 │   │   ├── logger.ts             # 结构化日志
 │   │   ├── error-handler.ts      # 错误脱敏
 │   │   ├── constants.ts          # SEO 关键词
-│   │   ├── conversion-map.ts     # 31 个转换对映射（key 形如 epub-azw3）
+│   │   ├── conversion-map.ts     # 60 个转换对映射（key 形如 epub-azw3；文本派生族 40 对标记 tool:"js"）
 │   │   └── utils.ts              # 通用工具
 │   ├── components/               # React 组件
 │   │   ├── tools/                # 转换页面专用组件
@@ -162,6 +163,50 @@ ebook-converter/
 - JSON-LD Schema（HowTo, FAQ, SoftwareApplication）
 - 40+ SEO 内容页面（每页 1200-6000 字）
 - 内部链接矩阵（RelatedConversions 组件）
+
+---
+
+## 转换架构 · 纯JS 兜底（2026-10-22）
+
+### 为什么需要纯 JS 路径
+CloudConvert 是付费兜底引擎，但免费/订阅额度耗尽后会返回 **402**，导致全站文本类转换失败（2026-10-01 实测 8 用户受影响；2026-10-20 复现）。纯 JS 路径完全在 Node 运行时内完成，**不依赖 CloudConvert / Calibre**，因此彻底免疫 402 配额墙。
+
+### 核心方法：extract → text → synthesize
+所有「文本派生」格式对（即 source 与 target 都是文本类格式）都走同一套两阶段流程（`src/lib/conversion.ts`）：
+
+1. **extract(source)** — 把源文件抽成纯文本（按源格式调用对应抽取器）。
+2. **synthesize(target)** — 把纯文本重新合成为目标格式（按目标格式调用对应合成器）。
+
+两类集合：
+- `TEXT_SOURCES`（9 种）= `epub, mobi, azw3, docx, html, rtf, fb2, lit, txt`
+- `TEXT_TARGETS`（5 种）= `epub, rtf, docx, fb2, txt`
+
+当 `source ∈ TEXT_SOURCES && target ∈ TEXT_TARGETS && source ≠ target` 时，`executeConversion` 内的通用分发器（`isPureJsTextPair`）**自动**走纯 JS 路径，无需为每对写独立分支。
+
+### 哪些对走纯 JS（40 对，tool:"js"）
+- 文本源 → 文本目标的完整矩阵（9×5 − 5 个自映射 = 40 对），例如：
+  - `epub → {rtf, docx, fb2, txt, epub}`
+  - `mobi / azw3 → {txt, epub, rtf, docx, fb2}`
+  - `docx / html / rtf / fb2 / lit / txt → {epub, rtf, docx, fb2, txt}`
+- 注意 `lit`（MS Reader）复用 MOBI 文本抽取器（`mobiToTxt`），属 best-effort。
+- 另有 `epub-epub` 也是纯 JS（重打包为最小合法 EPUB 3.0）。
+
+### 哪些对仍走 CloudConvert / Calibre（tool 非 "js"）
+- **专有二进制 / 图片目标**：`azw3, mobi, pdf, jpg, png, doc, cbr, djvu, chm` —— 纯 JS 无法可靠生成。
+- 仍标记为 `calibre` / `calibre+imagemagick` / `libreoffice+calibre` 的如对：
+  `epub-azw3, epub-pdf, epub-mobi, azw3-mobi, mobi-azw3, *-pdf, lit-mobi, azw-mobi, chm-mobi, cbr-pdf, djvu-pdf, doc-epub` 等。
+
+### 如何新增一对纯 JS 格式对
+1. 若**源格式无抽取器**：在 `extractToText()` 的 `switch` 加一个 `case`，调用已有的 `*ToTxt` 抽取函数（`mobiToTxt` / `docxToTxt` / `htmlToTxt` / `rtfToTxt` / `fb2ToTxt` / `txt` 直接 `readFileSync`）。
+2. 若**目标格式无合成器**：在 `synthesizeFromText()` 的 `switch` 加一个 `case`，调用已有的 `build*FromText` 合成函数（`buildEpubFromText` / `buildRtfFromText` / `buildDocxFromText` / `buildFb2FromText`）。
+3. 在 `src/lib/conversion-map.ts` 的 `CONVERSION_MAP` 注册该对，标注 `tool: "js"` + 描述（前端据此显示「纯 JS，无 CloudConvert」）。
+4. **无需新增 `executeConversion` 分支** —— 分发器按 `isPureJsTextPair` 自动路由。
+5. 补一条单元测试到 `tests/unit/`，并跑 `npm test` 确认 `CONVERSION_MAP` 计数与 `expectedKeys` 同步。
+
+### 代价与边界
+- 纯 JS 路径产出的是**纯文本降级版**（epub/rtf/docx/fb2 仅含正文段落），**丢失图片、样式、目录、元数据**；但比起 402 全挂更有用。
+- 输出仍经过 `verifyConversion` 的魔数 + 文本损失校验（见 `src/lib/conversion-verifier.ts`）。
+- 这是「免疫 402」的工程权衡，不是质量提升；二进制目标仍应优先走 Calibre / CloudConvert 以保真。
 
 ---
 
@@ -229,7 +274,7 @@ npm test
 
 > ⚠️ **本节已失效，保留仅为存档**：`tests/e2e/convert-full-test.js` **当前不存在**
 > （`tests/e2e/` 下只有 `fixtures/` 与 `health.spec.ts`）。下方命令无法执行，结果输出为 2026-08 快照。
-> 与当前代码的差异：转换路径应为 **31**（非 26）；**无轮询**——提交后同步返回文件字节。
+> 与当前代码的差异：转换路径应为 **60**（2026-10-22 起；此前 31，更早称 26）；**无轮询**——提交后同步返回文件字节。
 
 ```bash
 node tests/e2e/convert-full-test.js   # ⚠️ 文件已不存在，命令会失败
@@ -237,7 +282,7 @@ node tests/e2e/convert-full-test.js   # ⚠️ 文件已不存在，命令会失
 
 历史快照（2026-08）声称的流程：
 1. 自动生成 10 种格式的测试文件（EPUB、PDF、TXT、DOCX 等）
-2. 遍历转换路径（旧称 26 个，实为 31 个）
+2. 遍历转换路径（旧称 26 个 / 31 个，2026-10-22 起为 60 个）
 3. 通过 API 提交每个转换
 4. ~~轮询等待完成并验证状态~~ → 实际为**同步返回文件字节**后直接校验
 

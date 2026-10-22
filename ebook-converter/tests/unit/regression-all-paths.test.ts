@@ -2,8 +2,8 @@ import { CONVERSION_MAP, SUPPORTED_FORMATS } from '@/lib/conversion-map';
 import { sanitizeError, mapErrorCode } from '@/lib/error-handler';
 
 describe('CONVERSION_MAP Regression', () => {
-  it('should have exactly 31 conversion paths', () => {
-    expect(Object.keys(CONVERSION_MAP).length).toBe(31);
+  it('should have exactly 60 conversion paths', () => {
+    expect(Object.keys(CONVERSION_MAP).length).toBe(60);
   });
 
   it('should have tool type and description for every conversion', () => {

@@ -1,8 +1,8 @@
 import { CONVERSION_MAP, SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES, normalizeFormat, getConversionKey, getConversion } from '@/lib/conversion-map';
 
 describe('CONVERSION_MAP', () => {
-  it('should have exactly 31 conversion paths', () => {
-    expect(Object.keys(CONVERSION_MAP).length).toBe(31);
+  it('should have exactly 60 conversion paths', () => {
+    expect(Object.keys(CONVERSION_MAP).length).toBe(60);
   });
 
   it('should contain all expected conversion keys', () => {
@@ -12,6 +12,11 @@ describe('CONVERSION_MAP', () => {
       'mobi-txt', 'epub-docx', 'docx-epub', 'txt-epub', 'html-epub', 'epub-txt',
       'azw3-pdf', 'mobi-epub', 'doc-epub', 'cbr-pdf', 'mobi-pdf',
       'pdf-epub', 'djvu-pdf', 'epub-mobi',
+      // Pure-JS text-derived family (2026-10-22)
+      'epub-fb2', 'mobi-rtf', 'mobi-docx', 'mobi-fb2', 'azw3-rtf', 'azw3-docx',
+      'azw3-fb2', 'docx-rtf', 'docx-fb2', 'html-rtf', 'html-docx', 'html-fb2',
+      'rtf-docx', 'rtf-fb2', 'rtf-txt', 'fb2-rtf', 'fb2-docx', 'fb2-txt',
+      'lit-rtf', 'lit-docx', 'lit-fb2', 'lit-txt', 'txt-rtf', 'txt-docx', 'txt-fb2',
     ];
     for (const key of expectedKeys) {
       expect(CONVERSION_MAP).toHaveProperty(key);

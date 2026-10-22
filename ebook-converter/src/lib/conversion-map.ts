@@ -26,7 +26,7 @@ const DISPLAY_NAME_TO_REAL: Record<string, string> = {
 export const CONVERSION_MAP: ConversionMap = {
   "epub-azw3":  { tool: "calibre", description: "EPUB to AZW3 (Kindle Format 8)" },
   "azw3-epub":  { tool: "js", description: "AZW3 to EPUB (Pure JS, no CloudConvert)" },
-  "epub-rtf":   { tool: "calibre", description: "EPUB to RTF (Rich Text)" },
+  "epub-rtf":   { tool: "js", description: "EPUB to RTF (Rich Text) (Pure JS, no CloudConvert)" },
   "epub-jpg":   { tool: "calibre+imagemagick", description: "EPUB to JPG Images (via PDF)" },
   "epub-html":  { tool: "calibre", description: "EPUB to HTMLZ (Zipped Web Pages)" },
   "epub-doc":   { tool: "calibre", description: "EPUB to DOC (Microsoft Word)" },
@@ -59,6 +59,38 @@ export const CONVERSION_MAP: ConversionMap = {
   "rtf-epub":   { tool: "js", description: "RTF to EPUB (Pure JS text fallback, no CloudConvert)" },
   "fb2-epub":   { tool: "js", description: "FB2 to EPUB (Pure JS text fallback, no CloudConvert)" },
   "lit-epub":   { tool: "js", description: "LIT to EPUB (Pure JS text fallback, no CloudConvert)" },
+
+  // ── Pure-JS text-derived family (2026-10-22) ──────────────────────────────
+  // Every text source (epub/mobi/azw3/docx/html/rtf/fb2/lit/txt) can be routed
+  // to every text target (epub/rtf/docx/fb2/txt) via extract(source) → plain
+  // text → synthesize(target). These are immune to the CloudConvert 402 quota
+  // wall. Identity pairs (e.g. epub-epub) are excluded from this block because
+  // they are registered individually above.
+  "epub-fb2":   { tool: "js", description: "EPUB to FB2 (FictionBook) (Pure JS, no CloudConvert)" },
+  "mobi-rtf":   { tool: "js", description: "MOBI to RTF (Pure JS text fallback, no CloudConvert)" },
+  "mobi-docx":  { tool: "js", description: "MOBI to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "mobi-fb2":   { tool: "js", description: "MOBI to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "azw3-rtf":   { tool: "js", description: "AZW3 to RTF (Pure JS text fallback, no CloudConvert)" },
+  "azw3-docx":  { tool: "js", description: "AZW3 to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "azw3-fb2":   { tool: "js", description: "AZW3 to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "docx-rtf":   { tool: "js", description: "DOCX to RTF (Pure JS text fallback, no CloudConvert)" },
+  "docx-fb2":   { tool: "js", description: "DOCX to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "html-rtf":   { tool: "js", description: "HTML to RTF (Pure JS text fallback, no CloudConvert)" },
+  "html-docx":  { tool: "js", description: "HTML to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "html-fb2":   { tool: "js", description: "HTML to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "rtf-docx":   { tool: "js", description: "RTF to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "rtf-fb2":    { tool: "js", description: "RTF to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "rtf-txt":    { tool: "js", description: "RTF to TXT (Pure JS, no CloudConvert)" },
+  "fb2-rtf":    { tool: "js", description: "FB2 to RTF (Pure JS text fallback, no CloudConvert)" },
+  "fb2-docx":   { tool: "js", description: "FB2 to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "fb2-txt":    { tool: "js", description: "FB2 to TXT (Pure JS, no CloudConvert)" },
+  "lit-rtf":    { tool: "js", description: "LIT to RTF (Pure JS text fallback, no CloudConvert)" },
+  "lit-docx":   { tool: "js", description: "LIT to Word (DOCX) (Pure JS text fallback, no CloudConvert)" },
+  "lit-fb2":    { tool: "js", description: "LIT to FB2 (Pure JS text fallback, no CloudConvert)" },
+  "lit-txt":    { tool: "js", description: "LIT to TXT (Pure JS, no CloudConvert)" },
+  "txt-rtf":    { tool: "js", description: "TXT to RTF (Pure JS, no CloudConvert)" },
+  "txt-docx":   { tool: "js", description: "TXT to Word (DOCX) (Pure JS, no CloudConvert)" },
+  "txt-fb2":    { tool: "js", description: "TXT to FB2 (Pure JS, no CloudConvert)" },
 };
 
 /** Resolve display name aliases to real Calibre format identifiers. */

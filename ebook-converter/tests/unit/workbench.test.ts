@@ -97,16 +97,19 @@ describe('repository fact extraction', () => {
 
   it('derives the conversion pair count from conversion-map.ts', () => {
     // The workbench must not hard-code this. Guards against the constant
-    // drifting away from the actual map.
+    // drifting away from the actual map. 2026-10-22: pure-JS text-derived
+    // family bumped the count to 60; upper bound left with headroom.
     expect(facts.conversionPairs).toBeGreaterThan(20);
-    expect(facts.conversionPairs).toBeLessThan(60);
+    expect(facts.conversionPairs).toBeLessThan(80);
   });
 
   it('derives distinct format identifiers covering from- and to-sides', () => {
     // A previous audit script counted only the left-hand side of each pair and
     // reported 15; the true figure counts both sides. This test pins the
-    // difference so the mistake cannot silently return.
-    expect(facts.distinctFormats).toBeGreaterThan(facts.conversionPairs / 2);
+    // difference so the mistake cannot silently return. distinctFormats is a
+    // property of the format set (18), independent of how many pairs exist, so
+    // the guard is decoupled from conversionPairs (which grew to 60 in 2026-10).
+    expect(facts.distinctFormats).toBeGreaterThan(15);
     expect(facts.distinctFormats).toBe(18);
   });
 
