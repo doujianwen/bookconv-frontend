@@ -51,7 +51,7 @@ Two consequences worth understanding:
 If you want the text to stay adjustable, don't convert to images. Convert to PDF, or just keep the EPUB.`
     },
     {
-      heading: 'How to Convert EPUB to PNG',
+      heading: 'Rendering EPUB Pages as PNG Images',
       body: `**1. Upload your EPUB.** Drag and drop, or browse. Uploads are capped at 4MB. Text ebooks are nowhere near that, though image-heavy titles can exceed it.
 
 **2. Processing runs.** Calibre lays the book out, then every page is rasterized at 300 DPI. This step is heavier than most conversions — you're generating hundreds of images. A short book takes under a minute; a long one takes several.

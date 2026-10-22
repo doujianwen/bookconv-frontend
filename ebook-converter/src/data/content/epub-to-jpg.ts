@@ -49,7 +49,7 @@ Two things follow from this:
 If you want text that stays adjustable and searchable, this isn't the conversion you want. Go to PDF instead.`
     },
     {
-      heading: 'How to Convert EPUB to JPG',
+      heading: 'Turning Each EPUB Page into a JPG Image',
       body: `**1. Upload.** Drag your .epub onto the drop zone or click to browse. Uploads are capped at 4MB. Text-only novels are usually 1-3MB and fit easily; heavily illustrated books can run well past the limit, so those need to be compressed first or handled with a desktop tool.
 
 **2. Let it render.** Calibre lays out the book, then each page gets rasterized at 300 DPI. This takes longer than a typical format conversion because you're generating hundreds of images, not rewriting one file. A short book: well under a minute. A 600-page reference work: a few minutes.

@@ -73,7 +73,7 @@ There's also a publishing angle. If you wrote a novel and it's sitting in FB2, n
 And EPUB 3 supports things FB2 never got: proper accessibility semantics for screen readers, media overlays for read-along audio, embedded fonts, and MathML. For a straight novel none of that matters much. For anything more ambitious, it does.`
     },
     {
-      heading: 'How to Convert FB2 to EPUB',
+      heading: 'Bringing FB2 Fiction Back into EPUB',
       body: `**1. Upload the file.** Drag your .fb2 onto the drop zone. FB2 files are small — usually well under 1MB — so the 4MB free limit is never an issue unless the book is stuffed with illustrations. Zipped .fb2.zip files work too; they get unpacked automatically.
 
 **2. Conversion runs.** The XML tree is parsed, sections become XHTML chapter files, the metadata block maps onto EPUB's Dublin Core fields, and embedded base64 images are extracted into real image files. Typical novel: a few seconds.

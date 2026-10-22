@@ -384,11 +384,12 @@
           "owner": "A→O",
           "deliverable": "每页差异化 diff 记录",
           "accept": "脚本基线由 FAIL 2/4 变为 PASS ≥3/4；Jaccard 仍 <0.5（不引入克隆）",
-          "due": "2026-10-22",
+          "due": "2026-10-26",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "note": "30 天验收节点，对应锚点 A4"
+          "status": "doing",
+          "note": "30 天验收节点，对应锚点 A4",
+          "statusNote": "b1（2026-10-22）完成 3 页：epub-to-jpg / epub-to-png / fb2-to-epub，句式按各页正文语义定制。覆盖 18→16，骨架数仍 7（未引入新骨架），Jaccard avg 0.002/top 0.143 未引入克隆。判据以脚本 audit-convert-differentiation.mjs 为唯一真相（骨架数≤3 / 覆盖≤8），与本任务 detail 所写「<16/31 页」不一致，以脚本为准。达标算术：两项 FAIL 同源指向骨架#1 howtoconvert<>to<>（18 页），需改 11 页跌破阈值 ⇒ 覆盖降到 7 时判据 2 转 PASS 即达成 PASS 3/4 验收线。b2-b4 规划见 docs/m2-2-diff-record-2026-10-22.md（b2 html/rtf/doc-to-epub、b3 cbr/djvu/chm、b4 lit/mobi-to-pdf/mobi-to-txt）。门禁 tsc 0 / content 0/0 / heading 0，差异化门禁仍 FAIL 2/4 属预期未达标。"
         },
         {
           "id": "M2-3",
