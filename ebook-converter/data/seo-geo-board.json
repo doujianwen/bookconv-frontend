@@ -899,6 +899,31 @@
           "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。\nguide es schema additive 扩展 + 西语译文 4/10 篇完成（epub-vs-mobi + kindle-formats + best-ebook-converter + calibre-alternative；三向渲染验证通过）。候选 11 篇中 azw3-vs-mobi 与已有西语 blog 同题冲突跳过，可译 10 篇，剩余 6 篇已排期：批次3→2026-10-22(3篇) / 批次4→2026-10-24(3篇)，整体 due 2026-10-24。\n【线上核验发现并已修复】2026-10-21 部署核验发现西语 guide/blog 页「More guides/Related posts/Related Guides」卡片用英文标题且链接回非/es英文页、正文内联链接指英文页——已修（提交 b9efb47）：新增 src/lib/es-routes.ts 单一真相模块，middleware×2+sitemap×2 重复硬编码改 import 同一份，链接按白名单判定（内走/es、白名单外回退英文）杜绝 404 死链；线上复验 52 条唯一站内链接零 404。\n【chrome 层已拆出为 M5-6】面包屑/Key Takeaways/日期 en-US/blog 索引页等全局 chrome 西语化不在本任务范围，见 M5-6（due 2026-10-22）。\n[2026-10-22 批次3 完成] 实测 7/10 篇有真实 es 块（磁盘核验：epub-vs-mobi / kindle-formats / best-ebook-converter / calibre-alternative / calibre-vs-online-converter / batch-converter / ai-ebook-converter）；本轮批次3 新增 3 篇（calibre-vs-online-converter / batch-converter / ai-ebook-converter，全文真实西语、英文功能词 0 命中、updatedAt bump 2026-10-22、git diff 纯新增英文零改动），剩余 3 篇排批次4→2026-10-24，整体 due 2026-10-24。⚠️ 口径说明：任务书要求记「6/10」，但板面上一条 statusNote 记为 4/10（含 kindle-formats），4+3=7 且 7 已完成+3 剩余=10 总数自洽 ⇒ 按磁盘实测记 7/10；与任务书 6/10 的 1 篇差为 kindle-formats 计入问题，留待人工核对。azw3-vs-mobi 与已有西语 blog 同题冲突，已跳过不动（不在 10 篇内）。批次3 验证：本地 next start 端到端 3 页 HTTP 200 + lang=es + chrome 全西语 + 页内站内链接零 404；门禁 tsc 0 / content-integrity 0/0 / dup-headings 0 / meta-desc ERROR=0 / build exit 0 / board-json PASS。"
         },
         {
+          "id": "M5-3",
+          "action": "es 内容层覆盖扩充",
+          "detail": "当前西语内容仅 9 页（blog 6 + convert 3）；按流量潜力补 convert 页西语版，每周 ≤10 页。",
+          "owner": "A",
+          "deliverable": "扩充清单",
+          "accept": "es 内容页从 9 → ≥20；sitemap 中 es URL 同步更新",
+          "due": "2026-11-15",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo"
+        },
+        {
+          "id": "M5-4",
+          "action": "西语独立关键词台账",
+          "detail": "西语词表独立建立，不照搬英文词直译（西语搜索意图与词形不同）。",
+          "owner": "A",
+          "deliverable": "keyword-sheet-es.csv",
+          "accept": "≥15 个西语词，每个含本地搜索量来源与 Target URL",
+          "due": "2026-10-10",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "done",
+          "statusNote": "2026-10-13 完成：数据分析/keyword-sheet-es.csv（19 词，每词含 AI 侧引用两期 10-05/10-08 + citation share + 传统搜索佐证 es 曝光95/CTR2.11% + Target URL + 覆盖状态）。\n发现：epub→mobi 词簇 12/19 无 es convert 工具页（靠 en 页承接）；cbr→pdf、djvu→pdf、lector de epub 为纯缺口；epub a mobi 引用 174→179 微升、convertir epub a mobi 词级排名 Δ=-6 待观察。\ndoneNote（双源证据）：19 个西语 query 合计 1,265 次引用（全量 9.1%），share 22-37% 高于整体头部（来源=AISearchQueriesReport_2026_10_5.csv）；传统搜索 es 地域曝光 95（占 4.2%，≈cn 的 91%）+ es CTR 2.11%。\n[2026-10-22 恢复] 本条曾被并行会话误删且删除随 commit ae8d332 入库；现按 35daa23 原文恢复。"
+        },
+        {
           "id": "M5-5",
           "action": "P1: /es/ 语言错配治理——西语页承接英语查询的诊断与处置决策",
           "detail": "【立项来源】M2-12 statusNote 登记的 P1 残余单独立项（用户 2026-10-19 指令）；手册 P2-6（🟡 中）+ §3.1-F 多语言清单 🔴 行动项。\n\n【证据基线（Fact，GSC query×page 双维度，91 天窗 07-12→10-10）】/es/ 全站 21 个查询-页对、77 展示、0 点击；查询语言 100% 为英语（与手册 77/77 结论互证），西语查询 0。集中度：/es/blog/azw3-vs-mobi 69 展/13 查询（位 9.3-15.5，含 M2-12 的 4 个查询 25 展）；其余 /es/blog/txt-to-epub 3 展、/es/blog/tag/fb2 3 展、/es/guide/azw3-to-mobi-keep-formatting 1 展、/es/blog/epub-to-azw3 1 展。同簇英语查询下 es URL 展示量（69）远超 en URL（/blog/azw3-vs-mobi 21）⇒ Google 系统性偏好 es URL 承接英语查询。已排除：hreflang/canonical（M5-1 已复核）、sitemap 收录（正常）、en/es 正文互链（不互链为正常实践，非 bug）。\n\n【待诊断问题】① Google 偏好 es URL 的直接原因（索引时序/历史外链/其他）——可证实则给结论，不可证实则如实记 UNKNOWN，禁强行归因；② /es/guide/* 英文兜底正文（lang=es）是否加剧错配（与 M5-2 交界，需划界）；③ M5-4 实测 es 地域曝光 95 次/CTR 2.11% 实际落在哪些 URL。\n\n【处置选项（供用户决策，不预设立场）】A 信号强化英文页（M2-12 已做 title 层第一步，续做内容/内链层，优点是不动西语资产、缺点是 Google 行为不可控）；B es 页 SERP 标题英语化（es.metaTitle 用英语，风险=违背 10-18「西语页 SERP 标题用西语」模式且标题-正文语言错配接近欺骗性优化）；C 收缩 es 面（该页 noindex/下架，与 M5-3 扩充方向冲突，需先定西语战略）；D 维持现状+监控（机会成本极小）。交叉验证护栏：AI 侧 19 个西语 query 合计 1,265 引用（M5-4）⇒ es 内容有 GEO 价值，不可仅按 GSC 传统搜索判死刑。\n\n【边界】不做西语内容创作（M5-2/M5-3 范畴）；不改 middleware 白名单除非诊断结论明确指向且经用户批准；禁引用已证伪的「/es spam 归因」（claim-tier-register #5）。",
