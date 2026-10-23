@@ -5,7 +5,7 @@ export const title = 'What Format Does Kindle Use? AZW3, KFX, MOBI & EPUB Explai
 export const metaTitle = 'What Format Does Kindle Use? AZW3, KFX, MOBI'
 export const problem = 'AZW3, KFX, MOBI, EPUB - Kindle formats confuse everyone. This guide explains what each means, the safest format to convert to today, and how BookConv converts free in your browser with no software to install.'
 export const date = '2026-08-07'
-export const updatedAt = '2026-10-21'
+export const updatedAt = '2026-10-23'
 export const tags = ['kindle formats', 'what format does kindle use', 'azw3', 'kfx', 'mobi', 'send to kindle', 'epub vs kindle']
 export const keyTakeaways = [
   'Amazon’s Send to Kindle accepts EPUB and AZW3 and converts them for your device.',
@@ -119,7 +119,7 @@ export const faqs: BlogFaq[] = [
 // E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
 export const authorship = {
   author: 'BookConv Team',
-  lastVerified: '2026-09-12',
+  lastVerified: '2026-10-23',
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }

@@ -4,7 +4,7 @@ export const slug = 'how-to-read-epub-on-kindle'
 export const title = 'How to Read EPUB on Kindle: 3 Ways That Work'
 export const problem = 'You downloaded or purchased an EPUB, but your Kindle refuses to open it. Amazon devices prefer their own formats, so EPUB needs one extra step. Here are the three reliable routes, including when each one is worth it.'
 export const date = '2026-10-02'
-export const updatedAt = '2026-10-02'
+export const updatedAt = '2026-10-23'
 export const tags = ['epub', 'kindle', 'send to kindle', 'ebook conversion', 'how to']
 export const formats = { source: 'epub', target: 'azw3' }
 export const keyTakeaways = [
@@ -71,11 +71,13 @@ export const faqs: BlogFaq[] = [
   { question: 'Does BookConv keep my EPUB formatting when converting to AZW3?', answer: 'Yes. BookConv runs the Calibre engine and maps your chapters, cover, embedded fonts, and styles into the AZW3 output, so what you verified locally is what arrives on the Kindle.' },
   { question: 'Can Kindle read library EPUB books?', answer: 'Kindle cannot open the DRM-protected EPUB file itself, but Libby can deliver supported library loans directly to your Kindle through Amazon delivery. Manual conversion is not possible for DRM books, and stripping DRM violates the loan terms.' },
   { question: 'Is converting EPUB to AZW3 free?', answer: 'Yes. BookConv converts EPUB to AZW3 in the browser at no cost for standard files, with no account or software install required, and files are deleted automatically within an hour.' },
+  { question: 'Can I transfer my converted Kindle books to other devices?', answer: 'Yes. Once you have the AZW3 (or EPUB) file, you can sync it to any device that supports that format — Kobo, Apple Books, Android readers, or another Kindle via Send to Kindle. BookConv does not lock you into one ecosystem; the output file is yours to use anywhere.' },
+  { question: 'Should I convert to AZW3 or keep the original EPUB for my Kindle?', answer: 'It depends on your workflow. If you use Send to Kindle, upload the EPUB directly and let Amazon convert it. If you prefer self-managed files or need the best formatting control, convert to AZW3 first and sideload it. Both routes are supported; the choice comes down to whether you want Amazon to handle the conversion or you do it yourself.' },
 ]
 // E-E-A-T authorship block
 export const authorship = {
   author: 'BookConv Team',
-  lastVerified: '2026-10-02',
+  lastVerified: '2026-10-23',
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }
