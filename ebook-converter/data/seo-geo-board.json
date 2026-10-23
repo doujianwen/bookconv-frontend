@@ -714,12 +714,12 @@
           "owner": "A",
           "deliverable": "55页差异化内容 + publish-gate放行",
           "accept": "每页新增≥2个差异化section，Bing AI引用率提升",
-          "due": "2026-10-20",
+          "due": "2026-11-20",
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
           "note": "⚠️ 67/67 blog页已全部有FAQ schema，无批量加字段空间。差异化只能走M2-8 Batch 14逐篇内容改写路线，无法单会话安全完成55页。需按「批量改前必先审计」纪律分批推进。 关联 M3-12：keyTakeaways 术语已同步 Notion 手册（10-11），Blog 页差异化仍走 M2-8 Batch 14 逐篇路线。",
-          "statusNote": "[2026-10-22 逾期处理] 复核确认 blocked 判定成立（67/67 已有 FAQ schema；55 页无法单会话安全完成，既有审计结论未被推翻）。解阻提案（2026-10-22 18:34 用户拍板 A，已落地，状态转 doing）：A) 挂靠 M11-3 机会词批次——M11-3 P1 清单已含 open epub file 等 blog 词，blog 页差异化随批次顺带覆盖，零新增排期面（已选）；B) 独立周更批次（未选）。【落地机制】M3-10 转 doing，blog 差异化不再作为独立卡点，改为挂靠 M11-3 机会词批次逐批推进（≤3页/批 + Gate B + 人工审稿），每批交付后从 55 页中消项；不触碰 M2-8 既有 13 零抓取 convert 页。首批 blog 差异化页随 M11-3 后续机会词批次启动（须先确认目标页未被并行对话占用）。"
+          "statusNote": "[2026-10-22 逾期处理] 复核确认 blocked 判定成立（67/67 已有 FAQ schema；55 页无法单会话安全完成，既有审计结论未被推翻）。解阻提案（2026-10-22 18:34 用户拍板 A，已落地，状态转 doing）：A) 挂靠 M11-3 机会词批次——M11-3 P1 清单已含 open epub file 等 blog 词，blog 页差异化随批次顺带覆盖，零新增排期面（已选）；B) 独立周更批次（未选）。【落地机制】M3-10 转 doing，blog 差异化不再作为独立卡点，改为挂靠 M11-3 机会词批次逐批推进（≤3页/批 + Gate B + 人工审稿），每批交付后从 55 页中消项；不触碰 M2-8 既有 13 零抓取 convert 页。首批 blog 差异化页随 M11-3 后续机会词批次启动（须先确认目标页未被并行对话占用）。｜[2026-10-23 滚动口径] 本任务为分批长周期任务（55 页差异化，挂靠 M11-3 批次逐批消项，当前 0/55 消项），原 due 2026-10-20 已不可达；现改 due=2026-11-20（与 M11-3 全批次完成日对齐的滚动完成日），避免晨报按早定死 due 每日误报逾期。"
         },
         {
           "id": "M3-11",
@@ -1554,11 +1554,11 @@
           "owner": "A",
           "deliverable": "分批 guide/blog 文件 + 注册 index.ts + llms.txt 同步",
           "accept": "每批门禁全绿；每页 GEO 结构（Key Takeaways/FAQ/schema）达标；≤3 页/批",
-          "due": "2026-10-21",
+          "due": "2026-11-20",
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "首批 1 页 how-to-send-epub-to-kindle 强化（承接 send to kindle / amazon send to kindle，事实经 Amazon 官方验证）；后续批次 ≤3 页/批 + Gate B + 人工审稿。2026-10-21\n[批次 2 · 2026-10-22] 新建 guide kindle-vs-kobo（承接 kindle vs kobo 机会词，1 页 ≤3 上限；仅动新文件——kindle-formats/how-to-read-epub-on-kindle 属存量文件且正被并行对话 M5-2 触碰，parallel writer 纪律下批次 3 顺延）：GEO 结构达标（5 keyTakeaways / 8 FAQ / authorship / metaTitle 46 字 ≤55 / updatedAt 2026-10-22），index.ts 注册 + llms.txt Troubleshooting Guides 同步（26/26）；门禁：publish-gate 锁 kindle-vs-kobo（GATE_SLUGS）0 BLOCK / 0 critical / 1 存量 WARN（llms-conv-out-of-sync 28≠60，非本次） + meta-desc 全量 WARN=121 为 P2 积压（非 Gate B 输出） + audit-content 0/0 + 标题唯一性 0 + tsc 0 + next build exit 0。未 push，待人工审稿后由用户发布。｜存量积压：① llms-conv-out-of-sync（llms.txt 转换数 28 ≠ CONVERSION_MAP 60）待 backlog 修复；② kindle-vs-kobo 对比事实已于 2026-10-22 外部核验并修正——Kobo MOBI 误称「逐步淘汰」→ 原生支持、Kindle CBZ/CBR 误称「机型和型号而异」→ 不支持（转 EPUB/PDF）、补图书馆借阅区域限定（Kobo 多地区 / Libby→Kindle 主 US/UK）；另 Kobo FB2 官方文档未列（与官方一致），2026-10-22 用户拍板以官方文档为准（保持 Not supported，二手源冲突不采纳）。E-E-A-T 风险已闭环。"
+          "statusNote": "首批 1 页 how-to-send-epub-to-kindle 强化（承接 send to kindle / amazon send to kindle，事实经 Amazon 官方验证）；后续批次 ≤3 页/批 + Gate B + 人工审稿。2026-10-21\n[批次 2 · 2026-10-22] 新建 guide kindle-vs-kobo（承接 kindle vs kobo 机会词，1 页 ≤3 上限；仅动新文件——kindle-formats/how-to-read-epub-on-kindle 属存量文件且正被并行对话 M5-2 触碰，parallel writer 纪律下批次 3 顺延）：GEO 结构达标（5 keyTakeaways / 8 FAQ / authorship / metaTitle 46 字 ≤55 / updatedAt 2026-10-22），index.ts 注册 + llms.txt Troubleshooting Guides 同步（26/26）；门禁：publish-gate 锁 kindle-vs-kobo（GATE_SLUGS）0 BLOCK / 0 critical / 1 存量 WARN（llms-conv-out-of-sync 28≠60，非本次） + meta-desc 全量 WARN=121 为 P2 积压（非 Gate B 输出） + audit-content 0/0 + 标题唯一性 0 + tsc 0 + next build exit 0。未 push，待人工审稿后由用户发布。｜存量积压：① llms-conv-out-of-sync（llms.txt 转换数 28 ≠ CONVERSION_MAP 60）待 backlog 修复；② kindle-vs-kobo 对比事实已于 2026-10-22 外部核验并修正——Kobo MOBI 误称「逐步淘汰」→ 原生支持、Kindle CBZ/CBR 误称「机型和型号而异」→ 不支持（转 EPUB/PDF）、补图书馆借阅区域限定（Kobo 多地区 / Libby→Kindle 主 US/UK）；另 Kobo FB2 官方文档未列（与官方一致），2026-10-22 用户拍板以官方文档为准（保持 Not supported，二手源冲突不采纳）。E-E-A-T 风险已闭环。｜[2026-10-23 滚动口径] 本任务为分批长周期任务（≤3 页/批，首批/批次 2 已交），原 due 2026-10-21 为「首批 ≥10-21」口径；现改 due=2026-11-20（全机会词批次走完的滚动完成日），避免晨报按首批 due 每日误报逾期。批次 3+ 顺延不另起 due。"
         },
         {
           "id": "M11-5",
