@@ -92,7 +92,7 @@ const KNOWN_MAGIC_HINTS: Record<string, string> = {
  * 嗅探上传文件是否"明显不是目标源格式"。
  * @returns 命中可疑魔数时返回 SniffResult（调用方应阻断上传）；合法/无法识别时返回 null（放行）。
  */
-export async function sniffFileFormat(file: File, sourceFormat: string): Promise<SniffResult | null> {
+export async function sniffFileFormat(file: File, sourceFormat: string, isEs = false): Promise<SniffResult | null> {
   let head: Uint8Array;
   try {
     const buf = await file.slice(0, 64).arrayBuffer();
@@ -123,7 +123,9 @@ export async function sniffFileFormat(file: File, sourceFormat: string): Promise
   return {
     guess,
     magicHex,
-    userMessage: `您上传的文件看起来是「${guess}」，不是有效的 ${targetDisplay}。请确认选择的是正确的 .${targetDisplay.toLowerCase()} 文件（注意：重命名的 .pdf/.txt/数据库文件无法转换）。`,
+    userMessage: isEs
+      ? `El archivo que subiste parece ser «${guess}», no un ${targetDisplay} válido. Asegúrate de seleccionar el archivo .${targetDisplay.toLowerCase()} correcto (nota: los archivos .pdf/.txt/base de datos renombrados no se pueden convertir).`
+      : `The file you uploaded looks like "${guess}", not a valid ${targetDisplay}. Please make sure you selected the correct .${targetDisplay.toLowerCase()} file (note: renamed .pdf/.txt/database files cannot be converted).`,
   };
 }
 

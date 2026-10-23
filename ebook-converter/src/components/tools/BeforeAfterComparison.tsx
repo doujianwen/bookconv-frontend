@@ -2,6 +2,7 @@
 
 import { Download, ArrowRight, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { chrome } from "@/lib/ui-chrome"
 
 interface FileMeta {
   name: string
@@ -15,9 +16,11 @@ interface BeforeAfterComparisonProps {
   afterFile: FileMeta
   downloadUrl: string
   onReset: () => void
+  /** M5-7：西语页 chrome 本地化开关 */
+  isEs?: boolean
 }
 
-export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onReset }: BeforeAfterComparisonProps) {
+export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onReset, isEs = false }: BeforeAfterComparisonProps) {
   const formatBytes = (bytes: number): string => {
     if (bytes === 0) return "0 B"
     const k = 1024
@@ -37,7 +40,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
         {/* Before card */}
         <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
           <div className="mb-2 flex items-center gap-2">
-            <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-600">BEFORE</span>
+            <span className="rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-600">{chrome('bacBefore', isEs)}</span>
           </div>
           <p className="mb-1 truncate text-sm font-medium text-gray-900">{beforeFile.name}</p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -57,7 +60,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
         {/* After card */}
         <div className="rounded-xl border border-green-200 bg-green-50 p-4">
           <div className="mb-2 flex items-center gap-2">
-            <span className="rounded bg-green-200 px-2 py-0.5 text-xs font-medium text-green-700">AFTER</span>
+            <span className="rounded bg-green-200 px-2 py-0.5 text-xs font-medium text-green-700">{chrome('bacAfter', isEs)}</span>
           </div>
           <p className="mb-1 truncate text-sm font-medium text-gray-900">{afterFile.name}</p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -67,7 +70,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
           {sizeDiff !== 0 && (
             <div className="mt-2 space-y-1">
               <p className="text-xs">
-                Size change: {sizeDiffLabel} ({sizeDiffPercent > 0 ? "+" : ""}{sizeDiffPercent}%)
+                {chrome('bacSizeChange', isEs)} {sizeDiffLabel} ({sizeDiffPercent > 0 ? "+" : ""}{sizeDiffPercent}%)
               </p>
               {/* Size change visualization bar */}
               <div className="h-1.5 w-full rounded-full bg-gray-200">
@@ -80,7 +83,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
                 />
               </div>
               <p className="text-[10px] text-gray-400">
-                {sizeDiff >= 0 ? "↑ File grew" : "↓ File shrunk"} by {formatBytes(Math.abs(sizeDiff))}
+                {sizeDiff >= 0 ? chrome('bacGrew', isEs) : chrome('bacShrunk', isEs)} by {formatBytes(Math.abs(sizeDiff))}
               </p>
             </div>
           )}
@@ -89,17 +92,17 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
 
       {/* Download button */}
       <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-center">
-        <p className="mb-3 text-sm font-medium text-green-800">Conversion complete! Your file is ready.</p>
+        <p className="mb-3 text-sm font-medium text-green-800">{chrome('bacComplete', isEs)}</p>
         <a
           href={downloadUrl}
           download={afterFile.name}
           className="inline-flex h-11 items-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
         >
           <Download className="h-4 w-4" />
-          Download {afterFile.displayName}
+          {chrome('bacDownload', isEs)} {afterFile.displayName}
         </a>
         <p className="mt-2 text-[11px] text-gray-500">
-          Link expires in 5 minutes. Files are automatically deleted after download.
+          {chrome('bacLinkExpires', isEs)}
         </p>
       </div>
 
@@ -109,7 +112,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
           onClick={onReset}
           className="text-sm text-gray-500 underline underline-offset-2 hover:text-gray-700"
         >
-          Convert another file
+          {chrome('bacStartOver', isEs)}
         </button>
       </div>
     </div>

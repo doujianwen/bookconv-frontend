@@ -46,7 +46,17 @@ interface ToolPageClientProps {
 
 
 
-const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string; title: string; description?: string; steps?: Array<{ title: string; description: string }> }> = {
+type TutorialEntry = {
+  videoUrl: string
+  thumbnailUrl?: string
+  title: string
+  description?: string
+  steps?: Array<{ title: string; description: string }>
+  titleEs?: string
+  descriptionEs?: string
+  stepsEs?: Array<{ title: string; description: string }>
+}
+const VIDEO_TUTORIALS: Record<string, TutorialEntry> = {
   'lit-to-epub': {
     videoUrl: '/videos/lit-to-epub.mp4',
     title: 'How to Convert LIT to EPUB',
@@ -56,6 +66,14 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
       { title: 'Select EPUB output', description: 'Choose EPUB as the target format.' },
       { title: 'Wait for conversion', description: 'Conversion typically takes just a few seconds.' },
       { title: 'Download result', description: 'Click the button to download your converted EPUB file.' },
+    ],
+    titleEs: 'Cómo convertir LIT a EPUB',
+    descriptionEs: 'Guía paso a paso para convertir ebooks LIT de Microsoft al formato EPUB universal.',
+    stepsEs: [
+      { title: 'Sube tu archivo LIT', description: 'Arrastra y suelta tu archivo LIT o haz clic para buscarlo.' },
+      { title: 'Elige EPUB como salida', description: 'Selecciona EPUB como formato de destino.' },
+      { title: 'Espera la conversión', description: 'La conversión suele tardar solo unos segundos.' },
+      { title: 'Descarga el resultado', description: 'Haz clic en el botón para descargar tu archivo EPUB convertido.' },
     ],
   },
   'pdf-to-epub': {
@@ -67,6 +85,13 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
       { title: 'Select EPUB format', description: 'System auto-optimizes layout.' },
       { title: 'Preview and download', description: 'Download immediately after conversion.' },
     ],
+    titleEs: 'PDF a EPUB: conserva maquetación e índice',
+    descriptionEs: 'Aprende a convertir PDF a EPUB refluible para la mejor experiencia de lectura.',
+    stepsEs: [
+      { title: 'Sube tu PDF', description: 'Admite PDF escaneados y basados en texto.' },
+      { title: 'Elige formato EPUB', description: 'El sistema optimiza la maquetación automáticamente.' },
+      { title: 'Previsualiza y descarga', description: 'Descarga inmediatamente tras la conversión.' },
+    ],
   },
   'epub-to-txt': {
     videoUrl: '/videos/epub-to-txt.mp4',
@@ -76,6 +101,13 @@ const VIDEO_TUTORIALS: Record<string, { videoUrl: string; thumbnailUrl?: string;
       { title: 'Upload EPUB', description: 'Supports any size EPUB file.' },
       { title: 'Select TXT format', description: 'Extract pure text content.' },
       { title: 'Download text file', description: 'Get a clean .txt file.' },
+    ],
+    titleEs: 'Extrae texto puro de EPUB',
+    descriptionEs: 'Convierte ebooks EPUB a texto plano y limpio, eliminando todo el formato.',
+    stepsEs: [
+      { title: 'Sube tu EPUB', description: 'Admite archivos EPUB de cualquier tamaño.' },
+      { title: 'Elige formato TXT', description: 'Extrae el contenido de texto puro.' },
+      { title: 'Descarga el archivo de texto', description: 'Obtén un archivo .txt limpio.' },
     ],
   },
 }
@@ -116,7 +148,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
     async (file: File) => {
       // 上传前魔数嗅探：把"重命名的 .pdf/.txt/数据库文件"提前拦在上传前，
       // 省一次 500 + 一次飞书告警。识别不了就放行（后端 validateInputFile 仍兜底）。
-      const sniff = await sniffFileFormat(file, source)
+      const sniff = await sniffFileFormat(file, source, isEs)
       if (sniff) {
         setErrorMessage(sniff.userMessage)
         setErrorCode("CORRUPT_INPUT")
@@ -135,7 +167,9 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
       // fire and surface as a confusing conversion failure.
       if (file.size > MAX_FILE_SIZE_BYTES) {
         const sizeMB = (file.size / 1024 / 1024).toFixed(1)
-        setErrorMessage(`文件过大（${sizeMB}MB），超过 ${MAX_FILE_SIZE_MB}MB 限制。原因：免费版服务器有 60 秒硬时限，大文件转换会超时失败。建议：① 尝试导出为 TXT/DOCX（纯 JS 处理，无大小限制）；② 用压缩软件拆分 EPUB；③ 升级 Pro 版支持大文件。`)
+        setErrorMessage(isEs
+          ? `El archivo es demasiado grande (${sizeMB}MB) y supera el límite de ${MAX_FILE_SIZE_MB}MB. Causa: el servidor de la versión gratuita tiene un límite estricto de 60 segundos; los archivos grandes agotan el tiempo y fallan. Sugerencias: ① exporta a TXT/DOCX (procesado en JavaScript puro, sin límite de tamaño); ② divide el EPUB con un programa de compresión; ③ mejora a Pro para archivos grandes.`
+          : `The file is too large (${sizeMB}MB), exceeding the ${MAX_FILE_SIZE_MB}MB limit. Reason: the free-tier server has a hard 60-second limit, and large files time out and fail. Suggestions: ① export to TXT/DOCX (pure JS processing, no size limit); ② split the EPUB with compression software; ③ upgrade to Pro for large files.`)
         setErrorCode("FILE_TOO_LARGE")
         setStatus("error")
         // 关闭盲区：超大文件被客户端拦截也属于"用户发起的转换失败"，此前静默无事件，
@@ -198,7 +232,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         // 不在白名单里，被丢成 undefined，GA4 里只能看到 UNKNOWN。
         const mappedCode = isErrorCode(rawCode) ? rawCode : undefined
         setErrorCode(mappedCode)
-        setErrorMessage(errObj?.message || "Conversion failed")
+        setErrorMessage(errObj?.message || (isEs ? "La conversión falló" : "Conversion failed"))
         setStatus("error")
         trackGAEvent("conversion_failed", {
           source_format: source,
@@ -216,10 +250,10 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
       <main className="mx-auto max-w-3xl space-y-10 px-4 py-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {contentData?.hero?.title || sourceDisplay + " to " + targetDisplay + " Converter"}
+            {contentData?.hero?.title || (isEs ? `${sourceDisplay} a ${targetDisplay}: conversor gratuito online` : sourceDisplay + " to " + targetDisplay + " Converter")}
           </h1>
           <p className="mt-3 text-lg text-gray-500">
-            {contentData?.hero?.subtitle || "Free online tool \u2014 no registration, no watermarks, free for personal use."}
+            {contentData?.hero?.subtitle || (isEs ? "Herramienta online gratuita: sin registro, sin marcas de agua y gratis para uso personal." : "Free online tool \u2014 no registration, no watermarks, free for personal use.")}
           </p>
         </div>
         {/* AI Summary / Quick Answer — GEO optimized */}
@@ -279,6 +313,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             progress={status === "converting" ? progress : 0}
             errorMessage={errorMessage}
             errorCode={errorCode}
+            isEs={isEs}
           />
           {status === "error" && (
             <FeedbackWidget
@@ -302,6 +337,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
               }}
               downloadUrl={downloadUrl}
               onReset={handleReset}
+              isEs={isEs}
             />
           )}
           {/* Next steps CTA — lift retention at the conversion-complete moment */}
@@ -354,49 +390,49 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             </section>
           ))
         : (
-          <>
-            {/* How to convert */}
-            <section>
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                How to Convert {sourceDisplay} to {targetDisplay} Online
-              </h2>
-              <ol className="space-y-3 rounded-xl border bg-white p-6">
-                <li className="flex gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">1</span>
-                  <span className="text-sm text-gray-700"><strong>Upload your file</strong>. Drag and drop your {sourceDisplay} file or click to browse.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">2</span>
-                  <span className="text-sm text-gray-700"><strong>Conversion starts automatically</strong>. Our Calibre-powered engine converts your file in seconds.</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">3</span>
-                  <span className="text-sm text-gray-700"><strong>Download your {targetDisplay} file</strong>. Your converted file is ready to use immediately.</span>
-                </li>
-              </ol>
-            </section>
+            <>
+              {/* How to convert */}
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">
+                  {isEs ? `Cómo convertir ${sourceDisplay} a ${targetDisplay} online` : `How to Convert ${sourceDisplay} to ${targetDisplay} Online`}
+                </h2>
+                <ol className="space-y-3 rounded-xl border bg-white p-6">
+                  <li className="flex gap-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">1</span>
+                    <span className="text-sm text-gray-700">{isEs ? <><strong>Sube tu archivo</strong>. Arrastra y suelta tu archivo {sourceDisplay} o haz clic para buscarlo.</> : <><strong>Upload your file</strong>. Drag and drop your {sourceDisplay} file or click to browse.</>}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">2</span>
+                    <span className="text-sm text-gray-700">{isEs ? <><strong>La conversión empieza automáticamente</strong>. Nuestro motor basado en Calibre convierte tu archivo en segundos.</> : <><strong>Conversion starts automatically</strong>. Our Calibre-powered engine converts your file in seconds.</>}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">3</span>
+                    <span className="text-sm text-gray-700">{isEs ? <><strong>Descarga tu archivo {targetDisplay}</strong>. Tu archivo convertido está listo para usar de inmediato.</> : <><strong>Download your {targetDisplay} file</strong>. Your converted file is ready to use immediately.</>}</span>
+                  </li>
+                </ol>
+              </section>
             {/* Why convert section */}
             <section>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                Why Convert {sourceDisplay} to {targetDisplay}?
+                {isEs ? `¿Por qué convertir ${sourceDisplay} a ${targetDisplay}?` : `Why Convert ${sourceDisplay} to ${targetDisplay}?`}
               </h2>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="rounded-xl border bg-white p-5">
-                  <h3 className="font-semibold text-gray-900">Device Compatibility</h3>
+                  <h3 className="font-semibold text-gray-900">{chrome('whyCompatibility', isEs)}</h3>
                   <p className="mt-1 text-sm text-gray-500">
-                    {targetDisplay} is widely supported on many e-readers and devices. Convert to read your books anywhere.
+                    {isEs ? `${targetDisplay} es compatible con muchos lectores y dispositivos. Conviértelo para leer tus libros en cualquier lugar.` : `${targetDisplay} is widely supported on many e-readers and devices. Convert to read your books anywhere.`}
                   </p>
                 </div>
                 <div className="rounded-xl border bg-white p-5">
-                  <h3 className="font-semibold text-gray-900">Preserve Your Library</h3>
+                  <h3 className="font-semibold text-gray-900">{chrome('whyPreserve', isEs)}</h3>
                   <p className="mt-1 text-sm text-gray-500">
-                    Future-proof your ebook collection by converting to open, widely-supported formats.
+                    {isEs ? `Asegura tu colección de ebooks convirtiéndolos a formatos abiertos y ampliamente compatibles.` : `Future-proof your ebook collection by converting to open, widely-supported formats.`}
                   </p>
                 </div>
                 <div className="rounded-xl border bg-white p-5">
-                  <h3 className="font-semibold text-gray-900">Instant & Free</h3>
+                  <h3 className="font-semibold text-gray-900">{chrome('whyInstant', isEs)}</h3>
                   <p className="mt-1 text-sm text-gray-500">
-                    No software to install. No account needed. Convert in seconds, not minutes.
+                    {isEs ? `Sin software que instalar. Sin cuenta necesaria. Convierte en segundos, no en minutos.` : `No software to install. No account needed. Convert in seconds, not minutes.`}
                   </p>
                 </div>
               </div>
@@ -404,37 +440,37 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             {/* Format comparison table */}
             <section>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                {sourceDisplay} vs {targetDisplay}: Format Comparison
+                {isEs ? `${sourceDisplay} vs ${targetDisplay}: comparación de formatos` : `${sourceDisplay} vs ${targetDisplay}: Format Comparison`}
               </h2>
               <div className="overflow-x-auto rounded-xl border bg-white">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b bg-gray-50">
-                      <th className="px-4 py-3 text-left font-medium text-gray-700">Feature</th>
+                      <th className="px-4 py-3 text-left font-medium text-gray-700">{chrome('cmpFeature', isEs)}</th>
                       <th className="px-4 py-3 text-left font-medium text-gray-700">{sourceDisplay}</th>
                       <th className="px-4 py-3 text-left font-medium text-gray-700">{targetDisplay}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y">
                     <tr>
-                      <td className="px-4 py-2 font-medium text-gray-600">DRM Support</td>
-                      <td className="px-4 py-2 text-gray-700">Yes</td>
-                      <td className="px-4 py-2 text-gray-700">Varies</td>
+                      <td className="px-4 py-2 font-medium text-gray-600">{chrome('cmpDrm', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpYes', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpVaries', isEs)}</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-2 font-medium text-gray-600">Image Support</td>
-                      <td className="px-4 py-2 text-gray-700">Yes</td>
-                      <td className="px-4 py-2 text-gray-700">Yes</td>
+                      <td className="px-4 py-2 font-medium text-gray-600">{chrome('cmpImage', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpYes', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpYes', isEs)}</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-2 font-medium text-gray-600">Reflowable Text</td>
-                      <td className="px-4 py-2 text-gray-700">Yes</td>
-                      <td className="px-4 py-2 text-gray-700">Varies</td>
+                      <td className="px-4 py-2 font-medium text-gray-600">{chrome('cmpReflow', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpYes', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpVaries', isEs)}</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-2 font-medium text-gray-600">Open Standard</td>
-                      <td className="px-4 py-2 text-gray-700">Yes</td>
-                      <td className="px-4 py-2 text-gray-700">Varies</td>
+                      <td className="px-4 py-2 font-medium text-gray-600">{chrome('cmpOpen', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpYes', isEs)}</td>
+                      <td className="px-4 py-2 text-gray-700">{chrome('cmpVaries', isEs)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -480,9 +516,9 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
           {videoTutorial && (
             <VideoTutorial
               videoUrl={videoTutorial.videoUrl}
-              title={videoTutorial.title}
-              description={videoTutorial.description}
-              steps={videoTutorial.steps}
+              title={isEs ? videoTutorial.titleEs ?? videoTutorial.title : videoTutorial.title}
+              description={isEs ? videoTutorial.descriptionEs ?? videoTutorial.description : videoTutorial.description}
+              steps={isEs ? videoTutorial.stepsEs ?? videoTutorial.steps : videoTutorial.steps}
               isEs={isEs}
             />
           )}

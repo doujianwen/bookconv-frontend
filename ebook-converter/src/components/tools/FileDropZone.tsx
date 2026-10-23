@@ -18,6 +18,7 @@ import {
   AlertTriangle,
 } from "lucide-react"
 import { cn, formatBytes } from "@/lib/utils"
+import { chrome } from "@/lib/ui-chrome"
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { extractEbookMetadata, estimatePageCount, type EbookMetadata } from "@/lib/ebook-metadata"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
@@ -88,7 +89,7 @@ function warningFor(locale: string, mb: number): string {
   return template.replace("{mb}", String(mb))
 }
 
-function parseFileInfo(file: File, warningMsg: string): FileInfo {
+function parseFileInfo(file: File, warningMsg: string, isEs: boolean): FileInfo {
   const name = file.name
   const ext = name.split(".").pop()?.toLowerCase() || ""
   const displayName = FORMAT_DISPLAY_NAMES[ext] || ext.toUpperCase()
@@ -97,9 +98,9 @@ function parseFileInfo(file: File, warningMsg: string): FileInfo {
 
   let error: string | undefined
   if (!isValidFormat && ext !== "") {
-    error = "Unsupported format: ." + ext
+    error = chrome('fdzUnsupported', isEs) + ": ." + ext
   } else if (isTooLarge) {
-    error = "File too large — the free plan accepts files up to " + MAX_FILE_SIZE_MB + "MB per upload."
+    error = chrome('fdzFileTooLarge', isEs).replace("{mb}", String(MAX_FILE_SIZE_MB))
   }
 
   // Non-blocking heads-up for valid-but-heavy files. The copy is passed in
@@ -130,6 +131,8 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   const [metaError, setMetaError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const locale = useLocale()
+  // M5-7：next-intl locale → isEs 开关，复用 chrome() 字典（与 ToolPageClient 同机制）
+  const isEs = locale === "es"
 
   const extractMetadata = useCallback(async (file: File) => {
     if (!showMetadata) return
@@ -146,7 +149,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   }, [showMetadata])
 
   const handleFile = useCallback((file: File) => {
-    const info = parseFileInfo(file, warningFor(locale, MAX_FILE_SIZE_MB))
+    const info = parseFileInfo(file, warningFor(locale, MAX_FILE_SIZE_MB), isEs)
     setFileInfo(info)
     extractMetadata(file)
     onFileSelect(file)
@@ -238,17 +241,17 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
                   {fileInfo.pageCount !== undefined && (
                     <span className="flex items-center gap-1">
                       <BookOpen className="h-3 w-3" />
-                      ~{fileInfo.pageCount} pages
+                      ~{fileInfo.pageCount} {chrome('fdzPages', isEs)}
                     </span>
                   )}
                 </div>
                 {metaLoading ? (
                   <div className="flex items-center gap-1.5 text-xs text-blue-500">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    Reading file info...
+                    {chrome('fdzReading', isEs)}
                   </div>
                 ) : metaError ? (
-                  <p className="text-xs text-gray-400">Metadata unavailable</p>
+                  <p className="text-xs text-gray-400">{chrome('fdzMetadataUnavailable', isEs)}</p>
                 ) : metaFields.length > 0 ? (
                   <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-gray-500">
                     {metadata.title && (
@@ -271,7 +274,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs text-gray-400">No metadata found</p>
+                  <p className="text-xs text-gray-400">{chrome('fdzNoMetadata', isEs)}</p>
                 )}
                 {fileInfo.warning && (
                   <div className="flex items-start gap-1.5 rounded-md bg-amber-50 px-2.5 py-1.5 text-xs leading-snug text-amber-700">
@@ -287,9 +290,9 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
           <>
             <Upload className="mb-3 h-10 w-10 text-gray-400" />
             <p className="mb-1 text-sm font-medium text-gray-700">
-              Drag &amp; drop your file here
+              {chrome('fdzDropPrompt', isEs)}
             </p>
-            <p className="mb-2 text-xs text-gray-500">or click to browse</p>
+            <p className="mb-2 text-xs text-gray-500">{chrome('fdzOrBrowse', isEs)}</p>
             <div className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] text-gray-400">
               <span className="rounded bg-gray-100 px-1.5 py-0.5">EPUB</span>
               <span className="rounded bg-gray-100 px-1.5 py-0.5">PDF</span>
@@ -320,55 +323,55 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
       {!metaLoading && !fileInfo?.error && metaFields.length > 0 && (
         <details className="rounded-xl border border-gray-200 bg-white">
           <summary className="cursor-pointer select-none px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
-            Detailed File Information
+            {chrome('fdzDetailed', isEs)}
           </summary>
           <div className="border-t border-gray-100 px-4 pb-3 pt-2">
             <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
               {metadata.title && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Title</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzTitle', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.title}</dd>
                 </>
               )}
               {metadata.author && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Author</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzAuthor', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.author}</dd>
                 </>
               )}
               {metadata.publisher && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Publisher</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzPublisher', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.publisher}</dd>
                 </>
               )}
               {metadata.language && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Language</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzLanguage', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.language}</dd>
                 </>
               )}
               {metadata.isbn && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">ISBN</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzIsbn', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.isbn}</dd>
                 </>
               )}
               {metadata.publishedDate && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Published</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzPublished', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.publishedDate}</dd>
                 </>
               )}
               {metadata.subject && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Subject</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzSubject', isEs)}</dt>
                   <dd className="text-sm text-gray-900">{metadata.subject}</dd>
                 </>
               )}
               {metadata.description && (
                 <>
-                  <dt className="text-xs font-medium text-gray-500">Description</dt>
+                  <dt className="text-xs font-medium text-gray-500">{chrome('fdzDescription', isEs)}</dt>
                   <dd className="text-sm text-gray-700">{metadata.description}</dd>
                 </>
               )}

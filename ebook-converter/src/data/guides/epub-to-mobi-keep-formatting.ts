@@ -5,6 +5,7 @@ export const title = 'EPUB to MOBI: Keep Formatting and Read on Any Kindle (Free
 export const metaTitle = 'EPUB to MOBI: Keep Format, Read on Any Kindle'
 export const problem = 'Kindle won\'t open EPUB natively, and a careless EPUB to MOBI conversion scrambles your chapter breaks and drops your images. Here\'s how to convert cleanly with BookConv — free, in your browser, no software to install — and keep your layout.'
 export const date = '2026-08-02'
+export const updatedAt = '2026-10-23'
 export const tags = ['epub', 'mobi', 'kindle', 'formatting', 'ebook conversion']
 export const formats = { source: 'epub', target: 'mobi' }
 export const keyTakeaways = [
@@ -68,4 +69,70 @@ export const authorship = {
   credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
   estimatedConversions: '10,000+ monthly',
 }
+
+// M5-2（2026-10-23）：真实西语译文（批次4 / 3 篇之 2）
+export const es = {
+  title: 'EPUB a MOBI: conserva el formato y lee en cualquier Kindle (gratis)',
+  problem: 'Kindle no abre EPUB de forma nativa, y una conversión EPUB a MOBI descuidada desordena tus saltos de capítulo y pierde tus imágenes. Así es como convertir sin problemas con BookConv — gratis, en tu navegador, sin instalar software — y conservar tu maquetación.',
+  keyTakeaways: [
+    'Los Kindle antiguos leen MOBI o AZW3, no EPUB — convertir es obligatorio, no opcional.',
+    'MOBI es un formato legacy; si tu Kindle lo admite, AZW3 (vía EPUB a AZW3) conserva más de tu maquetación.',
+    'Los EPUB con muchas imágenes necesitan un conversor que las incruste bien, o llegan en blanco.',
+    'BookConv convierte EPUB a MOBI en el navegador y mantiene las imágenes y la estructura de capítulos intactas.',
+  ],
+  content: {
+    intro: 'Terminaste tu EPUB, lo envías a tu Kindle y no pasa nada — o se abre como un bloque de texto sin separación y sin portada. El problema no es tu archivo. Es que Kindle y EPUB no hablan el mismo idioma. Esta guía muestra cómo convertir EPUB a MOBI de la forma correcta para que tus capítulos, imágenes y portada sobrevivan.',
+    sections: [
+      {
+        heading: 'EPUB a MOBI: la respuesta breve',
+        body: `**EPUB** es el estándar abierto de libros electrónicos, pero los dispositivos Kindle leen **MOBI** y **AZW3**, no EPUB. Convertir EPUB a MOBI convierte tu libro en un archivo que los Kindle antiguos abren de forma nativa — y una conversión limpia conserva tus saltos de capítulo, imágenes y portada intactos. Tres pasos:
+
+1. Abre el [conversor gratuito de EPUB a MOBI de BookConv](/convert/epub-to-mobi).
+2. Sube tu archivo .epub y elige **MOBI**.
+3. Descarga el resultado y envíalo a tu Kindle.
+
+Un consejo: si tu Kindle es de 2016 o posterior, convierte a **AZW3** — conserva más de tu maquetación que el MOBI antiguo.`,
+      },
+      {
+        heading: 'Por qué Kindle necesita MOBI (y no EPUB)',
+        body: `El ecosistema Kindle de Amazon se construyó en torno a los formatos Mobipocket mucho antes de que EPUB se convirtiera en el estándar abierto. Los modelos Kindle antiguos, y la cadena original de Send to Kindle, entienden **MOBI** y **AZW3** — no EPUB.
+
+Si envías un EPUB a tu dirección de Kindle por correo, Amazon puede convertirlo por ti, pero el resultado es inconsistente: las portadas desaparecen, los saltos de capítulo se desplazan y las maquetaciones complejas se degradan. Convertir tú mismo te da control sobre el resultado.`,
+      },
+      {
+        heading: 'Qué se rompe al pasar de EPUB a MOBI',
+        body: `MOBI es un formato antiguo con un motor de maquetación más simple que EPUB. Tres cosas suelen salir mal:
+
+- **Los saltos de capítulo colapsan** en un flujo largo porque el conversor no leyó tus estilos de encabezado.
+- **Las imágenes llegan en blanco** cuando la herramienta no las incrusta (frecuente con portadas SVG).
+- **Las fuentes y el espaciado fino se ignoran** porque el modelo de estilos de MOBI es limitado.
+
+Nada de esto es corrupción del archivo. Simplemente el formato antiguo no soporta lo que tu EPUB usaba.`,
+      },
+      {
+        heading: 'Convierte con BookConv (lo más rápido)',
+        body: `BookConv ejecuta el motor de Calibre en el navegador, así que obtienes una conversión EPUB a MOBI correcta sin instalar software. Sube el EPUB, elige **MOBI** y este incrusta tus imágenes y conserva la estructura de capítulos. Empieza aquí: [/convert/epub-to-mobi](/convert/epub-to-mobi).
+
+Para un recorrido más amplio del mismo motor en una app de escritorio, consulta [/blog/epub-to-mobi-guide](/blog/epub-to-mobi-guide). Si tu objetivo es escapar de Kindle por completo, [convertir MOBI a EPUB](/convert/mobi-to-epub) es el camino más rápido — tus libros se vuelven portables en todos los lectores, no solo en Kindle.`,
+      },
+      {
+        heading: 'Convierte con Calibre (más control)',
+        body: `Si quieres ajustar el resultado, Calibre te ofrece un perfil de salida MOBI con opciones para encabezados, márgenes y orden de lectura. Abre el libro, elige **Convertir libros → MOBI** y ajusta las secciones **Detección de estructura** y **Salida MOBI**. Una guía paso a paso está en [/blog/epub-to-mobi-guide](/blog/epub-to-mobi-guide).`,
+      },
+      {
+        heading: 'EPUB a MOBI vs EPUB a AZW3',
+        body: `Si tu Kindle es de 2016 o posterior, admite **AZW3** (Kindle Format 8), que conserva mucha más maquetación que el MOBI antiguo. Cuando tengas la opción, prefiere AZW3: [/convert/epub-to-azw3](/convert/epub-to-azw3). Nuestra comparativa [/blog/azw3-vs-mobi](/blog/azw3-vs-mobi) detalla cuándo gana cada formato.`,
+      },
+    ],
+  },
+  faqs: [
+    { question: '¿Cómo convierto EPUB a MOBI?', answer: 'Abre un conversor online gratuito como BookConv, sube tu archivo .epub, elige MOBI como formato de salida y descarga el libro convertido. Todo el proceso se ejecuta en tu navegador sin instalar software y suele tardar menos de un minuto para una novela estándar.' },
+    { question: '¿Por qué mi Kindle no abre un archivo EPUB?', answer: 'Los modelos Kindle antiguos y la cadena original de Send to Kindle leen MOBI y AZW3, no EPUB. Tienes que convertir el EPUB a MOBI o AZW3 antes de que se abra correctamente.' },
+    { question: '¿EPUB a MOBI conserva mis imágenes y la portada?', answer: 'Puede, pero solo si el conversor las incrusta. BookConv incrusta imágenes raster y portadas SVG durante la conversión, así que tu portada e ilustraciones sobreviven. Las herramientas que omiten la incrustación de imágenes pueden entregar una portada en blanco.' },
+    { question: '¿EPUB a MOBI o a AZW3 — cuál es mejor para Kindle?', answer: 'AZW3 es mejor cuando tu Kindle lo admite (la mayoría de modelos desde 2016). AZW3 conserva más maquetación, fuentes y estructura que el formato MOBI antiguo. Usa MOBI solo para Kindles muy viejos.' },
+    { question: '¿Se conservarán mis saltos de capítulo al pasar de EPUB a MOBI?', answer: 'Sí, si el conversor lee tus estilos de encabezado. BookConv y Calibre mapean ambos los niveles de encabezado del EPUB a los capítulos MOBI; el resultado depende de que tu origen use estilos reales de Encabezado 1 / Encabezado 2 en lugar de texto en negrita manual.' },
+    { question: '¿Puedo convertir EPUB a MOBI online gratis?', answer: 'Sí. BookConv convierte EPUB a MOBI en el navegador sin instalar nada y sin coste para archivos estándar. Es el camino más rápido para una conversión puntual.' },
+    { question: '¿Necesito Calibre para enviar un EPUB a mi Kindle?', answer: 'No. Puedes convertir EPUB a MOBI o AZW3 con un conversor online como BookConv y luego enviar el resultado a tu Kindle por correo. Calibre solo ayuda si quieres control fino sobre el perfil de salida.' },
+  ],
+} satisfies import('./types').GuideEs
 

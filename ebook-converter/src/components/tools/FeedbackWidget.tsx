@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { trackGAEvent } from '@/lib/ga';
+import { chrome } from '@/lib/ui-chrome';
 
 interface FeedbackContext {
   sourceFormat?: string;
@@ -12,11 +13,13 @@ interface FeedbackContext {
 interface FeedbackWidgetProps {
   variant?: 'floating' | 'inline';
   context?: FeedbackContext;
+  /** M5-7：西语页 chrome 本地化开关 */
+  isEs?: boolean;
 }
 
 const MAX_LEN = 1000;
 
-export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidgetProps) {
+export function FeedbackWidget({ variant = 'floating', context, isEs = false }: FeedbackWidgetProps) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
@@ -68,12 +71,8 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
     }
   }
 
-  const title =
-    variant === 'inline' ? 'Report this conversion issue' : 'Send us feedback';
-  const subtitle =
-    variant === 'inline'
-      ? 'Something went wrong? Tell us what happened and we will look into it.'
-      : 'Questions, bugs, or ideas? We read every message.';
+  const title = chrome(variant === 'inline' ? 'fwReportIssue' : 'fwSendFeedback', isEs);
+  const subtitle = chrome(variant === 'inline' ? 'fwInlineSubtitle' : 'fwFloatingSubtitle', isEs);
 
   const modal = open && (
     <div
@@ -81,7 +80,7 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
       onClick={() => setOpen(false)}
       role="dialog"
       aria-modal="true"
-      aria-label={title}
+      aria-label={chrome('fwClose', isEs)}
     >
       <div
         className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
@@ -116,7 +115,7 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
           onChange={(e) => setMessage(e.target.value)}
           maxLength={MAX_LEN}
           rows={4}
-          placeholder="Describe what happened or share your idea…"
+          placeholder={chrome('fwPlaceholder', isEs)}
           className="mt-4 w-full resize-none rounded-lg border border-gray-300 p-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
 
@@ -124,21 +123,21 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your email (optional, so we can reply)"
+          placeholder={chrome('fwEmailPlaceholder', isEs)}
           className="mt-3 w-full rounded-lg border border-gray-300 p-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
 
         <p className="mt-2 text-xs text-gray-400">
-          We only collect this message and your optional email. Your files never leave your device.
+          {chrome('fwPrivacy', isEs)}
         </p>
 
         {status === 'error' && (
           <p className="mt-2 text-sm text-red-600">
-            Something went wrong. Please email hello@bookconv.com instead.
+            {chrome('fwError', isEs)}
           </p>
         )}
         {status === 'done' && (
-          <p className="mt-2 text-sm text-green-600">Thanks! We&apos;ll look into it.</p>
+          <p className="mt-2 text-sm text-green-600">{chrome('fwThanks', isEs)}</p>
         )}
 
         <button
@@ -147,7 +146,7 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
           disabled={status === 'sending' || !message.trim()}
           className="mt-4 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {status === 'sending' ? 'Sending…' : 'Send feedback'}
+          {status === 'sending' ? chrome('fwSending', isEs) : chrome('fwSend', isEs)}
         </button>
       </div>
     </div>
@@ -156,9 +155,9 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
   if (variant === 'inline') {
     const trigger = (
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
-        <h3 className="text-base font-semibold text-amber-900">Conversion didn&apos;t work?</h3>
+        <h3 className="text-base font-semibold text-amber-900">{chrome('fwDidntWork', isEs)}</h3>
         <p className="mt-1 text-sm text-amber-800">
-          Tell us what happened so we can fix it.
+          {chrome('fwTellUs', isEs)}
           {context?.errorCode ? ` Reference code: ${context.errorCode}.` : ''}
         </p>
         <button
@@ -166,7 +165,7 @@ export function FeedbackWidget({ variant = 'floating', context }: FeedbackWidget
           onClick={() => setOpen(true)}
           className="mt-3 inline-flex items-center rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
         >
-          Report this issue
+          {chrome('fwReportBtn', isEs)}
         </button>
       </div>
     );

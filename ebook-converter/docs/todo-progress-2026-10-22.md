@@ -8,15 +8,31 @@
 
 ## 🔴 今日推送后遗留（d4c16b0 之后）
 
-### 批次4 西语 guide（M5-2 连续动作）
+### 批次4 西语 guide（M5-2 连续动作）— ✅ 全部完成（2026-10-23 执行，due 2026-10-24）
 
 | 项 | 文件 | 状态 | 到期 | 备注 |
 |---|---|---|---|---|
-| `epub-to-azw3-for-kindle.ts` | src/data/guides/ | todo | 2026-10-24 | 批次3 完成 7/10 后剩余 3 篇之一 |
-| `epub-to-mobi-keep-formatting.ts` | src/data/guides/ | todo | 2026-10-24 | 同上 |
-| `azw3-to-mobi-keep-formatting.ts` | src/data/guides/ | todo | 2026-10-24 | 同上 |
+| `epub-to-azw3-for-kindle.ts` | src/data/guides/ | done | 2026-10-24 | 批次3 完成 7/10 后剩余 3 篇之一；2026-10-23 已加完整 es 块 |
+| `epub-to-mobi-keep-formatting.ts` | src/data/guides/ | done | 2026-10-24 | 同上 |
+| `azw3-to-mobi-keep-formatting.ts` | src/data/guides/ | done | 2026-10-24 | 同上；累计西语 guide 10/10 达标 |
 
-**约束**：恰 3 篇不扩大；azw3-vs-mobi 同题冲突继续跳过；西语率 100%、`satisfies GuideEs`、git diff 纯新增；git add 只加本轮 3 个文件 + board 回写（禁 add -A）；push 前 tsc/content-integrity/heading/meta-desc/build 六门禁全绿。
+**约束**：恰 3 篇不扩大；azw3-vs-mobi 同题冲突继续跳过；西语率 100%、`satisfies GuideEs`、git diff 纯新增；git add 只加本轮 3 个 guide + 本轮 M5-7 的 7 个 src 文件 + board 回写（禁 add -A）；push 前 tsc/content-integrity/heading/meta-desc/build 六门禁全绿（本轮实测全 0 error）。
+
+### M5-7 convert 交互 UI 西语本地化 — ✅ done（2026-10-23）
+
+> 原 2026-10-22「独立观察」第 50 行建议立项项，本轮已实做。M5-6 只覆盖 chrome 固定文案，本项补齐功能性交互流。
+
+| 文件 | 改动 |
+|---|---|
+| `src/lib/ui-chrome.ts` | 新增交互 UI 西语字典键（对比表 / Why 三卡 / 错误标签 / ConversionProgress / BeforeAfterComparison / FileDropZone / FeedbackWidget） |
+| `src/app/[locale]/convert/[slug]/ToolPageClient.tsx` | hero 回退 / Steps / Why / 对比表 / 视频 / 错误回退 西语化；修 line 138 历史中文 bug 为 en/es 分支 |
+| `src/components/tools/ConversionProgress.tsx` | isEs prop + ERROR_HINTS 西语 |
+| `src/components/tools/BeforeAfterComparison.tsx` | isEs prop，BEFORE/AFTER/Size change/Link expires/Download 全西语 |
+| `src/components/tools/FileDropZone.tsx` | `useLocale()` 推 isEs；drop/阅读/元数据/错误全西语 |
+| `src/lib/file-format-sniffer.ts` | 嗅探错误文案 en/es（修中文 bug） |
+| `src/components/tools/FeedbackWidget.tsx` | isEs prop，标题/占位/隐私/状态全西语 |
+
+**生效范围**：仅 3 个真实西语 convert 路由（`epub-to-doc` / `epub-to-txt`；`lit-to-epub` 为既有 301 源不可达）。英文 isEs=false 行为逐字不变（零回归）。门禁：tsc 0 / content-integrity 0/0 / heading 0 / build exit 0；本地 e2e：2 个可达 /es/convert/* 页西语 UI（"convertir" 命中），非西语 convert slug 正确 404。
 
 ---
 
@@ -47,7 +63,7 @@
 |---|---|---|---|
 | /es 索引页仍 404 | middleware P3-C 设计 | 既有意设计 | 路由开放时 M5-6 注释已标注"即生效"，无需单独任务 |
 | /es/blog/{marvel,twilight,lotr} 301→404 链 | B11a 既有决策 | 无内链指向 | 站内零风险，外部链接不影响 |
-| ToolPageClient.tsx:366/370/374 三处硬编码英文 | e2e 验证扫描 | 功能层残留 | 超出 M5-6 chrome 枚举，建议立项 M5-7（P2）；清点工作量待定 |
+| ToolPageClient.tsx:366/370/374 三处硬编码英文 | e2e 验证扫描 | 功能层残留 | ✅ 2026-10-23 M5-7 已实做（含 ConvertProgress/BeforeAfter/FileDropZone/FeedbackWidget/file-format-sniffer 一并西语化）；英文零回归 |
 | board.test.ts 13F 既有欠债 | M8-11 板面条目 | todo | 需板面专项处理 |
 
 ---
@@ -57,7 +73,7 @@
 | 日期 | 任务 | 模块 | 来源 |
 |---|---|---|---|
 | 2026-10-23 | M4-3 社区分发作信号源 | M4 | board |
-| 2026-10-24 | **M5-2 批次4 西语 guide 3 篇** | M5 | 本轮新增 |
+| 2026-10-24 | **M5-2 批次4 西语 guide 3 篇** | M5 | 本轮新增 | ✅ 2026-10-23 已执行（提前 1 天） |
 | 2026-10-24 | M11-7 复用方法论章节收口 | M11 | board |
 | 2026-10-24 | M8-11 修复 board.test.ts 脱节 | M8 | board |
 | 2026-10-26 | M2-2 结构同质度达标（batch b4） | M2 | board |
@@ -87,4 +103,14 @@
 
 ---
 
-*最后更新：2026-10-22 20:35（推送到 origin/main 后）*
+## 📝 本轮执行摘要（2026-10-23 · M5-7 + M5-2 批次4）
+
+- **M5-7**：convert 交互 UI 西语本地化（7 文件：ui-chrome.ts + ToolPageClient.tsx + ConversionProgress/BeforeAfterComparison/FileDropZone/FeedbackWidget + file-format-sniffer.ts），修 line 138 历史中文 bug
+- **M5-2 批次4**：3 篇西语 guide 译文（epub-to-azw3-for-kindle / epub-to-mobi-keep-formatting / azw3-to-mobi-keep-formatting）加完整 `es` 块，累计西语 guide **10/10** 达标
+- **门禁**：tsc 0 error / content-integrity 0/0 / find-duplicate-headings 0 / `next build --webpack` exit 0
+- **e2e 验证**：3 篇 /es/guide/* 全 HTTP 200 + 西语正文渲染 + 英文零回归（en 页无 es 泄漏）；2 个可达 /es/convert/* 页西语 UI（"convertir" 命中）；非西语 convert slug 正确 404
+- **未 push**：commit 待人工复核
+
+---
+
+*最后更新：2026-10-23（M5-7 + M5-2 批次4 执行，未 push）*
