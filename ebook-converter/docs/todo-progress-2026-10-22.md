@@ -154,4 +154,17 @@
 
 ---
 
-*最后更新：2026-10-23 10:38（GA4 T+1 因果验证遗留待办列入；M5-7 + M5-2 批次4 执行，commit f1ed2a1 已 push）*
+## 🔵 M11-3 批次节奏（周节奏推进）
+
+| 批次 | 日期 | 内容 | 状态 | 页数 |
+|---|---|---|---|---|
+| 批次 1 | 2026-10-21 | 强化 guide how-to-send-epub-to-kindle（P0 词 send to kindle） | ✅ 已 push | 1 |
+| 批次 2 | 2026-10-22 | 新建 guide kindle-vs-kobo（P1 词 kindle vs kobo） | ✅ 已 push | 1 |
+| 批次 3 | 2026-10-23 | 强化 guide kindle-formats + how-to-read-epub-on-kindle（P1 词） | ✅ 已 push | 2 |
+| 批次 4+ | 待定 | convert 词 P1-parked（CloudConvert 402，待付费档升级后启动） | ⏸️ 挂起 | — |
+
+**节奏约定**：每周 1-2 批，不另起 each-batch due；每批完成后在 statusNote 追加 `[批次 N · YYYY-MM-DD]` 记录。滚动 due = 2026-11-20。
+
+---
+
+*最后更新：2026-10-23 13:15（M11-3 批次节奏确立 + 批次 1-3 登记；滚动口径修正，commit f1ed2a1/32f413b/b8db6c0/5d136be 已 push）*
