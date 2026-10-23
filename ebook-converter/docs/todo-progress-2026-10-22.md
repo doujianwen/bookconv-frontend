@@ -57,6 +57,21 @@
 
 ---
 
+## 🔵 本轮滚动口径修正（消除晨报「假性逾期」）
+
+### M11-3（P0）+ M3-10（P1）due 改滚动完成日
+
+| 项 | 原 due | 新 due | 逻辑 | commit |
+|---|---|---|---|---|
+| M11-3 | 2026-10-21 | 2026-11-20 | 全批次完成日（首批/批次 2 已交，≤3 页/批） | f1ed2a1 |
+| M3-10 | 2026-10-20 | 2026-11-20 | 挂靠 M11-3 批次逐批消项（55 页，当前 0/55），与 M11-3 对齐 | f1ed2a1 |
+
+- **根因**：晨报按 `due vs today` 判逾期，但分批任务的 `due` 是首批 deadline，不是全批次完成 deadline → status=doing 且已交付批次时仍挂逾期，掩盖真实进度。
+- **处置**：改 due 为滚动完成日 2026-11-20，statusNote 末尾追加 `[2026-10-23 滚动口径]` 说明；`check-board-json.mjs` PASS；`board-daily-scan.mjs` 验效果 **逾期组清零**。
+- **纪律沉淀**：以后新出现「每批 ≤N 页/每周 X 篇」类分批长周期任务，**一开始就把 due 设成滚动完成日**，避免后续补修。
+
+---
+
 ## 📋 与板面不同步的独立观察
 
 | 项 | 来源 | 状态 | 建议 |
@@ -103,6 +118,19 @@
 
 ---
 
+## 📋 GA4 T+1 因果验证遗留待办（2026-10-23 自动化触发）
+
+> 来源：GA4 T+1 观察报告 `数据分析/GA4-T1观察-mobi-azw3源验证-2026-10-23.md`（commit 9912f0d mobi/azw3 源 402 归零验证，判定=UNKNOWN 样本不足）。
+
+| 项 | 优先级 | 内容 | 状态 | 备注 |
+|---|---|---|---|---|
+| file_upload 补发 source_format 参数 | P0 | 前端 `file_upload` 事件当前不带 `source_format`（仅 `conversion_failed` 带），导致 source_format × eventName 无法交叉，本次归零判定被 UNKNOWN 阻塞 | todo | 消除 9912f0d 验证盲区 |
+| 再拉 3 天 T+1 累积 mobi/azw3 源样本 ≥3 次后复判归零 | P1 | 10-23~10-25 GA4 拉取，累积 mobi/azw3/lit 源上传样本 | todo | 连续 7 天 0 失败再宣布"已归零" |
+| 10-22 GA4 vs dashboard 对账差 2 条复核 | P1 | GA4 10-22 失败 2 次（均 epub 源）vs dashboard errors=4，差 2 条疑 mobi/azw3 源或前端补报 | todo | T+3（10-25）复核 |
+| CloudConvert 升级付费档（根治 epub 源 402 主因） | P0 | 与 9912f0d 正交，mobi/azw3 源免疫 402 但 epub 源仍走 CC；10-22 唯一 402 = epub→azw3 | todo（用户决策） | 10-23 08:20 dashboard 实证仍 Free 10/天 |
+
+---
+
 ## 📝 本轮执行摘要（2026-10-23 · M5-7 + M5-2 批次4）
 
 - **M5-7**：convert 交互 UI 西语本地化（7 文件：ui-chrome.ts + ToolPageClient.tsx + ConversionProgress/BeforeAfterComparison/FileDropZone/FeedbackWidget + file-format-sniffer.ts），修 line 138 历史中文 bug
@@ -113,4 +141,4 @@
 
 ---
 
-*最后更新：2026-10-23（M5-7 + M5-2 批次4 执行，未 push）*
+*最后更新：2026-10-23（滚动口径修正 M11-3/M3-10 due + M5-7 + M5-2 批次4 执行，commit f1ed2a1 已 push）*
