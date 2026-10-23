@@ -5,7 +5,7 @@
 > - ❌「BullMQ + Redis 异步队列」→ 实际为**请求内同步转换**。异步队列在 Vercel serverless 上 100% 504（见 `诊断_转换管线生产故障_2026-08-04.md`），已刻意废弃
 > - ❌「Supabase Auth」→ 实际为**手写 HS256 JWT + scrypt**（`src/lib/auth`），Supabase 已移除（见 `src/lib/auth.ts:4` 注释）
 > - ❌「28+ 种格式 / 26 种转换路径」→ 实际 **60 个转换对**（2026-09-26 实测 31，2026-10-22 纯 JS 文本族补齐后增至 60），涉及 **18 种格式标识**
-> - ❌「`GET /api/convert/:jobId/status|result` 可用」→ 这两个端点查的是一个永不入队的空队列，属**孤儿端点**
+> - ❌「`GET /api/convert/:jobId/status|result` 可用」→ 这两个孤儿端点（查永不入队的空队列）已于 **2026-10-24 删除**
 > - ❌「`lib/storage/` R2 已接线」→ 代码存在但主链路**零引用**，仅 `api/download` 直连
 >
 > **唯一权威真相是代码**：`src/lib/conversion-map.ts`、`src/lib/convert-handler.ts`、`src/lib/auth`。
@@ -140,8 +140,8 @@ ebook-converter/
 |------|------|-----|
 | **单文件转换** | 上传一个文件，指定目标格式，**同步返回文件字节** | `POST /api/convert` |
 | **批量转换** | 一次上传多个文件，统一格式输出（Pro 门禁） | `POST /api/convert/batch` |
-| ~~Job 状态查询~~ | ⚠️ **孤儿端点**，查询永不入队的空队列，勿用 | ~~`GET /api/convert/:jobId/status`~~ |
-| ~~获取结果~~ | ⚠️ **孤儿端点**，同上 | ~~`GET /api/convert/:jobId/result`~~ |
+| ~~Job 状态查询~~ | ❌ **已删除**（2026-10-24，孤儿端点） | ~~`GET /api/convert/:jobId/status`~~ |
+| ~~获取结果~~ | ❌ **已删除**（2026-10-24，孤儿端点） | ~~`GET /api/convert/:jobId/result`~~ |
 | **下载文件** | 带速率限制的下载接口 | `GET /api/download` |
 | **健康检查** | 检查 Redis + Calibre 可用性 | `GET /api/health` |
 | **内部转换端** | VPS/Docker 上的 Calibre 执行端，共享密钥保护 | `POST /api/convert-internal` |
@@ -359,8 +359,7 @@ POST /api/convert/batch        # 批量转换（Pro 门禁）
 POST /api/convert-internal     # 内部端：VPS/Docker 上的 Calibre 执行端（共享密钥保护）
 GET  /api/download             # 下载转换后的文件
 GET  /api/health               # 健康检查
-~~GET  /api/convert/:jobId/status~~  # ⚠️ 孤儿端点（空队列），勿用
-~~GET  /api/convert/:jobId/result~~  # ⚠️ 孤儿端点（空队列），勿用
+# ~~GET /api/convert/:jobId/status|result~~  # 已删除（2026-10-24，孤儿端点）
 ```
 
 ### 请求示例
@@ -380,7 +379,7 @@ curl -X POST http://localhost:3000/api/convert \
   -F "target_format=pdf" \
   -o book.pdf
 
-# 注意：不存在 jobId / 轮询流程。旧版的 status、result 端点是孤儿端点，已废弃。
+# 注意：不存在 jobId / 轮询流程。旧版的 status、result 孤儿端点已于 2026-10-24 删除。
 ```
 
 ---

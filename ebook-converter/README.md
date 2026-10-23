@@ -69,7 +69,7 @@ curl -X POST http://localhost:3000/api/convert \
   -o result.azw3
 
 # ⚠️ 不存在 /status、/result 轮询流程
-#    这两个端点是孤儿端点（查询一个永不入队的空队列），已废弃
+#    这两个孤儿端点已于 2026-10-24 删除（无队列生产者，恒 404）
 `
 
 ### 健康检查
