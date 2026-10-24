@@ -180,7 +180,7 @@
       "title": "Referencia de Códigos de Error",
       "codes": {
         "CONVERSION_FAILED": "El proceso de conversión falló. Intenta de nuevo o contacta a soporte con los detalles del error.",
-        "FILE_TOO_LARGE": "El archivo excede el límite de ${MAX_FILE_SIZE_MB}MB. La versión gratuita tiene un límite de 60 segundos — archivos grandes fallarán. Prueba: ① Formatos puramente JS (EPUB→TXT/DOCX/RTF/FB2 sin límite); ② Comprime o divide el archivo; ③ Usa Calibre de escritorio para archivos grandes.",
+        "FILE_TOO_LARGE": "El archivo excede el límite de 4 MB. La versión gratuita tiene un límite de 60 segundos — archivos grandes fallarán. Prueba: ① Formatos puramente JS (EPUB→TXT/DOCX/RTF/FB2 sin límite); ② Comprime o divide el archivo; ③ Usa Calibre de escritorio para archivos grandes.",
         "RATE_LIMIT": "Demasiadas solicitudes. El límite es de 20 conversiones por minuto. Espera un momento e inténtalo de nuevo.",
         "DRM_PROTECTED": "El archivo fuente está protegido por DRM. No podemos convertir archivos protegidos.",
         "CORRUPT_INPUT": "El archivo subido está corrupto o es inválido. Por favor verifica el archivo fuente."

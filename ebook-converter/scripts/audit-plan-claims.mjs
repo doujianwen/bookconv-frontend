@@ -14,9 +14,10 @@
  * any of those figures come back.
  *
  * Verified truth baseline (checked against the code, not the docs):
- *   file size   src/lib/convert-handler.ts:16  MAX_FILE_SIZE_MB || 10, and
- *               .env.production sets MAX_FILE_SIZE_MB=10. No plan branch and
- *               convertAndStream() takes no user argument -> 10 MB for everyone.
+ *   file size   src/lib/file-size-limit.ts reads NEXT_PUBLIC_MAX_FILE_SIZE_MB
+ *               (default 4). No plan branch and convertAndStream() takes no user
+ *               argument -> 4 MB for everyone (Vercel Hobby edge 413 at 4.5MB).
+ *               The old variable MAX_FILE_SIZE_MB is never read.
  *   rate limit  src/app/api/convert/route.ts:30 uses the "convertApi" strategy,
  *               defined in src/lib/rate-limit.ts:49 as 20 requests / 60 s keyed
  *               by IP. No plan is consulted -> 20 req/min per IP.

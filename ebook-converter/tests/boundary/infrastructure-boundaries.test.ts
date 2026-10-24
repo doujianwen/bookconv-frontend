@@ -1,4 +1,4 @@
-﻿describe('Boundary: Environment configuration', () => {
+describe('Boundary: Environment configuration', () => {
   it('should have reasonable default UPLOAD_DIR', () => {
     const uploadDir = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
     expect(uploadDir).toBeDefined();
@@ -10,8 +10,8 @@
     expect(calibrePath).toBeDefined();
   });
 
-  it('should have MAX_FILE_SIZE_MB set', () => {
-    const maxMb = parseInt(process.env.MAX_FILE_SIZE_MB || '10', 10);
+  it('should have NEXT_PUBLIC_MAX_FILE_SIZE_MB set', () => {
+    const maxMb = parseInt(process.env.NEXT_PUBLIC_MAX_FILE_SIZE_MB || '4', 10);
     expect(maxMb).toBeGreaterThanOrEqual(1);
     expect(maxMb).toBeLessThanOrEqual(100);
   });

@@ -429,7 +429,7 @@ ebook-convert --version
 
 ### Q: 如何修改最大文件大小？
 
-A: 设置环境变量 `MAX_FILE_SIZE_MB=10`。
+A: 设置环境变量 `NEXT_PUBLIC_MAX_FILE_SIZE_MB`（默认 4，单位 MB）。代码只读该变量（`src/lib/file-size-limit.ts`）；旧变量名 `MAX_FILE_SIZE_MB` 从未被读取，勿使用。Vercel Hobby 边缘对 >4.5MB 请求体返回 413，调高需先升级计划或自托管。
 
 ### Q: 如何自定义限流阈值？
 

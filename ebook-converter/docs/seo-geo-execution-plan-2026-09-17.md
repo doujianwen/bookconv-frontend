@@ -283,6 +283,8 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | 声明 | 结论 | 依据 |
 |------|------|------|
 | Free `Up to 10MB` | ✅ 真 | `.env.production` 中 `MAX_FILE_SIZE_MB=10` |
+
+> ⚠️ **2026-10-24 更正**：上表「Free Up to 10MB ✅ 真」**判定有误**。代码只读 `NEXT_PUBLIC_MAX_FILE_SIZE_MB`（`src/lib/file-size-limit.ts`，默认 4），`.env.production` 的 `MAX_FILE_SIZE_MB=10` 变量名对不上、**从未生效**；线上实际为 4MB。定价页与 openapi 已按 4MB 修正（见 `docs/workspace-audit-v2-2026-10-24.md`）。本行保留为历史记录，勿再引用「10MB 真实」。
 | Pro `Up to 50MB` / API `Up to 100MB` | ❌ 假 | `convert-handler.ts:16` 单一固定上限，无套餐分支 |
 | Free `5 conversions per hour` | ❌ 假 | 实为 `convertApi` 20 req/60s/IP；**低估了 240 倍** |
 | Pro/API `Unlimited conversions` | ❌ 假 | 限流按 IP，与套餐无关 |

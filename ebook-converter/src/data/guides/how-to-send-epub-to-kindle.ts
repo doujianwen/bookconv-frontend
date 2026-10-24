@@ -60,7 +60,7 @@ Email is also the route with the tightest attachment limits, because it passes t
 When this route is worth the extra minute:
 
 - **Styled books.** Embedded fonts, CSS, tables, and multi-level footnotes survive an AZW3 conversion you control; Amazon's pipeline frequently strips them.
-- **Oversized files.** EPUBs above the app routes' comfortable size range stop failing once the conversion happens locally — a 10 MB-class EPUB converts cleanly with [BookConv's EPUB to AZW3 tool](/convert/epub-to-azw3) in the browser, no install needed.
+- **Oversized files.** EPUBs above the app routes' comfortable size range stop failing once the conversion happens locally — a 4 MB-class EPUB converts cleanly with [BookConv's EPUB to AZW3 tool](/convert/epub-to-azw3) in the browser, no install needed.
 - **Verification before delivery.** You can open the AZW3 in a desktop reader, confirm the chapter order and cover, and only then move it to the device.
 
 The same logic applies to very old Kindle hardware (roughly pre-2012) that predates AZW3 — convert to MOBI instead, using the same workflow with the [EPUB to MOBI converter](/convert/epub-to-mobi). What AZW3 preserves and why it is the default sideload target is explained in [our AZW3 format page](/formats/azw3).`,
@@ -106,7 +106,7 @@ export const faqs: BlogFaq[] = [
   { question: 'Can I avoid Amazon converting my file?', answer: 'Only by converting the EPUB to AZW3 yourself and copying the finished file to the Kindle over USB. That is the one route where the file arrives exactly as you prepared and verified it.' },
   { question: 'What size EPUB can I send to Kindle?', answer: 'The app and web routes comfortably handle standard novels; the email route faces tighter attachment limits because it passes through a mail gateway. Large or image-heavy EPUBs are more reliable after a local EPUB to AZW3 conversion, which also sidesteps any upload cap entirely.' },
   { question: 'Can I send a library EPUB book to my Kindle?', answer: 'Not directly — library loans are DRM-protected and every route rejects them, usually silently. Use the library app (such as Libby) and choose Kindle as the delivery target; Amazon handles the transfer of the protected loan through its own channel.' },
-  { question: 'Does converting EPUB to AZW3 before sending cost anything?', answer: 'No. BookConv converts EPUB to AZW3 free in your browser, with no account, no watermark, and files deleted automatically within an hour. Uploads are limited to 10 MB per file.' },
+  { question: 'Does converting EPUB to AZW3 before sending cost anything?', answer: 'No. BookConv converts EPUB to AZW3 free in your browser, with no account, no watermark, and files deleted automatically within an hour. Uploads are limited to 4 MB per file.' },
 ]
 // E-E-A-T authorship block
 export const authorship = {

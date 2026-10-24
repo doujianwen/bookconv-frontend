@@ -1,4 +1,4 @@
-﻿// Global mock setup for ioredis and BullMQ
+// Global mock setup for ioredis and BullMQ
 const mockRedis = {
   // ioredis exposes connection state as `status`; there is no `connected`
   // property at runtime, which is why production reads `status`.
@@ -67,4 +67,4 @@ process.env.CALIBRE_PATH = 'ebook-convert-fake';
 process.env.MAX_CONVERSION_RETRIES = '3';
 process.env.WORKER_CONCURRENCY = '4';
 process.env.REDIS_URL = 'redis://localhost:6379';
-process.env.MAX_FILE_SIZE_MB = '10';
+process.env.NEXT_PUBLIC_MAX_FILE_SIZE_MB = '4';

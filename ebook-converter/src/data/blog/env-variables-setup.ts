@@ -33,7 +33,7 @@ Only one variable is genuinely load-bearing: **REDIS_URL**. Storage, auth, payme
 
 **UPLOAD_DIR** is the local directory where each conversion gets a scratch folder. It defaults to /tmp/ebook-uploads. The process needs write access, and on ephemeral filesystems /tmp may be wiped between deploys — fine for in-flight jobs, not for anything you expect to persist.
 
-**MAX_FILE_SIZE_MB** caps upload size, defaulting to 4. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv every plan allows 4 MB; self-hosting, that ceiling comes from this variable.
+**NEXT_PUBLIC_MAX_FILE_SIZE_MB** caps upload size, defaulting to 4. Raise it and you also raise memory pressure and conversion time. On the hosted BookConv every plan allows 4 MB; self-hosting, that ceiling comes from this variable. (The old variable name MAX_FILE_SIZE_MB is not read by the code — use NEXT_PUBLIC_MAX_FILE_SIZE_MB.)
 
 **CALIBRE_PATH** points at the ebook-convert binary. The Docker image installs Calibre, so you rarely need to change this — but on a bare-metal host with a non-standard install, set the absolute path here.
 
@@ -102,7 +102,7 @@ For observability, **LOG_LEVEL** accepts debug, info, warn, or error. **NEXT_PUB
 export const faqs = [
   {
     question: `What's the smallest set of variables I need to run BookConv locally?`,
-    answer: `REDIS_URL pointing at a running Redis, and Calibre installed so ebook-convert resolves on your PATH. UPLOAD_DIR, MAX_FILE_SIZE_MB, and CALIBRE_PATH all have workable defaults. Everything else — storage, Supabase, payments, analytics — is optional.`,
+    answer: `REDIS_URL pointing at a running Redis, and Calibre installed so ebook-convert resolves on your PATH. UPLOAD_DIR, NEXT_PUBLIC_MAX_FILE_SIZE_MB, and CALIBRE_PATH all have workable defaults. Everything else — storage, Supabase, payments, analytics — is optional.`,
   },
   {
     question: `Should I commit .env.example to version control?`,

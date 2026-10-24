@@ -1,11 +1,11 @@
 // scripts/fix-free-size-claims.mjs
 //
 // One-off content fix: several pages claimed the FREE tier accepts 50MB uploads,
-// while the server enforces a global 10MB cap (MAX_FILE_SIZE_MB, not tier-aware).
-// Free users were being promised something the API rejects.
+// while the server enforces a flat cap (NEXT_PUBLIC_MAX_FILE_SIZE_MB, default 4,
+// not tier-aware). Free users were being promised something the API rejects.
 //
 // Only the explicitly listed lines are touched — lines that correctly say
-// "10 MB free / 50 MB Pro" must keep their Pro figure, so a blind global
+// "4 MB free / 50 MB Pro" must keep their Pro figure, so a blind global
 // replace is not safe here.
 //
 // Usage: node scripts/fix-free-size-claims.mjs [--dry]

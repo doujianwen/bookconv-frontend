@@ -1,4 +1,4 @@
-﻿// Lemon Squeezy payment service -- plan definitions + helpers
+// Lemon Squeezy payment service -- plan definitions + helpers
 import { createHmac, timingSafeEqual } from 'node:crypto';
 const LS_WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || '';
 
@@ -16,8 +16,8 @@ export interface PlanConfig {
 // These strings are the commercial offer -- they render on /pricing and are the
 // basis on which someone pays. Only list a benefit that the code actually
 // enforces. Verified against the implementation:
-//   file size    convert-handler.ts uses one flat MAX_FILE_SIZE_MB (10 in
-//                production), with no plan branch and no user argument.
+//   file size    convert-handler.ts uses one flat NEXT_PUBLIC_MAX_FILE_SIZE_MB
+//                (default 4), with no plan branch and no user argument.
 //   rate limit   /api/convert hard-codes the convertApi strategy (20 req/60s
 //                per IP) for every plan alike.
 //   priority     ConversionJobData.priority is declared but never assigned, so
