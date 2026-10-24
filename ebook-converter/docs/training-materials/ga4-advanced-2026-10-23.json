@@ -1,0 +1,690 @@
+{
+  "meta": {
+    "property": "547131052",
+    "start": "2026-09-23",
+    "end": "2026-10-23",
+    "generatedAt": "2026-10-24T00:57:02.142Z",
+    "source": "ga4-data-api"
+  },
+  "modules": {
+    "daily_overview": [
+      {
+        "date": "20261008",
+        "activeUsers": 24,
+        "eventCount": 144,
+        "sessions": 26
+      },
+      {
+        "date": "20261007",
+        "activeUsers": 22,
+        "eventCount": 142,
+        "sessions": 23
+      },
+      {
+        "date": "20261022",
+        "activeUsers": 20,
+        "eventCount": 76,
+        "sessions": 21
+      },
+      {
+        "date": "20261011",
+        "activeUsers": 16,
+        "eventCount": 91,
+        "sessions": 16
+      },
+      {
+        "date": "20261013",
+        "activeUsers": 16,
+        "eventCount": 134,
+        "sessions": 17
+      },
+      {
+        "date": "20261015",
+        "activeUsers": 16,
+        "eventCount": 54,
+        "sessions": 17
+      },
+      {
+        "date": "20261017",
+        "activeUsers": 16,
+        "eventCount": 81,
+        "sessions": 20
+      },
+      {
+        "date": "20260925",
+        "activeUsers": 15,
+        "eventCount": 59,
+        "sessions": 16
+      },
+      {
+        "date": "20261002",
+        "activeUsers": 14,
+        "eventCount": 93,
+        "sessions": 14
+      },
+      {
+        "date": "20261010",
+        "activeUsers": 14,
+        "eventCount": 99,
+        "sessions": 15
+      },
+      {
+        "date": "20260930",
+        "activeUsers": 13,
+        "eventCount": 64,
+        "sessions": 14
+      },
+      {
+        "date": "20261001",
+        "activeUsers": 13,
+        "eventCount": 82,
+        "sessions": 13
+      },
+      {
+        "date": "20261019",
+        "activeUsers": 13,
+        "eventCount": 90,
+        "sessions": 13
+      },
+      {
+        "date": "20261020",
+        "activeUsers": 13,
+        "eventCount": 69,
+        "sessions": 14
+      },
+      {
+        "date": "20261005",
+        "activeUsers": 12,
+        "eventCount": 105,
+        "sessions": 13
+      },
+      {
+        "date": "20261012",
+        "activeUsers": 12,
+        "eventCount": 79,
+        "sessions": 16
+      },
+      {
+        "date": "20261004",
+        "activeUsers": 11,
+        "eventCount": 108,
+        "sessions": 15
+      },
+      {
+        "date": "20261016",
+        "activeUsers": 10,
+        "eventCount": 37,
+        "sessions": 10
+      },
+      {
+        "date": "20261021",
+        "activeUsers": 10,
+        "eventCount": 70,
+        "sessions": 10
+      },
+      {
+        "date": "20261018",
+        "activeUsers": 9,
+        "eventCount": 45,
+        "sessions": 9
+      },
+      {
+        "date": "20261023",
+        "activeUsers": 9,
+        "eventCount": 51,
+        "sessions": 9
+      },
+      {
+        "date": "20261009",
+        "activeUsers": 8,
+        "eventCount": 53,
+        "sessions": 10
+      },
+      {
+        "date": "20260926",
+        "activeUsers": 6,
+        "eventCount": 60,
+        "sessions": 9
+      },
+      {
+        "date": "20260927",
+        "activeUsers": 6,
+        "eventCount": 21,
+        "sessions": 6
+      },
+      {
+        "date": "20261006",
+        "activeUsers": 6,
+        "eventCount": 45,
+        "sessions": 9
+      },
+      {
+        "date": "20261014",
+        "activeUsers": 6,
+        "eventCount": 52,
+        "sessions": 7
+      },
+      {
+        "date": "20261003",
+        "activeUsers": 4,
+        "eventCount": 55,
+        "sessions": 9
+      },
+      {
+        "date": "20260924",
+        "activeUsers": 2,
+        "eventCount": 12,
+        "sessions": 3
+      },
+      {
+        "date": "20260928",
+        "activeUsers": 2,
+        "eventCount": 15,
+        "sessions": 2
+      },
+      {
+        "date": "20260923",
+        "activeUsers": 1,
+        "eventCount": 3,
+        "sessions": 1
+      }
+    ],
+    "daily_events": [
+      {
+        "date": "20260928",
+        "file_upload": 1,
+        "conversion_complete": 0,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20260930",
+        "file_upload": 4,
+        "conversion_complete": 0,
+        "conversion_failed": 4
+      },
+      {
+        "date": "20261001",
+        "file_upload": 11,
+        "conversion_complete": 0,
+        "conversion_failed": 11
+      },
+      {
+        "date": "20261002",
+        "file_upload": 8,
+        "conversion_complete": 0,
+        "conversion_failed": 7
+      },
+      {
+        "date": "20261003",
+        "file_upload": 2,
+        "conversion_complete": 1,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261004",
+        "file_upload": 6,
+        "conversion_complete": 3,
+        "conversion_failed": 2
+      },
+      {
+        "date": "20261005",
+        "file_upload": 19,
+        "conversion_complete": 4,
+        "conversion_failed": 14
+      },
+      {
+        "date": "20261006",
+        "file_upload": 5,
+        "conversion_complete": 4,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261007",
+        "file_upload": 17,
+        "conversion_complete": 3,
+        "conversion_failed": 13
+      },
+      {
+        "date": "20261008",
+        "file_upload": 17,
+        "conversion_complete": 7,
+        "conversion_failed": 9
+      },
+      {
+        "date": "20261009",
+        "file_upload": 7,
+        "conversion_complete": 5,
+        "conversion_failed": 2
+      },
+      {
+        "date": "20261010",
+        "file_upload": 7,
+        "conversion_complete": 6,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261011",
+        "file_upload": 7,
+        "conversion_complete": 5,
+        "conversion_failed": 2
+      },
+      {
+        "date": "20261012",
+        "file_upload": 4,
+        "conversion_complete": 2,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261013",
+        "file_upload": 18,
+        "conversion_complete": 8,
+        "conversion_failed": 9
+      },
+      {
+        "date": "20261014",
+        "file_upload": 7,
+        "conversion_complete": 6,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261015",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      },
+      {
+        "date": "20261016",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      },
+      {
+        "date": "20261017",
+        "file_upload": 5,
+        "conversion_complete": 4,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261018",
+        "file_upload": 3,
+        "conversion_complete": 1,
+        "conversion_failed": 2
+      },
+      {
+        "date": "20261019",
+        "file_upload": 7,
+        "conversion_complete": 6,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261020",
+        "file_upload": 3,
+        "conversion_complete": 2,
+        "conversion_failed": 1
+      },
+      {
+        "date": "20261021",
+        "file_upload": 6,
+        "conversion_complete": 6,
+        "conversion_failed": 0
+      },
+      {
+        "date": "20261022",
+        "file_upload": 2,
+        "conversion_complete": 1,
+        "conversion_failed": 2
+      },
+      {
+        "date": "20261023",
+        "file_upload": 0,
+        "conversion_complete": 0,
+        "conversion_failed": 2
+      }
+    ],
+    "device_overview": [
+      {
+        "deviceCategory": "desktop",
+        "activeUsers": 165,
+        "sessions": 216,
+        "engagementRate": 0.5694444444444444,
+        "eventCount": 1301
+      },
+      {
+        "deviceCategory": "mobile",
+        "activeUsers": 154,
+        "sessions": 156,
+        "engagementRate": 0.2948717948717949,
+        "eventCount": 772
+      },
+      {
+        "deviceCategory": "tablet",
+        "activeUsers": 3,
+        "sessions": 3,
+        "engagementRate": 0.6666666666666666,
+        "eventCount": 9
+      },
+      {
+        "deviceCategory": "smart tv",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1,
+        "eventCount": 7
+      }
+    ],
+    "device_events": [
+      {
+        "deviceCategory": "desktop",
+        "file_upload": 131,
+        "conversion_complete": 59,
+        "conversion_failed": 70
+      },
+      {
+        "deviceCategory": "mobile",
+        "file_upload": 36,
+        "conversion_complete": 17,
+        "conversion_failed": 17
+      },
+      {
+        "deviceCategory": "smart tv",
+        "file_upload": 1,
+        "conversion_complete": 0,
+        "conversion_failed": 1
+      }
+    ],
+    "os_events": [
+      {
+        "operatingSystem": "Windows",
+        "file_upload": 106,
+        "conversion_complete": 46,
+        "conversion_failed": 59,
+        "page_view": 405
+      },
+      {
+        "operatingSystem": "Android",
+        "file_upload": 11,
+        "conversion_complete": 6,
+        "conversion_failed": 5,
+        "page_view": 170
+      },
+      {
+        "operatingSystem": "iOS",
+        "file_upload": 25,
+        "conversion_complete": 11,
+        "conversion_failed": 12,
+        "page_view": 147
+      },
+      {
+        "operatingSystem": "Macintosh",
+        "file_upload": 24,
+        "conversion_complete": 13,
+        "conversion_failed": 11,
+        "page_view": 54
+      },
+      {
+        "operatingSystem": "Linux",
+        "file_upload": 2,
+        "conversion_complete": 0,
+        "conversion_failed": 1,
+        "page_view": 20
+      }
+    ],
+    "source_medium": [
+      {
+        "sessionSourceMedium": "(direct) / (none)",
+        "activeUsers": 255,
+        "sessions": 268,
+        "engagementRate": 0.41044776119402987
+      },
+      {
+        "sessionSourceMedium": "(not set)",
+        "activeUsers": 24,
+        "sessions": 26,
+        "engagementRate": 0
+      },
+      {
+        "sessionSourceMedium": "doubao.com / referral",
+        "activeUsers": 24,
+        "sessions": 31,
+        "engagementRate": 0.7741935483870968
+      },
+      {
+        "sessionSourceMedium": "cn.bing.com / referral",
+        "activeUsers": 13,
+        "sessions": 16,
+        "engagementRate": 0.75
+      },
+      {
+        "sessionSourceMedium": "chatgpt.com / ai-assistant",
+        "activeUsers": 3,
+        "sessions": 3,
+        "engagementRate": 0.3333333333333333
+      },
+      {
+        "sessionSourceMedium": "bing / organic",
+        "activeUsers": 2,
+        "sessions": 2,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "google / organic",
+        "activeUsers": 2,
+        "sessions": 4,
+        "engagementRate": 0.5
+      },
+      {
+        "sessionSourceMedium": "app.seobotai.com / referral",
+        "activeUsers": 1,
+        "sessions": 20,
+        "engagementRate": 0.8
+      },
+      {
+        "sessionSourceMedium": "baidu / organic",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "duckduckgo / organic",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "link.wtturl.cn / referral",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "so.com / referral",
+        "activeUsers": 1,
+        "sessions": 3,
+        "engagementRate": 0.3333333333333333
+      },
+      {
+        "sessionSourceMedium": "yahoo / organic",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 0
+      }
+    ],
+    "source_events": [
+      {
+        "sessionSourceMedium": "(direct) / (none)",
+        "file_upload": 91,
+        "conversion_complete": 39,
+        "conversion_failed": 48
+      },
+      {
+        "sessionSourceMedium": "doubao.com / referral",
+        "file_upload": 35,
+        "conversion_complete": 14,
+        "conversion_failed": 21
+      },
+      {
+        "sessionSourceMedium": "(not set)",
+        "file_upload": 18,
+        "conversion_complete": 8,
+        "conversion_failed": 11
+      },
+      {
+        "sessionSourceMedium": "cn.bing.com / referral",
+        "file_upload": 14,
+        "conversion_complete": 9,
+        "conversion_failed": 5
+      },
+      {
+        "sessionSourceMedium": "bing / organic",
+        "file_upload": 2,
+        "conversion_complete": 2,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "google / organic",
+        "file_upload": 2,
+        "conversion_complete": 2,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "app.seobotai.com / referral",
+        "file_upload": 2,
+        "conversion_complete": 1,
+        "conversion_failed": 1
+      },
+      {
+        "sessionSourceMedium": "so.com / referral",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "chatgpt.com / ai-assistant",
+        "file_upload": 1,
+        "conversion_complete": 0,
+        "conversion_failed": 1
+      },
+      {
+        "sessionSourceMedium": "duckduckgo / organic",
+        "file_upload": 1,
+        "conversion_complete": 0,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "link.wtturl.cn / referral",
+        "file_upload": 1,
+        "conversion_complete": 0,
+        "conversion_failed": 1
+      }
+    ],
+    "failed_by_format": [
+      {
+        "source_format": "epub",
+        "target_format": "azw3",
+        "eventCount": 18
+      },
+      {
+        "source_format": "(not set)",
+        "target_format": "(not set)",
+        "eventCount": 17
+      },
+      {
+        "source_format": "epub",
+        "target_format": "mobi",
+        "eventCount": 14
+      },
+      {
+        "source_format": "txt",
+        "target_format": "epub",
+        "eventCount": 14
+      },
+      {
+        "source_format": "mobi",
+        "target_format": "epub",
+        "eventCount": 6
+      },
+      {
+        "source_format": "epub",
+        "target_format": "doc",
+        "eventCount": 5
+      },
+      {
+        "source_format": "epub",
+        "target_format": "pdf",
+        "eventCount": 3
+      },
+      {
+        "source_format": "epub",
+        "target_format": "txt",
+        "eventCount": 3
+      },
+      {
+        "source_format": "doc",
+        "target_format": "epub",
+        "eventCount": 2
+      },
+      {
+        "source_format": "pdf",
+        "target_format": "epub",
+        "eventCount": 2
+      },
+      {
+        "source_format": "docx",
+        "target_format": "epub",
+        "eventCount": 1
+      },
+      {
+        "source_format": "epub",
+        "target_format": "word",
+        "eventCount": 1
+      },
+      {
+        "source_format": "mobi",
+        "target_format": "pdf",
+        "eventCount": 1
+      },
+      {
+        "source_format": "mobi",
+        "target_format": "txt",
+        "eventCount": 1
+      }
+    ],
+    "failed_by_error": [
+      {
+        "error": "(not set)",
+        "eventCount": 68
+      },
+      {
+        "error": "This format is temporarily at capacity for today. EPUB to TXT and EPUB to ZIP still work right now —",
+        "eventCount": 13
+      },
+      {
+        "error": "file too large",
+        "eventCount": 3
+      },
+      {
+        "error": "Failed to fetch",
+        "eventCount": 2
+      },
+      {
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 2
+      }
+    ],
+    "android_detail": [
+      {
+        "operatingSystem": "Android",
+        "deviceCategory": "mobile",
+        "activeUsers": 81,
+        "sessions": 81,
+        "engagementRate": 0.32098765432098764
+      },
+      {
+        "operatingSystem": "Android",
+        "deviceCategory": "tablet",
+        "activeUsers": 2,
+        "sessions": 2,
+        "engagementRate": 0.5
+      }
+    ]
+  }
+}
