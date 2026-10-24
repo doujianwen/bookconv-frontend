@@ -137,8 +137,8 @@
 
 | 项 | 优先级 | 内容 | 状态 | 备注 |
 |---|---|---|---|---|
-| file_upload 补发 source_format 参数 | P0 | 前端 `file_upload` 事件当前不带 `source_format`（仅 `conversion_failed` 带），导致 source_format × eventName 无法交叉，本次归零判定被 UNKNOWN 阻塞 | todo | 消除 9912f0d 验证盲区 |
-| 再拉 3 天 T+1 累积 mobi/azw3 源样本 ≥3 次后复判归零 | P1 | 10-23~10-25 GA4 拉取，累积 mobi/azw3/lit 源上传样本 | todo | 连续 7 天 0 失败再宣布"已归零" |
+| ~~file_upload 补发 source_format 参数~~ | ~~P0~~ | ~~前端 `file_upload` 事件当前不带 `source_format`~~ | ✅ **已撤销（伪任务）** | **2026-10-24 实测证伪**：代码早已带参（ToolPageClient.tsx:200 / BatchUpload.tsx:373），GA4 `customEvent:source_format` 已注册可查（30 天 file_upload×source_format 交叉返回完整分布）。归零判定已通过该交叉查询完成，无需改代码 |
+| 再拉 3 天 T+1 累积 mobi/azw3 源样本 ≥3 次后复判归零 | P1 | 10-23~10-25 GA4 拉取，累积 mobi/azw3/lit 源上传样本 | 🟢 **2026-10-24 已判定归零** | 按源×日期细查：mobi 源唯一失败在 10-17（部署前）；10-18~10-23 0 失败且有上传/完成样本。改为持续观察至 7 天 |
 | 10-22 GA4 vs dashboard 对账差 2 条复核 | P1 | GA4 10-22 失败 2 次（均 epub 源）vs dashboard errors=4，差 2 条疑 mobi/azw3 源或前端补报 | todo | T+3（10-25）复核 |
 | CloudConvert 升级付费档（根治 epub 源 402 主因） | P0 | 与 9912f0d 正交，mobi/azw3 源免疫 402 但 epub 源仍走 CC；10-22 唯一 402 = epub→azw3 | todo（用户决策） | 10-23 08:20 dashboard 实证仍 Free 10/天 |
 
