@@ -88,13 +88,50 @@
 
 ## 八、复用方法论（仅方法论，不产出外部交付物）
 
-1. **资产识别**：BWT Topic Portfolio 抓取 SOP（API 404 → 登录态 UI 导出/半自动抓取；BETA 容错）。
-2. **能力拟合**：capabilityFit（calibre/js/cloudconvert/guide/none）+ servableNow 判定，避免追能力边界外词。
-3. **优先级矩阵**：Topic 需求 × 竞争反比 × 能力 × 语言/探针资格 [HEURISTIC]。
-4. **内容映射判定树**：convert/guide/blog 三类落点。
-5. **测量模板**：R_pre/R_post + 哈希锁 + append-only 时序 JSON。
-6. **纪律红线**：双渠道分离、人工审稿、≤3 页/批、append-only、claim tier。
-适用范围：geo-distributor 客户、geocitationblueprint.com 的**方法复用**；不产出任何客户交付物。
+> ⚠️ **适用范围与边界**：本节约为**可复用方法论**，供 geo-distributor 客户、geocitationblueprint.com 等场景**方法复用**；**不产出任何客户交付物、不对客户披露 bookconv 内部数据**。文中 bookconv 实例仅作「方法如何落地」的演示样例，其数值属 BETA / 个性化 / 近似区间，对外引用须带对应限定。所有推断性结论统一标 [HEURISTIC] 并带 claim tier。
+
+### 8.1 资产识别（Asset Identification）
+- **目标**：获得可服务的「AI 引用差距地图」——站点已被引主题版图 + 竞品被引而本站点未被引的 grounding queries。
+- **数据源**：Bing Webmaster Tools → AI Performance → Topic Portfolio (BETA)。属性：**BETA**（随时演化）、**账号个性化**、**月粒度窗口**、指标为近似区间——绝不可当市场通用数据对外表述。
+- **抓取 SOP（抗故障）**：API 404（实测 BWT API 不稳定）→ 降级为「登录态 UI 导出 / 半自动抓取」；BETA 改版 → 如实 BLOCKED 不造假数据。
+- **唯一真相源**：导出后落盘为带 TP-id 计数的 JSON（如 `data/topic-portfolio-opportunities.json`），后续所有计数以该 JSON 为准，不与网页显示交叉混用。
+
+### 8.2 能力拟合（Capability Fit）
+- **判定字段**：`capabilityFit ∈ {calibre, js, cloudconvert, guide, none}` + `servableNow`（当前能否真交付）。
+- **用途**：在追词前先确认「站内是否有承载面、当前能否真服务」，避免追能力边界外词（如 402 受限的 convert 词）。
+- **关键现实约束 [HEURISTIC]**：转换类词若依赖 CloudConvert 且当前 402，则 `servableNow=false` → 标 P1-parked，解锁条件 = 额度恢复或纯 JS 路径覆盖目标格式；**绝不**把无法交付的转换词导流到失败页（负体验）。
+
+### 8.3 优先级矩阵（Priority Matrix）[HEURISTIC]
+- **判定次序（可复现，按序短路）**：
+  1. **EXCLUDE**：偏离 niche 的超大拥挤主题（如 Technology）。
+  2. **P2**：`capabilityFit=none`（无承载面、不建页、仅记录）。
+  3. `capabilityFit=guide`：已有强承载 → **P0**（强化）；需新建 → **P1**。
+  4. convert 对：`servableNow=true` → **P0**；false（402）→ **P1-parked**。
+  5. on-niche 无工具但有 blog/guide 承载 → **P1**。
+- **乘积直觉 [HEURISTIC]**：Topic 需求 × 竞争反比 × 能力 × 语言 / 探针资格。注意：低 Sites Cited ≠ 机会大（可能是该主题 AI 引用活动总量本就低），两个命题不可混淆。
+
+### 8.4 内容映射判定树（Content Mapping Decision Tree）
+- **guide 型**：强化既有 `src/data/guides/` 或新建（须登记 `guides/index.ts`）。
+- **blog 型**：`src/data/blog/*.ts`（intro + sections + faqs + Key Takeaways + schema），遵守博客写作指南。
+- **convert 型**：挂起（402）；仅与既有页同页时顺带优化（同页不两次触碰）；新 slug 须先注册 CONVERSION_MAP + CONTENT_MAP（否则 `dynamicParams=false` 404）。
+- **统一流水线**：`seo-critic` → `critic-layer.blog` → `publish-gate`(Gate B) → **人工审稿红线** → 用户「发布」触发 → `verify-nojs-render` + `verify-hreflang-canonical`。
+
+### 8.5 测量模板（Measurement Template）
+- **R_pre**：发布前打标即采集，与 BWT「未被引」交叉验证；有效期距发布 ≤14 天，超期重采。
+- **R_post**：发布后 8 周 × 每周（仅 P0），P1 月频；每轮记录调用数；`cited=true` 连续 2 周或期满停测。
+- **哈希锁**：薄封装校验 `sha256(question)` 与存量一致（漂移 exit 2 fail-closed）→ 调探针 → 输出立即归档带日期副本（防覆盖）→ 追加 append-only 时序 JSON（替代物理数据库）。
+- **成本上限 [HEURISTIC]**：探针集 × 引擎 ≈ 调用数/轮；月度手工导出三角印证，注明月粒度口径差。
+- **双引擎 / 多语言纪律**：query 字段一律数据源原样字符串，禁止改写 / 翻译；仅 `probeEligible=true` 的原样 en 词进探针集。
+
+### 8.6 纪律红线（Discipline Red Lines）
+1. **双渠道分离**：Bing / AI 与 Google 看板绝不合并成单一 GEO 分。
+2. **人工审稿红线**：绝不自动 push；no scheduler / no rollback / 无假数据。
+3. **变更节制**：≤3 页改动 / 批、≤10 页 / 天；禁止混合测量批次。
+4. **append-only**：报告只追加；数字写前当场复算；delta = 0 如实记录。
+5. **claim tier**：所有推断（蓝海 / 重叠率）标 [HEURISTIC]；引用本文件数据须带「BETA + 个性化 + 近似区间」限定。
+6. **GEO 负向门禁**：不建特殊 GEO schema、不强制 chunking、不为 AI 生成影子页。
+
+> **复用交付口径**：对 geo-distributor 客户仅提供「方法骨架（8.1–8.6 流程）」，不附带 bookconv 内部计数与 BWT 个性化导出；任何客户侧实例化数据均须客户自行抓取并标注其自身 BETA / 个性化属性。
 
 ## 九、红线
 
@@ -116,5 +153,5 @@
 | M11-3 | 内容分发（前置 M2-8 完成；P0 内容词先行） | 2026-10-21 | todo |
 | M11-5 | R_post 跟踪（8 周窗口） | 2026-10-28 | todo, weekly |
 | M11-6 | Bing 月度印证 | 每月首周 | todo, monthly |
-| M11-7 | 复用方法论章节收口 | 2026-10-24 | todo |
+| M11-7 | 复用方法论章节收口 | 2026-10-24 | ✅ done 2026-10-25（§八 6 小节定稿，含「内部优先/外部不产出」标注与 claim tier） |
 | M11-8 | 月度快照自动化（前置：08:00 自动化验证 + 用户批准） | 2026-11-01 | blocked |

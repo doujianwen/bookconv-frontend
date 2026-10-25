@@ -26,14 +26,16 @@ describe('board data file', () => {
     expect(() => validateBoardData(data)).not.toThrow();
   });
 
-  it('covers all eleven modules M0–M10', () => {
+  it('covers all twelve modules M0–M11', () => {
+    // M11 (Bing Topic Portfolio) added 2026-10; board grew from 11 to 12 modules.
     expect(data.modules.map((m) => m.id)).toEqual([
-      'M0', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10',
+      'M0', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11',
     ]);
   });
 
-  it('has 66 tasks (63 from the breakdown table + M2-8/M2-9/M9-7 added 2026-10-02)', () => {
-    expect(data.modules.flatMap((m) => m.tasks)).toHaveLength(66);
+  it('has 101 tasks (board grew from 66; M11 module + many supplements added through Oct)', () => {
+    // Measured against the live board on 2026-10-25.
+    expect(data.modules.flatMap((m) => m.tasks)).toHaveLength(101);
   });
 
   it('uses unique task ids', () => {
@@ -73,7 +75,12 @@ describe('board data file', () => {
 
   it('declares at least one open decision for the owner', () => {
     expect(data.openDecisions.length).toBeGreaterThan(0);
-    for (const d of data.openDecisions) expect(d.blocks).toMatch(/^M\d+-\d+$/);
+    // An open decision blocks work either via a concrete task id (blocks) or via
+    // an anchor id (e.g. D2 anchors to A3). Both shapes are valid post-2026-10.
+    for (const d of data.openDecisions) {
+      const ref = d.blocks ?? d.anchor;
+      expect(ref).toMatch(/^(?:M\d+-\d+|[A-Z]\d+)$/);
+    }
   });
 });
 
@@ -108,8 +115,13 @@ describe('date helpers', () => {
 
 describe('recurrence', () => {
   it('fires daily task every day', () => {
-    expect(firesOn(taskById('M9-2'), '2026-09-28')).toBe(true);
-    expect(firesOn(taskById('M9-2'), '2026-10-04')).toBe(true);
+    // No live open `daily` task exists in the board as of 2026-10 (M9-2 became
+    // weekly). Pin the `daily` cadence branch directly so the contract holds
+    // regardless of which live tasks carry it.
+    const daily = { ...taskById('M1-5'), recurring: 'daily', status: 'todo' } as BoardTask;
+    expect(firesOn(daily, '2026-09-28')).toBe(true);
+    expect(firesOn(daily, '2026-10-04')).toBe(true);
+    expect(firesOn(daily, '2026-10-11')).toBe(true);
   });
 
   it('fires weekly tasks on Monday only', () => {
@@ -169,8 +181,10 @@ describe('recurrence', () => {
   });
 
   it('anchors the every-2-days parity to D0, not to run time', () => {
-    const t = taskById('M7-3');
-    // D0 is 2026-09-27; even offsets fire, odd offsets do not.
+    // M7-3 became weekly, and no live open `every-2-days` task remains as of
+    // 2026-10. Pin the parity logic directly: D0 = 2026-09-27; even offsets
+    // fire, odd offsets do not.
+    const t = { ...taskById('M1-5'), recurring: 'every-2-days', status: 'todo' } as BoardTask;
     expect(firesOn(t, '2026-09-27')).toBe(true);
     expect(firesOn(t, '2026-09-28')).toBe(false);
     expect(firesOn(t, '2026-09-29')).toBe(true);
@@ -179,21 +193,18 @@ describe('recurrence', () => {
 
 describe('board derivation', () => {
   const view = deriveBoard(data, '2026-09-27');
+  // 2026-09-28 is a Monday: the live weekly/monthly-end cadences actually fire
+  // on this day, so it is the realistic probe for "dated work appears" tests.
+  const mon = deriveBoard(data, '2026-09-28');
 
   it('reports the totals straight from the data file', () => {
-    expect(view.totals.tasks).toBe(66);
-    // 2026-10-03 backfill: 25 overdue tasks audited against on-disk evidence.
-    // 18 moved todo->done, 6 todo->doing (gate built, acceptance not met),
-    // 1 pre-existing done (M3-2); M8-5 + M2-5 + M6-4 + M6-5 + M7-2 + M5-1 +
-    // M0-5 + M6-1 closed done the same day (all grep/online-verified).
-    // 2026-10-04: M3-5 (no-JS render audit) closed done after
-    // scripts/verify-nojs-render.mjs passed 10/10 page templates online.
-    // 2026-10-04: M1-4 (内耗处置 GSC 验收) + M2-1 (分层审计报告) closed done
-    // after on-disk evidence (report + GSC queryxpage verification).
-    // open = todo + doing.
-    expect(view.totals.done).toBe(30);
-    expect(view.totals.open).toBe(36);
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(36);
+    // Measured against the live board on 2026-10-25 (board grew to 12 modules
+    // / 101 tasks; M11 added; many tasks closed done through October; M8-11 and
+    // M11-7 closed done on 2026-10-25 as part of this remediation).
+    expect(view.totals.tasks).toBe(101);
+    expect(view.totals.done).toBe(61);
+    expect(view.totals.open).toBe(40); // todo + doing
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(40);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -202,10 +213,12 @@ describe('board derivation', () => {
     expect(fixed).toHaveLength(0);
   });
 
-  it('lists recurring tasks on D0', () => {
-    const ids = view.dueToday.map((d) => d.taskId);
-    expect(ids).toContain('M9-2'); // daily
-    expect(ids).toContain('M1-5'); // daily
+  it('lists recurring tasks on a firing day', () => {
+    // 2026-09-28 (Monday): weekly + monthly-end cadences fire. Measured ids.
+    const ids = mon.dueToday.map((d) => d.taskId);
+    expect(ids).toContain('M1-5'); // weekly P0
+    expect(ids).toContain('M7-4'); // weekly P0
+    expect(ids).toContain('M9-6'); // monthly-end (last 3 days of Sept)
   });
 
   it('routes standing cadences out of the dated list', () => {
@@ -222,28 +235,29 @@ describe('board derivation', () => {
     for (const id of standingIds) expect(datedIds).not.toContain(id);
   });
 
-  it('keeps D0 actionable by excluding standing discipline', () => {
-    // Without the split, D0 lists 11 items and only 5 of them are dated work
-    // (the other 6 are standing discipline spread across six modules).
-    expect(view.dueToday.length).toBe(5);
-    expect(view.dueToday.every((d) => !isStanding(d.recurring))).toBe(true);
-    expect(view.standing.length).toBe(8); // 6 continuous + 1 per-change + 1 per-round
-    expect(view.standing.filter((d) => d.recurring === 'continuous')).toHaveLength(6);
+  it('keeps a firing day actionable by excluding standing discipline', () => {
+    // On 2026-09-28 the dated list holds 6 firing tasks; standing discipline is
+    // kept out of the dated list entirely.
+    expect(mon.dueToday.length).toBe(6);
+    expect(mon.dueToday.every((d) => !isStanding(d.recurring))).toBe(true);
+    expect(mon.standing.length).toBe(8); // 6 continuous + 1 per-change + 1 per-round
+    expect(mon.standing.filter((d) => d.recurring === 'continuous')).toHaveLength(6);
   });
 
   it('reports per-module standing counts without polluting nextDue', () => {
     const m8 = view.modules.find((m) => m.id === 'M8')!;
     expect(m8.standingOpen).toBe(3); // M8-1, M8-2, M8-6 continuous (M8-7 is monthly)
-    // M10 has only one dated task (M10-2); the standing one must not pin nextDue.
+    // M10-2 (the only dated task) closed done, so M10 has no open dated work;
+    // the standing M10-3 must not pin nextDue.
     const m10 = view.modules.find((m) => m.id === 'M10')!;
     expect(m10.standingOpen).toBe(1); // M10-3 continuous
-    expect(m10.nextDue).toBe('2026-10-15'); // M10-2, not "today" from M10-3
+    expect(m10.nextDue).toBeNull();
   });
 
   it('carries the task status and cadence label into the due item', () => {
-    const m15 = view.dueToday.find((d) => d.taskId === 'M1-5')!;
+    const m15 = mon.dueToday.find((d) => d.taskId === 'M1-5')!;
     expect(m15.status).toBe('todo');
-    expect(m15.cadenceLabel).toBe('每日');
+    expect(m15.cadenceLabel).toBe('每周');
   });
 
   it('has nothing overdue on day zero', () => {
@@ -331,17 +345,20 @@ describe('board derivation', () => {
     const m1OpenBefore = m1.tasks.filter((t) => t.status === 'todo' || t.status === 'doing').length;
     open.status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    expect(v.totals.open).toBe(36 - 1); // was 36 open; dropping one removes it
+    // Open count is 40 in the live board (2026-10-25); dropping one removes it.
+    expect(v.totals.open).toBe(40 - 1);
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(m1OpenBefore - 1);
     expect(openBefore).not.toBe('dropped'); // guard: we picked a real open task
   });
 
   it('counts blocked tasks separately', () => {
     const mutated = JSON.parse(JSON.stringify(data)) as BoardData;
+    const before = deriveBoard(mutated, '2026-09-27').totals.blocked;
+    const m2Before = mutated.modules[2].tasks.filter((t) => t.status === 'blocked').length;
     mutated.modules[2].tasks[0].status = 'blocked';
     const v = deriveBoard(mutated, '2026-09-27');
-    expect(v.totals.blocked).toBe(1);
-    expect(v.modules.find((m) => m.id === 'M2')!.blocked).toBe(1);
+    expect(v.totals.blocked).toBe(before + 1);
+    expect(v.modules.find((m) => m.id === 'M2')!.blocked).toBe(m2Before + 1);
   });
 
   it('counts down to anchors and flips them to passed', () => {
@@ -446,7 +463,7 @@ describe('board derivation', () => {
   it('exposes a convenience loader for a given day', () => {
     const v = getBoardView('2026-09-27');
     expect(v.today).toBe('2026-09-27');
-    expect(v.totals.tasks).toBe(66);
+    expect(v.totals.tasks).toBe(101); // live board 2026-10-25
   });
 });
 
