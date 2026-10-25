@@ -18,14 +18,31 @@ describe('RATE_LIMIT_STRATEGIES', () => {
   });
 
   it('should use 60s window for most strategies', () => {
-    for (const [name, strategy] of Object.entries(RATE_LIMIT_STRATEGIES) as [string, any][]) {
-      if (name === 'health') {
-        expect(strategy.windowMs).toBe(1_000);
-      } else if (name === 'downloadApi') {
-        expect(strategy.windowMs).toBe(3_600_000);
-      } else {
-        expect(strategy.windowMs).toBe(60_000);
-      }
+    // 声明式映射：每个策略必须在这里显式登记窗口，漏登记会让下面的覆盖率断言失败。
+    //
+    // 旧写法是 if/else 兜底 60s —— 兜底分支让「新增策略却忘了登记」静默通过：
+    //   · feedback(600s, 反滥用) 被误判为失败，红了两周没人管 → 测试变噪声被忽略
+    //   · presignApi 静默继承 60s，碰巧正确但没有任何断言保护它
+    // 一个会静默接受未知输入的判据不是门禁（见 gate-discipline-audit）。
+    const EXPECTED_WINDOW_MS: Record<string, number> = {
+      anonymous: 60_000,
+      authenticated: 60_000,
+      convertApi: 60_000,
+      presignApi: 60_000, // 单次转换可合法重试 presign，故与 convertApi 同窗不同额
+      paymentWebhook: 60_000,
+      health: 1_000,
+      downloadApi: 3_600_000,
+      feedback: 600_000, // 5 次/IP/10min，反滥用
+    };
+
+    // 覆盖率断言：策略集合必须与登记表完全一致（多一个、少一个都失败）
+    expect(Object.keys(RATE_LIMIT_STRATEGIES).sort()).toEqual(
+      Object.keys(EXPECTED_WINDOW_MS).sort()
+    );
+
+    for (const [name, expected] of Object.entries(EXPECTED_WINDOW_MS)) {
+      const strategy = RATE_LIMIT_STRATEGIES[name as keyof typeof RATE_LIMIT_STRATEGIES];
+      expect({ name, windowMs: strategy.windowMs }).toEqual({ name, windowMs: expected });
     }
   });
 });
