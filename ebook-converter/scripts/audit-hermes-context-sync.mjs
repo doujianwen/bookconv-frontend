@@ -21,6 +21,10 @@ const PAIRS = [
   ['docs/incident-2026-10-20-cloudconvert-402-credits.md', 'hermes-context/incident-2026-10-20-cloudconvert-402-credits.md'],
   // 2026-10-20 晚：402 复发权威版（含对上午报告与 Hermes 报告的更正）；-hermes-raw 为 Hermes 原始诊断，不入 PAIRS
   ['docs/incident-2026-10-20-cloudconvert-402-recurrence-evening.md', 'hermes-context/incident-2026-10-20-cloudconvert-402-recurrence-evening.md'],
+  // 2026-10-24/25：402 第三次复发 → 零成本阶段决策 → 路线 A 实施待审核（主文档在仓库根，不在 docs/）
+  ['诊断_CloudConvert额度耗尽_2026-10-24.md', 'hermes-context/诊断_CloudConvert额度耗尽_2026-10-24.md'],
+  ['方案_CloudConvert零成本缓解_红队审计v2_2026-10-25.md', 'hermes-context/方案_CloudConvert零成本缓解_红队审计v2_2026-10-25.md'],
+  ['方案_路线B重估_Oracle免费Calibre_2026-10-25.md', 'hermes-context/方案_路线B重估_Oracle免费Calibre_2026-10-25.md'],
 ];
 
 let failed = 0, undecidable = 0;

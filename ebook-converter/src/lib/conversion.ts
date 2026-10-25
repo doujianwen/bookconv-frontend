@@ -310,6 +310,8 @@ export type ConversionJobResult = {
   mimeType: string;
   downloadUrl?: string;
   fileSize?: number;
+  /** CloudConvert 路径的真实 credit 消耗（纯 JS 路径无此字段）；供预算闸门记账 */
+  creditsUsed?: number;
 };
 
 // --- Shared EPUB text extraction (no Calibre required) ---
@@ -986,6 +988,27 @@ function isPureJsTextPair(source: string, target: string): boolean {
   return TEXT_SOURCES.has(source) && TEXT_TARGETS.has(target) && source !== target;
 }
 
+/**
+ * 该格式对是否走「纯 JS 本地路径」（不消耗 CloudConvert credit）。
+ *
+ * 供预算闸门（conversion-budget）与结果缓存（conversion-cache）判断：
+ * 只有返回 false 的格式对才需要记账/拦截/缓存——纯 JS 路径本来就免费，
+ * 过闸门只会徒增故障面。
+ *
+ * ⚠️ 与下方 executeConversion 的纯 JS 分支保持数学等价：executeConversion 里
+ * 全部纯 JS 分支 = isPureJsTextPair 覆盖的文本派生对 + epub→zip 直通 +
+ * epub→epub 重打包（isEpubToEpub，同格式对不在 isPureJsTextPair 内）。
+ * 新增纯 JS 分支时必须同步本函数（漏判方向 = 缓存/预算对该格式失效，
+ * 不会搞挂转换；误判方向 = 纯 JS 格式被误拦/误记账，故宁可保守）。
+ * tests/unit/conversion-budget-cache.test.ts 对两个方向都有断言。
+ */
+export function isPureJsConversion(sourceFormat: string, targetFormat: string): boolean {
+  const s = String(sourceFormat || '').toLowerCase();
+  const t = String(targetFormat || '').toLowerCase();
+  if (s === 'epub' && (t === 'zip' || t === 'epub')) return true; // ZIP 直通 / 文本重打包
+  return isPureJsTextPair(s, t);
+}
+
 async function extractToText(source: string, inputPath: string): Promise<string> {
   switch (source) {
     case 'epub':
@@ -1230,6 +1253,7 @@ export async function executeConversion(
             extension: ext,
             mimeType: cloudResult.mimeType,
             fileSize: outBuffer.length,
+            creditsUsed: cloudResult.creditsUsed,
           };
         } else {
           throw new Error('Calibre is not available on this server. Please use EPUB to TXT or EPUB to ZIP conversions, or contact support for other formats.');

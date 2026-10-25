@@ -185,6 +185,8 @@ interface CCJobResponse {
       name: string;
       operation: string;
       status: string;
+      /** CloudConvert v2：convert 任务完成后返回的真实 credit 消耗（基础成本 + 超 1 分钟按分钟追加）。预算记账必须用这个真实值，不可按次数 +1（红队 R3）。 */
+      credits?: number;
       result?: {
         id?: string;
         message?: string;
@@ -371,6 +373,8 @@ export async function convertWithCloudConvert(
   mimeType: string;
   filename: string;
   fileSize: number;
+  /** 本次转换的真实 credit 消耗（CC convert 任务返回；字段缺失保守按 1） */
+  creditsUsed: number;
 }> {
   if (!API_KEY) {
     throw new Error('CloudConvert API key is not configured');
@@ -400,7 +404,17 @@ export async function convertWithCloudConvert(
       const job = await createJob(sourceFormat, targetFormat, useCalibre);
       await uploadToJob(job, inputBase64, sourceFormat, originalFilename);
       const finished = await pollUntilDone(job);
-      return await downloadResult(finished, targetFormat);
+      const downloaded = await downloadResult(finished, targetFormat);
+      // 真实 credit 消耗：CloudConvert v2 在 convert 任务完成后带回 credits
+      // （基础成本按格式族递增；超过 1 分钟的转换按分钟追加）。字段缺失时
+      // 保守按 1 记账——少记的风险是超额几个 credit，多记（拍脑袋 +N）会
+      // 让预算闸门提前误拦，把可用额度白白废掉（红队 R3）。
+      const convertTask = finished.data.tasks.find((t) => t.operation === 'convert');
+      const credits =
+        typeof convertTask?.credits === 'number' && convertTask.credits > 0
+          ? convertTask.credits
+          : 1;
+      return { ...downloaded, creditsUsed: credits };
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       trail.push(`${label}: ${msg}`);
