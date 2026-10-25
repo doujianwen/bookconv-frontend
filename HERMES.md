@@ -587,3 +587,61 @@ Hermes 的 Q4 计数与一条「Fact 命令」均错，已由主会话证伪：
 ### 交接原则（再次印证）
 - 故障诊断可交 Hermes，但**其报告必须经主会话独立复核后才能作为结论**（本例 5 处计数错误）。
 - 代码/门禁/commit 仍由人类+主会话执行；Hermes 不代跑修复。
+
+---
+
+## 2026-10-24/25 · 402 第三次复发 → 零成本阶段决策 → 路线 A 实施（待审核未 commit）
+
+> 故障诊断（Hermes，10-24）→ 方案+红队（主会话，10-25）→ 浏览器核验 → 路线 A 实施（主会话，验证全绿）→ 本节省用户「同步到 hermes」。全部结论有实测支撑。
+
+### 事故与检测系统验证
+- 10-24 四条飞书告警（`epub→azw3`×3 + `epub→mobi`×1，16:05–21:06），CC 402 credits 耗尽。
+- ✅ **检测系统本次验证通过**：同步路径 T+0 实时触发（10-01 是 T+1 才被 GA 日报发现）；分级正确（`CONVERSION_QUOTA_EXCEEDED` → 系统侧红卡）；5min 402 缓存短路（告警里 `(cached)` 那条）与 10min 告警节流均按设计工作，仅 1 条冗余告警。
+- 诊断报告：`ebook-converter/诊断_CloudConvert额度耗尽_2026-10-24.md`。
+
+### 根因（结构性，第三次复发：10-01 / 10-17 / 10-24）
+- 免费档 **10 credits/天** < 日活；tabbit 实测近 6 天 **5 天触顶**（Remaining=0，仅 10-20 余 9）。
+- 荧光云 VPS 自 10-05 到期未续费 ⇒ 25 个 Calibre 依赖格式唯一引擎 = CloudConvert，它倒即全挂。
+- 🔴 **CC credits ≠ 转换次数**：每种转换有基础 credit 成本（General=1、Office→PDF=2…），**超 1 分钟按分钟追加**，仅成功计费 ⇒ 记账必须按 CC 任务返回的真实 credit 消耗，禁止 +1 式估算。
+
+### 用户阶段决策（硬约束，已入 TASK-GOVERNANCE §5）
+站点未盈利 ⇒ **零成本优先 + 流量优先**；付费（$17 CC 包 / 重购 VPS）留 monetization 后。第一阶段目标=拿流量，之后广告/付费正向循环。
+
+### 红队审计 v2（PASS WITH RESIDUALS，2 P0 + 9 P1 + 2 P2）
+- **R1（P0）缓解≠修复**：缓存只命中「同文件+同格式」，10 个不同用户各转不同书时命中=0、402 必发 ⇒ 预期写死为「低流量日够用 + 部分用户优雅降级」。
+- **R2（P0）新层必须 fail-open**：缓存/Redis/R2 任一异常降级为「今天直接调 CC」，绝不阻断（否则连带搞挂仅剩的本地格式）。
+- 修订 v2（§4.0–4.5）闭合全部缺口。报告：`方案_CloudConvert零成本缓解_红队审计v2_2026-10-25.md`。
+
+### 4 项实施前置（tabbit 浏览器 + 代码，全部有结论）
+| 项 | 结论 |
+|---|---|
+| R9 rate-limit 门禁 `/api/convert` | ✅ 已接线（`route.ts:31`→`rate-limit.ts:49`=20 req/IP/60s） |
+| R10 CC 真实日用量 | ✅ 近 6 天 5 天 10/10 触顶 ⇒ 结构性 |
+| R4 R2 生产配置 | ✅ **已配置**（搜索框+负对照实证，见坑位）⇒ A1 零配置直接用 |
+| R1 权衡表述 | ✅ 用户接受「缓解非修复」 |
+
+### 路线 A 实施（2026-10-25，**未 commit，待用户审核**）
+- **新** `src/lib/conversion-budget.ts`（A2）：Redis 按 UTC 日 INCRBY 记账 CC 真实 credits，今日已用 ≥10 拦截 ⇒ 429 + Retry-After + 本地可用格式推荐；**拦截不发飞书**（防触顶日告警刷屏稀释真实故障信号）；Redis 异常 fail-open。
+- **新** `src/lib/conversion-cache.ts`（A1）：key=`sha256(源|目标|v1|文件字节)`；R2 存字节 + Redis 存 meta（TTL 30 天）；入缓存前魔数校验；`CACHE_SCHEMA_VERSION` 防陈旧；**Redis 不可用不写 R2**（防孤儿对象）；fail-open。
+- **接线** `conversion.ts`（导出 `isPureJsConversion()` 界定新层作用域 + CC 返回值带 `creditsUsed`）、`cloudconvert.ts`（提取 CC 真实 credits，缺失保守按 1）、`convert-handler.ts`（缓存查询→预算闸门→CC→**402 仍 T+0 飞书告警 + 富 body 降级**（状态码 500 保持前端兼容）→ `after()` 记账+写缓存）。
+- 验证：新测试 **19/19**（含 fail-open 反向验证 3 路径）；jest 全量 318 passed / 1 failed（`rate-limit.test` 存量失败，**stash 实证**与本次无关）；tsc 新代码 0 错（`board.test.ts` 同法实证存量）；`next build --webpack` ✅。
+- 🔴 **实施中实时抓到并修复真 bug**：谓词漏 `epub→epub`（executeConversion 有纯 JS 分支，但同格式对不在通用兜底）——不修则预算耗尽时免费的 epub→epub 被误拦。已补双向断言测试。
+
+### 路线 B 重估 → ⏸ 暂停（非方案失败）
+- Oracle Always-Free ARM **2026-06-15 已腰斩 4 OCPU/24GB → 2 OCPU/12GB**（08-18 强制），原「4/24」口径过期（跑 Calibre 仍够用）。
+- 主风险=**闲置回收**（低流量盒 7 天窗口 CPU/网/内存 <20% 被回收成死盒）；解法=**failover**（后端不可用→回退本地/CC，使 B 成纯增益）。
+- 集成就绪：设 `CONVERSION_BACKEND_URL`+`CONVERSION_INTERNAL_SECRET` 即转发 `/api/convert-internal`；docker-compose/Dockerfile 已备。
+- ⏸ **暂停原因=硬门槛**：用户无 Visa/Mastercard（Oracle 注册卡验证绕不过，银联单标卡不收）。触发条件：① 办全币种信用卡（招行全币种 Visa / 工行奋斗 MC，免年费）② monetization 后直接付费 VPS。
+- 报告：`方案_路线B重估_Oracle免费Calibre_2026-10-25.md`。
+
+### 坑位（固化）
+- 🔴 **Vercel env 列表是虚拟滚动**：整页 innerText 只抓视口顶部几行（连 `CLOUD_CONVERT_API_KEY` 都误显 false）⇒ 判 env 必须**搜索框逐词过滤 + 正对照 + 负对照**（搜不存在词须返回空，证明真在过滤）。本次 R2 判定即靠此法。
+- 🔴 tabbit `nodejs` 每次必须**全新递增 `--request-id`**（复用命中缓存返回陈旧结果=假成功）。
+- 🔴 Oracle 注册页 Billing Country 按**出口 IP 预填/锁定**（挂代理=Singapore）；且 **OCI 在中国大陆无 region**（Home Region 亚太区无中国是客观现实，选 Singapore/Phoenix，选后不可改；Calibre 后端延迟不敏感优先 Phoenix 抢到率）。
+- 🔴 **存量失败必须 stash 实证再报告**（`rate-limit.test` / `board.test.ts` 两例），禁与本次改动混淆。
+
+### 待办
+- ⏳ 用户审核路线 A diff → 说「发布」才 commit（只 stage 本轮 3 改+2 新+1 测试，**不碰** `docs/todo-progress-2026-10-22.md` 并行写入者改动）→ push 后 60–90s 线上验证。
+- ⏳ 上线后监控三项：`X-Conversion-Cache` 命中率 / `conv:budget:{UTC日}` 消耗曲线 / 429 降级触发次数 —— 用真实数据检验免费档到底够不够用。
+- ⏸ 路线 B：等全币种信用卡或 monetization 后付费 VPS。
+- 🔴 交接原则第三次印证：诊断=Hermes；**代码/测试/门禁/commit=人类+主会话**（Hermes 无 pre-commit 执行上下文）。
