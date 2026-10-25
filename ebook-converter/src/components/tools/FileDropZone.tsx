@@ -28,6 +28,14 @@ interface FileDropZoneProps {
   disabled?: boolean
   accept?: string
   showMetadata?: boolean
+  /**
+   * Largest file this deployment can actually accept, and the matching MB value
+   * for display. Supplied by the caller from useUploadCapability() so the drop
+   * zone never advertises a ceiling the deployment cannot honour.
+   * Defaults to the direct-upload constants for callers that have not migrated.
+   */
+  maxFileSizeBytes?: number
+  maxFileSizeMB?: number
 }
 
 interface FileInfo {
@@ -64,10 +72,10 @@ function getFormatIcon(format: string) {
 // function timeout even though they pass the size check — surface it before the
 // user waits 50s for a 500.
 //
-// Anchored to the DIRECT-upload cap (not the 4MB multipart cap): anything over
-// 4MB is now legitimately supported via R2, so warning at 3MB would fire on
-// ordinary ebooks and train users to ignore it.
-const LARGE_FILE_WARN_BYTES = MAX_UPLOAD_FILE_SIZE_BYTES * 0.75
+// The warn threshold is derived from the cap actually in force, so it moves with
+// the deployment's real capability instead of assuming the 100MB direct-upload
+// ceiling is available. See useUploadCapability() for why that cannot be assumed.
+const LARGE_FILE_WARN_RATIO = 0.75
 
 // The component is otherwise English-hardcoded; we localize just these two
 // user-facing strings so the free-plan timeout heads-up also shows on the
@@ -93,24 +101,30 @@ function warningFor(locale: string, mb: number): string {
   return template.replace("{mb}", String(mb))
 }
 
-function parseFileInfo(file: File, warningMsg: string, isEs: boolean): FileInfo {
+function parseFileInfo(
+  file: File,
+  warningMsg: string,
+  isEs: boolean,
+  maxBytes: number,
+  maxMB: number,
+): FileInfo {
   const name = file.name
   const ext = name.split(".").pop()?.toLowerCase() || ""
   const displayName = FORMAT_DISPLAY_NAMES[ext] || ext.toUpperCase()
   const isValidFormat = SUPPORTED_FORMATS.includes(ext)
-  const isTooLarge = file.size > MAX_UPLOAD_FILE_SIZE_BYTES
+  const isTooLarge = file.size > maxBytes
 
   let error: string | undefined
   if (!isValidFormat && ext !== "") {
     error = chrome('fdzUnsupported', isEs) + ": ." + ext
   } else if (isTooLarge) {
-    error = chrome('fdzFileTooLarge', isEs).replace("{mb}", String(MAX_UPLOAD_FILE_SIZE_MB))
+    error = chrome('fdzFileTooLarge', isEs).replace("{mb}", String(maxMB))
   }
 
   // Non-blocking heads-up for valid-but-heavy files. The copy is passed in
   // pre-localized (en/es) so the same warning shows on /es/ pages.
   let warning: string | undefined
-  if (!error && file.size > LARGE_FILE_WARN_BYTES) {
+  if (!error && file.size > maxBytes * LARGE_FILE_WARN_RATIO) {
     warning = warningMsg
   }
 
@@ -127,7 +141,14 @@ function parseFileInfo(file: File, warningMsg: string, isEs: boolean): FileInfo 
   }
 }
 
-export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = true }: FileDropZoneProps) {
+export function FileDropZone({
+  onFileSelect,
+  disabled,
+  accept,
+  showMetadata = true,
+  maxFileSizeBytes = MAX_UPLOAD_FILE_SIZE_BYTES,
+  maxFileSizeMB = MAX_UPLOAD_FILE_SIZE_MB,
+}: FileDropZoneProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
   const [metadata, setMetadata] = useState<EbookMetadata>({})
@@ -153,11 +174,17 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
   }, [showMetadata])
 
   const handleFile = useCallback((file: File) => {
-    const info = parseFileInfo(file, warningFor(locale, MAX_UPLOAD_FILE_SIZE_MB), isEs)
+    const info = parseFileInfo(
+      file,
+      warningFor(locale, maxFileSizeMB),
+      isEs,
+      maxFileSizeBytes,
+      maxFileSizeMB,
+    )
     setFileInfo(info)
     extractMetadata(file)
     onFileSelect(file)
-  }, [extractMetadata, onFileSelect, locale])
+  }, [extractMetadata, onFileSelect, locale, isEs, maxFileSizeBytes, maxFileSizeMB])
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -306,7 +333,7 @@ export function FileDropZone({ onFileSelect, disabled, accept, showMetadata = tr
               <span className="rounded bg-gray-100 px-1.5 py-0.5">DOCX</span>
               <span className="rounded bg-gray-100 px-1.5 py-0.5">RTF</span>
               <span className="rounded bg-gray-100 px-1.5 py-0.5">FB2</span>
-              <span className="text-xs">• Max {MAX_UPLOAD_FILE_SIZE_MB}MB per file</span>
+              <span className="text-xs">• Max {maxFileSizeMB}MB per file</span>
             </div>
             <p className="mt-1 max-w-sm text-center text-[11px] leading-relaxed text-amber-600">
               {hintFor(locale)}

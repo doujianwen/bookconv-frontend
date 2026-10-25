@@ -20,6 +20,8 @@ import {
 } from "@/lib/rate-limit";
 import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import {
+  MAX_FILE_SIZE_BYTES,
+  MAX_FILE_SIZE_MB,
   MAX_UPLOAD_FILE_SIZE_BYTES,
   MAX_UPLOAD_FILE_SIZE_MB,
 } from "@/lib/file-size-limit";
@@ -35,11 +37,16 @@ export const maxDuration = 15;
 export async function GET() {
   // Capability probe. Returns enabled:false rather than an error so the client
   // can decide to fall back to multipart without treating it as a failure.
-  return NextResponse.json({
-    enabled: isDirectUploadEnabled(),
-    maxBytes: MAX_UPLOAD_FILE_SIZE_BYTES,
-    maxMB: MAX_UPLOAD_FILE_SIZE_MB,
-  });
+  //
+  // maxBytes/maxMB describe the largest file that can ACTUALLY be accepted
+  // right now — not the configured ceiling. When direct upload is unavailable
+  // the only usable path is multipart, which is bounded by the edge limit, so
+  // reporting 100MB here would make the UI advertise a limit it cannot honour.
+  const enabled = isDirectUploadEnabled();
+  const maxBytes = enabled ? MAX_UPLOAD_FILE_SIZE_BYTES : MAX_FILE_SIZE_BYTES;
+  const maxMB = enabled ? MAX_UPLOAD_FILE_SIZE_MB : MAX_FILE_SIZE_MB;
+
+  return NextResponse.json({ enabled, maxBytes, maxMB });
 }
 
 export async function POST(request: NextRequest) {

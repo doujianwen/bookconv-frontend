@@ -18,8 +18,9 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
-import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_MB, MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect, DirectUploadUnavailableError } from "@/lib/client/direct-upload"
+import { useUploadCapability } from "@/lib/client/upload-capability"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
@@ -115,6 +116,11 @@ const VIDEO_TUTORIALS: Record<string, TutorialEntry> = {
 
 export function ToolPageClient({ source, target, contentData, isEs = false, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
+  // How large a file this deployment can actually take. Depends on whether the
+  // presigned direct-upload path is live (R2 configured + bucket CORS in place),
+  // so it must be probed rather than read from a constant — see
+  // src/lib/client/upload-capability.ts.
+  const uploadCap = useUploadCapability()
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
@@ -162,17 +168,16 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         })
         return
       }
-      // Size guard. TWO caps apply, and they are not the same number:
-      //   * up to MAX_FILE_SIZE_BYTES        → multipart POST to /api/convert
-      //   * up to MAX_UPLOAD_FILE_SIZE_BYTES → browser PUTs straight to R2
-      // The lower cap is the Vercel Hobby 4.5MB edge body limit, not a product
-      // choice. Above the direct cap we stop before any network call, because
-      // both paths would reject the file anyway.
-      if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
+      // Size guard against the cap this deployment can ACTUALLY accept.
+      // uploadCap.maxBytes is the direct-upload ceiling when R2+CORS are live,
+      // and the 4MB multipart ceiling when they are not. Reading the constant
+      // here would reject a 50MB file on a deployment that could take it, or
+      // accept one on a deployment that cannot.
+      if (file.size > uploadCap.maxBytes) {
         const sizeMB = (file.size / 1024 / 1024).toFixed(1)
         setErrorMessage(isEs
-          ? `El archivo es demasiado grande (${sizeMB}MB) y supera el límite de ${MAX_UPLOAD_FILE_SIZE_MB}MB. Sugerencias: ① divide el archivo con software de compresión; ② exporta a TXT/DOCX (procesado en JavaScript puro).`
-          : `The file is too large (${sizeMB}MB), exceeding the ${MAX_UPLOAD_FILE_SIZE_MB}MB limit. Suggestions: ① split the file with compression software; ② export to TXT/DOCX (pure JS processing).`)
+          ? `El archivo es demasiado grande (${sizeMB}MB) y supera el límite de ${uploadCap.maxMB}MB. Sugerencias: ① divide el archivo con software de compresión; ② exporta a TXT/DOCX (procesado en JavaScript puro).`
+          : `The file is too large (${sizeMB}MB), exceeding the ${uploadCap.maxMB}MB limit. Suggestions: ① split the file with compression software; ② export to TXT/DOCX (pure JS processing).`)
         setErrorCode("FILE_TOO_LARGE")
         setStatus("error")
         // 关闭盲区：超大文件被客户端拦截也属于"用户发起的转换失败"，此前静默无事件，
@@ -271,7 +276,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         })
       }
     },
-    [source, target, sniffFileFormat]
+    [source, target, sniffFileFormat, uploadCap]
   )
   return (
     <>
@@ -335,6 +340,8 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             onFileSelect={handleFileSelect}
             disabled={status === "uploading" || status === "converting"}
             accept={"." + source + ",." + source.toUpperCase()}
+            maxFileSizeBytes={uploadCap.maxBytes}
+            maxFileSizeMB={uploadCap.maxMB}
           />
           <ConversionProgress
             status={status}
