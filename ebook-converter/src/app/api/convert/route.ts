@@ -80,8 +80,18 @@ export async function POST(request: NextRequest) {
     }
 
     // --- Local execution (engine-free conversions) ---
+    // Two input modes share this endpoint:
+    //   * multipart `file`      — capped at MAX_FILE_SIZE_BYTES (Vercel 4.5MB edge)
+    //   * `upload_key` (string) — object already PUT to R2 by the browser, so the
+    //     request body is tiny and the edge limit no longer applies. Only used
+    //     when R2 is configured and no Calibre backend is set (see upload-presign).
     const formData = await request.formData();
-    return convertAndStream(formData, rateHeaders);
+    const rawUploadKey = formData.get("upload_key");
+    const uploadKey =
+      typeof rawUploadKey === "string" && rawUploadKey.length > 0
+        ? rawUploadKey
+        : undefined;
+    return convertAndStream(formData, rateHeaders, { uploadKey });
   } catch (err) {
     const { sanitizeError, mapErrorCode, getFriendlyMessage } = await import("@/lib/error-handler");
     const message = sanitizeError(err);

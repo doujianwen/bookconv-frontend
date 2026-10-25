@@ -21,11 +21,45 @@ import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 import { runConversion, isPureJsConversion, type ConversionJobResult } from "@/lib/conversion";
 import { notifyConversionFailure } from "@/lib/alerts";
-import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/file-size-limit";
 import { checkConversionBudget, recordCreditSpend } from "@/lib/conversion-budget";
 import { getCachedConversion, storeConversion } from "@/lib/conversion-cache";
+import { downloadFromR2, deleteFromR2 } from "@/lib/storage/r2";
+import { isValidUploadKey, fileNameFromUploadKey } from "@/lib/upload-presign";
 
 const MAX_FILE_SIZE = MAX_FILE_SIZE_BYTES;
+
+/** Options for the direct-to-R2 upload path. */
+export interface ConvertOptions {
+  /**
+   * R2 object key minted by /api/upload/presign. When present the input bytes
+   * are read back from R2 instead of from the multipart body, which is what
+   * lets files larger than the Vercel 4.5MB edge limit work at all.
+   */
+  uploadKey?: string;
+}
+
+/**
+ * Best-effort removal of a presigned upload object.
+ *
+ * Deliberately NOT registered on error paths: the client reuses one key across
+ * retries of the same file selection, so deleting after a transient failure
+ * would break the retry. Orphans on error paths are swept by an R2 lifecycle
+ * rule on the `uploads/` prefix (see docs/DIRECT_UPLOAD.md).
+ */
+function scheduleUploadCleanup(uploadKey?: string): void {
+  if (!uploadKey) return;
+  after(async () => {
+    try {
+      await deleteFromR2(uploadKey);
+    } catch (err) {
+      console.warn(
+        "[convert] R2 upload cleanup failed (non-fatal):",
+        err instanceof Error ? err.message : String(err),
+      );
+    }
+  });
+}
 
 /**
  * 构造文件下载响应（Content-Disposition 的 RFC 5987 处理见下方注释）。
@@ -76,12 +110,13 @@ function getLocalAlternatives(sourceFormat: string): string[] {
 export async function convertAndStream(
   formData: FormData,
   rateHeaders: Record<string, string> = {},
+  options: ConvertOptions = {},
 ): Promise<NextResponse> {
-  const file = formData.get("file") as File | null;
   const sourceFormat = normalizeFormat(formData.get("source_format") as string);
   const targetFormat = normalizeFormat(formData.get("target_format") as string);
+  const uploadKey = options.uploadKey;
 
-  if (!file || !sourceFormat || !targetFormat) {
+  if (!sourceFormat || !targetFormat) {
     return NextResponse.json(
       { error: "Missing required fields: file, source_format, target_format" },
       { status: 400, headers: rateHeaders },
@@ -101,15 +136,67 @@ export async function convertAndStream(
     );
   }
 
-  if (file.size > MAX_FILE_SIZE) {
-    return NextResponse.json(
-      { error: `File too large. Max ${MAX_FILE_SIZE_MB}MB per upload.`, code: "FILE_TOO_LARGE" },
-      { status: 413, headers: rateHeaders },
-    );
+  // --- Acquire input bytes: presigned R2 object, or multipart file ---------
+  // The two paths have DIFFERENT caps on purpose. Multipart is bounded by the
+  // Vercel 4.5MB edge limit (MAX_FILE_SIZE_BYTES); the R2 path never touches a
+  // serverless body limit, so it is bounded by MAX_UPLOAD_FILE_SIZE_BYTES.
+  let buffer: Buffer;
+  let fileName: string;
+
+  if (uploadKey) {
+    if (!isValidUploadKey(uploadKey)) {
+      return NextResponse.json(
+        { error: "Invalid upload key.", code: "INVALID_UPLOAD_KEY" },
+        { status: 400, headers: rateHeaders },
+      );
+    }
+    try {
+      buffer = await downloadFromR2(uploadKey);
+    } catch (r2Err) {
+      console.error(
+        "[convert] R2 upload download failed:",
+        r2Err instanceof Error ? r2Err.message : String(r2Err),
+      );
+      return NextResponse.json(
+        {
+          error: "Uploaded file could not be retrieved. Please upload it again.",
+          code: "UPLOAD_NOT_FOUND",
+        },
+        { status: 400, headers: rateHeaders },
+      );
+    }
+    if (buffer.length === 0) {
+      return NextResponse.json(
+        { error: "Uploaded file is empty.", code: "UPLOAD_EMPTY" },
+        { status: 400, headers: rateHeaders },
+      );
+    }
+    if (buffer.length > MAX_UPLOAD_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { error: `File too large. Max ${MAX_UPLOAD_FILE_SIZE_MB}MB per upload.`, code: "FILE_TOO_LARGE" },
+        { status: 413, headers: rateHeaders },
+      );
+    }
+    fileName = fileNameFromUploadKey(uploadKey, sourceFormat);
+  } else {
+    const file = formData.get("file") as File | null;
+    if (!file) {
+      return NextResponse.json(
+        { error: "Missing required fields: file, source_format, target_format" },
+        { status: 400, headers: rateHeaders },
+      );
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: `File too large. Max ${MAX_FILE_SIZE_MB}MB per upload.`, code: "FILE_TOO_LARGE" },
+        { status: 413, headers: rateHeaders },
+      );
+    }
+    buffer = Buffer.from(await file.arrayBuffer());
+    fileName = file.name;
   }
 
   const jobId = crypto.randomUUID();
-  const buffer = Buffer.from(await file.arrayBuffer());
 
   // 只有会消耗 CloudConvert credit 的格式对才需要缓存/记账/闸门
   const usesCloudConvert = !isPureJsConversion(sourceFormat, targetFormat);
@@ -127,7 +214,8 @@ export async function convertAndStream(
       );
     }
     if (cached) {
-      return buildFileResponse(cached, file.name, rateHeaders, {
+      scheduleUploadCleanup(uploadKey);
+      return buildFileResponse(cached, fileName, rateHeaders, {
         "X-Conversion-Cache": "hit",
       });
     }
@@ -231,7 +319,9 @@ export async function convertAndStream(
     });
   }
 
-  return buildFileResponse(result, file.name, rateHeaders, {
+  scheduleUploadCleanup(uploadKey);
+
+  return buildFileResponse(result, fileName, rateHeaders, {
     "X-Conversion-Cache": usesCloudConvert ? "miss" : "bypass",
   });
 }

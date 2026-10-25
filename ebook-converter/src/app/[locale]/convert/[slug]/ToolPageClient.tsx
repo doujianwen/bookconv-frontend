@@ -18,7 +18,8 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
-import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
+import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_MB, MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
+import { uploadFileDirect, DirectUploadUnavailableError } from "@/lib/client/direct-upload"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
@@ -161,15 +162,17 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         })
         return
       }
-      // Defense-in-depth: block oversized uploads before any network call.
-      // Vercel Hobby rejects >4.5MB request bodies at the edge with a 413 that
-      // our code never sees — without this guard the doomed request would still
-      // fire and surface as a confusing conversion failure.
-      if (file.size > MAX_FILE_SIZE_BYTES) {
+      // Size guard. TWO caps apply, and they are not the same number:
+      //   * up to MAX_FILE_SIZE_BYTES        → multipart POST to /api/convert
+      //   * up to MAX_UPLOAD_FILE_SIZE_BYTES → browser PUTs straight to R2
+      // The lower cap is the Vercel Hobby 4.5MB edge body limit, not a product
+      // choice. Above the direct cap we stop before any network call, because
+      // both paths would reject the file anyway.
+      if (file.size > MAX_UPLOAD_FILE_SIZE_BYTES) {
         const sizeMB = (file.size / 1024 / 1024).toFixed(1)
         setErrorMessage(isEs
-          ? `El archivo es demasiado grande (${sizeMB}MB) y supera el límite de ${MAX_FILE_SIZE_MB}MB. Causa: el servidor de la versión gratuita tiene un límite estricto de 60 segundos; los archivos grandes agotan el tiempo y fallan. Sugerencias: ① exporta a TXT/DOCX (procesado en JavaScript puro, sin límite de tamaño); ② divide el EPUB con un programa de compresión; ③ mejora a Pro para archivos grandes.`
-          : `The file is too large (${sizeMB}MB), exceeding the ${MAX_FILE_SIZE_MB}MB limit. Reason: the free-tier server has a hard 60-second limit, and large files time out and fail. Suggestions: ① export to TXT/DOCX (pure JS processing, no size limit); ② split the EPUB with compression software; ③ upgrade to Pro for large files.`)
+          ? `El archivo es demasiado grande (${sizeMB}MB) y supera el límite de ${MAX_UPLOAD_FILE_SIZE_MB}MB. Sugerencias: ① divide el archivo con software de compresión; ② exporta a TXT/DOCX (procesado en JavaScript puro).`
+          : `The file is too large (${sizeMB}MB), exceeding the ${MAX_UPLOAD_FILE_SIZE_MB}MB limit. Suggestions: ① split the file with compression software; ② export to TXT/DOCX (pure JS processing).`)
         setErrorCode("FILE_TOO_LARGE")
         setStatus("error")
         // 关闭盲区：超大文件被客户端拦截也属于"用户发起的转换失败"，此前静默无事件，
@@ -191,7 +194,29 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
       setFileName("")
       try {
         const formData = new FormData()
-        formData.append("file", file)
+        // Files above the serverless edge limit cannot be POSTed as multipart.
+        // They go browser → R2 directly, and /api/convert receives only the key.
+        let uploadKey: string | null = null
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+          setProgress(20)
+          try {
+            const direct = await uploadFileDirect(file, source)
+            uploadKey = direct.key
+          } catch (uploadErr) {
+            if (uploadErr instanceof DirectUploadUnavailableError) {
+              const sizeMB = (file.size / 1024 / 1024).toFixed(1)
+              throw new Error(
+                isEs
+                  ? `Este archivo (${sizeMB}MB) requiere carga directa, que no está disponible en este momento. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
+                  : `This file (${sizeMB}MB) needs direct upload, which is unavailable right now. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
+                { cause: { code: "FILE_TOO_LARGE" } },
+              )
+            }
+            throw uploadErr
+          }
+        }
+        if (uploadKey) formData.append("upload_key", uploadKey)
+        else formData.append("file", file)
         formData.append("source_format", source)
         formData.append("target_format", target)
         setProgress(30)

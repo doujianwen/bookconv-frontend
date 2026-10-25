@@ -47,6 +47,13 @@ export const RATE_LIMIT_STRATEGIES = {
   authenticated: { windowMs: 60_000, maxRequests: 300 },
   /** Convert API: 20 requests per IP per 60s (heavier operation) */
   convertApi: { windowMs: 60_000, maxRequests: 20 },
+  /**
+   * Presign API: 30 requests per IP per 60s.
+   * Higher than convertApi because a single conversion can legitimately retry a
+   * presign (expired URL, network drop) without the user doing anything twice.
+   * Still low enough that minting keys is not a free R2-write primitive.
+   */
+  presignApi: { windowMs: 60_000, maxRequests: 30 },
   /** Payment webhook: 10 requests per IP per 60s */
   paymentWebhook: { windowMs: 60_000, maxRequests: 10 },
   /** Health check: not rate-limited */
