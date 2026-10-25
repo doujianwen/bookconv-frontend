@@ -83,7 +83,17 @@ export interface BoardData {
   anchors: Anchor[];
   social: { note: string; x: SocialChannel; reddit: SocialChannel };
   modules: BoardModule[];
-  openDecisions: { id: string; title: string; context: string; suggestion: string; blocks: string; owner: string }[];
+  openDecisions: {
+    id: string;
+    title: string;
+    context: string;
+    suggestion: string;
+    /** Task id that this decision blocks (legacy format, still used). */
+    blocks?: string;
+    /** Anchor id that this decision is linked to (newer format, e.g. D2→A3). */
+    anchor?: string;
+    owner: string;
+  }[];
 }
 
 // ── Derived views ────────────────────────────────────────────────────────────
