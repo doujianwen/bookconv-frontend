@@ -203,16 +203,19 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             const direct = await uploadFileDirect(file, source)
             uploadKey = direct.key
           } catch (uploadErr) {
-            if (uploadErr instanceof DirectUploadUnavailableError) {
-              const sizeMB = (file.size / 1024 / 1024).toFixed(1)
-              throw new Error(
-                isEs
-                  ? `Este archivo (${sizeMB}MB) requiere carga directa, que no está disponible en este momento. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
-                  : `This file (${sizeMB}MB) needs direct upload, which is unavailable right now. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
-                { cause: { code: "FILE_TOO_LARGE" } },
-              )
-            }
-            throw uploadErr
+            // Any direct-upload failure must surface an actionable message.
+            // Re-throwing the raw error leaks things like "Failed to fetch"
+            // (R2 bucket CORS not configured) or "Upload to storage failed (403)"
+            // while the drop zone advertises the large-file cap — i.e. we would
+            // promise 100MB and deliver a cryptic dead end.
+            const sizeMB = (file.size / 1024 / 1024).toFixed(1)
+            const unavailable = uploadErr instanceof DirectUploadUnavailableError
+            throw new Error(
+              isEs
+                ? `Este archivo (${sizeMB}MB) requiere carga directa, que ${unavailable ? "no está disponible en este momento" : "falló"}. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
+                : `This file (${sizeMB}MB) needs direct upload, which ${unavailable ? "is unavailable right now" : "failed"}. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
+              { cause: { code: "FILE_TOO_LARGE" } },
+            )
           }
         }
         if (uploadKey) formData.append("upload_key", uploadKey)
