@@ -1,12 +1,12 @@
 export const slug = `azw3-vs-mobi`;
-export const title = `MOBI vs AZW3: Which Kindle Format Should You Use?`;
-export const metaTitle = `MOBI vs AZW3 for Kindle: Which Format Wins?`
+export const title = `AZW3 vs MOBI: What's the Difference for Kindle?`;
+export const metaTitle = `AZW3 vs MOBI: The Difference & Which to Use on Kindle`
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Calibre"];
 
 export const content = {
-  intro: `MOBI vs AZW3 and AZW3 vs MOBI — the answer depends on your Kindle's year. AZW3 wins for any Kindle from 2015 onward; MOBI only matters for pre-2015 hardware. Get the clear pick — plus a one-click, no-install way to convert either direction without losing your formatting.
+  intro: `AZW3 wins on any Kindle from 2015 onward; MOBI only matters for pre-2015 hardware. Here's the difference — and a clean way to convert either direction.
 
 > BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
   sections: [

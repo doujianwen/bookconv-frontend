@@ -5,7 +5,9 @@
  * - 首页 / 列表页（homepage / list）：永远只输出 en + x-default，不输出 es
  *   （无真实西语译文的页面输出 es 是错误信号，会让 Google 误以为存在双向语言对）
  * - convert / guide leaf page：当且仅当 hasEsVersion=true 时才输出完整三件套
- *   （目前只有 3 个 convert 页有真实 es 翻译；guide 全部无 es）
+ *   （目前 3 个 convert 页有真实 es 翻译；guide 中有 10 篇有 es 译文，
+ *     其余为英文兜底 —— 调用方必须传 hasEsVersion，漏传会导致 /es/ 页
+ *     缺 hrefLang="es" 而被 Google 判为英文版的替代页）
  * - blog leaf page：条件输出——真西语 blog（5 篇）输出三件套，其余 54 篇只输出 en + x-default
  *
  * 为什么是单一权威点：未来新增一页只调一次 helper，不会再出现各 page 各自实现不一致的 bug。

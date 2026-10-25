@@ -251,8 +251,8 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
 
         {(source || target) && (
           <section className="mt-12 rounded-xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">Ready to Convert?</h2>
-            <p className="mb-4 text-sm text-gray-600">Try our free online converter:</p>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">{isEs ? '¿Listo para convertir?' : 'Ready to Convert?'}</h2>
+            <p className="mb-4 text-sm text-gray-600">{isEs ? 'Prueba nuestro conversor online gratuito:' : 'Try our free online converter:'}</p>
             <div className="flex flex-wrap gap-2">
               {source && target && (
                 <Link

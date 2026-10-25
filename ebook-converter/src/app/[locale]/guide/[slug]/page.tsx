@@ -61,6 +61,10 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
     locale: locale,
     slugPath: `/guide/${g.slug}`,
     pageType: 'leaf',
+    // 有真西语译文时才声明 en↔es 语言对；无译文的 guide（英文兜底）只出 en + x-default。
+    // 漏传此参数会让 /es/guide/* 缺 hrefLang="es"，被 Google 判为
+    // "Alternate page with proper canonical tag" 而永不单独索引（2026-10-25 实测）。
+    hasEsVersion: !!g.es,
   })
 
   return {
