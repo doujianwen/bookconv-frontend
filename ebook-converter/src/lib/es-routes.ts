@@ -11,7 +11,7 @@
  * 口径说明：
  * - ESP_GUIDE_SLUGS：/es/guide/* 可路由的 guide（11 篇，含 4 篇真西语译文 + 7 篇英文兜底）
  * - ESP_BLOG_SLUGS：/es/blog/* 可路由的 blog（6 篇真西语译文）
- * - ESP_CONVERT_SLUGS：/es/convert/* 可路由的转换页（3 篇真西语译文）
+ * - ESP_CONVERT_SLUGS：/es/convert/* 可路由的转换页（5 篇真西语译文）
  */
 
 export const ESP_BLOG_SLUGS: readonly string[] = [
@@ -41,6 +41,8 @@ export const ESP_CONVERT_SLUGS: readonly string[] = [
   'epub-to-doc',
   'epub-to-txt',
   'lit-to-epub',
+  'epub-to-mobi',
+  'epub-to-azw3',
 ]
 
 /** guide 的西语路由链接；不在白名单内回退英文路由（避免 404） */

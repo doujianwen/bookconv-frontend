@@ -137,8 +137,8 @@ export async function middleware(request: NextRequest) {
       // Slug not in whitelist → 404
       return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
     }
-    // /es/convert/* — only the 3 content pages with genuine, complete Spanish
-    // translations (epub-to-doc, epub-to-txt, lit-to-epub) get a real /es route.
+    // /es/convert/* — only the 5 content pages with genuine, complete Spanish
+    // translations (epub-to-doc, epub-to-txt, lit-to-epub, epub-to-mobi, epub-to-azw3) get a real /es route.
     // Their body is rendered in Spanish by the [locale] convert page; previously
     // middleware 404'd them, leaving the es URLs dead (a leftover of the
     // over-broad P3-C "pseudo-Spanish" wipe, 2026-09-14 red-team).
