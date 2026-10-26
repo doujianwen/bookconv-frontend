@@ -440,6 +440,7 @@ node scripts/verify-markup-fix.mjs           # 部署后线上断言
 | K5 | 2026-10-02（Day 7） | 外联 publishingxpress.com：提交对比角度（免费即时 vs 人工服务），获取被引用机会 | 站外 | 0 页 | 同 K4 纪律 | ✅（10-02 草稿已落盘 社媒/外联-publishingxpress-2026-10-02.md，待用户发送） |
 | K6 | 2026-10-03（Day 8） | 首页 "Featured in"/评价位结构准备：等 K3 产出真实评分后挂载；先做 schema.org/Review/AggregateRating 的合规占位方案（无真实数据不启用） | 站内 | ≤1 页 | 无真实评分不上线 AggregateRating（防虚假结构化数据惩罚） | ⏳ |
 | K7 | 2026-10-04（Day 9） | P2 跟踪机制建立：① 月度 Kelriva 重测日程（下月同日）；② 扩展词库计划（Bing 高引用词选 10 个商业意图词，CRₚ+Wilson 区间口径）——25 词 Perplexity 批量测已在其他会话进行，此处仅登记口径引用 | 流程 | 0 页 | 重测日期已写入日历（recurring automation 每月 26 日，首测 2026-10-26）；口径与 `GEO跨平台统计分析方法论.md` 一致（CRₚ+Wilson 区间） | ✅ |
+| K8 | 2026-10-26（首测·下月同日） | 月度 AI 可见性重测（K7 机制首测）：① Kelriva 4 平台 R 重测=不可自动执行（本地无 Kelriva 凭据/接口）→ 待用户手动跑；② 代理=GSC+Bing AI 双渠道（09-26→10-26 增量）；③ delta 报告已出 | 流程/分析 | 0 页 | 口径 CRₚ+Wilson（缺 `GEO跨平台统计分析方法论.md`，改用 V3.0 口径）；基线 Kelriva 3/8=37.5%(Wilson[13.7%,69.4%])，但 n=2/平台不可判定；代理 Bing AI 日均 981→422.9(−56.9%)、VI +200.5%→−25.7%；Kelriva 手动重测待用户执行 | 🔄（文档登记完成·本地未push；Kelriva 手动待办） |
 
 > ⛔ 防御性否决（不执行项， Kelriva 原建议）：❌ 屏蔽 `/guide/best-ebook-converter`（唯一无品牌引用来源）；❌ Wikipedia 主动外链（COI 高风险）；❌ 无真实数据时上线 AggregateRating。
 
@@ -514,6 +515,7 @@ D1/D2 的**真实验收**应为：
 | M17 | 页面级定位 + 跨渠道交叉验证 | §十 小节「### M17 页面级定位与交叉验证 / M18 …」 | ✅ 2026-10-13 done（未接入周自动化） |
 | M18 | Bing 页面级时序缝合（消费 PageTraffic 快照） | 同上小节 | ✅ 2026-10-13 done |
 | M19 | 因果观测（长周期占位） | 同上小节 | ⏳ 明确不做，除非满足前提 |
+| M20 | 关键词/竞品周报流水线的 3 处口径与命名修复（2026-10-26 新增） | §十 小节「### M20」 | ⏳ 待修（见小节） |
 
 > 🔴 **两套编号体系**：作战台 `data/seo-geo-board.json` modules 的 M0–M10 与本文档 §十 M 系列是**不同体系**，勿混引。
 > 🔴 **已知文档瑕疵（2026-10-10 登记，最小侵入不重排）**：① §七 changelog 存在乱序——10-09 的 b6 行（`9446a9b`）插在 10-08 的 b1 行（`75ce218`）之前；② M3-5 小节表格中混入 1 行 B7 日期行（2026-10-05 Day 10），属错位待归位。
@@ -619,6 +621,21 @@ D1/D2 的**真实验收**应为：
 
 - 🔴 **`data/algorithm-updates.json` 仍为空**：抓 `developers.google.com/search/updates` 需代理，2026-10-13 实测 `curl HTTP=000` 且 `example.com` 同路径亦 000 ⇒ **代理整体不通**（非 Google 专属；GSC API 能通是走认证不走代理，两者可达性不同）。恢复后需抓真实日期写入，**禁止凭记忆填日期**。
 
+### M20 关键词/竞品周报流水线的 3 处口径与命名修复（2026-10-26 新增）
+
+> 来源：周报流水线第 3 次执行（2026-10-26）实测。报告：`数据分析/关键词排名竞品周报-2026-10-26.md`。
+> 三项均为**已实测证伪或已实测复现**的问题，非推测。**不新建独立待办文档**，按 §十 收口纪律并入本文档。
+
+| ID | 优先级 | 项 | 实测证据 | 验收 | 状态 |
+|----|--------|----|---------|------|------|
+| **M20-1** | 🟠 P1 | 修 `src/lib/keywords/candidates.ts:162/165` 的「未进入 Top-100」口径 | 该文案模板是 `no-competitor` 候选最终写入 `data/keyword-reason-candidates.json` 与候选报告的文字；2026-10-19 已实测证伪 `rank=0` = 「未进入观测窗口 top ~9」。上轮修复只覆盖 `build-competitor-series.mjs` 的 `_readme` 与 `fetch-competitor-serp.mjs`，**漏了文案模板本身** | 候选文案不再出现「未进 Top-100」；同步清理 `data/keyword-reasons.json` 已确认条目正文中的错误表述 | ⏳ |
+| **M20-2** | 🟠 P1 | 修 `suggest-keyword-reasons.mjs` 的候选报告文件名（取运行当日而非 `series.d0`） | 产物恒为 `数据分析/keyword-reason-candidates-2026-09-27.md`（`d0=2026-09-27`），**连续 3 轮覆盖同名文件，候选历史持续丢失** | 产物名含运行当日（如 `keyword-reason-candidates-2026-10-26.md`），旧文件保留 | ⏳ |
+| **M20-3** | 🟡 P2 | 决定是否把竞品监测词扩到「实际会动的词」 | 本轮达标变动词（\|Δ\|≥3）8 个与竞品监测词 12 个**交集 = 0** ⇒ 候选机制持续空转，候选原因永远只有 `no-competitor` 类型。属**监控配置问题，非工具故障** | 要么把实际会动的词加入 `data/competitor-config.json` 的 `keywords`，要么在报告里明确「候选机制仅作 no-competitor 排除性提示」 | ⏳ |
+
+**下期复核项（不单独编号，随周报执行）**
+
+- 🟡 **2026-10-26 竞品快照观测深度 min 7（10-19 为 min 8）**，且 `convert epub to mobi` / `mobi to epub` / `epub to zip` 三个词的监测竞品命中数由 3/4/1 归零 ⇒ **无法区分「竞品真掉出」与「窗口变浅刚好切掉边缘位次」**。下期周报须对照观察是否恢复。
+
 ### M3-5 抓取与渲染可解析性（2026-10-04 收口 done）
 
 > 产物：`scripts/verify-nojs-render.mjs`（npm run `audit:nojs`）+ 报告 `数据分析/M3-5-抓取与渲染可解析性-2026-10-04.md`（不入库）。
@@ -680,7 +697,7 @@ D1/D2 的**真实验收**应为：
 ---
 
 **文档版本**: v2.39（2026-10-20 Day 17·b3b 同步 10-19 H1 分诊：H1 长度非排名惩罚项，≤55 为 SERP metaTitle 误套；33 英文基线 B(11)+C(1) 已 10-19 落地、A15 保留、6 SERP 收口，剩余 22 篇 title>55 SEO/GEO 角度无需缩短，本行由 🔄 改 ✅；v2.38（2026-10-18 Day 17·b3 西语残留审计：6 西语 blog 补 es.metaTitle 收口 ES SERP（3 越界已修+3 合规）；Batch 4 Day 17·b3 完成：红队更正 B3 报告「blog 无 metaTitle」错误前提，blog 6 文件补 metaTitle 收口 SERP，27 篇 H1 超长移出本批次；Day 17·b2 结案：实测 guide SERP `<title>` 已被 `metaTitle` 兜底合规，0 改动，同步修订 B3 报告 §〇/§六 对 guide 结构的错误描述；2026-10-17 Batch 4 Day 17·b1 完成：3 convert 页 title+desc 收口 ≤55/≤158，commit f3f8f26 未 push；2026-10-16 B3 Title 解耦实施：45 个 guide/blog 超长标题加 metaTitle 仅用于 SERP，H1/OG/schema 不变；v2.32（2026-10-16 Batch 4 Day 17 补充：3 个 Tier-1 convert 页定点修复 6 处（Title>55 62→58、Desc>158 7→5）+ B3 审计口径纠错（guide 实为 18 条）；v2.31：2026-10-16 Batch 4 Day 17 B3 全站 Title/Description/OG 检查出报告 + B3-4 metaDescription 全覆盖已满足·0 代码改动；2026-10-15 Batch 4 Day 16 B2 Bing放大 FAQ≥8 验收已满足·0 代码改动；2026-10-14 Batch 4 Day 15 B1c 完成：mobi-to-epub/epub-to-txt/epub-to-doc 标题优化 + epub-to-doc 内链补充，commit 9440ed0 未 push；2026-10-06 Batch 4 Day 11 B8 已完成：B8 Batch 簇分工+标题错开，三页意图清晰分离，commit bbbe8fd 未 push；2026-10-04 09:3x M3-5 收口 done（no-JS 渲染审计 10/10 PASS，判据升级为双口径，抓到并修复 /tutorial H1 光杆词缺陷；48 页 Suspense 投递记为结构性观察暂不修）；v2.26（2026-10-03 21:5x M13-5 完成待发布（calibre-alternatives-online，红队改判据：p45 让给存量页、新页锁 p44 多替代品清单）+ 竞品实测报告 v2.0（6 站实测+红队 8 项修正）+ M16 立项（竞品结构缺口批次 M16-1~M16-5，formats 扩写试点制）；v2.25（2026-10-03 08:55 M15 第②篇完成待发布（post76 判据角度，题目因 R1 自我竞争由原题改写）+ 作战台 25 项逾期状态回填（18 done / 6 doing）+ 纠正「mobi-to-epub 是零抓取页」的错误内链决策；v2.24（2026-10-02 16:40 M15 第①篇完成待发布（post75 已注册，门禁全绿，未 push）；v2.23（2026-10-02 16:14 M15 两题按 A 版定稿：Kobo 48 字符 / DRM-free 44 字符，进入写作节奏 due 10-10；v2.22（2026-10-02 16:08 M15 首批选题候选写入：p26 Kobo + p37/p38 DRM-free，排除 Kindle 集群与 HP（防自竞争/等 IP 决策），due 10-10 待确认题目；v2.21（2026-10-02 15:56 M2-9 拍板=操作指南类优先；M3-2 收口 done（formats+compat 已于 9/27 补入 sitemap，10/02 复核）；D1 改写为残余分叉（未收录处置延至 10/20 后）；v2.20（2026-10-02 15:30 新增 M1-E/M14/M15：13 零抓取页前置子集；周一三合一分析挂自动化；博客补给待拍板；v2.19（2026-10-02 15:10 M1-D 覆盖率闭环：28/28 Inspection 成功（SA 需用前缀属性）；15 已收录/9 已发现未抓取/4 完全未知，13/28 crawl=never；v2.18（2026-10-02 M1 首读 API 复核：Tier-1 持平无修复信号、epub-to-pdf 第三窗 0；URL Inspection 403 权限阻断待提权；v2.17（Day8 前置：B5 标题错开 + K5 外联草稿落盘 + M13-4 新 guide how-to-read-epub-on-kindle（guide 22→23）；v2.16：M1-C：7 页上游全暗 + 5 页暗上游补活内链 14 条；原 M1-B：`epub-to-pdf` 定性＝已发现未编入索引；覆盖坍塌量化 16/31；判据修正：4 孤儿页实为「上游全暗」7 页 —— `epub-to-pdf` 定性＝已发现未编入索引；覆盖坍塌量化 16/31；新挖 4 个孤儿页定 P0）
-**下次更新**: 2026-10-20（Day 17·b3b 同步 10-19 分诊：H1 长度非惩罚项，33 英文基线 B(11)+C(1) 已 10-19 落地、A15 保留、6 SERP 收口，剩余 22 篇 title>55 SEO/GEO 角度无需缩短，状态 🔄→✅；3 西语 es.title 超长由 es.metaTitle 兜底）；2026-10-19（Batch 4 Day 17·b3 完成：红队更正 B3 报告「blog 无 metaTitle」错误前提，blog 6 文件补 metaTitle 收口 SERP，27 篇 H1 超长移出本批次标 ⏳（Day 17·b3b 待人工内容 pass）；Day 17·b2 ✅ 结案（guide SERP 已被 metaTitle 兜底合规，0 改动）；Day 17·b1 ✅；Day 17·b3 西语残留审计完成（3 es.metaTitle 修复+3 合规）；K3/K6 仍 ⏳ 待用户建 Trustpilot/G2 账号与真实评分；4 个 convert 残留页挂 10/20 锚点 A3 裁决；M1 观测延至 10/20 重评估）
+**下次更新**: 2026-10-26（K7 月度 AI 可见性重测首测：Kelriva 手动重测待用户执行；GSC+Bing AI 双渠道代理 delta 已登记 §八 K8 + 数据分析/AI可见性月度重测-K7-2026-10-26.md；四平台 R 因无 Kelriva 凭据不可自动算）；2026-10-20（Day 17·b3b 同步 10-19 分诊：H1 长度非惩罚项，33 英文基线 B(11)+C(1) 已 10-19 落地、A15 保留、6 SERP 收口，剩余 22 篇 title>55 SEO/GEO 角度无需缩短，状态 🔄→✅；3 西语 es.title 超长由 es.metaTitle 兜底）；2026-10-19（Batch 4 Day 17·b3 完成：红队更正 B3 报告「blog 无 metaTitle」错误前提，blog 6 文件补 metaTitle 收口 SERP，27 篇 H1 超长移出本批次标 ⏳（Day 17·b3b 待人工内容 pass）；Day 17·b2 ✅ 结案（guide SERP 已被 metaTitle 兜底合规，0 改动）；Day 17·b1 ✅；Day 17·b3 西语残留审计完成（3 es.metaTitle 修复+3 合规）；K3/K6 仍 ⏳ 待用户建 Trustpilot/G2 账号与真实评分；4 个 convert 残留页挂 10/20 锚点 A3 裁决；M1 观测延至 10/20 重评估）
 **状态更正（2026-10-09 实测）**：① 文档此前标注 b2/b3/b4/b5「未 push 待复核」**全部系过时信息**——`git merge-base --is-ancestor` 实测 d979647/d7cc7ba/92f11b9/578f7da 均为 `origin/main` HEAD `578f7da` 的祖先，即**已全部推送上线**（b5 违规 5 页亦已上线，无法再拆）。② 本地唯一未push = b6 `9446a9b`。③ 并行写入者（hermes）同期在改 `page.tsx`/`epub-to-png`/`rtf-to-epub`/`index.ts` 的 noindex 工作并已暂存，**与本批无关、未纳入本 commit**（parallel-writer 纪律）。
 **状态更正（2026-10-09 续）**：① b6 `9446a9b` + b7 `7dc3dce` 均已随 `origin/main` 推送上线（实测 `git merge-base --is-ancestor 9446a9b origin/main` = true）。② A 差异化 b1–b7 全部落地，覆盖 22/28 非 noindex convert 页；余 azw3-to-pdf/mobi-to-pdf 为 B 类 P2 观察项。③ `audit-convert-differentiation` 的「最高频共用章节覆盖 18 页 ≤8」FAIL 为历史既有结构性指标（通用 section 跨页复用），非 b7 引入，且非阻断 CI 门禁。
 **状态更正（2026-09-26 21:35 实测）**：① `b50732d`+`5ad0dcb` **已推送**——`git rev-list --left-right --count origin/main...main` = 0/0，本地与远程完全同步，原「未 push」记录系过时信息；② D1/D2 已由用户复核通过并提交。
