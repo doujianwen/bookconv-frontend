@@ -187,3 +187,205 @@ The conversion process has been validated through tens of thousands of successfu
     estimatedConversions: '10,000+ monthly'
   }
 };
+
+export const es = {
+  title: 'Conversor de EPUB a AZW3 — Formato Kindle Nativo',
+  metaDescription: 'Convierte EPUB a AZW3 gratis — sin registro. Obtén renderizado nativo Kindle Format 8 con mejores fuentes. Envía a tu biblioteca Kindle.',
+  content: {
+    hero: {
+      title: 'EPUB a AZW3 — Adapta tus Ebooks al Formato Nativo Kindle',
+      subtitle: 'Conversor gratuito de EPUB a AZW3. Sin registro — optimiza tus ebooks para renderizado nativo Kindle con tipografía mejorada.'
+    },
+    sections: [
+      {
+        heading: 'Herramienta rápida vs Guía completa: ¿Cuál necesitas?',
+        body: `Esta página de conversor y nuestra [Guía EPUB a AZW3 para Kindle](/guide/epub-to-azw3-for-kindle) cubren el mismo formato desde dos ángulos, y elegir el punto de entrada correcto te ahorra tiempo.
+
+Usa esta página cuando ya sepas lo que quieres: suelta el EPUB, obtén el AZW3, pásalo. No se requiere lectura — todo el trabajo es subir, convertir, descargar, y termina en segundos para novelas típicas.
+
+Usa la guía completa cuando la decisión aún no está hecha: explica cuándo AZW3 supera a MOBI, cómo Send to Kindle se compara con conversión local, qué generaciones de Kindle aceptan qué formatos, y cómo arreglar libros que no cargan. Es la versión larga de la decisión que esta página asume.`
+      },
+      {
+        heading: 'Conversión en reverso: AZW3 a EPUB',
+        body: `Esta página cubre EPUB a AZW3, pero la dirección inversa responde a una necesidad muy diferente — y es tan común como la original.
+
+Ir de AZW3 a EPUB es el movimiento cuando necesitas ir en la otra dirección. Es la ruta estándar para usuarios que ya han generado un archivo en un formato y ahora lo necesitan en otro.
+
+El [conversor AZW3 a EPUB](/convert/azw3-to-epub) dedicado usa el mismo motor en dirección opuesta: toma el archivo fuente y lo transforma al formato destino, preservando lo que importa y eliminando lo que no.
+
+Una regla práctica: convierte EPUB a AZW3 cuando quieras las características más nuevas de Kindle Format 8 (fuentes incrustadas, CSS3); convierte AZW3 a EPUB cuando tengas un destino específico que requiera un archivo abierto y universalmente legible. Guarda ambos formatos si no estás seguro de qué dispositivo o caso de uso necesitarás next.`
+      },
+      {
+        heading: 'Sobre EPUB: Qué gana y cuesta la conversión a AZW3',
+        body: `EPUB (Electronic Publication) es un estándar abierto de libros electrónicos mantenido por la W3C, actualmente en la versión 3.3 (publicada en 2023-05). Es un formato redimensionable basado en XHTML/CSS, lo que significa que el texto se ajusta automáticamente al tamaño de pantalla.
+
+Convertir EPUB a AZW3 mueve un archivo de estándar moderno y abierto al contenedor propietario de Amazon. Esa dirección tiene una ventaja y un costo.
+
+**La ventaja:** AZW3 es el formato Kindle actual. Los archivos convertidos se abren en todo Kindle fabricado desde aproximadamente 2010 y mantienen tipografía mejorada, mejor manejo de fuentes, y almacenamiento comprimido que MOBI antiguo no puede igualar.
+
+**El costo:** AZW3 no es un estándar abierto. Es legible por dispositivos Kindle y un conjunto limitado de herramientas, y no se abrirá en Kobo, Nook, Apple Books, o la mayoría de aplicaciones lectoras Android. Si tu lectura vive más allá de Amazon, guarda EPUB como tu archivo maestro.
+
+**Lo que la conversión preserva:** estructura de capítulos y navegación, imágenes, hipervínculos, y los metadatos que deciden cómo aparece el libro en una biblioteca.
+
+**Recursos oficiales:**
+- [Especificación W3C EPUB 3.3](https://www.w3.org/publishing/epub3/)
+- [Sitio oficial IDPF](https://idpf.org/)`
+      },
+      {
+        heading: '¿Por qué convertir EPUB a AZW3?',
+        body: `Aunque los dispositivos Kindle modernos pueden aceptar archivos EPUB a través del servicio Send to Kindle (que los convierte en la nube), proporcionar formato AZW3 directamente ofrece varias ventajas:
+
+**Conversión sin conexión** — No necesitas subir a servidores de Amazon, protegiendo tu privacidad.
+
+**Procesamiento más rápido** — La conversión local completa en segundos, sin esperar colas en la nube.
+
+**Mayor control** — Personaliza fuentes, márgenes, espaciado de párrafos, y otros parámetros de tipografía.
+
+**Compatibilidad nativa** — AZW3 es soportado nativamente en todos los dispositivos Kindle, requiriendo procesamiento adicional cero.
+
+**Mejor tipografía** — AZW3 soporta funciones avanzadas de diseño como kerning mejorado, ligaduras, e incrustación de fuentes personalizadas.`
+      },
+      {
+        heading: 'Qué es AZW3 y por qué sucedió a MOBI',
+        body: `AZW3, también conocido como Kindle Format 8 (KF8), fue introducido por Amazon en 2011 como sucesor del formato MOBI envejecido. Trae mejoras significativas:
+
+**Soporte CSS3** — Soporte completo de hojas de estilo en cascada para control preciso de tipografía.
+
+**Incrustación de fuentes** — Incrusta fuentes personalizadas para renderizado consistente en todos los dispositivos.
+
+**Diseño mejorado** — Soporte para diseños complejos incluyendo columnas, tablas, y notas al pie.
+
+**Mejor manejo de imágenes** — Renderizado de imágenes de mayor calidad y posicionamiento.
+
+**Navegación mejorada** — Tabla de contenidos estructurada con enlaces jerárquicos de capítulos.
+
+AZW3 es el formato predeterminado para Kindle Paperwhite, Kindle Oasis, Kindle Voyage, y otros dispositivos Kindle modernos lanzados después de 2012.`
+      },
+      {
+        heading: 'EPUB vs AZW3: Cuándo usar cuál',
+        body: `| Característica | EPUB | AZW3 |
+|---------------|------|------|
+| Creador | IDPF (Estándar abierto) | Amazon |
+| Tipografía | Excelente (CSS3) | Buena |
+| Incrustación de fuentes | Sí | Sí |
+| Soporte de dispositivo | Todos los e-readers | Solo Kindle |
+| Viabilidad a largo plazo | Estándar abierto | Propietario |`
+      },
+      {
+        heading: 'Casos de uso comunes',
+        body: `**Entusiastas de Kindle:** Convierte tu biblioteca EPUB a AZW3 para la mejor experiencia de lectura en tu dispositivo Kindle.
+
+**Usuarios conscientes de privacidad:** Evita subir documentos sensibles a la nube de Amazon convirtiendo localmente.
+
+**Migración de formato:** ¿Transicionando de aplicaciones de lectura basadas en EPUB a Kindle? AZW3 es el puente.`
+      },
+      {
+        heading: 'Aprende más sobre EPUB a AZW3',
+        body: `¿Quieres entender las diferencias de formato o solucionar problemas comunes? Mira nuestras guías detalladas:
+
+- [**Tutorial EPUB a AZW3**](/blog/epub-to-azw3) — Instrucciones paso a paso para convertir EPUB a AZW3 usando BookConv o Calibre
+- [**Comparación AZW3 vs MOBI**](/blog/azw3-vs-mobi) — ¿Qué formato Kindle es correcto para tus libros?
+- [**Formatos Kindle Explicados**](/guide/kindle-formats) — Guía completa de formatos de libros electrónicos Amazon`
+      },
+      {
+        heading: 'Cómo convertir EPUB a AZW3: Paso a paso',
+        body: `**Paso 1 — Sube tu EPUB.** Arrastra tu archivo .epub al área de carga o haz clic para explorar. No se requiere cuenta ni registro. El límite es 4 MB; los libros con fuentes incrustadas personalizadas son los más propensos a acercarse a él.
+
+**Paso 2 — Espera el procesamiento.** El motor de salida AZW3 de Calibre mapea tus estilos, fuentes, e imágenes a Kindle Format 8 y muestra estado en vivo. La mayoría de los libros terminan en 10-30 segundos; los libros con fuentes personalizadas toman un poco más porque las fuentes se incrustan.
+
+**Paso 3 — Descarga el AZW3.** Haz clic en Descargar, luego transfiere el archivo a tu Kindle por USB o envíalo por email a tu dirección Kindle. Los archivos convertidos se eliminan de nuestros servidores en una ventana rodante corta.
+
+**Cómo se ve la interfaz:** un área de carga, un indicador de progreso en vivo, y un botón de descarga — no hay menús de modelo de dispositivo para elegir. La salida apunta a firmware Kindle moderno (KF8), que cubre Paperwhite, Oasis, Voyage, y modelos posteriores; si tienes un Kindle previo a 2012, convierte a MOBI en cambio.`
+      },
+      {
+        heading: 'Problemas comunes de AZW3 y cómo solucionarlos',
+        body: `Basado en tickets reales de soporte de usuarios, aquí están los principales problemas y soluciones:
+
+**Problema 1: AZW3 no se abre en Kindle**
+- *Síntoma*: El archivo muestra error o no carga en el dispositivo
+- *Causa*: Modelo de Kindle muy antiguo (previo a 2012) que no soporta AZW3
+- *Solución*: Convierte a MOBI en cambio para Kindles antiguos. AZW3 requiere Kindle Paperwhite 2ª gen o posterior.
+
+**Problema 2: Formato perdido después de la conversión**
+- *Síntoma*: Fuentes, espaciado, o diseño se ven diferente en AZW3
+- *Causa*: EPUB usa CSS3 que mapea imperfectamente al subconjunto CSS de AZW3
+- *Solución*: Prueba en tu modelo específico de Kindle. Algunos diseños complejos pueden necesitar ajuste manual en Calibre.
+
+**Problema 3: Imágenes aparecen de baja calidad**
+- *Síntoma*: Fotos se ven pixeladas o comprimidas en AZW3
+- *Causa*: AZW3 comprime imágenes para optimización de display e-ink
+- *Solución*: Usa imágenes menores a 200KB. Para imágenes de alta calidad, considera guardar EPUB o usar configuraciones de conversión de Calibre.
+
+**Problema 4: Tabla de contenidos rota**
+- *Síntoma*: Enlaces TOC no funcionan o capítulos saltan incorrectamente
+- *Causa*: Navegación malformada en EPUB fuente
+- *Solución*: Verifica que EPUB declare su tabla de contenidos con un elemento nav marcado como TOC. Ejecuta EPUBCheck antes de convertir.
+
+**Problema 5: Conversión toma demasiado tiempo**
+- *Síntoma*: Procesamiento se atasca o toma minutos
+- *Causa*: Archivo grande con muchas imágenes o estructura compleja
+- *Solución*: Divide libros grandes en capítulos más pequeños. Verifica tamaño de archivo (límite 4 MB).`
+      },
+      {
+        heading: '¿Qué dispositivos Kindle leen AZW3?',
+        body: `**Soporte de formato AZW3 por dispositivo Kindle**
+
+| Dispositivo Kindle | Soporte nativo | Notas |
+|-------------------|---------------|-------|
+| Kindle Paperwhite (2ª-11ª gen) | ✅ Sí | Soporte completo AZW3 |
+| Kindle Oasis (todas las versiones) | ✅ Sí | Tipografía excelente |
+| Kindle Voyage | ✅ Sí | Experiencia de lectura premium |
+| Kindle Scribe | ✅ Sí | Soporta anotaciones |
+| Kindle Basic (10ª gen+) | ✅ Sí | Buen soporte |
+| Kindle Keyboard/DX | ❌ No | Usa MOBI en cambio |
+| Kindle Fire tablets | ⚠️ Limitado | También soporta EPUB/AZW |
+
+**AZW3 vs MOBI: ¿Cuál elegir?**
+
+| Característica | AZW3 | MOBI |
+|---------------|------|------|
+| Incrustación de fuentes | ✅ Sí | ❌ No |
+| Estilo CSS | ✅ Mejorado | ❌ Básico |
+| Calidad de imagen | ✅ Superior | ⚠️ Comprimida |
+| Tipografía | ✅ Avanzada | ⚠️ Limitada |
+| Soporte de dispositivo | Kindles modernos | Todos los Kindles |
+| Tamaño de archivo | Medio | Más pequeño |
+
+**Cuándo usar AZW3:**
+- Tienes un Kindle de 2012 o posterior
+- Quieres mejor tipografía y opciones de fuente
+- Necesitas formato mejorado para libros técnicos o cómics
+- Estás convirtiendo para uso personal (no compartiendo)
+
+**Cuándo usar MOBI:**
+- Tienes un Kindle antiguo (previo a 2012)
+- Necesitas máxima compatibilidad
+- El tamaño de archivo es crítico (dispositivos antiguos tienen almacenamiento limitado)
+- Libros simples solo de texto`
+      },
+      {
+        heading: 'Cómo preservamos tipografía y navegación en AZW3',
+        body: `Nuestro conversor usa el motor de salida AZW3 de Calibre con validación extensiva:
+
+- **Preservación de tipografía**: Fuentes, espaciado, y diseño se mapean cuidadosamente a equivalentes AZW3
+- **Optimización de imágenes**: Imágenes se comprimen y formatean para display Kindle óptimo
+- **Estructura de navegación**: Jerarquía de capítulos y marcadores se preservan en formato nativo AZW3
+- **Transferencia de metadatos**: Título, autor, editor, ISBN, e imagen de portada se transfieren todos
+- **Salida sin DRM**: Archivos convertidos son sin DRM, dándote propiedad completa y flexibilidad
+- **Pruebas multi-dispositivo**: Validado a través de múltiples modelos Kindle para renderizado consistente
+
+El proceso de conversión ha sido validado a través de decenas de miles de conversiones exitosas, asegurando precisión de formato y comodidad de lectura.`
+      }
+    ],
+    faq: [
+      { q: '¿Debo usar este conversor o la guía completa EPUB a AZW3?', a: 'Usa este conversor cuando ya sepas que necesitas un archivo AZW3 — sube, convierte, descarga en segundos. Usa la guía cuando aún estás decidiendo entre AZW3 y MOBI, solucionando un archivo rechazado, o convirtiendo toda una biblioteca a través de generaciones Kindle.' },
+      { q: '¿Cuál es la diferencia entre AZW3 y MOBI?', a: 'AZW3 (Kindle Format 8) es el sucesor de MOBI con mejor tipografía, incrustación de fuentes, estilo CSS, y renderizado de tablas. MOBI es un formato antiguo con capacidades limitadas. A menos que tu Kindle sea muy antiguo (previo a 2012), AZW3 es recomendado.' },
+      { q: '¿Puedo usar el AZW3 convertido en dispositivos no-Kindle?', a: 'AZW3 es un formato propietario de Amazon usado principalmente en dispositivos Kindle y aplicaciones Kindle. Si necesitas leer en otros dispositivos guarda el formato EPUB.' },
+      { q: '¿Se preservará el formato durante la conversión?', a: 'Sí. Nuestro conversor mapea cuidadosamente la tipografía EPUB a equivalentes AZW3. La mayoría del formato incluyendo fuentes, espaciado, imágenes, y diseño se preserva. Diseños complejos pueden necesitar ajuste manual.' },
+      { q: '¿El archivo AZW3 convertido estará libre de DRM?', a: 'Sí. Los archivos AZW3 convertidos son sin DRM, dándote propiedad completa. Puedes transferirlos a cualquier dispositivo o aplicación Kindle sin restricciones.' },
+      { q: '¿Cuánto tiempo toma la conversión?', a: 'La mayoría de archivos EPUB convierten a AZW3 en 10-30 segundos. Archivos con numerosas imágenes o diseños complejos pueden tomar 1-2 minutos.' },
+      { q: '¿Las imágenes se verán bien en AZW3?', a: 'Sí, las imágenes se incrustan y optimizan para displays e-ink. Para imágenes de alta calidad, considera usar AZW3 en lugar de MOBI, ya que AZW3 soporta mayor resolución.' },
+      { q: '¿Funciona la navegación de capítulos en AZW3?', a: 'Absolutamente. Tu tabla de contenidos EPUB se convierte a navegación AZW3 nativa, permitiéndote saltar entre capítulos en tu lector Kindle.' }
+    ]
+  }
+};
