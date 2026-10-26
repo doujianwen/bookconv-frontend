@@ -56,7 +56,7 @@ function loadDotEnv() {
   }
 }
 
-async function serpapiRanks(q, competitors, key) {
+async function serpapiRanks(q, competitors, key, ownDomain) {
   const url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(q)}&num=100&api_key=${key}`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`SerpApi ${r.status}`);
@@ -66,15 +66,22 @@ async function serpapiRanks(q, competitors, key) {
     const idx = organic.findIndex((o) => hostOf(o.link) === c.domain);
     return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? organic[idx].link : null };
   });
+  // Own-domain rank: tracks where BOOKCONV itself ranks for each target
+  // keyword, so "BookConv 出局头部" stops being an inference and becomes a
+  // measured rank. Added 2026-10-26 (red-team M-7). rank=0 = outside observed
+  // window, same caveat as rivals — NOT "not in top 100".
+  const ownIdx = ownDomain ? organic.findIndex((o) => hostOf(o.link) === ownDomain) : -1;
+  const ownRank = ownIdx >= 0 ? ownIdx + 1 : 0;
+  const ownUrl = ownIdx >= 0 ? organic[ownIdx].link : null;
   // MEASURED 2026-10-19: we ask for num=100 but SerpApi returns only 8-10
   // organic rows for these head queries. So rank=0 does NOT mean "not in the
   // top 100" — it means "outside the observed window", whose depth we did not
   // record before. Depth is recorded now so a shallow day is visible instead of
   // being silently read as a real ranking change.
-  return { rankings, observedDepth: organic.length, requestedDepth: 100 };
+  return { rankings, observedDepth: organic.length, requestedDepth: 100, ownRank, ownUrl };
 }
 
-async function bingRanks(q, competitors, key) {
+async function bingRanks(q, competitors, key, ownDomain) {
   const url = `https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(q)}&count=100`;
   const r = await fetch(url, { headers: { 'Ocp-Apim-Subscription-Key': key } });
   if (!r.ok) throw new Error(`Bing ${r.status}`);
@@ -84,7 +91,10 @@ async function bingRanks(q, competitors, key) {
     const idx = vals.findIndex((v) => hostOf(v.url) === c.domain);
     return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? vals[idx].url : null };
   });
-  return { rankings, observedDepth: vals.length, requestedDepth: 100 };
+  const ownIdx = ownDomain ? vals.findIndex((v) => hostOf(v.url) === ownDomain) : -1;
+  const ownRank = ownIdx >= 0 ? ownIdx + 1 : 0;
+  const ownUrl = ownIdx >= 0 ? vals[ownIdx].url : null;
+  return { rankings, observedDepth: vals.length, requestedDepth: 100, ownRank, ownUrl };
 }
 
 // Historical hit counts from earlier snapshots, so "today found fewer rivals
@@ -136,16 +146,18 @@ async function main() {
   let ki = 0;
   const nextKey = () => { const k = keys[ki % keys.length]; ki++; return k; };
   const srcNote = keys.length > 1 ? `serpapi (${keys.length} keys 轮换)` : source;
+  const ownDomain = cfg.ownDomain || null;
 
-  console.log(`SERP 源：${srcNote} · 词 ${cfg.keywords.length} 个 · 竞品 ${cfg.competitors.length} 个`);
+  console.log(`SERP 源：${srcNote} · 词 ${cfg.keywords.length} 个 · 竞品 ${cfg.competitors.length} 个${ownDomain ? ` · 本站 ${ownDomain}` : ''}`);
   const results = [];
   let fetchErrors = 0;
   for (const q of cfg.keywords) {
     try {
-      const { rankings, observedDepth, requestedDepth } = await fetchRanks(q, cfg.competitors, nextKey());
+      const { rankings, observedDepth, requestedDepth, ownRank, ownUrl } = await fetchRanks(q, cfg.competitors, nextKey(), ownDomain);
       const found = rankings.filter((r) => r.rank > 0).map((r) => `${r.name}#${r.rank}`).join(', ') || '无';
-      console.log(`  · ${q} → ${found}${observedDepth < requestedDepth ? `（观测深度 ${observedDepth}/${requestedDepth}）` : ''}`);
-      results.push({ query: q, rankings, observedDepth, requestedDepth });
+      const ownStr = ownRank > 0 ? ` · 本站 #${ownRank}` : ' · 本站 —';
+      console.log(`  · ${q} → ${found}${observedDepth < requestedDepth ? `（观测深度 ${observedDepth}/${requestedDepth}）` : ''}${ownStr}`);
+      results.push({ query: q, rankings, observedDepth, requestedDepth, ownRank, ownUrl });
     } catch (e) {
       fetchErrors++;
       console.error(`  ✗ ${q} 抓取失败：${e.message}`);
@@ -154,6 +166,8 @@ async function main() {
         rankings: cfg.competitors.map((c) => ({ ...c, rank: 0, url: null })),
         observedDepth: 0,
         requestedDepth: 100,
+        ownRank: 0,
+        ownUrl: null,
         error: e.message,
       });
     }
@@ -195,6 +209,7 @@ async function main() {
     date: new Date().toISOString().slice(0, 10),
     fetchedAt: new Date().toISOString(),
     source,
+    ownDomain: ownDomain || null,
     quality: {
       hits: totalHits,
       minObservedDepth: minDepth,
