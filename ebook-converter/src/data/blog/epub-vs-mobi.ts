@@ -117,6 +117,131 @@ Ready to convert? [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old K
   ]
 };
 
+export const es = {
+  title: `EPUB vs MOBI: ¿qué formato conviene usar?`,
+  metaTitle: `EPUB vs MOBI: qué formato conviene usar`,
+  content: {
+    intro: `EPUB y MOBI son los dos nombres de formato que la mayoría de los lectores reconoce, y no podrían venir de mundos más distintos. EPUB es el estándar abierto que usa casi cualquier lector que no es Kindle; MOBI es el formato más antiguo de Amazon que hoy vive sobre todo en Kindles legacy. Si decides en qué guardar tus libros o a qué convertirlos, la respuesta sigue directa de dónde lees. Esta es la comparación práctica, no la versión de ficha técnica.
+
+> BookConv procesa tu archivo en nuestros servidores y lo elimina automáticamente en menos de una hora. Los archivos se cifran en tránsito y no se requiere cuenta ni instalación de software.`,
+    sections: [
+      {
+        heading: `De un vistazo`,
+        body: `Si solo recuerdas una tabla, que sea esta.
+
+| | EPUB | MOBI |
+|---|---|---|
+| Respaldado por | [International Digital Publishing Forum](https://www.w3.org/publishing/) (estándar abierto) | Amazon (legacy) |
+| Mejor en | Kobo, Apple Books, Google Play Books, la mayoría de lectores | Kindles Amazon antiguos |
+| Estilo | CSS completo, fuentes incrustadas, reajuste | Limitado; aplana maquetación compleja |
+| Abierto o cerrado | Abierto, portable | Centrado en Amazon |
+| Futuro | En desarrollo activo (EPUB 3) | Congelado; Amazon pasó a AZW3/KF8 |
+
+El patrón es claro: EPUB es la opción portable y con futuro, y MOBI es la que conservas solo para hardware Kindle viejo.`
+      },
+      {
+        heading: `EPUB vs MOBI — comparación rápida`,
+        body: `| Dimensión | EPUB | MOBI |
+|---|---|---|
+| Estándar abierto | Sí (W3C) | No (legacy de Amazon) |
+| Soporte de dispositivo | Kobo, Apple Books, Google Play Books, la mayoría de lectores | Solo Kindles previos a 2015 |
+| Dificultad de conversión | Fácil a AZW3 o MOBI | Limitada; pierde estilo |
+| Escenario recomendado | Biblioteca maestra y cualquier lector no Kindle | Solo un Kindle antiguo |
+
+Mantén EPUB como fuente de verdad y convierte por dispositivo. [Convierte EPUB a MOBI →](/convert/epub-to-mobi) para un Kindle viejo, o [Convierte MOBI a EPUB →](/convert/mobi-to-epub) para liberar un libro legacy.`
+      },
+      {
+        heading: `¿Qué es EPUB?`,
+        body: `**EPUB** (Electronic Publication) es un estándar abierto construido sobre HTML y CSS. Esa es la razón por la que reajusta tan bien: un párrafo es un párrafo, no una imagen fija de una página. EPUB 3 añade audio, vídeo y navegación más rica, por eso es el predeterminado de Kobo, Apple Books, Google Play Books y casi todas las tiendas fuera de Amazon.
+
+Como es abierto, ninguna empresa lo controla. Puedes abrir un EPUB en una app, pasarlo a otra y el libro viaja contigo. Esa portabilidad es la razón principal para mantener tu biblioteca como EPUB.`
+      },
+      {
+        heading: `¿Qué es MOBI?`,
+        body: `**MOBI** (Mobipocket) es el formato que Amazon adoptó para los primeros Kindles. Hizo su trabajo para una generación de dispositivos anterior a los motores de estilo modernos, pero arrastra límites reales: soporte CSS débil, sin manejo fiable de fuentes incrustadas y una estructura que pierde en silencio tablas y maquetaciones complejas.
+
+Amazon ha pasado sus Kindles a **AZW3** (KF8), un formato mucho más rico, y eliminó MOBI de Send to Kindle en **agosto de 2022**. Así que MOBI hoy es sobre todo un formato de compatibilidad para quienes aún tienen un Kindle previo a 2015. No se siguen creando libros nuevos en MOBI.
+
+**Nota KFX:** el formato actual de la tienda de Amazon (KFX) es aún más avanzado que AZW3, con tipografía mejorada. Pero KFX lo genera la propia cadena de Amazon —no puedes crearlo tú—. Para carga por USB o conversión, AZW3 sigue siendo el destino práctico.`
+      },
+      {
+        heading: `EPUB vs MOBI: las diferencias que importan`,
+        body: `Más allá de las etiquetas, tres diferencias cambian tu lectura diaria:
+
+- **Reajuste y accesibilidad** — EPUB reajusta con limpieza a cualquier tamaño de fuente y admite navegación semántica adecuada; MOBI a menudo fuerza una maquetación más rígida y menos accesible.
+- **Fidelidad de formato** — un EPUB conserva el CSS, las fuentes y las tablas del editor; una conversión MOBI del mismo libro tiende a recortarlos o aplanarlos.
+- **Dónde abre** — EPUB abre casi en todas partes excepto en los Kindles modernos; MOBI abre en Kindles viejos y casi en ningún otro sitio relevante.
+
+Si te importa cómo se ve y se lee el libro, EPUB gana. Si estás atado a un Kindle antiguo, MOBI es el respaldo que ese dispositivo aún entiende.`
+      },
+      {
+        heading: `¿Cuál deberías elegir?`,
+        body: `Decide por dispositivo, no por hábito:
+
+- **Kobo, Apple Books, Google Play Books o cualquier lector no Kindle** → EPUB, siempre.
+- **Un Kindle moderno (2015 o posterior)** → AZW3, no MOBI; EPUB convierte a AZW3 con limpieza. Nuestra [guía de formatos Kindle](/guide/kindle-formats) lo desglosa por modelo.
+- **Un Kindle previo a 2015** → MOBI es el formato que se carga por USB con más fiabilidad.
+- **Tu biblioteca maestra** → mantén EPUB como fuente de verdad y convierte por dispositivo.
+
+Para la comparación completa del lado Amazon, ve [AZW3 vs MOBI](/blog/azw3-vs-mobi) y la [guía MOBI vs AZW3](/blog/azw3-vs-mobi). Para el panorama más amplio, [Formatos de libro electrónico explicados](/blog/ebook-formats-explained) cubre EPUB, AZW3, MOBI y más.`
+      },
+      {
+        heading: `EPUB vs MOBI para Kindle: la decisión en 10 segundos`,
+        body: `Si tu única pregunta es "¿qué archivo pongo en mi Kindle?", la respuesta depende solo de la antigüedad del Kindle:
+
+- **Kindle moderno (2015 o posterior, más cualquier Paperwhite, Oasis o Scribe)** → EPUB es ahora la respuesta correcta. Envía el EPUB al dispositivo por Send to Kindle de Amazon, y Amazon lo convierte a AZW3 en sus servidores. O pre-convierte con [EPUB a AZW3](/convert/epub-to-azw3) para control total del estilo. MOBI es innecesario aquí.
+- **Kindle previo a 2015 (Keyboard, Paperwhite temprano, Touch)** → MOBI es el formato que aún se carga por USB con más fiabilidad. [Convierte EPUB a MOBI](/convert/epub-to-mobi) solo para estas unidades más viejas.
+- **Nunca conservas MOBI** → tu biblioteca maestra se queda en EPUB; el Kindle recibe una copia convertida bajo demanda.
+
+Así que "EPUB o MOBI para mi Kindle" realmente significa "EPUB para cualquier Kindle actual, MOBI solo para los vintage que siguen en servicio". AZW3 queda en medio como el formato nativo moderno de Amazon —ve [AZW3 vs MOBI](/blog/azw3-vs-mobi) para el corte completo.`
+      },
+      {
+        heading: `Convertir entre EPUB y MOBI`,
+        body: `Los dos convierten en ambas direcciones, y es un trabajo de un clic en un conversor en el navegador:
+
+- **EPUB a MOBI** — para un Kindle viejo. [Convierte EPUB a MOBI](/convert/epub-to-mobi), elige MOBI, descarga. Espera alguna pérdida de estilo, que es límite del formato, no del conversor.
+- **MOBI a EPUB** — para liberar un libro de un dispositivo legacy y leerlo en cualquier sitio. [Convierte MOBI a EPUB](/convert/mobi-to-epub) restaura el reajuste adecuado y un índice funcional.
+- **EPUB a TXT** — si solo necesitas las palabras, sin maquetación. [Convierte EPUB a TXT](/convert/epub-to-txt) reduce el libro a texto plano limpio.
+
+Ninguna conversión necesita software de escritorio para un puñado de libros. Mantén tu maestro EPUB y podrás alimentar cualquier lector desde un solo archivo.`
+      },
+      {
+        heading: `Guías de formato relacionadas`,
+        body: `Esta página es el centro de la decisión EPUB vs MOBI. Para las preguntas de formato de alrededor, estas guías profundizan:
+
+- **[AZW3 vs MOBI](/blog/azw3-vs-mobi)** — cómo el formato Kindle moderno de Amazon se compara con el legacy.
+- **[Convierte MOBI a EPUB](/convert/mobi-to-epub)** — libera un libro legacy para leer en cualquier dispositivo.
+- **[Guía EPUB a MOBI](/blog/epub-to-mobi-guide)** — la conversión paso a paso para Kindles viejos.
+- **[AZW3, EPUB y MOBI para Kindle y Kobo](/blog/azw3-epub-mobi-kindle)** — la matriz de compatibilidad por dispositivo.
+- **[Kindle, Kobo, AZW3, EPUB, MOBI](/blog/kindle-epub-azw3-mobi)** — el panorama completo de formatos en un solo lugar.
+- **[Guía de formatos Kindle](/guide/kindle-formats)** — qué formato quiere cada modelo Kindle.
+
+Si mueves libros entre tiendas, ve también [MOBI a Kobo](/blog/mobi-to-kobo) y [Formatos de libro electrónico explicados](/blog/ebook-formats-explained).`
+      },
+      {
+        heading: `Puntos clave`,
+        body: `- **EPUB es el estándar abierto y portable** — mejor en Kobo, Apple Books, Google Play Books y la mayoría de lectores.
+- **MOBI es el formato legacy de Amazon** para Kindles viejos; el propio Amazon pasó a AZW3.
+- **EPUB conserva formato y reajuste**; MOBI tiende a aplanar maquetación y fuentes.
+- **Los Kindles modernos quieren AZW3**, no MOBI — convierte EPUB a AZW3 para ellos.
+- **Mantén EPUB como tu maestro** y convierte por dispositivo; solo reprocesas cuando un lector exige otro formato.
+
+¿Listo para convertir? [Convierte EPUB a MOBI →](/convert/epub-to-mobi) para un Kindle viejo, o [Convierte MOBI a EPUB →](/convert/mobi-to-epub) para leer un libro legacy en cualquier sitio. La [referencia del formato MOBI](/formats/mobi) lista lo que el formato aún hace bien en dispositivos antiguos, junto con sus límites.`
+      },
+    ],
+  },
+  faqs: [
+    { question: `¿Cuál es mejor, EPUB o MOBI?`, answer: `EPUB es mejor para casi cualquier lector moderno. Es un estándar abierto con CSS completo, fuentes incrustadas y reajuste adecuado, y abre en Kobo, Apple Books, Google Play Books y la mayoría de lectores. MOBI solo importa para Kindles previos a 2015, y hasta Amazon lo reemplazó con AZW3.` },
+    { question: `¿Kobo lee EPUB y MOBI?`, answer: `Kobo lee EPUB de forma nativa y ese es su mejor formato. MOBI no es el formato nativo de Kobo y se carga mal, así que si tienes un MOBI, conviértelo primero a EPUB —ve nuestra [guía MOBI a Kobo](/blog/mobi-to-kobo).` },
+    { question: `¿Debo guardar mis libros como EPUB o MOBI?`, answer: `Guárdalos como EPUB. Es abierto, portable y convierte con limpieza a lo que necesite un dispositivo concreto (AZW3 para Kindles modernos, KEPUB para Kobo). MOBI es un formato sin salida que solo produces cuando un Kindle viejo lo exige.` },
+    { question: `¿Convertir EPUB a MOBI pierde calidad?`, answer: `Sí, algo. MOBI no puede representar el CSS completo, las fuentes incrustadas y las maquetaciones complejas que lleva EPUB, así que una conversión a MOBI las aplana. Ese es un límite del propio formato MOBI, no de la herramienta de conversión. Para un Kindle moderno, convierte EPUB a AZW3 en su lugar para conservar el formato.` },
+    { question: `¿Amazon sigue usando MOBI?`, answer: `No para libros nuevos. Amazon pasó los Kindles a AZW3 (KF8) y eliminó MOBI de Send to Kindle en agosto de 2022. MOBI ahora sobrevive como formato de compatibilidad para quienes aún tienen hardware Kindle previo a 2015. El formato actual de la tienda de Amazon, KFX, es aún más avanzado, pero es exclusivo de Amazon y no puede crearlo una herramienta de terceros.` },
+    { question: `¿Cómo convierto entre EPUB y MOBI?`, answer: `Para uno o dos libros, usa un conversor en el navegador: [EPUB a MOBI](/convert/epub-to-mobi) para un Kindle viejo, o [MOBI a EPUB](/convert/mobi-to-epub) para liberar un libro legacy. No se requiere instalar Calibre de escritorio para lotes pequeños.` },
+    { question: `¿EPUB o MOBI para mi Kindle?`, answer: `EPUB para cualquier Kindle desde 2015 en adelante —Send to Kindle acepta EPUB por correo y lo convierte a AZW3 automáticamente, o puedes pre-convertir con [EPUB a AZW3](/convert/epub-to-azw3). MOBI solo importa para Kindles previos a 2015 que no leen los formatos más nuevos, donde [EPUB a MOBI](/convert/epub-to-mobi) es el respaldo.` },
+    { question: `¿Un Kindle puede leer EPUB directamente?`, answer: `No de forma nativa en el dispositivo, pero no necesitas convertir manualmente. El servicio Send to Kindle de Amazon acepta EPUB y lo convierte a AZW3 en la nube. Para carga por USB, convierte EPUB a AZW3 o MOBI primero con una herramienta como BookConv.` },
+    { question: `¿Debo enviar EPUB o MOBI a mi Kindle por Send to Kindle?`, answer: `Envía EPUB. Amazon eliminó MOBI de Send to Kindle en 2022, así que el servicio solo acepta EPUB y PDF ahora, convirtiéndolos a AZW3. MOBI queda reservado para carga por USB en hardware más viejo previo a la compatibilidad AZW3.` },
+  ],
+}
 export const faqs = [
   {
     question: `Which is better, EPUB or MOBI?`,

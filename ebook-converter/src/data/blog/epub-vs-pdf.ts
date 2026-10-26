@@ -78,6 +78,91 @@ Neither conversion needs desktop software for a handful of files. Keep your sour
   ]
 };
 
+export const es = {
+  title: `EPUB vs PDF: ¿qué formato conviene usar en realidad?`,
+  metaTitle: `EPUB vs PDF: qué formato conviene usar`,
+  content: {
+    intro: `EPUB y PDF están en extremos opuestos del espectro de documentos. EPUB se construye para reajustarse y adaptarse a cualquier pantalla; PDF se construye para congelar una maquetación exactamente como se diseñó. Si exportas un libro, archivas un informe o envías un manuscrito a un lector, la elección correcta sigue directa de lo que necesitas que haga el archivo —no de qué formato suena más moderno—. Esta es la comparación práctica, no la versión de ficha técnica.`,
+    sections: [
+      {
+        heading: `De un vistazo`,
+        body: `Si solo recuerdas una tabla, que sea esta.
+
+| | EPUB | PDF |
+|---|---|---|
+| Hecho para | Leer y reajustar en cualquier dispositivo | Fidelidad de impresión de maquetación fija |
+| Comportamiento del texto | Se adapta a la pantalla, fuente y zoom que elijas | Fijo en su sitio; desplazas o paginas |
+| Mejor en | Kobo, Apple Books, Google Play Books, Kindle (por Send to Kindle), la mayoría de lectores | Impresoras, escritorios, archivos legales y de archivo, formularios |
+| Texto editable | Extraíble con limpieza | A menudo presente, pero atado a la maquetación |
+| Tamaño de archivo | Normalmente pequeño y basado en texto | Puede ser grande al incrustar fuentes e imágenes |
+| Estándar | Abierto (EPUB 3) | Abierto (ISO 32000) |
+
+El patrón es claro: EPUB es el formato de lectura cómoda, y PDF es el formato de instantánea fiel. No son competidores tanto como herramientas para trabajos distintos.`
+      },
+      {
+        heading: `¿Qué es EPUB?`,
+        body: `**EPUB** (Electronic Publication) es el estándar abierto de libros electrónicos. Por dentro es un archivo ZIP de XHTML, CSS e imágenes —y esa es exactamente la razón por la que reajusta tan bien—. Un párrafo es un párrafo, no una foto fija de una página.
+
+Como el texto es real y reajustable, el lector controla cómo se ve: fuente, tamaño, interlineado y márgenes se ajustan. EPUB 3 añade audio, vídeo y navegación más rica, por eso es el predeterminado de Kobo, Apple Books, Google Play Books y casi todas las tiendas fuera de Amazon. Es el formato al que recurres cuando el objetivo son dos horas de lectura cómoda.`
+      },
+      {
+        heading: `¿Qué es PDF?`,
+        body: `**PDF** (Portable Document Format) lo creó Adobe para que un documento se viera idéntico en todas partes —en pantalla, impreso, en cualquier sistema operativo—. La maquetación es fija: un párrafo está en una coordenada exacta, las fuentes se incrustan y nada se mueve al abrir el archivo en otra máquina.
+
+Eso convierte a PDF en la opción correcta para todo lo que depende de la apariencia. Contratos, formularios, libros listos para imprimir, archivos escaneados, dibujos técnicos y facturas pertenecen a PDF. El archivo promete al lector que ve exactamente lo que el autor quiso, hasta el píxel.`
+      },
+      {
+        heading: `EPUB vs PDF: las diferencias que importan`,
+        body: `Más allá de las etiquetas, algunas diferencias cambian tu experiencia diaria:
+
+- **Reajuste vs maquetación fija** — EPUB se adapta a un móvil, una tableta o una pantalla e-ink de 6 pulgadas; PDF conserva su tamaño original y te obliga a pellizcar y hacer zoom.
+- **Comodidad de lectura en pantallas pequeñas** — un EPUB se lee como un libro en el móvil; un PDF en ese mismo móvil es una serie de páginas diminutas que hay que desplazar.
+- **Impresión y salida física** — PDF imprime de forma predecible y es el formato que esperan los servicios de impresión; EPUB está hecho para pantallas, no para la prensa.
+- **Extracción de texto y accesibilidad** — el texto EPUB se selecciona con limpieza y funciona con lectores de pantalla; el texto PDF puede ser seleccionable, solo imagen o un escaneo que primero necesita OCR.
+- **Portabilidad y tamaño** — EPUB se mantiene pequeño y viaja bien; los PDF pueden inflarse al incrustar cada fuente e imagen de alta resolución.
+
+Si el archivo es algo que alguien va a leer, EPUB suele ganar. Si es algo que alguien va a imprimir o firmar, PDF es la apuesta más segura.`
+      },
+      {
+        heading: `¿Cuál deberías elegir?`,
+        body: `Decide por el trabajo, no por el hábito:
+
+- **Lectura larga en móvil o lector** → EPUB, siempre. Se reajusta y mantiene tu posición.
+- **Imprimir, compartir una maquetación fija o archivos legales/de archivo** → PDF. La maquetación es la entrega.
+- **Autopublicar para distribuir** → EPUB para lectura reajustable; PDF para una prueba lista para imprimir.
+- **Archivar una página web o artículo** → EPUB si quieres leerlo como un libro; PDF si quieres una instantánea fiel de cómo se veía.
+- **Un Kindle moderno** → EPUB funciona por Send to Kindle de Amazon; PDF también se sube pero se lee menos cómodo en pantalla pequeña.
+
+Para el panorama más amplio de formatos, [Formatos de libro electrónico explicados](/blog/ebook-formats-explained) cubre EPUB, AZW3, MOBI y más, y la [guía de formatos Kindle](/guide/kindle-formats) detalla qué quiere cada modelo.`
+      },
+      {
+        heading: `Convertir entre EPUB y PDF`,
+        body: `Los dos convierten en ambas direcciones, y es un trabajo de un clic en un conversor en el navegador:
+
+- **EPUB a PDF** — para imprimir o fijar un libro en una maquetación. [Convierte EPUB a PDF](/convert/epub-to-pdf), elige PDF, descarga. Espera una renderización fiel de página, no reajustable.
+- **PDF a EPUB** — para leer un PDF como un libro en un lector. [Convierte PDF a EPUB](/convert/pdf-to-epub) restaura el reajuste y un índice funcional. Funciona mejor en PDF basados en texto; un PDF escaneado o solo imagen necesita OCR primero, porque no hay texto real que extraer.
+
+Ninguna conversión necesita software de escritorio para unos pocos archivos. Mantén tu origen en el formato que le conviene y convierte según el caso de uso. Para la comparación del lado Kindle, ve [EPUB vs MOBI](/blog/epub-vs-mobi) y la [guía AZW3 vs MOBI](/blog/azw3-vs-mobi).`
+      },
+      {
+        heading: `Puntos clave`,
+        body: `- **EPUB es el formato de lectura** — reajustable, controlado por el lector, mejor en Kobo, Apple Books, Google Play Books y la mayoría de lectores.
+- **PDF es el formato de instantánea** — maquetación fija, ideal para imprimir, archivos legales, formularios y archivo.
+- **EPUB gana en pantallas; PDF gana en impresión** — elige según lo que el lector hará con el archivo.
+- **Convierten en ambas direcciones** — [EPUB a PDF](/convert/epub-to-pdf) para una copia fija, [PDF a EPUB](/convert/pdf-to-epub) para lectura cómoda (solo PDF basados en texto).
+- **Mantén el origen en el formato correcto** y convierte por dispositivo o por trabajo; solo reprocesas cuando un caso lo exige. Para el lado de maquetación fija, nuestra [referencia del formato PDF](/formats/pdf) detalla qué garantiza ese formato y dónde falla.`
+      },
+    ],
+  },
+  faqs: [
+    { question: `¿Cuál es mejor, EPUB o PDF?`, answer: `Ninguno es universalmente mejor —resuelven problemas distintos. EPUB es mejor para leer en pantallas y lectores porque reajusta y deja al lector controlar la tipografía. PDF es mejor cuando la maquetación debe quedarse fija, como imprimir, contratos, formularios y archivos de archivo. Elige según lo que harás con el archivo, no según qué formato es más nuevo.` },
+    { question: `¿Kindle lee EPUB y PDF?`, answer: `Sí a ambos. Los Kindle modernos aceptan EPUB por Send to Kindle de Amazon, y también aceptan PDF. EPUB se lee más cómodo en una pantalla e-ink pequeña porque reajusta; PDF conserva su tamaño de página, así que a menudo exige pellizcar para hacer zoom en un Kindle.` },
+    { question: `¿Debo guardar mis libros como EPUB o PDF?`, answer: `Guarda los libros de lectura como EPUB —es abierto, portable y reajusta en cualquier dispositivo. Guarda todo lo que deba conservar una maquetación exacta, como un manuscrito listo para imprimir o un documento firmado, como PDF. Mantén tu maestro en el formato que coincide con su propósito y convierte cuando un caso concreto lo pida.` },
+    { question: `¿Convertir EPUB a PDF pierde calidad?`, answer: `No —EPUB a PDF es una renderización fiel. El texto, las imágenes y la estructura del EPUB se vuelven páginas fijas, que es justo para lo que sirve PDF. Pierdes el reajuste (el texto ya no se adapta a la pantalla), pero no pierdes contenido ni fidelidad.` },
+    { question: `¿Se puede convertir un PDF a EPUB de forma fiable?`, answer: `Depende del PDF. Un PDF basado en texto convierte con limpieza a EPUB con un índice funcional. Un PDF escaneado o solo imagen no tiene texto real que extraer, así que primero necesita OCR; sin eso, el resultado es una foto de cada página en lugar de un libro legible. Usa [PDF a EPUB](/convert/pdf-to-epub) para archivos basados en texto.` },
+    { question: `¿Cómo convierto entre EPUB y PDF?`, answer: `Para uno o dos archivos, usa un conversor en el navegador: [EPUB a PDF](/convert/epub-to-pdf) para una copia fija, o [PDF a EPUB](/convert/pdf-to-epub) para leer un PDF como un libro. No se requiere software de escritorio para lotes pequeños. Para muchos archivos o trabajo recurrente, una herramienta de escritorio como la línea de comandos de Calibre escala mejor.` },
+  ],
+}
 export const faqs = [
   {
     question: `Which is better, EPUB or PDF?`,

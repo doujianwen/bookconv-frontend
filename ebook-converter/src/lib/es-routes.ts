@@ -9,8 +9,8 @@
  * 存在漂移风险；本模块抽出后三处统一 import，新增西语页面只需改这一处。
  *
  * 口径说明：
- * - ESP_GUIDE_SLUGS：/es/guide/* 可路由的 guide（11 篇，含 4 篇真西语译文 + 7 篇英文兜底）
- * - ESP_BLOG_SLUGS：/es/blog/* 可路由的 blog（6 篇真西语译文）
+ * - ESP_GUIDE_SLUGS：/es/guide/* 可路由的 guide（11 篇，全部为真西语译文）
+ * - ESP_BLOG_SLUGS：/es/blog/* 可路由的 blog（8 篇真西语译文）
  * - ESP_CONVERT_SLUGS：/es/convert/* 可路由的转换页（5 篇真西语译文）
  */
 
@@ -21,13 +21,14 @@ export const ESP_BLOG_SLUGS: readonly string[] = [
   'epub-to-mobi-guide',
   'mobi-to-epub',
   'why-convert-lit-to-epub',
+  'epub-vs-pdf',
+  'epub-vs-mobi',
 ]
 
 export const ESP_GUIDE_SLUGS: readonly string[] = [
   'calibre-vs-online-converter',
   'best-ebook-converter',
   'epub-vs-mobi',
-  'azw3-vs-mobi',
   'kindle-formats',
   'batch-converter',
   'ai-ebook-converter',
@@ -35,6 +36,11 @@ export const ESP_GUIDE_SLUGS: readonly string[] = [
   'epub-to-azw3-for-kindle',
   'epub-to-mobi-keep-formatting',
   'azw3-to-mobi-keep-formatting',
+  'kindle-vs-kobo',
+  // NOTE: 'azw3-vs-mobi' intentionally REMOVED from guide whitelist (2026-10-26).
+  // The guide file has NO es field, so /es/guide/azw3-vs-mobi rendered English
+  // content at a Spanish URL with no es hreflang — a canonical violation (P2-2).
+  // The blog version (/es/blog/azw3-vs-mobi) is the canonical Spanish source.
 ]
 
 export const ESP_CONVERT_SLUGS: readonly string[] = [

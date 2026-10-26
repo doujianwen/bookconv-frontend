@@ -96,6 +96,108 @@ If the choice ends with devices from both camps, nothing is broken: EPUB is the 
     },
   ],
 }
+export const es = {
+  title: 'Kindle vs Kobo: qué lector encaja con tu biblioteca',
+  problem: 'Kindle y Kobo no se ponen de acuerdo en lo que decide todo: qué archivos abren. Aquí tienes la diferencia de formatos, la mecánica de bibliotecas y DRM, y los puentes de conversión exactos si cambias de bando.',
+  keyTakeaways: [
+    'La gran diferencia es el formato: Kobo abre EPUB de forma nativa; un Kindle solo acepta EPUB por Amazon Send to Kindle, que convierte el archivo en los servidores de Amazon antes de entregarlo.',
+    'Cargar archivos es más simple en Kobo: copias un EPUB sin DRM por USB y se abre tal cual. En Kindle, el destino fiable por USB es AZW3, que produces convirtiendo tú mismo el EPUB.',
+    'Los libros comprados están atados a su tienda: los títulos de Kindle Store (AZW3/KFX con DRM de Amazon) no abren en Kobo, y los de Kobo Store (EPUB con DRM de Adobe) no abren en Kindle.',
+    'Ambos gestionan préstamos de biblioteca, pero distinto: Kobo trae OverDrive/Libby integrado en el dispositivo; Kindle recibe los préstamos por la app Libby donde esté disponible.',
+    'Cambiar de ecosistema es una conversión única para archivos sin DRM: AZW3 o MOBI a EPUB para un Kobo, EPUB a AZW3 para un Kindle por USB.',
+  ],
+  content: {
+    intro: `Kindle o Kobo no es realmente una pregunta de hardware: las pantallas de ambos son agradables para leer, y ninguna marca tiene el monopolio de la imagen. La decisión la marcan tus archivos. Los dos ecosistemas no coinciden en qué formatos de libro electrónico abren de forma nativa, cómo se protegen las compras y cómo llegan los préstamos de biblioteca, y esas tres diferencias deciden tu rutina diaria más que cualquier ficha técnica. Esta guía recorre primero el panorama de formatos, luego las rutas prácticas para llevar tu biblioteca actual a cada dispositivo, y al final los puentes de conversión que hacen cambiar de uno a otro mucho menos doloroso de lo que suena.`,
+    sections: [
+      {
+        heading: 'La diferencia central en una frase',
+        body: `Kobo abre EPUB de forma nativa. Kindle no.
+
+Esa es toda la división en una línea. EPUB es el estándar abierto que usan casi todas las tiendas de libros electrónicos fuera de Amazon, así que un Kobo trata el archivo más común como su formato nativo: lo copias por USB y se abre tal cual. Un Kindle no tiene lector de EPUB. La única forma en que EPUB llega a un Kindle es por Amazon Send to Kindle, donde el archivo se sube y se convierte en los servidores de Amazon antes de entregarse —o lo conviertes tú mismo a AZW3, el formato nativo de Kindle, y lo copias por USB.
+
+Ningún enfoque está mal, pero crean hábitos muy distintos. En Kobo, tu biblioteca se queda en un formato universal. En Kindle, tus archivos pasan por la conversión de Amazon o mantienes copias AZW3. Lo que realmente son los formatos de Kindle —AZW3, KFX y el ya retirado MOBI— se detalla en [nuestra guía de formatos Kindle](/guide/kindle-formats).`,
+      },
+      {
+        heading: 'Soporte de formatos comparado',
+        body: `Así gestionan los dos ecosistemas los formatos que probablemente tengas:
+
+| Formato | Kindle | Kobo |
+|---|---|---|
+| EPUB | Solo por Send to Kindle (conversión en servidor) | Nativo, se abre tal cual |
+| AZW3 | Nativo (destino por USB) | No compatible |
+| KFX | Solo compras en tienda, generado por Amazon | No compatible |
+| MOBI | Sideload legacy (los archivos existentes aún abren) | Compatible de forma nativa |
+| PDF | Nativo | Nativo |
+| CBZ / CBR (cómics) | No compatible (convierte a EPUB/PDF) | Compatible en la mayoría de modelos actuales |
+| FB2 | No compatible | No compatible |
+
+Dos filas merecen énfasis. La fila EPUB es la razón por la que los comparadores caen en Kobo: una biblioteca cargada de EPUB de tiendas fuera de Amazon funciona allí sin conversión. La fila AZW3 es el espejo: las funciones de estilo de Kindle (fuentes incrustadas, tablas, capitulares) viven en AZW3, y ningún Kobo lo abrirá jamás. El puente práctico en ambas direcciones es una conversión de un paso, que cubre la sección de cambio más abajo.`,
+      },
+      {
+        heading: 'Cargar archivos: llevar tus propios libros a cada dispositivo',
+        body: `Cargar archivos significa mover los que ya tienes al lector por USB, sin una tienda en medio.
+
+**En Kobo:** conectas por USB y arrastras archivos EPUB o PDF sin DRM al almacenamiento del dispositivo. El archivo que copiaste es el que se abre —sin paso de conversión, sin ida y vuelta al servidor. Esta es la experiencia de carga más directa de las dos.
+
+**En Kindle:** tienes dos rutas. Send to Kindle acepta el EPUB directamente, pero Amazon lo convierte en sus servidores y a veces aplana las maquetaciones complejas, las tablas y las fuentes incrustadas. La ruta de control total es convertir tú mismo el EPUB a AZW3, verificar la salida y luego copiarlo al dispositivo: el paso a paso está en [EPUB a AZW3 para Kindle](/guide/epub-to-azw3-for-kindle), y el contraste de rutas de entrega se compara en [Cómo enviar EPUB a Kindle](/guide/how-to-send-epub-to-kindle).
+
+El resumen: cargar en Kobo es arrastrar y soltar; cargar en Kindle es arrastrar y soltar **tras un paso de conversión**. Para novelas sencillas la diferencia es despreciable. Para recetarios, libros de texto y libros con estilo, la conversión AZW3 que gestionas tú es en realidad la opción de mayor fidelidad en cualquiera de los dos dispositivos.`,
+      },
+      {
+        heading: 'Libros de biblioteca y DRM',
+        body: `Ambos ecosistemas admiten pedir prestado libros de biblioteca, pero la mecánica difiere lo bastante para importar a quienes leen mucho.
+
+**Kobo** tiene OverDrive/Libby integrado en el propio dispositivo (en regiones admitidas: EE. UU., Reino Unido, Canadá, Australia, Nueva Zelanda y varias más): navegas tu colección, inicias sesión y pides prestado directamente desde el lector. El préstamo llega como EPUB con DRM de Adobe, que el dispositivo está autorizado para abrir.
+
+**Kindle** recibe los préstamos de biblioteca por la app Libby en el móvil (donde esté disponible —principalmente EE. UU. y Reino Unido—): pides prestado en Libby, eliges Kindle como destino y Amazon entrega una copia en formato Kindle a tu dispositivo. El EPUB protegido en sí nunca toca el Kindle —Amazon gestiona la conversión del préstamo por su propio canal. La mecánica se describe en [Cómo leer EPUB en Kindle](/guide/how-to-read-epub-on-kindle).
+
+Una cosa más, con honestidad: el DRM corta en ambas direcciones. Los libros comprados en la tienda Kobo llevan DRM de Adobe y abren solo en dispositivos o apps autorizados por Kobo, igual que los de Kindle Store abren solo dentro del mundo Amazon. La libertad de moverte entre dispositivos pertenece a los archivos sin DRM —que además son lo que las herramientas de conversión pueden procesar legalmente.`,
+      },
+      {
+        heading: 'Ecosistema: qué encierra cada tienda',
+        body: `**Kindle** se construye en torno a la tienda Amazon: el catálogo de libros electrónicos más grande, la suscripción de lectura Kindle Unlimited, Whispersync para sincronizar posición y X-Ray. Los libros que compras allí llegan como AZW3/KFX con DRM de Amazon. Esa biblioteca es un activo real —y un compromiso real—. Vive cómoda en los Kindles, en la app de Kindle para móviles y tabletas, y en ningún otro lado.
+
+**Kobo** pertenece a Rakuten y gestiona su propia tienda con un catálogo comparable en la mayoría de regiones, más Kobo Plus, una suscripción de libros electrónicos y audiolibros. Las compras en la tienda Kobo son archivos EPUB con DRM de Adobe —el esquema de protección más portátil, pero un candado al fin y al cabo—.
+
+La regla de decisión que sobrevive al contacto con la realidad: mira dónde ya se fue tu dinero. Si tu biblioteca es sobre todo compras en Kindle Store, un Kobo no lee ninguna. Si es sobre todo EPUB de tiendas fuera de Amazon, un Kindle no abre ninguna de forma nativa. Las preferencias de hardware rara vez superan varios cientos de libros ya comprados.`,
+      },
+      {
+        heading: 'Cambiar entre Kindle y Kobo: los puentes de conversión',
+        body: `Cambiar de bando —o mantener un dispositivo de cada— es un trabajo único para archivos sin DRM. Los puentes:
+
+**Kindle a Kobo.** Tus archivos AZW3 y MOBI tienen que pasar a EPUB. [AZW3 a EPUB](/convert/azw3-to-epub) convierte conservando el formato —capítulos, portada, fuentes incrustadas y estilos se mantienen—, y la guía [AZW3 a EPUB: quita el candado Kindle](/guide/azw3-to-epub-keep-formatting) recorre el camino completo. Los MOBI antiguos se modernizan igual por [MOBI a EPUB](/convert/mobi-to-epub). Las compras en la tienda Kobo en sí no se pueden convertir —DRM de Adobe.
+
+**Kobo a Kindle.** Un EPUB tiene dos destinos. Send to Kindle lo toma directamente y convierte en servidor —bien para libros de texto plano. Para libros con estilo, convierte [EPUB a AZW3](/convert/epub-to-azw3) primero y cópialo por USB; el archivo que verificaste es el que abre el dispositivo. Para hardware Kindle legacy anterior a AZW3, el destino es MOBI.
+
+**¿Qué libros de Kindle se pueden convertir?** Solo los sin DRM. Las compras de Amazon llevan DRM por defecto y se quedan en el mundo Kindle; tus propios archivos y las compras sin DRM viajan libres. Una lista de comprobación previa para distinguirlos está en [la lista DRM-free](/blog/which-kindle-books-can-you-convert-drm-free-checklist).`,
+      },
+      {
+        heading: '¿Cuál deberías elegir?',
+        body: `| Tu situación | Mejor opción |
+|---|---|
+| Tu biblioteca es sobre todo compras en Kindle Store | Kindle |
+| Tu biblioteca es sobre todo EPUB de tiendas fuera de Amazon | Kobo |
+| Lee mucho de biblioteca y quiere pedir prestado en el dispositivo | Kobo (OverDrive integrado) |
+| Quiere un formato de archivo único en todas partes, para siempre | Kobo (EPUB nativo) |
+| Quiere catálogo profundo de Amazon y Kindle Unlimited | Kindle |
+| Libros con estilo (recetarios, textos) que cargas tú | Cualquiera —convierte a AZW3 para Kindle, EPUB tal cual en Kobo |
+| Hogares con uno de cada | Mantén bibliotecas sin DRM donde puedas, convierte según necesites |
+
+Si la elección acaba con dispositivos de ambos bandos, no pasa nada: EPUB es la moneda compartida de tus archivos sin DRM, y los puentes de conversión de arriba se encargan del lado Kindle. BookConv convierte entre EPUB, AZW3 y MOBI gratis en el navegador —sin instalar, sin cuenta—, lo que convierte el cambio en un trámite de una tarde en lugar de un proyecto.`,
+      },
+    ],
+  },
+  faqs: [
+    { question: '¿Kobo lee archivos EPUB de forma nativa?', answer: 'Sí. EPUB es el formato nativo de Kobo: copias un EPUB sin DRM por USB y se abre exactamente tal cual, sin conversión ni procesado en servidor. Esta es la gran diferencia práctica frente a Kindle, que no tiene lector de EPUB y solo acepta EPUB por la conversión Send to Kindle de Amazon.' },
+    { question: '¿Puedo leer mis libros de Kindle en un Kobo?', answer: 'Solo los que no tienen DRM. Las compras en Kindle Store son archivos AZW3/KFX con DRM que no abren en Kobo. Tus propios archivos AZW3 o MOBI se convierten a EPUB —por ejemplo con la herramienta gratuita AZW3 a EPUB de BookConv— y luego funcionan en cualquier Kobo.' },
+    { question: '¿Puedo leer libros EPUB de Kobo en mi Kindle?', answer: 'Los EPUB sin DRM, sí: envíalos por Amazon Send to Kindle, o convierte EPUB a AZW3 primero y cópialos por USB para control total del formato. Las compras en la tienda Kobo llevan DRM de Adobe y se quedan en el ecosistema Kobo.' },
+    { question: '¿Cuál es mejor para libros de biblioteca, Kindle o Kobo?', answer: 'Ambos funcionan, distinto. Kobo trae OverDrive integrado en el dispositivo, así que navegas y pides prestado directamente en el lector. Kindle recibe los préstamos por la app Libby donde esté disponible, y Amazon los entrega en formato Kindle. Quien lee mucho suele preferir tener el préstamo en el dispositivo.' },
+    { question: '¿Cargar archivos es más fácil en Kindle o en Kobo?', answer: 'En Kobo —arrastras un EPUB sin DRM por USB y se abre tal cual. En Kindle, el destino fiable por USB es AZW3, así que los EPUB necesitan primero un paso de conversión que gestionas tú. Para libros con estilo, ese paso de conversión produce justo el resultado más fiel en el dispositivo.' },
+    { question: '¿Los libros de Kindle Unlimited funcionan en Kobo?', answer: 'No. Los títulos de Kindle Unlimited llevan DRM y están atados a la suscripción Amazon, así que solo abren en Kindles y en la app de Kindle. El equivalente en Kobo es Kobo Plus, que igualmente está bloqueado a dispositivos y apps Kobo.' },
+    { question: '¿Qué formatos admite cada uno, Kindle y Kobo?', answer: 'Kindle: AZW3 de forma nativa, KFX para compras en tienda, MOBI para sideload legacy (solo archivos existentes), PDF, y EPUB solo por Send to Kindle. Kobo: EPUB y PDF de forma nativa, más cómics CBZ/CBR y MOBI en la mayoría de modelos actuales.' },
+    { question: '¿BookConv convierte entre formatos Kindle y Kobo?', answer: 'Sí. BookConv convierte AZW3 y MOBI a EPUB para Kobo, y EPUB a AZW3 para cargar en Kindle —gratis en el navegador, sin cuenta ni instalación, con archivos eliminados automáticamente en menos de una hora. Las compras en tienda con DRM no se pueden procesar.' },
+  ],
+} satisfies import('./types').GuideEs
 export const faqs: BlogFaq[] = [
   { question: 'Does Kobo read EPUB files natively?', answer: 'Yes. EPUB is Kobo\'s native format: copy a DRM-free EPUB over USB and it opens exactly as-is, no conversion or server-side processing. This is the single biggest practical difference from Kindle, which has no EPUB reader and only accepts EPUB through Amazon\'s Send to Kindle conversion.' },
   { question: 'Can I read my Kindle books on a Kobo?', answer: 'Only the DRM-free ones. Kindle Store purchases are DRM-protected AZW3/KFX files that will not open on Kobo. Your own AZW3 or MOBI files convert to EPUB — for example with BookConv\'s free AZW3 to EPUB tool — and then work on any Kobo.' },
