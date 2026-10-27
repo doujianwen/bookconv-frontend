@@ -219,3 +219,22 @@
 - **诚实保留**：未直接重查飞书告警群历史/Vercel 日志（权威失败通道），故「7 天无复发」为 Inference 非 Fact。
 - **关闭闸门**：重查权威通道 10-19→10-26 过滤 Input task has failed；0 例→关闭，≥2 例且深度校验放行后→重开诊断。
 - 详见 `docs/m8-10-失败签名监控小结-2026-10-27.md`；board M8-10 statusNote 同步。
+
+---
+
+## 🟡 2026-10-27 新增待办：BookConv 自托管转换后端 · 预发验证（WP5，切生产前 P0）
+
+**背景**：Calibre 转换后端已部署 HK 机（43.129.176.38，`convert.tuozhigeo.com`，LE 证书 + dry-run PASS）；WP4 failover 代码（熔断 + CloudConvert 回退）已提交；Vercel 已填 `CONVERSION_BACKEND_URL` + `CONVERSION_INTERNAL_SECRET`（Production）。**代码上线后 env 随部署生效，后端接管前必须过预发验证。**
+
+| # | 验证项 | 方法 | 通过标准 |
+|---|---|---|---|
+| PV-1 | Preview 真转换走后端 | Preview 域名上传 epub→mobi/azw3 | 200 + 合法文件 + `X-Conversion-Backend: hit` |
+| PV-2 | **failover 反向验证（铁律）** | 服务器 `sudo systemctl stop bookconv-conversion` 后再发请求 | 自动回退 CloudConvert（`X-Conversion-Backend: miss-cloudconvert`），**绝不 503** |
+| PV-3 | 熔断生效 | 连续打 3+ 次停用后端的请求 | 第 3 次后飞书收到「circuit OPEN」告警（仅一次，不刷屏）；冷却后恢复 |
+| PV-4 | GEO 零影响 | 转换进行时 curl GEO 站 + 观察 TTFB | www.tuozhigeo.com 全程 200；无 OOM（`systemctl status` 内存 < 1.2G cap） |
+| PV-5 | 非白名单格式直走 CC | 转一个后端不支持的格式（如 docx→epub 视 CONVERSION_MAP） | 正常 200 走 CC（`miss-cloudconvert`），无 422 泄漏给用户 |
+| PV-6 | 恢复验证 | `systemctl start` 后再请求 | 自动恢复 `hit`；熔断半开→闭合 |
+
+**上线顺序**：PV 全过 → 监控 3 天（MON-1~3 + `X-Conversion-Backend` 命中率）→ 确认无回退 → 正式切生产。**回滚**：Vercel 两个 env 置空 + Redeploy = 全量回 CloudConvert；服务器侧 `systemctl stop` 即停。
+
+*登记：2026-10-27 21:46*
