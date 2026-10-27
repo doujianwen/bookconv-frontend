@@ -17,6 +17,7 @@
 //   （isPureJsConversion=false）；纯 JS 路径本来就免费，不过闸门不缓存。
 
 import { NextResponse, after } from "next/server";
+import { createHash } from "node:crypto";
 import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 import { runConversion, isPureJsConversion, type ConversionJobResult } from "@/lib/conversion";
@@ -271,6 +272,19 @@ export async function convertAndStream(
     // 若 DRM 字样被截掉，错误码会静默降级为 CLOUD_CONVERT_ERROR（"请重试"），
     // 用户会对一个永久失败的文件反复重试。
     const errorCode = mapErrorCode(convMsg);
+    // 诊断字段（M8-10 Task 3，2026-10-27）：Vercel Hobby 1h 日志留存使 failedTask
+    // JSON 事后不可取，故把关键归因信息直接写进告警卡。inputHash/inputSize 来自
+    // 输入字节；validationResult 由错误码反推（CORRUPT_INPUT ⇒ §3.5 本地拦截失败，
+    // 其余 ⇒ 文件过 §3.5 才到 CC）；firstFailingEngine 解析自错误串 trail 首个 engine=XXX。
+    const inputHash =
+      buffer && buffer.length > 0
+        ? createHash('sha256').update(buffer).digest('hex').slice(0, 12)
+        : undefined;
+    const inputSize = buffer ? buffer.length : undefined;
+    const validationResult: 'passed' | 'failed' | 'unknown' =
+      errorCode === 'CORRUPT_INPUT' ? 'failed' : 'passed';
+    const engineMatch = convMsg.match(/engine=(\w+)/i);
+    const firstFailingEngine = engineMatch ? engineMatch[1] : 'n/a';
     // 实时 Feishu 告警（节流 + 3s 超时，内部消化异常）：生产同步路径此前无任何
     // 失败告警，2026-10-01 转换 100% 失败直到 T+1 才被 GA4 日报发现。
     await notifyConversionFailure({
@@ -279,6 +293,10 @@ export async function convertAndStream(
       sourceFormat,
       targetFormat,
       error: convMsg,
+      inputHash,
+      inputSize,
+      validationResult,
+      firstFailingEngine,
     });
     // Surface raw error only when CC_DEBUG is explicitly enabled (prod-safe)
     const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convMsg } : {};

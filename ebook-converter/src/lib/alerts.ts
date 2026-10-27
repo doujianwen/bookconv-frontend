@@ -51,6 +51,20 @@ export interface ConversionFailureAlert {
   sourceFormat?: string;
   targetFormat?: string;
   error: string;
+  /**
+   * 诊断字段（M8-10 Task 3，2026-10-27）：堵 Vercel Hobby 1h 日志留存导致的
+   * 事后归因盲点。Vercel Hobby 运行时日志仅保留 1h，复发后无法取回 failedTask
+   * JSON，故把关键诊断上下文直接写进告警卡，让每张失败卡自带归因信息。
+   * 全部可选——历史调用方与 backend-unavailable 路径不传也无妨。
+   */
+  /** 输入文件 sha256 前 12 位（稳定指纹，用于跨复发去重/定位同一坏文件） */
+  inputHash?: string;
+  /** 输入文件字节数 */
+  inputSize?: number;
+  /** §3.5 本地校验结果：passed=文件过校验才到 CC 失败 / failed=被 §3.5 本地拦截(CORRUPT_INPUT) / unknown */
+  validationResult?: 'passed' | 'failed' | 'unknown';
+  /** 首个失败引擎（解析自错误串 trail 的首个 engine=XXX），n/a 表示无 */
+  firstFailingEngine?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -230,6 +244,16 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
     '**Job:**', payload.jobId || 'n/a', '\n',
     '**Format:**', `${payload.sourceFormat || '?'} → ${payload.targetFormat || '?'}`, '\n',
     '**Error:**', (payload.error || 'unknown').slice(0, 200), '\n',
+    ...(payload.inputHash ? ['**Input hash:**', payload.inputHash, '\n'] : []),
+    ...(payload.inputSize !== undefined
+      ? ['**Input size:**', `${payload.inputSize} bytes`, '\n']
+      : []),
+    ...(payload.validationResult
+      ? ['**§3.5 check:**', payload.validationResult, '\n']
+      : []),
+    ...(payload.firstFailingEngine
+      ? ['**First engine:**', payload.firstFailingEngine, '\n']
+      : []),
     '**Time:**', new Date().toISOString(), '\n',
   ].join('');
 
