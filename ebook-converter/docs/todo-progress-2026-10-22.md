@@ -238,3 +238,31 @@
 **上线顺序**：PV 全过 → 监控 3 天（MON-1~3 + `X-Conversion-Backend` 命中率）→ 确认无回退 → 正式切生产。**回滚**：Vercel 两个 env 置空 + Redeploy = 全量回 CloudConvert；服务器侧 `systemctl stop` 即停。
 
 *登记：2026-10-27 21:46*
+
+### PV 进度回填（2026-10-27 22:10，push 后生产实测）
+
+- ✅ **PV-1（生产等价）**：`www.bookconv.com/api/convert` epub→mobi → 200 + 合法 Mobipocket + `X-Conversion-Backend: hit`（f01a558 已部署、env 已生效、全链路通）。
+- ✅ **PV-2（铁律反向）**：生产 `systemctl stop` 后端 → 同请求仍 **200** + `X-Conversion-Backend: miss-cloudconvert` + 合法输出，**无 503**（B-R1 已修复实证）。
+- ✅ **PV-6**：`systemctl start` 恢复 → 下一次请求回到 `hit`。
+- ⬜ **PV-3**（熔断开闸告警，需连续 3 次失败触发）⬜ **PV-4**（转换负载下 GEO TTFB 观测）⬜ **PV-5**（非白名单格式直走 CC）——留预发/日常验证窗口执行。
+- 上线状态：**后端已在生产接管 Calibre 白名单格式**（其余格式走 CC），进入 3 天监控期（MON-1~3 + `X-Conversion-Backend` 命中率）。回滚随时可用：Vercel 双 env 置空 + Redeploy。
+
+---
+
+## 🟢 2026-10-27 22:15 SEO/GEO 90 天工程首次执行收口（新登记待办）
+
+> 来源：90 天增长工程首次执行 CP0–CP11 闭环（权威报告 `数据分析/SEO-GEO-90天首次执行报告-2026-10-27.md`，裁定 `INITIAL_EXECUTION_COMPLETED`）。Notion 已同步并读回验证（SYNC_VERIFIED）。
+
+| # | 待办 | 优先级 | 到期/节奏 | 说明 | 状态 |
+|---|---|---|---|---|---|
+| EXP-OBS | **3 页 SERP title 单变量实验 28 天观察窗**（M2-15 关联） | P1 | 2026-11-24 复盘 | `/convert/epub-to-zip`（Instant）+ `/blog/can-kindle-read-azw3`（Compatibility by Model 2026）+ `/blog/azw3-vs-mobi`（决策意图）；commit `c782192`+`8f18a42` 已上线（10-27 22:05 线上验证）；基线/指标/回滚条件见报告 §J | 🟢 观察中 |
+| HREFLANG | **hreflang/alternate 信号调查与修复**（新 P1） | P1 | 2026-10-31 排查 | 10 优先页线上 HTML 均未检出 hreflang（UNKNOWN，待查 Next.js 注入机制）；与 `azw3 vs mobi` 曝光主力=西语页的 locale 错配（91d q×page 实证）合流 → 并入 M5-5 | todo |
+| BING-RE | **11-01 Bing AI dated 重采**（M13-13） | P1 | 2026-11-01 | 当前 −25.7% VI 含 9 月尖峰回归，是否结构性下滑不可判定；须带日期页面级数据复采 | todo |
+| SCHED | **周度调度启用**：GitHub Actions 每周一 cron 跑 GSC/Bing/GA4 采集 + 序列构建 | P2 | 待拍板 | 当前 SCHEDULER_NOT_ENABLED（仅 indexnow-ping.yml）；配置方案见报告 §L；凭据入 secrets | todo |
+| MON-A | 路线 A + 后端接管 **3 天监控期**（MON-1/2/3 + `X-Conversion-Backend` 命中率） | P0 | 10-28~10-30 | PV-1/2/6 已过；PV-3/4/5 留日常窗口；连续 3 天判据见上方 MON 表 | 🟢 进行中 |
+
+**关键事实回填**：GSC 非品牌 91d 曝光 1,560/点击 **0**（10 点击全品牌词）= 90 天主攻目标；`calibre alternative` 91 天零需求证据（原实验 3 被否决换入 can-kindle-read-azw3）；Bing AI 高引用 7 页列入保护名单禁改；新服务器迁移已验收（P0「route.ts 无回退」已解）。
+
+---
+
+*最后更新：2026-10-27 22:15（登记 90 天工程收口待办 5 项：EXP-OBS/HREFLANG/BING-RE/SCHED/MON-A；此前 2026-10-27 21:46 WP5 预发验证登记、22:10 PV 回填；2026-10-25 12:16 路线 A 上线状态回填）*
