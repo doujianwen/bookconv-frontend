@@ -108,7 +108,8 @@ async function main() {
     positional,
   };
 
-  const date = (series.d0 || new Date().toISOString().slice(0, 10));
+  // 用报告生成日期命名，避免每周运行覆盖同一份历史文件（修复：此前误用固定基线日 series.d0）。
+  const date = new Date().toISOString().slice(0, 10);
   const md = renderReport(doc, diag);
   const mdPath = join(ROOT, '数据分析', `keyword-reason-candidates-${date}.md`);
   mkdirSync(dirname(mdPath), { recursive: true });
