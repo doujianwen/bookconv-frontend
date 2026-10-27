@@ -1,0 +1,30 @@
+[Unit]
+Description=BookConv Calibre Conversion Backend (self-hosted, delegated by Vercel)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=bookconv-backend
+Group=bookconv-backend
+WorkingDirectory=/opt/bookconv-conversion/app
+EnvironmentFile=/opt/bookconv-conversion/.env
+ExecStart=/usr/bin/node /opt/bookconv-conversion/app/index.js
+Restart=on-failure
+RestartSec=3
+# --- Six-layer isolation (separate from GEO stack) ---
+MemoryMax=1.2G
+CPUQuota=70%
+IOWeight=50
+OOMScoreAdjust=800
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/bookconv-conversion/data/tmp /opt/bookconv-conversion/logs
+LimitNOFILE=1024
+StandardOutput=append:/opt/bookconv-conversion/logs/app.out.log
+StandardError=append:/opt/bookconv-conversion/logs/app.err.log
+
+[Install]
+WantedBy=multi-user.target

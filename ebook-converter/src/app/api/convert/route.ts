@@ -18,12 +18,15 @@ import {
   RATE_LIMIT_STRATEGIES,
 } from "@/lib/rate-limit";
 import { convertAndStream } from "@/lib/convert-handler";
-import { notifyConversionFailure } from "@/lib/alerts";
+import { normalizeFormat } from "@/lib/conversion-map";
+import {
+  backendConfigured,
+  delegateToBackend,
+  isCalibreTarget,
+  shouldUseBackend,
+} from "@/lib/conversion-backend-client";
 
 export const maxDuration = 300; // Vercel Pro 支持 300s；大文件（50+页EPUB→PDF经Calibre引擎）需 60-120s 处理时间
-
-const BACKEND_URL = process.env.CONVERSION_BACKEND_URL?.replace(/\/+$/, "");
-const INTERNAL_SECRET = process.env.CONVERSION_INTERNAL_SECRET;
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,42 +44,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // --- Optional delegation to a Calibre-capable backend (VPS/Docker) ---
-    if (BACKEND_URL && INTERNAL_SECRET) {
-      try {
-        const backendRes = await fetch(`${BACKEND_URL}/api/convert-internal`, {
-          method: "POST",
-          headers: { "x-internal-convert": INTERNAL_SECRET },
-          body: request.body,
-          // request.body is a stream we must forward; duplex:half enables that
-          // @ts-expect-error fetch duplex is supported in Node 18+ runtimes
-          duplex: "half",
-        });
-        // Stream the backend's bytes (or JSON error) straight back to the client.
-        const headers = new Headers();
-        backendRes.headers.forEach((v, k) => {
-          if (["content-type", "content-disposition", "cache-control"].includes(k.toLowerCase())) {
-            headers.set(k, v);
-          }
-        });
-        for (const [k, v] of Object.entries(rateHeaders)) headers.set(k, v);
-        return new NextResponse(backendRes.body, {
-          status: backendRes.status,
-          headers,
-        });
-      } catch (fwdErr) {
-        const fwdMsg = fwdErr instanceof Error ? fwdErr.message : String(fwdErr);
-        console.error("POST /api/convert backend forward failed:", fwdMsg);
-        // 后端不可达 = 全站转换不可用的最高优先信号，实时 Feishu 告警（节流见 alerts.ts）
-        await notifyConversionFailure({
-          kind: "backend-unavailable",
-          error: fwdMsg,
-        });
-        return NextResponse.json(
-          { error: "Conversion service temporarily unavailable. Please try again later." },
-          { status: 503, headers: rateHeaders },
-        );
+    // --- Optional delegation to a Calibre-capable backend (self-hosted, WP4 failover) ---
+    if (backendConfigured()) {
+      // Parse the form ONCE so we can BOTH delegate to the backend AND fall back to
+      // CloudConvert. The previous design forwarded request.body and could not retry;
+      // parse-once lets a backend failure degrade to the CloudConvert path instead of
+      // returning a hard 503. convertAndStream accepts the already-parsed FormData.
+      const formData = await request.formData();
+      const sourceFormat = normalizeFormat(formData.get("source_format") as string);
+      const targetFormat = normalizeFormat(formData.get("target_format") as string);
+      const uploadKeyRaw = formData.get("upload_key");
+      const uploadKey =
+        typeof uploadKeyRaw === "string" && uploadKeyRaw.length > 0 ? uploadKeyRaw : undefined;
+
+      const canDelegate =
+        sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend();
+
+      if (canDelegate) {
+        const backendResp = await delegateToBackend(formData, rateHeaders);
+        if (backendResp) {
+          // Backend succeeded (200 + file bytes). Returned as-is.
+          return backendResp;
+        }
+        // Backend down / unsupported / timeout -> fall through to CloudConvert below.
       }
+
+      // CloudConvert path: formats the backend can't emit, the upload_key (R2) path,
+      // backend-down, or circuit-open. X-Conversion-Backend header is for MON-style
+      // observability (hit vs miss).
+      const ccHeaders = { ...rateHeaders, "X-Conversion-Backend": "miss-cloudconvert" };
+      return convertAndStream(formData, ccHeaders, { uploadKey });
     }
 
     // --- Local execution (engine-free conversions) ---
