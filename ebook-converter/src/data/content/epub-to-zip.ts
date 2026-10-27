@@ -1,5 +1,5 @@
 export const slug = 'epub-to-zip';
-export const title = 'EPUB to ZIP Converter — Free, Byte-Exact, No Sign-Up';
+export const title = 'EPUB to ZIP Converter — Free, Instant, No Sign-Up';
 export const metaDescription = 'Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.';
 export const level = 'A' as const;
 export const wordCount = 730;

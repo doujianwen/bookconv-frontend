@@ -1,6 +1,6 @@
 export const slug = `azw3-vs-mobi`;
 export const title = `AZW3 vs MOBI: What's the Difference for Kindle?`;
-export const metaTitle = `AZW3 vs MOBI: The Difference & Which to Use on Kindle`
+export const metaTitle = `AZW3 vs MOBI: Which Format Should You Use on Kindle?`
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Calibre"];
