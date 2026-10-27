@@ -84,7 +84,7 @@ You can also manually specify chapter separators if your file uses unusual forma
 Keep TXT only for piping into scripts, AI tools, or translation engines where raw text is what you want.`
     },
     {
-      heading: 'How to Convert TXT to EPUB: Step by Step',
+      heading: 'Building an EPUB from a Plain TXT File',
       body: `Three steps, nothing to install:
 
 **Step 1 — Upload your TXT.** Drag it in or click to browse. Free accounts handle files up to 4MB; we have tested multi-million-word files that convert normally.

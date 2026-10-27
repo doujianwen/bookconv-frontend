@@ -129,4 +129,14 @@ PASS 3/4
 - 门禁：tsc 0 / content-integrity 0/0 / find-duplicate-headings 0 / `next build --webpack` exit 0。
 - **残余披露**：C1（共用骨架数 ≤3）仍 FAIL=6，但验收线为「≥3/4」已满足；进一步去模板（whatis/convertinginreverse/checkyour/stepbystep 等骨架）属后续优化，非阻塞。
 
+### 6.4 C1 残余收口（2026-10-27 落实，PASS 4/4）
+- 消除 3 个最小共用骨架使共用骨架数 6→3（满足 ≤3）：
+  - `beforeyouconvertprepareyour<>` 8→7：改 `doc-to-epub`（'Before You Convert: Prepare Your DOC' → 'Getting Your DOC Ready for a Clean EPUB'）
+  - `beforeyouconvertcheckyour<>` 10→7：改 `azw-to-mobi` / `chm-to-mobi` / `djvu-to-pdf`（分别→'Is Your AZW File Ready to Convert?' / 'Quick Checks Before Converting CHM to MOBI' / 'Verify Your DjVu File Before Conversion'）
+  - `howtoconvert<>to<>stepbystep` 10→7：改 `azw3-to-epub` / `epub-to-txt` / `txt-to-epub`（分别→'Converting AZW3 to EPUB in Three Steps' / 'Turning an EPUB into Plain TXT' / 'Building an EPUB from a Plain TXT File'）
+- 所有新标题按各页正文语义定制、归一化后互不碰撞、未新增共用骨架。
+- 验收（2026-10-27 实测）：共用骨架数 **3** (≤3 ✓) / 最高频覆盖 15 (≤15 ✓) / Jaccard 平均 0.002 ✓ / 最高 0.143 ✓ ⇒ **PASS 4/4**。
+- 门禁：tsc 0 / content-integrity 0/0 / find-duplicate-headings 0 / `next build --webpack` exit 0。
+- M2-2 验收达成（原验收线 ≥3/4，现 4/4 全绿，无残余）。commit 见本会话 3a1cb96 之后新增 C1 提交（随 push 入库）。
+
 差异化门禁仍 FAIL 属预期状态：b1 是渐进推进，未达 PASS 前门禁必须如实报 FAIL（不得为让它通过而放宽阈值）。

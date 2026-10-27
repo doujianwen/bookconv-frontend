@@ -113,7 +113,7 @@ If it opens but the navigation feels off, that is usually the source file's own 
 
     {
 
-heading: 'Before You Convert: Check Your AZW',
+heading: 'Is Your AZW File Ready to Convert?',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really AZW** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

@@ -147,7 +147,7 @@ Keep DOC if you must keep editing in Word and printing. Convert to EPUB when the
 If the TOC is flat or missing, apply proper heading styles in Word and reconvert.`
     },
     {
-      heading: 'Before You Convert: Prepare Your DOC',
+      heading: 'Getting Your DOC Ready for a Clean EPUB',
       body: `A few minutes of prep sharply improves the result:
 
 - **Apply real heading styles** rather than big bold text, so the converter can build a table of contents

@@ -99,7 +99,7 @@ A CHM manual that lost its search index is still readable, which is why this pro
 
     {
 
-heading: 'Before You Convert: Check Your CHM',
+heading: 'Quick Checks Before Converting CHM to MOBI',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really CHM** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

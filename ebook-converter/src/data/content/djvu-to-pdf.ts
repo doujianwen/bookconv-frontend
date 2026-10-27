@@ -115,7 +115,7 @@ If a page comes out blank, retry that page range; the rest of the document is us
 
     {
 
-heading: 'Before You Convert: Check Your DjVu',
+heading: 'Verify Your DjVu File Before Conversion',
       body: `A clean source file is half the battle. Before you upload, take one minute to verify three things.
 
 - **The file is really DjVu** — a wrong extension or a corrupted download is the most common cause of a failed conversion.

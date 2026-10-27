@@ -67,7 +67,7 @@ If you're weighing Amazon's two Kindle formats against each other, our [AZW3 vs 
 Keep AZW3 only if you read exclusively on a modern Kindle and never share files.`
     },
     {
-      heading: 'How to Convert AZW3 to EPUB: Step by Step',
+      heading: 'Converting AZW3 to EPUB in Three Steps',
       body: `Three steps, nothing to install:
 
 **Step 1 — Upload your AZW3.** Drag the file into the upload zone or click to browse. Free accounts accept files up to 4MB, which covers essentially every book.

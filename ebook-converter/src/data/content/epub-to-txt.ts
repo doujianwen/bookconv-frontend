@@ -93,7 +93,7 @@ Older Kindles and basic e-ink devices read TXT files perfectly. For simple novel
 Feed your books directly to AI summarization tools, quote extractors, or content analysis platforms that require clean text input. The absence of markup ensures accurate AI processing and prevents formatting errors that could corrupt your analysis results.`
     },
     {
-      heading: 'How to Convert EPUB to TXT: Step by Step',
+      heading: 'Turning an EPUB into Plain TXT',
       body: `Converting EPUB to TXT is straightforward with our browser-based tool. Follow these three simple steps:
 
 **Step 1 — Upload Your EPUB File**
