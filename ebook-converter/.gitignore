@@ -36,6 +36,10 @@ __pycache__/
 # 运维脚本例外（正式运维脚本，需进 git 供 CI 构建镜像使用，否则生产镜像无审计/博客生成脚本）
 !scripts/ai-audit.js
 !scripts/generate-blogs.js
+# conversion-backend 是纯 JS 自托管转换后端（无 TS 构建，2026-10-27）——
+# 目录内 .js 是核心生产代码，必须入库；须放在上方 *.js 全局规则之后才能生效
+!conversion-backend/app/*.js
+!conversion-backend/test/*.js
 # VI 度量衡判据与门禁（2026-10-05 加）：
 # daily_vi.py 固化 VI v1.0 口径，test_vi_classify.py 是它的防退化门禁
 # （负 VI 不得判「无信号」）。二者必须入库，否则换机器即失效。
