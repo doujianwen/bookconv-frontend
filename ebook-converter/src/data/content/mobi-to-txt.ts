@@ -53,7 +53,7 @@ For a lot of jobs, formatting is just noise in the way:
 The trade is honest and obvious: you keep every word and lose every visual detail.`
     },
     {
-      heading: 'How to Convert MOBI to TXT',
+      heading: 'Stripping a MOBI Down to Plain Text',
       body: `**1. Upload the MOBI.** Drag it in or browse for it. Free accounts handle files up to 4MB — MOBI files are rarely anywhere near that, since a full-length novel usually lands between 300KB and 2MB.
 
 **2. We unpack and strip.** The converter decompresses the MOBI record structure, removes the HTML tags, and rebuilds the text with sensible paragraph breaks. Chapters get separated by blank lines instead of vanishing into one endless wall of prose.

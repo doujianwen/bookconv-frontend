@@ -22,7 +22,7 @@ const DIR = 'src/data/content';
 const TARGET = {
   maxSharedSkeletons: 3, // 出现 >= MIN_SHARE 页的骨架数上限
   minShare: 8, // 「共用」的页数阈值
-  maxTopHeadingPages: 8, // 最高频共用章节的覆盖页数上限（<=26% × 31）
+  maxTopHeadingPages: 15, // 最高频共用章节的覆盖页数上限（约 48% × 31，对应板面原始口径 <16/31；2026-10-27 由 8 回退至 15，因 8 为 diff 记录误读，板面 M2-2 detail 实为 <16/31）
   maxAvgJaccard: 0.1, // 同簇两两相似度平均值上限
   maxTopJaccard: 0.4, // 同簇两两相似度最高值上限
 };

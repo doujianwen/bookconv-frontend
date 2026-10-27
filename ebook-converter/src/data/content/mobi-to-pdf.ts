@@ -43,7 +43,7 @@ The defining trait is that **a PDF looks the same everywhere.** Same fonts, same
 The trade-off is the mirror image of MOBI's: PDF gives up flexibility to gain permanence.`
     },
     {
-      heading: 'How to Convert MOBI to PDF',
+      heading: 'Laying a MOBI Out as a PDF',
       body: `**1. Upload your MOBI.** Drag it in or click to browse. Uploads are capped at 4MB, which suits most MOBI files — a full-length novel typically lands between 300KB and 2MB. Heavily illustrated titles are the ones that can run past the limit.
 
 **2. We render it to pages.** The converter unpacks the MOBI, rebuilds the HTML content, and lays it out onto real pages with sensible margins and readable type. Navigation points become PDF bookmarks so you can still jump between chapters.

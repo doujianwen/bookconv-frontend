@@ -45,7 +45,7 @@ Its strengths are reach and simplicity: a MOBI file opens on virtually any e-ink
 Because every Kindle reads MOBI natively, it remains the safest universal target when you just want a book to open on the device in your hand.`
     },
     {
-      heading: 'How to Convert LIT to MOBI',
+      heading: 'Bringing Dead LIT Files to MOBI',
       body: `**1. Upload your LIT file.** Drag it in or browse. Free accounts handle files up to 4MB, which covers essentially every LIT book — they are text-heavy and small.
 
 **2. Conversion runs.** The LIT container is unpacked, its HTML is simplified to what MOBI's renderer understands, images are re-packaged, and the chapter structure is rebuilt. Most files finish in under 30 seconds.

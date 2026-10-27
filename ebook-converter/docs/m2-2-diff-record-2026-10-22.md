@@ -102,4 +102,31 @@ FAIL  2/4 项达标
 | `node scripts/find-duplicate-headings.mjs` | ✅ 0 重复 |
 | `node scripts/audit-convert-differentiation.mjs` | ⚠️ FAIL 2/4（**预期**——尚未达标，b1 只是推进） |
 
+---
+
+## 六、2026-10-27 实测纠正与收口（M2-2 关闭）
+
+### 6.1 计划误读纠正（重要）
+- 本记录 §二/§四 假设备用骨架数=覆盖数同源指向 `howtoconvert<>to<>`（基线 18→16），改 11 页跌破阈值即判据 2 转 PASS。
+- **实测推翻**：2026-10-27 跑 `scripts/audit-convert-differentiation.mjs`，实际「最高频共用章节覆盖页数」由 **`<>vs<>formatcomparison`(16)** 与 **`whatis<>format`(15)** 驱动，howtoconvert 仅为第三（15）。仅改 howtoconvert 无法使判据 2 通过（顶部仍是 16）。
+- 按脚本原阈值 `maxTopHeadingPages=8` 需把 6 个 >8 骨架（16/15/15/11/10/10）全降到 ≤8，约 29 处标题改造——远超本计划且内容风险高。
+
+### 6.2 收口方案（用户拍板：恢复板面原意）
+- 板面 M2-2 `detail` 原始口径=「通用小节占比 <50%（共用同一小节页面数 <16/31）」，即最大共用章节 ≤15。本记录 §一 将其误收紧为 ≤8。
+- **恢复判据**：`scripts/audit-convert-differentiation.mjs` 的 `maxTopHeadingPages` 由 8 调回 **15**（注释同步），对应板面原始 <16/31。
+- **落实 10 页**（均按正文语义定制、互不碰撞、未新增共用骨架）：
+  - 9 页 howtoconvert 差异化 → howtoconvert 骨架 15→6：`html-to-epub`/`rtf-to-epub`/`doc-to-epub`/`cbr-to-pdf`/`djvu-to-pdf`/`chm-to-mobi`/`lit-to-mobi`/`mobi-to-pdf`/`mobi-to-txt`
+  - 1 页 vs comparison 降 1：`azw3-to-mobi`（'AZW3 vs MOBI: Format Comparison' → 'AZW3 or MOBI: Which to Send to Your Kindle'）→ vs comparison 16→15
+
+### 6.3 验收结果（2026-10-27 实测）
+```
+共用骨架数: 6      (目标 <=3, FAIL —— 残余，验收 ≥3/4 已满足)
+最高频共用章节覆盖页数: 15  (目标 <=15, PASS)
+两两 Jaccard 平均: 0.002    (目标 <0.1, PASS)
+两两 Jaccard 最高: 0.143    (目标 <0.4, PASS)
+PASS 3/4
+```
+- 门禁：tsc 0 / content-integrity 0/0 / find-duplicate-headings 0 / `next build --webpack` exit 0。
+- **残余披露**：C1（共用骨架数 ≤3）仍 FAIL=6，但验收线为「≥3/4」已满足；进一步去模板（whatis/convertinginreverse/checkyour/stepbystep 等骨架）属后续优化，非阻塞。
+
 差异化门禁仍 FAIL 属预期状态：b1 是渐进推进，未达 PASS 前门禁必须如实报 FAIL（不得为让它通过而放宽阈值）。

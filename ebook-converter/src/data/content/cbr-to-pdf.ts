@@ -77,7 +77,7 @@ The honest downside: dedicated comic readers are genuinely better at reading com
 Keep CBR if you read comics daily in a good reader app. Convert to PDF if you need to print, share with non-readers, or open on a locked-down device.`
     },
     {
-      heading: 'How to Convert CBR to PDF',
+      heading: 'Assembling Comic Pages into a PDF',
       body: `**1. Drop your file in.** Drag the .cbr or .cbz onto the upload zone. Uploads are capped at 4MB. Comics are image-heavy, so this is the one category where the ceiling bites early — a single issue often lands above it, and full graphic novels almost always do. If your file is over the limit, compress the images first or use desktop [Calibre](https://calibre-ebook.com) for the large ones.
 
 **2. Let it process.** The converter extracts every image from the archive, sorts them by filename, and assembles them into a single PDF using ImageMagick. A 24-page issue finishes in seconds. A 200-page collection takes a minute or two, mostly spent on image processing.

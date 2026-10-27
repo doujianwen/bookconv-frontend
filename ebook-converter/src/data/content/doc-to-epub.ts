@@ -74,7 +74,7 @@ The critical difference from DOC is **reflow**. There is no fixed page. The read
 DOC was designed for printing. EPUB is designed for reading on screens. If nobody is going to print your document, EPUB is simply the better container.`
     },
     {
-      heading: 'How to Convert DOC to EPUB',
+      heading: 'Rebuilding a DOC File as an EPUB',
       body: `We run a two-stage pipeline rather than a direct conversion, because it produces far better results with old files.
 
 **DOC to DOCX (LibreOffice), then DOCX to EPUB (Calibre).**

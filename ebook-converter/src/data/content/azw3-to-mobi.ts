@@ -139,7 +139,7 @@ Going the other direction — freeing an old MOBI from Amazon's ecosystem so it 
     },
 
     {
-      heading: 'AZW3 vs MOBI: Format Comparison',
+      heading: 'AZW3 or MOBI: Which to Send to Your Kindle',
       body: `You are choosing between a rich modern format and a bare-minimum legacy one. The table makes the trade obvious.
 
 | Feature | AZW3 | MOBI |

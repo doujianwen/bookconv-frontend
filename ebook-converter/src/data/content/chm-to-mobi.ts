@@ -32,7 +32,7 @@ The trade-off is styling. MOBI supports only a small HTML/CSS subset, so the pre
 The converter unpacks the CHM, reads its internal HTML pages and linked images, rebuilds a single linear reading flow, and maps the help system's headings to MOBI chapters. Because the source is clean HTML, the output keeps its text, headings, and inline images intact.`
     },
     {
-      heading: 'How to Convert CHM to MOBI',
+      heading: 'Opening a CHM File on Your Kindle',
       body: `**1. Upload your CHM file.** Drag it in or browse. Free accounts handle files up to 4MB, enough for almost every manual or reference.
 
 **2. Conversion runs.** The CHM is unpacked, its HTML is simplified to MOBI-compatible markup, and the table of contents becomes MOBI chapters. Most files finish in under a minute.

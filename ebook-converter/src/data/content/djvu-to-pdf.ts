@@ -52,7 +52,7 @@ Concretely, moving from DjVu to PDF buys you:
 The tradeoff is honest: your PDF will be bigger. Sometimes a lot bigger. A 12MB DjVu can land at 60-80MB as a PDF because PDF doesn't have DjVu's layer-splitting compression. You're trading disk space for the ability to actually open the thing on your phone.`
     },
     {
-      heading: 'How to Convert DjVu to PDF',
+      heading: 'Converting DjVu Scans into a PDF',
       body: `The process is straightforward — no software install, no account required for a single file.
 
 **1. Upload your file.** Drag the .djvu (or .djv) file onto the drop zone, or click to browse. Uploads are capped at 4MB. DjVu compresses aggressively, so many scanned books fit — but long or high-resolution scans can still exceed the limit.

@@ -67,7 +67,7 @@ In short, HTML is built for browsing. EPUB is built for sitting down and reading
 If you want someone to read your writing like a book — on a commute, on an e-reader, offline — EPUB is the upgrade from raw HTML. If you just need the page to render in a browser, HTML is already enough.`
     },
     {
-      heading: 'How to Convert HTML to EPUB',
+      heading: 'Turning a Web Page into an EPUB',
       body: `**1. Upload your file.** Drop in a .html or .htm file. Free accounts cover files up to 4MB, which is far more than any realistic text document needs — that ceiling only matters if your page is stuffed with large images.
 
 **2. We parse and restructure.** The converter reads your heading hierarchy to work out chapters, pulls the title and author from the document head where they exist, downloads any externally linked images so the book works offline, and rewrites inline styles into EPUB-safe CSS.
