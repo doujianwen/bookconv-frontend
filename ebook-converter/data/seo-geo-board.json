@@ -1330,7 +1330,7 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。\n2026-10-27 分析补全（M8-10 监控小结 docs/m8-10-失败签名监控小结-2026-10-27.md）：窗口 10-19→10-26 满 7 天；§3.4+§3.5 已上线并生产验证（Job 75c75593 被 §3.5 拦截）。窗口内无文档记录 Input task has failed 复发；同期仅有 10-22 起 402 复发（不同签名）。诚实保留：未直接重查飞书告警群历史/Vercel 日志（权威失败通道），故「7天无复发」为 Inference 非 Fact。关闭闸门=重查权威通道 10-19→10-26 过滤 Input task has failed；0例→关闭，≥2例且深度校验放行后→重开诊断。\n2026-10-27 续（GA4 辅助 + close-gate runbook）：服务账号实拉 10-19→10-26 窗口 conversion_failed=每日0-5(无尖峰)，佐证无复发但 GA4 不能关闭闸门；权威通道(飞书群/Vercel CLI)本环境无权限且 cookie 过期，close-gate 待用户实时登录确认。文档 docs/m8-10-失败签名监控小结-2026-10-27.md §7(GA4 数据)+§8(2分钟 runbook)。状态=close-gate pending，未伪报 PASS。\n2026-10-27 close-gate 复核（飞书权威通道 lark-cli 独立重查 10-19→10-27）：抓到 3 张失败卡——10-19 ×2（基线，修复 20:57 前）+ 10-26 ×1（POST-§3.5 复发：epub→mobi，Job 9dba318b，calibre+auto 双引擎失败，2 attempts；Severity=System-side fault）。Vercel Hobby 1h 留存使历史窗口无法经 Vercel 复核，飞书为系统权威通道（alerts.ts + 事故文档 §6.3）。裁定：close 条件（连续7天0复发）未满足 → close-gate FAILED，M8-10 不得关闭；单例虽未达 accept「≥2 重开诊断」字面阈值，但证伪「§3.5 结构性消除签名」假设，按「不伪报PASS」纪律保持 open 并诊断 10-26 个案。Vercel failedTask JSON 因 1h 留存已不可取。详见 docs/m8-10-失败签名监控小结-2026-10-27.md §9。"
+          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。\n2026-10-27 分析补全（M8-10 监控小结 docs/m8-10-失败签名监控小结-2026-10-27.md）：窗口 10-19→10-26 满 7 天；§3.4+§3.5 已上线并生产验证（Job 75c75593 被 §3.5 拦截）。窗口内无文档记录 Input task has failed 复发；同期仅有 10-22 起 402 复发（不同签名）。诚实保留：未直接重查飞书告警群历史/Vercel 日志（权威失败通道），故「7天无复发」为 Inference 非 Fact。关闭闸门=重查权威通道 10-19→10-26 过滤 Input task has failed；0例→关闭，≥2例且深度校验放行后→重开诊断。\n2026-10-27 续（GA4 辅助 + close-gate runbook）：服务账号实拉 10-19→10-26 窗口 conversion_failed=每日0-5(无尖峰)，佐证无复发但 GA4 不能关闭闸门；权威通道(飞书群/Vercel CLI)本环境无权限且 cookie 过期，close-gate 待用户实时登录确认。文档 docs/m8-10-失败签名监控小结-2026-10-27.md §7(GA4 数据)+§8(2分钟 runbook)。状态=close-gate pending，未伪报 PASS。\n2026-10-27 close-gate 复核（飞书权威通道 lark-cli 独立重查 10-19→10-27）：抓到 3 张失败卡——10-19 ×2（基线，修复 20:57 前）+ 10-26 ×1（POST-§3.5 复发：epub→mobi，Job 9dba318b，calibre+auto 双引擎失败，2 attempts；Severity=System-side fault）。Vercel Hobby 1h 留存使历史窗口无法经 Vercel 复核，飞书为系统权威通道（alerts.ts + 事故文档 §6.3）。裁定：close 条件（连续7天0复发）未满足 → close-gate FAILED，M8-10 不得关闭；单例虽未达 accept「≥2 重开诊断」字面阈值，但证伪「§3.5 结构性消除签名」假设，按「不伪报PASS」纪律保持 open 并诊断 10-26 个案。Vercel failedTask JSON 因 1h 留存已不可取。详见 docs/m8-10-失败签名监控小结-2026-10-27.md §9。\n[2026-10-27 立项] close-gate FAILED 裁定已确认（飞书权威通道 10-26 复发 Job 9dba318b）。监控结论：§3.5 必要但不充分（CRC/语义级损坏盲区）。根因诊断见 docs/m8-10-失败签名监控小结-2026-10-27.md §9.4-§9.6。派生 remediation 已立项：M8-12（扩展 §3.5 校验）/ M8-13（损坏卡改判灰）/ M8-14（重试对永久损坏短路）。M8-10 保持 doing，待 M8-12/13/14 交付后复查签名走向。"
         },
         {
           "id": "M8-11",
@@ -1344,6 +1344,45 @@
           "tier": "SUPP",
           "status": "done",
           "statusNote": "2026-10-20 07:30 建卡（用户拍板「单独立项处理」）。动机：门禁长期红会训练人忽略输出（用户级纪律：门禁噪声=不存在），且 M2-8 状态变更类操作失去「零新增失败」的可信基线。P1 定级依据：不影响线上功能，但破坏数据纪律门禁的可信度。｜2026-10-25 完成：npx jest tests/unit/board.test.ts → 56 passed/56 total（exit 0）。derive.ts 逻辑完好未改；13 处脱节全部是测试快照过时（board 已 12 模块/101 任务、M9-2/M7-3 改 weekly、M10-2 done、D2 改用 anchor、现有 1 个 blocked）。逐断言取证对照表 docs/board-test-remediation-2026-10-25.md。未改动 derive.ts 与其他任务数据。"
+        },
+        {
+          "id": "M8-12",
+          "action": "扩展 §3.5 本地校验：覆盖 CRC 校验 + EPUB 语义级损坏",
+          "detail": "当前 §3.5 (validateInputFile, conversion.ts:1142) 仅抓 deflate 级损坏（魔数/中央目录/container.xml 文件名/jszip 逐成员解压）。10-26 复发证明 jszip 通过但 CC import 仍拒绝——盲区为 CRC 不符 / EPUB 语义级损坏 / 256MB 深检上限。扩展：① zip 成员 CRC32 校验；② OPF/NCX 引用完整性；③ 大文件深检上限可配置。目标：把更多\"CC-import 级损坏\"拦在本地，减少无效 CC job 与用户侧红卡。",
+          "owner": "A",
+          "deliverable": "src/lib/conversion.ts (validateInputFile) + 单测",
+          "accept": "单测含 1 例 CRC 损坏 EPUB + 1 例 OPF 引用缺失 EPUB，均被本地拦截返回 CORRUPT_INPUT、不再到达 CloudConvert；tsc+eslint+既有门禁全过",
+          "due": "2026-11-03",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "派生自 M8-10（10-26 Job 9dba318b 双引擎 Input task has failed，§3.5 放行后到 CC 才被拒）"
+        },
+        {
+          "id": "M8-13",
+          "action": "损坏输入（CORRUPT_INPUT）告警由红卡改判灰卡（用户侧）",
+          "detail": "当前 classifyAlertSeverity 把转换失败一律按系统故障红卡（10-26 卡 Severity=System-side fault — investigate now）。但 §3.5 已拦截的损坏输入属用户侧问题，红卡会稀释真正系统故障（CC 402/超时）。参考 M8-8 已建立的\"系统故障红卡 / 用户输入错误灰卡\"框架，把 CORRUPT_INPUT 显式路由到灰卡。",
+          "owner": "A",
+          "deliverable": "src/lib/alerts.ts (classifyAlertSeverity)",
+          "accept": "注入 CORRUPT_INPUT 案例，告警卡 Severity=用户输入错误(灰) 且不含\"investigate now\"；注入真正系统故障仍红卡；含单测",
+          "due": "2026-11-03",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "派生自 M8-10 次级发现：损坏卡被误判为系统故障"
+        },
+        {
+          "id": "M8-14",
+          "action": "重试分类器对永久性损坏（CORRUPT_INPUT）短路，不白烧第 2 个 CC job",
+          "detail": "cloudconvert.ts:400-446 重试逻辑把\"2 attempts\"都烧 CC job；10-26 卡显示 \"after 2 attempt(s)\" 且双引擎均 Input task has failed——永久损坏重试无意义，只多烧 1 个免费额度（Hobby 仅 10 credits/天，结构性紧张）。参考同文件 DRM 短路（cloudconvert.ts:424 附近）模式，对 CORRUPT_INPUT 直接 fail-open 不重试。",
+          "owner": "A",
+          "deliverable": "src/lib/cloudconvert.ts (retry classifier)",
+          "accept": "注入 CORRUPT_INPUT 错误，断言仅 1 次 CC 调用（无重试）且最终返回用户侧错误；既有瞬态错误（5xx/超时）仍按原策略重试；含单测",
+          "due": "2026-11-03",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "派生自 M8-10 次级发现：重试白烧 CC 额度"
         }
       ]
     },
