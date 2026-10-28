@@ -34,6 +34,16 @@ import {
 
 export const maxDuration = 15;
 
+// 2026-10-28: this GET is a CAPABILITY PROBE and must never be cached. It was
+// getting statically prerendered at build time, so the deployed answer froze at
+// whatever isR2Configured() saw during the build — after a deploy, the CDN kept
+// serving a stale enabled:false for minutes (X-Vercel-Cache: STALE, Date frozen
+// at build end), making the client hide the 100MB path even when the new code
+// and runtime env were correct. force-dynamic + no-store make every probe a
+// live evaluation against runtime env.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   // Capability probe. Returns enabled:false rather than an error so the client
   // can decide to fall back to multipart without treating it as a failure.
@@ -46,7 +56,10 @@ export async function GET() {
   const maxBytes = enabled ? MAX_UPLOAD_FILE_SIZE_BYTES : MAX_FILE_SIZE_BYTES;
   const maxMB = enabled ? MAX_UPLOAD_FILE_SIZE_MB : MAX_FILE_SIZE_MB;
 
-  return NextResponse.json({ enabled, maxBytes, maxMB });
+  return NextResponse.json(
+    { enabled, maxBytes, maxMB },
+    { headers: { "Cache-Control": "no-store" } },
+  );
 }
 
 export async function POST(request: NextRequest) {
