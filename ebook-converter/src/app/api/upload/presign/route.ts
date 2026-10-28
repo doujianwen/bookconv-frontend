@@ -56,8 +56,22 @@ export async function GET() {
   const maxBytes = enabled ? MAX_UPLOAD_FILE_SIZE_BYTES : MAX_FILE_SIZE_BYTES;
   const maxMB = enabled ? MAX_UPLOAD_FILE_SIZE_MB : MAX_FILE_SIZE_MB;
 
+  // Per-var presence booleans — diagnostic only, no values exposed. Rationale:
+  // when enabled=false we must distinguish "env vars never reach runtime" from
+  // "deliberately unset". This caught a real production incident (2026-10-28):
+  // the three R2 vars existed on the Vercel env page but did not arrive in the
+  // function runtime, silently disabling R2 direct upload AND the A1 cache
+  // (conversion-cache returns null silently when !isR2Configured — fail-open
+  // means zero logs). Booleans let the deploy page tell us which var is lost.
+  const diagnostics = {
+    r2Endpoint: !!process.env.R2_ENDPOINT,
+    r2AccessKeyId: !!process.env.R2_ACCESS_KEY_ID,
+    r2SecretAccessKey: !!process.env.R2_SECRET_ACCESS_KEY,
+    backendConfigured: !!process.env.CONVERSION_BACKEND_URL,
+  };
+
   return NextResponse.json(
-    { enabled, maxBytes, maxMB },
+    { enabled, maxBytes, maxMB, diagnostics },
     { headers: { "Cache-Control": "no-store" } },
   );
 }
