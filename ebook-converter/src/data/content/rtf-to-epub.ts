@@ -55,7 +55,7 @@ EPUB is supported by Apple Books, Kobo, Nook, Google Play Books, PocketBook, and
 
 **3. Download and read.** The output is a standards-compliant EPUB 3 file that works in any reader.
 
-Most documents finish in ten to thirty seconds. Long manuscripts with many images take longer while the hex-encoded pictures are decoded and re-compressed. Pro accounts add batch conversion for archives of documents.`
+Most documents finish in ten to thirty seconds. Long manuscripts with many images take longer while the hex-encoded pictures are decoded and re-compressed. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When Rescuing an RTF Archive',
@@ -133,7 +133,7 @@ The converter reads RTF control words, extracts images, and builds a standards-c
     { q: 'Will my formatting survive the conversion?', a: 'Basic formatting — bold, italic, underline, headings, lists, tables — comes through intact. Page-specific things like headers, footers, and manual page breaks are dropped, because reflowable ebooks have no fixed pages.' },
     { q: 'Do embedded images make it into the EPUB?', a: 'Yes. Images stored inside the RTF are decoded and repackaged as EPUB resources. They move into the text flow rather than keeping exact page positions.' },
     { q: 'Why is my RTF file so large compared to the finished EPUB?', a: 'RTF stores images as hex-encoded text, which roughly doubles their size. EPUB uses ZIP compression and native image formats, so the ebook is often significantly smaller than the source.' },
-    { q: 'Is there a file size limit?', a: 'Free accounts handle files up to 4MB, which is plenty for text-heavy documents. Image-heavy RTFs can exceed that because of the hex encoding — Pro accounts raise the limit and add batch conversion.' },
+    { q: 'Is there a file size limit?', a: 'Single-file direct uploads support up to 100 MB when enabled; batch and fallback uploads are limited to 4 MB per file. Image-heavy RTFs can exceed that because of the hex encoding — Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.' },
     { q: 'Will my document look identical after conversion?', a: 'Structurally yes — headings, lists, tables, and images all come through. Visually it adopts your reader app typography instead of the RTF page layout, which is expected for a reflowable ebook.' }
   ]
 ,

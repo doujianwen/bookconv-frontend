@@ -183,6 +183,13 @@ export async function middleware(request: NextRequest) {
     return applySecurityHeaders(request, new NextResponse(null, { status: 404 }));
   }
 
+  // Public reproducibility fixtures are files, not localized app pages.
+  // EPUB is not in the legacy extension exclusion; rewriting these downloads
+  // to /en/data/... would return a rendered 404 instead of the original bytes.
+  if (pathname.startsWith('/data/conversion-samples/')) {
+    return applySecurityHeaders(request, NextResponse.next());
+  }
+
   // Case 2: path has NO locale prefix
   // Root "/" → serve the English homepage through the [locale] route so it
   // inherits the homepage hreflang from [locale]/layout.tsx (the browser URL

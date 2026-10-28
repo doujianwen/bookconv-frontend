@@ -69,7 +69,7 @@ HTML has also outlived a dozen "next big thing" document formats. Pages written 
 
 **3. Download the ZIP.** Inside you get index.html, one HTML file per chapter, and an images/ directory.
 
-Most novels finish in ten to twenty seconds. A heavily illustrated art book or a 900-page technical manual might take a minute. If you have a whole shelf to move, Pro accounts add batch queueing and larger file limits.`
+Most novels finish in ten to twenty seconds. A heavily illustrated art book or a 900-page technical manual might take a minute. If you have a whole shelf to move, Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When Publishing Chapters to the Web',

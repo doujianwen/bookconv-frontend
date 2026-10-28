@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const aboutFaqs = [
-  { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. We offer a Pro plan for power users who need batch processing and higher file size limits, but individual conversions are always free with no registration required." },
+  { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service. Personal conversions require no registration." },
   { q: 'How long are my files stored?', a: 'Uploaded files are deleted as soon as the conversion completes. We never store your content longer than necessary to complete the conversion and provide you with the download link.' },
   { q: 'Do you sell my data?', a: "Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion. Your privacy is our priority — that's why we don't even require account creation." },
   { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },

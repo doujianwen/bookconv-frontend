@@ -1,0 +1,15 @@
+Chapter 1
+BC-P01: Mara opened the blue notebook beside the window. The first chapter begins here.
+BC-P02: This is a separate paragraph. A plain-text export should keep a visible boundary before it.
+
+---
+
+Chapter 2
+BC-P03: In the second chapter, the café served tea while a naïve visitor read a résumé.
+BC-P04: The line contains an em dash — and Greek letters Ω and α. These characters are part of the original text.
+
+---
+
+Chapter 3
+BC-P05: The final chapter begins only after the second chapter has ended. Its position is defined by the EPUB reading order.
+BC-P06: This short original sample ends here. It is test material, not a performance claim about other books.

@@ -103,7 +103,7 @@ Drag and drop your .epub file into the upload area, or click to browse your comp
 Our pure JavaScript engine begins extracting text instantly. Unlike server-based converters that queue your file, this conversion happens locally in your browser. Most novels complete in under 10 seconds, while longer books with many chapters may take 20-30 seconds. You'll see a progress indicator showing the extraction status in real time.
 
 **Step 3 — Download Your TXT File**
-Click the Download button to save your plain text file. The converter automatically formats the output with chapter breaks, paragraph separation, and metadata headers. Your file will include the book title, author name, and table of contents as a comment section at the beginning. Converted files are deleted from our servers after the conversion completes for privacy protection.`
+Click the Download button to save your plain text file. In two original samples tested on October 28, 2026, the output kept the text and spine order, used one line break between adjacent paragraphs and separators between chapters. It did not add a title/author/TOC comment header. Review your own result; see the [sample check](/guide/epub-to-txt-extract) and [privacy policy](/privacy).`
     },
     {
       heading: 'EPUB vs TXT: Format Comparison',
@@ -141,12 +141,12 @@ Click the Download button to save your plain text file. The converter automatica
 
 | Check Item | Expected Result | How to Verify |
 |-----------|----------------|---------------|
-| **Paragraph structure** | Clear separation between paragraphs | Open file and check for blank lines between paragraphs |
+| **Paragraph structure** | Clear separation between paragraphs | Check paragraph boundaries; the tested output uses a single line break |
 | **Chapter breaks** | Visible chapter markers or headings | Scroll through and confirm each chapter starts clearly |
 | **Encoding** | UTF-8 supporting multilingual content | Check for proper display of special characters and symbols |
-| **Metadata header** | Title, author, and TOC at beginning | First 20 lines should contain book information as comments |
+| **Metadata header** | Not added by the tested path | Keep required title and author information separately |
 | **Special characters** | Properly encoded Unicode | Verify accents, symbols, and non-Latin scripts display correctly |
-| **File size** | Reasonable compression ratio | Compare with original EPUB (TXT should be 30-50% of original) |
+| **File size** | Reasonable compression ratio | Compare with original EPUB (ratio depends on images, fonts and source structure) |
 
 **Known Limitations:**
 - Images and illustrations cannot be preserved in plain text format
@@ -233,11 +233,11 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
   ],
 
   faq: [
-    { q: 'Will paragraph and chapter structure be preserved?', a: 'Yes. Although all HTML tags are removed, paragraph separation is maintained through blank lines, and chapter structure is preserved using clear chapter markers and headings. Each chapter typically starts with a clear separator line.' },
+    { q: 'Will paragraph and chapter structure be preserved?', a: 'The two samples on our guide kept spine order and original text. Adjacent paragraphs used single line breaks, not blank lines. Check your own EPUB; these small tests do not guarantee every book.' },
     { q: 'How are images and charts handled?', a: 'Pure text format cannot contain images. If the original EPUB contains images, we attempt to extract alt text descriptions and insert them as notes in the text where possible. However, visual content is not preserved in the final TXT file.' },
     { q: 'Can the converted text be used directly for AI analysis?', a: 'Absolutely. The output text has removed all formatting markers and extra whitespace. It is standard plain text that can be directly fed to any NLP tool, AI summarizer, or text analysis platform without additional preprocessing.' },
     { q: 'What encoding does the output TXT use?', a: 'Default is UTF-8 supporting Chinese, English, Japanese, Korean, Russian, and other multilingual content. Other encodings (GBK, BIG5) can be specified during conversion if needed for legacy system compatibility.' },
-    { q: 'How do I batch convert multiple EPUB files?', a: 'Free users convert one file at a time. Batch conversion is a Pro feature and takes up to 20 files in one upload for local formats like EPUB to TXT; every file is capped at 100 MB on all plans.' },
+    { q: 'How do I batch convert multiple EPUB files?', a: 'Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.' },
     { q: 'Does conversion preserve the table of contents?', a: 'Yes. The TOC is added as a comment section at the beginning of the TXT file, listing all chapters and page references for easy navigation in text editors. This preserves the structural hierarchy of your book.' },
     { q: 'Can I convert EPUB to TXT on mobile devices?', a: 'Yes. Our converter runs entirely in your browser using pure JavaScript, so it works on iOS, Android, and any device with a modern web browser. No app installation required.' },
     { q: 'Is there a file size limit for EPUB files?', a: 'Free users can convert EPUB files up to 100 MB. For larger files, consider splitting your book into smaller chapters or converting chapter by chapter.' }
@@ -247,8 +247,7 @@ Teachers can extract text for worksheets, quizzes, or reading comprehension exer
   authorship: {
     author: 'BookConv Team',
     lastVerified: '2026-09-05',
-    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
-    estimatedConversions: '10,000+ monthly'
+    credentials: 'Two original production API sample checks on 2026-10-28; scope and outputs linked in the extraction guide',
   }
 };
 
@@ -407,11 +406,11 @@ Si tu fuente es una biblioteca de Kindle en lugar de EPUB, la misma extracción 
       }
     ],
     faq: [
-      { q: '¿Se preservará la estructura de párrafos y capítulos?', a: 'Sí. Aunque se eliminan todas las etiquetas HTML, la separación de párrafos se mantiene mediante líneas en blanco, y la estructura de capítulos se preserva usando marcadores y encabezados de capítulo claros.' },
+      { q: '¿Se preservará la estructura de párrafos y capítulos?', a: 'En dos muestras pequeñas se conservaron el orden de lectura y el texto. Los párrafos contiguos usan un salto de línea, no una línea en blanco. Revisa tu propio EPUB; estas pruebas no garantizan todos los libros.' },
       { q: '¿Cómo se manejan las imágenes y gráficos?', a: 'El formato de texto puro no puede contener imágenes. Si el EPUB original contiene imágenes, intentamos extraer las descripciones de texto alternativo (alt) e insertarlas como notas en el texto cuando es posible.' },
       { q: '¿Se puede usar el texto convertido directamente para análisis de IA?', a: 'Absolutamente. El texto de salida ha eliminado todos los marcadores de formato y el espacio en blanco extra. Es texto plano estándar que se puede alimentar directamente a cualquier herramienta NLP, resumidor de IA o plataforma de análisis de texto.' },
       { q: '¿Qué codificación usa el TXT de salida?', a: 'Por defecto es UTF-8, compatible con contenido multilingüe en chino, inglés, japonés, coreano, ruso y otros. Otras codificaciones (GBK, BIG5) se pueden especificar durante la conversión si es necesario.' },
-      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'Los usuarios gratuitos convierten de uno en uno. La conversión por lotes es una función Pro y admite hasta 20 archivos en una sola subida para formatos locales como EPUB a TXT; cada archivo está limitado a 100 MB.' },
+      { q: '¿Cómo convierto por lotes varios archivos EPUB?', a: 'La conversión por lotes es gratuita durante la beta pública; está prevista para Pro después de la beta. Cada archivo del lote admite hasta 4 MB: hasta 20 archivos EPUB a ZIP/TXT o actualmente 3 con el servicio externo.' },
       { q: '¿Conserva la conversión la tabla de contenidos?', a: 'Sí. La TOC se añade como una sección de comentarios al inicio del archivo TXT, listando todos los capítulos y referencias de página para una navegación fácil en editores de texto.' }
     ]
   }

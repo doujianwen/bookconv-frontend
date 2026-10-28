@@ -32,10 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const COMPARISON_FEATURES = [
-  { feature: "Cost", bookconv: "Free (Pro plan for batch)", calibre: "Free (open source)", winner: "tie" },
+  { feature: "Cost", bookconv: "Free (batch free during public beta)", calibre: "Free (open source)", winner: "tie" },
   { feature: "Setup Required", bookconv: "None - works in browser", calibre: "Download & install", winner: "bookconv" },
-  { feature: "Privacy", bookconv: "Files auto-deleted in 1h", calibre: "Files stay on device", winner: "tie" },
-  { feature: "Batch Conversion", bookconv: "Up to 20 files (Pro)", calibre: "Unlimited (free)", winner: "calibre" },
+  { feature: "Privacy", bookconv: "Server processing; see privacy policy", calibre: "Files stay on device", winner: "tie" },
+  { feature: "Batch Conversion", bookconv: "Free during beta: 20 local-format files / 3 metered files; 4 MB each", calibre: "Unlimited (free)", winner: "calibre" },
   { feature: "Format Support", bookconv: "28+ formats", calibre: "100+ formats", winner: "calibre" },
   { feature: "Device Compatibility", bookconv: "Any device with browser", calibre: "Windows/Mac/Linux only", winner: "bookconv" },
   { feature: "Advanced Editing", bookconv: "No - conversion only", calibre: "Full eBook editor", winner: "calibre" },
@@ -48,7 +48,7 @@ const COMPARISON_FEATURES = [
 const FAQ_ITEMS = [
   {
     q: "Is BookConv free to use?",
-    a: "Yes! BookConv is completely free for personal use. We offer a Pro plan for batch processing and higher file size limits.",
+    a: "Yes! BookConv is completely free for personal use. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.",
   },
   {
     q: "Can I use BookConv on my phone?",

@@ -584,7 +584,7 @@ La compresión MOBI es más agresiva que EPUB, haciéndolo ideal para:
 | **Eliminación automática** | ✅ 1 hora | ⚠️ Varía | ❌ 24 horas | ❌ 2 horas |
 | **Motor Calibre** | ✅ Sí | ⚠️ Propietario | ⚠️ Propietario | ⚠️ Propietario |
 | **Límite de tamaño (gratis)** | ✅ 100MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
-| **Conversión por lotes** | ✅ Plan Pro | ✅ Pagado | ✅ Pagado | ✅ Pagado |
+| **Conversión por lotes** | ✅ Gratis durante la beta (4 MB/archivo) | ✅ Pagado | ✅ Pagado | ✅ Pagado |
 | **Backend open source** | ✅ Calibre | ❌ Cerrado | ❌ Cerrado | ❌ Cerrado |
 
 **Ventaja clave:** BookConv usa el mismo motor Calibre que la aplicación de escritorio, garantizando salida de alta calidad. Combinado con nuestro enfoque privacy-first (eliminación automática después de 1 hora), es la mejor opción para conversión personal de ebooks.

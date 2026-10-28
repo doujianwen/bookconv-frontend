@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Zap, Lock } from "lucide-react";
+import { Zap } from "lucide-react";
 import { getLocale } from "@/i18n/utils";
 import { BatchUpload } from "@/components/tools/BatchUpload";
-import { getSession } from "@/lib/auth/session";
-import { getPlanByEmail } from "@/lib/subscription";
-import { getPlanById } from "@/lib/payments/service";
 import { clampMetaDescription } from "@/lib/seo/meta-description";
-import UpgradeButton from "@/components/pricing/UpgradeButton";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const prefix = locale === "es" ? "/es" : "";
   const title = "Batch Ebook Converter — Convert Multiple Files at Once";
   const description =
-    clampMetaDescription("Convert several ebooks to one format in a single batch on BookConv — a Pro feature. Upload your files, get a ZIP of converted ebooks, no software install.");
+    clampMetaDescription("Convert several ebooks to one format in a single batch on BookConv — free during public beta. Upload your files, get a ZIP of converted ebooks, no software install.");
   return {
     title,
     description,
@@ -38,7 +34,7 @@ const FAQ = [
   },
   {
     q: "Is batch conversion free?",
-    a: "Batch conversion is included with the Pro plan; the free plan is limited to single-file conversions.",
+    a: "Batch conversion is free during public beta, with no Pro subscription required. It is planned for Pro after beta; check this page for current availability.",
   },
   {
     q: "Which formats can I convert in a batch?",
@@ -50,7 +46,7 @@ const FAQ = [
   },
   {
     q: "What is the maximum file size per file?",
-    a: "Each file in a batch can be up to 100 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
+    a: "Each file in a batch can be up to 4 MB. EPUB to ZIP and EPUB to TXT accept up to 20 files; conversions using the third-party service currently accept up to 3 files. The single-file direct uploader has a separate limit.",
   },
   {
     q: "What if one file in my batch fails?",
@@ -58,7 +54,7 @@ const FAQ = [
   },
   {
     q: "Why did my batch upload timeout?",
-    a: "Uploads may time out if you have many large files or a slow connection. Try uploading fewer files at once, or compress your EPUBs before batching. The free tier also limits concurrent uploads.",
+    a: "Uploads may time out if you have many large files or a slow connection. Try uploading fewer files at once, or compress your EPUBs before batching. Batch limits apply during beta regardless of subscription.",
   },
   {
     q: "Can I mix different source formats in one batch?",
@@ -74,13 +70,6 @@ export default async function BatchPage() {
   const locale = await getLocale();
   const prefix = locale === "es" ? "/es" : "";
 
-  // Gate: batch conversion is a Pro feature. Resolve the plan from the session
-  // email so anonymous / free users see an upgrade prompt instead of the uploader.
-  const session = await getSession();
-  const plan = await getPlanByEmail(session?.email ?? null);
-  const isPro = plan === "pro" || plan === "api";
-  const proPlan = getPlanById("pro");
-  const proHasVariant = !!proPlan?.lemonSqueezyVariantId;
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -105,55 +94,33 @@ export default async function BatchPage() {
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Batch Ebook Converter</h1>
         <p className="mt-4 text-lg text-gray-600">
-          Convert several ebooks to one format and download them as a single ZIP — a Pro feature.
+          Convert several ebooks to one format and download them as a single ZIP — free during public beta.
         </p>
         <p className="mt-3 text-base text-gray-500">
-          Personal single-file conversion stays free for personal use with a 100 MB per-file limit; batch mode is included with the Pro plan.
+          Batch mode is free during public beta. Each batch file is limited to 4 MB; the single-file direct uploader supports up to 100 MB when enabled.
         </p>
       </div>
 
-      {/* Pro feature banner */}
+      {/* Public beta banner */}
       <div className="mb-8 flex flex-col items-start gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <Zap className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
           <p className="text-sm text-blue-900">
-            Batch conversion is a <span className="font-semibold">Pro feature</span>. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch. Everything runs in your browser and downloads as one ZIP.
+            Batch conversion is <span className="font-semibold">free during public beta</span>, with Pro planned after beta. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch. Files are converted through our API and the results are packaged in your browser as one ZIP. Each batch file is limited to 4 MB.
           </p>
         </div>
         <Link
           href={prefix + "/pricing"}
           className="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
         >
-          See plan limits
+          See plans
         </Link>
       </div>
 
-      {/* Converter — Pro only */}
-      {isPro ? (
-        <div className="rounded-2xl border border-gray-200 bg-white p-6">
-          <BatchUpload />
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
-            <Lock className="h-6 w-6 text-blue-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900">Batch conversion is a Pro feature</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-gray-600">
-            Upgrade to Pro to convert many ebooks at once and download them as a single ZIP. The free plan covers single-file conversions.
-          </p>
-          <div className="mx-auto mt-6 max-w-xs">
-            <UpgradeButton
-              planId="pro"
-              hasVariantId={proHasVariant}
-              label={proHasVariant ? "Upgrade to Pro" : "Pro coming soon"}
-            />
-          </div>
-          <p className="mt-4 text-xs text-gray-500">
-            Already a member? <Link href={prefix + "/auth"} className="text-blue-600 hover:underline">Sign in</Link> to continue.
-          </p>
-        </div>
-      )}
+      {/* Public beta is available without a paid subscription. */}
+      <div className="rounded-2xl border border-gray-200 bg-white p-6">
+        <BatchUpload />
+      </div>
 
       {/* FAQ */}
       <section className="mt-16">

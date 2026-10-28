@@ -6,7 +6,7 @@ export const author = `BookConv Team`;
 export const tags = [`Large File`, `Troubleshooting`, `BookConv`, `Ebook`, `Pro`];
 
 export const content = {
-  intro: `The free tier accepts files up to 100 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink or split them so they fit, and what Pro actually adds when you are converting in volume.`,
+  intro: `The free tier accepts files up to 100 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink or split them so they fit, and how the single-file and batch upload paths differ.`,
   sections: [
     {
       heading: `Why Your Ebook Is Over 4 MB`,
@@ -18,22 +18,22 @@ export const content = {
     },
     {
       heading: `Free Method: Split the Book Into Parts`,
-      body: `If you can't shrink the file enough, splitting it across multiple conversions is often faster than waiting for Pro.\n\n**Split by chapters.** Most reading apps can combine multiple EPUB files into a single library view. Upload each part separately, then merge the outputs in your reader.\n\n**Use Calibre to split.** If you have Calibre installed, it can split a large book by chapter markers automatically. The free desktop tool handles files of any size.\n\n**Export as plain text.** For AI prep (NotebookLM, ChatGPT), extracting just the text via EPUB → TXT gives you a small, manageable file with no images or formatting.`
+      body: `If you can't shrink the file enough, use a local tool or split an authorized source into smaller parts.\n\n**Split by chapters.** Most reading apps can combine multiple EPUB files into a single library view. Upload each part separately, then merge the outputs in your reader.\n\n**Use Calibre to split.** If you have Calibre installed, it can split a large book by chapter markers automatically. The free desktop tool handles files of any size.\n\n**Export as plain text.** For AI prep (NotebookLM, ChatGPT), extracting just the text via EPUB → TXT gives you a small, manageable file with no images or formatting.`
     },
     {
-      heading: `When to Upgrade to Pro`,
-      body: `Pro does not raise the file size cap — 100 MB applies to every plan, Pro included. What Pro adds is batch conversion: several files in one upload instead of one at a time. Consider upgrading if:\n\n**You convert large files regularly.** If compression and upload is a routine, batching it removes the repetitive part.\n\n**You need batch conversion.** Pro allows multiple files in one upload, which matters when processing entire libraries.\n\n**You're a publisher or author.** Managing several format outputs for one manuscript is faster with bulk uploads.\n\n**You convert the same book into several formats.** Batch upload handles the repetition in one pass.`
+      heading: `Choose the Correct Upload Path`,
+      body: `Single-file direct uploads support up to 100 MB when enabled; batch and fallback uploads are limited to 4 MB per file. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service. For large collections or private material, prefer a local tool. Batch converts each input to one selected target format; it does not create several output formats from one book.`
     },
     {
       heading: `Quick Decision Checklist`,
-      body: `- **Under 4 MB?** Upload directly. No action needed.\n- **4–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 100 MB.\n- **Converting many files?** Pro takes several in one upload rather than one at a time.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
+      body: `- **Under 4 MB?** Upload directly. No action needed.\n- **4–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 100 MB.\n- **Converting many files?** Batch is free during public beta, but each file is limited to 4 MB.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
     },
     {
       heading: `Key Takeaways`,
       body: `- **Files over 4 MB usually have one of four causes.** Embedded images, scanned PDFs (a 300-page book easily reaches 20-100 MB), multiple embedded font weights, and lossless full-page-image formats like CBZ/CBR.
 - **An EPUB is just a ZIP.** Rename it to .zip, compress the images folder, rename it back — the size drops immediately.
 - **Lowering the DPI of scanned PDFs is the highest-leverage fix.** Going from 300 DPI to 150 DPI cuts size by about 75% while text stays readable.
-- **The 100 MB cap is the same on every plan — Pro does not raise it.** What Pro adds is batch upload, not a bigger single-file allowance.
+- **The 100 MB cap is the same on every plan — Pro does not raise it.** Batch is currently free during public beta with 4 MB per file, independently of the single-file direct-upload cap.
 - **For truly huge books, split into parts.** Upload each part separately; most reading apps can merge multiple files into one library view.
 - **Plain text is almost always under 5 MB.** For NotebookLM- or ChatGPT-style tools, converting to TXT is far easier than feeding them an EPUB.`
     }
@@ -43,7 +43,7 @@ export const content = {
 export const faqs = [
   {
     question: `What's the file size limit on the free tier?`,
-    answer: `4 MB per conversion, on every plan including Pro.`
+    answer: `Single-file direct uploads support up to 100 MB when enabled; batch and fallback uploads are limited to 4 MB per file.`
   },
   {
     question: `How do I shrink an EPUB file before uploading?`,
@@ -59,7 +59,7 @@ export const faqs = [
   },
   {
     question: `Does Pro let me convert files faster?`,
-    answer: `No. Pro adds batch conversion — several files in one upload — but jobs are not prioritised by plan; every conversion goes through the same queue.`
+    answer: `No paid-plan speed benefit is enforced. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
   },
   {
     question: `Can I convert a scanned PDF to EPUB without losing quality?`,

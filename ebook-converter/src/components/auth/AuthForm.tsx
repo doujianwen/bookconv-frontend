@@ -46,7 +46,7 @@ const COPY: Record<string, Copy> = {
     signIn: 'Sign In',
     createAccount: 'Create Account',
     welcomeBack: 'Welcome back! Sign in to your account.',
-    joinBlurb: 'Join BookConv for batch conversion.',
+    joinBlurb: 'Join BookConv to manage your account. Batch conversion is free during public beta.',
     email: 'Email address',
     password: 'Password',
     passwordNew: 'New password',

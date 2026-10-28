@@ -74,7 +74,7 @@ If you want someone to read your writing like a book — on a commute, on an e-r
 
 **3. Download the EPUB.** Send it to your reader, email it to your Kindle, or drop it into Apple Books.
 
-Typical conversions finish in five to fifteen seconds. Image-heavy pages can take a minute or two while the linked assets are fetched and repackaged. Converting a set of pages? Pro accounts handle batches and larger uploads.`
+Typical conversions finish in five to fifteen seconds. Image-heavy pages can take a minute or two while the linked assets are fetched and repackaged. Converting a set of pages? Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When Reading Long Web Articles Offline',
@@ -144,7 +144,7 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     { q: 'Will images hosted on the web still show up?', a: 'Yes. Externally linked images are downloaded during conversion and packaged inside the EPUB, so your book keeps working offline even if the original site goes down.' },
     { q: 'What happens to buttons, forms, and JavaScript?', a: 'They do not survive as interactive elements. EPUB readers deliberately restrict scripting, so dynamic content is flattened into its static equivalent or removed.' },
     { q: 'How does the table of contents get built?', a: 'From your heading hierarchy. If your document uses real heading tags in a sensible order, you will get clean chapter navigation. Pages that fake headings with styled text will produce a flat, single-entry TOC.' },
-    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Free accounts accept files up to 4MB; Pro adds batch conversion and larger uploads for image-heavy documents.' },
+    { q: 'How long does conversion take, and is there a size limit?', a: 'Most pages finish in five to fifteen seconds. Single-file direct uploads support up to 100 MB when enabled; batch and fallback uploads are limited to 4 MB per file. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.' },
     { q: 'Should I keep my content as HTML or convert it to EPUB?', a: 'Keep HTML if the content only needs to render in a browser. Convert to EPUB when you want it read like a book — on a phone, an e-reader, or offline — because EPUB adds reflow, a real table of contents, and saved reading position that raw HTML pages lack.' },
     { q: 'Can you also convert EPUB back to HTML?', a: 'Yes. The [EPUB to HTML converter](/convert/epub-to-html) unpacks the book into standalone chapter pages with a linked stylesheet, rebuilds the table of contents as an index, and extracts images into a hostable folder.' }
   ]

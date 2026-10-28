@@ -52,7 +52,7 @@ It is deliberately modest. Microsoft stopped developing it in 2008, so RTF will 
 
 **3. Download and edit.** Open the .rtf in whatever word processor you actually use and start working.
 
-Most books convert in fifteen to forty seconds. Longer or image-heavy titles take a bit more. Pro accounts add batch conversion and larger uploads if you are moving a whole collection into editable form.`
+Most books convert in fifteen to forty seconds. Longer or image-heavy titles take a bit more. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When RTF Is the Right Choice',

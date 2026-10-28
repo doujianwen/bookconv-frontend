@@ -87,7 +87,7 @@ The reason is practical: LibreOffice has the most forgiving DOC parser available
 2. Wait while the pipeline runs
 3. Download the EPUB
 
-Most documents under 100 pages finish in ten to thirty seconds. Files with a lot of embedded images can take a minute or two. Pro accounts add batch conversion, which is the sensible route if you are digitizing an entire archive folder.`
+Most documents under 100 pages finish in ten to thirty seconds. Files with a lot of embedded images can take a minute or two. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When Digitizing a Word Archive',

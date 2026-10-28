@@ -60,7 +60,7 @@ The trade is honest and obvious: you keep every word and lose every visual detai
 
 **3. Download the .txt.** UTF-8 encoded, ready for any editor, script, or reader.
 
-Conversion is close to instant — usually under five seconds, because there is very little to compute once the tags are gone. Pro accounts add batch conversion, which is the sane way to process a whole folder of books at once.`
+Conversion is close to instant — usually under five seconds, because there is very little to compute once the tags are gone. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When Do You Need Plain Text?',

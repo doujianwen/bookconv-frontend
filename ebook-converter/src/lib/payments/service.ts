@@ -12,21 +12,10 @@ export interface PlanConfig {
   features: string[];
 }
 
-// NOTE ON PLAN FEATURES (2026-09-17):
-// These strings are the commercial offer -- they render on /pricing and are the
-// basis on which someone pays. Only list a benefit that the code actually
-// enforces. Verified against the implementation:
-//   file size    convert-handler.ts uses one flat NEXT_PUBLIC_MAX_FILE_SIZE_MB
-//                (default 4), with no plan branch and no user argument.
-//   rate limit   /api/convert hard-codes the convertApi strategy (20 req/60s
-//                per IP) for every plan alike.
-//   priority     ConversionJobData.priority is declared but never assigned, so
-//                no job is ever prioritised.
-//   batch        genuinely gated by plan on /batch -- the one real Pro benefit.
-// Removed on this date: 'Up to 50MB file size', 'Up to 100MB file size',
-// 'Unlimited conversions', '5 conversions per hour', 'Priority queue'.
-// Do not re-add them until the pipeline reads the plan (see docs/
-// seo-geo-execution-plan-2026-09-17.md, risk R7).
+// Offer baseline reviewed 2026-10-28: public-beta batch access is available
+// without a paid plan. Batch uses the 4 MB multipart path; single-file direct
+// upload supports 100 MB when enabled. Neither cap is a paid-plan benefit.
+// Do not promise priority, higher quotas or future exclusive access as live.
 export const PLANS: PlanConfig[] = [
   {
     id: 'free',
@@ -36,7 +25,8 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'one_time',
     features: [
-      'Up to 4MB file size',
+      'Single-file direct upload up to 100 MB when enabled',
+      'Batch conversion free during public beta (4 MB per file)',
       'All standard formats',
       'No watermark',
     ],
@@ -49,7 +39,7 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'month',
     features: [
-      'Batch conversion',
+      'Batch conversion (also free during public beta)',
       'All formats + special tools',
       'No watermark',
     ],
@@ -62,7 +52,7 @@ export const PLANS: PlanConfig[] = [
     currency: 'USD',
     interval: 'month',
     features: [
-      'Batch conversion',
+      'Batch conversion (also free during public beta)',
       'All formats + special tools',
       'No watermark',
       'Full API access',

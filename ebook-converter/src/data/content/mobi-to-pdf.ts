@@ -50,7 +50,7 @@ The trade-off is the mirror image of MOBI's: PDF gives up flexibility to gain pe
 
 **3. Download and use it.** Print it, mark it up, email it, or drop it into a reference manager.
 
-A 300-page novel typically finishes in thirty seconds to two minutes. Books with lots of illustrations take longer, because every image gets re-rendered at print resolution. Pro accounts add batch conversion and larger uploads for bigger jobs.`
+A 300-page novel typically finishes in thirty seconds to two minutes. Books with lots of illustrations take longer, because every image gets re-rendered at print resolution. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
     },
     {
       heading: 'When You Need to Print or Cite a MOBI',

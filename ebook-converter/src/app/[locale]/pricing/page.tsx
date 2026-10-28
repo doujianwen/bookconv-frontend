@@ -146,7 +146,7 @@ export default async function PricingPage() {
         </div>
         <p className="mt-6 text-sm text-gray-500 italic">{t('pricing.privacy.footer')}</p>
         <p className="mt-4 text-sm text-gray-600">
-          Personal single-file conversions are free for personal use with a 100 MB per-file limit; batch conversion is included with the Pro plan.
+          Personal single-file conversions are free for personal use with a 100 MB per-file limit; batch conversion is free during public beta (4 MB per file), with Pro planned after beta.
         </p>
       </section>
 
@@ -166,9 +166,9 @@ export default async function PricingPage() {
               {/* Only list what the code actually enforces -- see the note above
                   PLANS in src/lib/payments/service.ts. File size today is 100 MB
                   on every plan and the rate limiter is per-IP, so neither is a
-                  differentiator; batch conversion is the one real Pro benefit. */}
+                  differentiator. Batch is also free during public beta. */}
               <tr><td className="px-4 py-3">{t('pricing.maxFileSize')}</td><td className="px-4 py-3 text-center">100 MB</td><td className="px-4 py-3 text-center">100 MB</td></tr>
-              <tr><td className="px-4 py-3">{t('pricing.batchConversion')}</td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td><td className="px-4 py-3 text-center"><Check className="h-4 w-4 mx-auto text-green-500" /></td></tr>
+              <tr><td className="px-4 py-3">{t('pricing.batchConversion')}</td><td className="px-4 py-3 text-center"><span>Free during beta</span></td><td className="px-4 py-3 text-center"><Check className="h-4 w-4 mx-auto text-green-500" /></td></tr>
               <tr><td className="px-4 py-3">{t('pricing.apiAccess')}</td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td><td className="px-4 py-3 text-center"><X className="h-4 w-4 mx-auto text-gray-300" /></td></tr>
             </tbody>
           </table>

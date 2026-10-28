@@ -33,10 +33,9 @@
  *               hourly quota -> "5 conversions an hour" style claims are FALSE.
  *   priority    ConversionJobData.priority is declared in the type and assigned
  *               nowhere -> no such feature.
- *   batch       genuinely plan-gated (src/app/[locale]/batch/page.tsx:80,128)
- *               -> this one is REAL and must not be flagged. Claims that batch
- *               is free / "open beta" are FALSE (Pro feature, $5/mo since
- *               58bbfcc 2026-10-28).
+ *   batch       free during public beta by owner decision on 2026-10-28.
+ *               /batch renders the uploader without a Pro gate. Future Pro
+ *               inclusion is a roadmap statement, not a current requirement.
  *   OCR         the pipeline has no OCR engine (no Tesseract, no OCR API).
  *               Affirmative OCR-marketing claims are FALSE; "does not perform
  *               OCR" copy is honest and must pass.
@@ -61,6 +60,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { batchPolicyViolations } from './lib/batch-policy.mjs';
 
 const ROOT = process.cwd();
 const SCAN_DIRS = ['src/data/blog', 'src/data/content', 'src/data/guides'];
@@ -88,11 +88,6 @@ const CLAIM = new RegExp(
     'cinco conversiones por hora',
     'priority (?:queue|queueing|queueing|processing)',
     'cola prioritaria',
-    // batch was never free (Pro-gated); "open beta" free claims are false
-    'open beta',
-    'beta abierta',
-    'durante la beta',
-    'during the (?:open )?beta',
     // no OCR engine exists; only affirmative marketing forms are banned so the
     // honest "does not perform OCR" copy passes
     'automatic OCR',
@@ -125,9 +120,10 @@ function sentencesOf(line) {
 /** Violations inside one line, if any. */
 function lineHits(line, rel, lineNo, severity) {
   if (/^\s*(\/\/|\*)/.test(line)) return [];              // comment
-  if (COMPARISON_ROW.test(line)) return [];                // competitor table
-  if (!CLAIM.test(line)) return [];
-  const out = [];
+  const policyHits = batchPolicyViolations(line).map(text => ({ rel, line: lineNo, severity, text }));
+  if (COMPARISON_ROW.test(line)) return policyHits;          // competitor table
+  if (!CLAIM.test(line)) return policyHits;
+  const out = [...policyHits];
   for (const s of sentencesOf(line)) {
     if (!CLAIM.test(s)) continue;
     if (THIRD_PARTY.test(s)) continue;
@@ -161,7 +157,12 @@ function scan(dirs, severity) {
  * survives there even once every .ts file is clean -- and it did, for four days
  * after the content-layer sweep, because this gate only walked src/data/**.ts.
  */
-const EXTRA_FILES = ['public/llms.txt', 'messages/en.json', 'messages/es.json'];
+const EXTRA_FILES = [
+  'public/llms.txt', 'messages/en.json', 'messages/es.json',
+  'src/app/[locale]/batch/page.tsx', 'src/app/[locale]/pricing/page.tsx',
+  'src/app/[locale]/about/page.tsx', 'src/app/[locale]/compare/bookconv-vs-calibre/page.tsx',
+  'src/components/tools/FAQSection.tsx', 'src/lib/payments/service.ts',
+];
 
 function scanFiles(rels, severity) {
   const hits = [];
@@ -206,7 +207,7 @@ if (errors.length) {
   console.log('implement the feature first -- real limits: file size src/lib/convert-');
   console.log('handler.ts:192/207 (multipart 4MB, R2 direct upload 100MB), rate limit');
   console.log('src/lib/rate-limit.ts:49 (20 req/min per IP, no hourly quota), batch =');
-  console.log('Pro-gated (batch/page.tsx), no OCR engine anywhere. Do not "restore" them.');
+  console.log('free during public beta (batch/page.tsx); no built-in OCR engine.');
 }
 
 console.log(

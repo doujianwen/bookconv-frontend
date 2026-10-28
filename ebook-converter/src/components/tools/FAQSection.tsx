@@ -35,19 +35,19 @@ export function generateDefaultFAQs(source: string, target: string): FAQ[] {
   return [
     {
       question: `Is ${source.toUpperCase()} to ${target.toUpperCase()} conversion free?`,
-      answer: `Yes! Our ${source.toUpperCase()} to ${target.toUpperCase()} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 4 MB limit per file.`,
+      answer: `Yes! Our ${source.toUpperCase()} to ${target.toUpperCase()} converter is completely free to use. No registration required, no watermarks, no hidden fees. Personal conversions are free; the single-file direct uploader supports up to 100 MB when enabled, while batch and fallback uploads are limited to 4 MB per file.`,
     },
     {
       question: `Will I lose formatting when converting from ${source.toUpperCase()} to ${target.toUpperCase()}?`,
-      answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${source.toUpperCase()} and ${target.toUpperCase()} format capabilities. The result is optimized for readability on your target device.`,
+      answer: `The conversion path depends on the format pair. Formatting support depends on the output format; plain TXT cannot retain fonts, images or layout. However, some complex formatting may change slightly due to differences between ${source.toUpperCase()} and ${target.toUpperCase()} format capabilities. The result is optimized for readability on your target device.`,
     },
     {
       question: "What is the file size limit?",
-      answer: "Every plan accepts files up to 4 MB. Pro adds batch conversion, which lets you process several books in a single upload.",
+      answer: "Single-file direct uploads support up to 100 MB when enabled. Batch and fallback uploads accept up to 4 MB per file on every plan.",
     },
     {
       question: "Can I batch convert multiple files?",
-      answer: "Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.",
+      answer: "Batch conversion is free during public beta, with Pro planned after beta. Each file can be up to 4 MB: up to 20 files for EPUB to ZIP or TXT, and currently up to 3 files for conversions using the third-party service.",
     },
   ]
 }
