@@ -313,3 +313,15 @@
 **同批发现（P2，待办）**：`next.config.ts` 给 `/api/(.*)` 全段设 `Cache-Control: public, s-maxage=10, stale-while-revalidate=59`——API GET 响应被 CDN 缓存最长约 69s（能力探针 STALE 假象的帮凶；限流 429 等响应同样会被缓存）。建议收窄为按路由白名单（探针已用 no-store 自保）。登记不本次动。
 
 **修复已上线部分**（无需再动）：探针 force-dynamic + no-store（dd1386a）+ 逐变量诊断布尔（2441c95）；大文件守卫修复 + R2→后端转发（5e39c7b）。
+
+---
+
+## ✅ 2026-10-28 12:20 P2 收口 + PV-3/4/5 全部验证完成（commit cc9be5f）
+
+**P2-A 后端路径 upload 清理**：route.ts 后端成功分支补 `scheduleUploadCleanup`（导出自 convert-handler），新增 `tests/unit/convert-route-cleanup.test.ts` 3 用例（hit 清理/回退不重复清理/无 key 不调用）。**生产实证**：负载测试中 upload 对象在首次转换完成后即被删除（第二个请求 UPLOAD_NOT_FOUND 正是清理生效的副作用）。
+**P2-B API 缓存头收窄**：`/api/(.*)` 从 `public, s-maxage=10, swr=59` 改 `no-store`——无任何 GET API 受益，反而殃及 auth/me（跨用户会话风险）/health/429 响应。部署验证：`/api/health` Cache-Control 实测变 no-store。
+
+**PV-3 熔断+告警（全链路闭环，无需停服务）**：3× 畸形 EPUB→后端 500→计 3 败→熔断开闸（白名单格式+有效文件也跳过后端直达 CC）→**飞书告警实锤**（群「窦红建的智能体团队」11:54:23，`🚨 Conversion Backend Unavailable / backend returned HTTP 500`，消息 om_x100b612351cf10a8ce9308ff2868d8f）→冷却 65s→半开试探→`hit` 恢复。
+**PV-5 非白名单格式走 CC**：epub→jpg/doc（target 不在 CALIBRE_TARGETS）实测 `X-Conversion-Backend: miss-cloudconvert`，路由判定正确。**⚠️ 新发现待查**：这两个格式对 CC 任务本身 500（`CLOUD_CONVERT_ERROR`），而 epub→mobi 经 CC 正常（200）⇒ 非 CC 通道故障、非额度问题（A2 预算闸门未触发），疑似 CC 侧不支持 doc 输出或 jpg 任务链配置问题。**这两个格式有 SEO 落地页，若线上一直如此则是存量问题**——待查 CC job 配置与历史成功率后拍板修复方案。
+**PV-4 转换负载下 GEO 站隔离**：基线（check-host 4 节点）0.92–1.56s 全 200；真实负载窗口（10.9MB EPUB→PDF 74.8s Calibre 转换运行中）两次探测 8 节点全 200，7/8 在 0.93–2.78s 正常带，1 节点（at1）11s 离群——单样本+节点各异，归因 UNKNOWN（需同节点重复采样才能判定是负载还是节点路径）。六层隔离（CPU 70% 限额）初步成立。
+**本机测量教训**：本机所有出口（curl/node/Chrome 经代理）对 43.129.176.38:443 TLS 握手被掐（TCP 通、ClientHello 被断）——境内访问腾讯 HK IP 的 SNI 干扰；裸域 tuozhigeo.com 无 A 记录（站点在 www）。外部探测用 check-host.net（http check 偶发全节点 "No such device" 瞬时故障，重试即可）。
