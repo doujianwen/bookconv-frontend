@@ -17,7 +17,7 @@ import {
   getRateLimitHeaders,
   RATE_LIMIT_STRATEGIES,
 } from "@/lib/rate-limit";
-import { convertAndStream } from "@/lib/convert-handler";
+import { convertAndStream, scheduleUploadCleanup } from "@/lib/convert-handler";
 import { normalizeFormat } from "@/lib/conversion-map";
 import { downloadFromR2 } from "@/lib/storage/r2";
 import { fileNameFromUploadKey } from "@/lib/upload-presign";
@@ -92,7 +92,11 @@ export async function POST(request: NextRequest) {
       if (canDelegate) {
         const backendResp = await delegateToBackend(formData, rateHeaders, { prebuiltFile });
         if (backendResp) {
-          // Backend succeeded (200 + file bytes). Returned as-is.
+          // Backend succeeded (200 + file bytes). Returned as-is. The R2 upload
+          // object is no longer needed on the happy path (the client only reuses
+          // the key across retries of a FAILED conversion), so schedule the same
+          // best-effort cleanup the CloudConvert path performs.
+          scheduleUploadCleanup(uploadKey);
           return backendResp;
         }
         // Backend down / unsupported / timeout -> fall through to CloudConvert below.

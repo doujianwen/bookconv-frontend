@@ -48,7 +48,7 @@ export interface ConvertOptions {
  * would break the retry. Orphans on error paths are swept by an R2 lifecycle
  * rule on the `uploads/` prefix (see docs/DIRECT_UPLOAD.md).
  */
-function scheduleUploadCleanup(uploadKey?: string): void {
+export function scheduleUploadCleanup(uploadKey?: string): void {
   if (!uploadKey) return;
   after(async () => {
     try {

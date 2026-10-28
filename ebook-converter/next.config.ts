@@ -68,7 +68,12 @@ const config: NextConfig = {
           { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization, Idempotency-Key, X-Request-ID" },
           { key: "Access-Control-Max-Age", value: "86400" },
-          { key: "Cache-Control", value: "public, s-maxage=10, stale-while-revalidate=59" },
+          // 2026-10-28 收窄：原 "public, s-maxage=10, stale-while-revalidate=59"
+          // 会把 GET API 缓存进 CDN 最长约 69s——auth/me（跨用户会话风险）、
+          // health（监控假象）、rate-limit 429 响应都被殃及。全部 API 路由均为
+          // 动态数据，无一受益；路由内自设的 Cache-Control（如 presign 探针
+          // no-store）优先级更高，不受影响。
+          { key: "Cache-Control", value: "no-store" },
         ]},
       { source: "/blog/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }] },
       { source: "/convert/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=300, stale-while-revalidate=3600" }] },

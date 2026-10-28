@@ -276,3 +276,40 @@
 - **部署动作**：随下次发布生效（无需新 env）；**建议同时加 Vercel env `CONVERSION_BACKEND_TIMEOUT_MS=240000`**（默认 90s 会掐断 60–120s 的大 PDF 后端转换，白白回退 CC）。
 - **遗留**：50–100MB 段仍走 CC（后端 cap 50MB）；全量接管需实测 tmpfs（1G）对 100MB 输入解压峰值后再提 nginx/MAX_FILE_BYTES。
 - **验证项 PV-7**（新增）：发布后用 >4.5MB 的 EPUB 走 Preview 转换 → 期望 `X-Conversion-Backend: hit`（或 >50MB 时 `miss-cloudconvert` 且 200，不再 413）。
+
+---
+
+## 🔴 2026-10-28 P0 用户动作：R2 三变量运行时缺失（大文件与 A1 缓存从未真正工作）
+
+**铁证**（探针逐变量布尔，2441c95 部署后实测）：`r2Endpoint:false / r2AccessKeyId:false / r2SecretAccessKey:false`，而 `backendConfigured:true`——env 页三行俱在（Production and Preview, Jul 25）但**值未注入运行时**（大概率键在值空；本地 .env.production 三键亦全空）。因 A1 缓存/直传全链路 fail-open 静默（`conversion-cache.ts:186` 直接 return null），**10-25 上线起 R2 链路就是静默空转、零告警**——红队审计 v2「R2 主链路未接线须先确认」的警告成真；10-25「已配置⇒可运行」是从 env 页推断、未实测运行时，此推断已被推翻。
+
+**用户动作**（Cloudflare 凭据我拿不到）：
+1. Cloudflare 控制台 R2 → Manage API Tokens，取/重建 Access Key ID + Secret；
+2. Vercel → ebook-converter-ymfg → Settings → Environment Variables，编辑 R2_ENDPOINT / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY 三行，**确认值非空**（R2_ENDPOINT 形如 `https://<account>.r2.cloudflarestorage.com`；R2_BUCKET_NAME=ebook-temp 已有值不动）；
+3. 保存后必须 **Redeploy**（env 改动不重新部署不生效）。
+4. 完成后通知 AI 复测：探针应返回 `enabled:true, maxBytes:104857600` + diagnostics 全 true → 随后执行 PV-7（11.4MB EPUB 走 presign→R2→convert 全流程）与 MON-1 缓存命中率首次真实观测。
+
+**✅ 2026-10-28 11:05 进展：①②③已完成**——探针实测 `{"enabled":true,"maxBytes":104857600,"diagnostics":全 true}`，`no-store` 生效（X-Vercel-Cache: MISS）。
+
+**🔴 新阻塞（PV-7 实测）：R2 返回 `NoSuchBucket`（bucket `ebook-temp` 不存在）**
+- 证据链：presign 成功签发（签名凭据有效）→ 11.4MB PUT 至 `ebook-temp.<account_id>.r2.cloudflarestorage.com` → `404 NoSuchBucket, BucketName=ebook-temp`。签名通过+报错点名桶名 ⇒ Access Key/Secret 有效、R2_ENDPOINT 格式正确（账号级），失败点在**桶**。
+- 两种可能（R2 对 token 范围外的桶也报 NoSuchBucket，二者无法远程区分）：
+  A. 该 Cloudflare 账号下从未创建 `ebook-temp` 桶（10-25「无需建桶」的推断一直未实测，可能一直不存在）；
+  B. API token 的 bucket scope 未包含 ebook-temp（token 限定了 "Specify bucket(s)"）。
+
+**新用户动作（二选一排查，5 分钟）**：
+1. Cloudflare → R2 → Object Buckets：确认是否存在名为 `ebook-temp` 的桶。**不存在 → Create bucket**，名称必须精确 `ebook-temp`（免费档 10GB 内 $0）；
+2. R2 → Manage API Tokens：检查刚用的 token 的 bucket 范围——最简单改为 **Apply to all buckets**（改范围即时生效，无需换 key/secret、无需 Redeploy）；
+3. 桶就绪后通知 AI 复测 PV-7（无需重新部署）。
+
+**🎉 2026-10-28 11:25 PV-7 全流程通过（用户建桶 ebook-temp 后）**
+- R2 直传：11,410,865B PUT → **200**（33.3s）
+- convert（epub→mobi, upload_key）→ **200**，285,322B，11.3s，**`X-Conversion-Backend: hit`**（Calibre 后端真实接管）
+- 输出魔数 `BOOKMOBI` + 书名 `PV7_Big_Test_Book` ⇒ 转换结果有效
+- **根因坐实**：桶从未创建（账号下原只有 hydrapet-assets）；10-25「无需建桶」推断被推翻
+- MON-1 首次观测结论：`X-Conversion-Cache` 只挂 CC 回退路径（convert-handler.ts:220/343），后端 hit 路径无此头是**设计内**——后端健康时 MON-1 天然低频，其「命中率」实际度量 CC 回退流量占比；A1 缓存仅在 CC 回退时省 credit。3 天监控窗口自今日起算。
+- 🟠 **新登记 P2**：后端委托路径不清理 R2 upload 对象（`scheduleUploadCleanup` 仅在 convert-handler CC 路径调用；route.ts 后端分支未调）⇒ 大文件转换后 `uploads/YYYY-MM-DD/*.epub` 永久留存，桶会缓慢增长。本次测试遗留 2 个对象（99ca8010/ea58da0f，各 ~11MB）可手动删。
+
+**同批发现（P2，待办）**：`next.config.ts` 给 `/api/(.*)` 全段设 `Cache-Control: public, s-maxage=10, stale-while-revalidate=59`——API GET 响应被 CDN 缓存最长约 69s（能力探针 STALE 假象的帮凶；限流 429 等响应同样会被缓存）。建议收窄为按路由白名单（探针已用 no-store 自保）。登记不本次动。
+
+**修复已上线部分**（无需再动）：探针 force-dynamic + no-store（dd1386a）+ 逐变量诊断布尔（2441c95）；大文件守卫修复 + R2→后端转发（5e39c7b）。
