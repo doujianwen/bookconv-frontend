@@ -15,7 +15,8 @@ export type ErrorCode =
   | "CORRUPT_INPUT"
   | "MEMORY_LIMIT"
   | "VERIFICATION_FAILED"
-  | "FILE_TOO_LARGE";
+  | "FILE_TOO_LARGE"
+  | "UNSUPPORTED_CONVERSION";
 
 export interface ErrorResponse {
   code: ErrorCode;
@@ -88,6 +89,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
   'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
   'FILE_TOO_LARGE': { message: `文件超过 ${MAX_FILE_SIZE_MB}MB 限制。免费版服务器有 60 秒硬时限，大文件会超时失败。建议：① 改用纯 JS 格式（EPUB→TXT/DOCX/RTF/FB2 无大小限制）；② 压缩或拆分文件后重试。`, retryable: false },
+  'UNSUPPORTED_CONVERSION': { message: 'This format combination is not supported by any available conversion engine. Please try the suggested alternative format.', retryable: false },
 };
 
 /** Get a friendly, user-facing message from an error code */

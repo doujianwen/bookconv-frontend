@@ -22,6 +22,7 @@ const ERROR_HINTS: Record<string, { icon: React.ReactNode; hint: string; hintEs?
   DRM_PROTECTED: { icon: <AlertTriangle className="h-4 w-4 text-amber-500" />, hint: "DRM-protected file — remove DRM before converting.", hintEs: "Archivo con DRM: quita el DRM antes de convertir." },
   MEMORY_LIMIT: { icon: <FileX className="h-4 w-4 text-orange-500" />, hint: "File too large or complex for conversion.", hintEs: "Archivo demasiado grande o complejo para convertir." },
   CONVERSION_FAILED: { icon: <AlertTriangle className="h-4 w-4 text-red-500" />, hint: isRetryable("CONVERSION_FAILED") ? "Click retry or try a different file." : "", hintEs: isRetryable("CONVERSION_FAILED") ? "Haz clic para reintentar o prueba con otro archivo." : "" },
+  UNSUPPORTED_CONVERSION: { icon: <FileX className="h-4 w-4 text-amber-500" />, hint: "Try the suggested alternative format instead.", hintEs: "Prueba con el formato alternativo sugerido." },
 }
 
 export function ConversionProgress({ status, progress = 0, errorMessage, errorCode, isEs = false }: ConversionProgressProps) {

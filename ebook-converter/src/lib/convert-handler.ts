@@ -27,6 +27,7 @@ import { checkConversionBudget, recordCreditSpend } from "@/lib/conversion-budge
 import { getCachedConversion, storeConversion } from "@/lib/conversion-cache";
 import { downloadFromR2, deleteFromR2 } from "@/lib/storage/r2";
 import { isValidUploadKey, fileNameFromUploadKey } from "@/lib/upload-presign";
+import { unsupportedConversionInfo } from "@/lib/unsupported-conversions";
 
 const MAX_FILE_SIZE = MAX_FILE_SIZE_BYTES;
 
@@ -134,6 +135,22 @@ export async function convertAndStream(
     return NextResponse.json(
       { error: `Unsupported target format: ${targetFormat}` },
       { status: 400, headers: rateHeaders },
+    );
+  }
+
+  // 「两头堵」组合前置拦截（2026-10-28 方案 A）：自建后端白名单外 + CloudConvert
+  // 无对应转换路径（官网转换页 404 实证）⇒ 不上传到 CC 白烧一次 job + 500 +
+  // 一次飞书告警，直接 422 并给出替代推荐。所有路径（multipart / R2 upload_key /
+  // 后端委托回退）都汇聚于此，一处拦截全覆盖。
+  const unsupported = unsupportedConversionInfo(sourceFormat, targetFormat);
+  if (unsupported) {
+    return NextResponse.json(
+      {
+        error: unsupported.noticeEn,
+        code: "UNSUPPORTED_CONVERSION",
+        alternative: unsupported.alternativeHref,
+      },
+      { status: 422, headers: rateHeaders },
     );
   }
 

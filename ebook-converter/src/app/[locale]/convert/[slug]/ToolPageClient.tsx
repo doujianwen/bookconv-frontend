@@ -22,6 +22,7 @@ import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect, DirectUploadUnavailableError } from "@/lib/client/direct-upload"
 import { useUploadCapability } from "@/lib/client/upload-capability"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
+import { unsupportedConversionInfo } from "@/lib/unsupported-conversions"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
 import { KeyTakeawaysSection } from "@/components/tools/KeyTakeawaysSection"
@@ -121,6 +122,9 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
   // so it must be probed rather than read from a constant — see
   // src/lib/client/upload-capability.ts.
   const uploadCap = useUploadCapability()
+  // 「两头堵」组合（自建后端白名单外 + CloudConvert 无此转换路径）：前端硬拦，
+  // 不让用户白传一次文件才见到 500。替代推荐直接给出可用的站内转换页。
+  const unsupported = unsupportedConversionInfo(source, target)
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
@@ -153,6 +157,19 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const handleFileSelect = useCallback(
     async (file: File) => {
+      // 不可行组合硬拦：在任何上传/嗅探之前直接拒绝并给出替代路径，
+      // 与魔数嗅探同层的客户端拦截（GA 可见，不留静默失败盲区）。
+      if (unsupported) {
+        setErrorMessage(isEs ? unsupported.noticeEs : unsupported.noticeEn)
+        setErrorCode("UNSUPPORTED_CONVERSION")
+        setStatus("error")
+        trackGAEvent("file_rejected_client", {
+          source_format: source,
+          target_format: target,
+          reason: "unsupported_conversion",
+        })
+        return
+      }
       // 上传前魔数嗅探：把"重命名的 .pdf/.txt/数据库文件"提前拦在上传前，
       // 省一次 500 + 一次飞书告警。识别不了就放行（后端 validateInputFile 仍兜底）。
       const sniff = await sniffFileFormat(file, source, isEs)
@@ -276,7 +293,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         })
       }
     },
-    [source, target, sniffFileFormat, uploadCap]
+    [source, target, sniffFileFormat, uploadCap, unsupported]
   )
   return (
     <>
@@ -336,9 +353,22 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
           <KeyTakeawaysSection keyTakeaways={contentData.keyTakeaways} isEs={isEs} />
         )}
         <div className="space-y-4">
+          {unsupported && (
+            <div className="rounded-xl border border-amber-300 bg-amber-50 p-5" data-testid="unsupported-conversion-notice">
+              <h2 className="mb-1 text-base font-semibold text-amber-900">
+                {isEs ? "Esta conversión no está disponible" : "This conversion is not available"}
+              </h2>
+              <p className="text-sm text-amber-800 leading-relaxed">
+                {isEs ? unsupported.noticeEs : unsupported.noticeEn}{" "}
+                <Link href={unsupported.alternativeHref} className="font-semibold underline hover:text-amber-950">
+                  {isEs ? `Convertir a ${unsupported.alternativeLabel} →` : `Convert to ${unsupported.alternativeLabel} →`}
+                </Link>
+              </p>
+            </div>
+          )}
           <FileDropZone
             onFileSelect={handleFileSelect}
-            disabled={status === "uploading" || status === "converting"}
+            disabled={unsupported !== undefined || status === "uploading" || status === "converting"}
             accept={"." + source + ",." + source.toUpperCase()}
             maxFileSizeBytes={uploadCap.maxBytes}
             maxFileSizeMB={uploadCap.maxMB}
