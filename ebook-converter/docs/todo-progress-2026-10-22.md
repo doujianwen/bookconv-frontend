@@ -340,3 +340,17 @@
 - **A 止血（改动最小）**：convert 页对这 3 组合前置拦截 + 推荐替代（jpg/png→先转 PDF 或用 docx/pdf 替代提示；doc→推荐 epub→docx，后者是纯 JS 本地转换零依赖），落地页改文案或 noindex。
 - **B 真修 jpg/png（工程中等）**：自建后端加 ImageMagick/poppler 链（epub→pdf→逐页图片），**前置依赖 = 先解 SSH 封禁才能装包**；价值 = 两个图片格式真正可用。
 - **C epub→doc 无真修选项**：CC 不支持 + Calibre 只产 docx 不产 doc ⇒ 只能走 A（改推荐 docx）。
+
+---
+
+## ✅ 2026-10-28 14:35 方案 A 上线（commit 0a3f469，生产验证通过）+ SSH 诊断闭环
+
+**方案 A（epub→jpg/doc/png 止血）**：
+- 新增 `src/lib/unsupported-conversions.ts`（组合登记 + 双语提示 + 替代链接：doc→docx / jpg·png→pdf）；`convertAndStream` 校验段 422 拦截（multipart/R2/后端回退全路径汇聚点）；ToolPageClient 落地页琥珀横幅 + dropzone 禁用 + 选文件即拦（`file_rejected_client` GA 事件可见）；error-handler 新增 `UNSUPPORTED_CONVERSION` 码。
+- 测试：新增 8 用例全绿（注册表完整性/422 拦截/白名单组合与反向对不误伤），tsc 干净。
+- **生产验证**：epub→doc 与 epub→jpg 实测 `422 + code=UNSUPPORTED_CONVERSION + alternative`，不再白烧 CC job、不再触发飞书告警。方案 B（后端 ImageMagick 链）若落地，删 `UNSUPPORTED_CONVERSIONS` 条目即同时解除两层拦截。
+
+**SSH「封禁」最终诊断（用户排查服务器全干净后闭环）**：
+- 决定性证据链：①用户侧主机安全/防火墙/fail2ban/hosts.deny/nftables/ipset/auth.log **全部零记录**；②外部 4 节点（in/ir/ru/vn）TCP:22 **全部秒连 0.04-0.31s**；③github.com:22 经代理加密隧道正常；④本机所有裸 IP 直连路径（22/443）TCP 通但首包被掐。
+- **判定：服务器、防火墙、sshd 全部无辜。是大陆出境链路对明文 SSH banner 的 RST 注入**（TCP 握手不涉及 banner 可通过；banner 一出现被 RST ⇒ "Connection closed"；auth.log 零记录 = 内核层 RST，流量未到达 sshd 应用层）。github SSH 正常的原因：域名匹配代理规则走加密隧道，banner 不暴露在跨境明文链路上。
+- **解法**：SSH 需求改走 ①ProxyCommand 经本地 HTTP 代理隧道（127.0.0.1:12450 实测可通 443，`ssh -o ProxyCommand="nc -X connect -x 127.0.0.1:12450 %h %p"`，需验证 22 是否被代理策略放行）；②或腾讯控制台 OrcaTerm 网页终端（不走 22）；③或服务器加备用 SSH 端口（如 2222，在 OrcaTerm 里配，用户操作）后 `ssh -p 2222` 绕开 22 端口干扰。
