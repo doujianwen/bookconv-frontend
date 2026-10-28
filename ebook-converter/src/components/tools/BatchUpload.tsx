@@ -215,7 +215,10 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
     const existingNames = new Set(files.map((f) => f.name));
     const added: BatchFileItem[] = [];
 
-    for (const file of newFiles) {
+    // Snapshot the live FileList before the first async sniff. The input is
+    // cleared immediately after this handler starts, which otherwise truncates
+    // a multi-file selection while awaiting the first file's bytes.
+    for (const file of Array.from(newFiles)) {
       if (existingNames.has(file.name)) continue;
 
       const ext = file.name.split(".").pop()?.toLowerCase() || "";
@@ -687,7 +690,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             onChange={(e) => setTargetFormat(e.target.value)}
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
-            {SUPPORTED_FORMATS.filter((f) => f !== targetFormat).map((fmt) => (
+            {SUPPORTED_FORMATS.map((fmt) => (
               <option key={fmt} value={fmt}>
                 {FORMAT_DISPLAY_NAMES[fmt] || fmt.toUpperCase()}
               </option>
