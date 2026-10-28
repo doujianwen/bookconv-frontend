@@ -325,3 +325,18 @@
 **PV-5 非白名单格式走 CC**：epub→jpg/doc（target 不在 CALIBRE_TARGETS）实测 `X-Conversion-Backend: miss-cloudconvert`，路由判定正确。**⚠️ 新发现待查**：这两个格式对 CC 任务本身 500（`CLOUD_CONVERT_ERROR`），而 epub→mobi 经 CC 正常（200）⇒ 非 CC 通道故障、非额度问题（A2 预算闸门未触发），疑似 CC 侧不支持 doc 输出或 jpg 任务链配置问题。**这两个格式有 SEO 落地页，若线上一直如此则是存量问题**——待查 CC job 配置与历史成功率后拍板修复方案。
 **PV-4 转换负载下 GEO 站隔离**：基线（check-host 4 节点）0.92–1.56s 全 200；真实负载窗口（10.9MB EPUB→PDF 74.8s Calibre 转换运行中）两次探测 8 节点全 200，7/8 在 0.93–2.78s 正常带，1 节点（at1）11s 离群——单样本+节点各异，归因 UNKNOWN（需同节点重复采样才能判定是负载还是节点路径）。六层隔离（CPU 70% 限额）初步成立。
 **本机测量教训**：本机所有出口（curl/node/Chrome 经代理）对 43.129.176.38:443 TLS 握手被掐（TCP 通、ClientHello 被断）——境内访问腾讯 HK IP 的 SNI 干扰；裸域 tuozhigeo.com 无 A 记录（站点在 www）。外部探测用 check-host.net（http check 偶发全节点 "No such device" 瞬时故障，重试即可）。
+
+---
+
+## 🔍 2026-10-28 12:40 立项排查完成：jpg/doc/png CC 500 根因 = CloudConvert 根本不支持这三条转换
+
+**排查结论（三个独立证据）**：
+1. 代码层：全站 31 组合中，target 不在后端 20 格式白名单且 tool≠js（纯 JS 本地转换不经 CC）的组合**只有 3 个**：epub→jpg、epub→doc、epub→png；
+2. CC 官方证据：cloudconvert.com/epub-to-doc、/epub-to-jpg、/epub-to-png 三个转换页**全部 404**（"This conversion type is not supported"）⇒ CC 无此转换路径，POST /jobs 直接被拒 ⇒ CLOUD_CONVERT_ERROR 500；
+3. 对照组：epub→mobi 经 CC 200 正常（熔断测试时实证）⇒ 非通道/额度问题。
+**判定**：非回归，大概率自上线以来一直 100% 失败（10-01 全站失败事件可能掩盖了它）；三个 SEO 内容页（src/data/content/epub-to-{doc,jpg,png}.ts + sitemap）仍在引导流量到站→转换必失败。
+
+**修复选项（待拍板）**：
+- **A 止血（改动最小）**：convert 页对这 3 组合前置拦截 + 推荐替代（jpg/png→先转 PDF 或用 docx/pdf 替代提示；doc→推荐 epub→docx，后者是纯 JS 本地转换零依赖），落地页改文案或 noindex。
+- **B 真修 jpg/png（工程中等）**：自建后端加 ImageMagick/poppler 链（epub→pdf→逐页图片），**前置依赖 = 先解 SSH 封禁才能装包**；价值 = 两个图片格式真正可用。
+- **C epub→doc 无真修选项**：CC 不支持 + Calibre 只产 docx 不产 doc ⇒ 只能走 A（改推荐 docx）。
