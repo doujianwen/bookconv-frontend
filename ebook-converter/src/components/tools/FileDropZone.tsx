@@ -21,7 +21,7 @@ import { cn, formatBytes } from "@/lib/utils"
 import { chrome } from "@/lib/ui-chrome"
 import { SUPPORTED_FORMATS, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { extractEbookMetadata, estimatePageCount, type EbookMetadata } from "@/lib/ebook-metadata"
-import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_MB, MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
+import { MAX_UPLOAD_FILE_SIZE_MB, MAX_UPLOAD_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 
 interface FileDropZoneProps {
   onFileSelect: (file: File) => void
@@ -146,8 +146,8 @@ export function FileDropZone({
   disabled,
   accept,
   showMetadata = true,
-  maxFileSizeBytes = MAX_FILE_SIZE_BYTES,
-  maxFileSizeMB = MAX_FILE_SIZE_MB,
+  maxFileSizeBytes = MAX_UPLOAD_FILE_SIZE_BYTES,
+  maxFileSizeMB = MAX_UPLOAD_FILE_SIZE_MB,
 }: FileDropZoneProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)

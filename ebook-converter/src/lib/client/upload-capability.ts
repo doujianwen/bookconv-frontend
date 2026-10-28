@@ -10,18 +10,22 @@
 //
 // Failure policy: the SERVER is authoritative. This hook only decides what to
 // display and whether to reject early.
-//   · while the probe is in flight → conservative (multipart cap). Advertising a
-//     100MB direct-upload ceiling the deployment cannot currently honour is a
-//     promise we would break, so we show the safe 4MB floor until the probe
-//     confirms otherwise. The server still rejects anything it cannot take
-//     (presign → 503, multipart → 413) and both now produce actionable copy.
+//   · while the probe is in flight → optimistic (direct cap), because rejecting
+//     a legitimate 50MB file in the first 100ms is worse than letting the
+//     server answer. The server rejects anything it cannot take (presign → 503,
+//     multipart → 413), and both now produce actionable copy.
 //   · probe failed → conservative (multipart cap). A dead probe must not
 //     advertise a capability we cannot confirm.
 
 "use client";
 
 import { useEffect, useState } from "react";
-import { MAX_FILE_SIZE_BYTES, MAX_FILE_SIZE_MB } from "@/lib/file-size-limit";
+import {
+  MAX_FILE_SIZE_BYTES,
+  MAX_FILE_SIZE_MB,
+  MAX_UPLOAD_FILE_SIZE_BYTES,
+  MAX_UPLOAD_FILE_SIZE_MB,
+} from "@/lib/file-size-limit";
 
 export interface UploadCapability {
   /** Largest file the deployment can currently accept. */
@@ -34,8 +38,8 @@ export interface UploadCapability {
 }
 
 const PENDING_OPTIMISTIC: UploadCapability = {
-  maxBytes: MAX_FILE_SIZE_BYTES,
-  maxMB: MAX_FILE_SIZE_MB,
+  maxBytes: MAX_UPLOAD_FILE_SIZE_BYTES,
+  maxMB: MAX_UPLOAD_FILE_SIZE_MB,
   directUpload: false,
   ready: false,
 };
