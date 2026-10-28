@@ -19,6 +19,8 @@ import {
 } from "@/lib/rate-limit";
 import { convertAndStream } from "@/lib/convert-handler";
 import { normalizeFormat } from "@/lib/conversion-map";
+import { downloadFromR2 } from "@/lib/storage/r2";
+import { fileNameFromUploadKey } from "@/lib/upload-presign";
 import {
   backendConfigured,
   delegateToBackend,
@@ -60,8 +62,35 @@ export async function POST(request: NextRequest) {
       const canDelegate =
         sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend();
 
+      // Large-file path (R2 direct upload, 2026-10-28): the bytes never traverse
+      // the 4.5MB Vercel inbound edge limit, so for upload_key requests we fetch
+      // the object here and hand the backend client a real File. Function→backend
+      // fetches are OUTBOUND and have no inbound body limit; the backend enforces
+      // its own cap (currently 50MB) and a non-200 there falls back to
+      // CloudConvert below. Known trade-off: if the backend then fails,
+      // convertAndStream re-downloads from R2 — a rare double fetch accepted
+      // instead of complicating the happy path.
+      let prebuiltFile: File | undefined;
+      if (canDelegate && uploadKey) {
+        try {
+          const buffer = await downloadFromR2(uploadKey);
+          if (buffer.length > 0) {
+            prebuiltFile = new File([new Uint8Array(buffer)], fileNameFromUploadKey(uploadKey, sourceFormat));
+          }
+          // empty buffer: skip the backend; convertAndStream returns its
+          // canonical UPLOAD_EMPTY 400.
+        } catch (r2Err) {
+          // R2 fetch failed: skip the backend; convertAndStream re-downloads and
+          // produces its own actionable 400 (UPLOAD_NOT_FOUND).
+          console.warn(
+            "[convert] R2 prebuilt download failed (will fall back):",
+            r2Err instanceof Error ? r2Err.message : String(r2Err),
+          );
+        }
+      }
+
       if (canDelegate) {
-        const backendResp = await delegateToBackend(formData, rateHeaders);
+        const backendResp = await delegateToBackend(formData, rateHeaders, { prebuiltFile });
         if (backendResp) {
           // Backend succeeded (200 + file bytes). Returned as-is.
           return backendResp;
@@ -80,8 +109,10 @@ export async function POST(request: NextRequest) {
     // Two input modes share this endpoint:
     //   * multipart `file`      — capped at MAX_FILE_SIZE_BYTES (Vercel 4.5MB edge)
     //   * `upload_key` (string) — object already PUT to R2 by the browser, so the
-    //     request body is tiny and the edge limit no longer applies. Only used
-    //     when R2 is configured and no Calibre backend is set (see upload-presign).
+    //     request body is tiny and the edge limit no longer applies (100MB cap).
+    //     Enabled whenever R2 is configured (see upload-presign); with a backend
+    //     configured, whitelisted formats are first offered to the backend via an
+    //     R2-fetched prebuilt File and fall back here.
     const formData = await request.formData();
     const rawUploadKey = formData.get("upload_key");
     const uploadKey =

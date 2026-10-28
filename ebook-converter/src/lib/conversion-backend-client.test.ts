@@ -175,5 +175,46 @@ describe("conversion backend client", () => {
       expect(elapsed).toBeLessThan(5_000); // aborted, did NOT wait 90s
       expect(breakerSnapshot().failures).toBeGreaterThan(0); // counted as failure
     });
+
+    it("forwards a prebuiltFile (R2 upload_key path) to the backend", async () => {
+      setEnv();
+      const fetchMock = jest.fn(
+        async () => new Response(new Blob([Buffer.from("OUT")]), { status: 200 }),
+      );
+      global.fetch = fetchMock as unknown as typeof global.fetch;
+      const fd = new FormData();
+      fd.append("upload_key", "uploads/2026-10-28/2f1c9a3b-4d5e-4f6a-8b7c-9d0e1f2a3b4c.epub");
+      fd.append("source_format", "epub");
+      fd.append("target_format", "mobi");
+      const prebuilt = new File([Buffer.from("BIG-EPUB-BYTES")], "upload.epub");
+
+      const resp = await delegateToBackend(fd, {}, { prebuiltFile: prebuilt });
+
+      expect(resp).not.toBeNull();
+      expect(resp!.status).toBe(200);
+      const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+      expect(url).toBe("https://bk.test/api/convert-internal");
+      const sent = init.body as FormData;
+      const sentFile = sent.get("file");
+      expect(sentFile).toBeInstanceOf(File);
+      expect((sentFile as File).name).toBe("upload.epub");
+      expect(sent.get("source_format")).toBe("epub");
+      expect(sent.get("target_format")).toBe("mobi");
+    });
+
+    it("forwards the quality field when present", async () => {
+      setEnv();
+      const fetchMock = jest.fn(
+        async () => new Response(new Blob([Buffer.from("X")]), { status: 200 }),
+      );
+      global.fetch = fetchMock as unknown as typeof global.fetch;
+      const fd = makeForm();
+      fd.append("quality", "high");
+
+      await delegateToBackend(fd, {});
+
+      const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+      expect((init.body as FormData).get("quality")).toBe("high");
+    });
   });
 });

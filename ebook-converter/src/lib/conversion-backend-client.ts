@@ -50,6 +50,16 @@ export function backendConfigured(): boolean {
 
 const DEFAULT_BACKEND_TIMEOUT_MS = 90_000;
 
+export interface DelegateOptions {
+  /**
+   * Pre-fetched file for the R2 upload_key path: route.ts downloads the object
+   * once and hands it over as a real File, so large files (which never fit the
+   * 4.5MB inbound edge limit) can still reach the backend. The backend enforces
+   * its own size cap; a non-200 there falls back to CloudConvert as usual.
+   */
+  prebuiltFile?: File;
+}
+
 /**
  * Try to convert via the self-hosted backend.
  * @returns a NextResponse to return to the client, or null to signal
@@ -58,6 +68,7 @@ const DEFAULT_BACKEND_TIMEOUT_MS = 90_000;
 export async function delegateToBackend(
   formData: FormData,
   rateHeaders: Record<string, string>,
+  opts: DelegateOptions = {},
 ): Promise<NextResponse | null> {
   const BACKEND_URL = process.env.CONVERSION_BACKEND_URL?.replace(/\/+$/, "");
   const INTERNAL_SECRET = process.env.CONVERSION_INTERNAL_SECRET;
@@ -67,13 +78,15 @@ export async function delegateToBackend(
   );
   if (!BACKEND_URL || !INTERNAL_SECRET || !shouldUseBackend()) return null;
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) return null; // upload_key (R2) path: let convertAndStream handle it
+  const file = opts.prebuiltFile ?? formData.get("file");
+  if (!(file instanceof File)) return null; // upload_key without a prebuilt File: let convertAndStream handle it
 
   const backendForm = new FormData();
   backendForm.append("file", file, file.name);
   backendForm.append("source_format", String(formData.get("source_format") ?? ""));
   backendForm.append("target_format", String(formData.get("target_format") ?? ""));
+  const quality = formData.get("quality");
+  if (typeof quality === "string" && quality) backendForm.append("quality", quality);
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), BACKEND_TIMEOUT_MS);

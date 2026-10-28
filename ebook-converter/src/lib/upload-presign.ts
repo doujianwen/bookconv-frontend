@@ -38,14 +38,20 @@ const UPLOAD_KEY_RE =
   /^uploads\/\d{4}-\d{2}-\d{2}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.[a-z0-9]{1,5}$/;
 
 /**
- * Presigning needs R2 credentials. It must also be skipped when a
- * Calibre-capable backend is configured: that deployment is self-hosted /
- * Docker, has no 4.5MB edge limit, and its /api/convert forwards the raw
- * request stream — a JSON `upload_key` call would not survive that forward.
- * Keeping the two modes mutually exclusive avoids a silent incompatibility.
+ * Presigning needs R2 credentials.
+ *
+ * History note (2026-10-28): this used to ALSO require that no Calibre backend
+ * was configured, because the old backend delegation forwarded the raw
+ * request.body stream — a JSON `upload_key` call would not have survived it.
+ * The delegation was since redesigned to parse-once (see
+ * conversion-backend-client.ts): upload_key requests are now offered to the
+ * backend via an R2-fetched prebuilt File and fall back to CloudConvert here
+ * when the backend is down/unsupported. The two modes are compatible again,
+ * so the guard reduces to R2 presence. Large files (> the backend's own cap,
+ * currently 50MB) still fall through to CloudConvert by design.
  */
 export function isDirectUploadEnabled(): boolean {
-  return isR2Configured() && !process.env.CONVERSION_BACKEND_URL;
+  return isR2Configured();
 }
 
 export function buildUploadKey(sourceFormat: string): string {

@@ -126,14 +126,18 @@ describe('isDirectUploadEnabled', () => {
     expect(isDirectUploadEnabled()).toBe(false);
   });
 
-  it('is false in Calibre-backend (self-hosted) mode even with R2 present', () => {
+  it('is TRUE in Calibre-backend (self-hosted) mode when R2 is present (2026-10-28)', () => {
     process.env.R2_ENDPOINT = 'https://example.r2.cloudflarestorage.com';
     process.env.R2_ACCESS_KEY_ID = 'id';
     process.env.R2_SECRET_ACCESS_KEY = 'secret';
     process.env.CONVERSION_BACKEND_URL = 'https://calibre.internal';
-    // The backend path forwards the raw multipart stream; a JSON upload_key
-    // request would not survive it, so the two modes are mutually exclusive.
-    expect(isDirectUploadEnabled()).toBe(false);
+    // The old raw-stream forward made the two modes mutually exclusive. The
+    // parse-once redesign (conversion-backend-client.ts) made upload_key +
+    // backend coexist: upload_key requests are offered to the backend via an
+    // R2-fetched prebuilt File and fall back to CloudConvert when the backend
+    // is down/unsupported. Removing the exclusion is what restored the 100MB
+    // cap after CONVERSION_BACKEND_URL went live.
+    expect(isDirectUploadEnabled()).toBe(true);
   });
 
   it('is true when R2 is configured and no backend is set', () => {
