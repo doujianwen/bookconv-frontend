@@ -39,7 +39,7 @@ The catch: **Kindle does not natively read EPUB** on most models released before
     },
     {
       heading: 'Converting between EPUB and MOBI',
-      body: `If you need to switch between EPUB and MOBI, [BookConv](https://www.bookconv.com) offers free online converters for both directions:\n\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — for older Kindles\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — for modern Kindles (recommended)\n- **MOBI → EPUB**: [/convert/mobi-to-epub](/convert/mobi-to-epub) — to escape the Kindle ecosystem\n\nAll conversions run in your browser. Files are deleted automatically within one hour. No software installation required.`,
+      body: `If you need to switch between EPUB and MOBI, [BookConv](https://www.bookconv.com) offers free online converters for both directions:\n\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — for older Kindles\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — for modern Kindles (recommended)\n- **MOBI → EPUB**: [/convert/mobi-to-epub](/convert/mobi-to-epub) — to escape the Kindle ecosystem\n\nAll conversions run in your browser. Files are deleted automatically after the conversion completes. No software installation required.`,
     },
     {
       heading: 'Should you bother converting at all?',

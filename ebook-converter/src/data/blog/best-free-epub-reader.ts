@@ -47,7 +47,7 @@ All of the above are free. Sync in the local-only apps means your reading progre
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
 
 - **Apple Books** (iOS/macOS) and **Google Play Books** (Android) are the zero-setup free defaults for EPUB.
 - **ReadEra** and **Moon+ Reader** are the best fully-offline free picks for side-loaded libraries.

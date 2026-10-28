@@ -45,7 +45,7 @@ If you want those pages on their own rather than inside a PDF, [EPUB to JPG](/co
 }
 export const faqs: BlogFaq[] = [
   { question: 'Is Calibre better than online converters?', answer: 'For bulk and offline work, yes. For a single quick file, an online converter is faster and needs no setup. Neither is universally "better" — it depends on volume, control, and privacy needs.' },
-  { question: 'Are online ebook converters safe for private files?', answer: 'Reputable ones use encrypted HTTPS and auto-delete files within about an hour (BookConv deletes within 1 hour). But the file does touch a server. For sensitive documents, prefer Calibre, which runs fully offline.' },
+  { question: 'Are online ebook converters safe for private files?', answer: 'Reputable ones use encrypted HTTPS and auto-delete files shortly after (BookConv deletes after the conversion completes). But the file does touch a server. For sensitive documents, prefer Calibre, which runs fully offline.' },
   { question: 'Does BookConv use Calibre?', answer: 'Yes. BookConv is built on the open-source Calibre conversion engine, so it inherits Calibre’s format support while adding a browser UI and automatic image/cover handling.' },
   { question: 'Can I batch convert with an online converter?', answer: 'Generally no — online converters are designed for one file at a time. For true batch work, Calibre (or its command-line tools) is the right choice.' },
   { question: 'Which is faster, Calibre or an online converter?', answer: 'For one file, the online converter wins because there is no install or setup. For hundreds of files, Calibre wins because you automate the job once.' },

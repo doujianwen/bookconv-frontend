@@ -10,7 +10,7 @@ export const content = {
   sections: [
     {
       heading: `Private by Design`,
-      body: `Conversions run in your browser, and BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted automatically within 1 hour of conversion — no account, no stored library. You do not hand your library to a desktop app's broader ecosystem, and you do not create an account just to convert one file. For most readers that is the right default: convert, download, move on.`
+      body: `Conversions run in your browser, and BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. You do not hand your library to a desktop app's broader ecosystem, and you do not create an account just to convert one file. For most readers that is the right default: convert, download, move on.`
     },
     {
       heading: `Built for Every Device`,
@@ -31,7 +31,7 @@ export const content = {
     {
       heading: `Key Takeaways`,
       body: `- BookConv is a free, browser-based converter — no install, no account for the basics.
-- Files are encrypted in transit and deleted within 1 hour of conversion.
+- Files are encrypted in transit and deleted after the conversion completes.
 - The same flow works on laptop, phone, or tablet; convert EPUB to AZW3 for Kindle on the spot.
 - Covers the everyday formats (EPUB, MOBI, AZW3, PDF, TXT).
 - Best for occasional, cross-device conversions; desktop tools still win for huge libraries. For batch workflows with large libraries, see our [Calibre free batch conversion guide](/blog/calibre-free-batch) and [batch converter guide](/guide/batch-converter). And if you want to verify your converted file quality, check our [check converted file quality guide](/blog/check-converted-file-quality).`

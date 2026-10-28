@@ -13,7 +13,7 @@ import { chrome } from "@/lib/ui-chrome"
 const TRUST_ITEMS = [
   'No registration required',
   'No watermarks',
-  'Files auto-deleted within 1 hour',
+  'Files deleted after conversion',
   'High-quality Calibre engine',
 ] as const
 

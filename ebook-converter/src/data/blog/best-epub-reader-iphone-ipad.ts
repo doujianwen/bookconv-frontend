@@ -31,7 +31,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
 
 - **Apple Books** is the right default: native EPUB rendering, free, pre-installed, iCloud progress sync.
 - **AirDrop or the Files app** are the fastest ways to side-load an EPUB — no computer needed between iPhones.

@@ -11,5 +11,5 @@
 export const SECURITY_FAQ = {
   question: 'Is my file secure?',
   answer:
-    'Absolutely. All files are transferred over 256-bit TLS (SSL) encrypted connections. Your original file and converted file are automatically deleted from our servers within 1 hour. We never read, store, or share your content.',
+    'Absolutely. All files are transferred over 256-bit TLS (SSL) encrypted connections. Your original file and converted file are automatically deleted from our servers after the conversion completes. We never read, store, or share your content.',
 }

@@ -50,7 +50,7 @@ Pick the app by device, then convert only when the file format does not match. B
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
 
 - **Free and capable** readers exist on every platform — you rarely need to pay.
 - **Apple Books** (iOS/macOS) and **Google Play Books** (Android) are the zero-setup defaults for EPUB.

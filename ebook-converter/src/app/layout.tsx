@@ -186,7 +186,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </main>
           <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
             <div className='mx-auto max-w-5xl space-y-2 px-4'>
-              <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are automatically deleted within 1 hour.'}</p>
+              <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are deleted as soon as the conversion completes.'}</p>
               <nav aria-label={locale === 'es' ? 'Navegación del pie de página' : 'Footer navigation'} className='flex flex-wrap justify-center gap-4'>
                 <Link href='/convert' className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
                 <Link href='/blog' className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>

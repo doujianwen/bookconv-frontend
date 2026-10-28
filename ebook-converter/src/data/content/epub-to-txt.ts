@@ -103,7 +103,7 @@ Drag and drop your .epub file into the upload area, or click to browse your comp
 Our pure JavaScript engine begins extracting text instantly. Unlike server-based converters that queue your file, this conversion happens locally in your browser. Most novels complete in under 10 seconds, while longer books with many chapters may take 20-30 seconds. You'll see a progress indicator showing the extraction status in real time.
 
 **Step 3 — Download Your TXT File**
-Click the Download button to save your plain text file. The converter automatically formats the output with chapter breaks, paragraph separation, and metadata headers. Your file will include the book title, author name, and table of contents as a comment section at the beginning. Converted files are deleted from our servers within one hour for privacy protection.`
+Click the Download button to save your plain text file. The converter automatically formats the output with chapter breaks, paragraph separation, and metadata headers. Your file will include the book title, author name, and table of contents as a comment section at the beginning. Converted files are deleted from our servers after the conversion completes for privacy protection.`
     },
     {
       heading: 'EPUB vs TXT: Format Comparison',

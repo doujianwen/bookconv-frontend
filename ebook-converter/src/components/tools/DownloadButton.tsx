@@ -20,7 +20,7 @@ export function DownloadButton({ downloadUrl, fileName }: DownloadButtonProps) {
         Download {fileName}
       </a>
       <p className="mt-2 text-xs text-gray-500">
-        Link expires in 1 hour. Files are automatically deleted after download.
+        Links are temporary - download your file promptly. Your file is not kept under your account.
       </p>
     </div>
   )

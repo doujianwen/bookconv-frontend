@@ -31,7 +31,7 @@ export default async function PrivacyPage() {
       <div className="prose max-w-none space-y-6">
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">File Handling &amp; Data Deletion</h2>
-          <p>All uploaded files are encrypted during transfer via HTTPS and automatically deleted within 1 hour of conversion completion.</p>
+          <p>All uploaded files are encrypted during transfer via HTTPS and deleted as soon as the conversion completes completion.</p>
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Data Collection</h2>

@@ -15,7 +15,7 @@ export const keyTakeaways = [
 ]
 export const formats = { source: 'epub', target: 'azw3' }
 export const content = {
-  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.\n\n> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.',
+  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.\n\n> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.',
   sections: [
     {
       heading: 'The Kindle format landscape',

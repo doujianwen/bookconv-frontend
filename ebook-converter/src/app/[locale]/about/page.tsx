@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const aboutFaqs = [
   { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. We offer a Pro plan for power users who need batch processing and higher file size limits, but individual conversions are always free with no registration required." },
-  { q: 'How long are my files stored?', a: 'Uploaded files are automatically deleted within 1 hour. We never store your content longer than necessary to complete the conversion and provide you with the download link.' },
+  { q: 'How long are my files stored?', a: 'Uploaded files are deleted as soon as the conversion completes. We never store your content longer than necessary to complete the conversion and provide you with the download link.' },
   { q: 'Do you sell my data?', a: "Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion. Your privacy is our priority — that's why we don't even require account creation." },
   { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },
   { q: 'Is BookConv the same as BookReverb or BookConvert?', a: 'No. BookConv (bookconv.com) is an independent, free online converter powered by Calibre. It is not affiliated with, related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one of those names, this site is bookconv.com only.' },
@@ -109,7 +109,7 @@ export default async function AboutPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span><strong>Secure</strong> — Your files are encrypted and auto-deleted within 1 hour</span>
+              <span><strong>Secure</strong> — Your files are encrypted and deleted after the conversion completes</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
@@ -121,7 +121,7 @@ export default async function AboutPage() {
             </li>
           </ul>
           <p className="mt-4 text-gray-700 leading-relaxed">
-            BookConv auto-deletes your uploaded files within 1 hour and encrypts them in transit — no account or software install required.
+            BookConv auto-deletes your uploaded files after the conversion completes and encrypts them in transit — no account or software install required.
           </p>
       </section>
 
@@ -145,7 +145,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">Privacy First</h3>
               <p className="text-sm text-gray-600">
-                No registration required. Files are encrypted during transfer and automatically deleted within 1 hour.
+                No registration required. Files are encrypted during transfer and deleted as soon as the conversion completes.
               </p>
             </div>
 
@@ -204,7 +204,7 @@ export default async function AboutPage() {
         <section className="rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center">
           <h2 className="mb-4 text-2xl font-bold text-white">Ready to Convert Your eBooks — Free?</h2>
           <p className="mb-6 text-blue-100">
-            Use the free BookConv converter: 28+ formats, no registration, files auto-deleted within 1 hour.
+            Use the free BookConv converter: 28+ formats, no registration, Files deleted after conversion.
           </p>
           <Link
             href="/"

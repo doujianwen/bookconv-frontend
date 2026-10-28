@@ -280,7 +280,7 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 | **Batch conversion** | ✅ Pro plan | ✅ Paid | ✅ Paid | ✅ Paid |
 | **Open source backend** | ✅ Calibre | ❌ Closed | ❌ Closed | ❌ Closed |
 
-**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Combined with our privacy-first approach (auto-delete after 1 hour), it's the best choice for personal ebook conversion.
+**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Combined with our privacy-first approach (delete files after the conversion completes), it's the best choice for personal ebook conversion.
 
 For more on choosing between online and desktop tools, see our [Calibre vs Online Converter guide](/guide/calibre-vs-online-converter).`,
     }

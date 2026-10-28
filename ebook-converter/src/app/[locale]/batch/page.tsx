@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const prefix = locale === "es" ? "/es" : "";
   const title = "Batch Ebook Converter — Convert Multiple Files at Once";
   const description =
-    clampMetaDescription("Convert several ebooks to one format in a single batch on BookConv. Free during open beta — upload your files, get a ZIP of converted ebooks, no software install.");
+    clampMetaDescription("Convert several ebooks to one format in a single batch on BookConv — a Pro feature. Upload your files, get a ZIP of converted ebooks, no software install.");
   return {
     title,
     description,
@@ -38,7 +38,7 @@ const FAQ = [
   },
   {
     q: "Is batch conversion free?",
-    a: "Batch conversion is included with the Pro plan. During the open beta period Pro members can use batch mode at no extra cost; the free plan is limited to single-file conversions.",
+    a: "Batch conversion is included with the Pro plan; the free plan is limited to single-file conversions.",
   },
   {
     q: "Which formats can I convert in a batch?",
@@ -66,7 +66,7 @@ const FAQ = [
   },
   {
     q: "Where do I find my batch results?",
-    a: "After all files finish converting, a download button appears for the result ZIP. Save it immediately — downloaded links expire within 1 hour for privacy.",
+    a: "After all files finish converting, a download button appears for the result ZIP. Save it immediately — download links are temporary.",
   },
 ];
 
@@ -105,10 +105,10 @@ export default async function BatchPage() {
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Batch Ebook Converter</h1>
         <p className="mt-4 text-lg text-gray-600">
-          Convert several ebooks to one format and download them as a single ZIP — free while in open beta.
+          Convert several ebooks to one format and download them as a single ZIP — a Pro feature.
         </p>
         <p className="mt-3 text-base text-gray-500">
-          Personal single-file conversion stays free for personal use with a 4 MB per-file limit; batch mode is free during open beta.
+          Personal single-file conversion stays free for personal use with a 4 MB per-file limit; batch mode is included with the Pro plan.
         </p>
       </div>
 

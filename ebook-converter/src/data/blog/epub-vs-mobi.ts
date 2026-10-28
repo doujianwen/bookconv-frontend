@@ -9,7 +9,7 @@ export const tags = ["EPUB", "MOBI", "Ebook Formats", "Kindle", "BookConv", "Cal
 export const content = {
   intro: `EPUB and MOBI are the two format names most readers recognize, and they could not have come from more different worlds. EPUB is the open standard almost every non-Kindle reader uses; MOBI is Amazon's older format that now mostly lives on legacy Kindles. If you are deciding which to save your books in, or which to convert to, the answer follows straight from where you read. This is the practical comparison, not the spec-sheet version.
 
-> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `At a Glance`,

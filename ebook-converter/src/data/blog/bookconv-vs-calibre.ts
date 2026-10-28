@@ -22,7 +22,7 @@ export const content = {
     },
     {
       heading: `Privacy`,
-      body: `Calibre converts entirely on your machine, so files never leave your computer. BookConv converts in the browser and is designed to avoid storing your files after conversion. Uploaded files are encrypted in transit over HTTPS and deleted automatically within 1 hour of conversion — no account, no stored library. For sensitive manuscripts, local tools (Calibre) give maximum control; for everyday files, BookConv's no-install, in-browser model is a low-friction option that does not require handing files to a desktop app's broader ecosystem.`
+      body: `Calibre converts entirely on your machine, so files never leave your computer. BookConv converts in the browser and is designed to avoid storing your files after conversion. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. For sensitive manuscripts, local tools (Calibre) give maximum control; for everyday files, BookConv's no-install, in-browser model is a low-friction option that does not require handing files to a desktop app's broader ecosystem.`
     },
     {
       heading: `Price`,
@@ -43,13 +43,13 @@ export const content = {
       body: `- **You need one EPUB on your Kindle right now:** open BookConv on the device you are holding, convert to AZW3, side-load. No desktop app, no waiting.
 - **You are on a phone with no Calibre installed:** BookConv's browser flow is the only realistic option without installing software.
 - **You convert the same 200 files every week:** Calibre's watched folders and batch tools win decisively; BookConv is built for one file at a time.
-- **The file is a confidential manuscript:** keep it fully offline with Calibre; BookConv still uploads briefly (deleted within 1 hour) and is better suited to everyday files.`
+- **The file is a confidential manuscript:** keep it fully offline with Calibre; BookConv still uploads briefly (deleted after the conversion completes) and is better suited to everyday files.`
     },
     {
       heading: `Key Takeaways`,
       body: `- BookConv and Calibre are both free; Calibre is a desktop library manager, BookConv is a browser converter with no install.
 - BookConv covers 27 format pairs (EPUB, MOBI, AZW3, PDF, TXT and more) for everyday conversions; Calibre adds niche formats and bulk automation.
-- Files on BookConv are encrypted in transit and deleted within 1 hour; Calibre runs fully offline.
+- Files on BookConv are encrypted in transit and deleted after the conversion completes; Calibre runs fully offline.
 - Use BookConv for a one-off file on any device; keep Calibre for large libraries, rare formats, and offline privacy.
 - For Kindle, convert EPUB to AZW3 on BookConv or use Amazon's Send to Kindle.`
     }

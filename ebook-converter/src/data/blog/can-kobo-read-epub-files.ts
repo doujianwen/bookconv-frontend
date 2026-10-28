@@ -8,7 +8,7 @@ export const tags = ["Kobo", "EPUB", "Ebook Formats", "DRM", "BookConv", "Kindle
 export const content = {
   intro: `Can Kobo read EPUB files? Yes — every Kobo eReader opens EPUB natively. EPUB is the one format Rakuten Kobo built its entire reading ecosystem around, from the store to the device firmware, so an EPUB file you sideload behaves like a store-bought book: real chapters, reflowable text, embedded fonts. The short version is that you almost never need to convert anything before putting it on a Kobo. The exceptions are DRM lockouts and Amazon-format files (MOBI, AZW3), and this guide covers exactly when those exceptions apply, how to get an EPUB onto your Kobo in under a minute, and what to do when a file refuses to show up in your library.
 
-> BookConv converts your file on our servers and automatically deletes it within 1 hour. No account, no software install.`,
+> BookConv converts your file on our servers and automatically deletes it after the conversion completes. No account, no software install.`,
   sections: [
     {
       heading: `The Short Answer`,

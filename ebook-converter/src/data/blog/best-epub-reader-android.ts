@@ -41,7 +41,7 @@ All three are free. If you only install one, ReadEra covers the most formats wit
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
 
 - **ReadEra** is the offline, no-account default — and it opens DRM-free AZW3, which almost nothing else does.
 - **Moon+ Reader** is the typography tool: per-book margins, spacing, and CSS overrides in the free tier.

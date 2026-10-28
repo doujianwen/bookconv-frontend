@@ -14,7 +14,7 @@ export const content = {
     },
     {
       heading: `What "Private by Design" Really Means`,
-      body: `BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted automatically within 1 hour of conversion — no account, no stored library. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine.`
+      body: `BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine.`
     },
     {
       heading: `The Formats You Can Convert`,
@@ -31,7 +31,7 @@ export const content = {
     {
       heading: `Key Takeaways`,
       body: `- BookConv is free for core conversions, with no account required.
-- Conversions run in your browser; uploaded files are encrypted and deleted within 1 hour.
+- Conversions run in your browser; uploaded files are encrypted and deleted after the conversion completes.
 - Supports EPUB, MOBI, AZW3, PDF, and TXT, plus conversions between them.
 - No software install — works on phone, tablet, and laptop.
 - For one-off conversions on any device, BookConv is a lighter path than installing Calibre. For help with common issues, see our [ebook troubleshooting guide](/blog/ebook-troubleshooting). And if you need to handle large libraries or rare formats, our [Calibre free batch conversion guide](/blog/calibre-free-batch) covers those scenarios.`

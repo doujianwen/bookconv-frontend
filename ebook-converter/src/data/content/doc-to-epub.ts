@@ -21,7 +21,7 @@ export const content = {
     'The Calibre engine parses DOC structure including headings, paragraphs, images, and tables into reflowable EPUB 3.',
     'Converting DOC to EPUB gives you chapter navigation, semantic markup, and compatibility with all major e-readers.',
     'For batch processing multiple DOC files, use Calibre command line with --chapter and --encoding flags for best results.',
-    'Scanned or image-based DOC files may need OCR enabled; plain text DOCs convert cleanly without additional steps.',
+    'Scanned or image-based DOC files need OCR in a separate tool before conversion; plain text DOCs convert cleanly without additional steps.',
   ],
 
   sections: [
@@ -37,7 +37,7 @@ Calibre parses the DOC structure — headings, paragraphs, images, tables — an
 
 for f in *.doc; do ebook-convert "$f" "\${f%.doc}.epub"; done
 
-Useful Calibre flags: --chapter detects chapter boundaries from heading styles, --toc-filter limits the table of contents to top-level headings, and --extra-css lets you inject custom styling for headings and lists. If your DOC has scanned images, Calibre can run OCR automatically with --enable-heuristics.
+Useful Calibre flags: --chapter detects chapter boundaries from heading styles, --toc-filter limits the table of contents to top-level headings, and --extra-css lets you inject custom styling for headings and lists. If your DOC contains scanned images with no text layer, run OCR in a separate tool before converting, since Calibre does not perform OCR.
 
 The web converter above is better for single files where you do not want to install software. Calibre is the right choice when you have dozens of documents, need consistent batch settings, or want to automate conversion as part of a larger digitization workflow.`
     },

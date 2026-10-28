@@ -39,7 +39,7 @@ export default async function TermsPage() {
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">File Storage</h2>
-          <p>All uploaded files are automatically deleted within 1 hour of conversion. We do not retain copies of your files.</p>
+          <p>All uploaded files are deleted as soon as the conversion completes. We do not retain copies of your files.</p>
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Limitation of Liability</h2>

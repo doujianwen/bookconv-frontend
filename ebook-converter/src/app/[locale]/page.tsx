@@ -202,7 +202,7 @@ export default function HomePage() {
             <div className="grid gap-8 md:grid-cols-3">
             {[
               { icon: Zap, title: 'Fast Conversion', desc: 'Powered by Calibre engine for lightning-fast conversions.' },
-              { icon: Shield, title: 'Secure & Private', desc: 'Files are encrypted and auto-deleted within 1 hour.' },
+              { icon: Shield, title: 'Secure & Private', desc: 'Files are encrypted and deleted after the conversion completes.' },
               { icon: Globe, title: 'No Account Needed', desc: 'Convert ebooks for free — no registration or software install required.' },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="text-center">

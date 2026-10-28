@@ -81,7 +81,7 @@ export function generateSchema(
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
-      featureList: ['No registration required', 'No watermarks', 'Files auto-deleted within 1 hour', 'Batch conversion (Pro)', 'High-quality Calibre engine'],
+      featureList: ['No registration required', 'No watermarks', 'Files deleted after conversion', 'Batch conversion (Pro)', 'High-quality Calibre engine'],
     },
     {
       '@context': 'https://schema.org',

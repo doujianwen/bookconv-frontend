@@ -13,14 +13,14 @@ export const content = {
 
 **Calibre** is versatile for basic format swapping. If you have a simple MOBI file and need an EPUB for Kobo, Calibre handles this instantly. It also allows for extensive metadata editing, library organization, and device syncing. Yet, Calibre struggles significantly with complex layouts. If your document contains intricate CSS, floating images, footnotes, or multi-column text, Calibre's default conversion engine often misinterprets the structure, resulting in broken pages and lost formatting.
 
-For high-fidelity conversions that retain original design—such as cookbooks, photo essays, or textbooks with sidebars—tools like **BookConv.com** utilize advanced OCR and formatting engines superior to standard converters. While Calibre is a powerful Swiss Army knife, it is not a precision surgical instrument. For manuscripts where visual fidelity matters, professional services offer automated preprocessing and manual fine-tuning that Calibre simply cannot match. 
+For high-fidelity conversions that retain original design—such as cookbooks, photo essays, or textbooks with sidebars—tools like **BookConv.com** use a Calibre-based formatting engine that handles text-based files well. While Calibre is a powerful Swiss Army knife, it is not a precision surgical instrument. For manuscripts where visual fidelity matters, professional services offer automated preprocessing and manual fine-tuning that Calibre simply cannot match. 
 
 | Feature | Calibre (Free) | BookConv (Professional) |
 | :--- | :--- | :--- |
 | **Cost** | Free | Paid (based on pages/complexity) |
 | **Complex Layouts** | Poor | Excellent |
 | **Image Retention** | Basic | High-fidelity |
-| **OCR Capability** | Limited | Advanced |
+| **OCR Capability** | Limited | None built-in |
 | **Speed** | Instant | Minutes |
 
 Choosing between these options depends on your project. If you are converting a plain text novel, Calibre is sufficient. If you are formatting a picture book or a technical manual, investing in a professional service ensures your readers see exactly what you intended.`
@@ -32,7 +32,7 @@ Choosing between these options depends on your project. If you are converting a 
 **Steps for Converting Physical Books:**
 
 1.  **High-Quality Scanning**: Use a book scanner or a high-resolution flatbed scanner. Avoid cheap smartphone apps for professional projects, as perspective distortion can ruin the layout.
-2.  **OCR Processing**: Feed the scanned PDFs into an OCR engine. Standard converters often produce "dumb" PDFs where text is not selectable. Services like BookConv use advanced OCR to ensure the text is accurate and searchable.
+2.  **OCR Processing**: Feed the scanned PDFs into an OCR engine (for example Tesseract or Adobe Acrobat). Standard converters, including BookConv, do not perform OCR themselves, so run it first to make the text selectable and searchable.
 3.  **Layout Reconstruction**: The OCR data must be mapped back to the original layout. This is where it gets tricky. Columns, captions, and footers require precise positioning that generic tools often miss.
 4.  **Refinement**: Human proofreading is often necessary to catch OCR errors, especially with older fonts or poor-quality paper.
 
@@ -92,7 +92,7 @@ export const faqs = [
   },
   {
     question: "Can I convert a scanned PDF into a proper EPUB?",
-    answer: "Only with OCR. A scanned PDF is a stack of page images until OCR turns them into selectable text. BookConv runs advanced OCR so the output is a real EPUB you can search, resize, and highlight on any e-reader, rather than a flat image you have to zoom and pan."
+    answer: "Only with OCR. A scanned PDF is a stack of page images until OCR turns them into selectable text. BookConv does not perform OCR itself — run OCR in a separate tool first (for example Tesseract or Adobe Acrobat), then upload the OCR'd PDF to get a real EPUB you can search, resize, and highlight on any e-reader, rather than a flat image you have to zoom and pan."
   },
   {
     question: "When should I pay for a professional conversion service?",

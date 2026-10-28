@@ -309,7 +309,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
                 upload your file using the form below, select <strong>{targetDisplay}</strong> as the output format, and click Convert.
                 Our Calibre-powered engine processes the conversion in seconds with no registration required.
                 The converter preserves text content, chapter structure, images, and metadata.
-                For batch conversions of up to 50 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
+                For batch conversions of up to 20 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
               </>
             )}
           </p>

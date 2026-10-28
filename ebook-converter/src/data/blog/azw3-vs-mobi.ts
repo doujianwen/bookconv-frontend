@@ -8,7 +8,7 @@ export const tags = ["AZW3", "MOBI", "Kindle", "Ebook Formats", "BookConv", "Cal
 export const content = {
   intro: `AZW3 wins on any Kindle from 2015 onward; MOBI only matters for pre-2015 hardware. Here's the difference — and a clean way to convert either direction.
 
-> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `The Short Version`,

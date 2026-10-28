@@ -54,7 +54,7 @@ For the MOBI path (very old Kindles only): [/guide/epub-to-mobi-keep-formatting]
       body: `- **AZW3 is Amazon's KF8, announced in 2011** with over 150 new formatting features including HTML5 and CSS3 support (source: Amazon KF8 announcement, Kindle Publisher Tools documentation).
 - **Send to Kindle dropped MOBI in August 2022** and now auto-converts emailed EPUBs to KF8 instead (source: Amazon Send to Kindle help documentation).
 - **Every e-ink Kindle since the Paperwhite 3 (2015) reads AZW3 natively** (source: Amazon Paperwhite release timeline, 2012–2024).
-- **BookConv's converter runs on a Calibre-derived engine and deletes uploaded files within 1 hour** (source: BookConv privacy note on this page).`,
+- **BookConv's converter runs on a Calibre-derived engine and deletes uploaded files after the conversion completes** (source: BookConv privacy note on this page).`,
     },
     {
       heading: 'Step-by-Step: Sideload AZW3 to Your Kindle',

@@ -9,7 +9,7 @@ export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `E
 export const content = {
   intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.
 
-> BookConv processes your file on our servers and automatically deletes it within 1 hour. Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `Why Sync Fails Between Devices`,

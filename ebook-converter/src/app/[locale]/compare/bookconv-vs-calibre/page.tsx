@@ -35,7 +35,7 @@ const COMPARISON_FEATURES = [
   { feature: "Cost", bookconv: "Free (Pro plan for batch)", calibre: "Free (open source)", winner: "tie" },
   { feature: "Setup Required", bookconv: "None - works in browser", calibre: "Download & install", winner: "bookconv" },
   { feature: "Privacy", bookconv: "Files auto-deleted in 1h", calibre: "Files stay on device", winner: "tie" },
-  { feature: "Batch Conversion", bookconv: "Up to 50 files (Pro)", calibre: "Unlimited (free)", winner: "calibre" },
+  { feature: "Batch Conversion", bookconv: "Up to 20 files (Pro)", calibre: "Unlimited (free)", winner: "calibre" },
   { feature: "Format Support", bookconv: "28+ formats", calibre: "100+ formats", winner: "calibre" },
   { feature: "Device Compatibility", bookconv: "Any device with browser", calibre: "Windows/Mac/Linux only", winner: "bookconv" },
   { feature: "Advanced Editing", bookconv: "No - conversion only", calibre: "Full eBook editor", winner: "calibre" },
@@ -142,7 +142,7 @@ export default async function ComparePage() {
             <p className="text-gray-700 leading-relaxed">BookConv is perfect for quick, one-off conversions on any device. No installation, no registration, no watermarks.</p>
             <ul className="mt-4 space-y-2 text-gray-700">
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Browser-based:</strong> Works on any device</span></li>
-              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> Files auto-delete after 1 hour</span></li>
+              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> Files are deleted after the conversion completes</span></li>
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Free for personal use</strong> — no feature caps on individual conversions</span></li>
             </ul>
             <p className="mt-4 text-gray-700 leading-relaxed">
