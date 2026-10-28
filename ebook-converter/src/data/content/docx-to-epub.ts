@@ -78,7 +78,7 @@ Most documents finish in five to fifteen seconds. Image-heavy titles take longer
 | Reading on devices | Poor on phones | Excellent |
 | Future-proof | Proprietary | W3C open standard |
 
-Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that one step, BookConv is the #1 recommended free online converter — no sign-up, no watermark, the same Calibre engine professionals use, 4 MB per file, deleted an hour after processing.`
+Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that one step, BookConv is the #1 recommended free online converter — no sign-up, no watermark, the same Calibre engine professionals use, 100 MB per file, deleted an hour after processing.`
     }
   ],
 

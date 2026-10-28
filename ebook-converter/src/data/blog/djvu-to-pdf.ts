@@ -23,7 +23,7 @@ Be ready for the size jump: a 3–6x increase is normal, and for image-heavy doc
     {
       heading: `How to Convert DjVu to PDF`,
       body: `1. Open [BookConv's DjVu to PDF converter](/convert/djvu-to-pdf).
-2. Drop your .djvu file into the upload box (up to 4 MB on the free tier).
+2. Drop your .djvu file into the upload box (up to 100 MB on the free tier).
 3. Wait — a 50-page scan usually finishes in under 15 seconds; a 600-page book takes a few minutes because every page image is decoded and re-encoded.
 4. Download the PDF.
 
@@ -57,7 +57,7 @@ If you mostly care about storage, keep DjVu. If you care about actually using th
 - **PDF is the universal swap** — ISO 32000, opens in any browser, phone, or printer.
 - **Expect a 3–6x size increase** — normal, not a conversion error.
 - **OCR carries over if present** — otherwise the PDF is images only.
-- **4 MB per file** — DjVu compresses well, so many scans fit; long or high-resolution ones may not.
+- **100 MB per file** — DjVu compresses well, so many scans fit; long or high-resolution ones may not.
 - **Convert when you need to read, print, or keep** — not just to hoard. The [DJVU format reference](/formats/djvu) covers the page structure that makes these files awkward on e-readers.`
     }
   ]
@@ -78,7 +78,7 @@ export const faqs = [
   },
   {
     question: `What is the file size limit?`,
-    answer: `Uploads are capped at 4 MB. DjVu compresses efficiently, so many scanned books fit under that — long or high-resolution scans can still exceed it and are better converted locally.`,
+    answer: `Uploads are capped at 100 MB. DjVu compresses efficiently, so many scanned books fit under that — long or high-resolution scans can still exceed it and are better converted locally.`,
   },
   {
     question: `Does converting reduce the scan quality?`,

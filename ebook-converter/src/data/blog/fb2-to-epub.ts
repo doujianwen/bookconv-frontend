@@ -71,7 +71,7 @@ export const faqs = [
   },
   {
     question: `How many FB2 files can I convert at once?`,
-    answer: `Free accounts convert one file at a time up to 4 MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.`,
+    answer: `Free accounts convert one file at a time up to 100 MB, which is far more than any FB2 file needs since most novels are under a megabyte. Pro accounts add batch conversion, which matters if you are migrating an entire FB2 library.`,
   },
   {
     question: `Is FB2 the same as EPUB?`,

@@ -269,11 +269,11 @@
 
 ---
 
-## 🟡 2026-10-28 新增：大文件拦截回归修复（本地完成，待发布）
+## 🟢 2026-10-28：大文件拦截回归修复（已发布 + 实测验证闭环）
 
 - **回归**：10-27 生产设 `CONVERSION_BACKEND_URL` 后，`upload-presign.isDirectUploadEnabled` 互斥守卫把 R2 直传关掉 → 客户端上限 100MB→4MB。
 - **修复**：①守卫恢复 `isR2Configured()`；②R2 对象经 Vercel 函数预取 → `delegateToBackend({prebuiltFile})`，白名单格式大文件也走自托管后端。测试 40/40。
-- **部署动作**：随下次发布生效（无需新 env）；**建议同时加 Vercel env `CONVERSION_BACKEND_TIMEOUT_MS=240000`**（默认 90s 会掐断 60–120s 的大 PDF 后端转换，白白回退 CC）。
+- **部署动作**：已发布（d2c90bd 后整链路在线）。R2 env 已填实值；Vercel env `CONVERSION_BACKEND_TIMEOUT_MS=240000` 已配置并实测生效（12.9MB/300页图片型 PDF→EPUB 端到端 270s，`X-Conversion-Backend: hit` + 72.5MB 成品；旧默认 90s 必然中途 abort 走回退，故 hit 即证明 240s 生效）。
 - **遗留**：50–100MB 段仍走 CC（后端 cap 50MB）；全量接管需实测 tmpfs（1G）对 100MB 输入解压峰值后再提 nginx/MAX_FILE_BYTES。
 - **验证项 PV-7**（新增）：发布后用 >4.5MB 的 EPUB 走 Preview 转换 → 期望 `X-Conversion-Backend: hit`（或 >50MB 时 `miss-cloudconvert` 且 200，不再 413）。
 
@@ -354,3 +354,22 @@
 - 决定性证据链：①用户侧主机安全/防火墙/fail2ban/hosts.deny/nftables/ipset/auth.log **全部零记录**；②外部 4 节点（in/ir/ru/vn）TCP:22 **全部秒连 0.04-0.31s**；③github.com:22 经代理加密隧道正常；④本机所有裸 IP 直连路径（22/443）TCP 通但首包被掐。
 - **判定：服务器、防火墙、sshd 全部无辜。是大陆出境链路对明文 SSH banner 的 RST 注入**（TCP 握手不涉及 banner 可通过；banner 一出现被 RST ⇒ "Connection closed"；auth.log 零记录 = 内核层 RST，流量未到达 sshd 应用层）。github SSH 正常的原因：域名匹配代理规则走加密隧道，banner 不暴露在跨境明文链路上。
 - **解法**：SSH 需求改走 ①ProxyCommand 经本地 HTTP 代理隧道（127.0.0.1:12450 实测可通 443，`ssh -o ProxyCommand="nc -X connect -x 127.0.0.1:12450 %h %p"`，需验证 22 是否被代理策略放行）；②或腾讯控制台 OrcaTerm 网页终端（不走 22）；③或服务器加备用 SSH 端口（如 2222，在 OrcaTerm 里配，用户操作）后 `ssh -p 2222` 绕开 22 端口干扰。
+
+## 🟡 2026-10-28 下午：跨文档一致性验证（100MB 真值同步）+ 遗留任务
+
+**背景**：5e39c7b 恢复 100MB R2 直传后，全站文案仍停留在 4MB 时代（~60 文件 200+ 处），且门禁 `audit-plan-claims.mjs` 的真值基线是硬编码的「4 MB for everyone」快照——代码真值变了、门禁没跟着变，反而会把正确的 100MB 文案判为假声明（46 errors）。
+
+**本轮已完成（统一修复 + 门禁根因修复）**：
+- 文案 4MB→100MB 全量同步：src/data 34 文件 + src/app（batch/pricing）+ messages(en/es) + public/llms.txt（llms.txt 原为 10MB，第三种数字；且残留「1 小时删除」旧隐私承诺→已改为「转换完成后即删」与隐私页对齐）。
+- 西语假承诺清零：guides ES 版 `beta abierta` 免费批量声明 ×10（58bbfcc 只修了 EN，ES 漏网——早期 sweep 模式 `Gratis durante beta` 匹配不上 `gratis durante la beta abierta`）。
+- 对比表我们自己的列 4MB→100MB（epub-to-mobi EN/ES、djvu-to-pdf）。
+- 大文件指南 Key Takeaways 整段中文残留→译为 EN。
+- **门禁修复（根因）**：audit-plan-claims.mjs 移除 `100\s?MB` 一刀切禁令（改为只禁「Pro 提高 100MB 上限」类能力吹嘘）；新增 open beta / beta abierta / affirmative-OCR / `N conversions an hour` 四类假声明模式；EXTRA_FILES 加 messages/en+es.json；头部真值基线注释重写为两路径现实（multipart 4MB / R2 直传 100MB，含 convert-handler.ts:192/207 行号锚点）。
+- 全部门禁绿：audit:claims/content/syntax 0 错误，tsc 干净。
+
+**遗留（下次内容批次）**：
+1. **P1｜large-file-conversion-guide 整篇重叙述**：全文以「4MB 上限」为前提写成（标题区 Why Over 4 MB、决策清单 Under 4MB/4–50MB/Over 50MB 分段建议、intro「shrink so they fit」），数字虽已改 100MB 但叙事逻辑已不自洽；llms.txt 里该文标题「Over 10 MB」也建议随文重定。
+2. **P2｜门禁扫描面扩展**：当前只扫 src/data/**.ts + llms.txt + messages；src/app 页面（batch/pricing 等 .tsx）与 openapi.json 不在扫描面——今天 batch/pricing 的 4MB 残留正是从盲区捞出来的。
+3. **P2｜残留叙述逻辑**：部分博客句子数字已 100MB 但推理仍基于「4MB 很紧」（如 cbr-to-pdf「comic scans 很容易超限」）；非假承诺但属误导性建议，随各文更新时顺手改。
+
+**教训（进 MEMORY）**：①门禁的真值基线如果硬编码，必须随代码真值变更同步（5e39c7b 改代码没改门禁=门禁变成「合法化旧谎言」）；②sweep 模式必须覆盖全部语言变体（EN 模式抓不到 ES 表述）；③对比表（COMPARISON_ROW 豁免）是声明盲区。

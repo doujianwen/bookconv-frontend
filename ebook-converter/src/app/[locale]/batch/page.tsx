@@ -50,7 +50,7 @@ const FAQ = [
   },
   {
     q: "What is the maximum file size per file?",
-    a: "Each file in a batch can be up to 4 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
+    a: "Each file in a batch can be up to 100 MB. Larger books are better handled one at a time, or with a desktop tool such as Calibre.",
   },
   {
     q: "What if one file in my batch fails?",
@@ -108,7 +108,7 @@ export default async function BatchPage() {
           Convert several ebooks to one format and download them as a single ZIP — a Pro feature.
         </p>
         <p className="mt-3 text-base text-gray-500">
-          Personal single-file conversion stays free for personal use with a 4 MB per-file limit; batch mode is included with the Pro plan.
+          Personal single-file conversion stays free for personal use with a 100 MB per-file limit; batch mode is included with the Pro plan.
         </p>
       </div>
 

@@ -43,7 +43,7 @@
   },
   "faq": {
     "q1": "Is BookConv free to use?",
-    "a1": "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 4 MB per file.",
+    "a1": "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 100 MB per file.",
     "q2": "What formats does BookConv support?",
     "a2": "BookConv supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents.",
     "q3": "Is my data safe when I upload files?",
@@ -228,7 +228,7 @@
     "step5Title": "Download result",
     "step5Desc": "After conversion completes, click the download button to save your file",
     "tipsTitle": "Tips",
-    "tip1": "Maximum file size supported: 4MB",
+    "tip1": "Maximum file size supported: 100MB",
     "tip2": "Files are deleted after the conversion completes to protect privacy",
     "tip3": "Drag-and-drop upload supported for convenience",
     "tip4": "For any questions, contact online customer service or view help documentation at any time",

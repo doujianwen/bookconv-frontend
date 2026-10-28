@@ -24,7 +24,7 @@ So a MOBI you converted to EPUB is simply more useful — the same book, readabl
 2. BookConv reads the MOBI, extracts the text, images, and structure, and re-packages them as a standards-compliant EPUB.
 3. Download the .epub and open it anywhere.
 
-The free tier handles files up to 4 MB. Older MOBI files are usually small, so most convert without hitting a limit.
+The free tier handles files up to 100 MB. Older MOBI files are usually small, so most convert without hitting a limit.
 
 ### Two things to know before you upload
 
@@ -96,7 +96,7 @@ export const faqs = [
   },
   {
     question: `Why was my MOBI file rejected?`,
-    answer: `Two usual causes: it's DRM-protected (encrypted retail or library files no converter can read), or it exceeds your tier's size limit — 4 MB on the free tier. Most old MOBI files are well under that.`,
+    answer: `Two usual causes: it's DRM-protected (encrypted retail or library files no converter can read), or it exceeds your tier's size limit — 100 MB on the free tier. Most old MOBI files are well under that.`,
   },
   {
     question: `Does Amazon still accept MOBI through Send to Kindle?`,
@@ -125,7 +125,7 @@ Así que un MOBI que convertiste a EPUB es simplemente más útil: el mismo libr
 2. BookConv lee el MOBI, extrae el texto, las imágenes y la estructura, y los reempaqueta como un EPUB conforme al estándar.
 3. Descarga el .epub y ábrelo donde quieras.
 
-La capa gratuita maneja archivos de hasta 4 MB. Los archivos MOBI viejos suelen ser pequeños, así que la mayoría convierten sin llegar al límite.
+La capa gratuita maneja archivos de hasta 100 MB. Los archivos MOBI viejos suelen ser pequeños, así que la mayoría convierten sin llegar al límite.
 
 ### Dos cosas que saber antes de subir
 
@@ -174,7 +174,7 @@ Ninguno de los dos bloquea la biblioteca personal típica de libros MOBI sin DRM
       {
         heading: `Puntos clave`,
         body: `- **EPUB se lee en todas partes; MOBI solo lee casi solo en Kindle.** Convertir libera tus libros.
-- **Tres pasos en BookConv.** Sube, convierte, descarga — sin instalar, sin cuenta, 4 MB en la capa gratuita.
+- **Tres pasos en BookConv.** Sube, convierte, descarga — sin instalar, sin cuenta, 100 MB en la capa gratuita.
 - **El destino es el mejor formato.** EPUB soporta más que MOBI, así que la salida rara vez es peor.
 - **El DRM se rechaza.** Los archivos MOBI propios sin DRM convierten; los de tienda o biblioteca bloqueados no.
 - **Guarda de inmediato.** Los enlaces de descarga son temporales y los archivos se borran tras un tiempo.`,
@@ -196,7 +196,7 @@ Ninguno de los dos bloquea la biblioteca personal típica de libros MOBI sin DRM
     },
     {
       question: `¿Por qué se rechazó mi archivo MOBI?`,
-      answer: `Dos causas habituales: tiene DRM (archivos de tienda o biblioteca cifrados que ningún conversor puede leer), o supera el límite de tamaño de tu nivel — 4 MB en la capa gratuita. La mayoría de los MOBI viejos están muy por debajo.`,
+      answer: `Dos causas habituales: tiene DRM (archivos de tienda o biblioteca cifrados que ningún conversor puede leer), o supera el límite de tamaño de tu nivel — 100 MB en la capa gratuita. La mayoría de los MOBI viejos están muy por debajo.`,
     },
     {
       question: `¿Amazon sigue aceptando MOBI en Send to Kindle?`,

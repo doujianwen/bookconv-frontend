@@ -1,6 +1,6 @@
 # BookConv
 
-> Free online ebook format converter supporting 28+ formats (17+ dedicated ebook formats plus documents and images). No registration, no watermarks. Uploads are limited to 10 MB per file and conversions to 20 per minute, on every plan. Powered by the Calibre engine and runs entirely in your browser.
+> Free online ebook format converter supporting 28+ formats (17+ dedicated ebook formats plus documents and images). No registration, no watermarks. Uploads are limited to 100 MB per file and conversions to 20 per minute, on every plan. Powered by the Calibre engine and runs entirely in your browser.
 
 ## Supported Formats
 EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU, JPG, PNG, ZIP
@@ -170,7 +170,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
 - [Pricing and plans](https://www.bookconv.com/pricing)
 
 ## About
-BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted within 1 hour of conversion. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
+BookConv is a free, browser-based ebook converter. Files are transferred over encrypted HTTPS and automatically deleted after the conversion completes. No account is required for free conversions. The service is built on the open-source Calibre conversion engine and supports ebooks, documents, and images.
 
 ### Privacy & Trust
 - No registration required for free conversions.

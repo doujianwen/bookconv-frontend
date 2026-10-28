@@ -94,12 +94,12 @@ Sitting on a folder of old MOBI files? [Convert MOBI to EPUB](/convert/mobi-to-e
 Upload the file, pick the target format, watch the progress bar, download the result. Conversion runs server-side on a Calibre engine, so you get desktop-grade output without maintaining a desktop app or waiting on an installer.
 
 **What the free tier gives you:**
-- Up to **4 MB per file**, which covers nearly every text-only novel
+- Up to **100 MB per file**, which covers nearly every text-only novel
 - **20 conversion requests per minute**, with no account and no sign-up
 - A **metadata preview** before you commit, so you can check the title and author were read correctly
 - A **live progress bar** — heavy files hand off to a background worker queue instead of stalling your tab
 
-**When you need more room:** every plan stops at **4 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
+**When you need more room:** every plan stops at **100 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
 
 Two things worth knowing before you upload. **DRM-protected files are rejected on upload** — we don't strip protection, so there's nothing to work around. And **download links are temporary**: converted files are deleted after a while, so save the result when it's ready instead of bookmarking the page.
 
@@ -151,7 +151,7 @@ export const faqs = [
   },
   {
     question: `My book is bigger than 4 MB. What now?`,
-    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images or split the book — the 4 MB cap applies to every plan.`,
+    answer: `The free tier rejects it up front rather than failing halfway through. Compress the images or split the book — the 100 MB cap applies to every plan.`,
   },
   {
     question: `What about DRM-protected purchases?`,
@@ -258,12 +258,12 @@ Amazon lo ha venido retirando poco a poco. Send to Kindle dejó de aceptar subid
 Sube el archivo, elige el formato destino, mira la barra de progreso, descarga el resultado. La conversión corre del lado del servidor en un motor Calibre, así obtienes salida de grado de escritorio sin mantener una app de escritorio ni esperar un instalador.
 
 **Qué da la capa gratuita:**
-- Hasta **4 MB por archivo**, lo que cubre casi todas las novelas solo de texto
+- Hasta **100 MB por archivo**, lo que cubre casi todas las novelas solo de texto
 - **20 solicitudes de conversión por minuto**, sin cuenta ni registro
 - Una **vista previa de metadatos** antes de comprometerte, así compruebas que el título y el autor se leyeron bien
 - Una **barra de progreso en vivo** — los archivos pesados pasan a una cola de trabajadores en segundo plano en vez de bloquear tu pestaña
 
-**Cuando necesitas más espacio:** todos los planes se detienen en **4 MB por archivo**, así que los libros ilustrados y los PDF escaneados necesitan compresión o división, no un plan mayor.
+**Cuando necesitas más espacio:** todos los planes se detienen en **100 MB por archivo**, así que los libros ilustrados y los PDF escaneados necesitan compresión o división, no un plan mayor.
 
 Dos cosas que vale la pena saber antes de subir. **Los archivos con DRM se rechazan al subir** — no quitamos protección, así que no hay nada que rodear. Y **los enlaces de descarga son temporales**: los archivos convertidos se borran tras un rato, así que guarda el resultado cuando esté listo en vez de guardar la página en marcadores.
 
@@ -307,7 +307,7 @@ Calibre de escritorio sigue valiendo la pena si gestionas miles de libros, edita
     },
     {
       question: `¿Mi libro es mayor de 4 MB. Qué ahora?`,
-      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes o divide el libro: el tope de 4 MB se aplica a todos los planes.`,
+      answer: `La capa gratuita lo rechaza de entrada en vez de fallar a mitad. Comprime las imágenes o divide el libro: el tope de 100 MB se aplica a todos los planes.`,
     },
     {
       question: `¿Y las compras con DRM?`,

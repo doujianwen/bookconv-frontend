@@ -6,7 +6,7 @@ export const author = `BookConv Team`;
 export const tags = [`Large File`, `Troubleshooting`, `BookConv`, `Ebook`, `Pro`];
 
 export const content = {
-  intro: `The free tier accepts files up to 4 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink or split them so they fit, and what Pro actually adds when you are converting in volume.`,
+  intro: `The free tier accepts files up to 100 MB. If your ebook is larger — whether it's packed with images, has embedded fonts, or is a scanned PDF — you'll hit the limit. This guide explains why files get big, how to shrink or split them so they fit, and what Pro actually adds when you are converting in volume.`,
   sections: [
     {
       heading: `Why Your Ebook Is Over 4 MB`,
@@ -22,20 +22,20 @@ export const content = {
     },
     {
       heading: `When to Upgrade to Pro`,
-      body: `Pro does not raise the file size cap — 4 MB applies to every plan, Pro included. What Pro adds is batch conversion: several files in one upload instead of one at a time. Consider upgrading if:\n\n**You convert large files regularly.** If compression and upload is a routine, batching it removes the repetitive part.\n\n**You need batch conversion.** Pro allows multiple files in one upload, which matters when processing entire libraries.\n\n**You're a publisher or author.** Managing several format outputs for one manuscript is faster with bulk uploads.\n\n**You convert the same book into several formats.** Batch upload handles the repetition in one pass.`
+      body: `Pro does not raise the file size cap — 100 MB applies to every plan, Pro included. What Pro adds is batch conversion: several files in one upload instead of one at a time. Consider upgrading if:\n\n**You convert large files regularly.** If compression and upload is a routine, batching it removes the repetitive part.\n\n**You need batch conversion.** Pro allows multiple files in one upload, which matters when processing entire libraries.\n\n**You're a publisher or author.** Managing several format outputs for one manuscript is faster with bulk uploads.\n\n**You convert the same book into several formats.** Batch upload handles the repetition in one pass.`
     },
     {
       heading: `Quick Decision Checklist`,
-      body: `- **Under 4 MB?** Upload directly. No action needed.\n- **4–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 4 MB.\n- **Converting many files?** Pro takes several in one upload rather than one at a time.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
+      body: `- **Under 4 MB?** Upload directly. No action needed.\n- **4–50 MB?** Try compression (remove fonts, shrink images, lower PDF DPI).\n- **Over 50 MB?** Split the file into parts — every plan caps one upload at 100 MB.\n- **Converting many files?** Pro takes several in one upload rather than one at a time.\n- **Need plain text for AI?** Convert to TXT instead — text-only files are almost always under 5 MB.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **超过 4 MB 通常有四个原因。** 内嵌图片、扫描 PDF（300 页轻松 20 到 100 MB）、多字重嵌入字体、以及 CBZ/CBR 这类无损全页图格式。
-- **EPUB 就是个 ZIP。** 改扩展名为 .zip 打开，压缩 images 目录再改回来，体积立刻下来。
-- **扫描 PDF 降 DPI 是最划算的一招。** 从 300 DPI 降到 150 DPI，体积减 75% 而文字依然可读。
-- **4 MB 上限对所有套餐都一样，Pro 也不提高。** Pro 增加的是批量上传，不是单文件额度。
-- **超 50 MB 就分册。** 按章节切开分别上传，多数阅读应用可以把多个文件合并成一个书库视图。
-- **纯文本几乎都不到 5 MB。** 喂给 NotebookLM、ChatGPT 这类工具时，转 TXT 比转 EPUB 省事得多。`
+      body: `- **Files over 4 MB usually have one of four causes.** Embedded images, scanned PDFs (a 300-page book easily reaches 20-100 MB), multiple embedded font weights, and lossless full-page-image formats like CBZ/CBR.
+- **An EPUB is just a ZIP.** Rename it to .zip, compress the images folder, rename it back — the size drops immediately.
+- **Lowering the DPI of scanned PDFs is the highest-leverage fix.** Going from 300 DPI to 150 DPI cuts size by about 75% while text stays readable.
+- **The 100 MB cap is the same on every plan — Pro does not raise it.** What Pro adds is batch upload, not a bigger single-file allowance.
+- **For truly huge books, split into parts.** Upload each part separately; most reading apps can merge multiple files into one library view.
+- **Plain text is almost always under 5 MB.** For NotebookLM- or ChatGPT-style tools, converting to TXT is far easier than feeding them an EPUB.`
     }
   ]
 };

@@ -202,7 +202,7 @@ Si nadie exige DOC específicamente, usa nuestro conversor de EPUB a DOCX. En se
       },
       {
         heading: 'Cómo convertir EPUB a DOC',
-        body: `**1. Sube tu EPUB.** Arrastra y suelta, o haz clic para explorar. Las cuentas gratuitas manejan archivos de hasta 4 MB, lo que cubre prácticamente cualquier libro de texto electrónico, ya que incluso una novela de 900 páginas rara vez supera los 5 MB. Solo los libros con muchas ilustraciones se acercan al límite.
+        body: `**1. Sube tu EPUB.** Arrastra y suelta, o haz clic para explorar. Las cuentas gratuitas manejan archivos de hasta 100 MB, lo que cubre prácticamente cualquier libro de texto electrónico, ya que incluso una novela de 900 páginas rara vez supera los 5 MB. Solo los libros con muchas ilustraciones se acercan al límite.
 
 **2. La conversión se ejecuta automáticamente.** Se analiza la estructura HTML del EPUB, los capítulos se fusionan en un flujo de documento único, las etiquetas de encabezado se convierten en estilos de encabezado de Word y las imágenes se incrustan. La mayoría de los libros terminan en menos de 30 segundos.
 
@@ -253,7 +253,7 @@ Nada de esto es una limitación del conversor. DOC es un formato de 1993 al que 
       { q: '¿Puedo editar el archivo DOC convertido?', a: 'Sí, totalmente. Se abre y edita en Microsoft Word, LibreOffice Writer, WPS Office, Google Docs y Apple Pages, aunque Word moderno mostrará un aviso de modo de compatibilidad.' },
       { q: '¿Sobreviven las imágenes a la conversión?', a: 'Las imágenes raster estándar como JPG y PNG se extraen y se incrustan en el documento. Los gráficos vectoriales SVG y las imágenes posicionadas con CSS pueden simplificarse o reposicionarse, ya que DOC no tiene un modelo de diseño equivalente.' },
       { q: 'Mi EPUB no se convierte, ¿qué pasa?', a: 'La causa más común es el DRM. Los libros comprados en Kobo, Google Play Books o tiendas similares están cifrados y ningún conversor puede leerlos, mientras que los archivos sin DRM de Project Gutenberg, autores independientes o tus propias exportaciones se convierten sin problema.' },
-      { q: '¿Cuántos libros puedo convertir a la vez?', a: 'Las cuentas gratuitas manejan un archivo a la vez, de hasta 4 MB cada uno, más que suficiente para libros de texto, que rara vez superan unos pocos megabytes. Las cuentas Pro añaden conversión por lotes y límites de archivo mayores para procesar una biblioteca completa.' }
+      { q: '¿Cuántos libros puedo convertir a la vez?', a: 'Las cuentas gratuitas manejan un archivo a la vez, de hasta 100 MB cada uno, más que suficiente para libros de texto, que rara vez superan unos pocos megabytes. Las cuentas Pro añaden conversión por lotes y límites de archivo mayores para procesar una biblioteca completa.' }
     ]
   }
 };

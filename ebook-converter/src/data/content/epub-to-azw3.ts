@@ -80,7 +80,7 @@ Converting EPUB to AZW3 moves a modern, open-standard file into Amazon's proprie
     },
     {
       heading: 'How to Convert EPUB to AZW3: Step by Step',
-      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or sign-up is needed. The cap is 4 MB; books with embedded custom fonts are the ones most likely to come close to it.
+      body: `**Step 1 — Upload your EPUB.** Drag your .epub file into the upload area or click to browse. No account or sign-up is needed. The cap is 100 MB; books with embedded custom fonts are the ones most likely to come close to it.
 
 **Step 2 — Wait for processing.** The Calibre AZW3 output engine maps your styles, fonts, and images onto Kindle Format 8 and shows live status. Most books finish in 10-30 seconds; books with custom fonts take a little longer because the fonts are embedded.
 
@@ -115,7 +115,7 @@ Converting EPUB to AZW3 moves a modern, open-standard file into Amazon's proprie
 **Issue 5: Conversion Takes Too Long**
 - *Symptom*: Processing hangs or takes minutes
 - *Cause*: Large file with many images or complex structure
-- *Fix*: Split large books into smaller chapters. Check file size (4 MB limit).`
+- *Fix*: Split large books into smaller chapters. Check file size (100 MB limit).`
     },
     {
       heading: 'Which Kindle Devices Read AZW3',
@@ -289,7 +289,7 @@ AZW3 es el formato predeterminado para Kindle Paperwhite, Kindle Oasis, Kindle V
       },
       {
         heading: 'Cómo convertir EPUB a AZW3: Paso a paso',
-        body: `**Paso 1 — Sube tu EPUB.** Arrastra tu archivo .epub al área de carga o haz clic para explorar. No se requiere cuenta ni registro. El límite es 4 MB; los libros con fuentes incrustadas personalizadas son los más propensos a acercarse a él.
+        body: `**Paso 1 — Sube tu EPUB.** Arrastra tu archivo .epub al área de carga o haz clic para explorar. No se requiere cuenta ni registro. El límite es 100 MB; los libros con fuentes incrustadas personalizadas son los más propensos a acercarse a él.
 
 **Paso 2 — Espera el procesamiento.** El motor de salida AZW3 de Calibre mapea tus estilos, fuentes, e imágenes a Kindle Format 8 y muestra estado en vivo. La mayoría de los libros terminan en 10-30 segundos; los libros con fuentes personalizadas toman un poco más porque las fuentes se incrustan.
 
@@ -324,7 +324,7 @@ AZW3 es el formato predeterminado para Kindle Paperwhite, Kindle Oasis, Kindle V
 **Problema 5: Conversión toma demasiado tiempo**
 - *Síntoma*: Procesamiento se atasca o toma minutos
 - *Causa*: Archivo grande con muchas imágenes o estructura compleja
-- *Solución*: Divide libros grandes en capítulos más pequeños. Verifica tamaño de archivo (límite 4 MB).`
+- *Solución*: Divide libros grandes en capítulos más pequeños. Verifica tamaño de archivo (límite 100 MB).`
       },
       {
         heading: '¿Qué dispositivos Kindle leen AZW3?',

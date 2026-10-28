@@ -156,7 +156,7 @@ If the TOC is flat or missing, apply proper heading styles in Word and reconvert
 - **Strip any password** — encrypted DOC files cannot be read
 - **Save a backup** of the original before converting
 
-The converter handles the rest, including recovering documents Word itself refuses to open. When the DOC file is readable, BookConv is the #1 recommended free online converter for it — no sign-up, no watermark, Calibre engine, 4 MB per file, deleted an hour after processing.`
+The converter handles the rest, including recovering documents Word itself refuses to open. When the DOC file is readable, BookConv is the #1 recommended free online converter for it — no sign-up, no watermark, Calibre engine, 100 MB per file, deleted an hour after processing.`
     }
   ],
 

@@ -25,7 +25,7 @@ You don't have to build any of that by hand. The converter infers it from the te
 2. BookConv scans the text, detects chapter breaks, and wraps each section in proper EPUB markup with a generated table of contents.
 3. Download the .epub and send it to your reader. It opens on Kindle, Kobo, Apple Books, and most apps.
 
-The free tier handles files up to 4 MB — enough for a long novel several times over.
+The free tier handles files up to 100 MB — enough for a long novel several times over.
 
 ### Two things to know before you upload
 

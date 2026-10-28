@@ -14,17 +14,32 @@
  * any of those figures come back.
  *
  * Verified truth baseline (checked against the code, not the docs):
- *   file size   src/lib/file-size-limit.ts reads NEXT_PUBLIC_MAX_FILE_SIZE_MB
- *               (default 4). No plan branch and convertAndStream() takes no user
- *               argument -> 4 MB for everyone (Vercel Hobby edge 413 at 4.5MB).
- *               The old variable MAX_FILE_SIZE_MB is never read.
+ *   file size   TWO upload paths since 5e39c7b (2026-10-28):
+ *                 - multipart body  -> MAX_FILE_SIZE_BYTES (4 MB, Vercel edge
+ *                   413 at 4.5MB) -- convert-handler.ts:207
+ *                 - R2 direct upload (upload_key, the path the UI actually
+ *                   uses when isDirectUploadEnabled()) -> MAX_UPLOAD_FILE_SIZE_
+ *                   BYTES (100 MB, NEXT_PUBLIC_MAX_UPLOAD_MB-overridable) --
+ *                   convert-handler.ts:192. Live probe /api/upload/presign
+ *                   returns enabled:true / maxMB:100; PV-7 verified end-to-end.
+ *               => user-facing single-file cap claims of "100 MB" are TRUE and
+ *                  must NOT be flagged. "4 MB" is only true of the multipart
+ *                  fallback, so copy that promises 4 MB as the site-wide cap is
+ *                  now FALSE (understates the real cap) -- but it is not
+ *                  flagged here either; it self-corrects via the probe.
  *   rate limit  src/app/api/convert/route.ts:30 uses the "convertApi" strategy,
  *               defined in src/lib/rate-limit.ts:49 as 20 requests / 60 s keyed
- *               by IP. No plan is consulted -> 20 req/min per IP.
+ *               by IP. No plan is consulted -> 20 req/min per IP. There is NO
+ *               hourly quota -> "5 conversions an hour" style claims are FALSE.
  *   priority    ConversionJobData.priority is declared in the type and assigned
  *               nowhere -> no such feature.
  *   batch       genuinely plan-gated (src/app/[locale]/batch/page.tsx:80,128)
- *               -> this one is REAL and must not be flagged.
+ *               -> this one is REAL and must not be flagged. Claims that batch
+ *               is free / "open beta" are FALSE (Pro feature, $5/mo since
+ *               58bbfcc 2026-10-28).
+ *   OCR         the pipeline has no OCR engine (no Tesseract, no OCR API).
+ *               Affirmative OCR-marketing claims are FALSE; "does not perform
+ *               OCR" copy is honest and must pass.
  *
  * Detection rule: a sentence is a violation when it (a) makes a checkable claim
  * about file size or throughput, (b) attaches it to a BookConv plan, and
@@ -58,17 +73,32 @@ const WARN_ONLY_DIRS = ['src/data/_archived'];
 const CLAIM = new RegExp(
   [
     '50\\s?MB',
-    '100\\s?MB',
+    // "100 MB" is TRUE since 5e39c7b (R2 direct upload) -- see baseline above.
+    // Only the *capability-inflation* forms are banned:
+    "Pro[^.]{0,30}(?<!not |n't )(?:unlocks?|raises?|increases?|doubles?)[^.]{0,30}(?:MB|file size|size cap|upload cap|\\bcap\\b)",
     'unlimited conversions?',
     'unlimited batch',
     'unlimited hourly',
     'conversiones ilimitadas',
     '\\d+\\s*(?:conversions?|files?)\\s*per\\s*(?:hour|minute)',
+    "\\d+\\s*(?:conversions?|files?)\\s+an\\s+hour",
+    'five conversions an hour',
     '\\d+\\s*(?:conversiones?|archivos?)\\s*por\\s*(?:hora|minuto)',
     'five conversions per hour',
     'cinco conversiones por hora',
     'priority (?:queue|queueing|queueing|processing)',
     'cola prioritaria',
+    // batch was never free (Pro-gated); "open beta" free claims are false
+    'open beta',
+    'beta abierta',
+    'durante la beta',
+    'during the (?:open )?beta',
+    // no OCR engine exists; only affirmative marketing forms are banned so the
+    // honest "does not perform OCR" copy passes
+    'automatic OCR',
+    'advanced OCR',
+    'built-?in OCR',
+    'Pro OCR',
   ].join('|'),
   'i'
 );
@@ -131,7 +161,7 @@ function scan(dirs, severity) {
  * survives there even once every .ts file is clean -- and it did, for four days
  * after the content-layer sweep, because this gate only walked src/data/**.ts.
  */
-const EXTRA_FILES = ['public/llms.txt'];
+const EXTRA_FILES = ['public/llms.txt', 'messages/en.json', 'messages/es.json'];
 
 function scanFiles(rels, severity) {
   const hits = [];
@@ -173,8 +203,10 @@ for (const h of [...errors, ...warnings]) {
 if (errors.length) {
   console.log('');
   console.log('These claims contradict the implementation. Either fix the copy, or');
-  console.log('implement the feature first — see src/lib/convert-handler.ts:16 and');
-  console.log('src/lib/rate-limit.ts:49 for the real limits. Do not "restore" them.');
+  console.log('implement the feature first -- real limits: file size src/lib/convert-');
+  console.log('handler.ts:192/207 (multipart 4MB, R2 direct upload 100MB), rate limit');
+  console.log('src/lib/rate-limit.ts:49 (20 req/min per IP, no hourly quota), batch =');
+  console.log('Pro-gated (batch/page.tsx), no OCR engine anywhere. Do not "restore" them.');
 }
 
 console.log(

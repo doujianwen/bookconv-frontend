@@ -184,7 +184,7 @@ Y una vez que un libro es EPUB, puede volverse cualquier otra cosa. [Convierte E
         body: `Si tienes un puñado de archivos LIT y no quieres instalar nada, BookConv es la ruta más rápida. La conversión usa el mismo motor Calibre que la app de escritorio, pero corre en tu navegador.
 
 ### Sube el archivo LIT
-Ve al [conversor de LIT a EPUB](/convert/lit-to-epub). Arrastra el archivo al área de subida o haz clic para buscarlo. El cargador comprueba el tamaño de inmediato: las conversiones gratis aceptan hasta 4 MB, lo que cubre casi cualquier novela LIT.
+Ve al [conversor de LIT a EPUB](/convert/lit-to-epub). Arrastra el archivo al área de subida o haz clic para buscarlo. El cargador comprueba el tamaño de inmediato: las conversiones gratis aceptan hasta 100 MB, lo que cubre casi cualquier novela LIT.
 
 ### Revisa la vista previa
 BookConv lee los metadatos y muestra el título y autor detectados antes de empezar. Los archivos LIT suelen tener metadatos desordenados, así que esta es tu oportunidad de ver problemas antes de que lleguen a tu biblioteca.
