@@ -49,7 +49,7 @@ function basicFromLive(live) {
   const complete = live.events?.conversion_complete ?? '—';
   const failed = live.events?.conversion_failed ?? '—';
   const upload = live.events?.file_upload ?? '—';
-  const conv = evalConversion(complete, failed, upload);
+  const conv = evalConversion(complete, failed, upload, live.failedByErrorCode ?? null);
   return {
     ok: true,
     source: 'ga4-data-api',
@@ -58,6 +58,10 @@ function basicFromLive(live) {
     abnormal: conv.abnormal,
     undecided: conv.undecided,
     convReason: conv.reason,
+    engineFailed: conv.engineFailed,
+    quotaFailed: conv.quotaFailed,
+    clientFailed: conv.clientFailed,
+    failedByErrorCode: live.failedByErrorCode ?? null,
     metrics: {
       users: String(live.activeUsers),
       events: String(live.eventCount),
@@ -97,27 +101,59 @@ function basicFromReport(report) {
     abnormal: conv.abnormal,
     undecided: conv.undecided,
     convReason: conv.reason,
+    engineFailed: conv.engineFailed,
+    quotaFailed: conv.quotaFailed,
+    clientFailed: conv.clientFailed,
+    failedByErrorCode: null,
     metrics: { users, events, complete, failed, upload, rate },
     batch: evalBatchAnomaly(failed, upload),
   };
 }
 
 // ── ①-b 转化失败率门禁 ─────────────────────────────────────────────────
-// 判据（测不变量，不硬编码清单）：
-//   异常 = 失败数 > 完成数，或 成功率(完成/上传) < 50%
-//   不可判定 = 无上传数据或数值缺失（降级，不报 FAIL，符合门禁纪律）
-function evalConversion(complete, failed, upload) {
+// 判据（2026-10-28 v2：按 error_code 三分类后测不变量，不硬编码清单）：
+//   * FILE_TOO_LARGE            — 客户端大小拦截，请求未发出 ⇒ 剔除（引擎无关，UX 范畴）
+//   * CONVERSION_QUOTA_EXCEEDED — 额度跳过/402 ⇒ 单独展示（Route A 下属 MON-2/3 正常降级，
+//     但真实故障日靠「成功率<50%」仍会触发，反向验证见 10-24）
+//   * 其余                       — 引擎失败 engineFailed ⇒ 异常 = engineFailed > 完成数
+//   兜底：成功率(完成/上传) < 50% 恒判异常（全量口径，防 error_code 误分类漏网）。
+//   error_code 明细缺失时按旧口径（全量 failed）并标 undecided（不可判定不硬报）。
+const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE']);
+const QUOTA_CODES = new Set(['CONVERSION_QUOTA_EXCEEDED']);
+
+function splitFailures(failed, failedByErrorCode) {
+  const f = Number(failed);
+  if (!Number.isFinite(f) || f <= 0) {
+    return { engineFailed: 0, quotaFailed: 0, clientFailed: 0, decided: Number.isFinite(f) };
+  }
+  if (!failedByErrorCode || typeof failedByErrorCode !== 'object') {
+    return { engineFailed: f, quotaFailed: 0, clientFailed: 0, decided: false }; // 明细缺失→旧口径，标 undecided
+  }
+  let client = 0, quota = 0;
+  for (const [code, n] of Object.entries(failedByErrorCode)) {
+    const v = Number(n) || 0;
+    if (CLIENT_INTERCEPT_CODES.has(code)) client += v;
+    else if (QUOTA_CODES.has(code)) quota += v;
+  }
+  return { engineFailed: Math.max(0, f - client - quota), quotaFailed: quota, clientFailed: client, decided: true };
+}
+
+function evalConversion(complete, failed, upload, failedByErrorCode = null) {
   const c = Number(complete), f = Number(failed), u = Number(upload);
   if (!Number.isFinite(c) || !Number.isFinite(f) || !Number.isFinite(u) || u <= 0) {
     return { abnormal: false, undecided: true, reason: '无上传数据，不可判定转化失败率' };
   }
+  const { engineFailed, quotaFailed, clientFailed, decided } = splitFailures(f, failedByErrorCode);
   const rate = c / u;
-  const abnormal = f > c || rate < 0.5;
+  const abnormal = engineFailed > c || rate < 0.5;
   return {
     abnormal,
-    undecided: false,
+    undecided: !decided,
+    engineFailed,
+    quotaFailed,
+    clientFailed,
     reason: abnormal
-      ? `失败${f} > 完成${c} 或 成功率${Math.round(rate * 100)}% < 50%`
+      ? `引擎失败${engineFailed} > 完成${c} 或 成功率${Math.round(rate * 100)}% < 50%`
       : '',
   };
 }
@@ -202,14 +238,28 @@ function buildReport(basic, syntax, geo, adv) {
     lines.push(`【基础分析 · ${basic.date} · ${srcTag}】`);
     lines.push(`• 活跃用户: ${basic.metrics.users} | 事件: ${basic.metrics.events}`);
     // 口径说明：完成率 = conversion_complete / file_upload；失败率 = conversion_failed / file_upload（分母均为上传数）
+    // ⚠️ WP4 failover 后（2026-10-27）新增客户端 FILE_TOO_LARGE 事件追踪：
+    //    file_upload 只统计成功提交到 /api/convert 的请求，conversion_failed 还包含客户端拦截事件。
+    //    当 file_upload < 实际请求数时，失败率会虚高（假阳性）。真实根因需结合 error_code 维度分析。
     const u = Number(basic.metrics.upload), c = Number(basic.metrics.complete), f = Number(basic.metrics.failed);
     const ratesLine = (Number.isFinite(u) && u > 0 && Number.isFinite(c) && Number.isFinite(f))
       ? `• 转换事件: 上传 ${u} 次 → 完成 ${c} 次 | 失败 ${f} 次 | 完成率(完成/上传) ${Math.round(c / u * 100)}% | 失败率(失败/上传) ${Math.round(f / u * 100)}%`
       : `• 转换事件: 上传 ${basic.metrics.upload ?? '—'} | 完成 ${basic.metrics.complete} | 失败 ${basic.metrics.failed} | 比率不可计算（缺上传数）`;
     lines.push(ratesLine);
-    if (basic.undecided) lines.push('• 转化失败率：⚠️ 不可判定（缺上传数据）');
-    else if (basic.abnormal) lines.push(`• ⚠️ 转化失败率偏高（${basic.convReason}；疑似 CloudConvert 免费额度耗尽，需人工核查）`);
-    else lines.push('• 转化失败率：正常');
+    // error_code 分布（仅实时源有）：让"失败"构成一目了然
+    const fec = basic.failedByErrorCode;
+    if (fec && typeof fec === 'object' && Object.keys(fec).length > 0) {
+      const dist = Object.entries(fec).map(([k, v]) => `${k}:${v}`).join(' | ');
+      const parts = [`• 失败构成: ${dist}`];
+      if (basic.clientFailed > 0) parts.push(`客户端拦截 ${basic.clientFailed}（未到引擎）`);
+      if (basic.quotaFailed > 0) parts.push(`额度降级 ${basic.quotaFailed}（MON-2/3 范畴）`);
+      lines.push(parts.join(' — '));
+    }
+    if (basic.undecided) lines.push('• 转化失败率：⚠️ 不可判定（缺上传数据或失败明细）');
+    else if (basic.abnormal) {
+      lines.push(`• ⚠️ 服务端引擎失败偏高（${basic.convReason}；需人工核查引擎/额度，衔接 error_code 维度）`);
+    }
+    else lines.push('• 转化失败率：正常（引擎侧无异常失败）');
     // P1-4 批量异常告警（v2 手册模块 7）
     const b = basic.batch;
     if (b?.decided && b.triggered) lines.push(`• 🚨 批量异常：${b.reason}（引擎/额度根因需人工分流，衔接 error_code 维度）`);

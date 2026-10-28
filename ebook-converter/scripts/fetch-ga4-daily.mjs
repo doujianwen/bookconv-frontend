@@ -131,6 +131,28 @@ try {
   const failed = events.conversion_failed || 0
   const conversionRate = upload > 0 ? Math.round((complete / upload) * 100) + '%' : '—'
 
+  // ②-b 失败明细：按 error_code 分组（customEvent:error_code 已注册为 custom dimension）。
+  // 用途：区分「客户端拦截」（FILE_TOO_LARGE 未到引擎 / QUOTA_EXCEEDED 额度跳过）
+  // 与「服务端引擎失败」（其余 code）——2026-10-28 实证：8 天窗口 13 次 FILE_TOO_LARGE
+  // 全是客户端拦截，CC 后台同窗 0 失败；不分组会把 UX 问题误报成引擎故障。
+  let failedByErrorCode = null
+  try {
+    const failReport = await runReport(token, {
+      dateRanges: [{ startDate: DATE, endDate: DATE }],
+      dimensions: [{ name: 'customEvent:error_code' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          stringFilter: { matchType: 'EXACT', value: 'conversion_failed' },
+        },
+      },
+    })
+    failedByErrorCode = rowsToMap(failReport)
+  } catch (e) {
+    console.error('⚠️ error_code 分组查询失败（不影响主流程）: ' + (e.message || e).slice(0, 150))
+  }
+
   // ③ 工具页用户数（上传率的正确分母；红队审计 R4：全站活跃用户会污染工具页比率）
   //    先按 pageLocation 明细拉取再本地聚合——CONTAINS 过滤需先看返回全集，防误命中（判据先测再采信）
   let toolPageUsers = null
@@ -182,6 +204,7 @@ try {
     activeUsers,
     eventCount,
     events: { file_upload: upload, conversion_complete: complete, conversion_failed: failed },
+    failedByErrorCode, // null=查询失败（不可判定）；{}=当日无失败事件
     conversionRate,
     toolPage: {
       users: toolPageUsers,
