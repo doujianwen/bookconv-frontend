@@ -266,3 +266,13 @@
 ---
 
 *最后更新：2026-10-27 22:15（登记 90 天工程收口待办 5 项：EXP-OBS/HREFLANG/BING-RE/SCHED/MON-A；此前 2026-10-27 21:46 WP5 预发验证登记、22:10 PV 回填；2026-10-25 12:16 路线 A 上线状态回填）*
+
+---
+
+## 🟡 2026-10-28 新增：大文件拦截回归修复（本地完成，待发布）
+
+- **回归**：10-27 生产设 `CONVERSION_BACKEND_URL` 后，`upload-presign.isDirectUploadEnabled` 互斥守卫把 R2 直传关掉 → 客户端上限 100MB→4MB。
+- **修复**：①守卫恢复 `isR2Configured()`；②R2 对象经 Vercel 函数预取 → `delegateToBackend({prebuiltFile})`，白名单格式大文件也走自托管后端。测试 40/40。
+- **部署动作**：随下次发布生效（无需新 env）；**建议同时加 Vercel env `CONVERSION_BACKEND_TIMEOUT_MS=240000`**（默认 90s 会掐断 60–120s 的大 PDF 后端转换，白白回退 CC）。
+- **遗留**：50–100MB 段仍走 CC（后端 cap 50MB）；全量接管需实测 tmpfs（1G）对 100MB 输入解压峰值后再提 nginx/MAX_FILE_BYTES。
+- **验证项 PV-7**（新增）：发布后用 >4.5MB 的 EPUB 走 Preview 转换 → 期望 `X-Conversion-Backend: hit`（或 >50MB 时 `miss-cloudconvert` 且 200，不再 413）。
