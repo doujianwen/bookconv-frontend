@@ -2,12 +2,12 @@ export const slug = 'epub-to-doc';
 export const title = 'EPUB to DOC Converter — Legacy Word 97-2003 Format';
 export const metaDescription = 'Free EPUB to DOC converter. Turn any EPUB into legacy Word 97-2003 .doc files — no sign-up. Built for enterprise systems that still need old DOC.';
 export const level = 'B' as const;
-export const wordCount = 820;
+export const wordCount = 2199;
 
 export const content = {
   hero: {
-    title: 'EPUB to DOC - Convert Ebooks to Legacy Word Format',
-    subtitle: 'Free EPUB to DOC converter. No sign-up — convert ebooks into legacy Word 97-2003 format for maximum compatibility.'
+    title: 'EPUB to DOC Converter — Convert Ebooks to Legacy Word, Free & Online',
+    subtitle: 'Free online EPUB to DOC converter. No sign-up — turn ebooks into legacy Word 97-2003 .doc for maximum compatibility with old systems.'
   },
 
   sections: [
@@ -130,6 +130,19 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
 **Known limitations:** custom fonts become system substitutes, CSS multi-column layouts flatten, and SVG graphics may not carry through. None of these are conversion errors — they are the ceiling of the 1993 DOC format itself.`
     },
     {
+      heading: 'EPUB to DOC Converter vs DOCX, PDF, and TXT',
+      body: `You came here for an EPUB to DOC converter, but DOC is only one possible destination. Picking the right target format saves you a needless round trip. Here is how the common EPUB exits compare:
+
+| Target | Choose it when | Keeps styling? | Opens in |
+|--------|---------------|----------------|----------|
+| DOC (this tool) | A portal or legacy Word install rejects anything newer | No — flattens CSS | Word 97-2003 compat mode |
+| DOCX | You want a modern, editable Word file | Mostly — far more than DOC | Word, LibreOffice, Google Docs |
+| PDF | You need a fixed layout for print or sharing | Yes — layout preserved | Any PDF reader |
+| TXT | You only need the raw words, no formatting | No — strips everything | Anything |
+
+If your real goal is a clean editable Word file, DOCX is usually the better call. Need just the text? [EPUB to TXT](/convert/epub-to-txt) pulls the plain words out in one step, and [DOC to EPUB](/convert/doc-to-epub) runs the whole thing in reverse if you later need a book again. Reach for DOC specifically when something external is forcing the old format — that is exactly what this converter is built for.`
+    },
+    {
       heading: 'Tips for the Cleanest Conversion',
       body: `A few habits make the result noticeably better.
 
@@ -150,7 +163,10 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
     { q: 'My EPUB will not convert — what is wrong?', a: 'The most common cause is DRM. Books purchased from Kobo, Google Play Books, or similar stores are encrypted and cannot be read by any converter, while DRM-free files from Project Gutenberg, indie authors, or your own exports convert without issue.' },
     { q: 'How many books can I convert at once?', a: 'Single-file direct uploads support up to 100 MB when enabled; batch and fallback uploads are limited to 4 MB per file. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.' },
     { q: 'Why did my table or sidebar come out wrong?', a: 'DOC has no layout engine for CSS-positioned sidebars or nested tables, so they flatten into a single text flow. If precise layout matters, convert to DOCX or PDF instead, where those structures survive.' },
-    { q: 'Should I convert to DOC or DOCX?', a: 'Almost always DOCX. It is smaller, more resilient, and holds far more formatting. Choose DOC only when a submission portal, grant system, or legacy Word install explicitly rejects DOCX — that is the one situation where the older format earns its keep.' }
+    { q: 'Should I convert to DOC or DOCX?', a: 'Almost always DOCX. It is smaller, more resilient, and holds far more formatting. Choose DOC only when a submission portal, grant system, or legacy Word install explicitly rejects DOCX — that is the one situation where the older format earns its keep.' },
+    { q: 'Is there a free EPUB to DOC converter online?', a: 'Yes. BookConv runs entirely in the browser with no sign-up and no desktop software to install. Upload a DRM-free EPUB and the converter returns a legacy Word 97-2003 .doc you can open in Word, LibreOffice Writer, WPS Office, Google Docs, or Pages.' },
+    { q: 'Can I convert EPUB to DOC without Microsoft Word installed?', a: 'Absolutely. The conversion runs on our servers, so you never need Word on your own machine — you only need Word (or LibreOffice / Google Docs) to open the resulting .doc, not to create it.' },
+    { q: 'What is the best EPUB to DOC converter for old submission systems?', a: 'Look for one that preserves heading hierarchy and embeds images rather than just dumping text. This converter maps h1/h2/h3 to Word Heading styles and embeds raster images, which is what journal portals and legacy intranets expect from a .doc.' }
   ]
 ,
 

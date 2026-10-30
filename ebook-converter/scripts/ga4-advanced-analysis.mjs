@@ -218,6 +218,36 @@ try {
     return rows(r, ['operatingSystem', 'deviceCategory'])
   })
 
+  // 模块 2d：conversion_failed 按 date × source_format × target_format（2026-10-30 增补）
+  // 目的：闭环 2026-10-26 报告的「txt→epub 验证缺口」——只有含日期的维度才能判断
+  // 某条纯 JS 路径上线后失败是否真降到 0，否则无法区分 legacy 与新发。
+  // 2026-10-30 追加 file_size：用于区分「真超 100MB 上限」与「探测降级导致误拦 4MB」。
+  await safe('failed_by_date_format', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'date' }, { name: 'customEvent:source_format' }, { name: 'customEvent:target_format' }, { name: 'customEvent:file_size' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'conversion_failed' } } },
+      orderBys: [{ dimension: { dimensionName: 'date' } }],
+      limit: 5000,
+    })
+    return rows(r, ['date', 'source_format', 'target_format', 'file_size'])
+  })
+
+  // 模块 2e：conversion_failed 按 date × error（2026-10-30 增补）
+  // 目的：error_code 三分类（客户端拦截 / 降级展示 / 引擎异常）需要时间维度才能判断「当前是否仍在发生」。
+  await safe('failed_by_date_error', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'date' }, { name: 'customEvent:error' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'conversion_failed' } } },
+      orderBys: [{ dimension: { dimensionName: 'date' } }],
+      limit: 5000,
+    })
+    return rows(r, ['date', 'error'])
+  })
+
   // 写盘
   const file = path.join(ROOT, '_wb_tmp', `ga4-advanced-${END}.json`)
   fs.writeFileSync(file, JSON.stringify(out, null, 2))

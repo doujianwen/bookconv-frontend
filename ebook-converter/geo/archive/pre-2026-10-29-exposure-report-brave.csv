@@ -1,0 +1,111 @@
+engine,question,intent,target_slug,domain,url,is_bookconv
+Brave,open epub file,intercept,,chromewebstore.google.com,https://chromewebstore.google.com/detail/epubreader/jhhclmfgfllimlhabjkgkeebkbiadflb?hl=en,False
+Brave,open epub file,intercept,,epub-reader.online,https://epub-reader.online/,False
+Brave,open epub file,intercept,,play.google.com,https://play.google.com/store/apps/details?id=epub.reader&hl=en_US,False
+Brave,open epub file,intercept,,adobe.com,https://www.adobe.com/uk/acrobat/resources/document-files/ebook-files/epub.html,False
+Brave,open epub file,intercept,,reddit.com,https://www.reddit.com/r/software/comments/sspk16/what_software_do_i_use_to_open_an_epub_file/,False
+Brave,open epub file,intercept,,epubreader.net,https://epubreader.net/,False
+Brave,open epub file,intercept,,apps.apple.com,https://apps.apple.com/us/app/epub-reader-read-epub-chm-txt/id1296870631,False
+Brave,open epub file,intercept,,support.talis.com,https://support.talis.com/hc/en-gb/articles/17337818073757-Downloading-and-working-with-ePUB-files,False
+Brave,open epub file,intercept,,flowoss.com,https://www.flowoss.com/,False
+Brave,open epub file,intercept,,wikihow.com,https://www.wikihow.com/Open-EPUB-Files,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/sendtokindle,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,chromewebstore.google.com,https://chromewebstore.google.com/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea?hl=en-US,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,reddit.com,https://www.reddit.com/r/kindle/comments/1jsu52q/help_me_understand_the_limitations_of_send_to/,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=G5WYD9SAF7PGXRNA,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,reddit.com,https://www.reddit.com/r/kindle/comments/1kmusev/how_to_actually_send_books_to_your_kindle/,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,play.google.com,https://play.google.com/store/apps/details?id=com.luciosoft.sendtokindle&hl=en_US,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,support.microsoft.com,https://support.microsoft.com/en-us/word/send-to-kindle,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,reddit.com,https://www.reddit.com/r/kindle/comments/1pacrs6/can_you_please_explain_what_is_and_how_to_use/,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,youtube.com,https://www.youtube.com/watch?v=UZr6iqUdwVk,False
+Brave,send to kindle,intercept,how-to-send-epub-to-kindle,youtube.com,https://www.youtube.com/shorts/mPke5qOPXRU,False
+Brave,epub reader online,intercept,,epub-reader.online,https://epub-reader.online/,False
+Brave,epub reader online,intercept,,flowoss.com,https://www.flowoss.com/,False
+Brave,epub reader online,intercept,,epubreader.net,https://epubreader.net/,False
+Brave,epub reader online,intercept,,chromewebstore.google.com,https://chromewebstore.google.com/detail/epubreader/jhhclmfgfllimlhabjkgkeebkbiadflb?hl=en,False
+Brave,epub reader online,intercept,,reddit.com,https://www.reddit.com/r/webdev/comments/1lc70m1/built_a_private_epub_reader_that_runs_in_your/,False
+Brave,epub reader online,intercept,,readloudly.com,https://readloudly.com/epub-reader/,False
+Brave,epub reader online,intercept,,lwebapp.com,https://lwebapp.com/en/epub-reader,False
+Brave,epub reader online,intercept,,products.aspose.app,https://products.aspose.app/ebook/reader/epub,False
+Brave,epub reader online,intercept,,play.google.com,https://play.google.com/store/apps/details?id=epub.reader&hl=en_US,False
+Brave,epub reader online,intercept,,epub.pub,https://www.epub.pub/signin,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/sendtokindle,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=G5WYD9SAF7PGXRNA,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=G7NECT4B4ZWHQ8WV,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,reddit.com,https://www.reddit.com/r/kindle/comments/1kmusev/how_to_actually_send_books_to_your_kindle/,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,reddit.com,https://www.reddit.com/r/kindle/comments/1pacrs6/can_you_please_explain_what_is_and_how_to_use/,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=TCUBEdEkbIhK07ysFu,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=TsX3vqZbX9EQWzm93r,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,youtube.com,https://www.youtube.com/shorts/mPke5qOPXRU,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,amazon.com,https://www.amazon.com/gp/help/customer/display.html?nodeId=ThDuDmqnYd2Ouy8c6i,False
+Brave,amazon send to kindle,intercept,how-to-send-epub-to-kindle,chromewebstore.google.com,https://chromewebstore.google.com/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea?hl=es-419&gl=DE,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,epub-reader.online,https://epub-reader.online/,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,play.google.com,https://play.google.com/store/apps/details?id=epub.reader&hl=en_US,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,chromewebstore.google.com,https://chromewebstore.google.com/detail/epubreader/jhhclmfgfllimlhabjkgkeebkbiadflb?hl=en,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,epubreader.net,https://epubreader.net/,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,apps.microsoft.com,https://apps.microsoft.com/detail/9nnckf446qfp?hl=en-US&gl=US,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,flowoss.com,https://www.flowoss.com/,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,apps.apple.com,https://apps.apple.com/us/app/epub-reader-read-epub-chm-txt/id1296870631,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,epubfilereader.com,https://www.epubfilereader.com/,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,reddit.com,https://www.reddit.com/r/ebooks/comments/1nszxak/any_good_epub_reader_recommendations_paid_or_free/,False
+Brave,epub reader,intercept,how-to-read-epub-on-kindle,readloudly.com,https://readloudly.com/epub-reader/,False
+Brave,kindle vs kobo,intercept,,womanandhome.com,https://www.womanandhome.com/life/books/kindle-vs-kobo/,False
+Brave,kindle vs kobo,intercept,,reddit.com,https://www.reddit.com/r/ereader/comments/1psica7/kindle_vs_kobo_advantages_and_disadvantages/,False
+Brave,kindle vs kobo,intercept,,laptopmag.com,https://www.laptopmag.com/news/amazon-kindle-vs-kobo-clara-bw,False
+Brave,kindle vs kobo,intercept,,techradar.com,https://www.techradar.com/versus/kindle-vs-kobo,False
+Brave,kindle vs kobo,intercept,,today.com,https://www.today.com/shop/kindle-paperwhite-vs-kobo-clara-bw-rcna200008,False
+Brave,kindle vs kobo,intercept,,reddit.com,https://www.reddit.com/r/kobo/comments/16qo6tv/kindle_vs_kobo/,False
+Brave,kindle vs kobo,intercept,,popularmechanics.com,https://www.popularmechanics.com/technology/gadgets/a70576462/kindle-vs-kobo/,False
+Brave,kindle vs kobo,intercept,,dvdfab.cn,https://www.dvdfab.cn/bookfab/kobo-vs-kindle.htm,False
+Brave,kindle vs kobo,intercept,,ereadersforum.com,https://www.ereadersforum.com/threads/kindle-vs-kobo-weighing-the-pros-and-cons-before-switching.5134/,False
+Brave,kindle vs kobo,intercept,,youtube.com,https://www.youtube.com/watch?v=mY8mamtGD4o&vl=en,False
+Brave,kindle epub,intercept,kindle-formats,amazon.com,https://www.amazon.com/sendtokindle,False
+Brave,kindle epub,intercept,kindle-formats,reddit.com,https://www.reddit.com/r/kindle/comments/1q97bc4/does_kindle_support_epub/,False
+Brave,kindle epub,intercept,kindle-formats,reddit.com,https://www.reddit.com/r/kindle/comments/1m60wpp/made_myself_a_epub_file_to_take_notes_and_write/,False
+Brave,kindle epub,intercept,kindle-formats,reddit.com,https://www.reddit.com/r/kindle/comments/18yjggz/kindle_no_longer_supporting_epub/,False
+Brave,kindle epub,intercept,kindle-formats,kindlepreneur.com,https://kindlepreneur.com/epub-to-kindle/,False
+Brave,kindle epub,intercept,kindle-formats,reddit.com,https://www.reddit.com/r/kindle/comments/1amggwm/can_i_move_my_epub_files_into_kindle_to_read/,False
+Brave,kindle epub,intercept,kindle-formats,sendtoreader.com,https://sendtoreader.com/blog/delivering-epub/,False
+Brave,kindle epub,intercept,kindle-formats,mashable.com,https://mashable.com/article/how-to-get-epub-files-on-kindle,False
+Brave,kindle epub,intercept,kindle-formats,news.ycombinator.com,https://news.ycombinator.com/item?id=38990309,False
+Brave,kindle epub,intercept,kindle-formats,digitalpublishing101.com,https://digitalpublishing101.com/digital-publishing-101/digital-publishing-basics/epub-kindle-formats/,False
+Brave,e-reader buying considerations,ai-feed,,ewritable.net,https://ewritable.net/e-readers/e-reader-buying-guide/,False
+Brave,e-reader buying considerations,ai-feed,,pcmag.com,https://www.pcmag.com/picks/the-best-ereaders,False
+Brave,e-reader buying considerations,ai-feed,,reddit.com,https://www.reddit.com/r/ereader/comments/14lun16/any_advice_for_things_to_look_for_when_buying_an/,False
+Brave,e-reader buying considerations,ai-feed,,techradar.com,https://www.techradar.com/best/best-ereader,False
+Brave,e-reader buying considerations,ai-feed,,lifewire.com,https://www.lifewire.com/e-reader-buying-guide-8750310,False
+Brave,e-reader buying considerations,ai-feed,,nytimes.com,https://www.nytimes.com/wirecutter/reviews/amazon-kindle-is-the-best-ebook-reader/,False
+Brave,e-reader buying considerations,ai-feed,,consumerreports.org,https://www.consumerreports.org/electronics-computers/e-book-readers/buying-guide/,False
+Brave,e-reader buying considerations,ai-feed,,electronics.howstuffworks.com,https://electronics.howstuffworks.com/gadgets/high-tech-gadgets/5-tips-for-choosing-the-right-ereader.htm,False
+Brave,e-reader buying considerations,ai-feed,,cnet.com,https://www.cnet.com/tech/computing/best-e-reader/,False
+Brave,e-reader buying considerations,ai-feed,,electronics-notes.com,https://www.electronics-notes.com/articles/equipment-items-gadgets/ereader/how-to-buy-best-ereader-top-tips.php,False
+Brave,epub online reader,intercept,,epub-reader.online,https://epub-reader.online/,False
+Brave,epub online reader,intercept,,flowoss.com,https://www.flowoss.com/,False
+Brave,epub online reader,intercept,,epubreader.net,https://epubreader.net/,False
+Brave,epub online reader,intercept,,chromewebstore.google.com,https://chromewebstore.google.com/detail/epubreader/jhhclmfgfllimlhabjkgkeebkbiadflb?hl=en,False
+Brave,epub online reader,intercept,,reddit.com,https://www.reddit.com/r/webdev/comments/1lc70m1/built_a_private_epub_reader_that_runs_in_your/,False
+Brave,epub online reader,intercept,,readloudly.com,https://readloudly.com/epub-reader/,False
+Brave,epub online reader,intercept,,lwebapp.com,https://lwebapp.com/en/epub-reader,False
+Brave,epub online reader,intercept,,products.aspose.app,https://products.aspose.app/ebook/reader/epub,False
+Brave,epub online reader,intercept,,play.google.com,https://play.google.com/store/apps/details?id=epub.reader&hl=en_US,False
+Brave,epub online reader,intercept,,epub.pub,https://www.epub.pub/signin,False
+Brave,kobo vs kindle,intercept,,reddit.com,https://www.reddit.com/r/ereader/comments/1psica7/kindle_vs_kobo_advantages_and_disadvantages/,False
+Brave,kobo vs kindle,intercept,,laptopmag.com,https://www.laptopmag.com/news/amazon-kindle-vs-kobo-clara-bw,False
+Brave,kobo vs kindle,intercept,,womanandhome.com,https://www.womanandhome.com/life/books/kindle-vs-kobo/,False
+Brave,kobo vs kindle,intercept,,today.com,https://www.today.com/shop/kindle-paperwhite-vs-kobo-clara-bw-rcna200008,False
+Brave,kobo vs kindle,intercept,,techradar.com,https://www.techradar.com/versus/kindle-vs-kobo,False
+Brave,kobo vs kindle,intercept,,reddit.com,https://www.reddit.com/r/kobo/comments/16qo6tv/kindle_vs_kobo/,False
+Brave,kobo vs kindle,intercept,,popularmechanics.com,https://www.popularmechanics.com/technology/gadgets/a70576462/kindle-vs-kobo/,False
+Brave,kobo vs kindle,intercept,,dvdfab.cn,https://www.dvdfab.cn/bookfab/kobo-vs-kindle.htm,False
+Brave,kobo vs kindle,intercept,,templacity.com,https://templacity.com/kindle-scribe/ebook-reader-kindle-vs-kobo/,False
+Brave,kobo vs kindle,intercept,,peanutblossombookclub.com,https://peanutblossombookclub.com/kobo-vs-kindle/,False
+Brave,kindle vs kobo, which is the best,intercept,,techradar.com,https://www.techradar.com/versus/kindle-vs-kobo,False
+Brave,kindle vs kobo, which is the best,intercept,,reddit.com,https://www.reddit.com/r/kobo/comments/16qo6tv/kindle_vs_kobo/,False
+Brave,kindle vs kobo, which is the best,intercept,,womanandhome.com,https://www.womanandhome.com/life/books/kindle-vs-kobo/,False
+Brave,kindle vs kobo, which is the best,intercept,,laptopmag.com,https://www.laptopmag.com/news/amazon-kindle-vs-kobo-clara-bw,False
+Brave,kindle vs kobo, which is the best,intercept,,reddit.com,https://www.reddit.com/r/ereader/comments/1psica7/kindle_vs_kobo_advantages_and_disadvantages/,False
+Brave,kindle vs kobo, which is the best,intercept,,today.com,https://www.today.com/shop/kindle-paperwhite-vs-kobo-clara-bw-rcna200008,False
+Brave,kindle vs kobo, which is the best,intercept,,blog.bestbuy.ca,https://blog.bestbuy.ca/computers-laptops-tablets/kobo-vs-kindle-gift-guide,False
+Brave,kindle vs kobo, which is the best,intercept,,dvdfab.cn,https://www.dvdfab.cn/bookfab/kobo-vs-kindle.htm,False
+Brave,kindle vs kobo, which is the best,intercept,,youtube.com,https://www.youtube.com/watch?v=mY8mamtGD4o,False
+Brave,kindle vs kobo, which is the best,intercept,,youtube.com,https://www.youtube.com/watch?v=TmnbEMN5uIE,False

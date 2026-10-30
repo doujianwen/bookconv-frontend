@@ -139,6 +139,11 @@ for (const q of seed) {
   for (const engine of engines) {
     const rows = allRows.filter((r) => r.engine === engine && r.question === q.question);
     const hit = rows.find((r) => r.is_bookconv);
+    // 同日去重守卫：防止重复运行污染 append-only 账本（红队审计 M11-5 发现双跑追加 11 条重复 Brave）
+    if (rec.measurements.some((m) => m.date === runDate && m.phase === PHASE && m.engine === engine)) {
+      console.warn(`[skip] 同日重复跳过 ${q.id}/${engine}/${runDate}`);
+      continue;
+    }
     rec.measurements.push({
       date: runDate,
       phase: PHASE,

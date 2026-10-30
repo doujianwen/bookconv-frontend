@@ -508,8 +508,9 @@
           "due": "2026-10-27",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。\n\n子任务已拆分：M2-12(P0 Title优化)/M2-13(P1排名突破)/M2-14(P2 epub para doc)/M2-15(P2其余4页)。"
+          "status": "doing",
+          "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。\n\n子任务已拆分：M2-12(P0 Title优化)/M2-13(P1排名突破)/M2-14(P2 epub para doc)/M2-15(P2其余4页)。",
+          "statusNote": "2026-10-30：M2-12(P0 Title)/M2-13(P1 epub-to-zip) 早已 done（已发布）；M2-14 本日内容强化完成(tsc 通过,待人工发布)；M2-15 重新 triage 发现 4 页已内容充实、原『补充内容』前提过时，建议改判信号方向。待 M2-14 发布 + M2-15 范围裁定后整体 close。"
         },
         {
           "id": "M2-12",
@@ -549,8 +550,9 @@
           "due": "2026-10-27",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。104展示是最高曝光，ROI最高。"
+          "status": "doing",
+          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。104展示是最高曝光，ROI最高。",
+          "statusNote": "2026-10-30 处理：epub-to-doc.ts 内容强化——新增 'EPUB to DOC Converter vs DOCX/PDF/TXT' 对比 section + 3 条意图 FAQ（在线免费/无需 Word/旧提交系统）+ hero 加 free online converter；tsc 通过。未 push，待人工审稿发布。GSC 数据(2026-10-12)已陈旧且 Google 自然流量当前≈0（Spam Update 恢复期），'4 周后复跑'验收现实不可达，已登记残余。\n红队审计纠正（2026-10-30）：① wordCount 原填 1080 仍严重失准——实测英文正文 2199 词（body 1630 + heading/faq 569），偏低约 2 倍，已重测修正为 2199；② publish-gate.mjs 仅扫描 src/data/blog，不覆盖 convert 页，本页正确验证路径为 tsc + next build，非 blog 专用门禁（早前『待跑 publish-gate』说法不精确，已纠正）。"
         },
         {
           "id": "M2-15",
@@ -562,8 +564,9 @@
           "due": "2026-10-27",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。与M2-14同批次执行。"
+          "status": "doing",
+          "note": "来源：GSC自动化分析 2026-10-13，P2优先级。与M2-14同批次执行。",
+          "statusNote": "2026-10-30 重新 triage：4 页实际已内容充实（epub-to-azw3 690w/11 section、lit-to-epub 720w/7 section、epub-to-txt 2800w/9 section、azw3-to-mobi 939w/9 section），原『补充内容』前提已过时——位 45-50 主因疑似信号/权威非内容稀薄。按务实充分纪律不堆砌（且 Spam Update 恢复期堆内容有风险）。建议改判为 signals/内链/canonical 方向，待用户裁定范围。\n红队审计修正（2026-10-30）：①『para=西/葡语』断言仅适用于 epub-to-txt 单页——其查询 'epub para txt' 确为西/葡语序、英文页难匹配（board detail 原文亦如此标注），不该推广到其余 4 页；② 位47.5/22.7/49.5/49.8 等数字源出 2026-10-13 GSC（约17天前、Spam Update 前），须用当前 GSC 复测确认各页主因；③ notion 清单(2026-10-25)显示 lit-to-epub 有 10.8K/mo Ahrefs 机会但被西语 301 规则杀掉（真实信号/技术故障，印证非纯内容薄），该 301 修复应优先于内容堆砌。\n【2026-10-30 专业建议（待用户裁定）】agent 推荐 signals-first，不推荐 blanket 内容堆砌：① 这 5 页内容已充实(700–2800w)，位45-50 属权威/相关性/技术信号问题而非内容稀薄——位45-50 代表 Google 已认可内容『尚可』但缺突破 top10–20 的权威/信任/相关性信号，堆字数边际收益递减；② Spam Update 恢复期，'SEO 内容'式增量可能触发/加深惩罚，反向有害；③ 已知 lit-to-epub 被西语 301 规则杀掉(10.8K/mo 机会)，应先全量排查 5 页 canonical/hreflang/indexation 技术故障（零成本、高 ROI，且技术故障面前内容无效）；④ 主攻内部链接枢纽（convert 簇互链 + 高权 blog/guide 反链传递 PageRank/主题相关）+ 实体/EEAT 信号（真实工具、对比、评价）；⑤ 仅对确存缺口页做外科手术式补充（如 epub-to-doc 缺对比表已补），不 blanket 加字数。此结论为假设，拍板前需验证：a) 修已知 301 故障；b) 取当前 GSC 各位/展数据；c) 确认 5 页已被收录（Google 自然流量当前≈0，可能部分未索引）。"
         },
         {
           "id": "M2-16",
@@ -1624,7 +1627,8 @@
           "recurring": "weekly",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "2026-10-30 启动 R_post，跑 2 轮但红队审计后判定结论不可靠，重分类为 UNKNOWN（非 delta=0）。问题清单：(1) 引擎覆盖残缺——ChatGPT 全程 429（账户 Tier<1 未开放 web_search），全文件 ChatGPT 记录=0；『AI 引用』仅 Gemini 单引擎，且 Gemini R_post resultRows 由 9 降至 4。(2) Brave 是传统搜索 top-10 代理（geo-exposure-probe.py:173），非 AI 引用引擎，不得与 Gemini cited 合并成单一 delta。(3) 种子 11 词中 7 词 target_slug 为空（open epub file/epub reader online/kindle vs kobo/e-reader buying/epub online reader/kobo vs kindle 等），无专属目标页，R_post 对之测的是不存在的内容、0 引用为预期内、结论真空。(4) 双跑污染——Round1/2 重复追加 11 条 R_post Brave，已清理（55→44 快照，R_post 唯一 22）。修正动作：measurement.json 已去重；topic-portfolio-measure.mjs 加同日去重守卫；Brave/Gemini 须分渠道记分。结论：当前证据不足以判定『发布后引用提升/无提升』，应报 UNKNOWN。待办：① 修 ChatGPT（OpenAI 账户充值≥$5 升 Tier≥1）；② 逐 query 补/确认 live 目标页后再测；③ 内容真发布+收录后重测。"
         },
         {
           "id": "M11-6",
