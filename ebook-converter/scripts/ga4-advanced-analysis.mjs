@@ -248,6 +248,21 @@ try {
     return rows(r, ['date', 'error'])
   })
 
+  // 模块 2f：conversion_failed 按 date × error_code（2026-10-31 增补，与 fetch-ga4-daily 同维度）
+  // 目的：提供「与 Part A 同源的 error_code 时间序列」，供红队 Part D 做 apples-to-apples 引擎失败比对，
+  // 避免 failed_by_date_error（customEvent:error，可能未注册降级）不可比导致的误判。
+  await safe('failed_by_date_error_code', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'date' }, { name: 'customEvent:error_code' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'conversion_failed' } } },
+      orderBys: [{ dimension: { dimensionName: 'date' } }],
+      limit: 5000,
+    })
+    return rows(r, ['date', 'error_code'])
+  })
+
   // 写盘
   const file = path.join(ROOT, '_wb_tmp', `ga4-advanced-${END}.json`)
   fs.writeFileSync(file, JSON.stringify(out, null, 2))

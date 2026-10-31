@@ -218,6 +218,12 @@ try {
   if (WRITE) {
     const p = path.join(ROOT, '_wb_tmp', 'ga4-live.json')
     fs.writeFileSync(p, JSON.stringify(result, null, 2))
+    // 写「拉取成功」新鲜度令牌：供红队 B1 区分「本轮真实拉取」与「fetch 失败被 || true 容忍、
+    // ga4-live.json 停在旧值照常全绿」的假成功。fetch 失败时本脚本 exit 1 且不写此文件。
+    const mtimeMs = fs.statSync(p).mtimeMs
+    fs.writeFileSync(path.join(ROOT, '_wb_tmp', 'ga4-fetch-status.json'), JSON.stringify({
+      ok: true, date: DATE, at: Date.now(), mtimeMs,
+    }, null, 2))
     console.error('✅ 已写 ' + p)
   }
   console.log(JSON.stringify(result, null, 2))

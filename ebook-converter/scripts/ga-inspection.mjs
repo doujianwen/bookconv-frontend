@@ -232,8 +232,18 @@ function checkAdvancedDimensions() {
   }
 }
 
+// ── ②-b 红队审计结果读取（Part B 执行结果 / Part D 深度分析）──────────
+function readRedteam(name) {
+  try {
+    const p = join(ROOT, '_wb_tmp', name)
+    return JSON.parse(readFileSync(p, 'utf8'))
+  } catch {
+    return null
+  }
+}
+
 // ── ③ 组装简报 ────────────────────────────────────────────────────────
-function buildReport(basic, syntax, geo, adv) {
+function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
   const lines = [];
   lines.push('📊 [bookconv] GA4 每日巡检');
   lines.push('');
@@ -300,14 +310,44 @@ function buildReport(basic, syntax, geo, adv) {
   lines.push(`• geo-audit-guide: ${geoMark} ${geo.detail}`);
   lines.push(`• 埋点待办: ${adv.ok ? '✅' : '❌'} ${adv.note}`);
 
+  // 红队审计（Part B 执行结果 / Part D 深度分析）
+  lines.push('');
+  lines.push('【红队审计】');
+  if (redteam) {
+    const mark = redteam.overall === 'FAIL' ? '❌' : (redteam.overall === 'PASS' ? '✅' : '⚠️');
+    const c = redteam.counts || {};
+    lines.push(`• 执行结果审计: ${mark} overall=${redteam.overall} (PASS ${c.PASS || 0}/FAIL ${c.FAIL || 0}/UNKNOWN ${c.UNKNOWN || 0})`);
+    for (const chk of (redteam.checks || [])) {
+      if (chk.verdict !== 'PASS') lines.push(`   - ${chk.level} ${chk.id} ${chk.verdict} ${chk.name}: ${chk.evidence}`);
+    }
+  } else {
+    lines.push('• 执行结果审计: ⚠️ 未运行（自动化应先跑 ga4-redteam.mjs）');
+  }
+  if (redteamAnalysis) {
+    const mark = redteamAnalysis.overall === 'FAIL' ? '❌' : (redteamAnalysis.overall === 'PASS' ? '✅' : '⚠️');
+    const c = redteamAnalysis.counts || {};
+    lines.push(`• 深度分析审计: ${mark} overall=${redteamAnalysis.overall} (PASS ${c.PASS || 0}/FAIL ${c.FAIL || 0}/UNKNOWN ${c.UNKNOWN || 0})`);
+    for (const chk of (redteamAnalysis.checks || [])) {
+      if (chk.verdict !== 'PASS') lines.push(`   - ${chk.level} ${chk.id} ${chk.verdict} ${chk.name}: ${chk.evidence}`);
+    }
+  } else {
+    lines.push('• 深度分析审计: ⚠️ 未运行（自动化应先跑 ga4-redteam-analysis.mjs）');
+  }
+
   const basicBad = basic.abnormal === true || basic.batch?.triggered === true;
   const basicUndecided = basic.undecided === true;
   const hasFail = syntax.ok === false || geo.ok === false || !basic.ok || !adv.ok || basicBad;
   const notRun = syntax.ok === null || geo.ok === null;
+  const rtB = redteam?.overall;
+  const rtD = redteamAnalysis?.overall;
+  const rtFailed = rtB === 'FAIL' || rtD === 'FAIL';
+  const rtResidual = rtB === 'PASS_WITH_RESIDUALS' || rtD === 'PASS_WITH_RESIDUALS';
   lines.push('');
-  if (hasFail) lines.push('巡检发现异常 ⚠️');
+  if (rtFailed) lines.push('🛡️ 红队审计拦截：检出假成功/漏报，巡检结论不可全信 ⚠️');
+  else if (hasFail) lines.push('巡检发现异常 ⚠️');
   else if (notRun) lines.push('部分检查未运行，详见上 ⚠️');
   else if (basicUndecided) lines.push('巡检完毕，但基础分析转化失败率不可判定 ⚠️');
+  else if (rtResidual) lines.push('巡检完毕，全绿 ✅（红队有残余项，见上）');
   else lines.push('巡检完毕，全绿 ✅');
   return lines.join('\n');
 }
@@ -394,7 +434,9 @@ const basic = extractBasic();
 const syntax = runSyntaxSweep();
 const geo = runGeoAudit();
 const adv = checkAdvancedDimensions();
-const report = buildReport(basic, syntax, geo, adv);
+const redteam = readRedteam('ga-redteam-latest.json');
+const redteamAnalysis = readRedteam('ga-redteam-analysis-latest.json');
+const report = buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis);
 
 console.log(report);
 console.log('\n---');

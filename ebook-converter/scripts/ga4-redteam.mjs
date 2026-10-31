@@ -11,8 +11,10 @@
  *   每个检查返回 PASS / FAIL / UNKNOWN 三态 + 证据字符串，禁止假 PASS、禁止空话。
  *
  * 输入（Part A 产出）：
- *   _wb_tmp/ga4-fetch-status.json  ← F1 写好（{ok, freshMtime, date, at}）；缺失=未运行
- *   _wb_tmp/ga4-live.json          ← fetch --write 产出（注意：可能陈旧！）
+ *   _wb_tmp/ga4-fetch-status.json  ← F1 成功写 ga4-live.json 时一并写（{ok,date,at,mtimeMs}）；缺失=未运行/失败
+ *   _wb_tmp/ga4-live.json          ← fetch --write 产出（可能陈旧，须配 fetch-status 校验）
+ *   _wb_tmp/ga-syntax.json         ← F2 产出
+ *   _wb_tmp/ga-geo.json            ← F3 产出
  *   _wb_tmp/ga-syntax.json         ← F2 产出
  *   _wb_tmp/ga-geo.json            ← F3 产出
  * 输出：
@@ -47,24 +49,33 @@ const checks = []
 const push = (id, name, level, verdict, evidence) => checks.push({ id, name, level, verdict, evidence })
 
 // ── B1 数据新鲜度（P0，防假成功核心）─────────────────────────────────
+// 依赖 fetch-ga4-daily.mjs --write 成功时写的 ga4-fetch-status.json（{ok,date,at,mtimeMs}）。
+// fetch 失败被 || true 容忍时，脚本 exit 1 且不写任何文件 → fetchStatus 缺失/陈旧 → B1 FAIL。
+// 双判据：① fetchStatus.date === T-1；② fetchStatus.at 须在最近 30min 内（本轮新写，非历史遗留）；
+// 二次校验 ga4-live.json mtime 与 fetchStatus.mtimeMs 一致（文件确为本轮重写）。
+// 2026-10-31 实测：fetch failed → 既无 ga4-live.json 更新也无令牌 → 旧数据照常全绿，此检查独立抓出假成功。
 {
   const name = '数据新鲜度'
   if (!fetchStatus || fetchStatus.ok !== true) {
     push('B1', name, 'P0', 'FAIL',
-      `fetch-status.ok=${fetchStatus ? fetchStatus.ok : '缺失'} → F1 未成功拉取；ga4-live.json 可能复用旧数据，巡检"全绿"不可信`)
+      `ga4-fetch-status.json.ok=${fetchStatus ? fetchStatus.ok : '缺失'} → F1 未成功拉取；ga4-live.json 可能复用旧数据，巡检"全绿"不可信`)
+  } else if (fetchStatus.date !== T_MINUS_1) {
+    push('B1', name, 'P0', 'FAIL',
+      `fetch-status.date=${fetchStatus.date} ≠ 期望T-1 ${T_MINUS_1} → 数据非今日应拉取窗口，疑似陈旧`)
   } else {
-    const liveDate = live?.date
-    if (liveDate !== T_MINUS_1) {
+    let ageMin = -1
+    try { ageMin = (now - fetchStatus.at) / 60000 } catch { ageMin = -1 }
+    if (ageMin < 0 || ageMin > 30) {
       push('B1', name, 'P0', 'FAIL',
-        `ga4-live.json.date=${liveDate} ≠ 期望T-1 ${T_MINUS_1} → 数据非今日应拉取窗口，疑似陈旧`)
+        `fetch-status.at 写于 ${ageMin < 0 ? '未知' : ageMin.toFixed(0) + ' 分钟前'}（阈值 30min）→ 非本轮运行新写，F1 失败被 || true 容忍的典型假成功`)
     } else {
-      // mtime 比对：文件确为本轮 fetch 重写（而非历史遗留）
       let mtimeMatch = true
-      try { mtimeMatch = fs.statSync(T('ga4-live.json')).mtimeMs === fetchStatus.freshMtime } catch { mtimeMatch = false }
+      try { mtimeMatch = fs.statSync(T('ga4-live.json')).mtimeMs === fetchStatus.mtimeMs } catch { mtimeMatch = false }
       if (!mtimeMatch) {
-        push('B1', name, 'P0', 'FAIL', `ga4-live.json mtime 与 fetch-status.freshMtime 不一致 → 文件非本轮重写，数据陈旧`)
+        push('B1', name, 'P0', 'FAIL', 'ga4-live.json mtime 与 fetch-status.mtimeMs 不一致 → 文件非本轮重写，数据陈旧')
       } else {
-        push('B1', name, 'P0', 'PASS', `fetch 成功且 ga4-live.json.date=${liveDate}=T-1、mtime 与本轮一致，数据新鲜`)
+        push('B1', name, 'P0', 'PASS',
+          `fetch 成功且 date=${fetchStatus.date}=T-1、${ageMin.toFixed(0)} 分钟前本轮新写、mtime 一致 → 数据新鲜`)
       }
     }
   }
