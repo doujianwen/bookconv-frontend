@@ -16,6 +16,7 @@ export type ErrorCode =
   | "MEMORY_LIMIT"
   | "VERIFICATION_FAILED"
   | "FILE_TOO_LARGE"
+  | "DIRECT_UPLOAD_FAILED"
   | "UNSUPPORTED_CONVERSION";
 
 export interface ErrorResponse {
@@ -89,6 +90,9 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'MEMORY_LIMIT': { message: 'Conversion used too much memory. The file may be too large or complex.', retryable: true },
   'VERIFICATION_FAILED': { message: 'The converted file failed our automated quality check. The original may be damaged, DRM-protected, or use an unsupported layout — try a different file or format.', retryable: false },
   'FILE_TOO_LARGE': { message: `文件超过 ${MAX_FILE_SIZE_MB}MB 限制。免费版服务器有 60 秒硬时限，大文件会超时失败。建议：① 改用纯 JS 格式（EPUB→TXT/DOCX/RTF/FB2 无大小限制）；② 压缩或拆分文件后重试。`, retryable: false },
+  // 2026-10-31：直传失败是基础设施故障（presign/R2 CORS/网络），不是用户文件问题。
+  // 之前借用 FILE_TOO_LARGE 被 GA 巡检误分类为「客户端拦截」，掩盖根因（10-29/10-30 R2 CORS 实锤）。
+  'DIRECT_UPLOAD_FAILED': { message: 'Large-file upload is temporarily unavailable. Please try a smaller file (under the multipart limit) or retry later.', retryable: true },
   'UNSUPPORTED_CONVERSION': { message: 'This format combination is not supported by any available conversion engine. Please try the suggested alternative format.', retryable: false },
 };
 

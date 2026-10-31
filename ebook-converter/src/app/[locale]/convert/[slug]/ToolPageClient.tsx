@@ -236,7 +236,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
               isEs
                 ? `Este archivo (${sizeMB}MB) requiere carga directa, que ${unavailable ? "no está disponible en este momento" : "falló"}. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
                 : `This file (${sizeMB}MB) needs direct upload, which ${unavailable ? "is unavailable right now" : "failed"}. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
-              { cause: { code: "FILE_TOO_LARGE" } },
+              { cause: { code: "DIRECT_UPLOAD_FAILED" } },
             )
           }
         }

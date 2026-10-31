@@ -74,6 +74,7 @@ R2 → 桶 → Settings → Object Lifecycle Rules：
 | 4 | 非法 key 被拒 | `POST /api/convert` 带 `upload_key=cache/xxx` → 400 `INVALID_UPLOAD_KEY` |
 | 5 | 对象被清理 | 转换成功后 R2 `uploads/<日期>/` 下对象消失 |
 | 6 | 降级路径 | 把 `R2_ENDPOINT` 清空重启 → `GET /api/upload/presign` 返回 `enabled:false`，>4MB 文件给出明确提示而非静默 413 |
+| 7 | **CORS 预检**（2026-10-31 新增，事故后教训） | 对真实 presigned URL 发 `OPTIONS` 带 `Origin: https://www.bookconv.com` + `Access-Control-Request-Method: PUT` → 必须 200 且含 `Access-Control-Allow-Origin`。**curl/脚本身不做 CORS 预检，探针绿≠浏览器绿**（10-29/10-30 直传连续失败根因：桶 CORS 403，仅真浏览器受影响） |
 
 ## 6. 回滚
 

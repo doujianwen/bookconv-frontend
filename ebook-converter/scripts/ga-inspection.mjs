@@ -61,6 +61,7 @@ function basicFromLive(live) {
     engineFailed: conv.engineFailed,
     quotaFailed: conv.quotaFailed,
     clientFailed: conv.clientFailed,
+    infraFailed: conv.infraFailed ?? 0,
     failedByErrorCode: live.failedByErrorCode ?? null,
     metrics: {
       users: String(live.activeUsers),
@@ -118,24 +119,29 @@ function basicFromReport(report) {
 //   * 其余                       — 引擎失败 engineFailed ⇒ 异常 = engineFailed > 完成数
 //   兜底：成功率(完成/上传) < 50% 恒判异常（全量口径，防 error_code 误分类漏网）。
 //   error_code 明细缺失时按旧口径（全量 failed）并标 undecided（不可判定不硬报）。
+// 判据（2026-10-31 v3：红队命中后新增基础设施分类）：
+//   * DIRECT_UPLOAD_FAILED      — 直传链路故障（presign/R2/网络），非引擎非客户端 ⇒ 单独展示，
+//     不计入 engineFailed（否则 1 次直传失败+0 完成会误报「引擎失败偏高」）
 const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE']);
 const QUOTA_CODES = new Set(['CONVERSION_QUOTA_EXCEEDED']);
+const INFRA_CODES = new Set(['DIRECT_UPLOAD_FAILED']);
 
 function splitFailures(failed, failedByErrorCode) {
   const f = Number(failed);
   if (!Number.isFinite(f) || f <= 0) {
-    return { engineFailed: 0, quotaFailed: 0, clientFailed: 0, decided: Number.isFinite(f) };
+    return { engineFailed: 0, quotaFailed: 0, clientFailed: 0, infraFailed: 0, decided: Number.isFinite(f) };
   }
   if (!failedByErrorCode || typeof failedByErrorCode !== 'object') {
-    return { engineFailed: f, quotaFailed: 0, clientFailed: 0, decided: false }; // 明细缺失→旧口径，标 undecided
+    return { engineFailed: f, quotaFailed: 0, clientFailed: 0, infraFailed: 0, decided: false }; // 明细缺失→旧口径，标 undecided
   }
-  let client = 0, quota = 0;
+  let client = 0, quota = 0, infra = 0;
   for (const [code, n] of Object.entries(failedByErrorCode)) {
     const v = Number(n) || 0;
     if (CLIENT_INTERCEPT_CODES.has(code)) client += v;
     else if (QUOTA_CODES.has(code)) quota += v;
+    else if (INFRA_CODES.has(code)) infra += v;
   }
-  return { engineFailed: Math.max(0, f - client - quota), quotaFailed: quota, clientFailed: client, decided: true };
+  return { engineFailed: Math.max(0, f - client - quota - infra), quotaFailed: quota, clientFailed: client, infraFailed: infra, decided: true };
 }
 
 function evalConversion(complete, failed, upload, failedByErrorCode = null) {
@@ -246,6 +252,22 @@ function buildReport(basic, syntax, geo, adv) {
       ? `• 转换事件: 上传 ${u} 次 → 完成 ${c} 次 | 失败 ${f} 次 | 完成率(完成/上传) ${Math.round(c / u * 100)}% | 失败率(失败/上传) ${Math.round(f / u * 100)}%`
       : `• 转换事件: 上传 ${basic.metrics.upload ?? '—'} | 完成 ${basic.metrics.complete} | 失败 ${basic.metrics.failed} | 比率不可计算（缺上传数）`;
     lines.push(ratesLine);
+    // 真实成功率（2026-10-31 红队复核后新增，仅展示不动门禁）：
+    // 客户端拦截（FILE_TOO_LARGE）不触发 file_upload 但触发 conversion_failed，
+    // 上传数低估尝试数 ⇒ 完成/上传 高估成功率。补 完成/(完成+失败) 与 引擎侧 完成/(完成+引擎失败)。
+    const tc = Number(basic.metrics.complete), tf = Number(basic.metrics.failed);
+    const engFailN = Number(basic.engineFailed);
+    const trueRate = (Number.isFinite(tc) && Number.isFinite(tf) && tc + tf > 0)
+      ? Math.round(tc / (tc + tf) * 100) : null;
+    const engRate = (Number.isFinite(tc) && Number.isFinite(engFailN) && tc + engFailN > 0)
+      ? Math.round(tc / (tc + engFailN) * 100) : null;
+    if (trueRate !== null) {
+      const trueParts = [`• 真实成功率(完成/(完成+失败)): ${trueRate}%`];
+      if (engRate !== null && basic.failedByErrorCode && engRate !== trueRate) {
+        trueParts.push(`引擎侧成功率: ${engRate}%`);
+      }
+      lines.push(trueParts.join(' | '));
+    }
     // error_code 分布（仅实时源有）：让"失败"构成一目了然
     const fec = basic.failedByErrorCode;
     if (fec && typeof fec === 'object' && Object.keys(fec).length > 0) {
@@ -253,6 +275,7 @@ function buildReport(basic, syntax, geo, adv) {
       const parts = [`• 失败构成: ${dist}`];
       if (basic.clientFailed > 0) parts.push(`客户端拦截 ${basic.clientFailed}（未到引擎）`);
       if (basic.quotaFailed > 0) parts.push(`额度降级 ${basic.quotaFailed}（MON-2/3 范畴）`);
+      if (basic.infraFailed > 0) parts.push(`上传链路故障 ${basic.infraFailed}（直传 presign/R2/网络，非引擎）`);
       lines.push(parts.join(' — '));
     }
     if (basic.undecided) lines.push('• 转化失败率：⚠️ 不可判定（缺上传数据或失败明细）');
