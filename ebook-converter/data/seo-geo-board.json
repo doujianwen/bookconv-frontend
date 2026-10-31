@@ -510,7 +510,7 @@
           "tier": "CORE",
           "status": "doing",
           "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。\n\n子任务已拆分：M2-12(P0 Title优化)/M2-13(P1排名突破)/M2-14(P2 epub para doc)/M2-15(P2其余4页)。",
-          "statusNote": "2026-10-30：M2-12(P0 Title)/M2-13(P1 epub-to-zip) 早已 done（已发布）；M2-14 本日内容强化完成(tsc 通过,待人工发布)；M2-15 重新 triage 发现 4 页已内容充实、原『补充内容』前提过时，建议改判信号方向。待 M2-14 发布 + M2-15 范围裁定后整体 close。"
+          "statusNote": "2026-10-30：M2-12(P0 Title)/M2-13(P1 epub-to-zip) 早已 done（已发布）；M2-14 本日内容强化完成(tsc 通过,待人工发布)；M2-15 重新 triage 发现 4 页已内容充实、原『补充内容』前提过时，建议改判信号方向。待 M2-14 发布 + M2-15 范围裁定后整体 close。 2026-10-31 复核：待 M2-14 发布 + M2-15 范围裁定后整体 close。AI 部分(分析/子任务)已完成。"
         },
         {
           "id": "M2-12",
@@ -552,7 +552,7 @@
           "tier": "CORE",
           "status": "doing",
           "note": "来源：GSC自动化分析 2026-10-13，P2优先级。104展示是最高曝光，ROI最高。",
-          "statusNote": "2026-10-30 处理：epub-to-doc.ts 内容强化——新增 'EPUB to DOC Converter vs DOCX/PDF/TXT' 对比 section + 3 条意图 FAQ（在线免费/无需 Word/旧提交系统）+ hero 加 free online converter；tsc 通过。未 push，待人工审稿发布。GSC 数据(2026-10-12)已陈旧且 Google 自然流量当前≈0（Spam Update 恢复期），'4 周后复跑'验收现实不可达，已登记残余。\n红队审计纠正（2026-10-30）：① wordCount 原填 1080 仍严重失准——实测英文正文 2199 词（body 1630 + heading/faq 569），偏低约 2 倍，已重测修正为 2199；② publish-gate.mjs 仅扫描 src/data/blog，不覆盖 convert 页，本页正确验证路径为 tsc + next build，非 blog 专用门禁（早前『待跑 publish-gate』说法不精确，已纠正）。"
+          "statusNote": "2026-10-30 处理：epub-to-doc.ts 内容强化——新增 'EPUB to DOC Converter vs DOCX/PDF/TXT' 对比 section + 3 条意图 FAQ（在线免费/无需 Word/旧提交系统）+ hero 加 free online converter；tsc 通过。未 push，待人工审稿发布。GSC 数据(2026-10-12)已陈旧且 Google 自然流量当前≈0（Spam Update 恢复期），'4 周后复跑'验收现实不可达，已登记残余。\n红队审计纠正（2026-10-30）：① wordCount 原填 1080 仍严重失准——实测英文正文 2199 词（body 1630 + heading/faq 569），偏低约 2 倍，已重测修正为 2199；② publish-gate.mjs 仅扫描 src/data/blog，不覆盖 convert 页，本页正确验证路径为 tsc + next build，非 blog 专用门禁（早前『待跑 publish-gate』说法不精确，已纠正）。 2026-10-31 复核：内容强化已在 commit 31b4b86(nightly-sync)本地提交，待人工审稿+push 部署后即生效。GSC 验收不可达(自然流量≈0)残余保留。"
         },
         {
           "id": "M2-15",
@@ -566,7 +566,7 @@
           "tier": "CORE",
           "status": "doing",
           "note": "来源：GSC自动化分析 2026-10-13，P2优先级。与M2-14同批次执行。",
-          "statusNote": "2026-10-30 重新 triage：4 页实际已内容充实（epub-to-azw3 690w/11 section、lit-to-epub 720w/7 section、epub-to-txt 2800w/9 section、azw3-to-mobi 939w/9 section），原『补充内容』前提已过时——位 45-50 主因疑似信号/权威非内容稀薄。按务实充分纪律不堆砌（且 Spam Update 恢复期堆内容有风险）。建议改判为 signals/内链/canonical 方向，待用户裁定范围。\n红队审计修正（2026-10-30）：①『para=西/葡语』断言仅适用于 epub-to-txt 单页——其查询 'epub para txt' 确为西/葡语序、英文页难匹配（board detail 原文亦如此标注），不该推广到其余 4 页；② 位47.5/22.7/49.5/49.8 等数字源出 2026-10-13 GSC（约17天前、Spam Update 前），须用当前 GSC 复测确认各页主因；③ notion 清单(2026-10-25)显示 lit-to-epub 有 10.8K/mo Ahrefs 机会但被西语 301 规则杀掉（真实信号/技术故障，印证非纯内容薄），该 301 修复应优先于内容堆砌。\n【2026-10-30 专业建议（待用户裁定）】agent 推荐 signals-first，不推荐 blanket 内容堆砌：① 这 5 页内容已充实(700–2800w)，位45-50 属权威/相关性/技术信号问题而非内容稀薄——位45-50 代表 Google 已认可内容『尚可』但缺突破 top10–20 的权威/信任/相关性信号，堆字数边际收益递减；② Spam Update 恢复期，'SEO 内容'式增量可能触发/加深惩罚，反向有害；③ 已知 lit-to-epub 被西语 301 规则杀掉(10.8K/mo 机会)，应先全量排查 5 页 canonical/hreflang/indexation 技术故障（零成本、高 ROI，且技术故障面前内容无效）；④ 主攻内部链接枢纽（convert 簇互链 + 高权 blog/guide 反链传递 PageRank/主题相关）+ 实体/EEAT 信号（真实工具、对比、评价）；⑤ 仅对确存缺口页做外科手术式补充（如 epub-to-doc 缺对比表已补），不 blanket 加字数。此结论为假设，拍板前需验证：a) 修已知 301 故障；b) 取当前 GSC 各位/展数据；c) 确认 5 页已被收录（Google 自然流量当前≈0，可能部分未索引）。"
+          "statusNote": "2026-10-30 重新 triage：4 页实际已内容充实（epub-to-azw3 690w/11 section、lit-to-epub 720w/7 section、epub-to-txt 2800w/9 section、azw3-to-mobi 939w/9 section），原『补充内容』前提已过时——位 45-50 主因疑似信号/权威非内容稀薄。按务实充分纪律不堆砌（且 Spam Update 恢复期堆内容有风险）。建议改判为 signals/内链/canonical 方向，待用户裁定范围。\n红队审计修正（2026-10-30）：①『para=西/葡语』断言仅适用于 epub-to-txt 单页——其查询 'epub para txt' 确为西/葡语序、英文页难匹配（board detail 原文亦如此标注），不该推广到其余 4 页；② 位47.5/22.7/49.5/49.8 等数字源出 2026-10-13 GSC（约17天前、Spam Update 前），须用当前 GSC 复测确认各页主因；③ notion 清单(2026-10-25)显示 lit-to-epub 有 10.8K/mo Ahrefs 机会但被西语 301 规则杀掉（真实信号/技术故障，印证非纯内容薄），该 301 修复应优先于内容堆砌。\n【2026-10-30 专业建议（待用户裁定）】agent 推荐 signals-first，不推荐 blanket 内容堆砌：① 这 5 页内容已充实(700–2800w)，位45-50 属权威/相关性/技术信号问题而非内容稀薄——位45-50 代表 Google 已认可内容『尚可』但缺突破 top10–20 的权威/信任/相关性信号，堆字数边际收益递减；② Spam Update 恢复期，'SEO 内容'式增量可能触发/加深惩罚，反向有害；③ 已知 lit-to-epub 被西语 301 规则杀掉(10.8K/mo 机会)，应先全量排查 5 页 canonical/hreflang/indexation 技术故障（零成本、高 ROI，且技术故障面前内容无效）；④ 主攻内部链接枢纽（convert 簇互链 + 高权 blog/guide 反链传递 PageRank/主题相关）+ 实体/EEAT 信号（真实工具、对比、评价）；⑤ 仅对确存缺口页做外科手术式补充（如 epub-to-doc 缺对比表已补），不 blanket 加字数。此结论为假设，拍板前需验证：a) 修已知 301 故障；b) 取当前 GSC 各位/展数据；c) 确认 5 页已被收录（Google 自然流量当前≈0，可能部分未索引）。 2026-10-31 复核：仍待用户裁定方向(signals-first vs 内容堆砌) + 西语 301 修复(lit-to-epub 10.8K/mo 机会)。AI 推荐 signals-first + 先修技术故障。"
         },
         {
           "id": "M2-16",
@@ -1333,7 +1333,7 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。\n2026-10-27 分析补全（M8-10 监控小结 docs/m8-10-失败签名监控小结-2026-10-27.md）：窗口 10-19→10-26 满 7 天；§3.4+§3.5 已上线并生产验证（Job 75c75593 被 §3.5 拦截）。窗口内无文档记录 Input task has failed 复发；同期仅有 10-22 起 402 复发（不同签名）。诚实保留：未直接重查飞书告警群历史/Vercel 日志（权威失败通道），故「7天无复发」为 Inference 非 Fact。关闭闸门=重查权威通道 10-19→10-26 过滤 Input task has failed；0例→关闭，≥2例且深度校验放行后→重开诊断。\n2026-10-27 续（GA4 辅助 + close-gate runbook）：服务账号实拉 10-19→10-26 窗口 conversion_failed=每日0-5(无尖峰)，佐证无复发但 GA4 不能关闭闸门；权威通道(飞书群/Vercel CLI)本环境无权限且 cookie 过期，close-gate 待用户实时登录确认。文档 docs/m8-10-失败签名监控小结-2026-10-27.md §7(GA4 数据)+§8(2分钟 runbook)。状态=close-gate pending，未伪报 PASS。\n2026-10-27 close-gate 复核（飞书权威通道 lark-cli 独立重查 10-19→10-27）：抓到 3 张失败卡——10-19 ×2（基线，修复 20:57 前）+ 10-26 ×1（POST-§3.5 复发：epub→mobi，Job 9dba318b，calibre+auto 双引擎失败，2 attempts；Severity=System-side fault）。Vercel Hobby 1h 留存使历史窗口无法经 Vercel 复核，飞书为系统权威通道（alerts.ts + 事故文档 §6.3）。裁定：close 条件（连续7天0复发）未满足 → close-gate FAILED，M8-10 不得关闭；单例虽未达 accept「≥2 重开诊断」字面阈值，但证伪「§3.5 结构性消除签名」假设，按「不伪报PASS」纪律保持 open 并诊断 10-26 个案。Vercel failedTask JSON 因 1h 留存已不可取。详见 docs/m8-10-失败签名监控小结-2026-10-27.md §9。\n[2026-10-27 立项] close-gate FAILED 裁定已确认（飞书权威通道 10-26 复发 Job 9dba318b）。监控结论：§3.5 必要但不充分（CRC/语义级损坏盲区）。根因诊断见 docs/m8-10-失败签名监控小结-2026-10-27.md §9.4-§9.6。派生 remediation 已立项：M8-12（扩展 §3.5 校验）/ M8-13（损坏卡改判灰）/ M8-14（重试对永久损坏短路）。M8-10 保持 doing，待 M8-12/13/14 交付后复查签名走向。"
+          "statusNote": "2026-10-19 21:06 建卡（拍板方案 C 落地后的监控配套）。\n2026-10-19 21:27 首次生产命中：Job 75c75593 (epub→pdf) 被 §3.5 深度校验拦截，错误信息\"corrupt epub: ZIP member OEBPS/chapter1.xhtml failed to decompress\"与新增文案逐字一致，确认修复已上线生效。旧代码对此类文件返回 CLOUD_CONVERT_ERROR + ~7s CC 往返；新代码 3.4s 本地拦截 + 不烧 CC job。\n2026-10-27 分析补全（M8-10 监控小结 docs/m8-10-失败签名监控小结-2026-10-27.md）：窗口 10-19→10-26 满 7 天；§3.4+§3.5 已上线并生产验证（Job 75c75593 被 §3.5 拦截）。窗口内无文档记录 Input task has failed 复发；同期仅有 10-22 起 402 复发（不同签名）。诚实保留：未直接重查飞书告警群历史/Vercel 日志（权威失败通道），故「7天无复发」为 Inference 非 Fact。关闭闸门=重查权威通道 10-19→10-26 过滤 Input task has failed；0例→关闭，≥2例且深度校验放行后→重开诊断。\n2026-10-27 续（GA4 辅助 + close-gate runbook）：服务账号实拉 10-19→10-26 窗口 conversion_failed=每日0-5(无尖峰)，佐证无复发但 GA4 不能关闭闸门；权威通道(飞书群/Vercel CLI)本环境无权限且 cookie 过期，close-gate 待用户实时登录确认。文档 docs/m8-10-失败签名监控小结-2026-10-27.md §7(GA4 数据)+§8(2分钟 runbook)。状态=close-gate pending，未伪报 PASS。\n2026-10-27 close-gate 复核（飞书权威通道 lark-cli 独立重查 10-19→10-27）：抓到 3 张失败卡——10-19 ×2（基线，修复 20:57 前）+ 10-26 ×1（POST-§3.5 复发：epub→mobi，Job 9dba318b，calibre+auto 双引擎失败，2 attempts；Severity=System-side fault）。Vercel Hobby 1h 留存使历史窗口无法经 Vercel 复核，飞书为系统权威通道（alerts.ts + 事故文档 §6.3）。裁定：close 条件（连续7天0复发）未满足 → close-gate FAILED，M8-10 不得关闭；单例虽未达 accept「≥2 重开诊断」字面阈值，但证伪「§3.5 结构性消除签名」假设，按「不伪报PASS」纪律保持 open 并诊断 10-26 个案。Vercel failedTask JSON 因 1h 留存已不可取。详见 docs/m8-10-失败签名监控小结-2026-10-27.md §9。\n[2026-10-27 立项] close-gate FAILED 裁定已确认（飞书权威通道 10-26 复发 Job 9dba318b）。监控结论：§3.5 必要但不充分（CRC/语义级损坏盲区）。根因诊断见 docs/m8-10-失败签名监控小结-2026-10-27.md §9.4-§9.6。派生 remediation 已立项：M8-12（扩展 §3.5 校验）/ M8-13（损坏卡改判灰）/ M8-14（重试对永久损坏短路）。M8-10 保持 doing，待 M8-12/13/14 交付后复查签名走向。 2026-10-31 M8-12/13/14 remediation 全部落地（代码+反向验证通过，待部署）。close-gate 仍 FAILED（10-26 复发未清零），待部署后重新起算 7 天窗口复测签名走向再裁定关闭。"
         },
         {
           "id": "M8-11",
@@ -1358,8 +1358,8 @@
           "due": "2026-11-03",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "派生自 M8-10（10-26 Job 9dba318b 双引擎 Input task has failed，§3.5 放行后到 CC 才被拒）"
+          "status": "done",
+          "statusNote": "派生自 M8-10（10-26 Job 9dba318b 双引擎 Input task has failed，§3.5 放行后到 CC 才被拒） 2026-10-31 落地：conversion.ts §3.5 加逐成员 CRC32 比对（取 member._data.crc32 与本地 crc32Unsigned 比对），关闭 §3.5 盲区#1（CRC 级损坏，deflate 完好仍可解压）。已加反向验证用例 corruptMemberStoredCrc 并 jest 通过；tsc 通过。实证：合法 EPUB 全成员 CRC 匹配(无误杀)、CRC 损坏用例被拦(corrupt epub)。未 push（发布由人工复核）。"
         },
         {
           "id": "M8-13",
@@ -1371,8 +1371,8 @@
           "due": "2026-11-03",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "派生自 M8-10 次级发现：损坏卡被误判为系统故障"
+          "status": "done",
+          "statusNote": "派生自 M8-10 次级发现：损坏卡被误判为系统故障 2026-10-31 落地：error-handler.ts mapErrorCode 在 cloudconvert 兜底前插入 input task has failed→CORRUPT_INPUT；alerts.ts USER_SIDE_PATTERNS 加 input task has failed + §3.5 标签改名，损坏卡判灰(用户侧)而非系统红卡。反向验证 M8-13 用例通过。未 push。"
         },
         {
           "id": "M8-14",
@@ -1384,8 +1384,8 @@
           "due": "2026-11-03",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "派生自 M8-10 次级发现：重试白烧 CC 额度"
+          "status": "done",
+          "statusNote": "派生自 M8-10 次级发现：重试白烧 CC 额度 2026-10-31 落地：cloudconvert.ts permanentFailure 增加 /input task has failed/i 与 DRM 一并短路，损坏签名不再重试(省第2个 CC job+额度+~270s 轮询)。瞬态 import 抖动仍可重试。反向验证 M8-14 用例通过(建1个job)。未 push。"
         }
       ]
     },
@@ -1627,8 +1627,8 @@
           "recurring": "weekly",
           "priority": "P1",
           "tier": "CORE",
-          "status": "doing",
-          "statusNote": "2026-10-30 启动 R_post，跑 2 轮但红队审计后判定结论不可靠，重分类为 UNKNOWN（非 delta=0）。问题清单：(1) 引擎覆盖残缺——ChatGPT 全程 429（账户 Tier<1 未开放 web_search），全文件 ChatGPT 记录=0；『AI 引用』仅 Gemini 单引擎，且 Gemini R_post resultRows 由 9 降至 4。(2) Brave 是传统搜索 top-10 代理（geo-exposure-probe.py:173），非 AI 引用引擎，不得与 Gemini cited 合并成单一 delta。(3) 种子 11 词中 7 词 target_slug 为空（open epub file/epub reader online/kindle vs kobo/e-reader buying/epub online reader/kobo vs kindle 等），无专属目标页，R_post 对之测的是不存在的内容、0 引用为预期内、结论真空。(4) 双跑污染——Round1/2 重复追加 11 条 R_post Brave，已清理（55→44 快照，R_post 唯一 22）。修正动作：measurement.json 已去重；topic-portfolio-measure.mjs 加同日去重守卫；Brave/Gemini 须分渠道记分。结论：当前证据不足以判定『发布后引用提升/无提升』，应报 UNKNOWN。待办：① 修 ChatGPT（OpenAI 账户充值≥$5 升 Tier≥1）；② 逐 query 补/确认 live 目标页后再测；③ 内容真发布+收录后重测。"
+          "status": "blocked",
+          "statusNote": "2026-10-30 启动 R_post，跑 2 轮但红队审计后判定结论不可靠，重分类为 UNKNOWN（非 delta=0）。问题清单：(1) 引擎覆盖残缺——ChatGPT 全程 429（账户 Tier<1 未开放 web_search），全文件 ChatGPT 记录=0；『AI 引用』仅 Gemini 单引擎，且 Gemini R_post resultRows 由 9 降至 4。(2) Brave 是传统搜索 top-10 代理（geo-exposure-probe.py:173），非 AI 引用引擎，不得与 Gemini cited 合并成单一 delta。(3) 种子 11 词中 7 词 target_slug 为空（open epub file/epub reader online/kindle vs kobo/e-reader buying/epub online reader/kobo vs kindle 等），无专属目标页，R_post 对之测的是不存在的内容、0 引用为预期内、结论真空。(4) 双跑污染——Round1/2 重复追加 11 条 R_post Brave，已清理（55→44 快照，R_post 唯一 22）。修正动作：measurement.json 已去重；topic-portfolio-measure.mjs 加同日去重守卫；Brave/Gemini 须分渠道记分。结论：当前证据不足以判定『发布后引用提升/无提升』，应报 UNKNOWN。待办：① 修 ChatGPT（OpenAI 账户充值≥$5 升 Tier≥1）；② 逐 query 补/确认 live 目标页后再测；③ 内容真发布+收录后重测。 2026-10-31 复核：硬阻塞仍为 OpenAI Tier<1(充值≥$5 升 Tier≥1 才能跑可信 R_post)；ChatGPT 全程 429 使结论 UNKNOWN。待用户充值后重测。"
         },
         {
           "id": "M11-6",
