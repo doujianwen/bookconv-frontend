@@ -107,6 +107,40 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
   else push('B3', name, 'P1', 'FAIL', '缺完成率与失败明细字段，指标口径不完整')
 }
 
+// ── B6 指标内部一致性（P0，2026-10-31 红队复核新增）──────────────────
+// 抓「数据假成功」：事件计数口径错乱。
+// ⚠️ 不变量纠正：不可写成「完成+失败 ≤ 上传」——conversion_failed 含客户端拦截
+// (FILE_TOO_LARGE)，这类在提交前就被前端拦下、从不计 file_upload，故合法数据里
+// 失败可合法超过上传。若照此写会制造假 FAIL（判据先测再采信，假门禁比没门禁更坏）。
+// 正确不变量：到达引擎的终态 = 完成 + (失败 − FILE_TOO_LARGE) 必须 ≤ 上传数；
+// 完成数更不可 > 上传数。违反 = 事件重复计数/口径错乱（物理不可能）。
+{
+  const name = '指标内部一致性'
+  const u = Number(live?.events?.file_upload)
+  const c = Number(live?.events?.conversion_complete)
+  const f = Number(live?.events?.conversion_failed)
+  const hasFec = !!live?.failedByErrorCode
+  if (!Number.isFinite(u) || !Number.isFinite(c) || !Number.isFinite(f)) {
+    push('B6', name, 'P0', 'UNKNOWN', '上传/完成/失败字段缺失或非数值，内部一致性不可判定')
+  } else if (c > u) {
+    push('B6', name, 'P0', 'FAIL', `完成 ${c} > 上传 ${u}（物理不可能：完成数不可超过提交数）→ 事件计数错乱`)
+  } else if (hasFec) {
+    // 客户端拦截型失败：提交前即被前端拦下、从不计 file_upload，故合法数据里
+    // 失败可超过上传。共有两类（fetch-ga4-daily.mjs:135-137 同口径）：
+    //   FILE_TOO_LARGE          — 单文件：客户端大小护栏拦截（ToolPageClient.tsx:202）
+    //   CONVERSION_QUOTA_EXCEEDED — 批量：额度耗尽跳过，不发 file_upload（BatchUpload.tsx:355）
+    // 仅剥 FILE_TOO_LARGE 会漏掉批量配额场景 → 制造假 FAIL（假门禁比没门禁更坏）。
+    const ftl = Number(live.failedByErrorCode.FILE_TOO_LARGE) || 0
+    const quota = Number(live.failedByErrorCode.CONVERSION_QUOTA_EXCEEDED) || 0
+    const clientIntercepted = ftl + quota
+    const reached = c + f - clientIntercepted
+    if (reached > u) push('B6', name, 'P0', 'FAIL', `到达引擎终态(完成+失败−客户端拦截${clientIntercepted})=${reached} > 上传 ${u}（事件重复计数/口径错乱，物理不可能）`)
+    else push('B6', name, 'P0', 'PASS', `到达引擎终态 ${reached} ≤ 上传 ${u}（客户端拦截 FILE_TOO_LARGE=${ftl}+QUOTA=${quota} 未计上传，口径自洽）`)
+  } else {
+    push('B6', name, 'P0', 'UNKNOWN', '缺 failedByErrorCode 无法剥离客户端拦截，仅凭 完成≤上传 验证，全量一致性不可判定')
+  }
+}
+
 // ── B4 门禁完整性（P1）──────────────────────────────────────────────
 {
   const name = '门禁完整性'

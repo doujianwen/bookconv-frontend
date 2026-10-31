@@ -292,7 +292,22 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
     else if (basic.abnormal) {
       lines.push(`• ⚠️ 服务端引擎失败偏高（${basic.convReason}；需人工核查引擎/额度，衔接 error_code 维度）`);
     }
-    else lines.push('• 转化失败率：正常（引擎侧无异常失败）');
+    else {
+      // 2026-10-31 红队复核：Part A 的"正常"结论须由深度分析 D2 背书。D2=UNKNOWN/FAIL
+      // （失败分流数据缺失，或与 Part A 引擎结论矛盾）时，引擎结论不可验证，禁写"正常"
+      // —— 否则即叙述层假成功（同日报 Part A 称正常、D2 说不可验证的矛盾复发）。
+      const d2 = (redteamAnalysis?.checks || []).find((c) => c.id === 'D2');
+      // 红队复核（2026-11-01 二次审计修正）：兜底必须是「!d2 || verdict!==PASS」。
+      // 此前写成「d2 && verdict!==PASS」会把 D2 检查项缺失（数据最糟、比 UNKNOWN 更糟）
+      // 误归入 else 分支写「正常」——即原审计要消灭的叙述层假成功。务必用「缺失即不可验证」。
+      if (!d2 || d2.verdict !== 'PASS') {
+        const d2verdict = d2 ? d2.verdict : 'MISSING';
+        const d2evidence = d2 ? d2.evidence : '深度分析未产出 D2 检查项，失败分流不可验证';
+        lines.push(`• 转化失败率：⚠️ 引擎结论不可验证（深度分析 D2=${d2verdict}：${d2evidence}）`);
+      } else {
+        lines.push('• 转化失败率：正常（引擎侧无异常失败）');
+      }
+    }
     // P1-4 批量异常告警（v2 手册模块 7）
     const b = basic.batch;
     if (b?.decided && b.triggered) lines.push(`• 🚨 批量异常：${b.reason}（引擎/额度根因需人工分流，衔接 error_code 维度）`);
