@@ -96,6 +96,13 @@ const USER_SIDE_ERROR_CODES: ReadonlySet<ErrorCode> = new Set<ErrorCode>([
  * "CORRUPT_INPUT: ..."）；②FILE_TOO_LARGE 在 ERROR_CODE_MAP 无任何映射模式
  * （该 code 只在文件大小预检时直接产生，实测 2026-10-21 反向测试抓出）。
  * 注意模式选词：「exceeds」不会误伤配额消息「exceeded」（子串不同）。
+ *
+ * 2026-10-31 红队复核新增 'input task has failed'：CloudConvert 导入级失败。
+ * 该签名（epub→azw3/mobi，calibre+auto 双子引擎同 hash 同消息失败）是已知的
+ * POST-§3.5 盲区复发——文件过本地 jszip 校验、却过不了 CC 导入解析，属**输入级
+ * 损坏**而非系统宕机（10-26 Job 9dba318b、10-31 Job 8de95590 实证）。原先 fail-closed
+ * 把它判成 🚨 系统故障，稀释告警通道信噪比；降级为灰卡（用户侧输入问题）。
+ * 注：瞬态 import 抖动若重试后仍失败，同样走灰卡——频率升高时仍可经节流观测。
  */
 const USER_SIDE_PATTERNS = [
   'drm_protected',
@@ -108,6 +115,7 @@ const USER_SIDE_PATTERNS = [
   'size limit',
   'exceeds',
   'failed verification',
+  'input task has failed',
 ];
 
 export type AlertSeverity = 'system' | 'user';
@@ -249,7 +257,7 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
       ? ['**Input size:**', `${payload.inputSize} bytes`, '\n']
       : []),
     ...(payload.validationResult
-      ? ['**§3.5 check:**', payload.validationResult, '\n']
+      ? ['**§3.5 pre-check (derived):**', payload.validationResult, '\n']
       : []),
     ...(payload.firstFailingEngine
       ? ['**First engine:**', payload.firstFailingEngine, '\n']

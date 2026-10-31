@@ -64,6 +64,28 @@ function corruptMemberData(buf: Buffer, memberName: string): Buffer {
   throw new Error(`test setup failed: local header for ${memberName} not found`);
 }
 
+/**
+ * M8-12（2026-10-31）回归辅助：翻转指定成员在 ZIP 中央目录（PK\x01\x02）的存储 CRC32
+ * 字段，使其与解压后计算值不符——但 deflate 数据完好、能正常解压。用于验证「CRC 级
+ * 损坏」这一 §3.5 旧盲区现在能被本地拦下（旧实现只抓 deflate 解压失败，会漏掉此类）。
+ */
+function corruptMemberStoredCrc(buf: Buffer, memberName: string): Buffer {
+  const nameBytes = Buffer.from(memberName, 'utf8');
+  for (let i = 0; i <= buf.length - 46 - nameBytes.length; i++) {
+    if (buf[i] !== 0x50 || buf[i + 1] !== 0x4b || buf[i + 2] !== 0x01 || buf[i + 3] !== 0x02) continue;
+    const fnameLen = buf[i + 28] | (buf[i + 29] << 8);
+    if (
+      fnameLen === nameBytes.length &&
+      buf.slice(i + 46, i + 46 + fnameLen).equals(nameBytes)
+    ) {
+      const out = Buffer.from(buf);
+      out.writeUInt32LE((out.readUInt32LE(i + 16) ^ 0xffffffff) >>> 0, i + 16);
+      return out;
+    }
+  }
+  throw new Error(`test setup failed: central dir entry for ${memberName} not found`);
+}
+
 describe('reverse-verify: §3.5 EPUB deep decompression validation (2026-10-19)', () => {
   let dir: string;
 
@@ -86,6 +108,14 @@ describe('reverse-verify: §3.5 EPUB deep decompression validation (2026-10-19)'
     const broken = corruptMemberData(good, 'OEBPS/chapter1.xhtml');
     const p = path.join(dir, 'broken-member.epub');
     await writeFile(p, broken);
+    await expect(validateInputFile(p, 'epub')).rejects.toThrow(/corrupt epub/i);
+  });
+
+  it('成员 CRC32 校验和损坏的 EPUB 被拦下（M8-12：CRC 盲区关闭，deflate 完好仍可解压）', async () => {
+    const good = await buildValidEpub();
+    const crcBroken = corruptMemberStoredCrc(good, 'OEBPS/chapter1.xhtml');
+    const p = path.join(dir, 'crc-broken.epub');
+    await writeFile(p, crcBroken);
     await expect(validateInputFile(p, 'epub')).rejects.toThrow(/corrupt epub/i);
   });
 

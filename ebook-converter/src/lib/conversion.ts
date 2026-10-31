@@ -130,6 +130,20 @@ function getMimeType(ext: string): string {
  * Validate input file before sending to Calibre. Throws if the file is clearly corrupted.
  * exported for reverse-verification tests (tests/reverse-verify-epub-deep-validation.test.ts).
  */
+// M8-12（2026-10-31）：标准 zlib CRC32（多项式 0xEDB88320），用于逐成员校验。
+// 返回无符号 32 位整数，便于与 jszip 存储的 crc32（central directory 值，可能为
+// 有符号）做 `>>> 0` 归一后比对。仅用于 §3.5 深度校验的 CRC 盲区关闭。
+function crc32Unsigned(buf: Uint8Array): number {
+  let crc = 0xffffffff;
+  for (let i = 0; i < buf.length; i++) {
+    crc ^= buf[i];
+    for (let k = 0; k < 8; k++) {
+      crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+    }
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
 export async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
   try {
     const stat = await fsp.stat(inputPath);
@@ -204,6 +218,14 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
       // 本地，直接给用户 CORRUPT_INPUT，不再白烧一个 CC job + 270s 轮询。
       // 内存护栏：累计解压超过 256MB 即停止（视为通过——超限不是损坏证据），
       // 避免极端文件把 Serverless 实例打爆；每次只保留一个成员的缓冲。
+      //
+      // M8-12（2026-10-31）：原校验仅捕获「成员 deflate 解压失败」子集，漏检 CRC 级
+      // 损坏（成员能解压、但存储 CRC 校验和错误，10-26 复发 Job 9dba318b 即 §3.5
+      // 假阴性盲区#1）。jszip 3.10.1 的 `member.async(..., {verify})` 不支持 CRC 校验
+      // （2nd 参被当回调，实测 updateCallback is not a function），改用：解压后取成员
+      // 存储 crc32（`member._data.crc32`，来自 ZIP central directory）与本地计算值比对，
+      // 不匹配即判定损坏 → CORRUPT_INPUT。正常 EPUB 必匹配，无误杀风险。此闭环使 §3.5
+      // 真正覆盖盲区#1，M8-13/14 + alerts.ts 灰卡退为双保险而非唯一兜底。
       const DEEP_CHECK_BYTE_CAP = 256 * 1024 * 1024;
       let deepChecked = 0;
       let firstBrokenMember: string | null = null;
@@ -218,6 +240,12 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
           try {
             const bytes = await member.async('uint8array');
             deepChecked += bytes.length;
+            // M8-12 CRC 盲区关闭：解压成功 ≠ 数据正确。比对存储 CRC 与计算 CRC。
+            const storedCrc = (member as { _data?: { crc32?: number } })._data?.crc32;
+            if (typeof storedCrc === 'number' && crc32Unsigned(bytes) !== (storedCrc >>> 0)) {
+              firstBrokenMember = `${member.name} (CRC32 mismatch)`;
+              break;
+            }
           } catch {
             firstBrokenMember = member.name;
             break;

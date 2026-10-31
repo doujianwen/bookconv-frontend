@@ -10,6 +10,7 @@
 // 注意：cloudconvert.ts 在模块顶层捕获 process.env.CLOUD_CONVERT_API_KEY，必须在设置 env
 // 之后再加载该模块（故用 beforeAll 里 require，而非顶层静态 import）。
 let convertWithCloudConvert: (...args: any[]) => Promise<any>;
+import { mapErrorCode } from '@/lib/error-handler';
 
 const ORIGINAL_KEY = process.env.CLOUD_CONVERT_API_KEY;
 
@@ -110,7 +111,7 @@ function buildFetch(firstJobFailMode: 'import' | 'convert' | 'export' | 'none') 
               id,
               status: 'error',
               tasks: [
-                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Input task has failed', code: 'input_failed' } },
+                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Import failed: transient upstream error', code: 'import_failed' } },
                 { id: 't2', name: 'convert-file', operation: 'convert', status: 'pending' },
                 { id: 't3', name: 'export-file', operation: 'export/url', status: 'pending' },
               ],
@@ -237,7 +238,7 @@ describe('reverse-verify: CloudConvert fixes 2026-10-12', () => {
               id,
               status: 'error',
               tasks: [
-                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Input task has failed', code: 'input_failed' } },
+                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Import failed: transient upstream error', code: 'input_failed' } },
                 { id: 't2', name: 'convert-file', operation: 'convert', status: 'pending' },
                 { id: 't3', name: 'export-file', operation: 'export/url', status: 'pending' },
               ],
@@ -319,5 +320,84 @@ describe('reverse-verify: CloudConvert fixes 2026-10-12', () => {
     await expect(
       runConversion(fakeEpub, null, 'epub', 'pdf', 'test-magic-1'),
     ).rejects.toThrow(/0x74686973/);
+  });
+
+  // ── M8-14（2026-10-31）反向验证：损坏签名短路重试 ───────────────────────
+  // 注入 CloudConvert 报 "Input task has failed"（§3.5 漏检的 CC-import 级损坏，
+  // 10-26 Job 9dba318b / 10-31 Job 8de95590 实证）。此前被当瞬态 import 重试，
+  // 白烧第 2 个 CC job + 额度 + ~270s 轮询。修复后须判为永久失败 → 只建 1 个 job、
+  // 直接 reject（不再重试）。
+  it('M8-14 corrupt-input signature is NOT retried (permanent failure short-circuit)', async () => {
+    let postCount = 0;
+    const fetchMock = jest.fn(async (input: any, init?: any) => {
+      const url = typeof input === 'string' ? input : input?.url;
+      if (url.includes('/v2/jobs') && init?.method === 'POST') {
+        const id = 'job-' + (++postCount);
+        return makeJson({
+          data: {
+            id,
+            status: 'waiting',
+            tasks: [
+              { id: 't1', name: 'import-file', operation: 'import/upload', status: 'waiting',
+                result: { form: { url: 'https://s3.upload.example/put-' + id, parameters: { key: 'k' } } } },
+              { id: 't2', name: 'convert-file', operation: 'convert', status: 'waiting' },
+              { id: 't3', name: 'export-file', operation: 'export/url', status: 'waiting' },
+            ],
+          },
+        });
+      }
+      if (url.startsWith('https://s3.upload.example/')) return makeUpload();
+      if (url.includes('/v2/jobs/') && init?.method !== 'POST') {
+        const id = url.split('/v2/jobs/')[1];
+        const jobIdx = parseInt(id.replace('job-', ''), 10);
+        if (jobIdx === 1) {
+          return makeJson({
+            data: {
+              id,
+              status: 'error',
+              tasks: [
+                { id: 't1', name: 'import-file', operation: 'import/upload', status: 'error', result: { message: 'Input task has failed', code: 'input_failed' } },
+                { id: 't2', name: 'convert-file', operation: 'convert', status: 'pending' },
+                { id: 't3', name: 'export-file', operation: 'export/url', status: 'pending' },
+              ],
+            },
+          });
+        }
+        return makeJson({
+          data: {
+            id,
+            status: 'finished',
+            tasks: [
+              { id: 't1', name: 'import-file', operation: 'import/upload', status: 'finished', result: {} },
+              { id: 't2', name: 'convert-file', operation: 'convert', status: 'finished', result: {} },
+              { id: 't3', name: 'export-file', operation: 'export/url', status: 'finished', result: { files: [{ filename: 'out.pdf', url: 'https://download.example/out.pdf' }] } },
+            ],
+          },
+        });
+      }
+      if (url.startsWith('https://download.example/')) return makeFile(Buffer.from('%PDF-1.4 fake'));
+      throw new Error('unexpected fetch: ' + url);
+    });
+    (global as any).fetch = fetchMock;
+    await expect(
+      convertWithCloudConvert(
+        'epub',
+        'pdf',
+        Buffer.from('PK\x03\x04 fake epub').toString('base64'),
+        'test.epub',
+      ),
+    ).rejects.toThrow(/CloudConvert job failed/);
+    // 关键不变量：损坏签名不重试，只建 1 个 job（若仍建 2 个 = 短路失效）
+    expect(jobPostCount(fetchMock)).toBe(1);
+  });
+
+  // ── M8-13（2026-10-31）反向验证：损坏签名改判 CORRUPT_INPUT ──────────────
+  // "Input task has failed" 必须映射为 CORRUPT_INPUT（用户侧灰卡），而非被 'cloudconvert'
+  // 兜底吞成 CLOUD_CONVERT_ERROR（系统红卡）。验证映射在兜底前命中。
+  it('M8-13 corrupt-input signature maps to CORRUPT_INPUT (not cloudconvert catch-all)', () => {
+    expect(mapErrorCode('Input task has failed')).toBe('CORRUPT_INPUT');
+    expect(mapErrorCode('Error: Input task has failed during import')).toBe('CORRUPT_INPUT');
+    // 对照：无此签名的通用 cloudconvert 错误仍走兜底（回归保护）
+    expect(mapErrorCode('some other cloudconvert error')).toBe('CLOUD_CONVERT_ERROR');
   });
 });

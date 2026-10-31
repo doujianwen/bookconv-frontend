@@ -421,7 +421,14 @@ export async function convertWithCloudConvert(
       // DRM 失败是永久性的：Calibre 拒转 DRM 是合规设计，换引擎必然同样失败，
       // 降级重试只会白烧一次 job 创建+上传+轮询（2026-10-12 ce307283 告警实证：
       // calibre 报 "This ebook is DRM encrypted" 后 auto 引擎同样失败）。
-      const permanentFailure = /DRM/i.test(msg);
+      //
+      // M8-14（2026-10-31）："Input task has failed" 与 DRM 同属永久失败。它是
+      // CloudConvert 对损坏/无法 import 文件的签名（§3.5 漏检的 CC-import 级损坏，
+      // 10-26 复发 Job 9dba318b：calibre+auto 双引擎同签名失败）。此前被当成瞬态
+      // import 重试，白烧第 2 个 CC job + 额度 + ~270s 轮询。这里与 DRM 一并短路，
+      // 省一次重试。真正瞬态的 import/upload 抖动（无此签名、仅 anyImportErrored）
+      // 仍可正常重试，不受影响。
+      const permanentFailure = /DRM/i.test(msg) || /input task has failed/i.test(msg);
       const isTransientImport =
         err instanceof CloudConvertJobFailure && err.importTaskFailed;
       const isEngineDowngrade =

@@ -41,6 +41,11 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   'Invalid or missing opf': 'CORRUPT_INPUT',
   'DRM': 'DRM_PROTECTED',
   'failed verification': 'VERIFICATION_FAILED',
+  // M8-13（2026-10-31）：§3.5 漏检、却溜到 CloudConvert 报 "Input task has failed" 的
+  // CC-import 级损坏（语义/CRC 级，10-26 复发 Job 9dba318b 实证）。这类签名与 DRM 一样
+  // 属用户侧损坏，必须映射为 CORRUPT_INPUT（而非被下方 'cloudconvert' 兜底吞成
+  // CLOUD_CONVERT_ERROR 红卡）。须排在 'cloudconvert' 兜底之前，否则后者先命中。
+  'input task has failed': 'CORRUPT_INPUT',
   // EPUB to TXT errors
   'no text content could be extracted': 'CONVERSION_FAILED',
   'cannot extract text': 'CONVERSION_FAILED',
