@@ -33,9 +33,10 @@ describe('board data file', () => {
     ]);
   });
 
-  it('has 101 tasks (board grew from 66; M11 module + many supplements added through Oct)', () => {
-    // Measured against the live board on 2026-10-25.
-    expect(data.modules.flatMap((m) => m.tasks)).toHaveLength(101);
+  it('has 104 tasks (board grew from 66; M11 module + many supplements added through Oct)', () => {
+    // Measured against the live board on 2026-11-01 (was 101 on 2026-10-25;
+    // M8-12/13/14 remediation + GA4 红队线新增任务使总数继续增长).
+    expect(data.modules.flatMap((m) => m.tasks)).toHaveLength(104);
   });
 
   it('uses unique task ids', () => {
@@ -198,13 +199,12 @@ describe('board derivation', () => {
   const mon = deriveBoard(data, '2026-09-28');
 
   it('reports the totals straight from the data file', () => {
-    // Measured against the live board on 2026-10-25 (board grew to 12 modules
-    // / 101 tasks; M11 added; many tasks closed done through October; M8-11 and
-    // M11-7 closed done on 2026-10-25 as part of this remediation).
-    expect(view.totals.tasks).toBe(101);
-    expect(view.totals.done).toBe(61);
-    expect(view.totals.open).toBe(40); // todo + doing
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(40);
+    // Measured against the live board on 2026-11-01 (was 101/61/40 on
+    // 2026-10-25): 104 tasks, 66 done, 38 open (isOpen = todo + doing + blocked).
+    expect(view.totals.tasks).toBe(104);
+    expect(view.totals.done).toBe(66);
+    expect(view.totals.open).toBe(38); // todo + doing + blocked
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(38);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -345,8 +345,8 @@ describe('board derivation', () => {
     const m1OpenBefore = m1.tasks.filter((t) => t.status === 'todo' || t.status === 'doing').length;
     open.status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    // Open count is 40 in the live board (2026-10-25); dropping one removes it.
-    expect(v.totals.open).toBe(40 - 1);
+    // Open count is 38 in the live board (2026-11-01); dropping one removes it.
+    expect(v.totals.open).toBe(38 - 1);
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(m1OpenBefore - 1);
     expect(openBefore).not.toBe('dropped'); // guard: we picked a real open task
   });
@@ -463,7 +463,7 @@ describe('board derivation', () => {
   it('exposes a convenience loader for a given day', () => {
     const v = getBoardView('2026-09-27');
     expect(v.today).toBe('2026-09-27');
-    expect(v.totals.tasks).toBe(101); // live board 2026-10-25
+    expect(v.totals.tasks).toBe(104); // live board 2026-11-01
   });
 });
 
