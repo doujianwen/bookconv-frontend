@@ -20,6 +20,7 @@ import { convertWithCloudConvert, isCloudConvertConfigured } from './cloudconver
 import * as fsp from 'node:fs/promises';
 import { errorMessage } from './error-handler';
 import JSZip from 'jszip';
+import { XMLParser } from 'fast-xml-parser';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -144,6 +145,73 @@ function crc32Unsigned(buf: Uint8Array): number {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
+/**
+ * M8-12 盲区#2（2026-11-01）：EPUB 语义级损坏辅助校验。
+ * 解析 META-INF/container.xml 取 rootfile 的 full-path（OPF 路径）。
+ * 解析失败/为空返回 null（由调用方决定是否继续——这里仅在有值时才校验 OPF，避免过度拦截）。
+ */
+function parseContainerRootfile(xml: string): string | null {
+  if (!xml.trim()) return null;
+  try {
+    const parser = new XMLParser({ ignoreAttributes: false, removeNSPrefix: true });
+    const doc = parser.parse(xml);
+    const rootfile = doc?.container?.rootfiles?.rootfile;
+    const fullPath = Array.isArray(rootfile)
+      ? rootfile[0]?.['@_full-path']
+      : rootfile?.['@_full-path'];
+    return typeof fullPath === 'string' && fullPath ? fullPath : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * M8-12 盲区#2（2026-11-01）：校验 OPF manifest 引用的本地文件是否都存在于 ZIP 内。
+ * 返回第一个缺失引用的描述；OPF 为空/不可解析返回损坏描述；无缺失返回 null。
+ * 刻意宽松（只拦确定性损坏，避免误杀合法 EPUB）：无 manifest、无 item、
+ * 远程/协议 href（http:/https:/data:/mailto: 等）、mimetype 缺失，一律放行。
+ */
+function findMissingManifestTarget(
+  opfXml: string,
+  opfPath: string,
+  files: Record<string, unknown>,
+): string | null {
+  if (!opfXml.trim()) return `${opfPath} (empty OPF)`;
+  let doc: unknown;
+  try {
+    const parser = new XMLParser({ ignoreAttributes: false, removeNSPrefix: true });
+    doc = parser.parse(opfXml);
+  } catch {
+    return `${opfPath} (OPF unparseable)`;
+  }
+  const pkg = doc as { package?: { manifest?: { item?: unknown } } };
+  const items = pkg?.package?.manifest?.item;
+  const list = Array.isArray(items) ? items : items ? [items] : [];
+  const dir = path.posix.dirname(opfPath);
+  for (const item of list) {
+    const href = (item as { '@_href'?: unknown })?.['@_href'];
+    if (typeof href !== 'string' || !href) continue;
+    const clean = href.split('#')[0].split('?')[0];
+    if (!clean) continue;
+    // 远程/协议类 href 不校验（合法 EPUB 也可能引用外部资源）
+    if (/^[a-z][a-z0-9+.-]*:/i.test(clean)) continue;
+    const resolved = clean.startsWith('/')
+      ? clean.slice(1)
+      : path.posix.normalize(path.posix.join(dir, clean));
+    let exists = !!files[resolved];
+    if (!exists) {
+      try {
+        // href 可能带百分号编码（空格 %20 等），jszip key 是原始字符——解码后再试一次
+        exists = !!files[decodeURIComponent(resolved)];
+      } catch {
+        // 非法百分号编码：按未命中处理，不当损坏
+      }
+    }
+    if (!exists) return `${resolved} (manifest reference missing)`;
+  }
+  return null;
+}
+
 export async function validateInputFile(inputPath: string, sourceFormat: string): Promise<void> {
   try {
     const stat = await fsp.stat(inputPath);
@@ -226,6 +294,12 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
       // 存储 crc32（`member._data.crc32`，来自 ZIP central directory）与本地计算值比对，
       // 不匹配即判定损坏 → CORRUPT_INPUT。正常 EPUB 必匹配，无误杀风险。此闭环使 §3.5
       // 真正覆盖盲区#1，M8-13/14 + alerts.ts 灰卡退为双保险而非唯一兜底。
+      //
+      // M8-12 盲区#2（2026-11-01，红队审计后补）：再堵「语义级损坏」——container.xml
+      // 指向的 OPF 缺失/为空/不可解析、OPF manifest 引用的本地文件缺失（断链）、
+      // mimetype 存在但内容错误。此类文件 ZIP 结构与 CRC 全部完好、可正常解压，却会被
+      // CC import 的严格 EPUB 解析拒收（与 10-26 复发同类别的另一半盲区）。校验刻意
+      // 只拦确定性损坏：无 manifest/无 item/远程 href/mimetype 缺失一律放行，避免误杀。
       const DEEP_CHECK_BYTE_CAP = 256 * 1024 * 1024;
       let deepChecked = 0;
       let firstBrokenMember: string | null = null;
@@ -260,6 +334,30 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
             const xml = await containerMember.async('string').catch(() => '');
             if (!xml.trim()) {
               firstBrokenMember = `${containerMember.name} (empty container.xml)`;
+            } else {
+              // M8-12 盲区#2：container.xml 指向的 OPF 必须真实存在，且 OPF manifest
+              // 引用的本地文件必须都在 ZIP 内（断链 = CC import 必拒的语义级损坏）。
+              const opfPath = parseContainerRootfile(xml);
+              if (opfPath) {
+                const opfMember = zip.files[opfPath];
+                if (!opfMember) {
+                  firstBrokenMember = `${opfPath} (referenced by container.xml but missing)`;
+                } else {
+                  const opfXml = await opfMember.async('string').catch(() => '');
+                  firstBrokenMember = findMissingManifestTarget(opfXml, opfPath, zip.files);
+                }
+              }
+            }
+          }
+          // M8-12 盲区#2：mimetype（若存在）必须为 application/epub+zip。
+          // 刻意宽松：mimetype 缺失不拦（个别合法 EPUB 无此文件），只有「存在但内容错」才拦。
+          if (!firstBrokenMember) {
+            const mtMember = zip.files['mimetype'];
+            if (mtMember) {
+              const mt = (await mtMember.async('string').catch(() => '')).trim();
+              if (mt && mt !== 'application/epub+zip') {
+                firstBrokenMember = `mimetype (expected application/epub+zip, got "${mt.slice(0, 60)}")`;
+              }
             }
           }
         }
@@ -273,8 +371,8 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
           sourceFormat,
         });
         throw new Error(
-          `corrupt epub: ZIP member ${firstBrokenMember} failed to decompress — ` +
-            `the file is damaged (truncated download or broken export). ` +
+          `corrupt epub: ZIP member ${firstBrokenMember} failed deep validation — ` +
+            `the file is damaged (truncated download, broken export or invalid EPUB structure). ` +
             `Please re-download or re-export the EPUB and try again.`,
         );
       }

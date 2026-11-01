@@ -135,4 +135,30 @@ describe('reverse-verify: §3.5 EPUB deep decompression validation (2026-10-19)'
     await writeFile(p, Buffer.from('<html>not a zip</html>', 'utf8'));
     await expect(validateInputFile(p, 'epub')).rejects.toThrow(/not a valid eBook format/i);
   });
+
+  it('M8-12 盲区#2：manifest 引用缺失文件的 EPUB 被拦下（断链语义损坏 → corrupt epub）', async () => {
+    // 构造：ZIP/CRC 全部合法（jszip 重新生成），但 manifest 仍引用已删除的 chapter1.xhtml
+    const data = await buildValidEpub();
+    const zip = await JSZip.loadAsync(data);
+    zip.remove('OEBPS/chapter1.xhtml');
+    const p = path.join(dir, 'missing-manifest-target.epub');
+    await writeFile(
+      p,
+      await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }),
+    );
+    await expect(validateInputFile(p, 'epub')).rejects.toThrow(/manifest reference missing/);
+  });
+
+  it('M8-12 盲区#2：mimetype 存在但内容错误的 EPUB 被拦下（语义损坏 → corrupt epub）', async () => {
+    // 构造：mimetype 存在但内容是 application/zip（CRC 仍合法，仅语义错误）
+    const data = await buildValidEpub();
+    const zip = await JSZip.loadAsync(data);
+    zip.file('mimetype', 'application/zip', { compression: 'STORE' });
+    const p = path.join(dir, 'wrong-mimetype.epub');
+    await writeFile(
+      p,
+      await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }),
+    );
+    await expect(validateInputFile(p, 'epub')).rejects.toThrow(/mimetype/);
+  });
 });

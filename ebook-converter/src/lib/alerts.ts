@@ -104,11 +104,12 @@ const USER_SIDE_ERROR_CODES: ReadonlySet<ErrorCode> = new Set<ErrorCode>([
  * （该 code 只在文件大小预检时直接产生，实测 2026-10-21 反向测试抓出）。
  * 注意模式选词：「exceeds」不会误伤配额消息「exceeded」（子串不同）。
  *
- * 2026-10-31 红队复核新增 'input task has failed'：CloudConvert 导入级失败。
- * 该签名（epub→azw3/mobi，calibre+auto 双子引擎同 hash 同消息失败）是已知的
- * POST-§3.5 盲区复发——文件过本地 jszip 校验、却过不了 CC 导入解析，属**输入级
- * 损坏**而非系统宕机（10-26 Job 9dba318b、10-31 Job 8de95590 实证）。原先 fail-closed
- * 把它判成 🚨 系统故障，稀释告警通道信噪比；降级为灰卡（用户侧输入问题）。
+ * 2026-10-31 红队复核：'input task has failed'（CloudConvert 导入级失败）属**输入级
+ * 损坏**而非系统宕机（10-26 Job 9dba318b、10-31 Job 8de95590 实证）——文件过本地
+ * jszip 校验、却过不了 CC 导入解析。原先 fail-closed 把它判成 🚨 系统故障，稀释告警
+ * 通道信噪比。2026-11-01 红队审计修正：本签名判灰**不走本 pattern 列表**，而是走
+ * error-handler.ts mapErrorCode → CORRUPT_INPUT → 下方 USER_SIDE_ERROR_CODES 的
+ * error-code 路径（与 API 响应同源）；此前本列表曾冗余登记该签名，已移除。
  * 注：瞬态 import 抖动若重试后仍失败，同样走灰卡——频率升高时仍可经节流观测。
  */
 const USER_SIDE_PATTERNS = [
@@ -122,7 +123,6 @@ const USER_SIDE_PATTERNS = [
   'size limit',
   'exceeds',
   'failed verification',
-  'input task has failed',
 ];
 
 export type AlertSeverity = 'system' | 'user';
