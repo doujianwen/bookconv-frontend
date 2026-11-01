@@ -15,7 +15,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const now = new Date();
 const iso = (d) => d.toISOString().slice(0, 10); // due 是 YYYY-MM-DD，UTC 口径与写入侧一致
 const today = iso(now);
-const in7 = iso(new Date(now.getTime() + 7 * 86400000));
+
 
 // ── ② 读板 ──
 const data = JSON.parse(readFileSync(join(ROOT, 'data/seo-geo-board.json'), 'utf8'));

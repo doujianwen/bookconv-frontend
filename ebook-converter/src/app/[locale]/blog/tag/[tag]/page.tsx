@@ -38,8 +38,6 @@ export async function generateMetadata({ params, searchParams }: TagPageProps): 
   const prefix = localePrefix(locale)
   const url = `https://www.bookconv.com${prefix}/blog/tag/${tag}`
 
-  const messages = await getMessage(locale)
-
   const pageTitle = currentPage > 1
     ? `${label} articles — Page ${currentPage}`
     : `${label} articles`
@@ -138,7 +136,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
           {hub.label}
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-          Articles tagged "{hub.label}"
+          Articles tagged &quot;{hub.label}&quot;
         </h1>
         <p className="mt-2 text-sm text-gray-500">
           {allPosts.length} {allPosts.length === 1 ? "article" : "articles"} in this topic.

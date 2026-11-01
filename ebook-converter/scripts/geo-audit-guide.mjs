@@ -82,11 +82,7 @@ function countBodyWords(src) {
 }
 
 function countInternalLinks(src) {
-  let count = 0;
-  for (const m of src.matchAll(/\((\/(?:convert|blog|guide)\/[^)]+)\)/g)) {
-    count++;
-  }
-  return count;
+  return [...src.matchAll(/\((\/(?:convert|blog|guide)\/[^)]+)\)/g)].length;
 }
 
 function countKeyTakeaways(src) {

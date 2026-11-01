@@ -19,13 +19,13 @@
 // NOTE ON SCOPE: this only checks the workbench's own claims. A pass here is
 // not evidence about SEO content quality — use publish-gate for that.
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W = join(ROOT, 'src/lib/workbench');
+
 
 const failures = [];
 const passes = [];

@@ -133,7 +133,7 @@ async function doConvert(req, res) {
   let parsed;
   try {
     parsed = await parseMultipart(req);
-  } catch (e) {
+  } catch {
     if (e && e.message === "FILE_TOO_LARGE") {
       return json(res, 413, { error: "File too large.", code: "FILE_TOO_LARGE" });
     }
@@ -193,7 +193,7 @@ async function doConvert(req, res) {
     });
     res.end(outBuf);
     log("OK", sourceFormat, "->", targetFormat, `${outBuf.length}B`, `${Date.now() - started}ms`);
-  } catch (e) {
+  } catch {
     return json(res, 500, { error: "Output read failed.", code: "OUTPUT_ERROR" });
   } finally {
     try { await fsp.unlink(outPath); } catch {}
@@ -217,7 +217,7 @@ const server = http.createServer(async (req, res) => {
       }
     }
     return json(res, 404, { error: "Not found" });
-  } catch (e) {
+  } catch {
     log("UNHANDLED", e && e.stack ? e.stack : String(e));
     if (!res.headersSent) json(res, 500, { error: "Internal error" });
   }

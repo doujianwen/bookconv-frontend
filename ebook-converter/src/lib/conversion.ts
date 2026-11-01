@@ -843,7 +843,7 @@ async function docxToTxt(inputPath: string): Promise<string> {
   }
 
   // Also handle <w:sep> for paragraph breaks
-  const sepCount = (docXml.match(/<w:sep\b/g) || []).length;
+
 
   let text = textParts.join(' ');
 

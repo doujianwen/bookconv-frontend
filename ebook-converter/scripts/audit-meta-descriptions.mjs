@@ -163,7 +163,7 @@ export const metaDescription = 'See [our guide](/blog/x) and \`code\` here';
   let records = [];
   for (const f of files) records = records.concat(extract(f));
   // self-test 强制 strict：E2 也必须报 ERROR，三类判据全部验证
-  const { errors, warns } = checkRecords(records, true);
+  const { errors } = checkRecords(records, true);
 
   // 期望：blog/bad.ts = E1(1) + E2(1) = 2；guides/bad.ts = E3(1)；content/bad.ts = E1(2)
   // good.ts = 0。合计 errors = 5。

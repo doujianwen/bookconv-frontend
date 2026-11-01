@@ -1,0 +1,2618 @@
+[
+  {
+    "url": "https://www.bookconv.com/about",
+    "checkedAt": "2026-11-01T09:31:05.823Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=zwJdTbN9noABPQXz62b7qA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/batch",
+    "checkedAt": "2026-11-01T09:31:12.837Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=dVbBXnbNi3mYlce9E5gz2Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/ai-feeding-notebooklm-chatgpt",
+    "checkedAt": "2026-11-01T09:31:20.703Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=olJ6ghJb_0dc6eiyvbE_6w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle",
+    "checkedAt": "2026-11-01T09:31:27.837Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=DH-B_DPJBCEysOL1OrfKGg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle-compatibility",
+    "checkedAt": "2026-11-01T09:31:35.111Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=7GBWtOcEJZYiSeHrNtEWhQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/azw3-to-mobi",
+    "checkedAt": "2026-11-01T09:31:42.198Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Mr_3w3YmOnILfQsL7nAGDQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/batch-converter",
+    "checkedAt": "2026-11-01T09:31:49.178Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=VPEyDrvtv02ZtWfmJydH4g&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/best-epub-reader-iphone-ipad",
+    "checkedAt": "2026-11-01T09:32:02.302Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=vedgfCZ8_2Rdka2kzm-DHg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/bookconv-faq",
+    "checkedAt": "2026-11-01T09:32:02.798Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=YhdhkHnYSmrlFLwX4_C54w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/best-epub-reader-android",
+    "checkedAt": "2026-11-01T09:32:02.912Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=KY9ueFQgj_O8B7rvVX-CAg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/best-free-epub-reader",
+    "checkedAt": "2026-11-01T09:32:02.969Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=DTbWCNDxrZdRNhxYkWEZGg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/bookconv-vs-calibre",
+    "checkedAt": "2026-11-01T09:32:09.073Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ShGjp-3LXbDzaimBiuuOCQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/calibre-free-batch",
+    "checkedAt": "2026-11-01T09:32:09.756Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=XpD_DspecpQjHB6VnDfV4A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/can-kobo-read-epub-files",
+    "checkedAt": "2026-11-01T09:32:09.854Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=LYfytv2TFkX6KdijhT0BpA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/cbr-to-pdf",
+    "checkedAt": "2026-11-01T09:32:09.952Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=rakLE9_Xprw5lD3eE2tHjA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/blog/pdf-to-epub-guide"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/check-converted-file-quality",
+    "checkedAt": "2026-11-01T09:32:15.840Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=VUjzOvTin_YdN_GHbk79ZQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/chronicles-of-narnia-ebooks-multiple-devices",
+    "checkedAt": "2026-11-01T09:32:16.719Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=rNHHd1Vwy0P6_v9ta8c8PQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/conversion-error-guide",
+    "checkedAt": "2026-11-01T09:32:16.919Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=dsziwVznID2DNVj4qVwkJw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/common-ebook-format-problems",
+    "checkedAt": "2026-11-01T09:32:16.923Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=LunoQwOUjfm09E0X1Tr2tw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/blog/common-ebook-format-problems"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/djvu-to-pdf",
+    "checkedAt": "2026-11-01T09:32:22.570Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=K8fPg0EbNn8LgB3157qXnA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/download-troubleshooting",
+    "checkedAt": "2026-11-01T09:32:23.686Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=XpaQ26_U_kVYokRLUoP-nA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/ebook-conversion-tools",
+    "checkedAt": "2026-11-01T09:32:23.860Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=nKoPu0Nv3BkzwtNFfVzdNw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/ebook-troubleshooting",
+    "checkedAt": "2026-11-01T09:32:23.910Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ytmgrVDZX4xBjUV_ZnZc1Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-converter",
+    "checkedAt": "2026-11-01T09:32:29.312Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=CQDok8BTd2MnGnjtlw1XQQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-to-mobi",
+    "checkedAt": "2026-11-01T09:32:30.784Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=HpMiu0ws3mdLpbbty5fMIg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-to-pdf-linux",
+    "checkedAt": "2026-11-01T09:32:30.838Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=tTCefZb7Bcdj-hzeseWczQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/blog/epub-to-pdf-linux",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-to-text",
+    "checkedAt": "2026-11-01T09:32:30.982Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=A5VH3KsxnAh7alqc7Atz2Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-to-various-other",
+    "checkedAt": "2026-11-01T09:32:36.032Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=tYAt4rbQW4R7LkW1MInnXA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-vs-pdf",
+    "checkedAt": "2026-11-01T09:32:37.866Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Gczh1ZTXPwMLA9Sjbbfb0A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/epub-vs-mobi",
+    "checkedAt": "2026-11-01T09:32:37.939Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=b9hF2BZcIM6OQ51NdqgHuw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/fb2-to-epub",
+    "checkedAt": "2026-11-01T09:32:38.138Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=8PQioy7DVJgifceEtWTXKQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/blog/fb2-to-epub"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/harry-potter-digital-books-multiple-devices",
+    "checkedAt": "2026-11-01T09:32:42.842Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=y1eaqQ0X5a4fAvoXVdjuGQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/kfx-vs-azw3",
+    "checkedAt": "2026-11-01T09:32:44.868Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=hzMQVRCKmwK_QPcPVG-08g&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/kindle-epub-azw3-mobi",
+    "checkedAt": "2026-11-01T09:32:44.934Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=waj3yZdSYf0pzw4eFHMH4w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/kobo-to-epub",
+    "checkedAt": "2026-11-01T09:32:45.159Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=W1OBSmzv3T3l1gjk10IVRA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/large-file-conversion-guide",
+    "checkedAt": "2026-11-01T09:32:49.605Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=BGdMHtPIiDa4GId6Ut2ioA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/layout-typesetting-pdf-epub",
+    "checkedAt": "2026-11-01T09:32:51.850Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=-VyN5t1KKYtMceyGytExzA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/legacy-lit-djvu-fb2-converter",
+    "checkedAt": "2026-11-01T09:32:51.921Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=le7Z2zySowxIAIaImHuuyA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/lit-ebook-format",
+    "checkedAt": "2026-11-01T09:32:52.198Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=loDfuR0LOFzh4j1L_HDY-g&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/lit-format-conversion-and",
+    "checkedAt": "2026-11-01T09:32:56.396Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=QPrZPJpn4S0q4QxBhPCThg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/lord-of-the-rings-ebooks-multiple-devices",
+    "checkedAt": "2026-11-01T09:32:58.802Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=8GIkfxgSMTFAt8KSHrk7fQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/marvel-comics-ebooks-multiple-devices",
+    "checkedAt": "2026-11-01T09:32:58.926Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Kx_AvlQa6UA0wqM53zFTyg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/pdf-to-epub-guide",
+    "checkedAt": "2026-11-01T09:32:59.335Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=eccwpqj932dmj2-6wUBPfQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/reading-groups-hub",
+    "checkedAt": "2026-11-01T09:33:03.259Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=jwz5GyjZ_gTtdUHxSIDWFg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr",
+    "checkedAt": "2026-11-01T09:33:05.742Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=0NqqSb2IO1IWjc-MDX0jhw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/selection-intercept-converter",
+    "checkedAt": "2026-11-01T09:33:05.890Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Z3qo1m27CL0Bne6C_7vD2A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/sync-reading-across-devices",
+    "checkedAt": "2026-11-01T09:33:06.176Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=RmfcdcxL-NljxAUQk5HIXg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/twilight-ebooks-multiple-devices",
+    "checkedAt": "2026-11-01T09:33:09.979Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=69InZaQwDzyhYDhEuIyPug&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/txt-to-epub",
+    "checkedAt": "2026-11-01T09:33:12.468Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=RxFCk2uoAwkRWhxTa66JgQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/blog/txt-to-epub"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/which-kindle-books-can-you-convert-drm-free-checklist",
+    "checkedAt": "2026-11-01T09:33:12.718Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=tgH1TBXM4Cs0XlLJhU7whA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/why-bookconv",
+    "checkedAt": "2026-11-01T09:33:13.006Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ItrdmXBd-ra-d47NqhDPAw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/compare/bookconv-vs-calibre",
+    "checkedAt": "2026-11-01T09:33:16.661Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=YKnKy-5advcLqZTL057zGg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/compat/epub-to-mobi-on-kindle-paperwhite",
+    "checkedAt": "2026-11-01T09:33:19.401Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ZbSikIjHbTuLzyLt_CnHUw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/azw3-to-pdf",
+    "checkedAt": "2026-11-01T09:33:19.717Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=QBnHJgoY5kyQiW4v4tVvEg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/cbr-to-pdf",
+    "checkedAt": "2026-11-01T09:33:20.058Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=em1DjkfbT-_cGTf6yzJSPg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/blog/cbr-to-pdf"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/djvu-to-pdf",
+    "checkedAt": "2026-11-01T09:33:23.527Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=4Q0HgwMV4NerkaixqIiKZA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/blog/djvu-to-pdf"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/doc-to-epub",
+    "checkedAt": "2026-11-01T09:33:26.349Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=yRjx7ZHWja7N5VpbixHAPQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/epub-to-html",
+    "checkedAt": "2026-11-01T09:33:26.712Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=C_CNYVEccNiQgw7tybqAQA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/epub-to-pdf",
+    "checkedAt": "2026-11-01T09:33:27.002Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=2IoYZIjaQtppMyXci0dw9w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/fb2-to-epub",
+    "checkedAt": "2026-11-01T09:33:30.249Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=LH2p9WPWV-WjUTPCryFiig&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/html-to-epub",
+    "checkedAt": "2026-11-01T09:33:33.358Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Bk-u91F0H0xp0QSCuhnsmw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/lit-to-mobi",
+    "checkedAt": "2026-11-01T09:33:33.492Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=PR8UAykVBZ_bz961CwMxaw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/mobi-to-azw3",
+    "checkedAt": "2026-11-01T09:33:33.788Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=-b15or3zZ5UKpHFTZP4P3w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/mobi-to-pdf",
+    "checkedAt": "2026-11-01T09:33:37.165Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ReRZMyL660axYE2DtTPTbw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/convert/azw3-to-mobi"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/mobi-to-txt",
+    "checkedAt": "2026-11-01T09:33:40.376Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=QOxvw8Nw2cBlsHHcYTnPug&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/convert/txt-to-epub",
+    "checkedAt": "2026-11-01T09:33:40.601Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=8Kb_Ls8sI_qiqEqKJ2W3FA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://bookconv.com/"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/data",
+    "checkedAt": "2026-11-01T09:33:40.811Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=n49w3_3Ckmp5Ny7Rt8WFIg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/data/bing-ai-citations",
+    "checkedAt": "2026-11-01T09:33:44.055Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=f_jBHkhZvIyomusAH90GlQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/data/google-search-performance",
+    "checkedAt": "2026-11-01T09:33:47.928Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=OcoTefudPK_dwq9EC338eQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/data/site-event-timeline",
+    "checkedAt": "2026-11-01T09:33:48.213Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=m8-tmfzXeR-HD3ilDLcuLA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/blog/ebook-formats-explained",
+    "checkedAt": "2026-11-01T09:33:48.369Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=_YUu1l8v772GXo7JpV05Eg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/blog/epub-to-mobi-guide",
+    "checkedAt": "2026-11-01T09:33:50.951Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=xphcumm0WbT92LUJpeBb5w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/blog/mobi-to-epub",
+    "checkedAt": "2026-11-01T09:33:54.971Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=JpvKbh2VIDH_odNbRBTLaA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/blog/why-convert-lit-to-epub",
+    "checkedAt": "2026-11-01T09:33:55.155Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=iRKDtgOQTxpLQ880rI5y5Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/convert/epub-to-doc",
+    "checkedAt": "2026-11-01T09:33:55.276Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=gCgQ4PpY4Hi030z1im00Eg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Crawled - currently not indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:50:03Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/convert/epub-to-doc",
+        "userCanonical": "https://www.bookconv.com/es/convert/epub-to-doc",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/convert/epub-to-doc",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/convert/epub-to-txt",
+    "checkedAt": "2026-11-01T09:33:57.829Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=7Y5-AKSOBW0TgmJJRadDlQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/convert/epub-to-txt",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/ai-ebook-converter",
+    "checkedAt": "2026-11-01T09:34:01.903Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=C8W0PjyRAArF4yX5agmGLA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/azw3-vs-mobi",
+    "checkedAt": "2026-11-01T09:34:02.099Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=3R0RlHjp0fh88W6MOqA6Kg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/best-ebook-converter",
+    "checkedAt": "2026-11-01T09:34:02.210Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=kDpvy4qT65DboUKpC6UYbQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/calibre-alternative",
+    "checkedAt": "2026-11-01T09:34:04.692Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=fBuONGVBQugf4OPeo0M8CQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "PASS",
+        "coverageState": "Submitted and indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:54:47Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/guide/calibre-alternative",
+        "userCanonical": "https://www.bookconv.com/es/guide/calibre-alternative",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/guide/calibre-alternative",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/epub-to-azw3-for-kindle",
+    "checkedAt": "2026-11-01T09:34:08.768Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=cCOdPuLcSu7gXnQPQqzCZQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Crawled - currently not indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:54:47Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/guide/epub-to-azw3-for-kindle",
+        "userCanonical": "https://www.bookconv.com/es/guide/epub-to-azw3-for-kindle",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/epub-to-mobi-keep-formatting",
+    "checkedAt": "2026-11-01T09:34:09.009Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ftUagkeEQEMXT5nXpXxdhg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Crawled - currently not indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:56:56Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/guide/epub-to-mobi-keep-formatting",
+        "userCanonical": "https://www.bookconv.com/es/guide/epub-to-mobi-keep-formatting",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/epub-vs-mobi",
+    "checkedAt": "2026-11-01T09:34:09.101Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=O2G68m74Bgwule3qtA_Y4A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Crawled - currently not indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:53:22Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/guide/epub-vs-mobi",
+        "userCanonical": "https://www.bookconv.com/es/guide/epub-vs-mobi",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/es/guide/kindle-formats",
+    "checkedAt": "2026-11-01T09:34:11.461Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=UQonAtP1PL5J8zmg48cYLQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "PASS",
+        "coverageState": "Submitted and indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-10-25T08:53:22Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/es/guide/kindle-formats",
+        "userCanonical": "https://www.bookconv.com/es/guide/kindle-formats",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/azw3",
+    "checkedAt": "2026-11-01T09:34:15.815Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=c0XH-DDT3I0vHfPXVIPSaQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/cbr",
+    "checkedAt": "2026-11-01T09:34:16.112Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=MqFXgcqvNF4pMXMSnyKNpA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/djvu",
+    "checkedAt": "2026-11-01T09:34:16.124Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=-rZeJDJ_x80ln4jhsCOCwA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/doc",
+    "checkedAt": "2026-11-01T09:34:18.579Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=VdQxDfI57BtL-avBmVVYmw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/docx",
+    "checkedAt": "2026-11-01T09:34:22.818Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=ctefg7C6qAWwBD6f1HoA8w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/epub",
+    "checkedAt": "2026-11-01T09:34:23.145Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=S16x-jLJu6FWKd26LwAeIQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/fb2",
+    "checkedAt": "2026-11-01T09:34:23.211Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=TXSHnv7RTUg8cUa_jIbI8A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/html",
+    "checkedAt": "2026-11-01T09:34:25.856Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=NuKEaZlQTqQmCCOcWFwcKQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/jpg",
+    "checkedAt": "2026-11-01T09:34:29.839Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=B7RnENdVrEKejYuvowlX1w&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/lit",
+    "checkedAt": "2026-11-01T09:34:30.164Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=cZYAw0nrqWeFrib2FeFWbg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/mobi",
+    "checkedAt": "2026-11-01T09:34:30.225Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=7pfQz3hKwh82hCKRnjA_LA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/pdf",
+    "checkedAt": "2026-11-01T09:34:32.588Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=mTC5Sco-7DOO6LduXk_kxA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/png",
+    "checkedAt": "2026-11-01T09:34:36.874Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=6CJnlMOBjBdeboXk_HU-fA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/rtf",
+    "checkedAt": "2026-11-01T09:34:37.221Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=_37oxnc_9L_4g3rD1M4ipA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/formats/txt",
+    "checkedAt": "2026-11-01T09:34:37.279Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=9FDcqED8AsUFU3-OQzN0JQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/founder",
+    "checkedAt": "2026-11-01T09:34:40.098Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=2SkVpwm3j9zPGc-E6O_LVA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/azw3-to-mobi-keep-formatting",
+    "checkedAt": "2026-11-01T09:34:43.847Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=djUc6Nt7H-2tu_vyBYCegg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/guide/azw3-to-mobi-keep-formatting"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/azw3-vs-mobi",
+    "checkedAt": "2026-11-01T09:34:44.241Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=QnF8FUrVT0IVtJ8Tg4pz-A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/batch-converter",
+    "checkedAt": "2026-11-01T09:34:44.266Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=_NUzs1-gK5UqwWcGIWyj0Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/guide/batch-converter",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/calibre-alternatives-online",
+    "checkedAt": "2026-11-01T09:34:50.847Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=3gsoKpg2vEV4wcpaJPBsbw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/cbr-to-pdf",
+    "checkedAt": "2026-11-01T09:34:51.366Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=aV0g4zuj1PiIdT1xZRmzwg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/guide/calibre-vs-online-converter",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/djvu-to-pdf",
+    "checkedAt": "2026-11-01T09:34:51.396Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=_7mwU0p8MGjHdvDU8R5ghQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/guide/calibre-vs-online-converter",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/epub-vs-mobi",
+    "checkedAt": "2026-11-01T09:34:53.805Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=N4ElQUBtoD-57dXCRtMe8g&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/fix-epub-to-pdf-formatting",
+    "checkedAt": "2026-11-01T09:34:57.958Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=vvQL8kVIfYQFWzZ9t7rRGg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/guide/epub-to-txt-extract",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+    "checkedAt": "2026-11-01T09:34:58.354Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=fUbREEj6JZiboXoyGArSPg&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/how-to-send-epub-to-kindle",
+    "checkedAt": "2026-11-01T09:34:58.512Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=tvXdpFV-3K3MuJbHtE-ryQ&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/kindle-formats",
+    "checkedAt": "2026-11-01T09:35:00.523Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=vuR5lcAqQ8-TlC5QCoiWrw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/es/guide/kindle-formats",
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/lit-to-epub-keep-formatting",
+    "checkedAt": "2026-11-01T09:35:04.890Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Qe_IdJKNMT6FgSm2POUZug&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/pdf-to-epub-keep-formatting",
+    "checkedAt": "2026-11-01T09:35:05.153Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=7gYbcNcKYZIPRD42k4YSPA&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/guide/epub-to-azw3-for-kindle"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/help",
+    "checkedAt": "2026-11-01T09:35:05.570Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=VSNtVPD_DXyQs5G8RYGqHw&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/pricing",
+    "checkedAt": "2026-11-01T09:35:07.283Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=kPn9_e_uaTu3AQsynZTa8A&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "URL is unknown to Google",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/terms",
+    "checkedAt": "2026-11-01T09:35:11.875Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=VWcWcBiZl-TW8hcrQDKe4Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "NEUTRAL",
+        "coverageState": "Discovered - currently not indexed",
+        "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+        "indexingState": "INDEXING_STATE_UNSPECIFIED",
+        "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+        "sitemap": [
+          "https://www.bookconv.com/sitemap.xml"
+        ],
+        "referringUrls": [
+          "https://www.bookconv.com/privacy"
+        ],
+        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/blog/read-epub-on-any-device",
+    "checkedAt": "2026-11-01T09:35:12.024Z",
+    "http": 200,
+    "inspectionResult": {
+      "inspectionResultLink": "https://search.google.com/search-console/inspect?resource_id=https://www.bookconv.com/&id=Acc4dCe23lVsT5l-g4NX7Q&utm_medium=link&utm_source=api",
+      "indexStatusResult": {
+        "verdict": "PASS",
+        "coverageState": "Submitted and indexed",
+        "robotsTxtState": "ALLOWED",
+        "indexingState": "INDEXING_ALLOWED",
+        "lastCrawlTime": "2026-09-05T18:32:19Z",
+        "pageFetchState": "SUCCESSFUL",
+        "googleCanonical": "https://www.bookconv.com/blog/read-epub-on-any-device",
+        "userCanonical": "https://www.bookconv.com/blog/read-epub-on-any-device",
+        "referringUrls": [
+          "https://www.bookconv.com/es/blog/read-epub-on-any-device"
+        ],
+        "crawledAs": "MOBILE"
+      },
+      "mobileUsabilityResult": {
+        "verdict": "VERDICT_UNSPECIFIED"
+      }
+    }
+  },
+  {
+    "url": "https://www.bookconv.com/guide/best-ebook-converter",
+    "checkedAt": "2026-11-01T09:36:08.334Z",
+    "http": 500,
+    "error": {
+      "code": 500,
+      "message": "Internal error encountered.",
+      "status": "INTERNAL"
+    }
+  }
+]

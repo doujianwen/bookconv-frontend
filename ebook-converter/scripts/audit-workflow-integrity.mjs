@@ -42,7 +42,7 @@ function add(ok, title, detail) {
 let wfFiles = [];
 try {
   wfFiles = fs.readdirSync(WF_DIR).filter((f) => f.endsWith('.yml') || f.endsWith('.yaml'));
-} catch (e) {
+} catch {
   console.error('⛔ 判据无法执行：读不到 ' + WF_DIR + ' ⇒ 显式失败（不静默当通过）');
   process.exit(2);
 }
@@ -119,7 +119,7 @@ function loadTracked() {
       let n;
       try {
         n = fs.readSync(fd, buf, 0, buf.length, null);
-      } catch (e) {
+      } catch {
         if (e.code === 'EAGAIN') continue;
         if (e.code === 'EOF') break;
         throw e;

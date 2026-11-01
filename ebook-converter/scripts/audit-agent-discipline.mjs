@@ -39,7 +39,7 @@ const add = (ok, title, detail) => blocks.push({ ok, title, detail });
 function readOrDie(p, label) {
   try {
     return fs.readFileSync(p, 'utf8');
-  } catch (e) {
+  } catch {
     console.error(`⛔ 判据无法执行：读不到 ${label}（${p}）：${e.message} ⇒ exit 2`);
     process.exit(2);
   }
@@ -55,7 +55,7 @@ const shDir = path.join(REPO, 'scripts');
 let shFiles;
 try {
   shFiles = fs.readdirSync(shDir).filter((f) => f.endsWith('.sh'));
-} catch (e) {
+} catch {
   console.error(`⛔ 判据无法执行：读不到 ${shDir} ⇒ exit 2`);
   process.exit(2);
 }

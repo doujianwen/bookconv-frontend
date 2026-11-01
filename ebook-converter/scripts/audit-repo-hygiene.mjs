@@ -404,5 +404,5 @@ if (gitUsable()) {
   unknown('H5', '关键源文件均已入库', 'git 进程不可用（spawnSync EBUSY，沙箱限制）—— 请在正常终端复跑');
 }
 
-const { ok, hasUnknown } = report();
+const { ok } = report();
 process.exit(ok ? 0 : 1);

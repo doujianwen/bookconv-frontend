@@ -18,7 +18,6 @@ export async function register(): Promise<void> {
   const webhook = (process.env.FEISHU_WEBHOOK_URL || '').trim();
 
   if (!webhook) {
-    // eslint-disable-next-line no-console
     console.error(
       '[boot-check] ⚠ FEISHU_WEBHOOK_URL 未配置。转换失败告警与用户反馈通知将' +
         '被静默跳过（postFeishuCard 返回 false，路由吞掉异常）。请在 Vercel 环境变量中设置' +
@@ -30,14 +29,12 @@ export async function register(): Promise<void> {
   const keyword = (process.env.FEISHU_WEBHOOK_KEYWORD || '').trim();
   const secret = (process.env.FEISHU_WEBHOOK_SECRET || '').trim();
   if (!keyword && !secret) {
-    // eslint-disable-next-line no-console
     console.warn(
       '[boot-check] ℹ FEISHU_WEBHOOK_URL 已配置，但 FEISHU_WEBHOOK_KEYWORD 与' +
         ' FEISHU_WEBHOOK_SECRET 均未设置。若飞书机器人开启了「关键词」或「签名」安全设置，' +
         '卡片将被 code 19024/19021 拒收而不送达。请按机器人安全设置补充其中一项。'
     );
   } else {
-    // eslint-disable-next-line no-console
     console.info('[boot-check] ✓ 飞书告警通道已配置（webhook 存在），启动自检通过。');
   }
 }

@@ -82,7 +82,7 @@ const token = await getAccessToken()
 console.log(`区间 ${startDate} ~ ${endDate}（${DAYS} 天）`)
 
 const qRows = await query(token, ['query'], 'GSC_query_2026-10-25.json')
-const qpRows = await query(token, ['query', 'page'], 'GSC_query_page_2026-10-25.json')
+await query(token, ['query', 'page'], 'GSC_query_page_2026-10-25.json')
 
 // 摘要：曝光最高的 30 个查询词
 if (qRows?.length) {

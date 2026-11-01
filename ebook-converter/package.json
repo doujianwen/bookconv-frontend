@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "node scripts/lint-tracked.mjs",
     "test": "jest --config jest.config.cjs",
     "test:watch": "jest --watch",
     "test:vi": "python bookconv_data_asset/_scripts/test_vi_classify.py",

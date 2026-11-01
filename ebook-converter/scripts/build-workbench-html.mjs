@@ -22,7 +22,7 @@
 //   node scripts/build-workbench-html.mjs [outfile]
 //   npm run build:workbench
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { transformSync } from '@swc/core';

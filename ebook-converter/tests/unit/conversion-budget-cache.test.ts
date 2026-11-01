@@ -22,7 +22,7 @@ import {
   recordCreditSpend,
   checkConversionBudget,
 } from '@/lib/conversion-budget';
-import { SUPPORTED_FORMATS } from '@/lib/conversion-map';
+
 
 // ---------------------------------------------------------------------------
 // isPureJsConversion —— 缓存/预算闸门的作用域判定

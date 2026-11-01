@@ -8,7 +8,7 @@
  *
  * M5-6：isEs 时渲染西语文案（英文页不传该 prop，行为逐字不变）。
  */
-import { chrome } from "@/lib/ui-chrome"
+
 
 const TRUST_ITEMS = [
   'No registration required',

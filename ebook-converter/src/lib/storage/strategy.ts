@@ -64,53 +64,9 @@ export const storageStrategy: StorageStrategy = {
 
   async cleanupExpired(): Promise<{ r2: number; local: number }> {
     let localCleaned = 0;
-    if (isR2Configured()) {
-      try {
-        const { S3Client } = await import('@aws-sdk/client-s3');
-        const client = new S3Client({
-          region: 'auto',
-          endpoint: process.env.R2_ENDPOINT!,
-          credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID!, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY! },
-        });
-        const { ListObjectsV2Command, DeleteObjectCommand } = await import('@aws-sdk/client-s3');
-        let r2Cleaned = 0;
-        let cursor: string | undefined;
-        // uploadToR2 writes uploadedAt/ttlHours as S3 user metadata, but
-        // ListObjectsV2 does NOT return user metadata (only HeadObject /
-        // GetObject do), so per-object TTL is unavailable from a listing.
-        // Fall back to the same 24h default that uploadToR2 and the local
-        // sweep both apply.
-        const DEFAULT_TTL_MS = 24 * 3600 * 1000;
-        do {
-          const resp = await client.send(new ListObjectsV2Command({
-            Bucket: process.env.R2_BUCKET_NAME || 'ebook-temp',
-            ContinuationToken: cursor,
-          }));
-          const objects = resp.Contents ?? [];
-          for (const obj of objects) {
-            if (!obj.Key) continue;
-            // Age by LastModified. The previous check keyed off obj.Metadata
-            // .uploadedAt, a field that does not exist on a ListObjectsV2
-            // result — so the guard was always falsy and this sweep deleted
-            // nothing.
-            const lastModified = obj.LastModified?.getTime();
-            if (!lastModified) continue;
-            if (Date.now() - lastModified > DEFAULT_TTL_MS) {
-              await client.send(new DeleteObjectCommand({
-                Bucket: process.env.R2_BUCKET_NAME || 'ebook-temp',
-                Key: obj.Key,
-              }));
-              r2Cleaned++;
-            }
-          }
-          cursor = resp.IsTruncated ? resp.NextContinuationToken : undefined;
-        } while (cursor);
-        return { r2: r2Cleaned, local: 0 };
-      } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : String(err);
-        console.warn('R2 cleanup failed:', msg);
-      }
-    }
+    // R2 expiry is owned by prefix-scoped bucket lifecycle rules.
+    // Never scan/delete the whole bucket with the local 24h TTL: cached
+    // outputs have a separate 30-day retention policy.
     // Local cleanup: scan and remove expired files
     try {
       const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';

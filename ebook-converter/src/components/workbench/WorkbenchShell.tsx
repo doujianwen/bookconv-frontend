@@ -10,27 +10,30 @@ import { SidebarNav } from './SidebarNav';
 import { panelFromPath } from '@/lib/workbench/panels';
 import { cn } from '@/lib/utils';
 
-export function WorkbenchShell({
-  children,
-  basePath,
-  badges,
-  siteName = 'BookConv.com',
-  envLabel = 'production',
-}: {
+type ShellProps = {
   children: React.ReactNode;
   basePath: string;
   badges?: Record<string, number>;
   siteName?: string;
   envLabel?: string;
-}) {
+};
+
+export function WorkbenchShell(props: ShellProps) {
   const pathname = usePathname() || '';
+  // A route change starts a fresh drawer, without a cascading effect render.
+  return <WorkbenchShellContent key={pathname} {...props} pathname={pathname} />;
+}
+
+function WorkbenchShellContent({
+  children,
+  basePath,
+  badges,
+  siteName = 'BookConv.com',
+  envLabel = 'production',
+  pathname,
+}: ShellProps & { pathname: string }) {
   const active = panelFromPath(pathname);
   const [open, setOpen] = React.useState(false);
-
-  // Close the drawer whenever the route changes.
-  React.useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0b0d12]">

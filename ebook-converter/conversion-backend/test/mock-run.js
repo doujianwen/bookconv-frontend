@@ -5,9 +5,8 @@
 //   - POST /api/convert-internal with correct secret -> 200 + file bytes + Content-Disposition
 //   - POST with wrong secret -> 403
 //   - temp files cleaned up after each request
-import { execSync } from "node:child_process";
+
 import fs from "node:fs";
-import fsp from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

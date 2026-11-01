@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { WorkbenchShell } from '@/components/workbench/WorkbenchShell';
 import { getWorkbenchPayload } from '@/lib/workbench/provider';
@@ -61,9 +62,9 @@ function AccessDenied({ reason }: { reason: string }) {
           </p>
         ) : null}
         <p style={{ marginTop: '1.5rem' }}>
-          <a href="/" style={{ color: '#2563eb', fontSize: 14 }}>
+          <Link href="/" style={{ color: '#2563eb', fontSize: 14 }}>
             ← Back to site
-          </a>
+          </Link>
         </p>
       </div>
     </main>

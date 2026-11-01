@@ -37,7 +37,7 @@ jobs:
         run: cd ebook-converter && node scripts/syntax-sweep.mjs
 
       - name: Run ESLint
-        run: cd ebook-converter && npx eslint . --max-warnings 0
+        run: cd ebook-converter && node scripts/lint-tracked.mjs
 
       - name: TypeScript type check
         run: cd ebook-converter && npx tsc --noEmit

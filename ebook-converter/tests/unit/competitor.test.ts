@@ -1,6 +1,6 @@
 // tests/unit/competitor.test.ts
 // Tests for the competitor rank series helpers + loader.
-import { sortCompetitorRows, TREND_LABEL, type CompetitorRow, type CompSortKey, type CompSortDir } from '@/lib/keywords/competitor';
+import { sortCompetitorRows, TREND_LABEL, type CompetitorRow } from '@/lib/keywords/competitor';
 import { loadCompetitorSeries, loadCompetitorConfig } from '@/lib/keywords/loader';
 
 function row(domain: string, query: string, over: Partial<CompetitorRow> = {}): CompetitorRow {

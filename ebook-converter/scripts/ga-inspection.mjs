@@ -13,7 +13,7 @@
  *   node scripts/ga-inspection.mjs --no-send  # 只跑检查，打印不发送
  */
 
-import { execFileSync } from 'node:child_process';
+
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

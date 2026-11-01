@@ -9,6 +9,7 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-*/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
@@ -18,6 +19,8 @@ const eslintConfig = defineConfig([
     "_archived/**",
     // 会话临时脚本（.cjs 定点替换/探针，CJS + require 属预期）；已随 .gitignore 排除
     "_wb_tmp/**",
+    ".trash/**",
+    ".playwright-cli/**",
   ]),
   // ── 分层：Node CJS 脚本（require 合法）─────────────────────
   {

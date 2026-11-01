@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "scope": "read-only analysis, no website changes or index submission",
+  "inputCount": 117,
+  "pageSnapshotCount": 188,
+  "inspectionUniqueCount": 118,
+  "inspectionOriginalSuccessCount": 116,
+  "findings": {
+    "http200": 116,
+    "http404": 1,
+    "crossCanonical": 4,
+    "mixedLanguage": 17,
+    "hiddenH1": 30,
+    "sampleZeroInbound": 5
+  },
+  "inputs": [
+    {
+      "path": "C:/Users/29537/Downloads/表格.csv",
+      "sha256": "f515d3f54c811cb8ffffc047a83b600c318ab90664632ad57cc23d1478b3bff7"
+    },
+    {
+      "path": "C:/Users/29537/Downloads/图表.csv",
+      "sha256": "7161a6ecebacbe2a14eb1f65665b3e7ae05d228d35241b6a73143d2d69f1788b"
+    },
+    {
+      "path": "C:/Users/29537/Downloads/元数据.csv",
+      "sha256": "0681cde8714fe0c1f0eea08abd16561e1d2938c62a71e533a55dff14c2b51c75"
+    }
+  ]
+}

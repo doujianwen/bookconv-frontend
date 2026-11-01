@@ -1,0 +1,5 @@
+engine,question,intent,target_slug,domain,url,is_bookconv
+Gemini,How do I convert EPUB to read on my Kindle Paperwhite without losing formatting?,,,cloudconvert.com,https://cloudconvert.com/epub-to-azw3,False
+Gemini,How do I extract text from an EPUB or MOBI book to upload into NotebookLM?,,,epub2txt.com,https://epub2txt.com/,False
+ChatGPT,What is the best CloudConvert alternative for ebook conversion?,,,reddit.com,https://reddit.com/r/Calibre/,False
+Gemini,I found old Microsoft Reader .lit books from 2005, how do I convert LIT to EPUB?,,,bookconv.com,https://bookconv.com/convert/lit-to-epub,True

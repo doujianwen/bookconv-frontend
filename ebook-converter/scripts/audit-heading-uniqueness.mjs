@@ -42,7 +42,7 @@ const SHARED_OK = new Map([
 let files;
 try {
   files = fs.readdirSync(DIR).filter((f) => f.endsWith('.ts') && f !== 'index.ts');
-} catch (e) {
+} catch {
   console.error(`⛔ 判据无法执行：读不到 ${DIR} ⇒ exit 2`);
   process.exit(2);
 }

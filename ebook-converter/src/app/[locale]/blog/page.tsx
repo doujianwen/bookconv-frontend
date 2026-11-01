@@ -3,7 +3,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Calendar, Tag } from "lucide-react"
 import { getAllPosts } from "@/data/blog"
-import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
+import { getMessage, resolvePath } from '@/i18n/utils'
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"
@@ -20,7 +20,6 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const { locale } = await params
   const { page: pageParam } = await searchParams
   const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
-  const prefix = locale === "es" ? "/es" : ""
   const messages = await getMessage(locale)
   const t = (key: string) => resolvePath(messages, key) || key
 

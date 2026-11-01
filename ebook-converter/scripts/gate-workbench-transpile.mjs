@@ -29,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolvePath(dirname(fileURLToPath(import.meta.url)), '..');
 const BUILDER = join(ROOT, 'scripts', 'build-workbench-html.mjs');
-const SELF = process.argv[1] ? resolvePath(process.argv[1]) : '';
+
 
 // ── 输出协议：ok / hasUnknown / problems（调用方按结构解构，勿改成裸布尔）──
 const problems = [];

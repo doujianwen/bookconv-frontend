@@ -23,7 +23,7 @@ import {
 const r2Store = new Map<string, Buffer>();
 jest.mock('@/lib/storage/r2', () => ({
   isR2Configured: () => true,
-  uploadToR2: jest.fn(async (key: string, bytes: Buffer, _ttlHours: number) => {
+  uploadToR2: jest.fn(async (key: string, bytes: Buffer) => {
     r2Store.set(key, Buffer.from(bytes));
     return undefined;
   }),

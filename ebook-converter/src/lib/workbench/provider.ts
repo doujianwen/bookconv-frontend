@@ -15,7 +15,6 @@
 
 import {
   PANEL_TO_GETTER,
-  type PanelKey,
   type PanelPayload,
   type ProviderPanelKey,
   type WorkbenchProvider,

@@ -4,7 +4,7 @@
 // dark mode. Status colors are explicit so nothing falls back to black.
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import type { Checklist, HealthLevel, Metric, StatusPill, TimelineEvent, WorkbenchTable } from '@/lib/workbench/types';
+import type { Checklist, HealthLevel, Metric, TimelineEvent, WorkbenchTable } from '@/lib/workbench/types';
 
 export const LEVEL_STYLES: Record<HealthLevel, { chip: string; dot: string; text: string }> = {
   healthy: {
