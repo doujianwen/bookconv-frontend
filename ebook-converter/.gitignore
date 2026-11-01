@@ -142,3 +142,13 @@ _wb_tmp/
 .trash-*/
 SEO_BACKUP_PHASE2_TITLE_2026-10-07/
 .feishu-webhook
+
+# Private audit evidence and browser traces: keep local, including nightly sync.
+/.playwright-cli/
+/bookconv_data_asset/bing/
+/docs/gsc-index-audit-2026-11-01/evidence/*
+!/docs/gsc-index-audit-2026-11-01/evidence/README.md
+!/docs/gsc-index-audit-2026-11-01/evidence/production-release-check.json
+!/docs/gsc-index-audit-2026-11-01/evidence/local-release-check.json
+!/docs/gsc-index-audit-2026-11-01/evidence/production-conversion-smoke.json
+!/docs/gsc-index-audit-2026-11-01/evidence/dataset-download-check.json

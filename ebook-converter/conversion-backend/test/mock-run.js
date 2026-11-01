@@ -18,19 +18,22 @@ const TMP = fs.mkdtempSync(path.join(os.tmpdir(), "bkconv-tmp-"));
 const FAKEBIN = fs.mkdtempSync(path.join(os.tmpdir(), "bkconv-bin-"));
 const SECRET = "test-secret-123";
 
-// fake ebook-convert (Windows-runnable): copy input -> output. On the Linux
-// server this is the real Calibre binary on PATH.
+// Copy-only contract double, never a test of actual conversion quality.
+const windows = process.platform === "win32";
+const fakeName = windows ? "ebook-convert.cmd" : "ebook-convert";
 fs.writeFileSync(
-  path.join(FAKEBIN, "ebook-convert.cmd"),
-  `@echo off\ncopy /Y "%1" "%2" >nul\n`,
+  path.join(FAKEBIN, fakeName),
+  windows ? `@echo off\ncopy /Y "%1" "%2" >nul\n` : '#!/bin/sh\ncp -- "$1" "$2"\n',
+  { mode: 0o755 },
 );
 
 process.env.CONVERSION_INTERNAL_SECRET = SECRET;
-process.env.CALIBRE_BIN = path.join(FAKEBIN, "ebook-convert.cmd");
+process.env.CALIBRE_BIN = path.join(FAKEBIN, fakeName);
 process.env.CONVERSION_TMP = TMP;
 process.env.CONVERSION_LOG_DIR = TMP;
 process.env.BIND_HOST = "127.0.0.1";
 process.env.PORT = "3099";
+process.env.MAX_FILE_BYTES = "64";
 process.env.PATH = `${FAKEBIN}${path.delimiter}${process.env.PATH}`;
 
 async function main() {
@@ -69,6 +72,7 @@ async function main() {
   check("returns file bytes", buf.toString().includes("hello epub content"));
   check("Content-Disposition has ASCII fallback", /filename="[^"]+\.mobi"/.test(disp));
   check("Content-Disposition has UTF-8'' (RFC5987)", /filename\*=UTF-8''/.test(disp));
+  check("Unicode filename decodes exactly", decodeURIComponent(disp.split("filename*=UTF-8''")[1]) === '我的书.mobi');
   check("Cache-Control no-store", (r.headers.get("cache-control") || "").includes("no-store"));
 
   // 4) unsupported target -> 422
@@ -78,6 +82,18 @@ async function main() {
   fd3.append("target_format", "xyz");
   r = await fetch(`${BASE}/api/convert-internal`, { method: "POST", headers: { "x-internal-convert": SECRET }, body: fd3 });
   check("unsupported target -> 422", r.status === 422);
+
+  const malformed = await fetch(`${BASE}/api/convert-internal`, {
+    method: 'POST', headers: { 'x-internal-convert': SECRET, 'Content-Type': 'multipart/form-data; boundary=missing' }, body: 'not-a-multipart-body',
+  });
+  check('malformed multipart -> 400 without an undefined catch binding', malformed.status === 400);
+
+  const tooLarge = new FormData();
+  tooLarge.append('file', new Blob([Buffer.alloc(128)]), 'oversize.epub');
+  tooLarge.append('source_format', 'epub');
+  tooLarge.append('target_format', 'mobi');
+  const limitResponse = await fetch(`${BASE}/api/convert-internal`, { method: 'POST', headers: { 'x-internal-convert': SECRET }, body: tooLarge });
+  check('oversize upload -> 413', limitResponse.status === 413);
 
   // 5) temp cleanup: TMP should have no leftover .epub/.mobi
   const leftovers = fs.readdirSync(TMP).filter((f) => /\.(epub|mobi|tmp)$/.test(f));

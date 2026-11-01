@@ -47,7 +47,10 @@ async function main() {
   }
   try { await Promise.all([worker(), worker(), worker()]); }
   finally { save('inspection.json', rows); }
-  const previousDirs = fs.readdirSync(outRoot).filter(d => d !== stamp && fs.existsSync(path.join(outRoot, d, 'inspection.json'))).sort();
+  const previousDirs = fs.readdirSync(outRoot).filter(d => {
+    const file = path.join(outRoot, d, 'inspection.json');
+    return d !== stamp && fs.existsSync(file) && JSON.parse(fs.readFileSync(file, 'utf8')).length === urls.length;
+  }).sort();
   const previous = previousDirs.length ? JSON.parse(fs.readFileSync(path.join(outRoot, previousDirs.at(-1), 'inspection.json'), 'utf8')) : [];
   const ptToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   const availableThrough = shiftDay(ptToday, -3); // conservative lag; API final state still controls readiness

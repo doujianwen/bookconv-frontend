@@ -83,10 +83,13 @@ function parseMultipart(req) {
   return new Promise((resolve, reject) => {
     const fields = {};
     let fileMeta = null;
+    let fileWriter = null;
     let aborted = false;
 
     const bb = Busboy({
       headers: req.headers,
+      // Browser/undici multipart filenames are UTF-8 bytes, not Latin-1.
+      defParamCharset: "utf8",
       limits: { files: 1, fileSize: MAX_FILE_BYTES },
     });
 
@@ -98,23 +101,30 @@ function parseMultipart(req) {
       const ext = path.extname(info.filename) || "";
       const tmp = path.join(TMP, `${randomUUID()}${ext}`);
       const ws = fs.createWriteStream(tmp);
+      fileWriter = ws;
       fileMeta = { tmp, originalName: info.filename };
       stream.pipe(ws);
       stream.on("limit", () => {
         aborted = true;
-        try {
-          fs.unlinkSync(tmp);
-        } catch {
-          /* ignore */
-        }
-        reject(new Error("FILE_TOO_LARGE"));
+        // Wait for the writer to close before unlinking: it may not have
+        // opened its file yet when Busboy emits the size-limit event.
+        stream.unpipe(ws);
+        ws.once('close', async () => {
+          try { await fsp.unlink(tmp); } catch { /* already absent */ }
+          reject(new Error("FILE_TOO_LARGE"));
+        });
+        ws.destroy();
+        stream.resume();
       });
       ws.on("error", (e) => reject(e));
     });
 
     bb.on("close", () => {
       if (aborted) return; // reject already fired
-      resolve({ fields, fileMeta });
+      // Multipart parsing can finish before the disk write has flushed.
+      if (fileWriter && !fileWriter.writableFinished) {
+        fileWriter.once('finish', () => resolve({ fields, fileMeta }));
+      } else resolve({ fields, fileMeta });
     });
     bb.on("error", (e) => reject(e));
 
@@ -133,7 +143,7 @@ async function doConvert(req, res) {
   let parsed;
   try {
     parsed = await parseMultipart(req);
-  } catch {
+  } catch (e) {
     if (e && e.message === "FILE_TOO_LARGE") {
       return json(res, 413, { error: "File too large.", code: "FILE_TOO_LARGE" });
     }
@@ -217,7 +227,7 @@ const server = http.createServer(async (req, res) => {
       }
     }
     return json(res, 404, { error: "Not found" });
-  } catch {
+  } catch (e) {
     log("UNHANDLED", e && e.stack ? e.stack : String(e));
     if (!res.headersSent) json(res, 500, { error: "Internal error" });
   }

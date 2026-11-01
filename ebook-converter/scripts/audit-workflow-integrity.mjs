@@ -119,7 +119,7 @@ function loadTracked() {
       let n;
       try {
         n = fs.readSync(fd, buf, 0, buf.length, null);
-      } catch {
+      } catch (e) {
         if (e.code === 'EAGAIN') continue;
         if (e.code === 'EOF') break;
         throw e;

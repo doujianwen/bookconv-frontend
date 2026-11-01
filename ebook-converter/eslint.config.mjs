@@ -32,6 +32,10 @@ const eslintConfig = defineConfig([
   },
   // ── 分层：worker/ 后台脚本（Node 运行时，混合风格）──────────
   {
+    files: ["scripts/**/*.mjs", "conversion-backend/**/*.js"],
+    rules: { "no-undef": "error" },
+  },
+  {
     files: ["worker/**/*.ts", "worker/**/*.js"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

@@ -12,7 +12,7 @@ test('drawer closes on navigation and stays closed when returning', async () => 
   let pathname = '/admin';
   const source = fs.readFileSync(new URL('../../src/components/workbench/WorkbenchShell.tsx', import.meta.url), 'utf8');
   const code = transformSync(source, { filename: 'WorkbenchShell.tsx', jsc: { parser: { syntax: 'typescript', tsx: true }, target: 'es2022', transform: { react: { runtime: 'classic' } } }, module: { type: 'commonjs' } }).code;
-  const module = { exports: {} };
+  const compiledModule = { exports: {} };
   const mocks = {
     react: React,
     'next/link': ({ children, ...props }) => React.createElement('a', props, children),
@@ -24,12 +24,12 @@ test('drawer closes on navigation and stays closed when returning', async () => 
   new Function('require', 'module', 'exports', code)(name => {
     if (!(name in mocks)) throw new Error(`Unexpected dependency ${name}`);
     return mocks[name];
-  }, module, module.exports);
-  const { WorkbenchShell } = module.exports;
+  }, compiledModule, compiledModule.exports);
+  const { WorkbenchShell } = compiledModule.exports;
   const container = document.createElement('div');
   document.body.append(container);
   const root = createRoot(container);
-  const render = () => root.render(React.createElement(WorkbenchShell, { basePath: '/admin', children: 'Panel' }));
+  const render = () => root.render(React.createElement(WorkbenchShell, { basePath: '/admin' }, 'Panel'));
   try {
     await React.act(render);
     await React.act(() => container.querySelector('[aria-label="Open navigation"]').click());

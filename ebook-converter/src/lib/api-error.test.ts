@@ -15,12 +15,6 @@ import { extractApiError } from "./api-error";
  * R2 直传取回失败不再塌缩 UNKNOWN，透传用例一并在下方锁定。
  */
 
-type MinimalResponse = {
-  status: number;
-  json: () => Promise<unknown>;
-  text: () => Promise<string>;
-};
-
 function jsonResponse(body: unknown, status: number): Response {
   return {
     status,

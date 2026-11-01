@@ -39,7 +39,7 @@ const add = (ok, title, detail) => blocks.push({ ok, title, detail });
 function readOrDie(p, label) {
   try {
     return fs.readFileSync(p, 'utf8');
-  } catch {
+  } catch (e) {
     console.error(`⛔ 判据无法执行：读不到 ${label}（${p}）：${e.message} ⇒ exit 2`);
     process.exit(2);
   }
