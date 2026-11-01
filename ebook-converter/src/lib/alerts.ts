@@ -61,8 +61,15 @@ export interface ConversionFailureAlert {
   inputHash?: string;
   /** 输入文件字节数 */
   inputSize?: number;
-  /** §3.5 本地校验结果：passed=文件过校验才到 CC 失败 / failed=被 §3.5 本地拦截(CORRUPT_INPUT) / unknown */
-  validationResult?: 'passed' | 'failed' | 'unknown';
+  /**
+   * 本地校验「反推」结果（NOT 真实 §3.5 运行产物）。
+   * 由错误码是否命中 CORRUPT_INPUT 反推：命中→failed（被 §3.5 本地拦截）、
+   * 否则→passed（文件过 §3.5 才到 CC）。与 §3.5 实测结果不是一回事——
+   * 例如「Input task has failed」过 §3.5 仍被 CC import 拒收，反推为 passed，
+   * 易被误读成「输入已校验干净」。2026-11-01 红队复核(F6)将标签由
+   * "§3.5 pre-check" 改名为 localValidationInferred 并显式标注「反推」。
+   */
+  localValidationInferred?: 'passed' | 'failed' | 'unknown';
   /** 首个失败引擎（解析自错误串 trail 的首个 engine=XXX），n/a 表示无 */
   firstFailingEngine?: string;
 }
@@ -256,8 +263,8 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
     ...(payload.inputSize !== undefined
       ? ['**Input size:**', `${payload.inputSize} bytes`, '\n']
       : []),
-    ...(payload.validationResult
-      ? ['**§3.5 pre-check (derived):**', payload.validationResult, '\n']
+    ...(payload.localValidationInferred
+      ? ['**Local validation (inferred, NOT measured §3.5):**', payload.localValidationInferred, '\n']
       : []),
     ...(payload.firstFailingEngine
       ? ['**First engine:**', payload.firstFailingEngine, '\n']

@@ -291,14 +291,16 @@ export async function convertAndStream(
     const errorCode = mapErrorCode(convMsg);
     // 诊断字段（M8-10 Task 3，2026-10-27）：Vercel Hobby 1h 日志留存使 failedTask
     // JSON 事后不可取，故把关键归因信息直接写进告警卡。inputHash/inputSize 来自
-    // 输入字节；validationResult 由错误码反推（CORRUPT_INPUT ⇒ §3.5 本地拦截失败，
-    // 其余 ⇒ 文件过 §3.5 才到 CC）；firstFailingEngine 解析自错误串 trail 首个 engine=XXX。
+    // 输入字节；localValidationInferred 由错误码反推（CORRUPT_INPUT ⇒ §3.5 本地拦截失败，
+    // 其余 ⇒ 文件过 §3.5 才到 CC）；注意这是「反推值」非实测 §3.5 结果——
+    // 例：「Input task has failed」过 §3.5 仍被 CC import 拒收，反推为 passed，
+    // 不可读作「输入已校验干净」。firstFailingEngine 解析自错误串 trail 首个 engine=XXX。
     const inputHash =
       buffer && buffer.length > 0
         ? createHash('sha256').update(buffer).digest('hex').slice(0, 12)
         : undefined;
     const inputSize = buffer ? buffer.length : undefined;
-    const validationResult: 'passed' | 'failed' | 'unknown' =
+    const localValidationInferred: 'passed' | 'failed' | 'unknown' =
       errorCode === 'CORRUPT_INPUT' ? 'failed' : 'passed';
     const engineMatch = convMsg.match(/engine=(\w+)/i);
     const firstFailingEngine = engineMatch ? engineMatch[1] : 'n/a';
@@ -312,7 +314,7 @@ export async function convertAndStream(
       error: convMsg,
       inputHash,
       inputSize,
-      validationResult,
+      localValidationInferred,
       firstFailingEngine,
     });
     // Surface raw error only when CC_DEBUG is explicitly enabled (prod-safe)

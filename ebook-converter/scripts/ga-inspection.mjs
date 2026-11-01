@@ -144,6 +144,27 @@ function splitFailures(failed, failedByErrorCode) {
   return { engineFailed: Math.max(0, f - client - quota - infra), quotaFailed: quota, clientFailed: client, infraFailed: infra, decided: true };
 }
 
+// F5（2026-11-01 红队复核）：把当日失败签名按「用户侧(灰)/系统侧(红)」二分，
+// 产出统一健康裁定；当「日报 Part A 引擎结论=正常」却仍存在系统侧失败签名时，
+// 发检测盲区告警（实时红卡/系统失败被日报阈值漏判的场景）。
+// 判定：命中 CLIENT/QUOTA/INFRA 三集合的归用户侧；其余（含 engine/CORRUPT_INPUT/
+// INPUT 类/超时等）归系统侧。failedByErrorCode 为 null/缺失→decided:false（不臆断）。
+function classifyFailureSides(failedByErrorCode) {
+  const userSide = { codes: {}, total: 0 };
+  const systemSide = { codes: {}, total: 0 };
+  if (!failedByErrorCode || typeof failedByErrorCode !== 'object') return { userSide, systemSide, decided: false };
+  for (const [code, n] of Object.entries(failedByErrorCode)) {
+    const v = Number(n) || 0;
+    if (v <= 0) continue;
+    if (CLIENT_INTERCEPT_CODES.has(code) || QUOTA_CODES.has(code) || INFRA_CODES.has(code)) {
+      userSide.codes[code] = v; userSide.total += v;
+    } else {
+      systemSide.codes[code] = v; systemSide.total += v;
+    }
+  }
+  return { userSide, systemSide, decided: true };
+}
+
 function evalConversion(complete, failed, upload, failedByErrorCode = null) {
   const c = Number(complete), f = Number(failed), u = Number(upload);
   if (!Number.isFinite(c) || !Number.isFinite(f) || !Number.isFinite(u) || u <= 0) {
@@ -306,6 +327,20 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
         lines.push(`• 转化失败率：⚠️ 引擎结论不可验证（深度分析 D2=${d2verdict}：${d2evidence}）`);
       } else {
         lines.push('• 转化失败率：正常（引擎侧无异常失败）');
+      }
+    }
+    // F5（2026-11-01 红队复核）：统一健康裁定 + 检测盲区告警（复用上方 D2 已校验过的
+    // failedByErrorCode）。即便 Part A 引擎结论=正常，只要存在系统侧失败签名即提示人工核对
+    // 实时飞书告警——这是 F5 要求的「实时红卡 spike 但日报正常 → 盲区告警」代理实现
+    // （实时卡本身发往飞书、无本地落盘，GA4 失败签名是唯一可程序化关联的同源数据）。
+    const sides = classifyFailureSides(basic.failedByErrorCode);
+    if (sides.decided) {
+      const userStr = Object.entries(sides.userSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
+      const sysStr = Object.entries(sides.systemSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
+      lines.push(`• 统一健康裁定: 用户侧(灰) ${sides.userSide.total} 次 [${userStr}] / 系统侧(红) ${sides.systemSide.total} 次 [${sysStr}]`);
+      // 盲区：日报引擎结论=正常（未 abnormal）但存在系统侧失败签名 ⇒ 阈值漏判，建议人工核对实时飞书告警
+      if (sides.systemSide.total > 0 && !basic.abnormal && sides.systemSide.total >= 2) {
+        lines.push(`• 🔍 检测盲区: 系统侧失败 ${sides.systemSide.total} 次但日报引擎阈值未触发（成功率/引擎失败数未达告警线），建议人工核对当日飞书实时告警卡`);
       }
     }
     // P1-4 批量异常告警（v2 手册模块 7）
