@@ -19,8 +19,9 @@ function makeForm(source: string, target: string): FormData {
 }
 
 describe("unsupported conversion registry", () => {
-  it("registers exactly the three known-impossible combos", () => {
+  it("registers the four pairs currently unavailable in BookConv", () => {
     expect(Object.keys(UNSUPPORTED_CONVERSIONS).sort()).toEqual([
+      "doc-epub",
       "epub-doc",
       "epub-jpg",
       "epub-png",
@@ -32,7 +33,7 @@ describe("unsupported conversion registry", () => {
     expect(unsupportedConversionInfo("epub", "jpg")).toBeDefined();
     expect(unsupportedConversionInfo("epub", "png")).toBeDefined();
     expect(unsupportedConversionInfo("epub", "mobi")).toBeUndefined();
-    expect(unsupportedConversionInfo("doc", "epub")).toBeUndefined();
+    expect(unsupportedConversionInfo("doc", "epub")).toBeDefined();
   });
 
   it("every entry points at a working alternative format pair", () => {
@@ -49,6 +50,7 @@ describe("convertAndStream 422 interception", () => {
     ["epub", "doc"],
     ["epub", "jpg"],
     ["epub", "png"],
+    ["doc", "epub"],
   ])("blocks %s → %s with 422 + UNSUPPORTED_CONVERSION + alternative", async (source, target) => {
     const res = await convertAndStream(makeForm(source, target));
     expect(res.status).toBe(422);
@@ -69,8 +71,8 @@ describe("convertAndStream 422 interception", () => {
     expect(body.error).toMatch(/Missing required fields/);
   });
 
-  it("does NOT intercept the reverse pairs (doc→epub is a js conversion)", async () => {
-    const res = await convertAndStream(makeForm("doc", "epub"));
+  it("does NOT intercept the supported DOCX input path", async () => {
+    const res = await convertAndStream(makeForm("docx", "epub"));
     expect(res.status).toBe(400);
     expect((await res.json()).error).toMatch(/Missing required fields/);
   });

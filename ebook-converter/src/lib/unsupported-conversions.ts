@@ -35,36 +35,36 @@ export const UNSUPPORTED_CONVERSIONS: Record<string, UnsupportedConversionInfo> 
     alternativeHref: "/convert/epub-to-docx",
     alternativeLabel: "DOCX",
     noticeEn:
-      "Direct EPUB-to-DOC conversion is not supported: no conversion engine can emit the legacy Word .doc format (modern Word opens .docx natively). Please convert to DOCX instead — same content, better compatibility.",
+      "BookConv does not currently export legacy Word .doc files. Use DOCX for Word instead and inspect the downloaded document before replacing your source.",
     noticeEs:
-      "La conversión directa de EPUB a DOC no está disponible: ningún motor puede generar el formato .doc antiguo de Word (las versiones modernas de Word abren .docx). Convierte a DOCX en su lugar: el mismo contenido y mejor compatibilidad.",
+      "BookConv no exporta actualmente archivos .doc antiguos de Word. Usa DOCX y comprueba el documento descargado antes de sustituir el original.",
   },
   "epub-jpg": {
     alternativeHref: "/convert/epub-to-pdf",
     alternativeLabel: "PDF",
     noticeEn:
-      "Direct EPUB-to-JPG image conversion is not supported. Convert to PDF instead — it preserves the full layout and can be exported to JPG images with any PDF tool.",
+      "BookConv does not currently render EPUB chapters as JPG images. Convert to PDF, inspect its layout, then export pages with a PDF tool that supports JPG.",
     noticeEs:
-      "La conversión directa de EPUB a imágenes JPG no está disponible. Convierte a PDF en su lugar: conserva todo el diseño y puede exportarse a imágenes JPG con cualquier herramienta PDF.",
+      "BookConv no convierte actualmente capítulos EPUB en imágenes JPG. Convierte a PDF, revisa el diseño y exporta las páginas con una herramienta compatible con JPG.",
   },
   "epub-png": {
     alternativeHref: "/convert/epub-to-pdf",
     alternativeLabel: "PDF",
     noticeEn:
-      "Direct EPUB-to-PNG image conversion is not supported. Convert to PDF instead — it preserves the full layout and can be exported to PNG images with any PDF tool.",
+      "BookConv does not currently render EPUB chapters as PNG images. Convert to PDF, inspect its layout, then export pages with a PDF tool that supports PNG.",
     noticeEs:
-      "La conversión directa de EPUB a imágenes PNG no está disponible. Convierte a PDF en su lugar: conserva todo el diseño y puede exportarse a imágenes PNG con cualquier herramienta PDF.",
+      "BookConv no convierte actualmente capítulos EPUB en imágenes PNG. Convierte a PDF, revisa el diseño y exporta las páginas con una herramienta compatible con PNG.",
   },
-  // 2026-11-01 两头堵第三例（反方向）：DOC（Word 97-2003 二进制）作为输入无任何
-  // 引擎支持——Calibre 输入白名单仅 DOCX（官方 FAQ 明确建议先转 .docx），CC 官网
+  // 2026-11-01 两头堵第三例（反方向）：DOC（Word 97-2003 二进制）作为输入在本服务当前配置中无可用
+  // 转换引擎——Calibre 输入白名单仅 DOCX（官方 FAQ 明确建议先转 .docx），CC 官网
   // doc-to-epub 页 404。站内替代=DOCX→EPUB 纯 JS 路径。
   "doc-epub": {
     alternativeHref: "/convert/docx-to-epub",
     alternativeLabel: "DOCX",
     noticeEn:
-      "Direct DOC-to-EPUB conversion is not supported: no conversion engine can read the legacy Word .doc (97-2003) format — Calibre accepts DOCX only. Save your file as .docx in Word or LibreOffice (File → Save As), then use the DOCX to EPUB converter — same content, modern format.",
+      "BookConv does not currently support legacy Word .doc input for EPUB conversion. Open the file in Word or LibreOffice, save as .docx, then use DOCX to EPUB and check the output formatting.",
     noticeEs:
-      "La conversión directa de DOC a EPUB no está disponible: ningún motor puede leer el formato .doc antiguo de Word (97-2003); Calibre solo acepta DOCX. Guarda tu archivo como .docx en Word o LibreOffice (Archivo → Guardar como) y usa el conversor de DOCX a EPUB: el mismo contenido, formato moderno.",
+      "BookConv no admite actualmente archivos .doc antiguos para convertir a EPUB. Abre el archivo en Word o LibreOffice, guárdalo como .docx y usa DOCX a EPUB. Comprueba el formato del resultado.",
   },
 };
 

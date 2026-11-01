@@ -1,0 +1,19 @@
+{
+  "bucket": "ebook-temp",
+  "key": "conversion-cache/bookconv-lifecycle-canary-20261101.txt",
+  "bytes": 263,
+  "sha256": "0222f69a587b6fcced060667eee153d525f4726aabbd732117929f8ff2f189fa",
+  "createdAt": "2026-11-01T15:51:12Z",
+  "policy": {
+    "rule": "cleanup-conversion-cache-30d",
+    "prefix": "conversion-cache/",
+    "days": 30
+  },
+  "expectedExpiryApprox": "2026-12-01T15:51:12Z",
+  "reviewDaysBeijing": [
+    "2026-12-02",
+    "2026-12-03"
+  ],
+  "doNotOverwriteOrManuallyDelete": true,
+  "purpose": "Synthetic self-authored non-user text; verify asynchronous physical lifecycle deletion, not API access TTL."
+}
