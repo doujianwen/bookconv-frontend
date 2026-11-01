@@ -104,7 +104,7 @@ One thing worth checking before you upload: if your RTF fakes headings by making
 Keep RTF for editing and printing. Convert to EPUB for reading on screens or distribution.`
     },
     {
-      heading: 'What to Check After an RTF to EPUB Export',
+      heading: 'Quality Checklist for an RTF EPUB Export',
       body: `After download, confirm these:
 
 - **Table of contents works** — built from your heading styles, fully clickable

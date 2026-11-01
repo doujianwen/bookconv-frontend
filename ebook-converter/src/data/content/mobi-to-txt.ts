@@ -101,7 +101,7 @@ Conversion is close to instant — usually under five seconds, because there is 
 Keep MOBI for reading. Convert to TXT when you need the raw words for tools or long-term storage.`
     },
     {
-      heading: 'What to Check After a MOBI to Text Export',
+      heading: 'Quality Checklist for Extracted MOBI Text',
       body: `After download, confirm these:
 
 - **Chapters separated** — blank lines mark chapter breaks, headings remain as plain lines

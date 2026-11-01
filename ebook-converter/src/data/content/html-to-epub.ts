@@ -123,7 +123,7 @@ One practical tip: if your HTML uses styled div elements instead of real heading
 **Set a title and author.** If the document head carries a title element and author meta, the converter picks them up automatically. Otherwise you will be editing metadata by hand afterward.`
     },
     {
-      heading: 'What to Check Before You Ship the EPUB',
+      heading: 'Quality Checklist for a Web Article EPUB',
       body: `After download, confirm the ebook is actually good before you send it to a reader:
 
 | Check item | Expected result | How to verify |

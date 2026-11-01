@@ -101,7 +101,7 @@ The short version: keep the DjVu if disk space matters and you have a viewer you
     },
 
     {
-      heading: 'Judging a Scanned DjVu After Conversion',
+      heading: 'Quality Checklist for a Scanned DjVu PDF',
       body: `A DjVu is page images, not text — so these checks are about fidelity, not structure.
 
 - **Every page is present** — compare the page count against the original; scanned archives often have unnumbered front matter that still must come through.

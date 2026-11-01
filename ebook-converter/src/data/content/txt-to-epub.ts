@@ -1,129 +1,52 @@
 export const slug = 'txt-to-epub';
 export const title = 'Free TXT to EPUB Converter — No Sign-up';
-export const metaDescription = 'Turn plain TXT files into structured EPUB — free converter, no sign-up. Auto chapter breaks, table of contents, and metadata included. Read anywhere.';
+export const metaDescription = 'Convert UTF-8 plain text into a simple EPUB for reading. Check paragraphs, navigation and language support before replacing your source file.';
 export const level = 'A' as const;
-export const wordCount = 750;
-
+export const wordCount = 650;
 export const content = {
-  hero: {
-    title: 'TXT to EPUB - Dress Plain Text in Ebook Clothing',
-    subtitle: 'Free TXT to EPUB converter. No sign-up — turn plain text into structured ebooks with table of contents and metadata.'
-  },
-  keyFacts: [
-    { label: 'Full name', value: 'Plain Text' },
-    { label: 'Extension', value: '.txt' },
-    { label: 'MIME type', value: 'text/plain' },
-    { label: 'Developer', value: 'Universal (no single developer)' },
-    { label: 'Initial release', value: '1960s (early computing)' },
-  ],
+  hero: { title: 'TXT to EPUB — Make a Simple Reading Copy', subtitle: 'Package UTF-8 plain text as an EPUB. Keep your source and inspect the output in your reading app.' },
   keyTakeaways: [
-    'Plain text files contain no formatting or structure, but EPUB conversion adds chapters, metadata, and navigation.',
-    'Calibre detects paragraph breaks and optional chapter markers in TXT files to create a structured EPUB with TOC.',
-    'TXT to EPUB is ideal for manuscripts, poems, or any text archive you want to read on an e-reader with proper pagination.',
-    'Use the --chapter flag in Calibre to define custom regex patterns for detecting chapter boundaries in plain text.',
-    'Encoding matters: specify --encoding (UTF-8, ASCII, GBK) if your text file uses a non-standard character set.',
+    'The local text path reads UTF-8 and builds a simple EPUB document. It does not provide automatic encoding detection or an encoding selector.',
+    'Blank-line-separated blocks become paragraphs. Existing chapter labels remain text; the local path does not infer a multi-chapter book from those labels.',
+    'The local output has a generic Converted Document title and one navigation entry. The uploader does not expose custom author, ISBN or chapter controls.',
+    'Choose Calibre or an ebook editor when you need detailed metadata, encoding settings or chapter navigation.',
+    'A successful download is a starting point: check the opening, ending, paragraphs and characters in your intended reader.'
   ],
-
   sections: [
-    {
-      heading: 'Convert TXT to EPUB from the Command Line (Calibre)',
-      body: `Calibre handles TXT → EPUB conversion natively, and it is the best tool when you need to process large text archives or add sophisticated chapter detection that the web converter does not expose.
+    { heading: 'What Plain Text Can Bring into an EPUB', body: `TXT stores characters without a book package, illustrations or rich formatting. An EPUB can wrap that text in documents and navigation that ebook readers understand. The reader can then offer its own font sizes, themes and reflow controls.
 
-After installing Calibre, run:
+Conversion cannot reconstruct information missing from the text file. A chapter label typed as plain text is not the same as an EPUB heading with an associated table-of-contents entry. Keep the best available source if you also have a structured Word, HTML or EPUB version.` },
+    { heading: 'How to Convert a UTF-8 TXT File to EPUB', body: `Open the source in a text editor and confirm it is saved as UTF-8. Select the TXT to EPUB pair, upload the file, convert and download. Follow the limit shown by the selected uploader: the server upload path is capped at 4 MB, while enabled direct storage uploads support larger inputs.
+
+Open the downloaded book before discarding anything. Look at the first paragraph, a section near the middle and the final paragraph. This verifies more than the filename or a successful response. No unlimited word count or five-million-word benchmark is claimed.` },
+    { heading: 'When a Simple Text EPUB Is Useful', body: `This route fits a reading copy of your notes, a short manuscript or a plain-text archive where paragraph flow matters more than complex navigation. It is also useful when your reader handles EPUB more conveniently than TXT.
+
+For a publication with chapters, footnotes, a cover and carefully edited metadata, use an ebook editor or a desktop conversion workflow. A simple text export should not be treated as a finished publishing manuscript. Test one representative document before migrating a collection.` },
+    { heading: 'TXT and EPUB: Format Comparison', body: `TXT is easy to search and edit with a text editor. EPUB adds a package manifest, reading order and navigation documents for ebook applications. Those capabilities depend on the actual documents created by the converter.
+
+The local BookConv text path produces one content document with a generic title and a single navigation link. EPUB does not automatically imply a detailed chapter list, a populated ISBN or correct language metadata. File size depends on text compression and package overhead; there is no fixed five-to-ten-percent increase.` },
+    { heading: 'Quality Checklist for TXT Encoding and Paragraphs', body: `Check accented letters, Chinese or other non-Latin characters before and after conversion. If the source already displays replacement characters or garbled text, save it with the correct encoding before uploading. Renaming its extension cannot repair the underlying bytes.
+
+In the local text path, blocks separated by blank lines become paragraphs. Single line breaks inside a block are not converted into separate verse lines. Poetry, source code and aligned tables can therefore need manual editing. Compare a representative passage in the output rather than assuming every whitespace choice is retained.` },
+    { heading: 'Chapter Navigation and Metadata Limits', body: `The local output is titled Converted Document and links to that content document from its navigation file. It does not recognize Chapter 1 or separator lines as instructions to create individual chapter documents. The uploader does not expose manual chapter separator or custom metadata fields.
+
+If navigation is your main requirement, create semantic headings in a structured source or edit the EPUB after conversion. Preserve the original text so that a later edit can be checked against it.` },
+    { heading: 'Using Calibre for More Control', body: `For an offline workflow, Calibre provides TXT input and EPUB output options. A basic command is:
 
 ebook-convert input.txt output.epub
 
-Calibre parses the plain text file, detects paragraph structure, and builds an EPUB with proper chapter navigation. For batch processing an entire TXT collection:
+Consult the installed version with ebook-convert input.txt output.epub -h. Input encoding uses --input-encoding; chapter detection uses an XPath expression with --chapter. These are desktop controls, not settings exposed by BookConv's uploader. See the [official command reference](https://manual.calibre-ebook.com/generated/en/ebook-convert.html) before using advanced options.` },
+    { heading: 'Handling Sensitive Notes and Keeping Originals', body: `BookConv processes uploaded files on the server. Review the [privacy policy](/privacy) and use an offline tool for material you prefer to keep on your device. Access expiry and physical storage cleanup are separate mechanisms.
 
-for f in *.txt; do ebook-convert "$f" "\${f%.txt}.epub"; done
-
-Useful flags for TXT conversion: --chapter marks a regex pattern for detecting chapter boundaries (default: lines matching Chapter\s+\d+), --chapter-no-top-level forces chapter detection even in flat text files, and --encoding lets you specify the source encoding when autodetect fails. For files with unusual separator patterns, --smarten-punctuation improves quotation marks and dashes.
-
-TXT is one of the simplest source formats because it carries no structural metadata — Calibre relies entirely on heuristics to detect chapters and paragraphs. The web converter above handles single files well; Calibre is the right choice when you are migrating a whole text library and need consistent settings.`
-    },
-    {
-      heading: 'The Problem with TXT Format',
-      body: `TXT (plain text) is the most basic format — no formatting, no table of contents, no metadata. Putting a 500,000-word novel in TXT is like stacking all furniture in a warehouse — everything is there, but you cannot live in it.
-
-Converting to EPUB gives you:
-- **Structured Typography** (headings, paragraphs, spacing)
-- **Clickable Table of Contents**
-- **Metadata** (title, author, language)
-- **Cross-Device Adaptation**
-- **Night Mode & Font Adjustment**`
-    },
-    {
-      heading: 'Intelligent Chapter Detection',
-      body: `Our converter automatically detects chapter separators in TXT files (common ones include "Chapter X", "Chapter X", "---", etc.) and generates independent EPUB chapter files for each. This maintains file modularity while ensuring navigation completeness.
-
-You can also manually specify chapter separators if your file uses unusual formatting.`
-    },
-    {
-      heading: 'Encoding Issue Handling',
-      body: 'TXT files may use GBK, UTF-8, ISO-8859-1, or other encodings. Our converter automatically detects encoding and converts correctly, avoiding Chinese garbled text issues. For files with incorrect encoding, an encoding selection interface is provided.'
-    },
-    {
-      heading: 'How We Detect Paragraphs and Chapter Structure',
-      body: `Our converter performs intelligent processing:
-
-- **Smart Paragraph Detection**: Identifies paragraph breaks based on blank lines and indentation
-- **Chapter Structure Recognition**: Detects common chapter patterns ("Chapter X", "Chapter X", "---", etc.)
-- **Encoding Auto-Detection**: Handles GBK, UTF-8, ISO-8859-1 automatically
-- **Metadata Generation**: Extracts title and author from file header comments or prompts user input
-- **Font Optimization**: Applies default ebook typography settings for optimal reading experience`
-    },
-    {
-      heading: 'When to Convert TXT to EPUB',
-      body: `Convert rather than keep plain text when:
-
-- **You want to actually read it** — a 500,000-word novel in a text editor has no navigation, no night mode, no adjustable font
-- **You are publishing or sharing** — recipients expect an ebook they can open in Apple Books or on a Kindle, not a raw file
-- **You need a table of contents** — the converter detects chapter markers and builds clickable navigation
-- **You want it future-proof** — EPUB carries metadata and structure; TXT is just characters
-
-Keep TXT only for piping into scripts, AI tools, or translation engines where raw text is what you want.`
-    },
-    {
-      heading: 'Building an EPUB from a Plain TXT File',
-      body: `Three steps, nothing to install:
-
-**Step 1 — Upload your TXT.** Drag it in or click to browse. Free accounts handle files up to 4MB; we have tested multi-million-word files that convert normally.
-
-**Step 2 — Let the engine structure it.** The converter detects chapter separators (common patterns like "Chapter X" or "---"), applies smart paragraph detection, and auto-detects encoding such as UTF-8, GBK, or ISO-8859-1.
-
-**Step 3 — Download the EPUB.** It arrives with a clickable table of contents, metadata, and clean typography.
-
-If your file uses unusual separators, you can specify them manually for more accurate chapter breaks.`
-    },
-    {
-      heading: 'TXT vs EPUB: What Gets Enhanced',
-      body: `| Feature | TXT | EPUB |
-|---------|-----|------|
-| Navigation | None | Clickable TOC |
-| Metadata | None | Title, Author, ISBN |
-| Typography | Plain | Headings, paragraphs, spacing |
-| Device Support | Any text editor | All e-readers |
-| Night Mode | No | Yes |
-| Font Size | Fixed | Adjustable |
-| File Size | Small | Small + metadata (+5-10%) |`
-    }
+Keep the source and output as separate files until you have checked the result. To extract readable text from an existing ebook instead, use [EPUB to TXT](/convert/epub-to-txt). If your source is a structured web document, consider [HTML to EPUB](/convert/html-to-epub) rather than flattening it to text first.` }
   ],
-
   faq: [
-    { q: 'Can I convert TXT to EPUB using Calibre command line?', a: 'Yes. Run: ebook-convert input.txt output.epub. Calibre detects paragraph structure and chapter boundaries automatically, then builds a navigable EPUB. Use --chapter to specify custom regex patterns for chapter detection.' },
-    { q: 'What if TXT file has no table of contents?', a: 'Converter automatically detects chapter markers (such as "Chapter X", "Chapter X", "---" separator lines) to generate TOC. You can also manually specify chapter separators.' },
-    { q: 'Will converted file be much larger?', a: 'EPUB is essentially a ZIP package containing metadata and navigation info. Compared to TXT, it usually increases only 5-10% in size — completely acceptable.' },
-    { q: 'How many words of TXT file are supported?', a: 'Theoretically unlimited. We have tested 5-million-word TXT files that convert normally.' },
-    { q: 'Does conversion preserve line breaks?', a: 'Yes. Meaningful line breaks (paragraph separators, chapter breaks) are preserved. Unnecessary empty lines are cleaned up.' },
-    { q: 'Can I add custom metadata?', a: 'Yes. During conversion you can specify title, author, language, ISBN, and other metadata fields.' },
-    { q: 'Will my chapter markers be detected automatically?', a: 'Yes. The converter recognizes common patterns such as "Chapter X" or "---" separator lines and builds a clickable table of contents. If your file uses unusual formatting, you can specify the separator manually for more accurate breaks.' }
-  ]
-,
-
-  authorship: {
-    author: 'BookConv Team',
-    lastVerified: '2026-09-05',
-    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
-    estimatedConversions: '10,000+ monthly'
-  }
+    { q: 'Does the local converter detect chapters?', a: 'It builds one content document. Chapter labels remain text, and the navigation has a single document entry.' },
+    { q: 'Can I choose GBK or another input encoding?', a: 'The uploader has no encoding selector. Save the input as UTF-8 first, or use an offline tool with explicit encoding controls.' },
+    { q: 'Can I set the author and ISBN?', a: 'The uploader does not expose those controls. Use an ebook editor or Calibre when custom metadata is required.' },
+    { q: 'Are line breaks preserved?', a: 'Blank-line-separated blocks become paragraphs. Single line breaks within a paragraph are not preserved as explicit verse lines.' },
+    { q: 'What size files can I upload?', a: 'Use the limit displayed by the selected uploader. Multipart uploads use the 4 MB cap; enabled direct uploads use a separate larger limit. No unlimited word count is promised.' },
+    { q: 'Should I delete my TXT source?', a: 'Keep it until you have inspected the ebook, including its first and final passages, non-Latin text and navigation.' }
+  ],
+  authorship: { author: 'BookConv Team', lastVerified: '2026-11-01', credentials: 'Reviewed against the local text packaging implementation and official Calibre options' }
 };

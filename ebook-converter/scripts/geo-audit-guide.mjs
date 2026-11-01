@@ -30,6 +30,7 @@
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
+import { guideMetrics } from './lib/guide-metrics.mjs';
 
 const ROOT = process.cwd();
 const GUIDES_DIR = join(ROOT, 'src/data/guides');
@@ -60,36 +61,8 @@ async function verifyOnline(slug) {
   }
 }
 
-function countWordsIn(text) {
-  return text.split(/\s+/).filter((w) => /^[a-zA-Z]{3,}$/.test(w)).length;
-}
-
-function countBodyWords(src) {
-  let total = 0;
-  // body: `...` — template literals (backtick-quoted, may contain \n, internal quotes)
-  for (const m of src.matchAll(/body:\s*`([\s\S]*?)`/g)) {
-    total += countWordsIn(m[1]);
-  }
-  // body: '...' — single-quoted
-  for (const m of src.matchAll(/body:\s*'((?:[^'\\]|\\.)*)'/g)) {
-    total += countWordsIn(m[1]);
-  }
-  // body: "..." — double-quoted
-  for (const m of src.matchAll(/body:\s*"((?:[^"\\]|\\.)*)"/g)) {
-    total += countWordsIn(m[1]);
-  }
-  return total;
-}
-
 function countInternalLinks(src) {
   return [...src.matchAll(/\((\/(?:convert|blog|guide)\/[^)]+)\)/g)].length;
-}
-
-function countKeyTakeaways(src) {
-  // keyTakeaways can be `keyTakeaways = [` or `keyTakeaways: [`
-  const match = src.match(/keyTakeaways\s*[=:]?\s*\[([\s\S]*?)\]/);
-  if (!match) return 0;
-  return (match[1].match(/\n\s+'/g) || []).length;
 }
 
 async function scan() {
@@ -120,14 +93,9 @@ async function scan() {
     const slug = file.replace(GUIDES_DIR + '\\', '').replace(GUIDES_DIR + '/', '').replace('.ts', '');
 
     // --- Extract structural fields ---
-    const headings = [...src.matchAll(/heading:\s*'([^']+)'/g)].map((m) => m[1]);
-    const faqCount = (src.match(/\{\s*question:/g) || []).length;
-    const wordCount = countBodyWords(src);
+    const { headings, faqCount, wordCount, keyTakeaways, hasIntro, hasLastVerified, hasCredentials } = guideMetrics(src);
     const internalLinks = countInternalLinks(src);
-    const keyTakeaways = countKeyTakeaways(src);
     const hasAuthorship = /authorship\s*=\s*\{/.test(src);
-    const hasLastVerified = /lastVerified\s*:\s*['\x22]/.test(src);
-    const hasCredentials = /credentials\s*:\s*['\x22]/.test(src);
 
     // --- Score (0-7) ---
     let score = 0;
@@ -158,7 +126,6 @@ async function scan() {
     else if (internalLinks >= MIN_INTERNAL_LINKS) score += 0.5;
 
     // 7. Intro presence (content.intro)
-    const hasIntro = /intro\s*:\s*['"`]/.test(src);
     if (hasIntro) score++;
 
     const rating = score >= 5 ? 'PASS' : score >= 3 ? 'WARN' : 'FAIL';

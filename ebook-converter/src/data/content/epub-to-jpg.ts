@@ -100,7 +100,7 @@ One rule that saves grief: **don't re-save a JPG repeatedly.** Each save runs co
     },
 
     {
-      heading: 'Checking the Images You Are About to Share',
+      heading: 'Quality Checklist for EPUB Page Images',
       body: `EPUB is reflowable text, so this conversion bakes each page into a fixed image. Check the output as an image, not as a book.
 
 - **Page dimensions are what you asked for** — the images are fixed-size now; confirm the width and height suit where you will post them.

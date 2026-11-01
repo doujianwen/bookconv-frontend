@@ -35,7 +35,7 @@ jobs:
       - name: Conversion and SEO regression tests
         run: npm test -- --runInBand src/lib/epub-html.test.ts tests/unit/seo-index-remediation.test.ts tests/unit/schema.test.ts tests/unit/conversion-map.test.ts tests/unit/unsupported-conversions.test.ts src/lib/conversion-purejs-epub.test.ts tests/unit/conversion-budget-cache.test.ts
       - name: GA export date regression tests
-        run: node --test scripts/lib/ga-date.test.mjs scripts/lib/gsc-observation.test.mjs scripts/lib/workbench-drawer.test.mjs
+        run: node --test scripts/lib/ga-date.test.mjs scripts/lib/gsc-observation.test.mjs scripts/lib/workbench-drawer.test.mjs scripts/lib/guide-metrics.test.mjs
       - name: Storage retention regression test
         run: npm test -- --runInBand tests/unit/storage-retention.test.ts
       - name: Backend HTTP and filename contract

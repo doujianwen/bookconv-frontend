@@ -85,7 +85,7 @@ CHM converts cleanly because both formats are HTML-based, but MOBI drops the pre
     },
 
     {
-      heading: 'Checking the Help File Survived the Trip to Kindle',
+      heading: 'Quality Checklist for CHM Help on Kindle',
       body: `CHM converts well because both formats are HTML-based, but the details still matter for a manual you intend to search.
 
 - **The table of contents is navigable** — help files are structure-heavy; confirm each entry jumps to the right topic.

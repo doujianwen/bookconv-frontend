@@ -136,7 +136,7 @@ Click the Download button to save your plain text file. In two original samples 
 - Basic text analysis and research`
     },
     {
-      heading: 'Verifying the TXT Came Through Cleanly',
+      heading: 'Quality Checklist for Extracted EPUB Text',
       body: `Before downloading your converted TXT file, verify these quality markers to ensure optimal results:
 
 | Check Item | Expected Result | How to Verify |

@@ -103,7 +103,7 @@ A 300-page novel typically finishes in thirty seconds to two minutes. Books with
 Keep MOBI for Kindle reading. Convert to PDF when you need to print, cite, or share outside the Kindle world.`
     },
     {
-      heading: 'What to Check After a MOBI to PDF Export',
+      heading: 'Quality Checklist for a MOBI PDF Export',
       body: `After download, confirm these:
 
 - **Page numbers present** — each page carries a stable number for citation

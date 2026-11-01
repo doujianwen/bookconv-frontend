@@ -103,7 +103,7 @@ Because LIT is already HTML under the hood, conversion to MOBI is smooth and kee
     },
 
     {
-      heading: 'Confirming the LIT Rescue Actually Worked',
+      heading: 'Quality Checklist for a Rescued LIT Book',
       body: `LIT is a rarely used format, so conversions from it are often rescue jobs. Check that you got real content, not a partial parse.
 
 - **The word count is plausible** — open the first and last chapters; LIT parsers sometimes stop early, producing a truncated file.
