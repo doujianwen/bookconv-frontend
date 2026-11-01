@@ -22,7 +22,7 @@ export const content = {
     },
     {
       "heading": "Key Takeaways",
-      "body": "- **选转换器看三件事。** 格式支持、隐私、速度；避开要邮箱和往书里插广告的。\n\n- **文件改名不是转换。** 转 EPUB 为 MOBI 供 Kindle 读需要真正保留版式，改后缀只会得到打不开的文件。\n\n- **转换失败多半是源文件问题。** 损坏文件或复杂 CSS 是主因；PDF 转 EPUB 失败先查是不是扫描件，需要 OCR 优先的工具。\n\n- **大文件不要硬撞上限。** 大文件会自动拆分或压缩，让你不会直接卡在硬性限制上。\n\n- **先用小样本测。** 保留原始文件备份，先拿一小段试转换再上全量。"
+      "body": "- Choose a converter by supported formats, upload limits, privacy terms and the output you need.\n- Renaming a file extension does not convert its contents.\n- Conversion failures may come from protected input, unsupported formats, upload limits or a service error.\n- Check the active upload path and the output quality before retrying or choosing another tool."
     }
   ]
 };
@@ -49,3 +49,4 @@ export const faqs = [
     "answer": "No. BookConv is a browser-based tool—just upload, convert, and download. Works on Windows, Mac, iOS, and Android."
   }
 ];
+export const lastUpdated = '2026-11-01';

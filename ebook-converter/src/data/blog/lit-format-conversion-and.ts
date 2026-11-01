@@ -21,7 +21,7 @@ export const content = {
     },
     {
       "heading": "Key Takeaways",
-      "body": "- **LIT 是早期格式。** 微软和亚马逊在电子阅读器起步阶段广泛使用，如今 EPUB 才是行业标准，MOBI 和 AZW3 只对 Kindle 用户有意义。\n\n- **格式互转有真实场景。** 手里是旧 LIT 收藏、设备只认 EPUB、或要交给只接受 PDF 的投稿系统。\n\n- **上传前确认文件没加密。** 带密码的源文件大部分转换器无法处理。\n\n- **转换后必检。** 字体丢失、目录断裂、图片错位是 LIT 转换最常见的三类问题。"
+      "body": "- LIT is an older Microsoft Reader format; support depends on the file structure and whether it is protected.\n- Check that the selected converter supports your actual source and target formats.\n- BookConv does not remove DRM, and a text-based fallback may lose images and styling.\n- Inspect chapters, character encoding and images before replacing your original file."
     }
   ]
 };
@@ -44,3 +44,4 @@ export const faqs = [
     "answer": "EPUB is the most widely supported format across iOS, Android, and most e-ink readers except Kindle."
   }
 ];
+export const lastUpdated = '2026-11-01';

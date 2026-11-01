@@ -163,18 +163,7 @@ Click the Download button to save your plain text file. In two original samples 
     },
     {
       heading: 'Instant and Private: The Pure-JS Advantage',
-      body: `Unlike conversions that wait in a Calibre queue on a remote server, EPUB to TXT on BookConv runs on a **pure JavaScript engine** — the same engine that powers your browser. That changes the experience in three practical ways.
-
-**No queue, no waiting**
-There is no server-side job to schedule, so conversion begins the moment you upload. A typical novel finishes in seconds rather than minutes, and you never sit behind someone else's batch.
-
-**Your text stays private**
-The plain text is extracted and returned without shipping your book to a separate conversion service. Files move over encrypted HTTPS and are deleted automatically within an hour, so nothing lingers afterward.
-
-**Predictable and lightweight**
-With no heavyweight engine in the loop, the result is consistent across files of any length. Poems, essays, and full novels all take the same fast path.
-
-If your source is a Kindle library rather than EPUB, the same clean extraction is available from MOBI through the MOBI to TXT tool.`
+      body: "Unlike conversions that wait in a Calibre queue on a remote server, EPUB to TXT on BookConv runs on a **pure JavaScript engine** — the same engine that powers your browser. That changes the experience in three practical ways.\n\n**No queue, no waiting**\nThere is no server-side job to schedule, so conversion begins the moment you upload. A typical novel finishes in seconds rather than minutes, and you never sit behind someone else's batch.\n\n**Your text stays private**\nThe plain text is extracted and returned without shipping your book to a separate conversion service. Files move over encrypted HTTPS and are handled according to our privacy policy; immediate deletion of all copies is not guaranteed, so nothing lingers afterward.\n\n**Predictable and lightweight**\nWith no heavyweight engine in the loop, the result is consistent across files of any length. Poems, essays, and full novels all take the same fast path.\n\nIf your source is a Kindle library rather than EPUB, the same clean extraction is available from MOBI through the MOBI to TXT tool."
     },
     {
       heading: 'What Gets Lost in EPUB to TXT Conversion?',

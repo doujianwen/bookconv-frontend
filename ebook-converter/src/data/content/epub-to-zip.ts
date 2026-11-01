@@ -7,7 +7,7 @@ export const wordCount = 730;
 export const content = {
   hero: {
     title: 'Convert EPUB to ZIP Free — Unlock the Files Inside Your E-book',
-    subtitle: 'Free EPUB to ZIP converter. No sign-up — extract the raw XHTML, CSS, images, and fonts from any e-book in seconds. Your file is never stored.'
+    subtitle: "Free EPUB to ZIP converter. No sign-up — extract the raw XHTML, CSS, images, and fonts from any e-book in seconds. See the privacy policy for processing and retention details."
   },
 
   keyTakeaways: [

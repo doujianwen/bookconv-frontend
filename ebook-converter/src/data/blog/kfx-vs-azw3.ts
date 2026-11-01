@@ -11,11 +11,7 @@ export const content = {
   sections: [
     {
       heading: `Key Takeaways`,
-      body: `- **KFX 与 AZW3 的分界是"谁控制文件"。** KFX 是 Amazon 商店交付格式，DRM 绑定你的账号；AZW3 是你自行转换、自行拷贝的侧载格式，转换后归你完全控制。
-- **KFX 无法被任何工具转换。** DRM 是法律墙而非技术墙，且 Enhanced Typesetting 在服务端渲染，本地文件本身不完整。想要可转换副本，唯一正路是另取开放格式（EPUB 购买版、图书馆借阅、Project Gutenberg）。
-- **自带 EPUB 一律转 AZW3。** 2012 年后的 Kindle 都支持，CSS、嵌入字体、表格都能保留；2012 年前的老设备才需要退回 MOBI。
-- **验证 DRM 状态只需十秒。** 文件能在 Kindle 之外的阅读器打开 = DRM-free；只会在登录态 Kindle 应用里打开 = DRM 锁定。
-- **BookConv 只收 DRM-free 文件。** EPUB、AZW3、MOBI、PDF 之间任意互转免费、无账号、文件 1 小时内删除。`
+      body: "- KFX and AZW3 serve different delivery workflows. Check the source and DRM status before choosing a conversion.\n- AZW3 is an option for USB sideloading to compatible Kindle devices; Send to Kindle accepts EPUB instead.\n- BookConv does not remove DRM. An unsupported or protected input needs a different, supported source file.\n- Conversion cannot restore typography or images already missing from the source."
     },
     {
       heading: `What KFX actually is`,

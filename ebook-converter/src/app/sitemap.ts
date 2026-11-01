@@ -13,7 +13,7 @@ import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS } from '@/lib/es-routes'
 // Neither is "pure template", so both are admitted. Emitted en-only to avoid
 // the /es pseudo-Spanish spam signal (P3-C rule). Previously count was 0
 // because sitemap.ts never emitted them.
-const FORMAT_LASTMOD = '2026-08-25'
+const FORMAT_LASTMOD = '2026-11-01'
 const COMPAT_LASTMOD = '2026-08-20'
 
 // Derive every supported conversion URL directly from CONTENT_MAP — the
@@ -39,32 +39,32 @@ BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.lastUpdated || p.date; })
 // millisecond" problem this map fixes. When a page's content is edited, its
 // entry here should be bumped to match.
 const CONTENT_DATES: Record<string, string> = {
-  'azw-to-mobi': '2026-08-09',
-  'azw3-to-epub': '2026-08-25',
-  'azw3-to-mobi': '2026-08-25',
-  'azw3-to-pdf': '2026-08-03',
-  'cbr-to-pdf': '2026-08-08',
-  'djvu-to-pdf': '2026-08-08',
-  'doc-to-epub': '2026-08-08',
-  'docx-to-epub': '2026-08-03',
-  'epub-to-azw3': '2026-08-03',
-  'epub-to-doc': '2026-08-24',
-  'epub-to-html': '2026-08-08',
-  'epub-to-jpg': '2026-08-08',
-  'epub-to-mobi': '2026-08-11',
-  'epub-to-pdf': '2026-09-04',
-  'epub-to-png': '2026-08-08',
-  'epub-to-rtf': '2026-08-08',
-  'epub-to-txt': '2026-08-24',
-  'epub-to-zip': '2026-08-23',
-  'fb2-to-epub': '2026-08-08',
-  'html-to-epub': '2026-08-09',
-  'mobi-to-epub': '2026-08-25',
-  'mobi-to-pdf': '2026-08-08',
-  'mobi-to-txt': '2026-08-08',
-  'pdf-to-epub': '2026-08-03',
-  'rtf-to-epub': '2026-08-08',
-  'txt-to-epub': '2026-08-10',
+  'azw-to-mobi': '2026-11-01',
+  'azw3-to-epub': '2026-11-01',
+  'azw3-to-mobi': '2026-11-01',
+  'azw3-to-pdf': '2026-11-01',
+  'cbr-to-pdf': '2026-11-01',
+  'djvu-to-pdf': '2026-11-01',
+  'doc-to-epub': '2026-11-01',
+  'docx-to-epub': '2026-11-01',
+  'epub-to-azw3': '2026-11-01',
+  'epub-to-doc': '2026-11-01',
+  'epub-to-html': '2026-11-01',
+  'epub-to-jpg': '2026-11-01',
+  'epub-to-mobi': '2026-11-01',
+  'epub-to-pdf': '2026-11-01',
+  'epub-to-png': '2026-11-01',
+  'epub-to-rtf': '2026-11-01',
+  'epub-to-txt': '2026-11-01',
+  'epub-to-zip': '2026-11-01',
+  'fb2-to-epub': '2026-11-01',
+  'html-to-epub': '2026-11-01',
+  'mobi-to-epub': '2026-11-01',
+  'mobi-to-pdf': '2026-11-01',
+  'mobi-to-txt': '2026-11-01',
+  'pdf-to-epub': '2026-11-01',
+  'rtf-to-epub': '2026-11-01',
+  'txt-to-epub': '2026-11-01',
 }
 
 // Sitemap P3-C rule (2026-09-05): Do NOT output /es/* for convert or guide.
@@ -111,17 +111,17 @@ const GUIDE_DATES: Record<string, string> = {
 // the best available proxy for "when this page last changed".
 const STATIC_DATES: Record<string, string> = {
   '/': '2026-08-25',
-  '/pricing': '2026-08-15',
+  '/pricing': '2026-11-01',
   '/batch': '2026-08-29',
   '/blog': '2026-08-07',
   '/tutorial': '2026-08-08',
-  '/help': '2026-08-15',
-  '/privacy': '2026-08-07',
-  '/terms': '2026-08-07',
+  '/help': '2026-11-01',
+  '/privacy': '2026-11-01',
+  '/terms': '2026-11-01',
   '/api-docs': '2026-07-28',
-  '/about': '2026-09-18',
+  '/about': '2026-11-01',
   '/founder': '2026-09-25',
-  '/compare/bookconv-vs-calibre': '2026-09-18',
+  '/compare/bookconv-vs-calibre': '2026-11-01',
   // M4-2 (2026-10-15): public citable dataset pages under /data/*
   '/data': '2026-10-15',
   '/data/bing-ai-citations': '2026-10-15',
@@ -267,7 +267,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         })
       }
       // M3-2: /compat/* (machine-verified reports) — en-only
-      for (const slug of Object.keys(COMPAT_MAP)) {
+      for (const slug of Object.keys(COMPAT_MAP).filter((key) => !COMPAT_MAP[key].isPlaceholder)) {
         allUrls.push({
           url: baseUrl + prefix + '/compat/' + slug,
           lastModified: new Date(COMPAT_LASTMOD),

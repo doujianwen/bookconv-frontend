@@ -97,7 +97,7 @@ export function FormatPageClient({ format, data }: FormatPageClientProps) {
             <h2 className="text-xl font-bold text-gray-900">Recommended Converters</h2>
           </div>
           <p className="mb-4 text-sm text-gray-600">
-            Convert {data.name} to other formats:
+            Conversion options involving {data.name}:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {data.recommendedConverters.map((rec, i) => (
@@ -118,7 +118,7 @@ export function FormatPageClient({ format, data }: FormatPageClientProps) {
         {/* Footer */}
         <div className="mt-12 text-center text-sm text-gray-500">
           Part of the BookConv format guide series.{' '}
-          <Link href="/formats/epub" className="text-blue-600 hover:underline">View all supported formats</Link>.
+          <Link href="/formats" className="text-blue-600 hover:underline">View all supported formats</Link>.
         </div>
       </main>
     </>

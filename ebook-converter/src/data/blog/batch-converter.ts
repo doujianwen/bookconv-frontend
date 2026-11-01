@@ -21,20 +21,11 @@ Any job with more than a handful of files is a batch job in spirit, even if the 
     },
     {
       heading: `How Browser Batch Conversion Works`,
-      body: `A browser-based batch converter takes your files, processes them (usually two at a time to stay responsive), and packages the results into one ZIP you download at the end. You do not install anything and you do not babysit each file.
-
-On BookConv, the [batch converter guide](/guide/batch-converter) walks through the exact UI: drag in up to 20 files, pick one output format for all of them, and grab a single ZIP when it finishes. That ceiling exists for a reason — see the limits section below.`
+      body: "A browser-based batch converter takes your files, processes them (usually two at a time to stay responsive), and packages the results into one ZIP you download at the end. You do not install anything and you do not babysit each file.\n\nOn BookConv, the [batch converter guide](/guide/batch-converter) walks through the exact UI: drag in files within the selected format’s batch limit, pick one output format for all of them, and grab a single ZIP when it finishes. That ceiling exists for a reason — see the limits section below."
     },
     {
       heading: `Practical Limits You Should Know`,
-      body: `Batch is convenient, but it is not unlimited:
-
-- **File count** — keep a batch to a sane size (BookConv caps it at 20 files per run). Beyond that, split into multiple batches.
-- **Per-file size** — very large books (hundreds of images, embedded fonts) take longer and can hit size ceilings; a single heavy PDF can slow the whole batch.
-- **One format per batch** — you pick the target format once for all files. If you need EPUB for some and AZW3 for others, run two batches.
-- **Same-direction jobs only** — a batch converts many files from format A to format B. Mixed source formats are fine; mixed targets are not.
-
-These limits are about keeping the queue fast and the download manageable, not about restricting what you can do.`
+      body: "Batch is convenient, but it is not unlimited:\n\n- **File count** — keep a batch to a sane size (BookConv accepts up to 20 EPUB-to-TXT/ZIP files, or currently 3 files for other batch routes; each file is limited to 4 MB). Beyond that, split into multiple batches.\n- **Per-file size** — very large books (hundreds of images, embedded fonts) take longer and can hit size ceilings; a single heavy PDF can slow the whole batch.\n- **One format per batch** — you pick the target format once for all files. If you need EPUB for some and AZW3 for others, run two batches.\n- **Same-direction jobs only** — a batch converts many files from format A to format B. Mixed source formats are fine; mixed targets are not.\n\nThese limits are about keeping the queue fast and the download manageable, not about restricting what you can do."
     },
     {
       heading: `When Desktop Calibre Is Still the Better Tool`,
@@ -73,11 +64,11 @@ For the destination-specific format choice, [Ebook Formats Explained](/blog/eboo
 export const faqs = [
   {
     question: `How do I convert multiple ebooks at once?`,
-    answer: `Use a batch converter: upload all the files in one pass, pick a single output format, and download the results as one ZIP. BookConv's [batch converter guide](/guide/batch-converter) shows the exact steps for up to 20 files per run. For hundreds of files, desktop Calibre with saved presets is the better long-term tool.`,
+    answer: "Use a batch converter: upload all the files in one pass, pick a single output format, and download the results as one ZIP. BookConv's [batch converter guide](/guide/batch-converter) shows the exact steps for up to 20 EPUB-to-TXT/ZIP files or currently 3 files for other routes. For hundreds of files, desktop Calibre with saved presets is the better long-term tool.",
   },
   {
     question: `What is the file limit for batch conversion?`,
-    answer: `A practical batch stays at a sane size — BookConv caps each run at 20 files so the queue stays fast and the download stays manageable. If you have more, split them into multiple batches. Very large individual books can also slow a batch, so keep files reasonable.`,
+    answer: "A practical batch stays at a sane size — BookConv accepts up to 20 EPUB-to-TXT/ZIP files, or currently 3 files for other batch routes; each file is limited to 4 MB. If you have more, split them into multiple batches. Very large individual books can also slow a batch, so keep files reasonable.",
   },
   {
     question: `Should I use a browser batch converter or desktop Calibre?`,

@@ -13,6 +13,7 @@ interface BatchConversionGuideProps {
 }
 
 export function BatchConversionGuide({ sourceFormat, targetFormat, isEs = false }: BatchConversionGuideProps) {
+  const maxFiles = sourceFormat.toLowerCase() === 'epub' && ['txt', 'zip'].includes(targetFormat.toLowerCase()) ? 20 : 3;
   return (
     <section className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 sm:p-8">
       <div className="flex flex-col items-start gap-6 sm:flex-row">
@@ -33,20 +34,20 @@ export function BatchConversionGuide({ sourceFormat, targetFormat, isEs = false 
           <p className="mt-2 text-sm text-gray-600">
             {isEs ? (
               <>
-                Sube hasta <strong>20 archivos</strong> a la vez y conviértelos todos a {targetFormat}.
-                Perfecto para crear toda tu biblioteca de ebooks.
+                Sube hasta <strong>{maxFiles} archivos</strong> a la vez y conviértelos a {targetFormat}.
+                Gratis durante la beta pública; máximo 4 MB por archivo.
               </>
             ) : (
               <>
-                Upload up to <strong>20 files</strong> at once and convert them all to {targetFormat}.
-                Perfect for building your entire ebook library.
+                Upload up to <strong>{maxFiles} files</strong> at once and convert them to {targetFormat}.
+                Free during public beta; maximum 4 MB per file.
               </>
             )}
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500">
             <span className="flex items-center gap-1">
-              <span className="text-green-600">✓</span> {chrome('batchUpTo20', isEs)}
+              <span className="text-green-600">✓</span> {isEs ? `Hasta ${maxFiles} archivos` : `Up to ${maxFiles} files`}
             </span>
             <span className="flex items-center gap-1">
               <span className="text-green-600">✓</span> {chrome('zipDownload', isEs)}
@@ -62,7 +63,7 @@ export function BatchConversionGuide({ sourceFormat, targetFormat, isEs = false 
           <Link href="/batch">
             <Button className="gap-2 bg-blue-600 text-white hover:bg-blue-700">
               <Sparkles className="h-4 w-4" />
-              {chrome('upgradePro', isEs)}
+              {isEs ? 'Abrir conversión por lotes' : 'Open batch converter'}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>

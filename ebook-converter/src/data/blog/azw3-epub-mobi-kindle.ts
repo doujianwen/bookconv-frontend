@@ -1,7 +1,7 @@
 export const slug = "azw3-epub-mobi-kindle";
 export const title = "Kindle vs Kobo: Best eBook Formats (AZW3, EPUB, MOBI)";
 export const date = "2026-08-27";
-export const lastUpdated = "2026-09-04";
+export const lastUpdated = '2026-11-01';
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "KINDLE", "PDF", "CONVERT", "AZW3", "KOBO"];
 
@@ -22,7 +22,7 @@ export const content = {
     },
     {
       "heading": "Key Takeaways",
-      "body": "- **Kindle 首选 AZW3。** MOBI 曾是标准，但缺少现代排版能力；Paperwhite、Oasis、Scribe 都应优先 AZW3。\n\n- **Kobo / Nook / Apple Books 统一用 EPUB。** 兼容矩阵里 PDF 虽处处可读，但在小屏上回流效果差。\n\n- **Kindle Fire 的 EPUB 支持有前提。** 可以侧载无 DRM 的 EPUB，但不会像购书那样进入 Kindle 图书馆；Paperwhite 和 Oasis 仍必须先转 AZW3。\n\n- **X-Ray 需要 AZW3。** 想用 Kindle 的 X-Ray 查人物信息，就必须输出 AZW3。\n\n- **提前转换。** 源文件先转好，字体、图片、章节标题才能在各平台正确渲染。"
+      "body": "- Choose the transfer method before choosing the file format.\n- Send to Kindle accepts EPUB and converts it for Kindle delivery; AZW3 is used for compatible USB sideloading.\n- Kobo and many mobile readers support EPUB, subject to DRM and app compatibility.\n- MOBI is a legacy option, not a universal recommendation for every Kindle."
     }
   ]
 };

@@ -52,7 +52,7 @@ export function generateSchema(
 
   const howToSteps = [
     { '@type': 'HowToStep', stepNumber: 1, name: 'Upload your file', text: 'Drag and drop your ' + sourceDisplay + ' file or click to browse.' },
-    { '@type': 'HowToStep', stepNumber: 2, name: 'Conversion starts automatically', text: 'Our Calibre-powered engine converts your file in seconds.' },
+    { '@type': 'HowToStep', stepNumber: 2, name: 'Conversion starts automatically', text: 'Processing time depends on the file and conversion route.' },
     { '@type': 'HowToStep', stepNumber: 3, name: 'Download result', text: 'Once complete, download your converted ' + targetDisplay + ' file instantly.' },
   ];
 
@@ -69,19 +69,19 @@ export function generateSchema(
       description: 'Follow these simple steps to convert ' + sourceDisplay + ' files to ' + targetDisplay + ' format online for free.',
       totalTime: 'PT2M',
       supply: [{ '@type': 'HowToSupply', name: sourceDisplay + ' file' }],
-      tool: [{ '@type': 'HowToTool', name: 'Calibre' }],
+      tool: [{ '@type': 'HowToTool', name: 'BookConv' }],
       step: howToSteps,
     },
     {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
       name: 'Convert ' + sourceDisplay + ' to ' + targetDisplay + ' Online',
-      description: sourceDisplay + ' to ' + targetDisplay + ' converter powered by Calibre. Free, no registration, no watermarks.',
+      description: sourceDisplay + ' to ' + targetDisplay + ' converter. Free for personal use, no registration, no watermarks.',
       url: pageUrl,
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
-      featureList: ['No registration required', 'No watermarks', 'HTTPS transfers; server-side processing', 'Batch conversion free during public beta', 'High-quality Calibre engine'],
+      featureList: ['No registration required', 'No watermarks', 'HTTPS transfers; server-side processing', 'Batch conversion free during public beta', 'Check output in your reader'],
     },
     {
       '@context': 'https://schema.org',

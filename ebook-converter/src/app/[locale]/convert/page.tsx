@@ -98,13 +98,13 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{chrome('allConversions', isEs)}</h1>
           <p className="mt-4 max-w-2xl text-lg text-gray-600">
             {isEs
-              ? 'Todos los pares de formato que BookConv puede manejar, en un solo lugar. Elige un origen y un destino y convierte gratis en tu navegador: sin cuenta, sin instalación, con Calibre en el servidor.'
-              : 'Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your browser — no account, no installer, Calibre running server-side.'}
+              ? 'Todos los pares de formato que BookConv puede manejar, en un solo lugar. Elige un origen y un destino y convierte gratis en tu navegador: sin cuenta, sin instalación, con procesamiento en el servidor.'
+              : 'Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your browser — no account, no installer, server-side processing.'}
           </p>
           <p className="mt-4 max-w-2xl text-base text-gray-600">
             {isEs
-              ? 'Cada conversión pasa por el motor de código abierto Calibre y admite más de 28 formatos de libros electrónicos: gratis para uso personal, sin necesidad de cuenta.'
-              : 'Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.'}
+              ? 'Elige un par de formatos compatible. El método y la fidelidad varían; las rutas de solo texto no conservan imágenes ni estilos.'
+              : 'Choose a supported format pair below. Conversion methods and output fidelity vary; text-only routes do not preserve images or styling.'}
           </p>
         </header>
 

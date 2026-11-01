@@ -21,7 +21,7 @@ export const content = {
     },
     {
       "heading": "Key Takeaways",
-      "body": "- **PDF 与 EPUB 的根本差异是固定版式对可回流。** 直接转 PDF 时，多栏、脚注、特殊字体常被破坏，因为回流引擎要把静态版面塞进弹性容器。\n\n- **文本型 PDF 远好于扫描件。** 避免扫描图和装饰过重的 PDF，这是最有效的单一改进。\n\n- **先简化排版再转换。** 去掉多余页眉页脚和异常页边距，能消除大部分后续问题。\n\n- **页宽过大会让 EPUB 里的行长过短。** 转换前检查页面尺寸是否合理。\n\n- **MOBI 和 AZW3 同样依赖可回流文本。** 面向 Kindle 时上面这些规则一样适用。\n\n- **多栏错乱要先改源 PDF。** 把原文档重排成单栏再转，而不是在转换器里反复试参数。"
+      "body": "- PDF fixes page geometry; EPUB normally reflows text, so an identical layout is not guaranteed.\n- Text-based PDFs and scanned PDFs need different workflows; scans need OCR before meaningful text reflow.\n- Check headings, images, footnotes and tables in the actual output rather than relying on a successful download.\n- Keep the original file and use the direction-specific troubleshooting guide for the problem you observe."
     }
   ]
 };
@@ -44,3 +44,4 @@ export const faqs = [
     "answer": "EPUB is the industry standard for reflowable e-books. It works on almost all devices except older Kindles, which prefer MOBI or AZW3."
   }
 ];
+export const lastUpdated = '2026-11-01';

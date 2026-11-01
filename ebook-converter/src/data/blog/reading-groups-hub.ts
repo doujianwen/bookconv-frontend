@@ -4,7 +4,7 @@ export const slug = "reading-groups-hub";
 export const title = "How to Sync Ebooks for Virtual Book Clubs";
 export const metaTitle = "Sync Ebooks for Book Clubs & Reading Groups"
 export const date = "2026-09-18";
-export const lastUpdated = "2026-09-18";
+export const lastUpdated = '2026-11-01';
 export const author = "BookConv Team";
 export const tags = ["Reading Groups", "Book Clubs", "Sync", "Multi-device", "Ebook", "Community", "Virtual Reading"];
 
@@ -29,7 +29,7 @@ export const content = {
     },
     {
       heading: `Popular Reading Group Guides`,
-      body: `Whether your group is diving into fantasy sagas or contemporary fiction, these guides cover format strategies for popular series:\n\n**Fantasy & Sci-Fi:**\n- [Harry Potter Digital Books: Multi-Device Reading Guide](/blog/harry-potter-digital-books-multiple-devices)\n- [Lord of the Rings Ebooks: Read Across Kindle, Kobo, and More](/blog/lord-of-the-rings-ebooks-multiple-devices)\n- [Chronicles of Narnia Ebooks: Complete Series Multi-Device Guide](/blog/chronicles-of-narnia-ebooks-multiple-devices)\n- [Twilight Ebooks: Read the Saga Across Devices](/blog/twilight-ebooks-multiple-devices)\n\n**Cross-Device Sync:**\n- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](/blog/sync-reading-across-devices)\n\n**Format Reference:**\n- [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](/guide/kindle-formats)
+      body: `Whether your group is diving into fantasy sagas or contemporary fiction, these guides cover format strategies for popular series:\n\n**Fantasy & Sci-Fi:**\n- [Harry Potter Digital Books: Multi-Device Reading Guide](/blog/harry-potter-digital-books-multiple-devices)\n- [Lord of the Rings Ebooks: Read Across Kindle, Kobo, and More](/blog/read-epub-on-any-device)\n- [Chronicles of Narnia Ebooks: Complete Series Multi-Device Guide](/blog/chronicles-of-narnia-ebooks-multiple-devices)\n- [Twilight Ebooks: Read the Saga Across Devices](/blog/read-epub-on-any-device)\n\n**Cross-Device Sync:**\n- [How to Sync Reading Progress Across Kindle, Kobo, and Apple Books](/blog/sync-reading-across-devices)\n\n**Format Reference:**\n- [Kindle Formats Explained: AZW3, KFX, MOBI & What to Convert To](/guide/kindle-formats)
 
 **Legacy & Niche Formats:**
 - [FB2 vs EPUB](/blog/fb2-vs-epub) for Russian-language library formats
@@ -46,11 +46,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `- **进度漂移是读书会第一大痛点。** 有人读完第 5 章、有人还卡在第 2 章，根因是各家把进度锁在自己的云里。
-- **Google Play Books 是唯一跨平台同步的。** Amazon 只在 Kindle 内同步，Apple Books 只在 iCloud 内，Kobo 自成一套。
-- **混合设备就用 EPUB。** AZW3/MOBI 只在全员 Kindle 时用，PDF 适合需要固定页码的学术或诗歌小组。
-- **改扩展名不叫转换。** 把 epub 改名成 mobi 格式不会变，阅读器会直接拒绝。
-- **DRM 是读书会最常见的失败原因。** 书店买的书无法转换或分享，选 Smashwords、BookFunnel 这类 DRM-free 来源或公共领域作品。`
+      body: "- Choose a reading app and edition before organizing a digital book club.\n- Transferring an ebook file does not synchronize reading progress between different reading ecosystems.\n- Use chapter names rather than page numbers when members use different editions or font sizes.\n- Share store or library links; do not assume every purchased or borrowed ebook can be exported or redistributed."
     }
   ]
 };

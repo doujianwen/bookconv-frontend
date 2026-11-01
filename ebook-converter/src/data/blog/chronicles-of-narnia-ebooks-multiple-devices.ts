@@ -2,7 +2,7 @@ export const slug = 'chronicles-of-narnia-ebooks-multiple-devices';
 export const title = 'Chronicles of Narnia Ebooks: Read the Complete Series on Kindle, Kobo, and More';
 export const metaTitle = 'Chronicles of Narnia Ebooks: Read on Kindle & Kobo'
 export const date = '2026-09-10';
-export const lastUpdated = '2026-09-10';
+export const lastUpdated = '2026-11-01';
 export const author = 'BookConv Team';
 export const tags = ['Chronicles of Narnia', 'C.S. Lewis', 'Multi-device', 'Ebook', 'Kindle', 'Kobo', 'EPUB', 'AZW3', 'Narnia'];
 
@@ -51,12 +51,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `- **AZW3 是 Kindle 上的首选。** 经典排版和插图都能保住；MOBI 是遗留格式，会剥掉高级特性。Kobo、Apple Books、Android 全部原生 EPUB。
-- **EPUB 回流特性适合全系列。** 6 英寸墨水屏到 10 英寸平板，同一个文件都能自动适配。
-- **版权状态比想象中复杂。** C.S. Lewis 1963 年去世，按 life-plus-70，纳尼亚正文在英欧要到 2033 年底才进入公有领域。
-- **插图是独立的著作权。** Pauline Baynes 的插画由其遗产权利人单独持有，即使正文免费，扫描进 EPUB 仍可能侵权。
-- **Kindle 会拒绝超过 50MB 的文件。** 大文件需要分册转换。
-- **阅读进度只在同一生态内同步。** 跨平台要用 Goodreads 这类第三方追踪器。`
+      body: "- Choose an edition available through an authorized retailer or library in your region.\n- EPUB works with compatible Kobo and mobile reader apps; Kindle delivery depends on the transfer method.\n- Send to Kindle can accept DRM-free EPUB; AZW3 is an alternative for compatible USB sideloading.\n- Changing formats does not remove DRM or synchronize progress between reading ecosystems."
     }
   ]
 };

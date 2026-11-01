@@ -74,11 +74,7 @@ When in doubt, AZW3 covers every current Kindle.`
     },
     {
       heading: `Key Takeaways`,
-      body: `- **目标格式是 AZW3。** Kindle 电子墨水屏原生读 AZW3；EPUB 需先转，MOBI 是过时输入。
-- **Send-to-Kindle 方便但会压缩。** 亚马逊服务器把 EPUB 自动转 AZW3 时常丢样式、图、表格；要求高保真就自己先转。
-- **USB 侧载最保真。** 直接把 .azw3 拷进 documents 文件夹，绕过云端转换，排版原样呈现。
-- **免费转换两条路。** BookConv 在线（无需安装）或 Calibre 桌面（可控最强），输出都选 AZW3。
-- **所有现役 Kindle 都读 AZW3。** Paperwhite / Oasis / Basic / Scribe 一致；Fire 平板能直接读 EPUB，但进 Kindle 书库仍需 AZW3。`
+      body: "- Send to Kindle accepts DRM-free EPUB and converts it for delivery.\n- For compatible USB sideloading, AZW3 is an option; it is not an accepted Send to Kindle upload format.\n- MOBI is a legacy format and is not the default choice for a new Kindle workflow.\n- Check chapters, images and fonts on the target device; no conversion guarantees identical rendering."
     }
   ]
 };
@@ -105,3 +101,5 @@ export const faqs = [
     answer: "All current Kindle e-ink models — Paperwhite, Oasis, Basic, and Scribe — read AZW3 natively and with the best quality. The Fire tablet can also read AZW3, and additionally opens EPUB through a reader app."
   }
 ];
+
+export const lastUpdated = '2026-11-01';

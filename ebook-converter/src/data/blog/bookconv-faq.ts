@@ -14,7 +14,7 @@ export const content = {
     },
     {
       heading: `What "Private by Design" Really Means`,
-      body: `BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine.`
+      body: "BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and handled according to our privacy policy — no account, no stored library. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine."
     },
     {
       heading: `The Formats You Can Convert`,

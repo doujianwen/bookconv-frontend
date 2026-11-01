@@ -9,6 +9,7 @@
 import type { CompatReport } from "@/lib/compat/schema";
 
 export const report: CompatReport = {
+  isPlaceholder: true,
   slug: "epub-to-mobi-on-kindle-paperwhite",
   sourceFormat: "epub",
   targetFormat: "mobi",

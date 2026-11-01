@@ -206,7 +206,7 @@ export const faqs: BlogFaq[] = [
   { question: 'Is sideloading easier on Kindle or Kobo?', answer: 'On Kobo — drag a DRM-free EPUB over USB and it opens as-is. On Kindle, the dependable sideload target is AZW3, so EPUB files need one self-managed conversion step first. For styled books, that conversion step actually produces the more faithful result on the device.' },
   { question: 'Do Kindle Unlimited books work on Kobo?', answer: 'No. Kindle Unlimited titles are DRM-protected and tied to the Amazon subscription, so they open only on Kindles and in the Kindle app. The equivalent on the Kobo side is Kobo Plus, which is likewise locked to Kobo devices and apps.' },
   { question: 'What formats do Kindle and Kobo each support?', answer: 'Kindle: AZW3 natively, KFX for store purchases, MOBI for legacy sideloading (existing files only), PDF, and EPUB only via Send to Kindle. Kobo: EPUB and PDF natively, plus CBZ/CBR comics and MOBI on most current models.' },
-  { question: 'Does BookConv convert between Kindle and Kobo formats?', answer: 'Yes. BookConv converts AZW3 and MOBI to EPUB for Kobo, and EPUB to AZW3 for Kindle sideloading — free in your browser, no account or install, with files deleted automatically within an hour. DRM-protected store purchases cannot be processed.' },
+  { question: 'Does BookConv convert between Kindle and Kobo formats?', answer: "Yes. BookConv converts AZW3 and MOBI to EPUB for Kobo, and EPUB to AZW3 for Kindle sideloading — free in your browser, no account or install, with files handled according to our privacy policy; immediate deletion of all copies is not guaranteed. DRM-protected store purchases cannot be processed." },
 ]
 // E-E-A-T authorship block
 export const authorship = {

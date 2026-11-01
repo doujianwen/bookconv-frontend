@@ -35,7 +35,7 @@
     "supportedFormatsDesc": "BookConv supports conversion between 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and more. Whether you need to convert Kindle books, rescue old LIT files, or transform documents to EPUB, we have you covered.",
     "exploreTitle": "Learn More About Ebook Formats",
     "formatsSectionDesc": "Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.",
-    "poweredByCalibre": "Powered by Calibre Engine",
+    "poweredByCalibre": "Format-specific conversion methods",
     "tutorialTitle": "Popular Conversion Tutorials",
     "tutorialLitDesc": "Convert in 3 minutes",
     "tutorialPdfDesc": "Keep your layout intact",
@@ -43,13 +43,13 @@
   },
   "faq": {
     "q1": "Is BookConv free to use?",
-    "a1": "Yes! BookConv is completely free to use with no registration required. Uploads are limited to 100 MB per file.",
+    "a1": "Personal conversions are free. Enabled single-file direct uploads accept up to 100 MB; batch and fallback uploads are limited to 4 MB per file. Batch is free during public beta.",
     "q2": "What formats does BookConv support?",
     "a2": "BookConv supports 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG, and Word documents.",
     "q3": "Is my data safe when I upload files?",
-    "a3": "Absolutely. All files are transferred over encrypted HTTPS connections and automatically deleted after the conversion completes. We never read, store, or share your content.",
+    "a3": "Files move over HTTPS and are processed on servers. Some routes use third-party processing and output caching. See our privacy policy for retention details.",
     "q4": "Do I need to install any software?",
-    "a4": "No! BookConv runs on our servers using the same Calibre engine as the desktop app. Upload your file, pick the output format, and download the result — no software installation needed. Your file is encrypted in transit and automatically deleted after the conversion completes.",
+    "a4": "No installation is needed. Files are processed on servers using format-specific methods, including text extraction and third-party services. See the privacy policy for handling and retention.",
     "q5": "Can I convert Kindle books to EPUB?",
     "a5": "Yes! BookConv supports converting AZW3 and MOBI (Kindle formats) to EPUB and other formats. Simply upload your Kindle file and choose your desired output format."
   },
@@ -89,12 +89,12 @@
         "desc": "All files are transferred over HTTPS with end-to-end encryption. We use industry-standard TLS 1.3 to protect your data in transit."
       },
       "delete": {
-        "title": "Files Removed After Conversion",
-        "desc": "Your original upload is deleted from our servers as soon as the conversion completes. The converted result is delivered through a temporary download link and is not kept under your account. We never build a library of your books."
+        "title": "File handling and retention",
+        "desc": "Processing and storage vary by route; see the privacy policy."
       },
       "no-store": {
         "title": "We Don't Build a Library of Your Books",
-        "desc": "Conversions run without human review and without any stored library of your files. We keep no backups or archives of your content."
+        "desc": "Some outputs may be cached; immediate removal of all copies is not guaranteed."
       },
       "no-read": {
         "title": "We Don't Read Your Content",
@@ -188,10 +188,10 @@
     },
     "fileExpiry": {
       "title": "File Expiry Policy",
-      "body": "For privacy protection, all converted files are automatically deleted after the conversion completes. This applies to all users, regardless of plan.",
+      "body": "Download your result when it is ready and keep the original file. Storage and retention depend on the processing route; see the privacy policy.",
       "points": {
         "download": "Always download immediately after conversion completes",
-        "immediate": "Do not wait to batch-download multiple files",
+        "immediate": "Deletion of every stored or cached copy is not guaranteed immediately after conversion.",
         "no-recovery": "Files cannot be recovered after the expiry window"
       }
     },

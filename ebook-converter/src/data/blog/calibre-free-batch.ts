@@ -33,11 +33,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Calibre 对批量转换是过度配置。** 界面拥挤、安装体积大、学习曲线陡，批量任务往往要点多次还要等它索引根本不存在的书库。
-- **只做格式转换时，浏览器工具更快。** 把一堆 EPUB 变 MOBI、或 PDF 变可读文件，拖进网页就完事。
-- **桌面替代品各有取舍。** 更轻量的桌面工具适合离线批处理，但可控参数不如 Calibre 细。
-- **先清理再批量。** 批量任务里一个坏文件会拖垮整批，开跑前先筛掉损坏和带 DRM 的。
-- **批量之后必须抽检。** 跑完抽查几本，确认字体、目录、图片都没丢再收工。`
+      body: "- Browser tools suit occasional batches; desktop Calibre is useful for larger libraries and repeatable settings.\n- BookConv batch conversion is free during public beta, with a 4 MB limit per file.\n- EPUB to TXT and EPUB to ZIP accept up to 20 files; other batch routes currently accept up to 3.\n- Test a representative file before converting a whole collection, and keep the original files."
     }
   ]
 };
@@ -68,3 +64,4 @@ export const faqs = [
     answer: "Direct conversion from Kindle (AZW/KFX) to EPUB is difficult due to DRM. Without removing DRM first, most free tools will fail. Once DRM is removed, you can use almost any converter, including BookConv, to transform the file into a widely compatible EPUB format."
   }
 ];
+export const lastUpdated = '2026-11-01';

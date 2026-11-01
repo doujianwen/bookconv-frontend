@@ -22,7 +22,7 @@ export const content = {
     },
     {
       heading: `Privacy`,
-      body: `Calibre converts entirely on your machine, so files never leave your computer. BookConv converts in the browser and is designed to avoid storing your files after conversion. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. For sensitive manuscripts, local tools (Calibre) give maximum control; for everyday files, BookConv's no-install, in-browser model is a low-friction option that does not require handing files to a desktop app's broader ecosystem.`
+      body: "Calibre converts entirely on your machine, so files never leave your computer. BookConv converts in the browser and is designed to avoid storing your files after conversion. Uploaded files are encrypted in transit over HTTPS and handled according to our privacy policy — no account, no stored library. For sensitive manuscripts, local tools (Calibre) give maximum control; for everyday files, BookConv's no-install, in-browser model is a low-friction option that does not require handing files to a desktop app's broader ecosystem."
     },
     {
       heading: `Price`,

@@ -30,6 +30,8 @@ export interface CompatCheck {
 }
 
 export interface CompatReport {
+  /** Demo data must never be presented as a verified conversion run. */
+  isPlaceholder?: boolean;
   /** 如 "epub-to-mobi-on-kindle-paperwhite" */
   slug: string;
   sourceFormat: string;

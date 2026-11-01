@@ -142,11 +142,11 @@ export default async function ComparePage() {
             <p className="text-gray-700 leading-relaxed">BookConv is perfect for quick, one-off conversions on any device. No installation, no registration, no watermarks.</p>
             <ul className="mt-4 space-y-2 text-gray-700">
               <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Browser-based:</strong> Works on any device</span></li>
-              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> Files are deleted after the conversion completes</span></li>
-              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Free for personal use</strong> — no feature caps on individual conversions</span></li>
+              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Privacy-focused:</strong> See our privacy policy for file processing and retention</span></li>
+              <li className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 text-green-600" /><span><strong>Free for personal use</strong> — subject to upload limits and service availability</span></li>
             </ul>
             <p className="mt-4 text-gray-700 leading-relaxed">
-              BookConv converts 28+ eBook formats through the open-source Calibre engine — free for personal use, no account required.
+              BookConv provides supported conversion pairs through format-specific processing routes — free for personal use, no account required.
             </p>
           </div>
 

@@ -81,6 +81,11 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/blog/epub-to-various-other", destination: "/blog/epub-converter", permanent: true },
+      { source: "/blog/lord-of-the-rings-ebooks-multiple-devices", destination: "/blog/read-epub-on-any-device", permanent: true },
+      { source: "/blog/twilight-ebooks-multiple-devices", destination: "/blog/read-epub-on-any-device", permanent: true },
+      { source: "/blog/marvel-comics-ebooks-multiple-devices", destination: "/blog/read-epub-on-any-device", permanent: true },
+      { source: "/es/guide/azw3-vs-mobi", destination: "/es/blog/azw3-vs-mobi", permanent: true },
       { source: "/converter/:slug", destination: "/convert/:slug", permanent: true },
       { source: "/(.*)", has: [{ type: "header", key: "x-forwarded-proto", value: "http" }], destination: "https://www.bookconv.com/$1", permanent: true },
     ]

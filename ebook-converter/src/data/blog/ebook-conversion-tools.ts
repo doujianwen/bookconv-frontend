@@ -76,11 +76,7 @@ If you attempt to convert a complex cookbook using a free online converter or ba
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Calibre 适合纯文本换格式，不适合复杂版式。** 遇到内嵌 CSS、浮动图片、脚注、多栏排版，它的默认引擎会把结构读错。
-- **Calibre 是瑞士军刀，不是手术刀。** 菜谱、摄影集、带侧栏的教材这类需要视觉保真的书，值得投入专业处理。
-- **OCR 是实体书数字化的关键。** 没有可靠 OCR，电子书就是一叠静态图，不能高亮、不能搜索、字号也调不了。
-- **Kobo 只支持 EPUB。** 它既不支持 MOBI 也不支持 AZW3，所以面向 Kobo 的源文件就该是排版良好的 EPUB。
-- **目录坏掉通常怪源文件。** 标题没套用 H1/H2 结构，转换器就生成不出可点击的目录。`
+      body: "- Digital format conversion and scanning a paper book are different tasks.\n- Scanned pages need OCR to produce searchable text or a reflowable ebook.\n- Choose a tool by the source format, desired output and the amount of layout change you can accept.\n- Check complex tables, images and footnotes in the output rather than assuming automatic preservation."
     }
   ]
 };
@@ -99,3 +95,4 @@ export const faqs = [
     answer: "Pay for a professional service when visual fidelity matters — cookbooks, textbooks, comics, and children's books with fixed layouts. Free tools like Calibre handle plain-text novels well, but they flatten complex CSS, drop embedded fonts, and misplace images, which is exactly what a paid service is built to preserve."
   }
 ];
+export const lastUpdated = '2026-11-01';

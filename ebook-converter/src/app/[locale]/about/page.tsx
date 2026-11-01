@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "About BookConv — Free Online eBook Converter",
-    description: clampMetaDescription("Learn about BookConv's mission to make eBook conversion accessible, secure, and free for everyone. Powered by Calibre, trusted by readers worldwide."),
+    description: clampMetaDescription("Learn about BookConv's mission to make eBook conversion accessible, secure, and free for everyone. See supported formats and output limitations."),
     keywords: ["about", "bookconv", "ebook converter", "calibre", "privacy"],
     alternates: { canonical, languages },
     openGraph: {
@@ -48,7 +48,7 @@ const aboutFaqs = [
   { q: 'How long are my files stored?', a: 'Uploaded files are deleted as soon as the conversion completes. We never store your content longer than necessary to complete the conversion and provide you with the download link.' },
   { q: 'Do you sell my data?', a: "Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion. Your privacy is our priority — that's why we don't even require account creation." },
   { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },
-  { q: 'Is BookConv the same as BookReverb or BookConvert?', a: 'No. BookConv (bookconv.com) is an independent, free online converter powered by Calibre. It is not affiliated with, related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one of those names, this site is bookconv.com only.' },
+  { q: 'Is BookConv the same as BookReverb or BookConvert?', a: 'No. BookConv (bookconv.com) is an independent, free online converter using format-specific conversion methods. It is not affiliated with, related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one of those names, this site is bookconv.com only.' },
 ];
 
 export default async function AboutPage() {
@@ -62,7 +62,7 @@ export default async function AboutPage() {
             "@context": "https://schema.org",
             "@type": "AboutPage",
             name: "About BookConv",
-            description: "BookConv is a free online eBook format converter powered by Calibre. We are not affiliated with BookReverb or BookConvert — any site using those names is a separate product.",
+            description: "BookConv is a free online eBook format converter using format-specific conversion methods. We are not affiliated with BookReverb or BookConvert — any site using those names is a separate product.",
             url: "https://www.bookconv.com/about",
             publisher: {
               "@type": "Organization",
@@ -117,7 +117,7 @@ export default async function AboutPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span><strong>Open</strong> — Powered by Calibre, the industry-standard open-source engine</span>
+              <span><strong>Open</strong> — Format-specific tools with explicit output limits</span>
             </li>
           </ul>
           <p className="mt-4 text-gray-700 leading-relaxed">
@@ -135,7 +135,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">Lightning Fast</h3>
               <p className="text-sm text-gray-600">
-                Powered by Calibre&apos;s optimized conversion engine. Most conversions complete in seconds, not minutes.
+                Upload a supported file without installing desktop software. Processing time depends on file size, format and service availability.
               </p>
             </div>
 
@@ -145,7 +145,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">Privacy First</h3>
               <p className="text-sm text-gray-600">
-                No registration required. Files are encrypted during transfer and deleted as soon as the conversion completes.
+                No registration required for personal conversions. Files are transferred over HTTPS; see our privacy policy for processing and retention details.
               </p>
             </div>
 
@@ -155,7 +155,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">28+ Formats</h3>
               <p className="text-sm text-gray-600">
-                Support for EPUB, MOBI, AZW3, PDF, DOCX, TXT, and many more. Convert between any combination of formats.
+                Support for EPUB, MOBI, AZW3, PDF, DOCX, TXT, and many more. Choose from the supported conversion pairs.
               </p>
             </div>
 
@@ -165,7 +165,7 @@ export default async function AboutPage() {
               </div>
               <h3 className="mb-2 font-semibold text-gray-900">Format Preserved</h3>
               <p className="text-sm text-gray-600">
-                Images, chapters, metadata, and formatting are preserved during conversion. Your eBook looks exactly as intended.
+                Preservation depends on the conversion route and target format. Some routes rebuild text only; check images, chapters and styling in your reader.
               </p>
             </div>
           </div>
@@ -173,19 +173,19 @@ export default async function AboutPage() {
 
         {/* Technology Section */}
         <section className="mb-12 rounded-2xl border border-gray-200 bg-gray-50 p-8">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900">Powered by Calibre</h2>
+          <h2 className="mb-4 text-2xl font-bold text-gray-900">Format-specific conversion methods</h2>
           <p className="text-gray-700 leading-relaxed">
-            BookConv uses the <a href="https://calibre-ebook.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-700">Calibre engine</a> — the most trusted open-source ebook library in the world.
-            Used by millions of readers and developers, Calibre ensures:
+            Some BookConv routes use the <a href="https://calibre-ebook.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-700">Calibre engine</a> ; other routes extract and rebuild text or use a third-party service.
+            Choose a route based on the file and output you need:
           </p>
           <ul className="mt-4 space-y-2 text-gray-700">
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span><strong>Industry-standard conversion quality</strong> — Font rendering, chapter structure, and metadata are preserved faithfully</span>
+              <span><strong>Industry-standard conversion quality</strong> — Check font rendering, chapter structure and metadata after conversion</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span><strong>Transparent process</strong> — No black-box algorithms; conversion runs on the auditable Calibre engine</span>
+              <span><strong>Transparent process</strong> — Methods differ by format; text-only output cannot preserve images and styling</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
@@ -252,6 +252,10 @@ export default async function AboutPage() {
           </div>
         </section>
 
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold">Explore BookConv</h2>
+          <p className="mt-4"><Link href="/compare/bookconv-vs-calibre" className="underline">Compare BookConv and Calibre</Link> for different conversion workflows, or explore our <Link href="/data" className="underline">public measurement datasets</Link> and their limitations.</p>
+        </section>
         {/* FAQ Section */}
         <section className="mb-12 mt-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>

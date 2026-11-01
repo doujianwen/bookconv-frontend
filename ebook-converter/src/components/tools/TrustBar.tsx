@@ -14,14 +14,14 @@ const TRUST_ITEMS = [
   'No registration required',
   'No watermarks',
   'HTTPS transfers; server-side processing',
-  'High-quality Calibre engine',
+  'Check output in your reader',
 ] as const
 
 const TRUST_ITEMS_ES = [
   'Sin registro obligatorio',
   'Sin marcas de agua',
   'Transferencia HTTPS; procesamiento en servidor',
-  'Motor Calibre de alta calidad',
+  'Comprueba el resultado en tu lector',
 ] as const
 
 export function TrustBar({ isEs = false }: { isEs?: boolean }) {

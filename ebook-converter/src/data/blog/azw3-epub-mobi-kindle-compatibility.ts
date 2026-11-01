@@ -88,11 +88,7 @@ Legacy MOBI renders footnotes as plain inline text or broken jumps. Convert to A
     },
     {
       heading: `Key Takeaways`,
-      body: `- **Kindle 不原生支持 EPUB。** Send to Kindle 的服务器端转换常会剥掉样式、弄坏表格或丢图，要保留设计稿就预先转成 AZW3。
-- **Kobo / Nook / Apple Books 走开放标准。** EPUB 在这些设备上是原生格式，标题、脚注、图片说明都能按你预期呈现。
-- **AZW3 全面胜过 MOBI。** 内嵌字体、CSS3 排版控制、行内脚注交叉引用，MOBI 都做不到。
-- **格式错配的表现很具体。** MOBI 在现代 Kindle 上段落间距不一致、嵌入字体加载失败；在 Kobo 上则需要第三方应用才能打开。
-- **EPUB 是可回流格式。** 小说适合回流；菜谱、儿童书、手册可能需要固定版式 EPUB 才能保住图的位置。`
+      body: "- Separate native device support from formats accepted by a cloud delivery service.\n- EPUB can be uploaded through Send to Kindle; AZW3 is an option for compatible USB sideloading.\n- Kobo and many other readers accept EPUB, subject to DRM and device compatibility.\n- Verify the output on the target device and keep the original file."
     }
   ],
 };
@@ -104,6 +100,6 @@ export const faqs = [
   },
   {
     question: `Is my data safe when I upload files to BookConv?`,
-    answer: `Yes. We prioritize user privacy. Uploaded files are processed securely and automatically deleted from our servers after a short period. We never read, store, or distribute your content.`
+    answer: "Yes. We prioritize user privacy. Uploaded files are processed securely and subject to route-specific storage and cleanup. Some routes use third-party processing and may cache converted outputs; see the privacy policy."
   }
 ];

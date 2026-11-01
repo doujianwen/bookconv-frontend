@@ -38,10 +38,13 @@ export async function generateMetadata({
   if (!report) return {};
   const title = `${report.sourceFormat.toUpperCase()} to ${report.targetFormat.toUpperCase()} — compatibility report`;
   const passed = report.checks.filter((c) => c.passed).length;
-  const description = clampMetaDescription(`Real-world conversion test: ${report.sourceFormat} to ${report.targetFormat} using ${report.engineVersion}. ${passed}/${report.checks.length} integrity checks passed.`);
+  const description = report.isPlaceholder
+    ? 'Compatibility report pending a verified conversion run.'
+    : clampMetaDescription(`Real-world conversion test: ${report.sourceFormat} to ${report.targetFormat} using ${report.engineVersion}. ${passed}/${report.checks.length} integrity checks passed.`);
   const url = `https://www.bookconv.com/compat/${slug}`;
   return {
     title,
+    robots: report.isPlaceholder ? { index: false, follow: true } : undefined,
     description,
     alternates: { canonical: url },
     openGraph: {
@@ -80,6 +83,16 @@ export default async function CompatPage({
   const { slug } = await params;
   const report = getCompatReport(slug);
   if (!report) notFound();
+  if (report.isPlaceholder) {
+    return (
+      <main className="mx-auto max-w-3xl px-4 py-16">
+        <h1 className="text-3xl font-bold">Conversion report awaiting verification</h1>
+        <p className="mt-4">This page previously displayed demonstration data. Those values were not evidence of a real conversion or a Kindle Paperwhite device test and have been withdrawn.</p>
+        <p className="mt-4">A verified report will require a reproducible input, output and test log. No compatibility result is claimed here.</p>
+        <Link href="/convert/epub-to-mobi" className="mt-6 inline-block underline">Open the EPUB to MOBI converter</Link>
+      </main>
+    );
+  }
 
   const badge = VERDICT_BADGE[report.verdict];
   const passed = report.checks.filter((c) => c.passed).length;
@@ -90,7 +103,7 @@ export default async function CompatPage({
       <nav className="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
         <Link href="/" className="hover:text-gray-700">Home</Link>
         <span className="mx-2">/</span>
-        <Link href="/compat" className="hover:text-gray-700">Compatibility reports</Link>
+        <Link href="/convert" className="hover:text-gray-700">Converters</Link>
         <span className="mx-2">/</span>
         <span className="text-gray-700">{report.sourceFormat} to {report.targetFormat}</span>
       </nav>

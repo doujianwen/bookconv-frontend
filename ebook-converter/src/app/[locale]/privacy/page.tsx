@@ -31,15 +31,15 @@ export default async function PrivacyPage() {
       <div className="prose max-w-none space-y-6">
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">File Handling &amp; Data Deletion</h2>
-          <p>All uploaded files are encrypted during transfer via HTTPS and deleted as soon as the conversion completes completion.</p>
+          <p>Files are transferred over HTTPS and processed on servers. Some conversions use third-party processing, including CloudConvert. Direct uploads use temporary object storage; converted outputs may be cached to serve an identical conversion again.</p>
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Data Collection</h2>
-          <p>We collect minimal data necessary for service operation. No personal information is stored or shared with third parties.</p>
+          <p>We process uploaded content and operational data to provide conversions. A route using a third-party conversion service sends the file to that processor. See CloudConvert’s privacy policy for its handling practices.</p>
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Cookies</h2>
-          <p>We use essential cookies for language preference and session management only.</p>
+          <p>The site uses cookies for language preference and sessions and may use analytics to understand site usage.</p>
         </section>
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mt-6">Contact</h2>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { PageLanguageLinks } from '@/components/PageLanguageLinks'
 import { notFound } from "next/navigation"
 import { Calendar, Tag, ArrowLeft, BookOpen } from "lucide-react"
 import { getAllGuides } from "@/data/guides"
@@ -136,6 +137,7 @@ export default async function GuidePage({ params }: GuideSlugProps) {
       />
 
       <main className="mx-auto max-w-3xl px-4 py-16">
+        <PageLanguageLinks path={`/guide/${slug}`} isEs={isEs} />
         <nav aria-label={isEs ? 'Migas de pan' : 'Breadcrumb'} className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
             <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>

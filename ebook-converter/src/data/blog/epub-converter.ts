@@ -26,5 +26,5 @@ export const faqs = [
   { question: `Does converting EPUB to PDF lose the reflowable text?`, answer: `Yes. PDF is a fixed-layout format. When you convert, the text will no longer resize based on your font settings, but the layout will remain consistent across all devices.` },
   { question: `Can I convert EPUB to Kindle format?`, answer: `Absolutely. You can convert EPUB to MOBI or AZW3, which are the native formats supported by Kindle devices.` },
   { question: `Will my bookmarks be preserved after conversion?`, answer: `Bookmarks are generally stored within the app or device, not the file itself. However, converting to a compatible format like AZW3 for Kindle ensures the best experience for syncing highlights and notes.` },
-  { question: `Is it safe to upload my ebooks to an online converter?`, answer: `We prioritize user privacy. Files are processed securely and automatically deleted from our servers after a short period. We never read or distribute your content.` }
+  { question: `Is it safe to upload my ebooks to an online converter?`, answer: "We prioritize user privacy. Files are processed securely and subject to route-specific storage and cleanup. We never read or distribute your content." }
 ];

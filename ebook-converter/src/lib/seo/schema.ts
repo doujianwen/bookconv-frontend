@@ -1,4 +1,5 @@
 import { SECURITY_FAQ } from './securityFaq'
+import { generateDefaultFAQs } from './conversion-faq'
 
 interface FAQItem {
   question: string;
@@ -65,7 +66,7 @@ export function generateSoftwareApplicationSchema(opts: SoftwareAppSchemaOpts): 
         'No watermarks',
         'HTTPS transfers; server-side processing',
         'Batch conversion free during public beta',
-        'High-quality Calibre engine',
+        'Check output in your reader',
       ],
     }],
   }, null, 2);
@@ -102,21 +103,9 @@ interface ConversionContentLite {
   faq?: Array<{ q: string; a: string }>;
 }
 
-// NOTE: this FAQ list is duplicated verbatim in
-// src/components/tools/FAQSection.tsx (generateDefaultFAQs). The two copies
-// drifted apart once already -- both carried "Free users get 5 conversions per
-// hour" and "Pro users enjoy up to 50 MB", neither of which the pipeline
-// enforces (see risk R7 in docs/seo-geo-execution-plan-2026-09-17.md). Edit
-// both, or better, have this function import the component's generator.
+// Visible defaults and server JSON-LD share the same source to prevent claim drift.
 function defaultFaqsFor(source: string, target: string): FAQItem[] {
-  const s = source.toUpperCase();
-  const t = target.toUpperCase();
-  return [
-    { question: `Is ${s} to ${t} conversion free?`, answer: `Yes! Our ${s} to ${t} converter is completely free to use. No registration required, no watermarks, no hidden fees. Every conversion is free, with a 4 MB limit per file.` },
-    { question: `Will I lose formatting when converting from ${s} to ${t}?`, answer: `Our converter uses the Calibre engine, which preserves most formatting including fonts, images, tables, and layout. However, some complex formatting may change slightly due to differences between ${s} and ${t} format capabilities. The result is optimized for readability on your target device.` },
-    { question: 'What is the file size limit?', answer: 'Every plan accepts files up to 4 MB. Pro adds batch conversion, which lets you process several books in a single upload.' },
-    { question: 'Can I batch convert multiple files?', answer: 'Batch conversion is available with our Pro plan ($5/month). You can upload multiple files at once and convert them all in a single session, saving you time.' },
-  ];
+  return generateDefaultFAQs(source, target);
 }
 
 /**
@@ -159,12 +148,12 @@ export function generateConversionPageSchema(
       description: 'Follow these simple steps to convert ' + sourceDisplay + ' files to ' + targetDisplay + ' format online for free.',
       step: [
         { '@type': 'HowToStep', position: 1, name: 'Upload your file', text: 'Drag and drop your ' + sourceDisplay + ' file or click to browse.' },
-        { '@type': 'HowToStep', position: 2, name: 'Conversion starts automatically', text: 'Our Calibre-powered engine converts your file in seconds.' },
+        { '@type': 'HowToStep', position: 2, name: 'Conversion starts automatically', text: 'Processing time depends on the file and conversion route.' },
         { '@type': 'HowToStep', position: 3, name: 'Download result', text: 'Once complete, download your converted ' + targetDisplay + ' file instantly.' },
       ],
       totalTime: 'PT2M',
       supply: [{ '@type': 'HowToSupply', name: sourceDisplay + ' file' }],
-      tool: [{ '@type': 'HowToTool', name: 'Calibre' }],
+      tool: [{ '@type': 'HowToTool', name: 'BookConv' }],
     },
     {
       '@type': 'WebPage',
@@ -178,7 +167,7 @@ export function generateConversionPageSchema(
     {
       '@type': 'SoftwareApplication',
       name: sourceDisplay + ' to ' + targetDisplay + ' Online',
-      description: sourceDisplay + ' to ' + targetDisplay + ' converter powered by Calibre. Free, no registration, no watermarks.',
+      description: sourceDisplay + ' to ' + targetDisplay + ' converter. Free for personal use, no registration, no watermarks.',
       url: pageUrl,
       applicationCategory: 'UtilityApplication',
       operatingSystem: 'Any',
@@ -189,7 +178,7 @@ export function generateConversionPageSchema(
         'No watermarks',
         'HTTPS transfers; server-side processing',
         'Batch conversion free during public beta',
-        'High-quality Calibre engine',
+        'Check output in your reader',
       ],
     },
     {

@@ -59,12 +59,7 @@ Sync problems usually fall into three categories:
     },
     {
       heading: `Key Takeaways`,
-      body: `- **主流阅读应用都不跨平台同步。** Kindle 只在亚马逊生态内、Apple Books 只在苹果设备内、Kobo 是封闭系统。
-- **先统一格式再谈同步。** EPUB 是唯一在 Kobo、Apple Books、Google Play Books 和多数 Android 阅读器都通用的格式。
-- **Google Play Books 上限 1,000 本。** 有这个硬限制，库更大就得换方案。
-- **Kindle Unlimited 的书不能转换或转移。** 这类书天然锁在单一生态。
-- **简化 EPUB 兼容性最广。** 不用自定义字体、CSS 最少的 EPUB 在任何设备上都能打开。
-- **跨平台追踪进度要第三方工具。** Kindle 的进度不会同步到 Kobo，需要 BookFusion 或 Readwise Reader 这类工具。`
+      body: "- Copying an ebook and synchronizing reading progress are separate tasks.\n- Progress synchronization generally depends on using the same reading service and account.\n- Converting a file does not move highlights, bookmarks or progress between Kindle, Kobo and Apple Books.\n- For a mixed-device group, coordinate by chapter and use compatible reader apps rather than promising automatic cross-ecosystem sync."
     }
   ]
 };

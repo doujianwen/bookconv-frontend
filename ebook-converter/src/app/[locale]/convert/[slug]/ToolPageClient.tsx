@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { PageLanguageLinks } from '@/components/PageLanguageLinks'
 import { useState, useCallback } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
@@ -306,6 +307,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             {contentData?.hero?.subtitle || (isEs ? "Herramienta online gratuita: sin registro, sin marcas de agua y gratis para uso personal." : "Free online tool \u2014 no registration, no watermarks, free for personal use.")}
           </p>
         </div>
+        <PageLanguageLinks path={`/convert/${source}-to-${target}`} isEs={isEs} />
         {/* AI Summary / Quick Answer — GEO optimized */}
         <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
           <h2 className="mb-3 text-lg font-semibold text-blue-900">
@@ -316,17 +318,17 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
               <>
                 Para convertir <strong>{sourceDisplay}</strong> a <strong>{targetDisplay}</strong>:
                 sube tu archivo con el formulario de abajo, elige <strong>{targetDisplay}</strong> como formato de salida y pulsa Convertir.
-                Nuestro motor basado en Calibre procesa la conversión en segundos y no requiere registro.
-                El conversor conserva el contenido de texto, la estructura de capítulos, las imágenes y los metadatos.
-                Si necesitas convertir varios archivos a la vez, <Link href="/pricing" className="underline hover:text-blue-600">mejora a Pro</Link>.
+                No necesitas registrarte. Comprueba el resultado en tu lector.
+                La conservación de imágenes, estilos y metadatos depende del formato y del método de conversión. TXT solo contiene texto.
+                La conversión por lotes es gratuita durante la beta: consulta los <Link href="/batch" className="underline hover:text-blue-600">límites por formato</Link>.
               </>
             ) : (
               <>
                 To convert <strong>{sourceDisplay}</strong> to <strong>{targetDisplay}</strong>:
                 upload your file using the form below, select <strong>{targetDisplay}</strong> as the output format, and click Convert.
-                Our Calibre-powered engine processes the conversion in seconds with no registration required.
-                The converter preserves text content, chapter structure, images, and metadata.
-                For batch conversions of up to 20 files, <Link href="/pricing" className="underline hover:text-blue-600">upgrade to Pro</Link>.
+                No registration is required. Check the result in your reader.
+                Image, styling and metadata preservation depends on the formats and conversion method. TXT output contains text only.
+                Batch conversion is free during public beta: check the <Link href="/batch" className="underline hover:text-blue-600">format-specific limits</Link>.
               </>
             )}
           </p>
@@ -334,12 +336,12 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         {/* Calibre engine endorsement — explicit GEO trust / entity signal */}
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
           <h2 className="mb-2 text-lg font-semibold text-emerald-900">
-            {chrome('calibreEngine', isEs)}
+            {isEs ? 'Qué esperar del resultado' : 'What to expect from the output'}
           </h2>
           <p className="text-sm text-emerald-800 leading-relaxed">
             {isEs
-              ? `Cada conversión de ${sourceDisplay} a ${targetDisplay} se ejecuta con el motor de Calibre, la biblioteca de ebooks de código abierto estándar del sector, en la que confían lectores y herramientas de todo el mundo. Calibre conserva fuentes, estructura de capítulos y metadatos con mucha más fidelidad que los conversores que reconstruyen los archivos desde cero.`
-              : `Every ${sourceDisplay} to ${targetDisplay} conversion runs on the Calibre engine — the industry-standard open-source ebook library trusted by readers and tools worldwide. Calibre preserves fonts, chapter structure, and metadata far more faithfully than converters that rebuild files from scratch.`}
+              ? 'Los métodos dependen del par de formatos. Algunas rutas extraen y reconstruyen solo el texto, por lo que pueden perder imágenes, estilos o metadatos. Comprueba capítulos, imágenes y caracteres en tu lector. No se elimina DRM.'
+              : 'Conversion methods depend on the format pair. Some routes extract and rebuild text only, which can lose images, styling or metadata. Check chapters, images and character encoding in your reader. DRM is not removed.'}
           </p>
         </div>
         {/* Trust proofs above the fold — P0: surface privacy/quality promise at top for GEO */}
@@ -468,7 +470,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
                   </li>
                   <li className="flex gap-3">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">2</span>
-                    <span className="text-sm text-gray-700">{isEs ? <><strong>La conversión empieza automáticamente</strong>. Nuestro motor basado en Calibre convierte tu archivo en segundos.</> : <><strong>Conversion starts automatically</strong>. Our Calibre-powered engine converts your file in seconds.</>}</span>
+                    <span className="text-sm text-gray-700">{isEs ? <><strong>La conversión empieza automáticamente</strong>. Comprueba el resultado cuando termine la conversión.</> : <><strong>Conversion starts automatically</strong>. Check the output when conversion finishes.</>}</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">3</span>
@@ -497,7 +499,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
                 <div className="rounded-xl border bg-white p-5">
                   <h3 className="font-semibold text-gray-900">{chrome('whyInstant', isEs)}</h3>
                   <p className="mt-1 text-sm text-gray-500">
-                    {isEs ? `Sin software que instalar. Sin cuenta necesaria. Convierte en segundos, no en minutos.` : `No software to install. No account needed. Convert in seconds, not minutes.`}
+                    {isEs ? `Sin software que instalar. Sin cuenta necesaria. El tiempo depende del archivo y del método de conversión.` : `No software to install. No account needed. Processing time depends on the file and conversion route.`}
                   </p>
                 </div>
               </div>

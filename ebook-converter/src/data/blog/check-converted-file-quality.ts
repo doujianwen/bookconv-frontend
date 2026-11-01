@@ -30,11 +30,7 @@ export const content = {
     },
     {
       heading: `Key Takeaways`,
-      body: `- **先验文件大小。** 大小异常往往比内容异常更早暴露问题。
-- **在目标阅读器里实际打开。** 转换成功不等于能读，必须在真正要用的设备上验证。
-- **逐项检查内容完整性。** 章节、目录、图片、脚注分别确认，缺哪一项补哪一项。
-- **在自己的设备上测，而不是在转换器预览里测。** 转换器的预览与目标设备的渲染引擎不同。
-- **图像丢失优先压源文件。** 扫描件把 DPI 降到 150 通常就能解决，不必重转多遍。`
+      body: "- A successful conversion response does not prove that the whole book was preserved.\n- Open the output in the reader or device where you plan to use it.\n- Check chapters, table of contents, images, footnotes and character encoding against the source.\n- File size is only a warning signal: compression can change size without losing content."
     }
   ]
 };
@@ -65,3 +61,5 @@ export const faqs = [
     answer: `Always keep your source file until you've verified the output. If something went wrong, check the error message and try a different format pair. Our [conversion error guide](/blog/conversion-error-guide) covers common failure scenarios.`
   }
 ];
+
+export const lastUpdated = '2026-11-01';

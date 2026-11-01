@@ -10,7 +10,7 @@ export const content = {
   sections: [
     {
       heading: `Private by Design`,
-      body: `Conversions run in your browser, and BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and deleted as soon as the conversion completes of conversion — no account, no stored library. You do not hand your library to a desktop app's broader ecosystem, and you do not create an account just to convert one file. For most readers that is the right default: convert, download, move on.`
+      body: "Conversions run in your browser, and BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and handled according to our privacy policy — no account, no stored library. You do not hand your library to a desktop app's broader ecosystem, and you do not create an account just to convert one file. For most readers that is the right default: convert, download, move on."
     },
     {
       heading: `Built for Every Device`,

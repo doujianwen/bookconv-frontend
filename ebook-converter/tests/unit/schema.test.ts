@@ -17,7 +17,7 @@
     expect(breadcrumb.itemListElement.length).toBe(3);
   });
 
-  it('should include HowTo with Calibre tool', () => {
+  it('should identify the actual BookConv tool without asserting a universal engine', () => {
     const { generateSchema } = require('@/lib/schema');
     const json = generateSchema('epub', 'azw3');
     const parsed = JSON.parse(json);
@@ -25,7 +25,7 @@
     expect(howTo).toBeDefined();
     expect(howTo.name).toContain('EPUB');
     expect(howTo.name).toContain('AZW3');
-    expect(howTo.tool[0].name).toBe('Calibre');
+    expect(howTo.tool[0].name).toBe('BookConv');
   });
 
   it('should include SoftwareApplication with free pricing', () => {
