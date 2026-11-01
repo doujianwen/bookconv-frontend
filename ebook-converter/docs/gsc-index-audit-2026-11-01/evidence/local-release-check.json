@@ -1,0 +1,1070 @@
+{
+  "base": "http://localhost:3114",
+  "checkedAt": "2026-11-01T09:57:30.344Z",
+  "count": 117,
+  "status": {
+    "200": 112,
+    "308": 5
+  },
+  "englishChinese": [],
+  "oldEngineClaims": [],
+  "aliasesInSitemap": false,
+  "placeholderInSitemap": false,
+  "aliasesInLlms": false,
+  "sitemapCount": 166,
+  "results": [
+    {
+      "url": "https://www.bookconv.com/batch",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/ai-feeding-notebooklm-chatgpt",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/about",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/batch-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/best-epub-reader-android",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/azw3-to-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/azw3-epub-mobi-kindle-compatibility",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/bookconv-faq",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/best-epub-reader-iphone-ipad",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/best-free-epub-reader",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/bookconv-vs-calibre",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/calibre-free-batch",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/check-converted-file-quality",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/cbr-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/can-kobo-read-epub-files",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/conversion-error-guide",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/common-ebook-format-problems",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/chronicles-of-narnia-ebooks-multiple-devices",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/djvu-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/download-troubleshooting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/ebook-troubleshooting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/ebook-conversion-tools",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-to-various-other",
+      "status": 308,
+      "location": "/blog/epub-converter",
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-to-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-to-pdf-linux",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-to-text",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-vs-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/blog/epub-vs-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/blog/harry-potter-digital-books-multiple-devices",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/fb2-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/large-file-conversion-guide",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/kindle-epub-azw3-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/kobo-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/kfx-vs-azw3",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/layout-typesetting-pdf-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/lord-of-the-rings-ebooks-multiple-devices",
+      "status": 308,
+      "location": "/blog/read-epub-on-any-device",
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/marvel-comics-ebooks-multiple-devices",
+      "status": 308,
+      "location": "/blog/read-epub-on-any-device",
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/lit-ebook-format",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/lit-format-conversion-and",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/legacy-lit-djvu-fb2-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/selection-intercept-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/reading-groups-hub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/pdf-to-epub-guide",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/twilight-ebooks-multiple-devices",
+      "status": 308,
+      "location": "/blog/read-epub-on-any-device",
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/why-bookconv",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/txt-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/sync-reading-across-devices",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/blog/which-kindle-books-can-you-convert-drm-free-checklist",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/compat/epub-to-mobi-on-kindle-paperwhite",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": true,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/azw3-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/compare/bookconv-vs-calibre",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/cbr-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/djvu-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/doc-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/epub-to-html",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/epub-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/fb2-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/html-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/lit-to-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/mobi-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/mobi-to-txt",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/mobi-to-azw3",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/convert/txt-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/data/site-event-timeline",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/data/bing-ai-citations",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/data/google-search-performance",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/data",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/blog/mobi-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/blog/epub-to-mobi-guide",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/blog/why-convert-lit-to-epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/blog/ebook-formats-explained",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/azw3-vs-mobi",
+      "status": 308,
+      "location": "/es/blog/azw3-vs-mobi",
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/convert/epub-to-doc",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/convert/epub-to-txt",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/ai-ebook-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/calibre-alternative",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/best-ebook-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/epub-to-azw3-for-kindle",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/epub-to-mobi-keep-formatting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/formats/azw3",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/cbr",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/epub-vs-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/formats/djvu",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/es/guide/kindle-formats",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/formats/doc",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/docx",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/epub",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/fb2",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/html",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/jpg",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/lit",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/png",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/rtf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/formats/txt",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/founder",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/azw3-to-mobi-keep-formatting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/guide/azw3-vs-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/batch-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/guide/cbr-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/best-ebook-converter",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/guide/calibre-alternatives-online",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/djvu-to-pdf",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/fix-epub-to-pdf-formatting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/epub-vs-mobi",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/how-to-send-epub-to-kindle",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/lit-to-epub-keep-formatting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/pdf-to-epub-keep-formatting",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/guide/kindle-formats",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": true
+    },
+    {
+      "url": "https://www.bookconv.com/help",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/terms",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    },
+    {
+      "url": "https://www.bookconv.com/pricing",
+      "status": 200,
+      "location": null,
+      "chinese": 0,
+      "hasOldEngineClaim": false,
+      "noindex": false,
+      "hasLanguageLink": false
+    }
+  ]
+}

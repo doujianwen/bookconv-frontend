@@ -1,0 +1,185 @@
+{
+  "date": "2026-11-01",
+  "hub": "https://app.notion.com/p/40bddd472a3681a1aa5bfc6bb36817a2",
+  "pages": {
+    "11月逐日执行计划-红队修订版.md": {
+      "id": "40bddd47-2a36-816a-ab78-dc7b149fb3a4",
+      "url": "https://app.notion.com/p/40bddd472a36816aab78dc7b149fb3a4?pvs=204",
+      "properties": {
+        "title": "11月逐日执行计划-红队修订版"
+      }
+    },
+    "Bing与豆包引用放大方案-2026-11-01.md": {
+      "id": "40bddd47-2a36-81b3-b02e-cd790d200518",
+      "url": "https://app.notion.com/p/40bddd472a3681b3b02ecd790d200518?pvs=204",
+      "properties": {
+        "title": "Bing与豆包引用放大方案-2026-11-01"
+      }
+    },
+    "BookConv运营全面复盘-2026-11-01.md": {
+      "id": "40bddd47-2a36-8195-9938-c6f53bfed70e",
+      "url": "https://app.notion.com/p/40bddd472a3681959938c6f53bfed70e?pvs=204",
+      "properties": {
+        "title": "BookConv运营全面复盘-2026-11-01"
+      }
+    },
+    "TopicPortfolio月度复核与增长规划-2026-11-01.md": {
+      "id": "40bddd47-2a36-8110-bf84-ebf6fde3afed",
+      "url": "https://app.notion.com/p/40bddd472a368110bf84ebf6fde3afed?pvs=204",
+      "properties": {
+        "title": "TopicPortfolio月度复核与增长规划-2026-11-01"
+      }
+    },
+    "规划红队审计-2026-11-01.md": {
+      "id": "40bddd47-2a36-81b8-975d-ef0a12bcf3bc",
+      "url": "https://app.notion.com/p/40bddd472a3681b8975def0a12bcf3bc?pvs=204",
+      "properties": {
+        "title": "规划红队审计-2026-11-01"
+      }
+    },
+    "SEO-GEO首轮实验-2026-11-01.md": {
+      "id": "40bddd47-2a36-810b-a7c4-dcb21ff0c1fd",
+      "url": "https://app.notion.com/p/40bddd472a36810ba7c4dcb21ff0c1fd?pvs=204",
+      "properties": {
+        "title": "SEO-GEO首轮实验-2026-11-01"
+      }
+    }
+  },
+  "consistency": "https://app.notion.com/p/40bddd472a3681b186a6d165213fcdc5",
+  "checks": [
+    {
+      "name": "11月逐日执行计划-红队修订版.md",
+      "id": "40bddd47-2a36-816a-ab78-dc7b149fb3a4",
+      "pass": true,
+      "details": [
+        {
+          "headings": 8,
+          "missing": []
+        },
+        {
+          "dateCoverage": 30,
+          "absent": []
+        }
+      ]
+    },
+    {
+      "name": "Bing与豆包引用放大方案-2026-11-01.md",
+      "id": "40bddd47-2a36-81b3-b02e-cd790d200518",
+      "pass": true,
+      "details": [
+        {
+          "headings": 7,
+          "missing": []
+        }
+      ]
+    },
+    {
+      "name": "BookConv运营全面复盘-2026-11-01.md",
+      "id": "40bddd47-2a36-8195-9938-c6f53bfed70e",
+      "pass": true,
+      "details": [
+        {
+          "headings": 12,
+          "missing": []
+        }
+      ]
+    },
+    {
+      "name": "TopicPortfolio月度复核与增长规划-2026-11-01.md",
+      "id": "40bddd47-2a36-8110-bf84-ebf6fde3afed",
+      "pass": true,
+      "details": [
+        {
+          "headings": 7,
+          "missing": []
+        }
+      ]
+    },
+    {
+      "name": "规划红队审计-2026-11-01.md",
+      "id": "40bddd47-2a36-81b8-975d-ef0a12bcf3bc",
+      "pass": true,
+      "details": [
+        {
+          "headings": 6,
+          "missing": []
+        }
+      ]
+    },
+    {
+      "name": "SEO-GEO首轮实验-2026-11-01.md",
+      "id": "40bddd47-2a36-810b-a7c4-dcb21ff0c1fd",
+      "pass": true,
+      "details": [
+        {
+          "headings": 6,
+          "missing": []
+        }
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "name": "TopicPortfolio_snapshot_2026-11-01_recheck.json",
+      "file_upload_id": "40bddd47-2a36-81a6-b716-00b2ef5fbfd6",
+      "filename": "TopicPortfolio_snapshot_2026-11-01_recheck.json",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": 8309,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-81a6-b716-00b2ef5fbfd6",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-81a6-b716-00b2ef5fbfd6\" />"
+    },
+    {
+      "name": "TopicPortfolio_2026-11-01_recheck_delta.json",
+      "file_upload_id": "40bddd47-2a36-8126-97da-00b25f0f5521",
+      "filename": "TopicPortfolio_2026-11-01_recheck_delta.json",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": 1236,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-8126-97da-00b25f0f5521",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-8126-97da-00b25f0f5521\" />"
+    },
+    {
+      "name": "TopicPortfolio_action_map_2026-11-01.csv",
+      "file_upload_id": "40bddd47-2a36-81b9-b552-00b22539e6fd",
+      "filename": "TopicPortfolio_action_map_2026-11-01.csv",
+      "content_type": "text/csv; charset=utf-8",
+      "content_length": 11837,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-81b9-b552-00b22539e6fd",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-81b9-b552-00b22539e6fd\" />"
+    },
+    {
+      "name": "AIPerformance_live_2026-11-01.json",
+      "file_upload_id": "40bddd47-2a36-8172-8bd6-00b204cb6d1f",
+      "filename": "AIPerformance_live_2026-11-01.json",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": 41400,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-8172-8bd6-00b204cb6d1f",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-8172-8bd6-00b204cb6d1f\" />"
+    },
+    {
+      "name": "GSC_API_date_2026-10-30.json",
+      "file_upload_id": "40bddd47-2a36-81a5-9da1-00b2c91cd450",
+      "filename": "GSC_API_date_2026-10-30.json",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": 4392,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-81a5-9da1-00b2c91cd450",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-81a5-9da1-00b2c91cd450\" />"
+    },
+    {
+      "name": "GSC_API_query_page_2026-10-30.json",
+      "file_upload_id": "40bddd47-2a36-81c4-a25a-00b23a7f134d",
+      "filename": "GSC_API_query_page_2026-10-30.json",
+      "content_type": "application/json; charset=utf-8",
+      "content_length": 7983,
+      "status": "uploaded",
+      "markdown_source": "file-upload://40bddd47-2a36-81c4-a25a-00b23a7f134d",
+      "suggested_markdown": "<file source=\"file-upload://40bddd47-2a36-81c4-a25a-00b23a7f134d\" />"
+    }
+  ],
+  "boardSyncStatus": "NOT_WRITTEN",
+  "status": "NOTION_DOCUMENTS_SYNCED_READBACK_VERIFIED"
+}

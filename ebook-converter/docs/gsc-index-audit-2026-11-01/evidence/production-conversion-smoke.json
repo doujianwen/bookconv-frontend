@@ -1,0 +1,26 @@
+{
+  "base": "https://www.bookconv.com",
+  "checkedAt": "2026-11-01T10:01:07.986Z",
+  "sample": "Self-authored text, no customer or copyrighted book uploaded",
+  "results": [
+    {
+      "route": "txt-to-epub",
+      "status": 200,
+      "inputSha256": "4556a9b58bb4aad9eea548732191b011b5ede04e26a23f5cedd7c36f723178de",
+      "outputSha256": "c662bdcd55394337769fd785597911dc3ae143bed490d36a46d6cf142ca24ef3",
+      "bytes": 171442,
+      "backend": "hit",
+      "validEpub": true,
+      "textPreserved": true
+    },
+    {
+      "route": "epub-to-txt",
+      "status": 200,
+      "inputSha256": "c662bdcd55394337769fd785597911dc3ae143bed490d36a46d6cf142ca24ef3",
+      "outputSha256": "ac8c4a3ed87eb523506aa6f9f563ebde1f7154fe52f74fc2645cd30f025c52d2",
+      "bytes": 164,
+      "backend": "miss-cloudconvert",
+      "textPreserved": true
+    }
+  ]
+}

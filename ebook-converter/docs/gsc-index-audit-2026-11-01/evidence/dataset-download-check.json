@@ -1,0 +1,63 @@
+[
+  {
+    "url": "https://www.bookconv.com/data/bing-ai-citations.csv",
+    "status": 200,
+    "records": 829,
+    "columns": 15,
+    "headers": [
+      "source_engine",
+      "report_type",
+      "date",
+      "snapshot_date",
+      "query_key",
+      "query_raw",
+      "page_key",
+      "page_raw",
+      "domain",
+      "cited_pages",
+      "citations",
+      "citation_share",
+      "intent",
+      "topic",
+      "note"
+    ]
+  },
+  {
+    "url": "https://www.bookconv.com/data/google-search-performance.csv",
+    "status": 200,
+    "records": 6876,
+    "columns": 17,
+    "headers": [
+      "source_engine",
+      "dimension",
+      "date",
+      "snapshot_date",
+      "query_key",
+      "query_raw",
+      "page_key",
+      "page_raw",
+      "domain",
+      "country",
+      "device",
+      "search_type",
+      "clicks",
+      "impressions",
+      "ctr",
+      "position",
+      "note"
+    ]
+  },
+  {
+    "url": "https://www.bookconv.com/data/site-event-timeline.csv",
+    "status": 200,
+    "records": 996,
+    "columns": 5,
+    "headers": [
+      "event_type",
+      "event_date",
+      "entity",
+      "value",
+      "evidence"
+    ]
+  }
+]
