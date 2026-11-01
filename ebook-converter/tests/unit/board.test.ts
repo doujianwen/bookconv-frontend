@@ -200,11 +200,12 @@ describe('board derivation', () => {
 
   it('reports the totals straight from the data file', () => {
     // Measured against the live board on 2026-11-01 (was 101/61/40 on
-    // 2026-10-25): 104 tasks, 66 done, 38 open (isOpen = todo + doing + blocked).
+    // 2026-10-25, then 104/66/38 after M2-14 closed done): 104 tasks,
+    // 67 done, 37 open (isOpen = todo + doing + blocked).
     expect(view.totals.tasks).toBe(104);
-    expect(view.totals.done).toBe(66);
-    expect(view.totals.open).toBe(38); // todo + doing + blocked
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(38);
+    expect(view.totals.done).toBe(67);
+    expect(view.totals.open).toBe(37); // todo + doing + blocked
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(37);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -345,8 +346,8 @@ describe('board derivation', () => {
     const m1OpenBefore = m1.tasks.filter((t) => t.status === 'todo' || t.status === 'doing').length;
     open.status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    // Open count is 38 in the live board (2026-11-01); dropping one removes it.
-    expect(v.totals.open).toBe(38 - 1);
+    // Open count is 37 in the live board (2026-11-01); dropping one removes it.
+    expect(v.totals.open).toBe(37 - 1);
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(m1OpenBefore - 1);
     expect(openBefore).not.toBe('dropped'); // guard: we picked a real open task
   });

@@ -510,7 +510,7 @@
           "tier": "CORE",
           "status": "doing",
           "note": "来源：GSC自动化分析 2026-10-13。与M2-8（13页差异化）并行，注意不冲突。\n\n子任务已拆分：M2-12(P0 Title优化)/M2-13(P1排名突破)/M2-14(P2 epub para doc)/M2-15(P2其余4页)。",
-          "statusNote": "2026-10-30：M2-12(P0 Title)/M2-13(P1 epub-to-zip) 早已 done（已发布）；M2-14 本日内容强化完成(tsc 通过,待人工发布)；M2-15 重新 triage 发现 4 页已内容充实、原『补充内容』前提过时，建议改判信号方向。待 M2-14 发布 + M2-15 范围裁定后整体 close。 2026-10-31 复核：待 M2-14 发布 + M2-15 范围裁定后整体 close。AI 部分(分析/子任务)已完成。"
+          "statusNote": "2026-10-30：M2-12(P0 Title)/M2-13(P1 epub-to-zip) 早已 done（已发布）；M2-14 本日内容强化完成(tsc 通过,待人工发布)；M2-15 重新 triage 发现 4 页已内容充实、原『补充内容』前提过时，建议改判信号方向。待 M2-14 发布 + M2-15 范围裁定后整体 close。 2026-10-31 复核：待 M2-14 发布 + M2-15 范围裁定后整体 close。AI 部分(分析/子任务)已完成。 2026-11-01 M2-14 已部署上线（线上实测验证）；M2-12/13 done。剩 M2-15 方向裁定一项，裁定后整体 close。"
         },
         {
           "id": "M2-12",
@@ -550,9 +550,9 @@
           "due": "2026-10-27",
           "priority": "P2",
           "tier": "CORE",
-          "status": "doing",
+          "status": "done",
           "note": "来源：GSC自动化分析 2026-10-13，P2优先级。104展示是最高曝光，ROI最高。",
-          "statusNote": "2026-10-30 处理：epub-to-doc.ts 内容强化——新增 'EPUB to DOC Converter vs DOCX/PDF/TXT' 对比 section + 3 条意图 FAQ（在线免费/无需 Word/旧提交系统）+ hero 加 free online converter；tsc 通过。未 push，待人工审稿发布。GSC 数据(2026-10-12)已陈旧且 Google 自然流量当前≈0（Spam Update 恢复期），'4 周后复跑'验收现实不可达，已登记残余。\n红队审计纠正（2026-10-30）：① wordCount 原填 1080 仍严重失准——实测英文正文 2199 词（body 1630 + heading/faq 569），偏低约 2 倍，已重测修正为 2199；② publish-gate.mjs 仅扫描 src/data/blog，不覆盖 convert 页，本页正确验证路径为 tsc + next build，非 blog 专用门禁（早前『待跑 publish-gate』说法不精确，已纠正）。 2026-10-31 复核：内容强化已在 commit 31b4b86(nightly-sync)本地提交，待人工审稿+push 部署后即生效。GSC 验收不可达(自然流量≈0)残余保留。"
+          "statusNote": "2026-10-30 处理：epub-to-doc.ts 内容强化——新增 'EPUB to DOC Converter vs DOCX/PDF/TXT' 对比 section + 3 条意图 FAQ（在线免费/无需 Word/旧提交系统）+ hero 加 free online converter；tsc 通过。未 push，待人工审稿发布。GSC 数据(2026-10-12)已陈旧且 Google 自然流量当前≈0（Spam Update 恢复期），'4 周后复跑'验收现实不可达，已登记残余。\n红队审计纠正（2026-10-30）：① wordCount 原填 1080 仍严重失准——实测英文正文 2199 词（body 1630 + heading/faq 569），偏低约 2 倍，已重测修正为 2199；② publish-gate.mjs 仅扫描 src/data/blog，不覆盖 convert 页，本页正确验证路径为 tsc + next build，非 blog 专用门禁（早前『待跑 publish-gate』说法不精确，已纠正）。 2026-10-31 复核：内容强化已在 commit 31b4b86(nightly-sync)本地提交，待人工审稿+push 部署后即生效。GSC 验收不可达(自然流量≈0)残余保留。 2026-11-01 已发布：push 后线上实测 /convert/epub-to-doc 返回 200 + X-Matched-Path 真路由命中，新增对比 section（EPUB to DOC Converter vs DOCX）线上出现 x2——部署验证通过。残余：GSC 排名/展示验收窗口待自然流量恢复后观察。"
         },
         {
           "id": "M2-15",
@@ -1629,7 +1629,7 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "blocked",
-          "statusNote": "2026-10-30 启动 R_post，跑 2 轮但红队审计后判定结论不可靠，重分类为 UNKNOWN（非 delta=0）。问题清单：(1) 引擎覆盖残缺——ChatGPT 全程 429（账户 Tier<1 未开放 web_search），全文件 ChatGPT 记录=0；『AI 引用』仅 Gemini 单引擎，且 Gemini R_post resultRows 由 9 降至 4。(2) Brave 是传统搜索 top-10 代理（geo-exposure-probe.py:173），非 AI 引用引擎，不得与 Gemini cited 合并成单一 delta。(3) 种子 11 词中 7 词 target_slug 为空（open epub file/epub reader online/kindle vs kobo/e-reader buying/epub online reader/kobo vs kindle 等），无专属目标页，R_post 对之测的是不存在的内容、0 引用为预期内、结论真空。(4) 双跑污染——Round1/2 重复追加 11 条 R_post Brave，已清理（55→44 快照，R_post 唯一 22）。修正动作：measurement.json 已去重；topic-portfolio-measure.mjs 加同日去重守卫；Brave/Gemini 须分渠道记分。结论：当前证据不足以判定『发布后引用提升/无提升』，应报 UNKNOWN。待办：① 修 ChatGPT（OpenAI 账户充值≥$5 升 Tier≥1）；② 逐 query 补/确认 live 目标页后再测；③ 内容真发布+收录后重测。 2026-10-31 复核：硬阻塞仍为 OpenAI Tier<1(充值≥$5 升 Tier≥1 才能跑可信 R_post)；ChatGPT 全程 429 使结论 UNKNOWN。待用户充值后重测。"
+          "statusNote": "2026-10-30 启动 R_post，跑 2 轮但红队审计后判定结论不可靠，重分类为 UNKNOWN（非 delta=0）。问题清单：(1) 引擎覆盖残缺——ChatGPT 全程 429（账户 Tier<1 未开放 web_search），全文件 ChatGPT 记录=0；『AI 引用』仅 Gemini 单引擎，且 Gemini R_post resultRows 由 9 降至 4。(2) Brave 是传统搜索 top-10 代理（geo-exposure-probe.py:173），非 AI 引用引擎，不得与 Gemini cited 合并成单一 delta。(3) 种子 11 词中 7 词 target_slug 为空（open epub file/epub reader online/kindle vs kobo/e-reader buying/epub online reader/kobo vs kindle 等），无专属目标页，R_post 对之测的是不存在的内容、0 引用为预期内、结论真空。(4) 双跑污染——Round1/2 重复追加 11 条 R_post Brave，已清理（55→44 快照，R_post 唯一 22）。修正动作：measurement.json 已去重；topic-portfolio-measure.mjs 加同日去重守卫；Brave/Gemini 须分渠道记分。结论：当前证据不足以判定『发布后引用提升/无提升』，应报 UNKNOWN。待办：① 修 ChatGPT（OpenAI 账户充值≥$5 升 Tier≥1）；② 逐 query 补/确认 live 目标页后再测；③ 内容真发布+收录后重测。 2026-10-31 复核：硬阻塞仍为 OpenAI Tier<1(充值≥$5 升 Tier≥1 才能跑可信 R_post)；ChatGPT 全程 429 使结论 UNKNOWN。待用户充值后重测。 2026-11-01 用户决定暂不充值 OpenAI（Tier<1 维持，ChatGPT 429 使 R_post 结论 UNKNOWN）。本项保持 blocked，等充值窗口重开或改用替代信号源时重测。"
         },
         {
           "id": "M11-6",
