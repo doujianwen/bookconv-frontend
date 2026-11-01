@@ -5,9 +5,14 @@
 // cloudconvert.com/epub-to-{doc,jpg,png} 全部 404 "This conversion type is
 // not supported"，线上实测 100% CLOUD_CONVERT_ERROR 500）。
 //
+// 2026-11-01 第三例（doc-epub，反方向）：CC 官网 doc-to-epub 页同样 404，
+// 且 Calibre 手册/官方 FAQ 输入格式清单无 DOC 仅 DOCX（自建后端亦无
+// LibreOffice）⇒ 三源互证 100% 必败（Job 1f80d108 生产实证）。教训：
+// 两头堵审计必须双向枚举，不能只沿单一源格式方向扫。
+//
 // 处置（用户拍板方案 A）：API 层 422 前置拦截 + 前端选择/落地页提示替代路径，
 // 避免用户上传后才发现失败（省一次上传 + 一次 500 + 一次飞书告警）。
-// 注意：这三个组合都有 SEO 落地页在引流，页面保留但必须诚实展示。
+// 注意：这些组合都有 SEO 落地页在引流，页面保留但必须诚实展示。
 
 export interface UnsupportedConversionInfo {
   /** 推荐替代转换的站内路径（/convert/ 前缀路由） */
@@ -49,6 +54,17 @@ export const UNSUPPORTED_CONVERSIONS: Record<string, UnsupportedConversionInfo> 
       "Direct EPUB-to-PNG image conversion is not supported. Convert to PDF instead — it preserves the full layout and can be exported to PNG images with any PDF tool.",
     noticeEs:
       "La conversión directa de EPUB a imágenes PNG no está disponible. Convierte a PDF en su lugar: conserva todo el diseño y puede exportarse a imágenes PNG con cualquier herramienta PDF.",
+  },
+  // 2026-11-01 两头堵第三例（反方向）：DOC（Word 97-2003 二进制）作为输入无任何
+  // 引擎支持——Calibre 输入白名单仅 DOCX（官方 FAQ 明确建议先转 .docx），CC 官网
+  // doc-to-epub 页 404。站内替代=DOCX→EPUB 纯 JS 路径。
+  "doc-epub": {
+    alternativeHref: "/convert/docx-to-epub",
+    alternativeLabel: "DOCX",
+    noticeEn:
+      "Direct DOC-to-EPUB conversion is not supported: no conversion engine can read the legacy Word .doc (97-2003) format — Calibre accepts DOCX only. Save your file as .docx in Word or LibreOffice (File → Save As), then use the DOCX to EPUB converter — same content, modern format.",
+    noticeEs:
+      "La conversión directa de DOC a EPUB no está disponible: ningún motor puede leer el formato .doc antiguo de Word (97-2003); Calibre solo acepta DOCX. Guarda tu archivo como .docx en Word o LibreOffice (Archivo → Guardar como) y usa el conversor de DOCX a EPUB: el mismo contenido, formato moderno.",
   },
 };
 

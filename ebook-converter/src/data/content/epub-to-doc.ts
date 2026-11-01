@@ -24,7 +24,7 @@ That design gives EPUB its defining trait: **reflowable text**. There are no fix
 
 Not sure whether EPUB or MOBI is the right source format for your reader? Our [EPUB vs MOBI comparison](/blog/epub-vs-mobi) breaks it down by device and feature.
 
-The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in. The same pipeline runs the other direction too: an old Word file becomes a reflowable book with [DOC to EPUB](/convert/doc-to-epub).`
+The catch: EPUB is built for reading, not editing. You can't open one in Word, track changes on it, or hand it to a colleague who lives in Office. That's where conversion comes in. The road runs the other direction too: an old Word file becomes a reflowable book via [DOC to EPUB](/convert/doc-to-epub) — save the .doc as .docx first, because no engine reads the legacy binary directly.`
     },
     {
       heading: 'Converting in Reverse: Doc To Epub',
@@ -140,7 +140,7 @@ None of this is a converter limitation. DOC is a format from 1993 being asked to
 | PDF | You need a fixed layout for print or sharing | Yes — layout preserved | Any PDF reader |
 | TXT | You only need the raw words, no formatting | No — strips everything | Anything |
 
-If your real goal is a clean editable Word file, DOCX is usually the better call. Need just the text? [EPUB to TXT](/convert/epub-to-txt) pulls the plain words out in one step, and [DOC to EPUB](/convert/doc-to-epub) runs the whole thing in reverse if you later need a book again. Reach for DOC specifically when something external is forcing the old format — that is exactly what this converter is built for.`
+If your real goal is a clean editable Word file, DOCX is usually the better call. Need just the text? [EPUB to TXT](/convert/epub-to-txt) pulls the plain words out in one step, and [DOC to EPUB](/convert/doc-to-epub) covers the reverse trip when you need a book again — via a quick save-as-.docx step. Reach for DOC specifically when something external is forcing the old format — that is exactly what this converter is built for.`
     },
     {
       heading: 'Tips for the Cleanest Conversion',

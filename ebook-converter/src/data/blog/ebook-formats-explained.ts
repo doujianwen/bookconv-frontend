@@ -109,7 +109,7 @@ The routes people take most:
 - [PDF to EPUB](/convert/pdf-to-epub) when a fixed-layout file needs to reflow
 - [FB2 to EPUB](/convert/fb2-to-epub) for Russian-language archives
 - [Scanned PDF to EPUB with OCR](/blog/scanned-pdf-to-epub-ocr) when your PDF is an image- [Scanned PDF to EPUB with OCR](/blog/scanned-pdf-to-epub-ocr) when your PDF is an image
-- [DOC to EPUB](/convert/doc-to-epub) when the source file is an old Word document
+- [DOC to EPUB](/convert/doc-to-epub) when the source file is an old Word document — via a quick save-as-.docx step, since no engine reads the 1997 binary format directly
 - [EPUB to JPG](/convert/epub-to-jpg) and [EPUB to PNG](/convert/epub-to-png) when you want the pages kept as images - [EPUB to JPG](/convert/epub-to-jpg) and [EPUB to PNG](/convert/epub-to-png) when you want the pages kept as images
 - [EPUB to RTF](/convert/epub-to-rtf) and [RTF to EPUB](/convert/rtf-to-epub) for the rich-text round trip
 - [HTML to EPUB](/convert/html-to-epub) when you are turning a web page into a book

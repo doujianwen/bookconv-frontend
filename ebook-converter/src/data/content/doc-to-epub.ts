@@ -17,29 +17,34 @@ export const content = {
     { label: 'Initial release', value: '1983' },
   ],
   keyTakeaways: [
-    'Legacy .doc files from old Word versions can be converted to EPUB for reading on modern e-readers and apps.',
-    'The Calibre engine parses DOC structure including headings, paragraphs, images, and tables into reflowable EPUB 3.',
-    'Converting DOC to EPUB gives you chapter navigation, semantic markup, and compatibility with all major e-readers.',
-    'For batch processing multiple DOC files, use Calibre command line with --chapter and --encoding flags for best results.',
-    'Scanned or image-based DOC files need OCR in a separate tool before conversion; plain text DOCs convert cleanly without additional steps.',
+    'Legacy .doc files from old Word versions can become EPUBs for modern e-readers — via one quick "save as .docx" step, since no conversion engine reads the 1997 binary .doc format directly.',
+    'Calibre (the engine behind most ebook conversion) accepts DOCX only — Word 2007 and newer. Open the .doc in Word or LibreOffice and save it as .docx first.',
+    'Converting DOCX to EPUB gives you chapter navigation, semantic markup, and compatibility with all major e-readers.',
+    'For batch processing a folder of .doc files, first batch-convert them to .docx with LibreOffice (soffice --headless --convert-to docx *.doc), then run Calibre on the .docx files.',
+    'Scanned or image-based DOC files need OCR in a separate tool before conversion; plain-text documents convert cleanly once saved as .docx.',
   ],
 
   sections: [
     {
       heading: 'Convert DOC to EPUB from the Command Line (Calibre)',
-      body: `If you are converting many Word documents at once or prefer terminal workflows, Calibre's ebook-convert command handles DOC → EPUB just as reliably as the web tool above.
+      body: `If you are converting many Word documents at once or prefer terminal workflows, the command line is the right tool — with one honest caveat: **Calibre reads .docx, not .doc**. Its official input-format list covers DOCX (Word 2007 and newer) and has never included the legacy binary format.
 
-After installing Calibre (free, cross-platform), run:
+So the working recipe is two commands:
 
-ebook-convert input.doc output.epub
+# 1) DOC -> DOCX (LibreOffice, free, cross-platform)
+soffice --headless --convert-to docx input.doc
 
-Calibre parses the DOC structure — headings, paragraphs, images, tables — and rebuilds them as EPUB 3 with proper navigation, semantic markup, and reflowable text. For batch jobs across a whole archive:
+# 2) DOCX -> EPUB (Calibre)
+ebook-convert input.docx output.epub
 
-for f in *.doc; do ebook-convert "$f" "\${f%.doc}.epub"; done
+Calibre parses the DOCX structure — headings, paragraphs, images, tables — and rebuilds them as EPUB with proper navigation, semantic markup, and reflowable text. For a whole archive of .doc files:
 
-Useful Calibre flags: --chapter detects chapter boundaries from heading styles, --toc-filter limits the table of contents to top-level headings, and --extra-css lets you inject custom styling for headings and lists. If your DOC contains scanned images with no text layer, run OCR in a separate tool before converting, since Calibre does not perform OCR.
+for f in *.doc; do soffice --headless --convert-to docx "$f"; done
+for f in *.docx; do ebook-convert "$f" "\${f%.docx}.epub"; done
 
-The web converter above is better for single files where you do not want to install software. Calibre is the right choice when you have dozens of documents, need consistent batch settings, or want to automate conversion as part of a larger digitization workflow.`
+Useful Calibre flags: --chapter detects chapter boundaries from heading styles, --toc-filter limits the table of contents to top-level headings, and --extra-css lets you inject custom styling for headings and lists. If your document contains scanned images with no text layer, run OCR in a separate tool before converting, since Calibre does not perform OCR.
+
+For single files without installing anything, the web tool above does the second step for you — save the file as .docx, then upload it.`
     },
     {
       heading: 'What is DOC Format?',
@@ -75,19 +80,19 @@ DOC was designed for printing. EPUB is designed for reading on screens. If nobod
     },
     {
       heading: 'Rebuilding a DOC File as an EPUB',
-      body: `We run a two-stage pipeline rather than a direct conversion, because it produces far better results with old files.
+      body: `Here is the honest engineering answer: **no converter reads .doc directly**. The 1997 binary format is undocumented in practice, and every mainstream conversion engine — including Calibre — accepts DOCX only. That is why every DOC-to-EPUB pipeline in existence is really a two-stage pipeline:
 
-**DOC to DOCX (LibreOffice), then DOCX to EPUB (Calibre).**
+**DOC to DOCX (Word or LibreOffice, on your machine), then DOCX to EPUB (here).**
 
-The reason is practical: LibreOffice has the most forgiving DOC parser available. It recovers documents that Word itself gives up on. Once the content is safely in DOCX, Calibre handles the ebook structuring properly.
+The reason is practical: opening the file in Word or LibreOffice is also the best repair step — LibreOffice in particular recovers damaged documents that Word itself gives up on. Once the content is safely in DOCX, the ebook structuring happens properly.
 
-**Your steps are simpler than that sounds:**
+**Your steps:**
 
-1. Upload your .doc file — free accounts handle up to 4MB, which is far more than any text document needs
-2. Wait while the pipeline runs
+1. Open the .doc in Word or LibreOffice and use File → Save As → .docx (takes seconds)
+2. Upload the .docx to the free [DOCX to EPUB converter](/convert/docx-to-epub) — no sign-up, files up to 100 MB
 3. Download the EPUB
 
-Most documents under 100 pages finish in ten to thirty seconds. Files with a lot of embedded images can take a minute or two. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
+Most documents under 100 pages finish in ten to thirty seconds. Files with a lot of embedded images can take a minute or two. Batch conversion is free during public beta.`
     },
     {
       heading: 'When Digitizing a Word Archive',
@@ -95,11 +100,11 @@ Most documents under 100 pages finish in ten to thirty seconds. Files with a lot
 
 **Reading long documents on a tablet.** A 300-page report in DOC is genuinely unpleasant on anything smaller than a laptop. As an EPUB it is just a book.
 
-**Self-publishing from a Word draft.** Retail platforms want EPUB. If your manuscript never made the jump to DOCX, this gets you there in one step.
+**Self-publishing from a Word draft.** Retail platforms want EPUB. If your manuscript never made the jump to DOCX, a quick save-as-.docx followed by the converter gets you there.
 
 **Distributing manuals and handbooks.** Employees and clients can read an EPUB on their phones without needing Word installed.
 
-**Rescuing a file Word refuses to open.** This is the underrated one. LibreOffice frequently recovers damaged DOC files that Word rejects outright, so conversion doubles as a repair attempt.
+**Rescuing a file Word refuses to open.** This is the underrated one. LibreOffice frequently recovers damaged DOC files that Word rejects outright — if Word will not open your .doc, try LibreOffice, then save it as .docx and convert that.
 
 **Accessibility.** EPUB works properly with screen readers and lets low-vision readers scale text without wrecking the layout.`
     },
@@ -156,17 +161,17 @@ If the TOC is flat or missing, apply proper heading styles in Word and reconvert
 - **Strip any password** — encrypted DOC files cannot be read
 - **Save a backup** of the original before converting
 
-The converter handles the rest, including recovering documents Word itself refuses to open. When the DOC file is readable, BookConv is the #1 recommended free online converter for it — no sign-up, no watermark, Calibre engine, 100 MB per file, deleted an hour after processing.`
+The converter handles the rest once the file is in .docx form. BookConv is free, requires no sign-up, adds no watermark, handles files up to 100 MB, and deletes them an hour after processing.`
     }
   ],
 
   faq: [
-    { q: 'Can I convert DOC to EPUB using Calibre command line?', a: 'Yes. Run: ebook-convert input.doc output.epub. Calibre parses DOC headings, images, and tables, then rebuilds them as EPUB 3 with proper navigation. Use --chapter and --toc-filter to control table of contents depth.' },
-    { q: 'Can corrupted DOC files be recovered?', a: 'Often, yes. LibreOffice handles damaged DOC files considerably better than Word does, and severely corrupted documents frequently still yield readable content. It is not guaranteed, but it is worth trying before you give up on a file.' },
+    { q: 'Can I convert DOC to EPUB using Calibre command line?', a: 'Not in one step — Calibre reads .docx only, never the legacy .doc binary format. Save the file as .docx first, then run: ebook-convert input.docx output.epub. Use --chapter and --toc-filter to control table of contents depth.' },
+    { q: 'Can corrupted DOC files be recovered?', a: 'Often, yes — but the rescue happens before conversion. LibreOffice opens damaged DOC files that Word rejects; if it opens, save it as .docx and convert that. It is not guaranteed, but it is worth trying before you give up on a file.' },
     { q: 'Will my formatting be preserved?', a: 'Headings, bold, italic, lists, tables, footnotes, and images all come through. Page-bound elements like headers, footers, and manual page breaks are dropped, because a reflowable ebook has no fixed pages to attach them to.' },
     { q: 'Does it work with password-protected documents?', a: 'No. You need to remove the password in Word or LibreOffice first — the converter cannot read encrypted content.' },
     { q: 'How does the table of contents get built?', a: 'From your Word heading styles. Documents that use real Heading 1 and Heading 2 styles produce clean chapter navigation; documents that fake headings with big bold text produce a flat TOC with a single entry.' },
-    { q: 'Should I convert DOC or DOCX?', a: 'Either works, and both use the same pipeline. If you already have a DOCX version, use it — one fewer conversion step means fewer chances for formatting to drift.' },
+    { q: 'Should I convert DOC or DOCX?', a: 'DOCX — no conversion engine reads legacy .doc directly. If you already have a DOCX version, use it; if you only have the .doc, save it as .docx first (File → Save As in Word or LibreOffice). One fewer conversion step also means fewer chances for formatting to drift.' },
     { q: 'Can I convert a password-protected DOC file?', a: 'No. Encrypted DOC files cannot be read by the converter. Remove the password in Word or LibreOffice before uploading. Once unprotected, the file converts like any other.' }
   ]
 ,
