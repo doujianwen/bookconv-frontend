@@ -79,7 +79,7 @@
     "pqa3_q": "Is there a free trial?",
     "pqa3_a": "Yes! All paid plans come with a 14-day free trial. You can cancel anytime during the trial.",
     "pqa4_q": "What happens to my files?",
-    "pqa4_a": "All uploaded files are encrypted and deleted as soon as the conversion completes, regardless of your plan.",
+    "pqa4_a": "Files are transferred over HTTPS and processed server-side. See our privacy policy for handling details; your plan does not establish a deletion deadline.",
     "pqa5_q": "Do you offer refunds?",
     "pqa5_a": "Yes, we offer a full refund within 30 days of purchase if you are not satisfied with the service.",
     "privacy": {

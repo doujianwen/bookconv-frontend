@@ -79,7 +79,7 @@
     "pqa3_q": "¿Hay una prueba gratuita?",
     "pqa3_a": "¡Sí! Todos los planes pagos vienen con una prueba gratuita de 14 días. Puedes cancelar en cualquier momento durante la prueba.",
     "pqa4_q": "¿Qué pasa con mis archivos?",
-    "pqa4_a": "Todos los archivos subidos se cifran y se eliminan en cuanto termina la conversión, independientemente de tu plan.",
+    "pqa4_a": "Los archivos se transfieren por HTTPS y se procesan en servidores. Consulta la política de privacidad; tu plan no establece un plazo de eliminación.",
     "pqa5_q": "¿Ofrecen reembolsos?",
     "pqa5_a": "Sí, ofrecemos un reembolso completo dentro de los 30 días posteriores a la compra si no estás satisfecho con el servicio.",
     "privacy": {

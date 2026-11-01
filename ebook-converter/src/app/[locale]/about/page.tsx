@@ -109,7 +109,7 @@ export default async function AboutPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span><strong>Secure</strong> — Your files are encrypted and deleted after the conversion completes</span>
+              <span><strong>Secure</strong> — Files are transferred over HTTPS and processed server-side; see our privacy policy</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
@@ -204,7 +204,7 @@ export default async function AboutPage() {
         <section className="rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center">
           <h2 className="mb-4 text-2xl font-bold text-white">Ready to Convert Your eBooks — Free?</h2>
           <p className="mb-6 text-blue-100">
-            Use the free BookConv converter: 28+ formats, no registration, Files deleted after conversion.
+            Use the free BookConv converter: 28+ formats, no registration, HTTPS transfers; server-side processing.
           </p>
           <Link
             href="/"

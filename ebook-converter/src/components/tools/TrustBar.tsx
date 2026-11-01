@@ -13,14 +13,14 @@ import { chrome } from "@/lib/ui-chrome"
 const TRUST_ITEMS = [
   'No registration required',
   'No watermarks',
-  'Files deleted after conversion',
+  'HTTPS transfers; server-side processing',
   'High-quality Calibre engine',
 ] as const
 
 const TRUST_ITEMS_ES = [
   'Sin registro obligatorio',
   'Sin marcas de agua',
-  'Archivos eliminados automáticamente en 1 hora',
+  'Transferencia HTTPS; procesamiento en servidor',
   'Motor Calibre de alta calidad',
 ] as const
 
