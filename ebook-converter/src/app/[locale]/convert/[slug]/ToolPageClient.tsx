@@ -128,6 +128,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
   const unsupported = unsupportedConversionInfo(source, target)
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
+  const [outputFileSize, setOutputFileSize] = useState(0)
   const [errorMessage, setErrorMessage] = useState("")
   const [errorCode, setErrorCode] = useState<ErrorCode | undefined>()
   const [progress, setProgress] = useState(0)
@@ -142,6 +143,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
     setProgress(0)
     setOriginalFileName("")
     setOriginalFileSize(0)
+    setOutputFileSize(0)
   }, [])
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || (target.toLowerCase() === "htmlz" ? "HTMLZ" : target.toUpperCase())
@@ -261,10 +263,14 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         // Synchronous mode: response is the converted file blob directly
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
-        const outputName = file.name.replace(/\.[^.]+$/, "") + "." + (target === "html" ? "htmlz" : target)
+        // Extension must match what the backend actually emits (conversion.ts:1218): epub→html
+        // is a .zip archive (original chapters + reading-order index); other sources→html use .htmlz.
+        const outputExt = target === "html" ? (source === "epub" ? "zip" : "htmlz") : target
+        const outputName = file.name.replace(/\.[^.]+$/, "") + "." + outputExt
         setOriginalFileName(file.name)
         setOriginalFileSize(file.size)
         setFileName(outputName)
+        setOutputFileSize(blob.size)
         setDownloadUrl(url)
         setProgress(100)
         setStatus("done")
@@ -294,7 +300,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
         })
       }
     },
-    [source, target, sniffFileFormat, uploadCap, unsupported]
+    [source, target, uploadCap, unsupported, isEs]
   )
   return (
     <>
@@ -398,7 +404,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
               }}
               afterFile={{
                 name: fileName,
-                size: 0,
+                size: outputFileSize,
                 format: target,
                 displayName: FORMAT_DISPLAY_NAMES[target] || target.toUpperCase(),
               }}

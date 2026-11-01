@@ -127,9 +127,11 @@ function statusConfig(status: string) {
 
 // ── Conversion helpers ────────────────────────────────────────
 /** Extension the API actually produces for a given target format. */
-function outputExtension(targetFormat: string): string {
-  // The HTML target is delivered as an HTMLZ archive, matching the single-file tool page.
-  return targetFormat === "html" ? "htmlz" : targetFormat;
+function outputExtension(sourceFormat: string, targetFormat: string): string {
+  // Match the backend (conversion.ts:1218): epub→html is a .zip archive of the original
+  // chapters + reading-order index; other sources→html use the .htmlz archive.
+  if (targetFormat === "html") return sourceFormat === "epub" ? "zip" : "htmlz";
+  return targetFormat;
 }
 
 /** Guarantee every entry inside the ZIP has a unique name. */
@@ -379,7 +381,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
           });
           const blob = await convertOne(item.file, item.sourceFormat, targetFormat);
           const outName = uniqueName(
-            item.name.replace(/\.[^.]+$/, "") + "." + outputExtension(targetFormat),
+            item.name.replace(/\.[^.]+$/, "") + "." + outputExtension(item.sourceFormat, targetFormat),
             usedNames
           );
           collected.push({ blob, filename: outName });
