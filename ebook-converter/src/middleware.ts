@@ -29,7 +29,12 @@ const CONVERSION_REDIRECTS: Record<string, string> = {
   '/convert/epub-to-text': '/convert/epub-to-txt',
   '/convert/epub-to-docx': '/convert/epub-to-word',
   // B-class P0 (2026-10-08): zero-demand pages merged to canonical targets
-  '/convert/lit-to-epub': '/blog/why-convert-lit-to-epub',
+  // NOTE 2026-11-01 (M2-15): '/convert/lit-to-epub' → '/blog/why-convert-lit-to-epub'
+  // was REMOVED here. The zero-demand premise was falsified (GSC keyword
+  // cluster + complete Spanish translation + llms.txt entry pointing at a
+  // redirect), so the page is re-registered in CONTENT_MAP and this rule was
+  // killing the English AND the Spanish convert page (the redirect matched
+  // locale-stripped paths) while the sitemap still emitted the /es URL.
   '/convert/chm-to-mobi': '/convert/mobi-to-epub',
 };
 

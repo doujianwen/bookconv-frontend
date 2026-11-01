@@ -24,6 +24,7 @@ import * as djvu_to_pdf from './djvu-to-pdf';
 import * as epub_to_mobi from './epub-to-mobi';
 import * as epub_to_zip from './epub-to-zip';
 import * as lit_to_mobi from './lit-to-mobi';
+import * as lit_to_epub from './lit-to-epub';
 import * as azw_to_mobi from './azw-to-mobi';
 import * as mobi_to_azw3 from './mobi-to-azw3';
 
@@ -96,6 +97,15 @@ export const CONTENT_MAP: Record<string, ConversionContentModule> = {
   'epub-to-mobi': epub_to_mobi,
   'epub-to-zip': epub_to_zip,
   'lit-to-mobi': lit_to_mobi,
+  // Restored 2026-11-01 (M2-15 ruling): was de-registered + 301'd to blog by
+  // Batch 4 (758e994) on a "zero-demand" premise that GSC/Ahrefs data later
+  // contradicted (lit-to-epub keyword cluster had impressions at pos ~22 and
+  // the module holds a complete human-grade Spanish translation). Registering
+  // restores generateStaticParams + English sitemap entry + /es/convert route
+  // (es-routes ESP_CONVERT_SLUGS already whitelists this slug), and un-breaks
+  // the llms.txt entry that kept pointing at the redirected URL. Conversion
+  // engine: CONVERSION_MAP 'lit-epub' → tool "js" (no CloudConvert spend).
+  'lit-to-epub': lit_to_epub,
   'azw-to-mobi': azw_to_mobi,
   'mobi-to-azw3': mobi_to_azw3,
 };
