@@ -1,55 +1,91 @@
 import { BlogFaq } from '../blog/types'
 
-export const slug = 'azw3-vs-mobi'
-export const title = 'AZW3 vs MOBI: Which Kindle Format Should You Use?'
-export const problem = 'Kindle supports two legacy formats — AZW3 and MOBI — and they are not the same. AZW3 preserves fonts and layout; MOBI is simpler and older. Here is how to pick.'
-export const date = '2026-09-10'
-export const updatedAt = '2026-09-10'
-export const tags = ['azw3', 'mobi', 'kindle', 'ebook format', 'comparison']
-export const keyTakeaways = [
-  'AZW3 (Kindle Format 8) preserves fonts, CSS, and images far better than MOBI.',
-  'MOBI is a legacy format only needed for very old Kindles (pre-2016).',
-  'Both formats are being phased out by Amazon in favor of EPUB via Send-to-Kindle.',
-  'If you control the conversion, always prefer AZW3 over MOBI when possible.',
-]
-export const content = {
-  intro: `Amazon's Kindle ecosystem has two legacy formats — AZW3 (Kindle Format 8) and MOBI — and choosing between them matters if you want your book to look right. AZW3 keeps fonts, layout, and images. MOBI strips most of that away.\n\nThis guide explains the difference so you can convert to the right format and avoid a broken file.`,
-  sections: [
-    {
-      heading: 'Quick comparison',
-      body: `| Feature | AZW3 | MOBI |\n|---|---|---|\n| Also known as | Kindle Format 8 (KF8) | Mobipocket |\n| Introduced | 2011 | ~2000 |\n| Embedded fonts | ✅ Yes | ❌ No |\n| CSS styling | ✅ Full | ❌ Minimal |\n| Images | ✅ Preserved | ⚠️ Often downgraded |\n| Chapter structure | ✅ Good | ⚠️ Depends on source |\n| Device support | Kindles 2011+ | Kindles ~2007–2015 |\n| Amazon preference | ✅ Recommended | ⚠️ Legacy only |\n\n**Bottom line:** AZW3 is the better format whenever your device supports it. For a detailed comparison including FB2 and Lit ecosystem notes, see [FB2 vs EPUB](/blog/fb2-vs-epub) and [Lit format conversion guide](/blog/lit-format-conversion-and). And if you need help diagnosing conversion issues after switching formats, our [ebook troubleshooting guide](/blog/ebook-troubleshooting) covers the most common headaches.`,
-    },
-    {
-      heading: 'What is AZW3?',
-      body: `**AZW3** (Kindle Format 8) was introduced by Amazon in 2011 as the successor to MOBI. It is based on the EPUB standard but wrapped in an Amazon-specific container.\n\nWhat AZW3 gives you:\n- **Embedded custom fonts** — your chosen typeface survives.\n- **CSS3 styling** — margins, spacing, and text decoration are preserved.\n- **Better image handling** — covers and illustrations stay sharp.\n- **Chapter navigation** — proper TOC and section breaks.\n\nAZW3 is the recommended format for all Kindles released from roughly 2012 onward, including Paperwhite, Oasis, and basic Kindle models.`,
-    },
-    {
-      heading: 'What is MOBI?',
-      body: `**MOBI** (Mobipocket format) is the original Kindle format, dating back to Amazon's acquisition of Mobipocket in 2005. It is still supported on older Kindles but is considered legacy.\n\nWhat MOBI gives you:\n- **Simple, forgiving structure** — works even with poorly formatted source files.\n- **Small file size** — less overhead from missing advanced features.\n- **Universal Kindle compatibility** — reads on every Kindle ever made.\n\nWhat MOBI does **not** give you:\n- Custom font embedding (limited to Kindle's built-in fonts).\n- Advanced CSS or complex layout.\n- Reliable image preservation for SVG or high-resolution graphics.\n\nMOBI is only worth using if your Kindle is too old to support AZW3.`,
-    },
-    {
-      heading: 'Which should you convert to?',
-      body: `Use this decision tree:\n\n**1. What Kindle do you have?**\n- **Kindle Paperwhite (any generation), Oasis, Voyage, Kindle (2016+)** → **AZW3**\n- **Kindle (2007–2015), Kindle Keyboard, Kindle 3** → **MOBI** (AZW3 may not work)\n- **Kindle Scribe, Kindle Colorsoft** → **AZW3**\n\n**2. Where did the file come from?**\n- **EPUB source** → Convert to AZW3 for modern Kindles, MOBI for old ones.\n- **MOBI source already** → Leave it; it will open on any Kindle.\n- **AZW3 source already** → Leave it; it will open on most Kindles from 2011+.\n\n**3. Do you care about formatting quality?**\n- Yes → Always use AZW3. The difference in font and image preservation is significant.\n- No → MOBI is fine for text-only novels.\n\n**Recommendation:** Unless your Kindle is from before 2016, convert to AZW3. The better formatting is worth the extra step.`,
-    },
-    {
-      heading: 'How to convert EPUB to AZW3 or MOBI',
-      body: `Both conversions are free and run in your browser with [BookConv](https://www.bookconv.com):\n\n- **EPUB → AZW3**: [/convert/epub-to-azw3](/convert/epub-to-azw3) — recommended for all Kindles from 2016+\n- **EPUB → MOBI**: [/convert/epub-to-mobi](/convert/epub-to-mobi) — only for very old Kindles\n- **MOBI → AZW3**: [/convert/mobi-to-azw3](/convert/mobi-to-azw3) — upgrade your legacy files\n- **AZW3 → MOBI**: [/convert/azw3-to-mobi](/convert/azw3-to-mobi) — downgrade for older devices\n\nFiles are deleted after the conversion completes. No software installation required.\n\nFor a detailed comparison of these formats, see our [AZW3 vs MOBI guide](/blog/azw3-vs-mobi). If you need to convert from other sources like EPUB, check our [EPUB to AZW3 conversion guide](/blog/epub-to-azw3). Other format pairs worth knowing: [FB2 to EPUB keep formatting](/guide/fb2-to-epub-keep-formatting), [Lit to EPUB keep formatting](/guide/lit-to-epub-keep-formatting), and [Cbr to PDF guide](/guide/cbr-to-pdf) for comic archives.`,
-    },
-  ],
-}
-export const faqs: BlogFaq[] = [
-  { question: 'Is AZW3 better than MOBI for Kindle?', answer: 'Yes. AZW3 preserves embedded fonts, CSS styling, and images far better than MOBI. Only use MOBI if your Kindle is from before roughly 2016 and does not support AZW3.' },
-  { question: 'Can my Kindle read both AZW3 and MOBI?', answer: 'Most Kindles from 2011 onward can read both. Older Kindles (pre-2011) may only support MOBI. If you are unsure, try AZW3 first — if it fails, fall back to MOBI.' },
-  { question: 'Will my books look better in AZW3 vs MOBI?', answer: 'Yes, especially if your book has custom fonts, images, or complex layout. AZW3 preserves these elements; MOBI often strips them. For plain text novels the difference is less noticeable.' },
-  { question: 'Do I need to convert if my book is already in MOBI?', answer: 'Only if your Kindle supports AZW3 and you want better formatting. Converting MOBI to AZW3 will not add lost information (MOBI cannot store custom fonts), but AZW3 may render the file more efficiently on your device.' },
-  { question: 'Can I convert MOBI to AZW3 for free?', answer: 'Yes. BookConv offers a free MOBI to AZW3 converter at [/convert/mobi-to-azw3](/convert/mobi-to-azw3). Upload your file, select AZW3, and download the result.' },
-  { question: 'Is Amazon phasing out MOBI?', answer: 'Yes. Amazon has been pushing AZW3 since 2011 and now recommends EPUB via Send-to-Kindle for new uploads. MOBI remains supported on existing devices but is not the recommended format for new conversions.' },
+export const slug = "azw3-vs-mobi"
+
+export const title = "AZW3 vs MOBI: Which Kindle Format Should You Use?"
+
+export const problem = "Choose a Kindle ebook format by delivery route: Send to Kindle, direct USB or KDP publishing. Compare AZW3, MOBI and EPUB without a blanket device-year rule."
+
+export const date = "2026-09-10"
+
+export const updatedAt = "2026-11-01"
+
+export const tags = [
+  "azw3",
+  "mobi",
+  "kindle",
+  "ebook format",
+  "comparison"
 ]
 
-// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const keyTakeaways = [
+  "Choose the transfer route before converting.",
+  "Use EPUB for Send to Kindle; check your device documentation for USB.",
+  "A MOBI-to-AZW3 conversion cannot restore information absent from the source.",
+  "Check the selected uploader and inspect one output before a batch."
+]
+
+export const formats = undefined
+
+export const content = {
+  "intro": "AZW3 vs MOBI is a practical delivery choice, not just a comparison of file extensions. The first question is whether you are using Send to Kindle, transferring over USB or preparing a manuscript for KDP. These workflows have different requirements.",
+  "sections": [
+    {
+      "heading": "Which format should I use for my Kindle in 2026?",
+      "body": "Start with how you will transfer the book, rather than a model-year cutoff. For Send to Kindle, choose EPUB. For a direct USB transfer, check the formats accepted by your exact Kindle model and firmware; AZW3 can be a useful option on compatible devices. Keep MOBI for a confirmed legacy requirement. Publishing a book is a separate workflow from sending a personal document.\n\nAn EPUB that works through Amazon's service does not establish that copying the same EPUB over USB will work. Likewise, a file that opens locally does not establish that Amazon accepts it as an upload. Decide the delivery route before converting."
+    },
+    {
+      "heading": "AZW3 vs MOBI vs EPUB: choose by task",
+      "body": "| Your task | Starting choice | Check before proceeding |\n|---|---|---|\n| Send a personal book through Send to Kindle | EPUB | Amazon's current supported upload list |\n| Copy a book directly over USB | A format listed for your device, potentially AZW3 | Exact model, firmware and transfer procedure |\n| Keep an existing MOBI library | Retain an original copy | Whether the receiving reader accepts that file |\n| Publish through KDP | EPUB, DOCX or KPF as appropriate | KDP manuscript specifications and preview |\n\nAZW3 is commonly associated with KF8; MOBI is a legacy file label and can contain different variants. Do not assume that every .mobi has identical formatting capabilities. See [Calibre's format notes](https://manual.calibre-ebook.com/faq.html) for the distinction between MOBI variants."
+    },
+    {
+      "heading": "Does Kindle still support MOBI in 2026?",
+      "body": "Support depends on the channel. Amazon's current [Send to Kindle file list](https://digprjsurvey.amazon.co.uk/csad/help/node/G5WYD9SAF7PGXRNA) includes EPUB and does not list MOBI or AZW3. That upload list is separate from the formats an existing device may read locally. Check its manual before replacing a working library.\n\nFor publishing, [KDP's MOBI policy](https://kdp.amazon.com/en_US/help/topic/GULSQMHU5MNH4EZM) says its transition away from MOBI uploads is complete. Use the accepted manuscript formats for a new publication or update. Neither rule means you should delete your existing files or convert an entire library without testing one book first."
+    },
+    {
+      "heading": "Is AZW3 better than MOBI?",
+      "body": "For a compatible local reader, AZW3 can preserve styling that an older MOBI variant cannot represent. That does not guarantee a better result for every book: source structure, embedded assets and conversion settings matter.\n\nKeep the best original file. If fonts or layout were already lost, converting the remaining MOBI to AZW3 does not reconstruct those assets. Preview chapter order, navigation, images and a few representative pages before replacing the original. A format comparison should help you complete a reading task, rather than promise identical rendering on every device."
+    },
+    {
+      "heading": "How to convert MOBI to AZW3 or EPUB",
+      "body": "For a DRM-free file you are entitled to convert, choose the target that matches your delivery route:\n\n- [MOBI to AZW3](/convert/mobi-to-azw3) for a compatible local reading workflow.\n- [MOBI to EPUB](/convert/mobi-to-epub) when EPUB is required by the next service or reader.\n- [EPUB to AZW3](/convert/epub-to-azw3) for a device-specific local file.\n\nSelect the format pair, check the uploader's displayed limits, upload, convert, download and inspect the output. A format extension alone does not prove that a file is DRM-free or structurally valid. Keep the input until the result has opened successfully. Calibre is an alternative when you need an offline workflow or more conversion controls."
+    },
+    {
+      "heading": "BookConv limits, privacy and output checks",
+      "body": "BookConv processes conversions server-side. Transfers use HTTPS; see the [privacy policy](/privacy) for file-handling details. For sensitive manuscripts, prefer an offline workflow.\n\nEnabled single-file direct uploads accept up to 100 MB; batch and fallback routes are limited to 4 MB per file. Batch is free during public beta, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service. Check the selected uploader rather than applying one cap to every route.\n\nTest one file before a larger job. A successful download is only the first check: open it in the intended reader and inspect navigation and formatting. This guide does not promise DRM removal, automatic OCR or identical output across devices."
+    }
+  ]
+}
+
+export const faqs: BlogFaq[] = [
+  {
+    "question": "Which Kindle format should I use in 2026?",
+    "answer": "Choose by delivery route: EPUB for Send to Kindle; a format supported by your exact device for USB. Use the current KDP manuscript requirements for publishing."
+  },
+  {
+    "question": "Can I send AZW3 or MOBI through Send to Kindle?",
+    "answer": "They are not listed in Amazon’s current Send to Kindle supported upload formats. Use EPUB for that workflow; local device support is a separate question."
+  },
+  {
+    "question": "Does every Kindle made before 2015 need MOBI?",
+    "answer": "No fixed year cutoff is reliable for every model and firmware. Check the device documentation and test one file before converting a whole library."
+  },
+  {
+    "question": "Will converting MOBI to AZW3 restore lost fonts?",
+    "answer": "No. Conversion cannot reconstruct fonts, images or layout information that is absent from the source. Start from the best original file available."
+  },
+  {
+    "question": "Can I convert MOBI to EPUB or AZW3 with BookConv?",
+    "answer": "BookConv provides both format-pair tools for supported DRM-free inputs. Check the selected uploader’s limits and inspect the downloaded result on your intended reader."
+  },
+  {
+    "question": "What should I upload to KDP?",
+    "answer": "KDP recommends accepted manuscript formats such as EPUB, DOCX and KPF depending on the book. Its MOBI upload policy differs from local-device reading support."
+  }
+]
+
 export const authorship = {
-  author: 'BookConv Team',
-  lastVerified: '2026-09-12',
-  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
-  estimatedConversions: '10,000+ monthly',
+  "author": "BookConv Team",
+  "lastVerified": "2026-11-01",
+  "credentials": "Official format documentation and current BookConv upload rules reviewed; no independent performance benchmark claimed."
 }
