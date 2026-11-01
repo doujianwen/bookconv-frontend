@@ -1,20 +1,4 @@
-import type { ErrorCode } from "./error-handler"
-
-const KNOWN_CODES = new Set<ErrorCode>([
-  "FILE_NOT_FOUND",
-  "PERMISSION_DENIED",
-  "CONVERSION_TIMEOUT",
-  "TOO_MANY_OPEN_FILES",
-  "DRM_PROTECTED",
-  "CONVERSION_FAILED",
-  "CONVERSION_UNAVAILABLE",
-  "CONVERSION_QUOTA_EXCEEDED",
-  "CLOUD_CONVERT_ERROR",
-  "INTERNAL_ERROR",
-  "CORRUPT_INPUT",
-  "MEMORY_LIMIT",
-  "VERIFICATION_FAILED",
-])
+import { isErrorCode, type ErrorCode } from "./error-handler"
 
 export interface ApiError {
   message: string
@@ -66,7 +50,12 @@ export async function extractApiError(res: Response): Promise<ApiError> {
         : `Request failed (HTTP ${status}). Please try again.`
   }
 
-  const normalizedCode = code && KNOWN_CODES.has(code as ErrorCode) ? (code as ErrorCode) : undefined
+  // 单一事实源校验（isErrorCode 派生自 error-handler 的 ErrorCode 全集）。
+  // 此前这里手维护 KNOWN_CODES 白名单，已静默漂移：FILE_TOO_LARGE /
+  // DIRECT_UPLOAD_FAILED / UNSUPPORTED_CONVERSION 三个后端真实 code 被判
+  // unknown → 前端 conversion_failed 的 error_code 塌缩为 UNKNOWN，GA4 根因
+  // 分流失真。改用 isErrorCode 后新增 ErrorCode 自动被接受，不再漂移。
+  const normalizedCode = code && isErrorCode(code) ? code : undefined
 
   return { message, code: normalizedCode, status }
 }

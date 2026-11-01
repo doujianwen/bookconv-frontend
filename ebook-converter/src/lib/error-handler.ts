@@ -17,7 +17,10 @@ export type ErrorCode =
   | "VERIFICATION_FAILED"
   | "FILE_TOO_LARGE"
   | "DIRECT_UPLOAD_FAILED"
-  | "UNSUPPORTED_CONVERSION";
+  | "UNSUPPORTED_CONVERSION"
+  | "UPLOAD_NOT_FOUND"
+  | "UPLOAD_EMPTY"
+  | "INVALID_UPLOAD_KEY";
 
 export interface ErrorResponse {
   code: ErrorCode;
@@ -99,6 +102,11 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   // 之前借用 FILE_TOO_LARGE 被 GA 巡检误分类为「客户端拦截」，掩盖根因（10-29/10-30 R2 CORS 实锤）。
   'DIRECT_UPLOAD_FAILED': { message: 'Large-file upload is temporarily unavailable. Please try a smaller file (under the multipart limit) or retry later.', retryable: true },
   'UNSUPPORTED_CONVERSION': { message: 'This format combination is not supported by any available conversion engine. Please try the suggested alternative format.', retryable: false },
+  // 2026-11-01：convert-handler 自造码（R2 直传取回失败族）纳入全集——此前不在
+  // ERROR_MESSAGES，isErrorCode 判 unknown → GA4 conversion_failed 塌缩 UNKNOWN。
+  'UPLOAD_NOT_FOUND': { message: 'Uploaded file could not be retrieved. Please upload it again.', retryable: true },
+  'UPLOAD_EMPTY': { message: 'The uploaded file is empty. Please upload a valid file.', retryable: true },
+  'INVALID_UPLOAD_KEY': { message: 'Upload session expired or invalid. Please upload the file again.', retryable: true },
 };
 
 /** Get a friendly, user-facing message from an error code */
