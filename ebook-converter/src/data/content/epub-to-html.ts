@@ -1,161 +1,46 @@
 export const slug = 'epub-to-html';
-export const title = 'Free EPUB to HTML Converter — No Sign-up';
-export const metaDescription = 'Extract clean, editable HTML from any EPUB — free converter, no sign-up. Publish, restyle, or paste your e-book content straight into a CMS.';
+export const title = 'Free EPUB to HTML Converter — Download Chapters as ZIP';
+export const metaDescription = 'Extract original XHTML chapters, images and CSS from a DRM-free EPUB. Download a ZIP with a reading-order index for editing and browser preview.';
 export const level = 'B' as const;
-export const wordCount = 750;
-
+export const wordCount = 600;
 export const content = {
-  hero: {
-    title: 'EPUB to HTML - Extract Web-Ready Content',
-    subtitle: 'Free EPUB to HTML converter. No sign-up — extract clean, editable HTML you can publish, restyle, or paste into a CMS.'
-  },
-
+  hero: { title: 'EPUB to HTML — Extract Chapters and Resources', subtitle: 'Download original chapters, styles and images in a ZIP, with an index following the reading order.' },
   keyTakeaways: [
-    'An EPUB file is already a website in disguise — it is a ZIP of XHTML, CSS, and images, so extracting HTML is a clean unwrap, not a format translation.',
-    'The download is a ZIP containing index.html, one HTML file per chapter, and an images/ folder you can open in any browser offline.',
-    'Convert to HTML when you need to publish chapters to a CMS, make content indexable by search engines, or edit at scale.',
-    'DRM-locked books will not convert; store purchases encrypt their content, but self-written or public-domain titles work without trouble.',
-    'Pagination does not survive — EPUB has no fixed pages; if you need page numbers, convert to PDF instead.'
+    'EPUB contains XHTML chapters and resources. This converter extracts the package on our server without an external conversion engine.',
+    'The ZIP retains original filenames, chapter markup, CSS and image bytes, and adds a reading-order index.',
+    'Extract the entire ZIP before opening the index. Browser appearance and font support can differ from your reading app.',
+    'Use a DRM-free EPUB with a valid manifest and spine. Missing chapters or malformed packages can prevent conversion.',
+    'Review chapters before publishing them. Extraction does not automatically make content accessible or optimized for search.'
   ],
-
   sections: [
-    {
-      heading: 'What EPUB Is and Why It Is Already a Website',
-      body: `EPUB is the open standard for reflowable ebooks. It is maintained by the W3C and supported by Apple Books, Kobo, Google Play Books, Nook, and — since 2022 — Kindle through Send to Kindle.
+    { heading: 'How the Export Works', body: `An EPUB is a ZIP package containing chapter documents, stylesheets, images and metadata. Its manifest identifies the files, and its spine specifies reading order. Alphabetical filenames can give the wrong sequence.
 
-Here is the part most people never realize: **an EPUB file is already a website in disguise.** Rename any .epub to .zip, unzip it, and you will find XHTML documents, CSS stylesheets, images, and an OPF manifest holding it all together. A reader app is essentially a stripped-down browser with page-turn animations.
+BookConv reads the package document and creates a small HTML index linking the spine chapters in order. Original chapter and resource paths remain unchanged. The output may contain .xhtml files as well as .html files: source markup and extensions are preserved.
 
-That is why EPUB to HTML is one of the cleanest conversions in the whole ebook world. You are not translating between two unrelated things — you are unwrapping content that was HTML all along and tidying up the packaging.
+This is extraction rather than a layout conversion. It does not normalize CSS, merge chapters, rewrite internal links, or reorganize images into a new folder.` },
+    { heading: 'Upload, Download and Open', body: `Upload your DRM-free EPUB using the conversion area above. Follow the limit shown by the interface. The server upload path is limited to 4 MB; direct storage upload may support larger files.
 
-What EPUB layers on top of plain HTML:
+Download the ZIP and extract the entire archive into one folder. Open index.html to see the chapter links. If the source already contains a root index.html, that file is preserved and the new index is named bookconv-index-0.html, or the next available number.
 
-- **A manifest and spine** that define the real reading order
-- **A navigation document** (NAV in EPUB 3, NCX in EPUB 2) that builds the table of contents
-- **Metadata** — title, author, language, publisher, ISBN
-- **Optional DRM**, which is the one thing that stops a conversion cold  Packing those chapters back into a readable book is a single step away with [HTML to EPUB](/convert/html-to-epub).`
-    },
-    {
-      heading: 'Converting in Reverse: Html To Epub',
-      body: `This page covers Epub To Html, but the reverse direction answers a very different user need — and it is just as common.
+Open a chapter through the index and check its images, internal links and styles. Keep the complete directory together when moving it. Relative references depend on that structure.` },
+    { heading: 'What Is Preserved and What Needs Checking', body: `Original chapters, images, CSS and other archive resources are retained. Existing links continue to use their source paths. The added index follows the spine but cannot create missing chapters or repair broken links in the original book.
 
-Going html to epub is the move when you need to go the other way. It is the standard path for users who have already generated a file in one format and now need it in another.
+Reader apps apply their own themes, margins and font settings. A browser may render the same source differently, and local-file restrictions can affect resources. Embedded font files remain in the ZIP; browser support and publishing permissions need separate review.
 
-The dedicated [Html To Epub converter](/convert/html-to-epub) runs the same engine in the opposite direction: it takes the source file and transforms it into the target format, preserving what matters and stripping what does not.
+Annotations and reading progress stored only in a reader app are not exported. Fixed pagination is not added. For a paginated document, try [EPUB to PDF](/convert/epub-to-pdf) and inspect the output.` },
+    { heading: 'Using Chapters on a Website', body: `For your own writing or material you have permission to publish, extracted chapters can be a starting point for documentation, editing or sample chapters. Import relevant content into your CMS and adapt its navigation, styles and image references.
 
-A practical rule: convert Epub To Html when you want the source format as your master archive; convert Html To Epub when you have a specific destination that requires it. Keep both formats if you are unsure which device or use case you will need next.`
-    },
-    {
-      heading: 'What is HTML Format?',
-      body: `HTML is the markup language every web page is built from. Heading tags, paragraphs, lists, images, links — they describe what the content *is*, and CSS decides how it looks.
+The ZIP retains the original book content, including any scripts or external references. Extraction is not HTML sanitization; review those elements before publishing material on your website.
 
-Unlike EPUB, HTML is not a single file. It is a folder: one or more .html documents plus the images and stylesheets they point at. Open index.html in any browser and it just works. No reader app, no plugin, no account.
+Check headings, alternative text, navigation, canonical URLs and metadata on published pages. Search visibility depends on those pages and their value to readers. Downloading an archive does not establish indexing or ranking.
 
-**Why that matters once your book is out of its shell:**
-
-- Every device on earth already has a browser
-- You can edit it in Notepad, VS Code, or paste it into WordPress
-- Search engines can crawl it, so the words are actually findable
-- It is the natural starting point for turning a book into a course, a docs site, or a run of blog posts
-
-HTML has also outlived a dozen "next big thing" document formats. Pages written in 1998 still render today.`
-    },
-    {
-      heading: 'How to Convert EPUB to HTML',
-      body: `Three steps, nothing to install.
-
-**1. Upload your EPUB.** Drag it onto the upload area or click to browse. Uploads are capped at 4MB, which covers essentially every text-based ebook. Image-heavy titles can exceed it.
-
-**2. Let the converter unpack it.** We read the OPF spine to get the true chapter order — alphabetical folder order is wrong surprisingly often — then extract the XHTML, rewrite image paths, and normalize the stylesheet.
-
-**3. Download the ZIP.** Inside you get index.html, one HTML file per chapter, and an images/ directory.
-
-Most novels finish in ten to twenty seconds. A heavily illustrated art book or a 900-page technical manual might take a minute. If you have a whole shelf to move, Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.`
-    },
-    {
-      heading: 'When Publishing Chapters to the Web',
-      body: `**Publishing chapters as blog posts.** Sample chapters, serialized fiction, lead magnets. HTML drops into WordPress, Ghost, or Substack without the formatting wreckage you get from copy-pasting out of a reader app.
-
-**Turning a book into documentation.** Plenty of technical authors write in ebook-friendly tools and then need a real docs site. HTML is the bridge.
-
-**Making content indexable.** Google cannot read inside an EPUB. It reads HTML all day long.
-
-**Editing at scale.** Need to rename a product across 40 chapters? Find-and-replace across HTML files takes seconds. Doing the same thing inside an EPUB means unzipping, editing, and repackaging archives by hand.
-
-**Long-term archiving.** If you want text that will still open in thirty years without a dedicated app, a folder of HTML is a very safe bet.`
-    },
-    {
-      heading: 'What You Get - and What You Lose',
-      body: `**Comes through intact:**
-
-- Chapter structure, with each chapter as its own HTML file
-- An index.html that links every chapter in correct spine order
-- Headings, paragraphs, bold and italic, lists, blockquotes, tables
-- Images in an images/ folder, referenced by relative path so nothing breaks when you move the folder
-- Internal cross-references, rewritten to point at the new filenames
-- Semantic HTML5 markup that is accessible and SEO-friendly
-
-**Does not survive, and here is why:**
-
-- **Pagination.** EPUB reflows, so it never had fixed pages to begin with. HTML does not either. If you need page numbers, convert to PDF instead.
-- **DRM-locked books.** Encrypted files cannot be read by the converter — or by anything else without the license.
-- **Highlights, notes, and reading position.** Those live in your reader app, not in the file.
-- **Embedded fonts** are often dropped or swapped for web-safe stacks, because font licences rarely transfer to web use.
-
-HTML preserves structure and content beautifully. It just stops pretending to be a book.`
-    },
-    {
-      heading: 'EPUB vs HTML: Format Comparison',
-      body: `Use this table to decide which fits the job:
-
-| Feature | EPUB | HTML |
-|---------|------|------|
-| Package | Single .epub file | Folder of files |
-| Opens in | Reader apps, Send to Kindle | Any browser |
-| Best for | Reading a book | Publishing, editing, CMS |
-| SEO | Not crawlable | Crawlable |
-| Editing | Needs EPUB tool | Any text editor |
-
-Keep EPUB for reading. Convert to HTML when you need to publish, restyle, or make the content findable.`
-    },
-    {
-      heading: 'Checking the Web Bundle',
-      body: `After download, confirm these:
-
-- **index.html opens** — double-click it and the book loads in your browser offline
-- **Images resolve** — the images/ folder sits next to index.html and pictures display
-- **Chapters split** — each chapter is its own HTML file in correct order
-- **Headings preserved** — chapter titles became real H1/H2 tags
-- **Cross-links work** — internal references point at the new filenames
-
-If images show as broken, check that you unzipped the whole download folder together, not just index.html.`
-    },
-    {
-      heading: 'Before You Convert: Prepare Your EPUB',
-      body: `A little prep avoids surprises:
-
-- **Remove DRM first** — store-bought, encrypted EPUBs cannot be read by the converter
-- **Check the spine** — a well-built EPUB with a correct reading order converts cleanly; a hand-edited one with a broken manifest may list chapters out of order
-- **Note your fonts** — embedded fonts are often swapped for web-safe stacks, so the HTML may look plainer than your reader app
-- **Decide single vs multi-file** — the export splits per chapter; concatenate the files if you need one document
-
-The converter reads the OPF spine to get true chapter order, not the alphabetical folder listing.`
-    }
+To package a web document as an ebook, use [HTML to EPUB](/convert/html-to-epub).` }
   ],
-
   faq: [
-    { q: 'Can the generated HTML open directly in a browser?', a: 'Yes. Unzip the download and double-click index.html. It works offline in Chrome, Safari, Firefox, or Edge with no server needed.' },
-    { q: 'Are images preserved during conversion?', a: 'Yes. Every embedded image is written to an images/ folder and referenced by relative path, so the whole folder stays portable. Cover art is included too.' },
-    { q: 'Why does it split the book into multiple HTML files?', a: 'Because that is how the EPUB stores it internally, and one file per chapter is far easier to edit or publish individually. If you want a single document, concatenate the files in a text editor.' },
-    { q: 'My EPUB will not convert. What is wrong?', a: 'Nine times out of ten it is DRM from a store purchase, which encrypts the content. Books you wrote, bought DRM-free, or downloaded from public-domain libraries convert without trouble.' },
-    { q: 'Will the HTML look identical to my reader app?', a: 'Not exactly. Reader apps apply their own fonts, margins, and colour themes on top of the book. You get the publisher CSS instead, which you can restyle however you like.' },
-    { q: 'Why does the download come as a ZIP?', a: 'Because HTML is a folder, not a single file. The ZIP bundles index.html, one HTML file per chapter, and the images/ directory so the whole thing stays portable. Unzip it before opening.' }
-  ]
-,
-
-  authorship: {
-    author: 'BookConv Team',
-    lastVerified: '2026-09-05',
-    credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
-    estimatedConversions: '10,000+ monthly'
-  }
+    { q: 'Does the download contain one HTML file?', a: 'No. It contains original chapters and resources plus a reading-order HTML index. Chapters may retain their .xhtml extension.' },
+    { q: 'Are images and styles preserved?', a: 'Original files and paths are retained. Browser rendering and broken references in the source still need checking.' },
+    { q: 'Why will my EPUB not convert?', a: 'Possible causes include an invalid archive, missing package or spine chapter, upload limits and encrypted content. This tool does not decrypt DRM.' },
+    { q: 'Can I open it offline?', a: 'Extract the whole ZIP and open the added index. Local chapters and resources can be viewed offline; external references still require a connection.' }
+  ],
+  authorship: { author: 'BookConv Team', lastVerified: '2026-11-01', credentials: 'Reviewed against the local EPUB extraction implementation and automated fixtures' }
 };

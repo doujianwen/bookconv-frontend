@@ -21,6 +21,7 @@ import * as fsp from 'node:fs/promises';
 import { errorMessage } from './error-handler';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
+import { epubToHtmlArchive } from './epub-html';
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || '/tmp/ebook-uploads';
 const CALIBRE_PATH = process.env.CALIBRE_PATH || 'ebook-convert';
@@ -1131,7 +1132,7 @@ function isPureJsTextPair(source: string, target: string): boolean {
 export function isPureJsConversion(sourceFormat: string, targetFormat: string): boolean {
   const s = String(sourceFormat || '').toLowerCase();
   const t = String(targetFormat || '').toLowerCase();
-  if (s === 'epub' && (t === 'zip' || t === 'epub')) return true; // ZIP 直通 / 文本重打包
+  if (s === 'epub' && (t === 'zip' || t === 'epub' || t === 'html')) return true; // ZIP/HTML extraction or text repack
   return isPureJsTextPair(s, t);
 }
 
@@ -1214,7 +1215,7 @@ export async function executeConversion(
     }
   }
 
-  const ext = targetFormat === 'html' ? 'htmlz' : targetFormat;
+  const ext = targetFormat === 'html' ? (sourceFormat === 'epub' ? 'zip' : 'htmlz') : targetFormat;
   const outputPath = path.join(jobDir, 'output.' + ext);
 
   // EPUB → ZIP is a direct passthrough: an EPUB file IS a ZIP archive.
@@ -1269,6 +1270,8 @@ export async function executeConversion(
 
     if (isZipPassthrough) {
       writeFileSync(outputPath, readFileSync(inputPath));
+    } else if (sourceFormat === 'epub' && targetFormat === 'html') {
+      writeFileSync(outputPath, await epubToHtmlArchive(readFileSync(inputPath)));
     } else if (isEpubToTxt) {
       const txt = await epubToTxt(inputPath);
       writeFileSync(outputPath, txt, 'utf8');

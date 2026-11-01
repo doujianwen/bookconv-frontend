@@ -19,6 +19,7 @@ import {
 } from "@/lib/rate-limit";
 import { convertAndStream, scheduleUploadCleanup } from "@/lib/convert-handler";
 import { normalizeFormat } from "@/lib/conversion-map";
+import { isPureJsConversion } from "@/lib/conversion";
 import { downloadFromR2 } from "@/lib/storage/r2";
 import { fileNameFromUploadKey } from "@/lib/upload-presign";
 import {
@@ -60,7 +61,8 @@ export async function POST(request: NextRequest) {
         typeof uploadKeyRaw === "string" && uploadKeyRaw.length > 0 ? uploadKeyRaw : undefined;
 
       const canDelegate =
-        sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend();
+        sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend()
+        && !(sourceFormat === 'epub' && targetFormat === 'html');
 
       // Large-file path (R2 direct upload, 2026-10-28): the bytes never traverse
       // the 4.5MB Vercel inbound edge limit, so for upload_key requests we fetch
@@ -105,7 +107,7 @@ export async function POST(request: NextRequest) {
       // CloudConvert path: formats the backend can't emit, the upload_key (R2) path,
       // backend-down, or circuit-open. X-Conversion-Backend header is for MON-style
       // observability (hit vs miss).
-      const ccHeaders = { ...rateHeaders, "X-Conversion-Backend": "miss-cloudconvert" };
+      const ccHeaders = { ...rateHeaders, "X-Conversion-Backend": isPureJsConversion(sourceFormat, targetFormat) ? "local-js" : "miss-cloudconvert" };
       return convertAndStream(formData, ccHeaders, { uploadKey });
     }
 

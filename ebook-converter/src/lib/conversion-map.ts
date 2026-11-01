@@ -28,7 +28,7 @@ export const CONVERSION_MAP: ConversionMap = {
   "azw3-epub":  { tool: "js", description: "AZW3 to EPUB (Pure JS, no CloudConvert)" },
   "epub-rtf":   { tool: "js", description: "EPUB to RTF (Rich Text) (Pure JS, no CloudConvert)" },
   "epub-jpg":   { tool: "calibre+imagemagick", description: "EPUB to JPG Images (via PDF)" },
-  "epub-html":  { tool: "calibre", description: "EPUB to HTMLZ (Zipped Web Pages)" },
+  "epub-html":  { tool: "js", description: "EPUB to HTML (ZIP of original chapters and resources)" },
   "epub-doc":   { tool: "calibre", description: "EPUB to DOC (Microsoft Word)" },
   "epub-pdf":   { tool: "calibre", description: "EPUB to PDF" },
   "epub-png":   { tool: "calibre+imagemagick", description: "EPUB to PNG Images (via PDF)" },

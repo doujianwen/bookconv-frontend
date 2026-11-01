@@ -24,6 +24,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { normalizeGaDate, dailyWindow } from './lib/ga-date.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -77,10 +78,10 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
   if (series.length < 7) {
     push('D1', name, 'P1', 'UNKNOWN', `可用日序列仅 ${series.length} 天（<7），趋势结论不可判定`)
   } else {
-    const sorted = [...series].sort((a, b) => a.date.localeCompare(b.date))
-    const last = sorted[sorted.length - 1]?.date
-    if (last !== T_MINUS_1) {
-      push('D1', name, 'P1', 'UNKNOWN', `序列末端日期 ${last} ≠ 期望T-1 ${T_MINUS_1} → 数据滞后，趋势窗口不闭合`)
+    const window = dailyWindow(series, T_MINUS_1)
+    const sorted = window.rows
+    if (!window.ok) {
+      push('D1', name, 'P1', 'UNKNOWN', `${window.reason} → 趋势窗口不闭合`)
     } else {
       const users = sorted.map((r) => Number(r.activeUsers) || 0)
       const avg = users.reduce((a, b) => a + b, 0) / users.length
@@ -88,7 +89,7 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
       const min = Math.min(...users)
       const swings = max > 0 ? (max - min) / max : 0
       push('D1', name, 'P1', 'PASS',
-        `${series.length} 天序列闭合至 T-1；均活跃 ${avg.toFixed(1)}、峰${max}/谷${min}、振幅 ${(swings * 100).toFixed(0)}%（单日波动正常，非异常趋势）`)
+        `${series.length} 天序列闭合至 T-1；均活跃 ${avg.toFixed(1)}、峰${max}/谷${min}、振幅 ${(swings * 100).toFixed(0)}%。日期完整性通过；描述性振幅不能单独证明趋势正常或异常。`)
     }
   }
 }
@@ -96,9 +97,11 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
 // ── D2 失败分流暴露 / Part A 矛盾（P0）──────────────────────────────
 {
   const name = '失败分流×Part A 矛盾'
-  const fde = adv?.modules?.failed_by_date_error_code?.filter((r) => !r._error) || []
+  const fde = adv?.modules?.failed_by_date_error_code?.filter((r) => !r._error).map(r => ({ ...r, date: normalizeGaDate(r.date) })) || []
   if (!fde.length) {
     push('D2', name, 'P0', 'UNKNOWN', 'failed_by_date_error_code 无数据（维度未注册或查询失败）→ 无法验证 Part A 引擎结论')
+  } else if (fde.some(r => !r.date)) {
+    push('D2', name, 'P0', 'UNKNOWN', '失败明细包含缺失或无效日期，不能与Part A按日对照')
   } else {
     // 取 T-1 当天（或最近一天）的引擎失败数
     const todayRows = fde.filter((r) => r.date === T_MINUS_1)

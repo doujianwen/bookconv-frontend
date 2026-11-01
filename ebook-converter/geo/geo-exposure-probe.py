@@ -33,12 +33,40 @@ import urllib.request
 import urllib.error
 from urllib.parse import urlparse
 from datetime import datetime, timezone
+from pathlib import Path
+from uuid import uuid4
+import tempfile
 
 GEMINI_MODEL = "gemini-2.5-flash"
 OPENAI_MODEL = "gpt-4o"
 BOOKCONV_DOMAINS = ("bookconv.com",)
 COMPETITOR_HINTS = ("cloudconvert", "convertio", "zamzar", "online-convert",
                     "epub2txt", "djvu2pdf", "smallpdf", "reddit", "github")
+
+
+def write_probe_reports(out_md, out_csv, markdown, csv_text):
+    """Archive both formats before replacing the stable aliases used by measure.mjs."""
+    md_path, csv_path = Path(out_md), Path(out_csv)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-%fZ")
+    archive = md_path.parent / "archive" / f"{md_path.stem}-{stamp}-{uuid4().hex[:8]}"
+    archive.mkdir(parents=True, exist_ok=False)
+    # Preserve the previous aliases too, including the first run after upgrading.
+    for source, name in [(md_path, "previous.md"), (csv_path, "previous.csv")]:
+        if source.exists():
+            (archive / name).write_bytes(source.read_bytes())
+    archived_md, archived_csv = archive / "report.md", archive / "report.csv"
+    archived_md.write_text(markdown, encoding="utf-8")
+    archived_csv.write_text(csv_text, encoding="utf-8")
+    for target, text in [(md_path, markdown), (csv_path, csv_text)]:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=target.parent, delete=False) as tmp:
+            tmp.write(text)
+            staged = tmp.name
+        try:
+            os.replace(staged, target)
+        finally:
+            if os.path.exists(staged):
+                os.unlink(staged)
+    return str(archived_md), str(archived_csv)
 
 
 # ----------------------------------------------------------------------------
@@ -371,11 +399,8 @@ def main():
         md, csv, gaps = build_report(rows, questions)
         out_md = "geo/exposure-report.md"
         out_csv = "geo/exposure-report.csv"
-        with open(out_md, "w", encoding="utf-8") as f:
-            f.write(md)
-        with open(out_csv, "w", encoding="utf-8") as f:
-            f.write(csv)
-        print(f"已生成：{out_md}  {out_csv}  （引用记录 {len(rows)} 条，缺口 {len(gaps)} 个）")
+        archived_md, archived_csv = write_probe_reports(out_md, out_csv, md, csv)
+        print(f"已生成：{out_md}  {out_csv}  归档：{archived_md}  {archived_csv}  （引用记录 {len(rows)} 条，缺口 {len(gaps)} 个）")
         if saw_429 and not rows:
             print("\n[诊断] 全部请求被 429 限流，且重试后仍失败。常见根因：", file=sys.stderr)
             print("  · Gemini：免费层有每日/每分钟配额，今配额可能已用尽；去 AI Studio 查看额度或等重置。", file=sys.stderr)
@@ -411,11 +436,8 @@ def main():
         md, csv, gaps = build_report(rows, questions)
         out_md = "geo/exposure-report-brave.md"
         out_csv = "geo/exposure-report-brave.csv"
-        with open(out_md, "w", encoding="utf-8") as f:
-            f.write(md)
-        with open(out_csv, "w", encoding="utf-8") as f:
-            f.write(csv)
-        print(f"已生成：{out_md}  {out_csv}  （结果 {len(rows)} 条，缺口 {len(gaps)} 个）")
+        archived_md, archived_csv = write_probe_reports(out_md, out_csv, md, csv)
+        print(f"已生成：{out_md}  {out_csv}  归档：{archived_md}  {archived_csv}  （结果 {len(rows)} 条，缺口 {len(gaps)} 个）")
         if saw_429 and not rows:
             print("[诊断] Brave 也全 429：检查 BRAVE_API_KEY 配额或等待重置。", file=sys.stderr)
 
