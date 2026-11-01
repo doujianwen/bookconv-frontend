@@ -1,68 +1,40 @@
-# Ebook QA Reviewer Gatekeeper
-# Pure error correction agent that runs on every PR and merge to main
-# Based on the "´¿¾À´íÖÇÄÜÌå" principles: role fixation, information isolation, veto power
-
+name: Ebook QA Regression Gate
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'ebook-converter/**'
-      - '.github/workflows/qa-reviewer.yml'
+    paths: ['ebook-converter/**', '.github/workflows/qa-reviewer.yml']
   push:
     branches: [main]
-    paths:
-      - 'ebook-converter/**'
-
+    paths: ['ebook-converter/**', '.github/workflows/qa-reviewer.yml']
 jobs:
   ebook-qa-reviewer:
-    name: Ebook QA Reviewer Agent
+    name: Ebook QA Regression Gate
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./ebook-converter
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - Setup Node with cache
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: ebook-converter/package-lock.json
-
-      - Install dependencies
+      - name: Install dependencies
         run: npm ci
-
-      # Run our pure error correction agent script
-      - Run Ebook QA Reviewer Agent
-        id: qa-reviewer
+      # The former workflow referenced a missing scripts/qa/runner.ts and
+      # invalid YAML steps. Run existing executable checks; do not fabricate
+      # an AI review report or treat a missing report as a successful review.
+      - name: Verify source and content integrity
         run: |
-          cd ebook-converter
-          npm install --save-dev typescript ts-node
-          npx ts-node scripts/qa/runner.ts --target pr --verbose
-        env:
-          CI: true
-
-      # Critical: Fail the whole workflow if QA Reviewer finds critical issues
-      - Check Results and Block if Needed
-        run: |
-          REPORT=$PWD/results/qa-report.json
-          if [ -f "$REPORT" ]; then
-            CONCLUSION=$(python3 -c "import json; d=json.load(open('$REPORT')); print(d['conclusion'])")
-            echo "QA Conclusion: $CONCLUSION"
-            if [ "$CONCLUSION" = "failed" ]; then
-              echo "? EBOOK QA REVIEWER: CRITICAL ISSUES FOUND - MERGER BLOCKED"
-              exit 1
-            else
-              echo "? All QA checks passed - no critical blockers"
-            fi
-          fi
-
-      - Upload QA Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: qa-report
-          path: results/qa-report.json
-          retention-days: 30
+          node scripts/syntax-sweep.mjs
+          node scripts/audit-content-integrity.mjs
+          node scripts/seo-critic.mjs
+      - name: Conversion and SEO regression tests
+        run: npm test -- --runInBand src/lib/epub-html.test.ts tests/unit/seo-index-remediation.test.ts tests/unit/schema.test.ts tests/unit/conversion-map.test.ts tests/unit/unsupported-conversions.test.ts src/lib/conversion-purejs-epub.test.ts tests/unit/conversion-budget-cache.test.ts
+      - name: GA export date regression tests
+        run: node --test scripts/lib/ga-date.test.mjs
+      - name: Probe archive regression tests
+        run: python3 geo/test_probe_archiving.py

@@ -18,7 +18,7 @@ export const content = {
 BookConv reads the package document and creates a small HTML index linking the spine chapters in order. Original chapter and resource paths remain unchanged. The output may contain .xhtml files as well as .html files: source markup and extensions are preserved.
 
 This is extraction rather than a layout conversion. It does not normalize CSS, merge chapters, rewrite internal links, or reorganize images into a new folder.` },
-    { heading: 'Upload, Download and Open', body: `Upload your DRM-free EPUB using the conversion area above. Follow the limit shown by the interface. The server upload path is limited to 4 MB; direct storage upload may support larger files.
+    { heading: 'How to Convert EPUB to HTML', body: `Upload your DRM-free EPUB using the conversion area above. Follow the limit shown by the interface. The server upload path is limited to 4 MB; direct storage upload may support larger files.
 
 Download the ZIP and extract the entire archive into one folder. Open index.html to see the chapter links. If the source already contains a root index.html, that file is preserved and the new index is named bookconv-index-0.html, or the next available number.
 
@@ -35,12 +35,26 @@ The ZIP retains the original book content, including any scripts or external ref
 Check headings, alternative text, navigation, canonical URLs and metadata on published pages. Search visibility depends on those pages and their value to readers. Downloading an archive does not establish indexing or ranking.
 
 To package a web document as an ebook, use [HTML to EPUB](/convert/html-to-epub).` }
+    ,{ heading: 'When to Use EPUB to HTML', body: `Choose this export when you need the existing source chapters and their resources for inspection or editing. It is useful for checking a book you authored, comparing source CSS with a reader display, or preparing permitted sample chapters for a website.
+
+Keep the original EPUB as your reading copy and work on a separate extracted folder. For a short quotation, exporting plain text may be simpler than handling a directory of resources. For a printable document, use a PDF conversion instead. This tool does not turn a scanned page into editable text through optical character recognition.` },
+    { heading: 'EPUB and HTML: Format Comparison', body: `EPUB packages documents and a reading order into one file for ebook readers. HTML or XHTML describes individual documents that a browser can display. The export bridges those uses by adding a browser index while retaining the original package contents.
+
+The EPUB manifest and navigation documents remain in the download, but a browser does not become an ebook reader just because it can display a chapter. Page turns, synchronized audio, reader annotations and library features may depend on an ebook application. Opening the extracted index is a way to navigate the chapter files, not a complete replacement for those reader features.` },
+    { heading: 'Quality Checklist for the Extracted Bundle', body: `Start with the first and final chapter links and confirm both contain the expected text. Then check a chapter with images, a table and a footnote if your book contains them. Compare their appearance with the original reader display rather than assuming a successful download proves visual accuracy.
+
+Check that the index sequence matches the table of contents. Follow an internal reference and a stylesheet link. If a resource fails, inspect whether its source path exists in the extracted directory. Retaining original bytes preserves the source files, including any pre-existing broken references; it does not guarantee every browser will render them identically.` },
+    { heading: 'Handling Files and Failed Exports', body: `A failed export can result from an invalid ZIP, a missing container document, a manifest entry that points to an absent chapter, an unsafe archive path, or an upload limit. Try opening the original EPUB in a reader and validate the package structure before retrying. Encryption cannot be removed by this exporter.
+
+Extraction runs on the server. Conversion outputs may be cached; access expiry and physical object deletion are separate mechanisms. Review the [privacy policy](/privacy) for the current handling description. After downloading, keep your source book and extracted folder where you normally store project files. Publishing extracted chapters requires a separate review of your permission to share the material.` }
   ],
   faq: [
     { q: 'Does the download contain one HTML file?', a: 'No. It contains original chapters and resources plus a reading-order HTML index. Chapters may retain their .xhtml extension.' },
     { q: 'Are images and styles preserved?', a: 'Original files and paths are retained. Browser rendering and broken references in the source still need checking.' },
     { q: 'Why will my EPUB not convert?', a: 'Possible causes include an invalid archive, missing package or spine chapter, upload limits and encrypted content. This tool does not decrypt DRM.' },
-    { q: 'Can I open it offline?', a: 'Extract the whole ZIP and open the added index. Local chapters and resources can be viewed offline; external references still require a connection.' }
+    { q: 'Can I open it offline?', a: 'Extract the whole ZIP and open the added index. Local chapters and resources can be viewed offline; external references still require a connection.' },
+    { q: 'Does extraction rewrite links or styles?', a: 'No. Source chapter markup, paths and styles are retained. The exporter adds a reading-order index rather than repairing or restyling the book.' },
+    { q: 'What if my EPUB already has index.html?', a: 'The original file is preserved. The added reading index uses bookconv-index-0.html, or the next available number if that name is occupied.' }
   ],
   authorship: { author: 'BookConv Team', lastVerified: '2026-11-01', credentials: 'Reviewed against the local EPUB extraction implementation and automated fixtures' }
 };
