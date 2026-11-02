@@ -2,7 +2,13 @@
 
 > **Version**: V1 | **Date**: 2026-08-16 | **Purpose**: Personal / team project archive
 > **Scope**: 2026-07-09 inception → 2026-08-15 wrap-up, full development process
-> **Data basis**: Full Git history (240 commits) + work logs + GSC measured data; commit hashes verified against Git
+> **Data basis**: Git history (**snapshot at writing: 240 commits, as of 2026-08-15**) + work logs + GSC measured data; commit hashes verified against Git **at that time**
+
+> 🔴 **2026-11-02 snapshot correction (must be read together with the body)**
+>
+> 1. **All quantitative figures** in this document (240 commits / 88 pages / GSC 3→162 in 16 days) are **2026-08-15 snapshots**, **not current values**. Always cite the date, or nobody can tell in three months whether a number is still true.
+> 2. **Current Git measurement: 360 commits** (`git rev-list --count HEAD`), **earliest commit 2026-09-28**. → The phrase "Full Git history" **no longer holds**: commits from 2026-07-09 to 09-27 are **not in this repository** (e.g. `894ecff` recorded here no longer exists; `git cat-file` returns `Not a valid object name`). Early facts can only be traced via text archives such as this document — **not reproducible via `git log`**.
+> 3. When citing commit counts, write: **240 (2026-08-15 snapshot) / 360 (2026-11-02 measured)**, never a bare number.
 
 ---
 

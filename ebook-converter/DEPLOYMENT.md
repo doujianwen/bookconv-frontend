@@ -1,6 +1,6 @@
 # 电子书转换工具站 - 部署指南
 
-> **最后更新**: 2026-10-05（VPS 状态更正：荧光云实例已到期未续费）
+> **最后更新**: 2026-11-02（部署事实校正：自建 Calibre 后端已上线 —— 原文「Calibre 全部依赖 CloudConvert fallback」已作废）
 
 > 📘 **新人先看这篇**：[`docs/新人部署上手指南-GitHub到Vercel.md`](./docs/新人部署上手指南-GitHub到Vercel.md) — 面向刚接手项目的开发者，讲清从 GitHub push 到 Vercel 上线的完整步骤与常见坑。本文件偏「VPS + Vercel + Cloudflare 全量方案与接线细节」。
 
@@ -9,8 +9,28 @@
 | 组件 | 状态 | 说明 |
 |------|------|------|
 | 前端 + API（Vercel） | ✅ 已上线 | `bookconv.com` → Vercel Serverless |
-| VPS 后端（Calibre） | ❌ 已到期未续费 | 荧光云 VPS（`149.104.69.126`）**已到期、未续费，实例不可用**；Calibre 委派路径整体不可用 |
+| **Calibre 转换后端（自建）** | ✅ **已上线（2026-10-27 起）** | 境外独立节点，独立运行用户 + systemd 限额 + tmpfs 临时目录 + nginx 反代。**这是当前 Calibre 类格式的主路径**。主机地址**不在本文件记载**（见 Vercel 环境变量 `BACKEND_URL` 与内部凭据库） |
+| **CloudConvert（回退路径）** | ⚠️ 熔断回退 | 自建后端连续 3 次失败 → 熔断 60s → 回退 CloudConvert；免费额度有限，仅作兜底 |
+| 旧 VPS（荧光云） | ❌ 已到期未续费 | `149.104.69.126`，2026-10-05 起不可用。**下文所有标注「VPS 已到期」的段落均指这一台，与当前自建后端无关** |
 | Redis 队列 | ❌ 未使用 | Vercel serverless 不支持常驻 Worker，异步队列已降级为同步请求内处理 |
+
+> 🚨 **读本文档前必读（2026-11-02 校正）**
+>
+> 本文写于多轮架构变更之前，**正文中大量「VPS 已到期 / Calibre 不可用 / 依赖 CloudConvert」的表述描述的是 2026-10-05 之前的旧架构**，已不代表现状。现行事实以本节上表为准：
+>
+> | 旧表述（正文残留） | 现行事实 |
+> | --- | --- |
+> | Calibre 类格式依赖 CloudConvert fallback | **走自建 Calibre 后端**；CloudConvert 仅在熔断时兜底 |
+> | `CONVERSION_BACKEND_URL` 无有效值 | 已配置（Vercel `BACKEND_URL`，名称以实际 env 为准） |
+> | 25 个格式在 Vercel 上无法转换 | 已可转换（经后端委派） |
+>
+> **权威来源（优于本文正文）**：
+> - `方案_BookConv转换后端部署_新服务器_2026-10-27.md`（部署方案与隔离加固）
+> - `方案_甲同驻_实施定稿_服务器实测_2026-10-27.md`（服务器实测结论）
+> - `docs/DIRECT_UPLOAD.md`（R2 直传与运维）
+> - `docs/BookConv运营全面复盘-2026-11-01.md`（转换成功率口径）
+>
+> 保留旧正文的理由：它记录了**一次真实的架构失败与切换代价**（免费额度耗尽 → 方案重估 → 自建），删除会丢掉判断依据。
 
 ## 生产地址
 
@@ -42,7 +62,7 @@ docker-compose up -d
 ## VPS 部署（荧光云 — 已到期，本节仅作历史存档）
 
 > ⚠️ **实例已到期未续费**（2026-10-05 用户核实），以下 SSH/安装/配置命令**一律无效**。
-> 现行生产路径：**网站与 API 完全运行在 Vercel**；Calibre 类格式依赖 CloudConvert fallback（额度有限，见文末「已知限制」）。
+> 现行生产路径：网站与 API 在 Vercel；**Calibre 类格式走自建后端**（见页首「当前生产状态」），后端连续失败时熔断回退 CloudConvert。本节仅描述**旧的荧光云实例**，与当前后端无关。
 >
 > 本节保留仅供将来重新采购 VPS 时参考，**不作为可执行方案**。
 
@@ -270,19 +290,22 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 ---
 
-## Vercel 与 VPS 转换后端接线（Calibre 委派 — 已作废，仅作历史存档）
+## Vercel ↔ 转换后端接线（**机制现行有效**；文中旧 VPS 地址已作废）
 
-> ❌ **此路径已不可用**（2026-10-05）。VPS 实例已到期未续费，不存在可委派的 Calibre 后端。
+> 🔴 **2026-11-02 重要更正**：本节此前标为「已作废」，**这个判定是错的**。
+> 作废的是**旧荧光云实例的地址**，不是**委派机制本身** —— 现行生产正是用同一套机制（Vercel 转发到 `/api/convert-internal`）指向**新的自建后端**。把整节当历史存档会导致读者以为机制不存在。
 >
-> 下文三步接线方案**仅作历史存档**。若将来重新采购 VPS，需先确认 CloudConvert 额度与 Vercel Hobby 60s 超时上限这两个已知限制是否已解决 —— 详见文末「已知限制」。
+> **现行接法**：Vercel 环境变量配置后端地址与内部密钥（变量名以 Vercel 项目实际 env 为准），后端提供 `/api/convert-internal`；未配密钥的请求应返回 403。具体主机地址与密钥值**不在本文件记载**，见内部凭据库。
 >
-> 另注：本节原稿在此处与后文「前置条件」自相矛盾（一处写「尚未部署」、一处写「已安装 Calibre」）；两者均与「实例已到期」不符，已一并更正。
+> 下文中所有 `149.104.69.126` 均为**旧实例地址，已失效**，仅保留用于理解当时的接线方式。三步流程（后端重部署 → Vercel 设 env → 双路验证）**逻辑仍适用**。
+>
+> 另注：本节原稿曾与后文「前置条件」自相矛盾（一处写「尚未部署」、一处写「已安装 Calibre」）；两者均与「旧实例已到期」不符，已更正。
 
 Vercel serverless 运行时**没有 Calibre 二进制**，因此 25 个走 Calibre 的格式在 Vercel 上无法转换。方案：Vercel 的 `/api/convert` 在设了 `CONVERSION_BACKEND_URL` 时，把上传**转发**到装 Calibre 的 VPS 的 `/api/convert-internal`，再把结果流式返回。epub→zip 等纯透传格式无需后端，Vercel 本地即可完成。
 
 ### 前置条件
 
-- ~~VPS（荧光云 `149.104.69.126`）已安装 Calibre~~ ❌ **不成立**：该实例已到期，Calibre 从未在本项目部署成功
+- ~~VPS（荧光云 `149.104.69.126`）已安装 Calibre~~ ❌ **仅对该实例不成立**：它已到期。**但 Calibre 现已在 2026-10-27 新建的独立后端节点上部署成功**（见页首「当前生产状态」）
 - ~~VPS 已从 `main` 重新部署~~ ❌ **不成立**：无实例可部署
 
 > 这两条前置条件在原稿中写作已满足，实际均未发生。留着会让人以为「只差配两个环境变量就能上线」。
@@ -308,7 +331,7 @@ Vercel Dashboard → 项目 → Settings → Environment Variables，添加：
 
 | 变量名 | 值 | 说明 |
 |--------|-----|------|
-| `CONVERSION_BACKEND_URL` | ~~`http://149.104.69.126`~~ ❌ 实例已到期，**当前无有效值** | 重新采购 VPS 后填入新公网地址（需能被 Vercel 出站访问） |
+| `CONVERSION_BACKEND_URL` | 旧值 ~~`http://149.104.69.126`~~ ❌ 已失效 | **现已配置指向自建后端**（变量名以 Vercel 项目实际 env 为准）；地址不在此文件记载 |
 | `CONVERSION_INTERNAL_SECRET` | 与步骤 1 中 VPS `.env` 里的随机串完全一致 | 校验转发请求，防开放代理 |
 
 保存后 Vercel 会自动重建。
@@ -325,11 +348,13 @@ curl -F "file=@sample.epub" -F "source_format=epub" -F "target_format=txt" https
 file out.txt
 ```
 
-> 注意：`deploy-production` 的 Verify 步骤从 `curl https://bookconv.com/api/health`（命中 Vercel），不会校验 VPS。VPS 健康请单独 `curl http://localhost:3000/api/health`（VPS 本地 Redis+Calibre）自查。
+> ⚠️ **探针陷阱（2026-11-02 补）**：`deploy-production` 的 Verify 步骤从 `curl https://bookconv.com/api/health`（命中 Vercel），**不会校验转换后端**。所以「CI 绿 = 后端健康」是错的假安全感。后端健康须单独从**能访问该主机的 vantage**实测 `/api/health`；且**必须用一个真实 Calibre 类格式做端到端转换验证**，不能只看健康端点返回 200。
 
 ---
 
-## 已知限制（2026-10-05 实测，VPS 关闭后）
+## 已知限制（2026-10-05 实测；**2026-11-02 部分已解除**）
+
+> 🔴 **本节部分内容已过期**：自建 Calibre 后端 2026-10-27 上线后，「Calibre 类格式全部失败」的限制**已解除**，实际走自建后端；**仍适用**的是：Vercel Hobby 60s 函数超时、CloudConvert 免费额度（现仅作为熔断兜底）。
 
 VPS Calibre 后端已到期关闭后，转换能力受两条**互相独立**的限制约束：
 
@@ -369,7 +394,7 @@ VPS Calibre 后端已到期关闭后，转换能力受两条**互相独立**的�
 
 ---
 
-*最后更新：2026-10-05*
-*当前生产：Vercel（bookconv.com）*
-*后端：荧光云 VPS 149.104.69.126 —— **已到期未续费，实例不可用**（2026-10-05 核实；供应商名此前误记为「莹云」）*
-*Calibre 委派路径已关闭；Vercel 本地仅 epub→txt / epub→zip 可用，其余格式依赖 CloudConvert*
+*最后更新：2026-11-02（部署事实校正：自建 Calibre 后端上线，接线下文机制现行有效）*
+*当前生产：Vercel（bookconv.com）＋ 自建 Calibre 转换后端（境外独立节点，地址见 Vercel env 与内部凭据库，本文件不记载）*
+*旧后端：荧光云 VPS 149.104.69.126 —— **已到期未续费，实例不可用**（2026-10-05 核实；供应商名此前误记为「莹云」），与当前后端无关*
+*转换路径：Calibre 类格式 → 自建后端；后端连续 3 次失败 → 熔断 60s → 回退 CloudConvert（免费额度有限）；Vercel 本地仅直通格式（如 epub→txt / epub→zip）*
