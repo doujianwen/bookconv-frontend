@@ -10,21 +10,8 @@ type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'en';
 
 export async function getLocale() {
-  const cookieStore = await cookies();
-  const localeFromCookie = cookieStore.get('locale')?.value as Locale | undefined;
-
-  if (localeFromCookie && locales.includes(localeFromCookie)) {
-    return localeFromCookie;
-  }
-
-  // M5-6（2026-10-22）：cookie 未设时从 middleware 注入的请求头取 locale。
-  // 根因：根 layout（<html lang> / Header / 页脚 chrome）靠本函数取 locale，而直访
-  // /es/guide/* 时 cookie 尚未写入（Set-Cookie 只对下一请求生效）⇒ 回退 en ⇒
-  // 西语页出现「正文西语、导航英文」且 lang="en" 的错配（slug 页读 params 判 es
-  // 是对的，错的是 layout 侧）。
-  // middleware 对放行的 /es 路径用 NextResponse.next({ request: { headers } })
-  // 注入 x-bookconv-locale，同请求下游渲染可读（Next 官方机制）。
-  // 优先级：cookie（用户显式切换）> URL 前缀请求头 > defaultLocale；英文路径行为不变。
+  // The URL locale injected by middleware is authoritative, even when an old
+  // language cookie exists. Middleware overwrites this header for EN and ES.
   try {
     const { headers } = await import('next/headers');
     const headerStore = await headers();
@@ -35,6 +22,14 @@ export async function getLocale() {
   } catch {
     // 静态渲染 / 无 headers 场景 ⇒ 静默回退 defaultLocale
   }
+
+  const cookieStore = await cookies();
+  const localeFromCookie = cookieStore.get('locale')?.value as Locale | undefined;
+
+  if (localeFromCookie && locales.includes(localeFromCookie)) {
+    return localeFromCookie;
+  }
+
 
   return defaultLocale;
 }

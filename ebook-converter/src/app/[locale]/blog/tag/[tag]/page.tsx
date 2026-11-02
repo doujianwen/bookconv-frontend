@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { Calendar, Tag } from "lucide-react"
 import { getMessage, resolvePath } from '@/i18n/utils'
+import { ESP_BLOG_SLUGS, ESP_TAG_SLUGS } from '@/lib/es-routes'
 import { getHubTags, getPostsByTagSlug } from "@/lib/internal-links"
 
 const PAGE_SIZE = 8
@@ -17,7 +18,7 @@ export async function generateStaticParams() {
   const hubs = getHubTags()
   const out: { locale: string; tag: string }[] = []
   for (const locale of locales) {
-    for (const h of hubs) out.push({ locale, tag: h.slug })
+    for (const h of hubs) if (locale === 'en' || ESP_TAG_SLUGS.includes(h.slug)) out.push({ locale, tag: h.slug })
   }
   return out
 }
@@ -35,27 +36,28 @@ export async function generateMetadata({ params, searchParams }: TagPageProps): 
   const posts = getPostsByTagSlug(tag)
   if (posts.length === 0) return {}
   const label = hub.label
+  const isEs = locale === 'es'
   const prefix = localePrefix(locale)
   const url = `https://www.bookconv.com${prefix}/blog/tag/${tag}`
 
   const pageTitle = currentPage > 1
-    ? `${label} articles — Page ${currentPage}`
-    : `${label} articles`
+    ? `${label} ${isEs ? 'artículos — Página' : 'articles — Page'} ${currentPage}`
+    : `${label} ${isEs ? 'artículos' : 'articles'}`
 
   return {
     title: pageTitle,
-    description: `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
+    description: isEs ? `Guías y comparaciones de BookConv sobre ${label} en español.` : `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
     alternates: {
       canonical: url,
       languages: {
         en: `/blog/tag/${tag}`,
-        es: `/es/blog/tag/${tag}`,
+        ...(ESP_TAG_SLUGS.includes(tag) ? { es: `/es/blog/tag/${tag}` } : {}),
         'x-default': `/blog/tag/${tag}`,
       },
     },
     openGraph: {
       title: `${pageTitle} | BookConv Blog`,
-      description: `Expert BookConv guides about ${label}.`,
+      description: isEs ? `Guías de BookConv sobre ${label}.` : `Expert BookConv guides about ${label}.`,
       type: "website",
       url,
     },
@@ -72,9 +74,10 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
   const { page: pageParam } = await searchParams
   const hub = getHubTags().find((h) => h.slug === tag)
   if (!hub) notFound()
-  const allPosts = getPostsByTagSlug(tag)
+  const allPosts = getPostsByTagSlug(tag).filter(p => locale !== 'es' || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex)).map(p => locale === 'es' && p.es ? { ...p, title: p.es.title, content: p.es.content } : p)
   if (allPosts.length === 0) notFound()
 
+  const isEs = locale === 'es'
   const messages = await getMessage(locale)
   const t = (key: string) => resolvePath(messages, key) || key
   const prefix = localePrefix(locale)
@@ -84,7 +87,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
   const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
 
   if (currentPage > totalPages) {
-    redirect(`${prefix}/blog/tag/${tag}${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
+    redirect(`${prefix}/blog/tag/${tag}`)
   }
 
   const startIdx = (currentPage - 1) * PAGE_SIZE
@@ -107,8 +110,9 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: `${hub.label} articles`,
-            description: `All BookConv guides about ${hub.label}.`,
+            name: isEs ? `Artículos sobre ${hub.label}` : `${hub.label} articles`,
+            inLanguage: isEs ? 'es' : 'en',
+            description: isEs ? `Guías de BookConv sobre ${hub.label} en español.` : `All BookConv guides about ${hub.label}.`,
             url: `https://www.bookconv.com${prefix}/blog/tag/${tag}`,
             hasPart: pagedPosts.map((p) => ({
               "@type": "BlogPosting",
@@ -120,7 +124,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
         }}
       />
 
-      <nav aria-label="Breadcrumb" className="mb-8">
+      <nav aria-label={isEs ? 'Ruta de navegación' : 'Breadcrumb'} className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-gray-500">
           <li><Link href={prefix || "/"} className="hover:text-blue-600">{t("common.home")}</Link></li>
           <li>/</li>
@@ -136,11 +140,11 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
           {hub.label}
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-          Articles tagged &quot;{hub.label}&quot;
+          {isEs ? 'Artículos sobre' : 'Articles tagged'} &quot;{hub.label}&quot;
         </h1>
         <p className="mt-2 text-sm text-gray-500">
-          {allPosts.length} {allPosts.length === 1 ? "article" : "articles"} in this topic.
-          {totalPages > 1 && ` — Page ${currentPage} of ${totalPages}`}
+          {allPosts.length} {isEs ? 'artículos en este tema.' : 'articles in this topic.'}
+          {totalPages > 1 && ` — ${isEs ? 'Página' : 'Page'} ${currentPage} / ${totalPages}`}
         </p>
       </header>
 
@@ -166,7 +170,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
       </div>
 
       {totalPages > 1 && (
-        <nav aria-label="Tag pagination" className="mt-10 flex justify-center gap-2 flex-wrap">
+        <nav aria-label={isEs ? 'Paginación del tema' : 'Tag pagination'} className="mt-10 flex justify-center gap-2 flex-wrap">
           {currentPage > 1 && (
             <Link
               href={pagHref(currentPage - 1)}

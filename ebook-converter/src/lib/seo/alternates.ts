@@ -1,14 +1,8 @@
 /**
  * 单一权威点：构建 canonical + hreflang alternate 语言组。
  *
- * 设计原则：
- * - 首页 / 列表页（homepage / list）：永远只输出 en + x-default，不输出 es
- *   （无真实西语译文的页面输出 es 是错误信号，会让 Google 误以为存在双向语言对）
- * - convert / guide leaf page：当且仅当 hasEsVersion=true 时才输出完整三件套
- *   （目前 3 个 convert 页有真实 es 翻译；guide 中有 10 篇有 es 译文，
- *     其余为英文兜底 —— 调用方必须传 hasEsVersion，漏传会导致 /es/ 页
- *     缺 hrefLang="es" 而被 Google 判为英文版的替代页）
- * - blog leaf page：条件输出——真西语 blog（5 篇）输出三件套，其余 54 篇只输出 en + x-default
+ * 设计原则：仅已验收的 ESP_STATIC_PATHS 及 hasEsVersion 详情页输出双向语言组。
+ * 未开放的列表或未翻译详情不发 es 关联。西语首页规范路径为 /es。
  *
  * 为什么是单一权威点：未来新增一页只调一次 helper，不会再出现各 page 各自实现不一致的 bug。
  *
@@ -17,6 +11,8 @@
  * @param opts.pageType 页面类型：'home' | 'list' | 'leaf'
  * @param opts.hasEsVersion 仅 leaf page 用，true = 该 leaf 有真西语译本（默认 false）
  */
+import { ESP_STATIC_PATHS } from '@/lib/es-routes';
+
 export function buildAlternates(opts: {
   locale: string;
   slugPath: string;
@@ -26,16 +22,16 @@ export function buildAlternates(opts: {
   const baseUrl = 'https://www.bookconv.com';
   const isEs = opts.locale === 'es';
   const prefix = isEs ? '/es' : '';
-  const canonical = `${baseUrl}${prefix}${opts.slugPath}`;
+  const canonical = `${baseUrl}${prefix}${opts.slugPath === '/' ? '' : opts.slugPath}`;
 
-  if (opts.pageType === 'leaf' && opts.hasEsVersion === true) {
+  if ((opts.pageType === 'leaf' && opts.hasEsVersion === true) || ESP_STATIC_PATHS.includes(opts.slugPath)) {
     // 三件套：en ↔ es 双向 + x-default 指回英文版（Google 官方推荐 x-default 指向主力语言）
     return {
       canonical,
       languages: {
-        en: `${baseUrl}${opts.slugPath}`,
-        es: `${baseUrl}/es${opts.slugPath}`,
-        'x-default': `${baseUrl}${opts.slugPath}`,
+        en: `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
+        es: `${baseUrl}/es${opts.slugPath === '/' ? '' : opts.slugPath}`,
+        'x-default': `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
       },
     };
   }
@@ -44,8 +40,8 @@ export function buildAlternates(opts: {
   return {
     canonical,
     languages: {
-      en: `${baseUrl}${opts.slugPath}`,
-      'x-default': `${baseUrl}${opts.slugPath}`,
+      en: `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
+      'x-default': `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
     },
   };
 }

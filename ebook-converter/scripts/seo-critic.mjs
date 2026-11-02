@@ -197,6 +197,8 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
     const block = esRouteSource.match(new RegExp(String.raw`export const ${name}[^=]*= \[([\s\S]*?)\]`))?.[1] || '';
     for (const match of block.matchAll(/'([a-z0-9-]+)'/g)) esRoutes.add(`/es/${group}/${match[1]}`);
   }
+  const staticBlock = esRouteSource.match(/export const ESP_STATIC_PATHS[^=]*= \[([^\]]*)\]/)?.[1] || '';
+  for (const match of staticBlock.matchAll(/'([^']+)'/g)) esRoutes.add(match[1] === '/' ? '/es' : `/es${match[1]}`);
   for (const fp of files) {
     const src = read(fp);
     if (!src) continue;
@@ -209,7 +211,7 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
       if (!url.startsWith('/')) continue; // 外链跳过
       const where = `${fp.replace(ROOT + '/', '')}:${lineOf(src, m.index)}`;
 
-      if (esRoutes.has(url)) url = url.slice(3);
+      if (esRoutes.has(url)) url = url.slice(3) || '/';
       if (KNOWN.has(url)) continue;
       if (url.startsWith('/blog/tag/')) continue; // 标签页动态
 

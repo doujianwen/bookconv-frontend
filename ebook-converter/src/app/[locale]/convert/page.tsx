@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { CONTENT_MAP } from '@/data/content'
+import { unsupportedConversionInfo } from '@/lib/unsupported-conversions'
+import { ESP_CONVERT_SLUGS } from '@/lib/es-routes'
 import { KEYWORDS } from "@/lib/constants"
 import { getConversion, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import { getSlug } from "@/lib/utils"
@@ -16,8 +19,8 @@ const BASE_URL = "https://www.bookconv.com"
 
 export async function generateMetadata({ params }: ConvertIndexProps): Promise<Metadata> {
   const { locale } = await params
-  const title = "All Ebook Format Conversions"
-  const description =
+  const title = locale === 'es' ? 'Herramientas de conversión de libros electrónicos' : 'All Ebook Format Conversions'
+  const description = locale === 'es' ? 'Elige una herramienta de conversión en español. Comprueba formatos compatibles, límites de subida y calidad antes de sustituir el original.' :
     "Browse every ebook format conversion BookConv supports — EPUB, AZW3, MOBI, PDF, and more. Pick a pair and convert free in your browser, no install."
   const { canonical, languages } = buildAlternates({
     locale,
@@ -56,7 +59,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
   // Filtering out "planned" KEYWORDS pairs (epub-to-zip, epub-to-lrf, pdf-to-docx, …)
   // prevents internal links to 404 pages and stops Google from rediscovering them.
   const items = KEYWORDS
-    .filter((k) => getConversion(k.source, k.target))
+    .filter((k) => getConversion(k.source, k.target) && CONTENT_MAP[getSlug(k.source, k.target)] && !unsupportedConversionInfo(k.source, k.target))
     .map((k) => {
       const slug = getSlug(k.source, k.target)
       const conversion = getConversion(k.source, k.target)
@@ -69,15 +72,23 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
       }
     })
 
+  const localizedItems = isEs ? ESP_CONVERT_SLUGS.filter(slug => {
+    const [source, target] = slug.split('-to-')
+    return CONTENT_MAP[slug]?.es && getConversion(source, target) && !unsupportedConversionInfo(source, target)
+  }).map(slug => {
+    const [source, target] = slug.split('-to-')
+    return { slug, source, target, label: CONTENT_MAP[slug].es?.title || `${source.toUpperCase()} a ${target.toUpperCase()}`, description: CONTENT_MAP[slug].es?.metaDescription || '' }
+  }) : items
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Supported ebook format conversions",
-    itemListElement: items.map((item, i) => ({
+    name: isEs ? 'Herramientas de conversión en español' : 'Supported ebook format conversions',
+    inLanguage: isEs ? 'es' : 'en',
+    itemListElement: localizedItems.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${BASE_URL}/convert/${item.slug}`,
-      name: `Convert ${item.label}`,
+      url: `${BASE_URL}${isEs ? '/es' : ''}/convert/${item.slug}`,
+      name: isEs ? item.label : `Convert ${item.label}`,
     })),
   }
 
@@ -88,7 +99,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
       <main className="mx-auto max-w-5xl px-4 py-16">
         <nav aria-label={chrome('breadcrumbLabel', isEs)} className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
-            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
+            <li><Link href={isEs ? '/es' : '/'} className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
             <li>/</li>
             <li aria-current="page" className="font-medium text-gray-900">{chrome('converters', isEs)}</li>
           </ol>
@@ -98,7 +109,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{chrome('allConversions', isEs)}</h1>
           <p className="mt-4 max-w-2xl text-lg text-gray-600">
             {isEs
-              ? 'Todos los pares de formato que BookConv puede manejar, en un solo lugar. Elige un origen y un destino y convierte gratis en tu navegador: sin cuenta, sin instalación, con procesamiento en el servidor.'
+              ? 'Estas herramientas tienen instrucciones en español. Elige un par compatible y revisa sus limitaciones. Los archivos se procesan en servidores; no necesitas una cuenta para convertir un archivo.'
               : 'Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your browser — no account, no installer, server-side processing.'}
           </p>
           <p className="mt-4 max-w-2xl text-base text-gray-600">
@@ -109,7 +120,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
         </header>
 
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
+          {localizedItems.map((item) => (
             <Link
               key={item.slug}
               href={isEs ? esConvertHref(item.slug) : `/convert/${item.slug}`}
@@ -128,8 +139,9 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
           ))}
         </section>
 
+        {isEs && <aside className="mt-8 rounded border p-5"><h2 className="font-semibold">Otros formatos y limitaciones</h2><p className="mt-2">BookConv no exporta DOC antiguo. Consulta la <Link href="/es/convert/epub-to-doc" className="underline">explicación de EPUB a DOC</Link>. Para herramientas sin instrucciones en español, visita el <Link href="/convert" className="underline">directorio completo (en inglés)</Link>.</p></aside>}
         <div className="mt-12 pt-6 border-t">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+          <Link href={isEs ? '/es' : '/'} className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
             {chrome('backToHome', isEs)}
           </Link>
         </div>

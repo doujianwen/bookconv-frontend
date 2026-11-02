@@ -63,7 +63,7 @@ export function BatchConversionGuide({ sourceFormat, targetFormat, isEs = false 
           <Link href="/batch">
             <Button className="gap-2 bg-blue-600 text-white hover:bg-blue-700">
               <Sparkles className="h-4 w-4" />
-              {isEs ? 'Abrir conversión por lotes' : 'Open batch converter'}
+              {isEs ? 'Abrir conversión por lotes (en inglés)' : 'Open batch converter'}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>

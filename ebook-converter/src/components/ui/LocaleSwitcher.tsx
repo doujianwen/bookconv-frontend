@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import {spanishRoute} from '@/lib/es-routes';
 import {useLocale, useTranslations} from 'next-intl';
 import {useRouter, usePathname} from 'next/navigation';
 
@@ -15,7 +16,7 @@ export function LocaleSwitcher() {
     
     const newPath = value === 'en'
       ? pathname.replace(/\/(en|es)/, '').replace(/^\/\//, '/') || '/'
-      : '/' + value + pathname.replace(/^\/(en|es)/, '');
+      : spanishRoute(pathname);
     
     router.push(newPath);
   }

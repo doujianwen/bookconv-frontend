@@ -159,3 +159,15 @@ SEO_BACKUP_PHASE2_TITLE_2026-10-07/
 !/docs/gsc-index-audit-2026-11-01/evidence/local-release-check.json
 !/docs/gsc-index-audit-2026-11-01/evidence/production-conversion-smoke.json
 !/docs/gsc-index-audit-2026-11-01/evidence/dataset-download-check.json
+
+# Local BookConv governance evidence (GSC business data; authoritative files stay in project).
+/docs/tasks/bookconv-special-20261102/evidence/
+/docs/tasks/bookconv-special-20261102/*.zip
+/docs/tasks/bookconv-special-20261102/es-restoration/runtime/
+/docs/tasks/bookconv-special-20261102/es-restoration/*.log
+/docs/tasks/bookconv-special-20261102/es-restoration/*.py
+/docs/tasks/bookconv-special-20261102/es-restoration/*baseline*
+/docs/tasks/bookconv-special-20261102/es-restoration/*results*
+/docs/tasks/bookconv-special-20261102/es-restoration/source-before/
+/docs/tasks/bookconv-special-20261102/es-restoration/local/
+/docs/tasks/bookconv-special-20261102/es-restoration/online/

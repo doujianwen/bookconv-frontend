@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { applySecurityHeaders } from './middleware/security';
-import { ESP_BLOG_SLUGS, ESP_CONVERT_SLUGS, ESP_GUIDE_SLUGS } from './lib/es-routes';
+import { ESP_BLOG_SLUGS, ESP_CONVERT_SLUGS, ESP_GUIDE_SLUGS, ESP_STATIC_PATHS, ESP_TAG_SLUGS } from './lib/es-routes';
 
 /**
  * M5-6（2026-10-22）：放行 /es 路径时注入请求头 x-bookconv-locale=es。
@@ -132,6 +132,9 @@ export async function middleware(request: NextRequest) {
     // /es/* → P3-C rule (2026-09-05): only allow /es/blog/{slug} for the 6
     // real Spanish blog posts. Everything else under /es/ (convert, guide,
     // other blogs) is a pseudo-Spanish spam signal → return 404.
+    const esPath = pathname.slice(3).replace(/\/$/, '') || '/';
+    if (ESP_STATIC_PATHS.includes(esPath)) return esPassThrough(request);
+    if (esPath.startsWith('/blog/tag/') && ESP_TAG_SLUGS.includes(esPath.slice(10))) return esPassThrough(request);
     if (pathname.startsWith('/es/blog/')) {
       const slug = pathname.replace('/es/blog/', '');
       // Validate slug is one of the 6 real Spanish blog posts
@@ -201,7 +204,9 @@ export async function middleware(request: NextRequest) {
   if (pathname === '/') {
     const url = request.nextUrl.clone();
     url.pathname = '/en/';
-    const response = NextResponse.rewrite(url);
+    const englishHeaders = new Headers(request.headers);
+    englishHeaders.set('x-bookconv-locale', 'en');
+    const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
     response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
     return applySecurityHeaders(request, response);
   }
@@ -211,7 +216,9 @@ export async function middleware(request: NextRequest) {
   //   while the browser URL stays unprefixed (clean, SEO-friendly).
   const url = request.nextUrl.clone();
   url.pathname = `/en${pathname}`;
-  const response = NextResponse.rewrite(url);
+  const englishHeaders = new Headers(request.headers);
+  englishHeaders.set('x-bookconv-locale', 'en');
+  const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
   response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
   return applySecurityHeaders(request, response);
 }

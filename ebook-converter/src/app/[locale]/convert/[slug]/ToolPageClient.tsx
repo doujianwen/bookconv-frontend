@@ -602,14 +602,14 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         </section>
 
         {/* Social Proof -- Testimonials */}
-        <section className="mt-12 rounded-xl border bg-gray-50 p-6">
+        {!isEs && <section className="mt-12 rounded-xl border bg-gray-50 p-6">
           <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">{chrome('trustedBy', isEs)}</h3>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.slice(0, 3).map((t, i) => (
               <TestimonialCard key={i} name={t.name} role={t.role} rating={t.rating} text={t.text} />
             ))}
           </div>
-        </section>
+        </section>}
         {/* Related conversions */}
         <RelatedConversions currentSource={source} currentTarget={target} allowedSlugs={allowedConversionSlugs} isEs={isEs} />
       </main>

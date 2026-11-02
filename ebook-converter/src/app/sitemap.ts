@@ -4,7 +4,7 @@ import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
 import { SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { COMPAT_MAP } from '@/data/compat'
-import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS, ESP_CONVERT_SLUGS } from '@/lib/es-routes'
+import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS, ESP_CONVERT_SLUGS, ESP_STATIC_PATHS } from '@/lib/es-routes'
 
 // M3-2 decision (2026-09-27, per SEO/GEO V2.0 拆解表): admit /formats/* and
 // /compat/* to the sitemap. Both carry independent information increment —
@@ -191,6 +191,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // now would re-create the exact spam signal. They are restored in the
     // [locale] rendering fix (see routing task), not here.
     if (locale === 'es') {
+      for (const path of ESP_STATIC_PATHS) {
+        allUrls.push({ url: baseUrl + '/es' + (path === '/' ? '' : path), lastModified: new Date('2026-11-02'), changeFrequency: 'monthly', priority: path === '/' ? 1 : 0.6 })
+      }
       // Only the 6 real Spanish blog posts emit /es/blog/* URLs.
       for (const slug of ESP_BLOG_SLUGS) {
         allUrls.push({

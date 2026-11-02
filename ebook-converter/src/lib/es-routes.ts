@@ -23,6 +23,7 @@ export const ESP_BLOG_SLUGS: readonly string[] = [
   'why-convert-lit-to-epub',
   'epub-vs-pdf',
   'epub-vs-mobi',
+  'txt-to-epub',
 ]
 
 export const ESP_GUIDE_SLUGS: readonly string[] = [
@@ -46,6 +47,7 @@ export const ESP_GUIDE_SLUGS: readonly string[] = [
 export const ESP_CONVERT_SLUGS: readonly string[] = [
   'epub-to-doc',
   'epub-to-word',
+  'html-to-epub',
   'epub-to-txt',
   'lit-to-epub',
   'epub-to-mobi',
@@ -82,4 +84,24 @@ export function localizeEsInternalLinks(markdown: string): string {
     .replace(/\]\(\/blog\/([^)\s]+)\)/g, (m, slug: string) =>
       ESP_BLOG_SLUGS.includes(slug) ? `](/es/blog/${slug})` : m,
     )
+}
+
+
+/** Fully localized static destinations restored after the 2026-11-02 audit. */
+export const ESP_STATIC_PATHS: readonly string[] = ['/', '/convert', '/blog', '/privacy']
+/** Navigation-only collection; intentionally retains the existing tag noindex policy. */
+export const ESP_TAG_SLUGS: readonly string[] = ['epub']
+
+export function hasSpanishRoute(path: string): boolean {
+  const clean = path.replace(/^\/(?:en|es)(?=\/|$)/, '').replace(/\/$/, '') || '/'
+  return ESP_STATIC_PATHS.includes(clean)
+    || (clean.startsWith('/convert/') && ESP_CONVERT_SLUGS.includes(clean.slice(9)))
+    || (clean.startsWith('/guide/') && ESP_GUIDE_SLUGS.includes(clean.slice(7)))
+    || (clean.startsWith('/blog/tag/') && ESP_TAG_SLUGS.includes(clean.slice(10)))
+    || (clean.startsWith('/blog/') && ESP_BLOG_SLUGS.includes(clean.slice(6)))
+}
+
+export function spanishRoute(path: string): string {
+  const clean = path.replace(/^\/(?:en|es)(?=\/|$)/, '').replace(/\/$/, '') || '/'
+  return hasSpanishRoute(clean) ? (clean === '/' ? '/es' : `/es${clean}`) : '/es'
 }

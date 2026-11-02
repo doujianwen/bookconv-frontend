@@ -157,3 +157,74 @@ One practical tip: if your HTML uses styled div elements instead of real heading
     estimatedConversions: '10,000+ monthly'
   }
 };
+
+export const es = {
+  "title": "Convertir HTML a EPUB online",
+  "metaDescription": "Convierte un archivo HTML local a EPUB. Revisa texto, acentos y orden de lectura; no se garantiza conservar imágenes, estilos ni enlaces.",
+  "content": {
+    "hero": {
+      "title": "Convertir HTML a EPUB",
+      "subtitle": "Sube un archivo HTML local para obtener un EPUB. La ruta alternativa extrae texto; no se garantiza conservar imágenes, estilos, enlaces ni capítulos."
+    },
+    "sections": [
+      {
+        "heading": "Cómo convertir un archivo HTML",
+        "body": "1. Guarda el documento con codificación UTF-8.\n2. Sube el archivo .html o .htm en el formulario. Esta herramienta recibe archivos; no ofrece un campo para descargar una página mediante su URL.\n3. Descarga el EPUB y comprueba el texto con un lector compatible. Guarda el original y sus recursos."
+      },
+      {
+        "heading": "Qué puede cambiar durante la conversión",
+        "body": "BookConv puede utilizar un motor de conversión o una ruta alternativa de texto. En la prueba de la ruta alternativa se conservaron las palabras y los acentos, pero no la imagen, el color CSS ni el destino del enlace. El texto del enlace permaneció. El script de la muestra no apareció en el EPUB. Estos resultados no garantizan el comportamiento de cualquier HTML o del otro motor. No dependas de formularios, JavaScript o recursos externos."
+      },
+      {
+        "heading": "Imágenes, enlaces relativos y estilos",
+        "body": "Un archivo HTML suelto no incluye necesariamente sus imágenes ni hojas de estilo. Los recursos relativos pueden faltar al subir solo el documento. No se garantiza que BookConv descargue esos recursos, conserve enlaces navegables o reproduzca la maquetación. Si necesitas fidelidad visual, compara el resultado antes de elegir este flujo. El EPUB no debe sustituir el sitio original."
+      },
+      {
+        "heading": "Tamaño, lotes y precio",
+        "body": "Sigue el límite mostrado por el formulario: hasta 100 MB para la subida directa de un archivo cuando está habilitada; 4 MB en la ruta alternativa y por archivo en los lotes. Para este par, el lote admite hasta 3 archivos. Los lotes son gratuitos durante la beta pública; Pro está previsto para después. Los archivos complejos pueden fallar aun dentro del límite."
+      },
+      {
+        "heading": "Comparación entre HTML y EPUB",
+        "body": "| Formato | Uso | Comprobación |\n| --- | --- | --- |\n| HTML | Documento para navegador con recursos externos posibles | Codificación, enlaces y archivos asociados |\n| EPUB | Libro empaquetado para lectura | Orden del texto, navegación y recursos incluidos |\n\nCambiar la extensión no convierte el documento. La ruta alternativa crea un libro sencillo con texto y navegación básica, sin reconstruir automáticamente los capítulos."
+      },
+      {
+        "heading": "Cuándo utilizar esta herramienta",
+        "body": "Puede servir para leer offline una copia de texto de un artículo propio o de un documento que tengas derecho a convertir. No es una herramienta para capturar sitios completos ni para ejecutar páginas dinámicas. Para preparar un libro de varios capítulos con portada y metadatos precisos, utiliza un editor EPUB y revisa el paquete final."
+      },
+      {
+        "heading": "Lista de comprobación de calidad",
+        "body": "Busca una frase del inicio y otra del final. Revisa ñ, tildes, símbolos, párrafos y orden. Comprueba por separado las imágenes y los enlaces que necesites. La ruta alternativa puede utilizar el título Converted Document y metadatos de idioma en inglés aun cuando el texto sea español; corrígelos en un editor EPUB si son importantes para tu lector."
+      },
+      {
+        "heading": "Si el archivo falla",
+        "body": "Utiliza un archivo no vacío con texto legible y codificación UTF-8. Un documento aceptado no demuestra que todas sus etiquetas y recursos sean compatibles. No renombres un PDF u otro formato como HTML. Si el resultado es texto simplificado, puede haberse utilizado la ruta alternativa. Para otras opciones consulta el [directorio en español](/es/convert)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "¿Puedo pegar una URL?",
+        "a": "No en esta herramienta. El formulario recibe un archivo local; no promete descargar una página mediante su URL."
+      },
+      {
+        "q": "¿Se conservan las imágenes y CSS?",
+        "a": "No se garantiza. La ruta alternativa extrae texto y no incluye las imágenes ni el estilo original."
+      },
+      {
+        "q": "¿El HTML puede contener JavaScript?",
+        "a": "No dependas de su ejecución. El EPUB generado no reproduce una página dinámica; comprueba siempre el resultado."
+      },
+      {
+        "q": "¿Se crean capítulos automáticamente?",
+        "a": "No se garantiza. La ruta alternativa produce un documento de texto con navegación básica, no un capítulo por cada encabezado."
+      },
+      {
+        "q": "¿Cuál es el límite por archivo?",
+        "a": "Consulta el formulario: subida directa hasta 100 MB cuando está habilitada; ruta alternativa y cada archivo por lotes hasta 4 MB."
+      },
+      {
+        "q": "¿Se conservan los acentos?",
+        "a": "La muestra UTF-8 conservó ñ y tildes. Comprueba tu archivo; otras codificaciones o documentos complejos pueden fallar."
+      }
+    ]
+  }
+};

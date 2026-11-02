@@ -9,7 +9,7 @@ import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPost
 import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
-import { esBlogHref, esGuideHref } from "@/lib/es-routes"
+import { esBlogHref, esGuideHref, esConvertHref, ESP_BLOG_SLUGS, ESP_TAG_SLUGS } from "@/lib/es-routes"
 import { chrome, dateLocale } from "@/lib/ui-chrome"
 import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
 
@@ -118,11 +118,17 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
     const displayContent = isEs ? post.es!.content : post.content
     const displayFaqs = isEs ? post.es?.faqs : post.faqs
     const postUrl = `${baseUrl}${isEs ? "/es" : ""}/blog/${post.slug}`
-    const { source, target } = extractSourceTarget(displayTitle)
-    const relatedPosts = getRelatedPosts(post.slug, 3)
-    const relatedGuides = getRelatedGuidesForBlogPost(post.slug, 3)
+    const { source, target } = extractSourceTarget(post.title)
+    const relatedPosts = getRelatedPosts(post.slug, 3).map(rp => {
+      const translated = getAllPosts().find(p => p.slug === rp.slug)?.es
+      return isEs ? { ...rp, title: translated?.title ?? `${rp.title} (en inglés)`, excerpt: translated?.content.intro ?? `${rp.excerpt} (en inglés)` } : rp
+    })
+    const relatedGuides = getRelatedGuidesForBlogPost(post.slug, 3).map(rg => {
+      const translated = getAllGuides().find(g => g.slug === rg.slug)?.es
+      return isEs ? { ...rg, title: translated?.title ?? `${rg.title} (en inglés)`, excerpt: translated?.content.intro ?? `${rg.excerpt} (en inglés)` } : rg
+    })
 
-    const allPosts = getAllPosts()
+    const allPosts = getAllPosts().filter(p => !isEs || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex))
     const curIdx = allPosts.findIndex((p) => p.slug === post.slug)
     const newerPost = curIdx > 0 ? allPosts[curIdx - 1] : null
     const olderPost = curIdx < allPosts.length - 1 ? allPosts[curIdx + 1] : null
@@ -164,9 +170,9 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
         <PageLanguageLinks path={`/blog/${slug}`} isEs={isEs} />
         <nav aria-label={isEs ? 'Migas de pan' : 'Breadcrumb'} className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
-            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
+            <li><Link href={isEs ? '/es' : '/'} className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
             <li>/</li>
-            <li><Link href="/blog" className="hover:text-blue-600">{chrome('blog', isEs)}</Link></li>
+            <li><Link href={isEs ? '/es/blog' : '/blog'} className="hover:text-blue-600">{chrome('blog', isEs)}</Link></li>
             <li>/</li>
             <li aria-current="page" className="font-medium text-gray-900 truncate">{displayTitle}</li>
           </ol>
@@ -187,10 +193,10 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             <span>{post.author || "BookConv Team"}</span>
               <div className="flex items-center gap-1.5">
               {post.tags.map((tag) => {
-                const clickable = isHubTag(tag)
+                const clickable = isHubTag(tag) && (!isEs || ESP_TAG_SLUGS.includes(slugifyTag(tag)))
                 const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
                 return clickable ? (
-                  <Link key={tag} href={`/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
+                  <Link key={tag} href={`${isEs ? '/es' : ''}/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
                     <Tag className="h-2.5 w-2.5 mr-0.5" />
                     {tag}
                   </Link>
@@ -258,15 +264,15 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             <div className="flex flex-wrap gap-2">
               {source && target && (
                 <Link
-                  href={`/convert/${source.toLowerCase()}-to-${target.toLowerCase()}`}
+                  href={isEs ? esConvertHref(`${source.toLowerCase()}-to-${target.toLowerCase()}`) : `/convert/${source.toLowerCase()}-to-${target.toLowerCase()}`}
                   className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                 >
                   <BookOpen className="h-4 w-4" />
-                  Convert {source.toUpperCase()} to {target.toUpperCase()}
+                  {isEs ? 'Convertir' : 'Convert'} {source.toUpperCase()} {isEs ? 'a' : 'to'} {target.toUpperCase()}{isEs && !esConvertHref(`${source.toLowerCase()}-to-${target.toLowerCase()}`).startsWith('/es/') ? ' (en inglés)' : ''}
                 </Link>
               )}
               {source && (
-                <Link href="/convert"
+                <Link href={isEs ? '/es/convert' : '/convert'}
                   className="inline-flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50"
                 >
                   {chrome('browseAllConverters', isEs)}
@@ -309,7 +315,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             {olderPost ? (
               <Link href={isEs ? esBlogHref(olderPost.slug) : `/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
                 <span className="text-xs text-gray-500">{chrome('older', isEs)}</span>
-                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
+                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{isEs ? olderPost.es?.title : olderPost.title}</p>
               </Link>
             ) : (
               <span className="flex-1" />
@@ -317,7 +323,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
             {newerPost ? (
               <Link href={isEs ? esBlogHref(newerPost.slug) : `/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
                 <span className="text-xs text-gray-500">{chrome('newer', isEs)}</span>
-                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
+                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{isEs ? newerPost.es?.title : newerPost.title}</p>
               </Link>
             ) : (
               <span className="flex-1" />
@@ -326,7 +332,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
         )}
 
         <div className="mt-12 pt-6 border-t">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+          <Link href={isEs ? '/es/blog' : '/blog'} className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
             <ArrowLeft className="h-4 w-4" />
             {chrome('backToAllPosts', isEs)}
           </Link>

@@ -34,7 +34,7 @@
     "supportedFormatsTitle": "Formatos de Ebook Soportados",
     "supportedFormatsDesc": "BookConv soporta conversión entre más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y más. Ya sea que necesites convertir libros Kindle, rescatar archivos LIT antiguos o transformar documentos a EPUB, tenemos la solución.",
     "exploreTitle": "Aprende Más Sobre los Formatos de Ebook",
-    "formatsSectionDesc": "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más al instante. Sin registro necesario.",
+    "formatsSectionDesc": "Convierte libros electrónicos y comprueba el resultado. Consulta los formatos compatibles y los límites de cada herramienta.",
     "poweredByCalibre": "Métodos específicos por formato",
     "tutorialTitle": "Tutoriales populares de conversión",
     "tutorialLitDesc": "Convierte en 3 minutos",
@@ -128,7 +128,7 @@
   },
   "seo": {
     "defaultTitle": "BookConv -- Convertidor de Ebooks Online Gratuito | Convierte EPUB, MOBI, AZW3, PDF",
-    "defaultDescription": "Convertidor de ebooks online gratuito que soporta más de 28 formatos: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. Sin registro, sin marcas de agua, sin cuenta.",
+    "defaultDescription": "Herramientas online para convertir libros electrónicos. Consulta formatos compatibles, límites de subida y calidad del resultado. Sin cuenta para un archivo.",
     "founderPage": "Sobre el Fundador — Hongjian Dou (Andy) | Experto en SEO y Visibilidad IA"
   },
   "help": {

@@ -7,6 +7,7 @@ import { getMessage, resolvePath } from '@/i18n/utils'
 import { buildAlternates } from "@/lib/seo/alternates"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
 import { isHubTag, slugifyTag } from "@/lib/internal-links"
+import { ESP_BLOG_SLUGS, esConvertHref } from '@/lib/es-routes'
 import { chrome } from "@/lib/ui-chrome"
 
 const PAGE_SIZE = 8
@@ -30,10 +31,10 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   })
 
   const pageTitle = currentPage > 1
-    ? `${t("blog.title")} — Page ${currentPage}`
+    ? `${t("blog.title")} — ${locale === "es" ? "Página" : "Page"} ${currentPage}`
     : t("blog.title")
 
-  const robots = locale === "es" ? { index: false, follow: true } : undefined;
+  const robots = undefined;
 
   return {
     title: pageTitle,
@@ -62,12 +63,12 @@ export default async function BlogPage({ params, searchParams }: Props) {
   const localeCode = locale === "es" ? "es-ES" : "en-US"
 
   const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
-  const allPosts = getAllPosts()
+  const allPosts = getAllPosts().filter(p => locale !== 'es' || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex)).map(p => locale === 'es' && p.es ? { ...p, title: p.es.title, content: p.es.content } : p)
   const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
   const isEs = locale === 'es'
 
   if (currentPage > totalPages && totalPages > 0) {
-    redirect(`${prefix}/blog${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
+    redirect(`${prefix}/blog`)
   }
 
   const startIdx = (currentPage - 1) * PAGE_SIZE
@@ -119,9 +120,9 @@ export default async function BlogPage({ params, searchParams }: Props) {
       <div className="space-y-8">
         {pagedPosts.map((post) => (
           <article key={post.slug} className="border-b pb-8">
-            <Link href={`${prefix}/blog/${post.slug}`} className="group block">
+            <div className="group block">
               <h2 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                {post.title}
+                <Link href={`${prefix}/blog/${post.slug}`}>{post.title}</Link>
               </h2>
               {post.content?.intro && (
                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">{post.content.intro}</p>
@@ -133,7 +134,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
                 </span>
                 <div className="flex items-center gap-1.5">
                   {post.tags.map((tag) => {
-                    const clickable = isHubTag(tag)
+                    const clickable = isHubTag(tag) && (!isEs || slugifyTag(tag) === 'epub')
                     const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
                     return clickable ? (
                       <Link key={tag} href={`${prefix}/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
@@ -149,7 +150,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
                   })}
                 </div>
               </div>
-            </Link>
+            </div>
           </article>
         ))}
       </div>
@@ -202,10 +203,10 @@ export default async function BlogPage({ params, searchParams }: Props) {
           ].map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={isEs ? esConvertHref(item.href.slice('/convert/'.length)) : item.href}
               className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 border"
             >
-              {item.label}
+              {isEs ? item.label.replace(' to ', ' a ') + (esConvertHref(item.href.slice('/convert/'.length)).startsWith('/es/') ? '' : ' (en inglés)') : item.label}
             </Link>
           ))}
         </div>

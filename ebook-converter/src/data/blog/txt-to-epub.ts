@@ -96,3 +96,59 @@ export const faqs = [
     answer: `Yes. Kindle devices and the Kindle app read EPUB directly through Send to Kindle, or you can convert it onward to AZW3 for native sideloading.`,
   }
 ];
+
+export const es = {
+  "title": "Cómo convertir TXT a EPUB y revisar el resultado",
+  "metaTitle": "Convertir TXT a EPUB: texto, acentos y capítulos",
+  "content": {
+    "intro": "Un archivo TXT puede convertirse en un EPUB legible, pero el resultado no tiene por qué incluir capítulos detectados automáticamente, portada ni un índice detallado. Esta guía explica cómo preparar un texto en UTF-8, convertirlo y comprobar lo que contiene realmente el libro. Conserva siempre el archivo original.",
+    "sections": [
+      {
+        "heading": "Prepara el texto antes de subirlo",
+        "body": "Guarda una copia en UTF-8 y revisa las tildes, la ñ y los saltos de párrafo. Separa los párrafos con líneas en blanco cuando resulte útil. Escribe los títulos de capítulo de forma consistente para facilitar su edición posterior; esto no garantiza que el conversor los reconozca como capítulos. No cambies la extensión de un PDF para simular un TXT."
+      },
+      {
+        "heading": "Convierte el archivo paso a paso",
+        "body": "1. Abre la [herramienta TXT a EPUB (en inglés)](/convert/txt-to-epub).\n2. Sube el archivo respetando el límite que muestra el formulario.\n3. Descarga el EPUB y ábrelo en un lector compatible.\n4. Compara el principio, el final y varios fragmentos intermedios con el original. El tiempo depende del archivo y del método; no hay una duración garantizada."
+      },
+      {
+        "heading": "Qué mostró la prueba real",
+        "body": "Una muestra UTF-8 con Capítulo uno, Capítulo dos, tildes y ñ generó un EPUB descargable con esos textos. La ruta alternativa los guardó en párrafos dentro de un único documento. Su navegación tenía una sola entrada llamada Converted Document; los rótulos de capítulo del TXT no se convirtieron en capítulos separados. Una muestra con codificación antigua falló. Estos casos no prueban que cualquier documento funcione."
+      },
+      {
+        "heading": "Índice, portada y metadatos",
+        "body": "Si necesitas un índice por capítulos, abre el resultado en un editor EPUB, estructura los encabezados y genera la navegación allí. La ruta alternativa utiliza un título genérico y metadatos de idioma en inglés; revisa título, autor e idioma y corrígelos cuando corresponda. La interfaz en español no cambia automáticamente el idioma interno de tu libro."
+      },
+      {
+        "heading": "Comprueba la calidad antes de compartir",
+        "body": "Busca una frase del último párrafo, además de la primera. Revisa caracteres especiales, palabras repetidas, líneas cortadas y párrafos unidos. Abre el índice y confirma que sus enlaces llevan a las secciones correctas. El TXT no contiene imágenes ni estilos que puedan recuperarse por conversión. Si necesitas esos elementos, añádelos con un editor."
+      },
+      {
+        "heading": "Límites de subida y tratamiento de archivos",
+        "body": "Consulta el formulario: la subida directa de un archivo admite hasta 100 MB cuando está habilitada; la ruta alternativa y cada archivo por lotes admiten 4 MB. Un archivo puede fallar aun dentro del límite. Los lotes son gratuitos durante la beta pública; Pro está previsto para después. Los archivos se procesan en servidores y algunas conversiones utilizan terceros. Consulta la [política de privacidad](/es/privacy); esta guía no promete un plazo de eliminación."
+      },
+      {
+        "heading": "Cuándo conviene otro flujo",
+        "body": "Para un manuscrito con muchos capítulos, notas o ilustraciones, considera una herramienta de edición EPUB antes de distribuirlo. Para elegir formato consulta la [comparación de formatos de libros electrónicos](/es/blog/ebook-formats-explained). Puedes encontrar otras herramientas disponibles en el [directorio de conversiones](/es/convert)."
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "¿Se crea automáticamente un índice por capítulos?",
+      "answer": "No se garantiza. La prueba de la ruta alternativa produjo un único documento y una sola entrada de navegación; crea una estructura de capítulos con un editor si la necesitas."
+    },
+    {
+      "question": "¿Cómo evito caracteres incorrectos?",
+      "answer": "Guarda el TXT en UTF-8 y revisa el resultado. La muestra UTF-8 conservó tildes y ñ; una muestra con codificación antigua falló."
+    },
+    {
+      "question": "¿Cuánto tarda la conversión?",
+      "answer": "Depende del archivo y del método utilizado. Esta guía no promete un plazo de segundos."
+    },
+    {
+      "question": "¿Puedo conservar imágenes o maquetación?",
+      "answer": "Un TXT no contiene imágenes ni estilos de maquetación. La conversión no puede recuperarlos del texto."
+    }
+  ]
+};
