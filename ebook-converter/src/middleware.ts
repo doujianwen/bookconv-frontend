@@ -14,12 +14,10 @@ function esPassThrough(request: NextRequest): NextResponse {
   const headers = new Headers(request.headers);
   headers.set('x-bookconv-locale', 'es');
   const response = NextResponse.next({ request: { headers } });
-  response.cookies.set('locale', 'es', { maxAge: 31536000, path: '/' });
   return applySecurityHeaders(request, response);
 }
 
 const locales = ['en', 'es'];
-const defaultLocale = 'en';
 
 // 301 redirects for deduplicated conversion pages.
 // These slugs were removed from KEYWORDS (and thus sitemap/generateStaticParams)
@@ -207,7 +205,6 @@ export async function middleware(request: NextRequest) {
     const englishHeaders = new Headers(request.headers);
     englishHeaders.set('x-bookconv-locale', 'en');
     const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
-    response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
     return applySecurityHeaders(request, response);
   }
 
@@ -219,7 +216,6 @@ export async function middleware(request: NextRequest) {
   const englishHeaders = new Headers(request.headers);
   englishHeaders.set('x-bookconv-locale', 'en');
   const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
-  response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
   return applySecurityHeaders(request, response);
 }
 
