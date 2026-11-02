@@ -200,7 +200,7 @@ describe('buildCandidates', () => {
     expect(items[0].text).toContain('Convertio');
   });
 
-  it('reports "no monitored-competitor pressure" when rivals are all outside Top-100', () => {
+  it('reports unobserved rivals without inferring they are outside Top-100', () => {
     const doc = buildCandidates({
       keywords: [kw('is azw3 compatible with kindle', -7, 12, 5)],
       competitorMatrix: [
@@ -214,7 +214,9 @@ describe('buildCandidates', () => {
     expect(it.type).toBe('no-competitor');
     expect(it.confidence).toBe('medium');
     // It must NOT claim "no competitor caused it" — only that monitored ones are absent.
-    expect(it.text).toContain('均未进入 Top-100');
+    expect(it.text).toContain('均未出现在观测窗口内');
+    expect(it.text).not.toContain('均未进入 Top-100');
+    expect(it.evidence).toContain('不等于');
   });
 
   it('stays silent when rivals are present but there is no baseline (no false "newly entered")', () => {

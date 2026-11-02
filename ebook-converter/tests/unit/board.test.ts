@@ -199,12 +199,14 @@ describe('board derivation', () => {
   const mon = deriveBoard(data, '2026-09-28');
 
   it('reports the totals straight from the data file', () => {
-    // Measured against the live board on 2026-11-01 (after M2-14/M2-15/M2-11
-    // all closed done): 104 tasks, 69 done, 35 open (isOpen = todo + doing + blocked).
+    // Validate the live data rather than freezing yesterday's completion counts.
+    const tasks = data.modules.flatMap((m) => m.tasks);
+    const openCount = tasks.filter((t) => ['todo', 'doing', 'blocked'].includes(t.status)).length;
     expect(view.totals.tasks).toBe(104);
-    expect(view.totals.done).toBe(69);
-    expect(view.totals.open).toBe(35); // todo + doing + blocked
-    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(35);
+    expect(view.totals.done).toBe(tasks.filter((t) => t.status === 'done').length);
+    expect(view.totals.open).toBe(openCount);
+    expect(view.totals.coreOpen + view.totals.suppOpen).toBe(openCount);
+    expect(view.totals.done + view.totals.open + tasks.filter((t) => t.status === 'dropped').length).toBe(view.totals.tasks);
   });
 
   it('lists fixed-date tasks due today', () => {
@@ -342,11 +344,10 @@ describe('board derivation', () => {
     const m1 = mutated.modules.find((m) => m.id === 'M1')!;
     const open = m1.tasks.find((t) => t.status === 'todo' || t.status === 'doing')!;
     const openBefore = open.status;
-    const m1OpenBefore = m1.tasks.filter((t) => t.status === 'todo' || t.status === 'doing').length;
+    const m1OpenBefore = m1.tasks.filter((t) => ['todo', 'doing', 'blocked'].includes(t.status)).length;
     open.status = 'dropped';
     const v = deriveBoard(mutated, '2026-09-27');
-    // Open count is 35 in the live board (2026-11-01); dropping one removes it.
-    expect(v.totals.open).toBe(35 - 1);
+    expect(v.totals.open).toBe(view.totals.open - 1);
     expect(v.modules.find((m) => m.id === 'M1')!.open).toBe(m1OpenBefore - 1);
     expect(openBefore).not.toBe('dropped'); // guard: we picked a real open task
   });
