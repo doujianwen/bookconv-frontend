@@ -25,6 +25,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { normalizeGaDate, dailyWindow } from './lib/ga-date.mjs'
+import { sumDirectUploadInfra, DIRECT_UPLOAD_INFRA_CODES } from './lib/ga-error-codes.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -48,8 +49,10 @@ try {
 const adv = advPath ? readJson(path.basename(advPath)) : null
 const live = readJson('ga4-live.json')
 
-// 非引擎类 error_code（与 ga-inspection splitFailures 同口径）
-const NON_ENGINE = new Set(['FILE_TOO_LARGE', 'CONVERSION_QUOTA_EXCEEDED', 'DIRECT_UPLOAD_FAILED'])
+// 非引擎类 error_code（与 ga-inspection splitFailures 同口径）。
+// ⚠️ 直传族四码走共享常量（scripts/lib/ga-error-codes.mjs）：这是 Part D 红队本身，
+// 漏改会让 D2 引擎失败漏报检查对新码误判（红队审计 2026-11-02 G3，最易被漏改的一处）。
+const NON_ENGINE = new Set(['FILE_TOO_LARGE', 'CONVERSION_QUOTA_EXCEEDED', ...DIRECT_UPLOAD_INFRA_CODES])
 const isEngine = (code) => !!code && !NON_ENGINE.has(code)
 
 const checks = []
@@ -109,12 +112,12 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     const rows = fde.filter((r) => r.date === useDate)
     let advEngine = 0
     for (const r of rows) if (isEngine(r.error_code)) advEngine += Number(r.eventCount) || 0
-    // Part A 当日 engineFailed（failed - client - quota - infra）
+    // Part A 当日 engineFailed（failed - client - quota - 直传族）
     const fec = live?.failedByErrorCode || {}
     const failed = Number(live?.events?.conversion_failed) || 0
     const client = Number(fec.FILE_TOO_LARGE) || 0
     const quota = Number(fec.CONVERSION_QUOTA_EXCEEDED) || 0
-    const infra = Number(fec.DIRECT_UPLOAD_FAILED) || 0
+    const infra = sumDirectUploadInfra(fec)
     const liveEngine = Math.max(0, failed - client - quota - infra)
     if (advEngine > 0 && liveEngine === 0) {
       push('D2', name, 'P0', 'FAIL',

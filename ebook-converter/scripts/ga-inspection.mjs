@@ -18,6 +18,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import https from 'node:https';
+import { DIRECT_UPLOAD_INFRA_CODES } from './lib/ga-error-codes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -120,11 +121,14 @@ function basicFromReport(report) {
 //   兜底：成功率(完成/上传) < 50% 恒判异常（全量口径，防 error_code 误分类漏网）。
 //   error_code 明细缺失时按旧口径（全量 failed）并标 undecided（不可判定不硬报）。
 // 判据（2026-10-31 v3：红队命中后新增基础设施分类）：
-//   * DIRECT_UPLOAD_FAILED      — 直传链路故障（presign/R2/网络），非引擎非客户端 ⇒ 单独展示，
-//     不计入 engineFailed（否则 1 次直传失败+0 完成会误报「引擎失败偏高」）
+//   * 直传族（DIRECT_UPLOAD_FAILED 聚合旧码 + 2026-11-02 拆分的 PRESIGN_UNAVAILABLE/
+//     PRESIGN_ERROR/PUT_FAILED 三码，单一事实源 scripts/lib/ga-error-codes.mjs）
+//     — 直传链路故障（presign/R2/网络），非引擎非客户端 ⇒ 单独展示，
+//     不计入 engineFailed（否则 1 次直传失败+0 完成会误报「引擎失败偏高」）。
+//     ⚠️ 漏改本集合 → 新码掉 else 被算成引擎失败 + 飞书误报系统侧红卡（红队审计 G2）。
 const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE']);
 const QUOTA_CODES = new Set(['CONVERSION_QUOTA_EXCEEDED']);
-const INFRA_CODES = new Set(['DIRECT_UPLOAD_FAILED']);
+const INFRA_CODES = new Set(DIRECT_UPLOAD_INFRA_CODES);
 
 function splitFailures(failed, failedByErrorCode) {
   const f = Number(failed);

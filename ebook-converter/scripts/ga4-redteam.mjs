@@ -25,6 +25,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { sumDirectUploadInfra } from './lib/ga-error-codes.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -133,19 +134,22 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     // 未到达 file_upload 阶段就结束的前置失败（三类，均从不计 file_upload）：
     //   FILE_TOO_LARGE           — 单文件：客户端大小护栏拦截（ToolPageClient.tsx:201）
     //   CONVERSION_QUOTA_EXCEEDED — 批量：额度耗尽跳过，不发 file_upload（BatchUpload.tsx）
-    //   DIRECT_UPLOAD_FAILED     — R2 直传阶段基础设施失败，未发 file_upload（ToolPageClient.tsx:242→line 294 conversion_failed）
-    // 注：DIRECT_UPLOAD_FAILED 在此剥离"到达引擎终态"，但 error-handler 刻意不当作"用户侧拦截"
+    //   直传族（DIRECT_UPLOAD_FAILED 聚合旧码 + 2026-11-02 拆分的 PRESIGN_UNAVAILABLE/
+    //     PRESIGN_ERROR/PUT_FAILED 三码）— R2 直传阶段基础设施失败
+    //     （ToolPageClient.tsx 直传 catch→line 294 conversion_failed），统一经共享常量剥离，
+    //     防「一码三处硬编码、漏改一处即假 FAIL」复发（2026-11-02 红队审计 G1/G3 实证）。
+    // 注：直传族在此剥离"到达引擎终态"，但 error-handler 刻意不当作"用户侧拦截"
     // （要暴露基础设施故障，飞书归灰而非红）；此处仅为口径计算，不改变其告警语义。
-    // 漏剥 DIRECT_UPLOAD_FAILED → 假 FAIL（2026-11-02 实测：8 次直传失败被误判"口径错乱"）。
+    // 漏剥任一直传码 → 假 FAIL（2026-11-02 实测：8 次直传失败被误判"口径错乱"）。
     const ftl = Number(live.failedByErrorCode.FILE_TOO_LARGE) || 0
     const quota = Number(live.failedByErrorCode.CONVERSION_QUOTA_EXCEEDED) || 0
-    const direct = Number(live.failedByErrorCode.DIRECT_UPLOAD_FAILED) || 0
+    const direct = sumDirectUploadInfra(live.failedByErrorCode)
     const preUploadFailures = ftl + quota + direct
     const reached = c + f - preUploadFailures
     // GA4 实时事件计数为近似（非精确事务），小量级 ±2 抖动常见；TOL 吸收抖动避免误判。
     const TOL = 2
     if (reached > u + TOL) push('B6', name, 'P0', 'FAIL', `到达引擎终态(完成+失败−前置失败${preUploadFailures})=${reached} > 上传 ${u}+容差${TOL}（事件重复计数/口径错乱，物理不可能）`)
-    else push('B6', name, 'P0', 'PASS', `到达引擎终态 ${reached} ≤ 上传 ${u}+容差${TOL}（前置失败 FILE_TOO_LARGE=${ftl}+QUOTA=${quota}+DIRECT_UPLOAD=${direct} 未计上传，口径自洽）`)
+    else push('B6', name, 'P0', 'PASS', `到达引擎终态 ${reached} ≤ 上传 ${u}+容差${TOL}（前置失败 FILE_TOO_LARGE=${ftl}+QUOTA=${quota}+直传族=${direct} 未计上传，口径自洽）`)
   } else {
     push('B6', name, 'P0', 'UNKNOWN', '缺 failedByErrorCode 无法剥离客户端拦截，仅凭 完成≤上传 验证，全量一致性不可判定')
   }
