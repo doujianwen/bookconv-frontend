@@ -496,7 +496,8 @@
           "due": "2026-10-31",
           "priority": "P3",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "doing",
+          "statusNote": "[2026-11-02 代码落地，转 doing] ConversionProgress.tsx 单点实施：errorCode===DRM_PROTECTED 时渲染内链块（EN+ES 双语文案，Link→/blog/which-kindle-books-can-you-convert-drm-free-checklist，slug 实测存在于 src/data/blog 非死链）；只改前端展示层未动 API 文案契约。验证：tsc --noEmit 0 错误；5/5 内容断言 PASS；audit-syntax exit 0；文件 CRLF 一致。⏳ 线上验证（accept 前两项）待随下次部署后探针复核，通过后置 done。"
         },
         {
           "id": "M2-11",
@@ -822,8 +823,9 @@
           "due": "2026-10-23",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "todo",
-          "note": "见本文件 social 区块的排期明细"
+          "status": "blocked",
+          "note": "见本文件 social 区块的排期明细",
+          "statusNote": "[2026-11-02 用户决定：社媒先暂停] 状态 todo→blocked（用户主动暂停，非能力阻塞）；恢复发布时转 todo 并按排期表续跑。逾期天数因此不再构成执行信号。"
         },
         {
           "id": "M4-4",
@@ -937,7 +939,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "2026-10-19 诊断报告完成（数据分析/M5-5-es语言错配诊断报告-2026-10-19.md），待用户决策。核心结论：① 错配真实存在但已自行消失——7-8 月 /es/ URL 系统性承接英语查询（21 查询 100% 英语、同查询 es 排名高于 en，如 azw3 vs mobi：es 29 展@9.9 vs en 7 展@12.4），9 月中旬起 /es/ 内容页英语查询展示 77→0 并保持；② 直接原因记 UNKNOWN，但时间线与 09-05 P3-C 白名单（未翻译 /es/ 路由 404→退索引）强相关，当时的错配主体是「英文兜底内容挂 /es/ URL」而非翻译页本身；③ 仍存的设计内错配：/es/guide/* 11 页英文正文+lang=es（M5-2 若翻译则自动消解，长期不翻需 noindex/canonical 单处处置）；④ 当前真问题是全部 /es/ 内容页 0 展示且收录状态不可验证——URL Inspection API 今日 403（服务账号失权限，含 en 页全挂），10-02 历史 Inspection 无 es 页；⑤ 口径澄清：M5-4 的「es 曝光 95/CTR 2.11%」是 Bing CountryReport 地域口径非 GSC 页面级；⑥ 验收③已提前达成（英语查询展示 77→0，信号转移结果已由 P3-C 实现），西语查询 0→0 结合 Bing 侧 95 曝光支持「西语价值在 AI 侧」读法（hedge：样本小）。重构后选项：A 降级常规 SEO / B 建议否决（无问题可解+欺骗性优化风险）/ C1 下架翻译页建议否决（毁 AI 侧资产）/ C2 guide 兜底处置可排队低优先 / D 维持监控=当前默认最优 / E（新）恢复 GSC 服务账号权限验证收录=前置必修（需用户 GSC 后台操作）。推荐路径 E→D+C2 排队→西语战略随 M5-3 定。未 push（连同 e77ea19、9033a90 待发布）。\n[2026-10-19 10:46 已发布] 上述「未 push（连同 e77ea19、9033a90 待发布）」已过期：9033a90（立项）、32b697f（本任务 doing）、e77ea19（M2-12）、c95ef0b（SERP 观测深度防护+数据重建）等共 21 个提交已推送并部署上线。本任务保持 doing（待用户处置决策，推荐路径 E→D+C2）。",
+          "statusNote": "2026-10-19 诊断报告完成（数据分析/M5-5-es语言错配诊断报告-2026-10-19.md），待用户决策。核心结论：① 错配真实存在但已自行消失——7-8 月 /es/ URL 系统性承接英语查询（21 查询 100% 英语、同查询 es 排名高于 en，如 azw3 vs mobi：es 29 展@9.9 vs en 7 展@12.4），9 月中旬起 /es/ 内容页英语查询展示 77→0 并保持；② 直接原因记 UNKNOWN，但时间线与 09-05 P3-C 白名单（未翻译 /es/ 路由 404→退索引）强相关，当时的错配主体是「英文兜底内容挂 /es/ URL」而非翻译页本身；③ 仍存的设计内错配：/es/guide/* 11 页英文正文+lang=es（M5-2 若翻译则自动消解，长期不翻需 noindex/canonical 单处处置）；④ 当前真问题是全部 /es/ 内容页 0 展示且收录状态不可验证——URL Inspection API 今日 403（服务账号失权限，含 en 页全挂），10-02 历史 Inspection 无 es 页；⑤ 口径澄清：M5-4 的「es 曝光 95/CTR 2.11%」是 Bing CountryReport 地域口径非 GSC 页面级；⑥ 验收③已提前达成（英语查询展示 77→0，信号转移结果已由 P3-C 实现），西语查询 0→0 结合 Bing 侧 95 曝光支持「西语价值在 AI 侧」读法（hedge：样本小）。重构后选项：A 降级常规 SEO / B 建议否决（无问题可解+欺骗性优化风险）/ C1 下架翻译页建议否决（毁 AI 侧资产）/ C2 guide 兜底处置可排队低优先 / D 维持监控=当前默认最优 / E（新）恢复 GSC 服务账号权限验证收录=前置必修（需用户 GSC 后台操作）。推荐路径 E→D+C2 排队→西语战略随 M5-3 定。未 push（连同 e77ea19、9033a90 待发布）。\n[2026-10-19 10:46 已发布] 上述「未 push（连同 e77ea19、9033a90 待发布）」已过期：9033a90（立项）、32b697f（本任务 doing）、e77ea19（M2-12）、c95ef0b（SERP 观测深度防护+数据重建）等共 21 个提交已推送并部署上线。本任务保持 doing（待用户处置决策，推荐路径 E→D+C2）。\n[2026-11-02 E 步重测：API 侧仍未恢复] 用户告知 GSC 已恢复 ⇒ 实测重跑：服务账号 bookconv-gsc-reader@bookconv-gsc.iam.gserviceaccount.com 对三种资源口径（sc-domain:bookconv.com / https://www.bookconv.com / https://bookconv.com）全部 403 PERMISSION_DENIED（\"You do not own this site, or the inspected URL is not part of this property\"）；隔离对照=英文页同 403 ⇒ 账号整体无权限，非 es 特异性、非代理/网络问题（token 获取成功、API 真实响应）。24 个 /es/ 页 0/24 成功，未获任何收录数据。⏸️ 阻塞在用户动作：GSC → 设置 → 用户和权限 → 添加用户 bookconv-gsc-reader@bookconv-gsc.iam.gserviceaccount.com（或核实恢复的是哪个账号），生效后重跑 node scripts/check-indexing.mjs /tmp/es-urls.txt（24 URL 清单已备）。E 步保持 blocked-on-user，其余结论不变。",
           "note": "来源：M2-12 P1 残余单独立项（用户 10-19 指令「对P1残余单独立项」）。样本量义务：77 展示/91 天≈0.85 展示/天，任何 CTR 类结论必须带样本量，预期收益上限约 2-4 点击/周——小 ROI 问题，但属程序化页面治理的结构性样本，且为 de/ja 语言扩张的前置探路。与 M5-2（补西语 guide 译文，due 10-20）、M5-3（es 内容扩充，due 11-15）存在方向张力：西语战略需在本任务决策点同步明确。"
         },
         {
@@ -1667,8 +1669,8 @@
           "due": "2026-11-01",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "note": "2026-10-15 用户决策提前创建：自动化已建（id f112c8ff，ACTIVE，每月 1 日 10:00，首跑 2026-11-01，本月不执行）；首跑成功并留验证记录后置 done"
+          "status": "done",
+          "note": "2026-10-15 用户决策提前创建：自动化已建（id f112c8ff-e583-4799-99a9-8ceaccc957d3，ACTIVE，每月 1 日 10:00，本月不执行）；首跑成功并留验证记录后置 done。｜[2026-11-02 置 done] 首跑 2026-11-01 10:00 成功（tabbit 抓取 BWT Topic Portfolio，7 主题+50 机会词，与 10-14 基线 delta=0）；验证记录=自动化 memory.md（含红队复核 PASS WITH RESIDUALS + 二次审计）+ 产物 TopicPortfolio_snapshot_2026-11-01.json/.csv、月度对比报告、SOP v2（docs/TopicPortfolio快照SOP-v2-2026-11-01.md，下次快照按此执行）。产物已逐一实测核验落盘。"
         },
         {
           "id": "M11-9",
@@ -1680,7 +1682,8 @@
           "due": "2026-11-15",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo"
+          "status": "blocked",
+          "statusNote": "[2026-11-02 用户决定：充值先暂停] 状态 todo→blocked（付费决策挂起，等待充值窗口重开）。连带影响：M11-5 R_post 的 ChatGPT 429 阻塞同步维持，解阻时两项一起动。"
         }
       ]
     }

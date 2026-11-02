@@ -1,6 +1,7 @@
 "use client"
 
 import { Loader2, CheckCircle2, AlertTriangle, FileX } from "lucide-react"
+import Link from "next/link"
 import type { ErrorCode } from "@/lib/error-handler"
 import { getFriendlyMessage, isRetryable } from "@/lib/error-handler"
 import { chrome } from "@/lib/ui-chrome"
@@ -72,6 +73,30 @@ export function ConversionProgress({ status, progress = 0, errorMessage, errorCo
             <div className="flex items-start gap-2 pl-8">
               {ERROR_HINTS[errorCode].icon}
               <span className="text-xs text-gray-500">{isEs ? (ERROR_HINTS[errorCode].hintEs ?? ERROR_HINTS[errorCode].hint) : ERROR_HINTS[errorCode].hint}</span>
+            </div>
+          )}
+          {/* M2-10: DRM error becomes an internal-link surface — point users
+              at the on-site DRM guide instead of a dead end. Display layer
+              only; the API error message contract is untouched. */}
+          {errorCode === "DRM_PROTECTED" && (
+            <div className="pl-8 text-xs text-gray-500">
+              {isEs ? (
+                <>
+                  ¿No sabes si tu archivo tiene DRM? Consulta la{" "}
+                  <Link href="/blog/which-kindle-books-can-you-convert-drm-free-checklist" className="font-semibold text-blue-600 underline hover:text-blue-700">
+                    guía de archivos Kindle sin DRM
+                  </Link>
+                  .
+                </>
+              ) : (
+                <>
+                  Not sure if your file is DRM-free? Check the{" "}
+                  <Link href="/blog/which-kindle-books-can-you-convert-drm-free-checklist" className="font-semibold text-blue-600 underline hover:text-blue-700">
+                    DRM-free Kindle conversion checklist
+                  </Link>
+                  .
+                </>
+              )}
             </div>
           )}
           {/* Machine-readable code — surfaces the real cause (e.g. a non-JSON
