@@ -1,0 +1,57 @@
+{
+  "note": "7 个 GBK 乱码文件名按内容证据重命名。原始字节被二次破坏(含 U+07BB 等异区码点)不可反解，故不靠字符推断；映射依据=与 _archived/数据分析-2026-10-27/ 同批次文件的内容比对(表头/首行/行数/md5)，每项均为唯一候选。命名沿用归档系列规范 GSC_<维度>_<日期>.csv。",
+  "date": "2026-11-02",
+  "count": 7,
+  "items": [
+    {
+      "old": "µÑ޻óµò¦.csv",
+      "new": "GSC_查询数_2026-09-24.csv",
+      "md5": "7486d389879e9c80dcaadc1756d8a8b8",
+      "size": 12115,
+      "evidence": "hdr=热门查询; head 全等; 399行 vs 归档401行(导出窗口不同)"
+    },
+    {
+      "old": "µɣþ¦óþ+ôµףÕæêþĦ.csv",
+      "new": "GSC_搜索结果呈现_2026-09-24.csv",
+      "md5": "5e8b290076b7d6c4060417bf54348cc6",
+      "size": 55,
+      "evidence": "md5 与归档完全一致"
+    },
+    {
+      "old": "Õø¢իÂ_գ¦Õî¦.csv",
+      "new": "GSC_国家地区_2026-09-24.csv",
+      "md5": "eef6e44c90c2fce882dd8b8f6b24f2af",
+      "size": 2004,
+      "evidence": "hdr+head+85行 与归档完全一致"
+    },
+    {
+      "old": "Õø¥Þí¿.csv",
+      "new": "GSC_图表_2026-09-24.csv",
+      "md5": "790d77fcaad5aea3dff5b8ed54648b29",
+      "size": 1498,
+      "evidence": "hdr=日期; head 全等; 61行 vs 归档64行(导出窗口不同);归档报告称'日期.csv'"
+    },
+    {
+      "old": "Þ+çµ+ñÕֿ.csv",
+      "new": "GSC_过滤器_2026-09-24.csv",
+      "md5": "df39ec4f9d0baa9d0f379cba13c6bdcb",
+      "size": 56,
+      "evidence": "md5 与归档完全一致"
+    },
+    {
+      "old": "þ¢æÚíÁ.csv",
+      "new": "GSC_网页_2026-09-24.csv",
+      "md5": "8309523e92cbe8af27b6cb9aa27a2162",
+      "size": 3401,
+      "evidence": "hdr+head+56行 与归档完全一致"
+    },
+    {
+      "old": "ޫ¥Õñç.csv",
+      "new": "GSC_设备_2026-09-24.csv",
+      "md5": "bdfc74812b184a04c2df5d44c693b0c1",
+      "size": 125,
+      "evidence": "hdr+head+3行 与归档完全一致"
+    }
+  ],
+  "storage_note": "本文件已入库至 docs/project-governance/，作为改名依据的硬证据（size+md5）。数据分析/ 不入库，故不随数据目录存放。"
+}
