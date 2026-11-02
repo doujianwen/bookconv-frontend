@@ -54,11 +54,11 @@ Convert Schema: SoftwareApplication + HowTo + FAQPage + BreadcrumbList
 | 1 | About Source Format | "About.*Format" | - | 建立主题权威性 |
 | 2 | About Target Format | "About.*Format" | - | 建立主题权威性 |
 | 3 | Why Convert | "Why Convert" | - | 匹配搜索意图 |
-| 4 | **When to Use** | "When.*Use|When.*Need" | ≥300词 | 捕获长尾关键词 |
-| 5 | **How to Convert** | "How to|Step by Step" | ≥400词 | 配合 HowTo Schema |
-| 6 | **Format Comparison** | "Comparison|vs\b" | ≥200词 | 捕获对比类搜索词 |
-| 7 | **Quality Checklist** | "Quality|Checklist" | ≥150词 | 提升权威性 |
-| 8 | FAQ | "FAQ|Frequently Asked" | ≥6条 | 配合 FAQPage Schema |
+| 4 | **When to Use** | `"When.*Use|When.*Need"` | ≥300词 | 捕获长尾关键词 |
+| 5 | **How to Convert** | `"How to|Step by Step"` | ≥400词 | 配合 HowTo Schema |
+| 6 | **Format Comparison** | `"Comparison|vs\b"` | ≥200词 | 捕获对比类搜索词 |
+| 7 | **Quality Checklist** | `"Quality|Checklist"` | ≥150词 | 提升权威性 |
+| 8 | FAQ | `"FAQ|Frequently Asked"` | ≥6条 | 配合 FAQPage Schema |
 
 **质量标准**（阈值校准见 §2.4，2026-09-25）:
 - 英文正文词数 ≥ 1000（满分）/ ≥ 600（合格底线）；旧「2000 词」阈值实测不可达，已废止

@@ -41,7 +41,10 @@
     "export:sheets": "node scripts/export-sheets.mjs",
     "topics:derive": "node scripts/derive-topics.mjs",
     "audit:sync": "node scripts/audit-hermes-context-sync.mjs",
-    "test:board": "node --experimental-strip-types scripts/check-board-json.mjs"
+    "test:board": "node --experimental-strip-types scripts/check-board-json.mjs",
+    "audit:doc-integrity": "node scripts/check-doc-integrity.mjs --governance",
+    "audit:doc-integrity:all": "node scripts/check-doc-integrity.mjs",
+    "audit:doc-integrity:self-test": "node scripts/check-doc-integrity.mjs --self-test"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

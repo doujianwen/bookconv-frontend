@@ -36,14 +36,41 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
+// 阻断门禁范围：仅这 7 份治理/战略/素材文档（本次要保护的对象，实测 FAIL 0）。
+// 其余历史文档（含日志表自由文本里的 |、## 11/1 日期标题等）走 advisory 全量扫描，不阻断。
+const GOVERNANCE_DOCS = [
+  'docs/strategy/BookConv-战略定位与四项职能-V1.0.md',
+  'docs/strategy/BookConv-原始规划与战略演进梳理-V1.0.md',
+  'docs/strategy/BookConv-知识资产盘点报告-V1.0.md',
+  'docs/learning-materials/BookConv-实战素材库索引-V1.0.md',
+  'docs/learning-materials/素材沉淀机制-SOP-V1.0.md',
+  'docs/project-governance/BookConv-战略整合红队审计-V1.0.md',
+  'docs/project-governance/BookConv-本次更新执行与验收报告-V1.0.md',
+];
+
 // ───────────────────────────── 单文件检查 ─────────────────────────────
 
-/** 按「未转义的 |」拆表格行。Markdown 里 `\|` 是单元格内的字面竖线（例如 grep "a\|b"）。 */
+/**
+ * 按「未转义的 |」拆表格行。遵循 CommonMark：
+ *   · `\|` 是单元格内的字面竖线（例如 grep "a\|b"）→ 不当分隔符
+ *   · 反引号代码串（`...|...`）内的 | 也不当分隔符（GitHub 亦如此渲染）
+ *     —— 否则 `| BookConv | Free |` 这类对比表会被误判为列数不一致（首版实测踩过）
+ */
 function splitRow(line) {
   const cells = [];
   let cur = '';
+  let inCode = false;
   for (let i = 0; i < line.length; i++) {
     const ch = line[i];
+    if (ch === '`') {
+      inCode = !inCode;
+      cur += ch;
+      continue;
+    }
+    if (inCode) {
+      cur += ch;
+      continue;
+    }
     if (ch === '\\' && line[i + 1] === '|') {
       cur += '\\|';
       i++;
@@ -71,13 +98,22 @@ function checkFile(file) {
   const lines = text.split(/\r?\n/);
   const findings = [];
 
-  // ── D1：H2 章节编号唯一（子号必须完整保留：1.5 ≠ 1，G.2 ≠ G）
-  // 正则要点：`(?:\.\d+)*` 必须贪婪吃完整子号；`(?=\s|$)` 保证编号后是真分隔，
-  // 否则 "## 1.5 xxx" 会被截断成 "1" 而与 "## 1. xxx" 误判重复（首版实测踩过）。
+  // ── D1：H2 章节编号唯一（仅提取「章节号形态」标记，排除英文单词标题）
+  // 章节号形态：①单字母+分隔符（A. / B) / C:) ②字母.数字（G.2）③纯数字（1 / 1.5）④M.数字（M.4）
+  // 反例（不提取）："## Layer 2:"、"## Persona B:" —— 首单词是完整英文词，非章节号；
+  //   若整体提取会误把 "Layer" 截成 "L"，与真实的 "## L. 变更记录" 撞成假重复（首版实测踩过）。
+  // 注：纯数字分支加了 (?![0-9/\-]) 负向前瞻——排除「## 11/1 晚间状态补记」「## 2026-10-01」
+  // 这类日期标题被误当成章节号而假报重复（实测 geo-growth-experiment 踩过此坑；首版只写 (?![/\-])，
+  // 正则会回溯取「11/1」的首位「1」去和真章节「## 1」撞重复，故前瞻要同时排除「数字」）。
+  // 真章节号后是空格或点号，日期后是 / 或 - 或续接数字，故前瞻即可区分。
+  const h2TokRe = /^##\s+((?:[A-Z]\.[0-9]+)|(?:[A-Z][.、):])|(?:[0-9]+(?:\.[0-9]+)*)(?![0-9/\-])|(?:M\.[0-9]+))/;
   const h2Tokens = [];
   lines.forEach((line, idx) => {
-    const m = /^##\s+([A-Za-z0-9]+(?:\.\d+)*)[.、)]?(?=\s|$)/.exec(line);
-    if (m) h2Tokens.push({ token: m[1], line: idx + 1, title: line.trim() });
+    const m = h2TokRe.exec(line);
+    if (m) {
+      const token = m[1].replace(/[.、):]$/, ''); // "A." → "A"；"G.2"/"1.5"/"M.4" 不变
+      h2Tokens.push({ token, line: idx + 1, title: line.trim() });
+    }
   });
   const seen = new Map();
   for (const h of h2Tokens) {
@@ -94,7 +130,12 @@ function checkFile(file) {
   }
 
   // ── D2：表格内各行列数一致
+  // 关键：跳过围栏代码块（``` / ~~~）内的行 —— 否则 shell 管道 `curl | jq`、
+  // JSON、`grep "a|b"` 等以 | 开头的代码行会被误当表格行，制造大量假 FAIL
+  // （纪律：假失败比没门禁更坏，门禁必须高精而非高召回）。
   let block = [];
+  let inFence = false;
+  let fenceMarker = '';
   const flush = () => {
     if (block.length === 0) return;
     const rows = block.filter((r) => !isSeparatorRow(r.line));
@@ -115,6 +156,19 @@ function checkFile(file) {
     block = [];
   };
   lines.forEach((line, idx) => {
+    const fenceMatch = /^(\s*)(```|~~~)/.exec(line);
+    if (fenceMatch) {
+      if (!inFence) {
+        inFence = true;
+        fenceMarker = fenceMatch[2];
+        flush(); // 围栏前的表格结束
+      } else if (line.trim().startsWith(fenceMarker)) {
+        inFence = false;
+        fenceMarker = '';
+      }
+      return; // 围栏标记行本身不进表格
+    }
+    if (inFence) return; // 代码块内：跳过失落处理，也不入 block
     if (line.trim().startsWith('|')) {
       block.push({ line, no: idx + 1 });
     } else {
@@ -186,7 +240,12 @@ const FIXTURES = {
   'd-escaped-pipe.md': `# T\n\n| 判据 | 证据 |\n| --- | --- |\n| 检索 | \`grep "素材\\|课程"\` 零命中 |\n| 行数 | 360 |\n`,
   // 回归用例：子号章节（1.5 / G.2）不得被判成与主号（1 / G）重复
   'd-subnumber-ok.md': `# T\n\n## 1. 甲\n\n内容\n\n## 1.5 子节\n\n内容\n\n## 1.6 子节\n\n内容\n\n## G. 乙\n\n内容\n\n## G.2 子节\n\n内容\n`,
+  // 回归用例：围栏代码块内以 | 开头的行（shell 管道 / JSON）不得触发 D2
+  'd-fence-pipe.md': `# T\n\n## A. 甲\n\n\`\`\`bash\ncurl -s url | jq '.a | .b'\ngrep "x|y" file\n\`\`\`\n\n| a | b |\n| --- | --- |\n| 1 | 2 |\n`,
   'd-clean.md': `# T\n\n## A. 甲\n\n| a | b |\n| --- | --- |\n| 1 | 2 |\n\n## B. 乙\n\n比例 51.9%（80/154）正确。\n`,
+  // 回归用例：日期标题（## 11/1 / ## 2026-10-01）不得被误判为章节号重复；
+  // 用「## 1 真实章节」做碰撞靶——若门禁回溯取「11/1」的首位「1」就会和「## 1」撞重复而 FAIL
+  'd-date-heading-ok.md': `# T\n\n## 11/1 晚间状态补记（以此处更新为准）\n\n## A. 章节\n\n## 1 真实章节\n\n内容\n`,
 };
 
 function selfTest() {
@@ -216,7 +275,9 @@ function selfTest() {
       expectFail('d3-wrong-pct.md', 'D3'),
       expectNoFail('d-escaped-pipe.md'), // 反向验证：转义竖线不得误报 D2
       expectNoFail('d-subnumber-ok.md'), // 回归：1.5/G.2 不得误报 D1
+      expectNoFail('d-fence-pipe.md'), // 回归：代码块内 | 行不得误报 D2
       expectNoFail('d-clean.md'),
+      expectNoFail('d-date-heading-ok.md'), // 回归：日期标题不得误判章节号
     ];
 
     let bad = 0;
@@ -251,10 +312,16 @@ function main() {
   const argv = process.argv.slice(2);
   if (argv.includes('--self-test')) return selfTest();
   const asJson = argv.includes('--json');
+  const useGovernance = argv.includes('--governance');
   const files = argv.filter((a) => !a.startsWith('--'));
 
-  let targets = files.map((f) => path.resolve(f));
-  if (targets.length === 0) {
+  let targets;
+  if (useGovernance) {
+    targets = GOVERNANCE_DOCS.map((f) => path.resolve(ROOT, f));
+  } else if (files.length > 0) {
+    targets = files.map((f) => path.resolve(f));
+  } else {
+    // 默认：全量扫描 docs/（advisory，可能含历史文档的噪音 FAIL）
     const docs = path.join(ROOT, 'docs');
     targets = fs.existsSync(docs) ? walk(docs) : [];
   }
