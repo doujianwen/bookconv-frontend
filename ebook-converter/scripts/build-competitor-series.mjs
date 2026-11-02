@@ -203,6 +203,11 @@ function main() {
         // note written by fetch-competitor-serp.mjs.
         url: latest.url ?? null,
         observedDepth: latest.observedDepth ?? null,
+        // 🔴 M22-1（2026-11-02 新增）：补存上期观测深度，使「掉出是否因窗口变浅」这一归因
+        // 可从 matrix 直接算出，无需回原始快照手工重算。
+        // 若 rawPrev.observedDepth 不存在（旧快照 2026-10-19 之前），记 null ——
+        // 调用方遇到 null 应把该行归因标 UNKNOWN 而非 SHRUNK。
+        prevObservedDepth: rawPrev ? (rawPrev.observedDepth ?? null) : null,
         shallowBaselineSkipped: shallowSkipped,
         // false = 上期快照没有记录观测深度（2026-10-19 之前的老快照），
         // 此时 trend=new 只意味着「无有效前期基准」，不可表述为「新进入 Top-100」。

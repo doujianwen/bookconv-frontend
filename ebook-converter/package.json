@@ -30,6 +30,7 @@
     "audit:nojs": "node scripts/verify-nojs-render.mjs",
     "audit:repo": "node scripts/audit-repo-hygiene.mjs",
     "build:workbench": "node scripts/build-workbench-html.mjs",
+    "build:workbench:gate": "npm run build:workbench && npm run audit:workbench",
     "fetch:bing": "node scripts/fetch-bing-webmaster.mjs",
     "fetch:gsc": "node scripts/fetch-gsc-webmaster.mjs",
     "build:keywords": "node scripts/build-keyword-series.mjs",

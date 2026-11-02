@@ -19,12 +19,19 @@
 // NOTE ON SCOPE: this only checks the workbench's own claims. A pass here is
 // not evidence about SEO content quality — use publish-gate for that.
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+// M22-2: the gate can only vouch for artifacts that already existed when the
+// gate started. Anything written *after* this moment is a version this run
+// never inspected (2026-11-02: the report claimed a 47/0 gate pass while
+// keyword-series.json was re-written 37s after the gate ran). Recorded at
+// module load so it is the earliest possible instant of this process.
+const GATE_START_MS = Date.now();
 
 
 const failures = [];
@@ -343,6 +350,55 @@ check(
   /if\s*\(!data\)/.test(kwPage) && /fetch:bing/.test(kwPage),
   'the keyword page explains how to generate the series when it is missing'
 );
+
+// ---------------------------------------------------------------- P7
+// M22-2 staleness self-check: every artifact this gate's verdicts rest on
+// must have been written BEFORE the gate started. A missing artifact is
+// UNKNOWN (fresh clone is a legitimate state); a NEWER artifact means the
+// gate would be auditing a stale snapshot of reality -> FAIL, never pass
+// through to "looks fine".
+const AUDITED_ARTIFACTS = [
+  'workbench.html',
+  'data/keyword-series.json',
+  'data/competitor-series.json',
+  'data/keyword-reason-candidates.json',
+];
+const staleArtifacts = [];
+const missingArtifacts = [];
+for (const rel of AUDITED_ARTIFACTS) {
+  try {
+    const mtimeMs = statSync(join(ROOT, rel)).mtimeMs;
+    if (mtimeMs > GATE_START_MS) staleArtifacts.push(`${rel} (written after gate start)`);
+  } catch {
+    missingArtifacts.push(rel);
+  }
+}
+check(
+  'P7.1',
+  staleArtifacts.length === 0,
+  `audited artifacts predate this gate run (${AUDITED_ARTIFACTS.length - staleArtifacts.length - missingArtifacts.length}/${AUDITED_ARTIFACTS.length} present${staleArtifacts.length ? '; STALE: ' + staleArtifacts.join(', ') : ''})`
+);
+
+// ---------------------------------------------------------------- P7.2
+// M22-1 completion guard: the competitor matrix now carries prevObservedDepth,
+// so the "gone = fell out of the observed window" attribution must be 100%
+// decidable. A gone row with prevObservedDepth === null means we CANNOT tell
+// whether the rival actually dropped or the shallow observed window (6–9/100,
+// not 100) clipped an edge rank — that gap used to require a manual re-read of
+// the raw competitor-serp snapshots. Any undecidable row is a FAIL, never a
+// silent pass-through to "looks fine".
+try {
+  const comp = JSON.parse(read('data/competitor-series.json'));
+  const gone = (comp.matrix || []).filter((r) => r.trend === 'gone');
+  const undecidable = gone.filter((r) => r.prevObservedDepth === null).length;
+  check(
+    'P7.2',
+    undecidable === 0,
+    `every 'gone' rival has a decidable depth attribution (${gone.length - undecidable}/${gone.length} decidable${undecidable ? '; UNKNOWN: ' + undecidable : ''})`
+  );
+} catch {
+  // Missing artifact is already caught by P7.1; skip the dependency here.
+}
 
 // ---------------------------------------------------------------- report
 console.log('\nworkbench honesty audit');
