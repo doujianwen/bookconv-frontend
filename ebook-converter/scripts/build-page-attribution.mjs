@@ -79,8 +79,12 @@ const shortPath = (url) => {
 // ─────────────────────────────────────────── load the three inputs
 function loadGscQueryPage() {
   if (!existsSync(DATA_DIR)) return null;
+  // Accept BOTH legacy (`..._2026-10-30.json`) and window-tagged
+  // (`..._2026-10-30_d90.json`) names. fetch-gsc-webmaster.mjs switched to the
+  // tagged form so different --days runs can no longer overwrite each other;
+  // a strict legacy-only pattern would silently ignore every new snapshot.
   const files = readdirSync(DATA_DIR)
-    .filter((f) => /^GSC_API_query_page_\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    .filter((f) => /^GSC_API_query_page_\d{4}-\d{2}-\d{2}(_d\d+)?\.json$/.test(f))
     .sort();
   if (files.length === 0) return null;
 
@@ -88,6 +92,10 @@ function loadGscQueryPage() {
   // query -> [{ page, position, clicks, impressions }]
   const byQuery = new Map();
 
+  // Same fetchedAt may have both a legacy and a tagged file (or two exports of
+  // different window lengths). Keep the richest one; decisions are printed so
+  // nothing is silently dropped.
+  const parsedByDate = new Map();
   for (const f of files) {
     const fetchedAt = f.match(/(\d{4}-\d{2}-\d{2})/)[1];
     const j = readJson(join(DATA_DIR, f));
@@ -99,6 +107,22 @@ function loadGscQueryPage() {
       start && end
         ? Math.round((Date.parse(end + 'T00:00:00Z') - Date.parse(start + 'T00:00:00Z')) / 86400000) + 1
         : null;
+    const cand = { file: f, fetchedAt, start, end, windowDays, rows };
+    const prev = parsedByDate.get(fetchedAt);
+    if (!prev) {
+      parsedByDate.set(fetchedAt, cand);
+    } else {
+      const keep = cand.rows.length > prev.rows.length ? cand : prev;
+      const drop = keep === cand ? prev : cand;
+      console.log(
+        `  ⚠ ${fetchedAt} 同日多份，丢弃 ${drop.file}（${drop.rows.length} 行 / ${drop.windowDays ?? '?'}d），保留 ${keep.file}（${keep.rows.length} 行 / ${keep.windowDays ?? '?'}d）`
+      );
+      parsedByDate.set(fetchedAt, keep);
+    }
+  }
+
+  for (const cand of [...parsedByDate.values()].sort((a, b) => a.fetchedAt.localeCompare(b.fetchedAt))) {
+    const { file: f, fetchedAt, start, end, windowDays, rows } = cand;
     snapshots.push({ file: f, fetchedAt, start, end, windowDays, rows: rows.length });
 
     for (const r of rows) {
