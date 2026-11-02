@@ -1,0 +1,82 @@
+[
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\middleware.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\middleware.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\sitemap.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\sitemap.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\es-routes.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\es-routes.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\unsupported-conversions.test.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\unsupported-conversions.test.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\unsupported-conversions.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\unsupported-conversions.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\page.tsx",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\page.tsx.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\convert\\[slug]\\page.tsx",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\convert\\[slug]\\page.tsx.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\convert\\[slug]\\ToolPageClient.tsx",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\convert\\[slug]\\ToolPageClient.tsx.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\guide\\[slug]\\page.tsx",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\app\\[locale]\\guide\\[slug]\\page.tsx.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\components\\tools\\RelatedConversions.tsx",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\components\\tools\\RelatedConversions.tsx.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\epub-to-pdf-linux.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\epub-to-pdf-linux.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\epub-to-word.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\epub-to-word.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\pdf-to-epub-guide.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\blog\\pdf-to-epub-guide.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\docx-to-epub.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\docx-to-epub.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\epub-to-doc.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\epub-to-doc.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\epub-to-word.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\epub-to-word.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\index.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\index.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\pdf-to-epub.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\content\\pdf-to-epub.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\guides\\pdf-to-epub-keep-formatting.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\data\\guides\\pdf-to-epub-keep-formatting.ts.source.txt"
+  },
+  {
+    "old": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\seo\\schema.ts",
+    "new": "docs\\tasks\\bookconv-special-20261102\\evidence\\baseline\\source-backup\\src\\lib\\seo\\schema.ts.source.txt"
+  }
+]

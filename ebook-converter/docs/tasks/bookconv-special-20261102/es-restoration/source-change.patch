@@ -1,0 +1,1910 @@
+diff --git a/ebook-converter/.gitignore b/ebook-converter/.gitignore
+index 51baf28..d797e51 100644
+--- a/ebook-converter/.gitignore
++++ b/ebook-converter/.gitignore
+@@ -159,3 +159,15 @@ SEO_BACKUP_PHASE2_TITLE_2026-10-07/
+ !/docs/gsc-index-audit-2026-11-01/evidence/local-release-check.json
+ !/docs/gsc-index-audit-2026-11-01/evidence/production-conversion-smoke.json
+ !/docs/gsc-index-audit-2026-11-01/evidence/dataset-download-check.json
++
++# Local BookConv governance evidence (GSC business data; authoritative files stay in project).
++/docs/tasks/bookconv-special-20261102/evidence/
++/docs/tasks/bookconv-special-20261102/*.zip
++/docs/tasks/bookconv-special-20261102/es-restoration/runtime/
++/docs/tasks/bookconv-special-20261102/es-restoration/*.log
++/docs/tasks/bookconv-special-20261102/es-restoration/*.py
++/docs/tasks/bookconv-special-20261102/es-restoration/*baseline*
++/docs/tasks/bookconv-special-20261102/es-restoration/*results*
++/docs/tasks/bookconv-special-20261102/es-restoration/source-before/
++/docs/tasks/bookconv-special-20261102/es-restoration/local/
++/docs/tasks/bookconv-special-20261102/es-restoration/online/
+diff --git a/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/RED-TEAM.md b/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/RED-TEAM.md
+new file mode 100644
+index 0000000..40dae77
+--- /dev/null
++++ b/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/RED-TEAM.md
+@@ -0,0 +1,11 @@
++# 独立红队复审（2026-11-02）
++
++审查者：独立 es_red_review 智能体，仅只读审查；实施由主智能体完成。
++
++方案审查：4基础页、2详情页、EPUB标签条件恢复可执行；FB2/workflow保持404、清理错误语言声明；没有充分301依据。
++
++发布前要求：移除西语首页无证据社会证明/全Calibre/极速承诺；静态页明确白名单，规范/es；双向语言组不全局开启；博客真实译文先过滤后分页、去嵌套链接；目录实际能力和CONTENT_MAP双重过滤、DOC仅限制说明；未开放标签不发es hreflang；语言切换基于真实资格；详情先测真实输出。
++
++候选终审：发现公共页脚formatsSectionDesc仍al instante，及博客相关摘要/前后文章/工具CTA英文未标注。已据此修正西语公共说明、相关内容和导航。英文HomePageClient与原文件规范换行后完全一致。运行小样本显示HTML/TXT成功输出及明确fallback限制；空HTML与旧编码TXT500仍为未修API风险。
++
++最终独立复核：先前阻断已修正，未发现新增发布阻断；要求线上验证旧cookie和相反语言请求头。测试/构建与线上结果单独记录，不以本审查代替真实验收。
+diff --git a/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/REPORT.md b/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/REPORT.md
+new file mode 100644
+index 0000000..b5b61bd
+--- /dev/null
++++ b/ebook-converter/docs/tasks/bookconv-special-20261102/es-restoration/REPORT.md
+@@ -0,0 +1,35 @@
++# 历史西语 URL 恢复交付
++
++日期：2026-11-02（Asia/Shanghai）。本轮方案独立红队复审及候选终审已完成，无新增发布阻断。源码基线 f59c1e753ee3366dbb48b380481abd0f893fcc05；并发经营数据与其他任务文件保留，不纳入提交。
++
++## 内容与路由决定
++
++恢复200：/es、/es/convert、/es/privacy、/es/blog、/es/blog/txt-to-epub、/es/convert/html-to-epub、/es/blog/tag/epub。前6页可索引；EPUB标签沿用既有noindex、排除sitemap，仅恢复真实西语集合导航。
++
++FB2/workflow标签保持404，当前没有真实西语集合或明确等价迁移目标；清除英文标签页指向不存在西语页的hreflang。没有新增301，没有全局放开/es，没有批量noindex。
++
++西语首页改为单独服务端内容，避免重用未经证实的速度、用户数、全Calibre等旧承诺。英文首页移至HomePageClient，内容不变。转换目录依实际内容和能力筛选，DOC仅限制说明。博客及标签先筛选完整真实译文再分页，卡片/结构化数据/语言链接一致。静态路由资格与sitemap共享清单，语言helper按资格输出英西双向关系，统一/es规范URL。修复语言切换404及旧cookie优先导致URL语言失配；英文和西语middleware都覆盖可信语言头。
++
++## 验证证据
++
++- 本地生产构建通过，TypeScript通过，tracked lint通过；完整43套433项测试通过。
++- SEO critic 0 critical / 0 warn；内容完整性0错误/0警告；代码与GEO审计见本目录日志，不以零阻断冒充零存量警告。
++- 本地20URL检查，加内链、sitemap、meta、语言信号、相反cookie及请求头，共85断言通过（local/results.json）。
++- 真实生产接口6个小样本：复杂HTML与UTF8 TXT走local-js成功；HTM和伪HTML文本走backend成功；空HTML与旧编码TXT500。下载产物与原始响应见runtime/results.json。
++- HTML fallback保留西语文字/重音，丢弃图片/CSS/链接目标/脚本，单文档导航；TXT fallback只生成一个正文文档和一条导航，非自动多章目录。内部默认标题Converted Document、语言en问题已在西语内容中披露。小样本不证明大文件或所有文档成功。
++
++## 未决接口风险
++
++空HTML、旧编码TXT的500仍待专项修复；本轮未改转换引擎或接口错误处理，未宣称全功能测试通过。页面正文明确使用非空UTF8、检查输出；后续应将无效输入转为可解释4xx，并复测各执行路径。fallback默认语言/标题及文本简化亦非本轮引擎修复范围。
++
++## 文件来源与回滚
++
++用户要求唯一资料来源：此前workspace outputs/bookconv-governance整体迁至本项目docs/tasks/bookconv-special-20261102/evidence；原zip迁入同级目录。证据在本地项目保存，经营数据不推公共GitHub。旧源码备份的.ts/.tsx增加.source.txt后缀以免被项目编译，内容未改，映射见evidence-relocation.json。旧清单保留为历史证据，迁移清单另存。新增报告、红队记录、脚本、样本、测试日志及今天工作日志均只在本项目保存。
++
++回滚用revert本轮提交或回退上一验收部署，禁止reset/clean整个并发工作区；新恢复URL500、错误canonical/语言、核心转换回归时回滚本轮修复，再复测原英文PDF/Word及西语工具。
++
++28/56天观察以本轮实际发布日期D0计；如11/2发布则11/30和12/28，GSC final数据齐全后再评估。Page/Query分开、HTTP与Google历史索引分开。9URL原始21展示0点击，仅小样本，不宣称稳定排名或增长因果。
++
++## 发布与线上验收
++
++待实际提交/发布后追加，当前文档不提前宣称发布成功。
+diff --git a/ebook-converter/messages/es.json b/ebook-converter/messages/es.json
+index 344d058..0c6b68e 100644
+--- a/ebook-converter/messages/es.json
++++ b/ebook-converter/messages/es.json
+@@ -34,7 +34,7 @@
+     "supportedFormatsTitle": "Formatos de Ebook Soportados",
+     "supportedFormatsDesc": "BookConv soporta conversión entre más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y más. Ya sea que necesites convertir libros Kindle, rescatar archivos LIT antiguos o transformar documentos a EPUB, tenemos la solución.",
+     "exploreTitle": "Aprende Más Sobre los Formatos de Ebook",
+-    "formatsSectionDesc": "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más al instante. Sin registro necesario.",
++    "formatsSectionDesc": "Convierte libros electrónicos y comprueba el resultado. Consulta los formatos compatibles y los límites de cada herramienta.",
+     "poweredByCalibre": "Métodos específicos por formato",
+     "tutorialTitle": "Tutoriales populares de conversión",
+     "tutorialLitDesc": "Convierte en 3 minutos",
+@@ -128,7 +128,7 @@
+   },
+   "seo": {
+     "defaultTitle": "BookConv -- Convertidor de Ebooks Online Gratuito | Convierte EPUB, MOBI, AZW3, PDF",
+-    "defaultDescription": "Convertidor de ebooks online gratuito que soporta más de 28 formatos: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. Sin registro, sin marcas de agua, sin cuenta.",
++    "defaultDescription": "Herramientas online para convertir libros electrónicos. Consulta formatos compatibles, límites de subida y calidad del resultado. Sin cuenta para un archivo.",
+     "founderPage": "Sobre el Fundador — Hongjian Dou (Andy) | Experto en SEO y Visibilidad IA"
+   },
+   "help": {
+diff --git a/ebook-converter/scripts/seo-critic.mjs b/ebook-converter/scripts/seo-critic.mjs
+index 5ee13ca..14056c9 100644
+--- a/ebook-converter/scripts/seo-critic.mjs
++++ b/ebook-converter/scripts/seo-critic.mjs
+@@ -197,6 +197,8 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
+     const block = esRouteSource.match(new RegExp(String.raw`export const ${name}[^=]*= \[([\s\S]*?)\]`))?.[1] || '';
+     for (const match of block.matchAll(/'([a-z0-9-]+)'/g)) esRoutes.add(`/es/${group}/${match[1]}`);
+   }
++  const staticBlock = esRouteSource.match(/export const ESP_STATIC_PATHS[^=]*= \[([^\]]*)\]/)?.[1] || '';
++  for (const match of staticBlock.matchAll(/'([^']+)'/g)) esRoutes.add(match[1] === '/' ? '/es' : `/es${match[1]}`);
+   for (const fp of files) {
+     const src = read(fp);
+     if (!src) continue;
+@@ -209,7 +211,7 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
+       if (!url.startsWith('/')) continue; // 外链跳过
+       const where = `${fp.replace(ROOT + '/', '')}:${lineOf(src, m.index)}`;
+ 
+-      if (esRoutes.has(url)) url = url.slice(3);
++      if (esRoutes.has(url)) url = url.slice(3) || '/';
+       if (KNOWN.has(url)) continue;
+       if (url.startsWith('/blog/tag/')) continue; // 标签页动态
+ 
+diff --git a/ebook-converter/src/app/[locale]/HomePageClient.tsx b/ebook-converter/src/app/[locale]/HomePageClient.tsx
+new file mode 100644
+index 0000000..6f898f4
+--- /dev/null
++++ b/ebook-converter/src/app/[locale]/HomePageClient.tsx
+@@ -0,0 +1,354 @@
++"use client"
++
++import Link from "next/link"
++import { useState, useMemo } from "react"
++import {
++  ArrowRight, Zap, Shield, Globe, Search,
++  BookOpen, FileText, Image, Newspaper,
++  Sparkles, ChevronRight,
++} from "lucide-react"
++import { useTranslations } from "next-intl"
++import { KEYWORDS } from "@/lib/constants"
++import { getSlug } from "@/lib/utils"
++import { FORMAT_DISPLAY_NAMES, getConversion } from "@/lib/conversion-map"
++import { TestimonialsSection } from "@/components/tools/TestimonialsSection"
++
++const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
++  eBook: BookOpen,
++  Document: FileText,
++  Image: Image,
++  Comic: Newspaper,
++}
++
++const CATEGORY_ORDER = ["eBook", "Document", "Image", "Comic"]
++
++function getCategory(sourceFormat: string) {
++  const ebookFormats = ["epub", "azw3", "mobi", "lit", "fb2"]
++  const docFormats = ["doc", "docx", "rtf", "txt", "html", "word", "text"]
++  const imageFormats = ["jpg", "png"]
++  const comicFormats = ["cbr"]
++  if (ebookFormats.includes(sourceFormat)) return "eBook"
++  if (docFormats.includes(sourceFormat)) return "Document"
++  if (imageFormats.includes(sourceFormat)) return "Image"
++  if (comicFormats.includes(sourceFormat)) return "Comic"
++  return "Other"
++}
++
++// Top converters for SEO internal linking
++const TOP_CONVERTERS = [
++  { label: "EPUB to MOBI", href: "/convert/epub-to-mobi" },
++  { label: "PDF to EPUB", href: "/convert/pdf-to-epub" },
++  { label: "AZW3 to EPUB", href: "/convert/azw3-to-epub" },
++  { label: "MOBI to EPUB", href: "/convert/mobi-to-epub" },
++  { label: "LIT to EPUB", href: "/convert/lit-to-epub" },
++  { label: "EPUB to TXT", href: "/convert/epub-to-txt" },
++  { label: "EPUB to AZW3", href: "/convert/epub-to-azw3" },
++  { label: "EPUB to Word (DOCX)", href: "/convert/epub-to-word" },
++  { label: "DOCX to EPUB", href: "/convert/docx-to-epub" },
++  { label: "FB2 to EPUB", href: "/convert/fb2-to-epub" },
++  { label: "EPUB to PDF", href: "/convert/epub-to-pdf" },
++  { label: "TXT to EPUB", href: "/convert/txt-to-epub" },
++]
++
++export default function HomePage() {
++  const t = useTranslations()
++  const [searchQuery, setSearchQuery] = useState("")
++  const [selectedCategory, setSelectedCategory] = useState("All")
++
++  const filteredKeywords = useMemo(() => {
++    // Only surface pairs that are actually supported (in CONVERSION_MAP).
++    // Filtering out "planned" KEYWORDS pairs stops internally linking to 404s.
++    let result = KEYWORDS.filter((k) => getConversion(k.source, k.target))
++    if (searchQuery.trim()) {
++      const q = searchQuery.toLowerCase()
++      result = result.filter(
++        (k) =>
++          k.source.toLowerCase().includes(q) ||
++          k.target.toLowerCase().includes(q) ||
++          (FORMAT_DISPLAY_NAMES[k.source] || "").toLowerCase().includes(q) ||
++          (FORMAT_DISPLAY_NAMES[k.target] || "").toLowerCase().includes(q)
++      )
++    }
++    return result
++  }, [searchQuery])
++
++  const groupedByCategory = useMemo(() => {
++    const groups: Record<string, typeof KEYWORDS> = {}
++    filteredKeywords.forEach((k) => {
++      const cat = getCategory(k.source)
++      if (!groups[cat]) groups[cat] = []
++      groups[cat].push(k)
++    })
++    return groups
++  }, [filteredKeywords])
++
++  const categories = ["All", ...CATEGORY_ORDER.filter((c) => groupedByCategory[c])]
++
++  return (
++    <main>
++      {/* Hero Section */}
++      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 sm:py-24">
++        <div className="absolute inset-0 opacity-10">
++          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white blur-3xl" />
++          <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-yellow-300 blur-3xl" />
++        </div>
++
++        <div className="relative mx-auto max-w-4xl px-4 text-center">
++          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-blue-100 mb-6">
++            <Sparkles className="h-4 w-4" />
++            {t('home.poweredByCalibre')}
++          </div>
++
++          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
++            <span dangerouslySetInnerHTML={{ __html: (t('home.heroTitle') || 'Free Online Ebook\nFormat Converter').replace('\n', '<br/>') }} />
++          </h1>
++
++          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, free for personal use.').replace('\n', '<br/>') }} />
++
++          <div className="mx-auto mt-8 max-w-lg">
++            <div className="relative">
++              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
++              <input
++                type="text"
++                placeholder={t('common.searchConversions')}
++                value={searchQuery}
++                onChange={(e) => setSearchQuery(e.target.value)}
++                className="w-full rounded-xl border-0 bg-white py-3 pl-12 pr-4 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
++              />
++            </div>
++          </div>
++        </div>
++      </section>
++
++      {/* Converter Grid */}
++      <section className="bg-white py-16">
++        <div className="mx-auto max-w-5xl px-4">
++          <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
++            <h2 className="text-2xl font-bold text-gray-900">{t('common.allFormats')}</h2>
++            <div className="flex gap-2 flex-wrap">
++              {categories.map((cat) => (
++                <button
++                  key={cat}
++                  onClick={() => setSelectedCategory(cat)}
++                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
++                    selectedCategory === cat
++                      ? 'bg-blue-600 text-white'
++                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
++                  }`}
++                >
++                  {cat === 'All' ? t('common.allFormats') : t(`common.${cat.toLowerCase()}`)}
++                </button>
++              ))}
++            </div>
++          </div>
++
++          {categories.map((cat) => {
++            if (selectedCategory !== 'All' && selectedCategory !== cat) return null;
++            const keywords = groupedByCategory[cat];
++            if (!keywords) return null;
++
++            const Icon = CATEGORY_ICONS[cat] || BookOpen;
++            return (
++              <div key={cat} className="mb-10">
++                <div className="flex items-center gap-2 mb-4">
++                  <Icon className="h-5 w-5 text-blue-600" />
++                  <h3 className="text-lg font-semibold text-gray-900">{t(`common.${cat.toLowerCase()}`)}</h3>
++                </div>
++                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
++                  {keywords.map((kw) => (
++                    <Link
++                      key={`${kw.source}-${kw.target}`}
++                      href={`/convert/${getSlug(kw.source, kw.target)}`}
++                      className="group flex items-center justify-between rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md"
++                    >
++                      <div className="flex items-center gap-2">
++                        <span className="font-medium text-gray-900 group-hover:text-blue-600">
++                          {FORMAT_DISPLAY_NAMES[kw.source]} → {FORMAT_DISPLAY_NAMES[kw.target]}
++                        </span>
++                      </div>
++                      <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
++                      {" "}
++                    </Link>
++                  ))}
++                </div>
++              </div>
++            );
++          })}
++        </div>
++      </section>
++
++      {/* Popular conversions — SEO internal-link hub (P1: concentrate
++          homepage authority onto the high-value convert pages) */}
++      <section className="bg-gray-50 py-16">
++        <div className="mx-auto max-w-5xl px-4">
++          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">Popular Conversions</h2>
++          <div className="flex flex-wrap justify-center gap-3">
++            {TOP_CONVERTERS.map((c) => (
++              <Link key={c.href} href={c.href} className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:text-blue-600">
++                {c.label}
++              </Link>
++            ))}
++          </div>
++        </div>
++      </section>
++
++      {/* Features */}
++      <section className="bg-gray-50 py-16">
++        <div className="mx-auto max-w-5xl px-4">
++            <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">{t('common.freeOnlineEbookConverter')}</h2>
++            <p className="mx-auto mb-10 max-w-3xl text-center text-lg text-gray-600">
++              Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
++            </p>
++            <div className="grid gap-8 md:grid-cols-3">
++            {[
++              { icon: Zap, title: 'Fast Conversion', desc: 'Powered by Calibre engine for lightning-fast conversions.' },
++              { icon: Shield, title: 'Secure & Private', desc: 'Files are transferred over HTTPS and processed server-side. See our privacy policy for handling details.' },
++              { icon: Globe, title: 'No Account Needed', desc: 'Convert ebooks for free — no registration or software install required.' },
++            ].map(({ icon: Icon, title, desc }) => (
++              <div key={title} className="text-center">
++                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
++                  <Icon className="h-6 w-6 text-blue-600" />
++                </div>
++                <h3 className="mb-2 font-semibold text-gray-900">{title}</h3>
++                <p className="text-sm text-gray-600">{desc}</p>
++              </div>
++            ))}
++          </div>
++        </div>
++      </section>
++
++
++      {/* Explore: Blog & Guides entry points (internal linking R2) */}
++      <section className="bg-white py-16">
++        <div className="mx-auto max-w-5xl px-4">
++          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.exploreTitle') || 'Learn More About Ebook Formats'}</h2>
++          <div className="grid gap-6 sm:grid-cols-2">
++            <Link href="/blog" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
++              <div>
++                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.blog') || 'Blog'}</h3>
++                <p className="mt-1 text-sm text-gray-500">Guides, how-tos, and format deep-dives.</p>
++              </div>
++              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
++            </Link>
++            <Link href="/guide" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
++              <div>
++                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.guide') || 'Guides'}</h3>
++                <p className="mt-1 text-sm text-gray-500">Format comparisons and conversion explainers.</p>
++              </div>
++              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
++            </Link>
++          </div>
++        </div>
++      </section>
++
++      {/* Social Proof & Testimonials */}
++      <section className="bg-white py-16">
++        <div className="mx-auto max-w-4xl px-4 text-center mb-10">
++          <p className="text-sm text-gray-600">Join thousands of satisfied users who trust BookConv for their ebook conversion needs.</p>
++        </div>
++      </section>
++
++              {/* Featured Video Tutorials */}
++        <section className="bg-white py-16">
++          <div className="mx-auto max-w-4xl px-4">
++            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('home.tutorialTitle')}</h2>
++            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
++              <Link href="/convert/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
++                <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
++                  <span className="text-white text-4xl">▶</span>
++                </div>
++                <h3 className="font-semibold text-gray-900">LIT → EPUB</h3>
++                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialLitDesc')}</p>
++              </Link>
++              <Link href="/convert/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
++                <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
++                  <span className="text-white text-4xl">▶</span>
++                </div>
++                <h3 className="font-semibold text-gray-900">PDF → EPUB</h3>
++                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialPdfDesc')}</p>
++              </Link>
++              <Link href="/convert/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
++                <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
++                  <span className="text-white text-4xl">▶</span>
++                </div>
++                <h3 className="font-semibold text-gray-900">EPUB → TXT</h3>
++                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialEpubDesc')}</p>
++              </Link>
++              <Link href="/convert/epub-to-azw3" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
++                <div className="aspect-video rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
++                  <span className="text-white text-4xl">▶</span>
++                </div>
++                <h3 className="font-semibold text-gray-900">EPUB → AZW3</h3>
++                <p className="text-sm text-gray-500 mt-1">Kindle-native AZW3 from any EPUB in one click.</p>
++              </Link>
++              <Link href="/convert/epub-to-word" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
++                <div className="aspect-video rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
++                  <span className="text-white text-4xl">▶</span>
++                </div>
++                <h3 className="font-semibold text-gray-900">EPUB → Word (DOCX)</h3>
++                <p className="text-sm text-gray-500 mt-1">Extract EPUB text into an editable DOCX; image and layout preservation is not guaranteed.</p>
++              </Link>
++            </div>
++          </div>
++        </section>
++
++<TestimonialsSection />
++      {/* CTA */}
++      <section className="bg-gradient-to-br from-blue-600 to-indigo-700 py-16">
++        <div className="mx-auto max-w-4xl px-4 text-center">
++          <h2 className="text-2xl font-bold text-white sm:text-3xl">{t('home.ctaReadyTitle')}</h2>
++          <p className="mt-4 text-lg text-blue-100">{t('home.ctaReadyDesc')}</p>
++          <Link href="/convert/epub-to-mobi" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-blue-50">
++            {t('common.startConvertingNow')} <ArrowRight className="h-5 w-5" />
++          </Link>
++        </div>
++      </section>
++
++      {/* Homepage FAQ — visible accordion + FAQPage rich snippet (matches the
++          visible accordion below so crawlers see consistent content). */}
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{
++          __html: JSON.stringify({
++            '@context': 'https://schema.org',
++            '@type': 'FAQPage',
++            mainEntity: [1, 2, 3, 4, 5].map((i) => ({
++              '@type': 'Question',
++              name: t(`faq.q${i}`),
++              acceptedAnswer: {
++                '@type': 'Answer',
++                text: t(`faq.a${i}`),
++              },
++            })),
++          }),
++        }}
++      />
++      <section className="bg-gray-50 py-16">
++        <div className="mx-auto max-w-3xl px-4">
++          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.faqTitle')}</h2>
++          <div className="space-y-4">
++            {[1, 2, 3, 4, 5].map((i) => (
++              <details key={i} className="rounded-xl border bg-white p-4">
++                <summary className="cursor-pointer font-medium text-gray-900">{t(`faq.q${i}`)}</summary>
++                <p className="mt-2 text-sm leading-relaxed text-gray-600">{t(`faq.a${i}`)}</p>
++              </details>
++            ))}
++          </div>
++        </div>
++      </section>
++
++      {/* SEO Footer */}
++      <section className="border-t bg-white py-12">
++        <div className="mx-auto max-w-5xl px-4">
++          <h2 className="mb-4 text-xl font-bold text-gray-900">{t('home.supportedFormatsTitle')}</h2>
++          <p className="mb-6 text-sm text-gray-600">{t('home.supportedFormatsDesc')}</p>
++          <div className="flex flex-wrap gap-2">
++            {["EPUB", "MOBI", "AZW3", "PDF", "DOCX", "TXT", "RTF", "HTML", "FB2", "LIT", "CBR", "DJVU", "JPG", "PNG", "Word"].map((fmt) => (
++              <span key={fmt} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">{fmt}</span>
++            ))}
++          </div>
++        </div>
++      </section>
++    </main>
++  )
++}
+diff --git a/ebook-converter/src/app/[locale]/blog/[slug]/page.tsx b/ebook-converter/src/app/[locale]/blog/[slug]/page.tsx
+index 8c8e6d1..92840d0 100644
+--- a/ebook-converter/src/app/[locale]/blog/[slug]/page.tsx
++++ b/ebook-converter/src/app/[locale]/blog/[slug]/page.tsx
+@@ -9,7 +9,7 @@ import { renderMarkdownToHtml, stripMarkdown, BlogPostContent, BlogFaq, BlogPost
+ import { getRelatedPosts, getRelatedGuidesForBlogPost, isHubTag, slugifyTag } from "@/lib/internal-links"
+ import { buildAlternates } from "@/lib/seo/alternates"
+ import { clampMetaDescription } from "@/lib/seo/meta-description"
+-import { esBlogHref, esGuideHref } from "@/lib/es-routes"
++import { esBlogHref, esGuideHref, esConvertHref, ESP_BLOG_SLUGS, ESP_TAG_SLUGS } from "@/lib/es-routes"
+ import { chrome, dateLocale } from "@/lib/ui-chrome"
+ import { CONVERSION_MAP, normalizeFormat } from "@/lib/conversion-map"
+ 
+@@ -118,11 +118,17 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+     const displayContent = isEs ? post.es!.content : post.content
+     const displayFaqs = isEs ? post.es?.faqs : post.faqs
+     const postUrl = `${baseUrl}${isEs ? "/es" : ""}/blog/${post.slug}`
+-    const { source, target } = extractSourceTarget(displayTitle)
+-    const relatedPosts = getRelatedPosts(post.slug, 3)
+-    const relatedGuides = getRelatedGuidesForBlogPost(post.slug, 3)
++    const { source, target } = extractSourceTarget(post.title)
++    const relatedPosts = getRelatedPosts(post.slug, 3).map(rp => {
++      const translated = getAllPosts().find(p => p.slug === rp.slug)?.es
++      return isEs ? { ...rp, title: translated?.title ?? `${rp.title} (en inglés)`, excerpt: translated?.content.intro ?? `${rp.excerpt} (en inglés)` } : rp
++    })
++    const relatedGuides = getRelatedGuidesForBlogPost(post.slug, 3).map(rg => {
++      const translated = getAllGuides().find(g => g.slug === rg.slug)?.es
++      return isEs ? { ...rg, title: translated?.title ?? `${rg.title} (en inglés)`, excerpt: translated?.content.intro ?? `${rg.excerpt} (en inglés)` } : rg
++    })
+ 
+-    const allPosts = getAllPosts()
++    const allPosts = getAllPosts().filter(p => !isEs || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex))
+     const curIdx = allPosts.findIndex((p) => p.slug === post.slug)
+     const newerPost = curIdx > 0 ? allPosts[curIdx - 1] : null
+     const olderPost = curIdx < allPosts.length - 1 ? allPosts[curIdx + 1] : null
+@@ -164,9 +170,9 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+         <PageLanguageLinks path={`/blog/${slug}`} isEs={isEs} />
+         <nav aria-label={isEs ? 'Migas de pan' : 'Breadcrumb'} className="mb-8">
+           <ol className="flex items-center gap-2 text-sm text-gray-500">
+-            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
++            <li><Link href={isEs ? '/es' : '/'} className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
+             <li>/</li>
+-            <li><Link href="/blog" className="hover:text-blue-600">{chrome('blog', isEs)}</Link></li>
++            <li><Link href={isEs ? '/es/blog' : '/blog'} className="hover:text-blue-600">{chrome('blog', isEs)}</Link></li>
+             <li>/</li>
+             <li aria-current="page" className="font-medium text-gray-900 truncate">{displayTitle}</li>
+           </ol>
+@@ -187,10 +193,10 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+             <span>{post.author || "BookConv Team"}</span>
+               <div className="flex items-center gap-1.5">
+               {post.tags.map((tag) => {
+-                const clickable = isHubTag(tag)
++                const clickable = isHubTag(tag) && (!isEs || ESP_TAG_SLUGS.includes(slugifyTag(tag)))
+                 const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
+                 return clickable ? (
+-                  <Link key={tag} href={`/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
++                  <Link key={tag} href={`${isEs ? '/es' : ''}/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
+                     <Tag className="h-2.5 w-2.5 mr-0.5" />
+                     {tag}
+                   </Link>
+@@ -258,15 +264,15 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+             <div className="flex flex-wrap gap-2">
+               {source && target && (
+                 <Link
+-                  href={`/convert/${source.toLowerCase()}-to-${target.toLowerCase()}`}
++                  href={isEs ? esConvertHref(`${source.toLowerCase()}-to-${target.toLowerCase()}`) : `/convert/${source.toLowerCase()}-to-${target.toLowerCase()}`}
+                   className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                 >
+                   <BookOpen className="h-4 w-4" />
+-                  Convert {source.toUpperCase()} to {target.toUpperCase()}
++                  {isEs ? 'Convertir' : 'Convert'} {source.toUpperCase()} {isEs ? 'a' : 'to'} {target.toUpperCase()}{isEs && !esConvertHref(`${source.toLowerCase()}-to-${target.toLowerCase()}`).startsWith('/es/') ? ' (en inglés)' : ''}
+                 </Link>
+               )}
+               {source && (
+-                <Link href="/convert"
++                <Link href={isEs ? '/es/convert' : '/convert'}
+                   className="inline-flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50"
+                 >
+                   {chrome('browseAllConverters', isEs)}
+@@ -309,7 +315,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+             {olderPost ? (
+               <Link href={isEs ? esBlogHref(olderPost.slug) : `/blog/${olderPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50">
+                 <span className="text-xs text-gray-500">{chrome('older', isEs)}</span>
+-                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{olderPost.title}</p>
++                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{isEs ? olderPost.es?.title : olderPost.title}</p>
+               </Link>
+             ) : (
+               <span className="flex-1" />
+@@ -317,7 +323,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+             {newerPost ? (
+               <Link href={isEs ? esBlogHref(newerPost.slug) : `/blog/${newerPost.slug}`} className="group flex-1 rounded-xl border bg-white p-4 text-right transition-colors hover:border-blue-300 hover:bg-blue-50">
+                 <span className="text-xs text-gray-500">{chrome('newer', isEs)}</span>
+-                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{newerPost.title}</p>
++                <p className="mt-1 text-sm font-medium text-gray-900 group-hover:text-blue-600">{isEs ? newerPost.es?.title : newerPost.title}</p>
+               </Link>
+             ) : (
+               <span className="flex-1" />
+@@ -326,7 +332,7 @@ export default async function BlogPostPage({ params }: BlogSlugProps) {
+         )}
+ 
+         <div className="mt-12 pt-6 border-t">
+-          <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
++          <Link href={isEs ? '/es/blog' : '/blog'} className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+             <ArrowLeft className="h-4 w-4" />
+             {chrome('backToAllPosts', isEs)}
+           </Link>
+diff --git a/ebook-converter/src/app/[locale]/blog/page.tsx b/ebook-converter/src/app/[locale]/blog/page.tsx
+index 7bb9d8e..fae0f53 100644
+--- a/ebook-converter/src/app/[locale]/blog/page.tsx
++++ b/ebook-converter/src/app/[locale]/blog/page.tsx
+@@ -7,6 +7,7 @@ import { getMessage, resolvePath } from '@/i18n/utils'
+ import { buildAlternates } from "@/lib/seo/alternates"
+ import { clampMetaDescription } from "@/lib/seo/meta-description"
+ import { isHubTag, slugifyTag } from "@/lib/internal-links"
++import { ESP_BLOG_SLUGS, esConvertHref } from '@/lib/es-routes'
+ import { chrome } from "@/lib/ui-chrome"
+ 
+ const PAGE_SIZE = 8
+@@ -30,10 +31,10 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
+   })
+ 
+   const pageTitle = currentPage > 1
+-    ? `${t("blog.title")} — Page ${currentPage}`
++    ? `${t("blog.title")} — ${locale === "es" ? "Página" : "Page"} ${currentPage}`
+     : t("blog.title")
+ 
+-  const robots = locale === "es" ? { index: false, follow: true } : undefined;
++  const robots = undefined;
+ 
+   return {
+     title: pageTitle,
+@@ -62,12 +63,12 @@ export default async function BlogPage({ params, searchParams }: Props) {
+   const localeCode = locale === "es" ? "es-ES" : "en-US"
+ 
+   const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
+-  const allPosts = getAllPosts()
++  const allPosts = getAllPosts().filter(p => locale !== 'es' || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex)).map(p => locale === 'es' && p.es ? { ...p, title: p.es.title, content: p.es.content } : p)
+   const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
+   const isEs = locale === 'es'
+ 
+   if (currentPage > totalPages && totalPages > 0) {
+-    redirect(`${prefix}/blog${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
++    redirect(`${prefix}/blog`)
+   }
+ 
+   const startIdx = (currentPage - 1) * PAGE_SIZE
+@@ -119,9 +120,9 @@ export default async function BlogPage({ params, searchParams }: Props) {
+       <div className="space-y-8">
+         {pagedPosts.map((post) => (
+           <article key={post.slug} className="border-b pb-8">
+-            <Link href={`${prefix}/blog/${post.slug}`} className="group block">
++            <div className="group block">
+               <h2 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+-                {post.title}
++                <Link href={`${prefix}/blog/${post.slug}`}>{post.title}</Link>
+               </h2>
+               {post.content?.intro && (
+                 <p className="mt-2 text-sm text-gray-600 leading-relaxed">{post.content.intro}</p>
+@@ -133,7 +134,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
+                 </span>
+                 <div className="flex items-center gap-1.5">
+                   {post.tags.map((tag) => {
+-                    const clickable = isHubTag(tag)
++                    const clickable = isHubTag(tag) && (!isEs || slugifyTag(tag) === 'epub')
+                     const cls = "inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700"
+                     return clickable ? (
+                       <Link key={tag} href={`${prefix}/blog/tag/${slugifyTag(tag)}`} className={cls + " hover:bg-blue-100 hover:text-blue-800 transition-colors"}>
+@@ -149,7 +150,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
+                   })}
+                 </div>
+               </div>
+-            </Link>
++            </div>
+           </article>
+         ))}
+       </div>
+@@ -202,10 +203,10 @@ export default async function BlogPage({ params, searchParams }: Props) {
+           ].map((item) => (
+             <Link
+               key={item.href}
+-              href={item.href}
++              href={isEs ? esConvertHref(item.href.slice('/convert/'.length)) : item.href}
+               className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 border"
+             >
+-              {item.label}
++              {isEs ? item.label.replace(' to ', ' a ') + (esConvertHref(item.href.slice('/convert/'.length)).startsWith('/es/') ? '' : ' (en inglés)') : item.label}
+             </Link>
+           ))}
+         </div>
+diff --git a/ebook-converter/src/app/[locale]/blog/tag/[tag]/page.tsx b/ebook-converter/src/app/[locale]/blog/tag/[tag]/page.tsx
+index 5d266a4..6b80fb4 100644
+--- a/ebook-converter/src/app/[locale]/blog/tag/[tag]/page.tsx
++++ b/ebook-converter/src/app/[locale]/blog/tag/[tag]/page.tsx
+@@ -3,6 +3,7 @@ import Link from "next/link"
+ import { notFound, redirect } from "next/navigation"
+ import { Calendar, Tag } from "lucide-react"
+ import { getMessage, resolvePath } from '@/i18n/utils'
++import { ESP_BLOG_SLUGS, ESP_TAG_SLUGS } from '@/lib/es-routes'
+ import { getHubTags, getPostsByTagSlug } from "@/lib/internal-links"
+ 
+ const PAGE_SIZE = 8
+@@ -17,7 +18,7 @@ export async function generateStaticParams() {
+   const hubs = getHubTags()
+   const out: { locale: string; tag: string }[] = []
+   for (const locale of locales) {
+-    for (const h of hubs) out.push({ locale, tag: h.slug })
++    for (const h of hubs) if (locale === 'en' || ESP_TAG_SLUGS.includes(h.slug)) out.push({ locale, tag: h.slug })
+   }
+   return out
+ }
+@@ -35,27 +36,28 @@ export async function generateMetadata({ params, searchParams }: TagPageProps):
+   const posts = getPostsByTagSlug(tag)
+   if (posts.length === 0) return {}
+   const label = hub.label
++  const isEs = locale === 'es'
+   const prefix = localePrefix(locale)
+   const url = `https://www.bookconv.com${prefix}/blog/tag/${tag}`
+ 
+   const pageTitle = currentPage > 1
+-    ? `${label} articles — Page ${currentPage}`
+-    : `${label} articles`
++    ? `${label} ${isEs ? 'artículos — Página' : 'articles — Page'} ${currentPage}`
++    : `${label} ${isEs ? 'artículos' : 'articles'}`
+ 
+   return {
+     title: pageTitle,
+-    description: `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
++    description: isEs ? `Guías y comparaciones de BookConv sobre ${label} en español.` : `Expert BookConv guides about ${label} — ebook format conversion tips, comparisons, and how-tos.`,
+     alternates: {
+       canonical: url,
+       languages: {
+         en: `/blog/tag/${tag}`,
+-        es: `/es/blog/tag/${tag}`,
++        ...(ESP_TAG_SLUGS.includes(tag) ? { es: `/es/blog/tag/${tag}` } : {}),
+         'x-default': `/blog/tag/${tag}`,
+       },
+     },
+     openGraph: {
+       title: `${pageTitle} | BookConv Blog`,
+-      description: `Expert BookConv guides about ${label}.`,
++      description: isEs ? `Guías de BookConv sobre ${label}.` : `Expert BookConv guides about ${label}.`,
+       type: "website",
+       url,
+     },
+@@ -72,9 +74,10 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+   const { page: pageParam } = await searchParams
+   const hub = getHubTags().find((h) => h.slug === tag)
+   if (!hub) notFound()
+-  const allPosts = getPostsByTagSlug(tag)
++  const allPosts = getPostsByTagSlug(tag).filter(p => locale !== 'es' || (ESP_BLOG_SLUGS.includes(p.slug) && p.es && !p.noindex)).map(p => locale === 'es' && p.es ? { ...p, title: p.es.title, content: p.es.content } : p)
+   if (allPosts.length === 0) notFound()
+ 
++  const isEs = locale === 'es'
+   const messages = await getMessage(locale)
+   const t = (key: string) => resolvePath(messages, key) || key
+   const prefix = localePrefix(locale)
+@@ -84,7 +87,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+   const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
+ 
+   if (currentPage > totalPages) {
+-    redirect(`${prefix}/blog/tag/${tag}${currentPage > 1 ? `?page=${currentPage - 1}` : ""}`)
++    redirect(`${prefix}/blog/tag/${tag}`)
+   }
+ 
+   const startIdx = (currentPage - 1) * PAGE_SIZE
+@@ -107,8 +110,9 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+           __html: JSON.stringify({
+             "@context": "https://schema.org",
+             "@type": "CollectionPage",
+-            name: `${hub.label} articles`,
+-            description: `All BookConv guides about ${hub.label}.`,
++            name: isEs ? `Artículos sobre ${hub.label}` : `${hub.label} articles`,
++            inLanguage: isEs ? 'es' : 'en',
++            description: isEs ? `Guías de BookConv sobre ${hub.label} en español.` : `All BookConv guides about ${hub.label}.`,
+             url: `https://www.bookconv.com${prefix}/blog/tag/${tag}`,
+             hasPart: pagedPosts.map((p) => ({
+               "@type": "BlogPosting",
+@@ -120,7 +124,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+         }}
+       />
+ 
+-      <nav aria-label="Breadcrumb" className="mb-8">
++      <nav aria-label={isEs ? 'Ruta de navegación' : 'Breadcrumb'} className="mb-8">
+         <ol className="flex items-center gap-2 text-sm text-gray-500">
+           <li><Link href={prefix || "/"} className="hover:text-blue-600">{t("common.home")}</Link></li>
+           <li>/</li>
+@@ -136,11 +140,11 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+           {hub.label}
+         </div>
+         <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+-          Articles tagged &quot;{hub.label}&quot;
++          {isEs ? 'Artículos sobre' : 'Articles tagged'} &quot;{hub.label}&quot;
+         </h1>
+         <p className="mt-2 text-sm text-gray-500">
+-          {allPosts.length} {allPosts.length === 1 ? "article" : "articles"} in this topic.
+-          {totalPages > 1 && ` — Page ${currentPage} of ${totalPages}`}
++          {allPosts.length} {isEs ? 'artículos en este tema.' : 'articles in this topic.'}
++          {totalPages > 1 && ` — ${isEs ? 'Página' : 'Page'} ${currentPage} / ${totalPages}`}
+         </p>
+       </header>
+ 
+@@ -166,7 +170,7 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
+       </div>
+ 
+       {totalPages > 1 && (
+-        <nav aria-label="Tag pagination" className="mt-10 flex justify-center gap-2 flex-wrap">
++        <nav aria-label={isEs ? 'Paginación del tema' : 'Tag pagination'} className="mt-10 flex justify-center gap-2 flex-wrap">
+           {currentPage > 1 && (
+             <Link
+               href={pagHref(currentPage - 1)}
+diff --git a/ebook-converter/src/app/[locale]/convert/[slug]/ToolPageClient.tsx b/ebook-converter/src/app/[locale]/convert/[slug]/ToolPageClient.tsx
+index 9b922b4..516fd63 100644
+--- a/ebook-converter/src/app/[locale]/convert/[slug]/ToolPageClient.tsx
++++ b/ebook-converter/src/app/[locale]/convert/[slug]/ToolPageClient.tsx
+@@ -602,14 +602,14 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
+         </section>
+ 
+         {/* Social Proof -- Testimonials */}
+-        <section className="mt-12 rounded-xl border bg-gray-50 p-6">
++        {!isEs && <section className="mt-12 rounded-xl border bg-gray-50 p-6">
+           <h3 className="mb-4 text-center text-lg font-semibold text-gray-900">{chrome('trustedBy', isEs)}</h3>
+           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+             {TESTIMONIALS.slice(0, 3).map((t, i) => (
+               <TestimonialCard key={i} name={t.name} role={t.role} rating={t.rating} text={t.text} />
+             ))}
+           </div>
+-        </section>
++        </section>}
+         {/* Related conversions */}
+         <RelatedConversions currentSource={source} currentTarget={target} allowedSlugs={allowedConversionSlugs} isEs={isEs} />
+       </main>
+diff --git a/ebook-converter/src/app/[locale]/convert/page.tsx b/ebook-converter/src/app/[locale]/convert/page.tsx
+index 52a9996..8f680fc 100644
+--- a/ebook-converter/src/app/[locale]/convert/page.tsx
++++ b/ebook-converter/src/app/[locale]/convert/page.tsx
+@@ -1,5 +1,8 @@
+ import type { Metadata } from "next"
+ import Link from "next/link"
++import { CONTENT_MAP } from '@/data/content'
++import { unsupportedConversionInfo } from '@/lib/unsupported-conversions'
++import { ESP_CONVERT_SLUGS } from '@/lib/es-routes'
+ import { KEYWORDS } from "@/lib/constants"
+ import { getConversion, FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
+ import { getSlug } from "@/lib/utils"
+@@ -16,8 +19,8 @@ const BASE_URL = "https://www.bookconv.com"
+ 
+ export async function generateMetadata({ params }: ConvertIndexProps): Promise<Metadata> {
+   const { locale } = await params
+-  const title = "All Ebook Format Conversions"
+-  const description =
++  const title = locale === 'es' ? 'Herramientas de conversión de libros electrónicos' : 'All Ebook Format Conversions'
++  const description = locale === 'es' ? 'Elige una herramienta de conversión en español. Comprueba formatos compatibles, límites de subida y calidad antes de sustituir el original.' :
+     "Browse every ebook format conversion BookConv supports — EPUB, AZW3, MOBI, PDF, and more. Pick a pair and convert free in your browser, no install."
+   const { canonical, languages } = buildAlternates({
+     locale,
+@@ -56,7 +59,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+   // Filtering out "planned" KEYWORDS pairs (epub-to-zip, epub-to-lrf, pdf-to-docx, …)
+   // prevents internal links to 404 pages and stops Google from rediscovering them.
+   const items = KEYWORDS
+-    .filter((k) => getConversion(k.source, k.target))
++    .filter((k) => getConversion(k.source, k.target) && CONTENT_MAP[getSlug(k.source, k.target)] && !unsupportedConversionInfo(k.source, k.target))
+     .map((k) => {
+       const slug = getSlug(k.source, k.target)
+       const conversion = getConversion(k.source, k.target)
+@@ -69,15 +72,23 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+       }
+     })
+ 
++  const localizedItems = isEs ? ESP_CONVERT_SLUGS.filter(slug => {
++    const [source, target] = slug.split('-to-')
++    return CONTENT_MAP[slug]?.es && getConversion(source, target) && !unsupportedConversionInfo(source, target)
++  }).map(slug => {
++    const [source, target] = slug.split('-to-')
++    return { slug, source, target, label: CONTENT_MAP[slug].es?.title || `${source.toUpperCase()} a ${target.toUpperCase()}`, description: CONTENT_MAP[slug].es?.metaDescription || '' }
++  }) : items
+   const jsonLd = {
+     "@context": "https://schema.org",
+     "@type": "ItemList",
+-    name: "Supported ebook format conversions",
+-    itemListElement: items.map((item, i) => ({
++    name: isEs ? 'Herramientas de conversión en español' : 'Supported ebook format conversions',
++    inLanguage: isEs ? 'es' : 'en',
++    itemListElement: localizedItems.map((item, i) => ({
+       "@type": "ListItem",
+       position: i + 1,
+-      url: `${BASE_URL}/convert/${item.slug}`,
+-      name: `Convert ${item.label}`,
++      url: `${BASE_URL}${isEs ? '/es' : ''}/convert/${item.slug}`,
++      name: isEs ? item.label : `Convert ${item.label}`,
+     })),
+   }
+ 
+@@ -88,7 +99,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+       <main className="mx-auto max-w-5xl px-4 py-16">
+         <nav aria-label={chrome('breadcrumbLabel', isEs)} className="mb-8">
+           <ol className="flex items-center gap-2 text-sm text-gray-500">
+-            <li><Link href="/" className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
++            <li><Link href={isEs ? '/es' : '/'} className="hover:text-blue-600">{chrome('home', isEs)}</Link></li>
+             <li>/</li>
+             <li aria-current="page" className="font-medium text-gray-900">{chrome('converters', isEs)}</li>
+           </ol>
+@@ -98,7 +109,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{chrome('allConversions', isEs)}</h1>
+           <p className="mt-4 max-w-2xl text-lg text-gray-600">
+             {isEs
+-              ? 'Todos los pares de formato que BookConv puede manejar, en un solo lugar. Elige un origen y un destino y convierte gratis en tu navegador: sin cuenta, sin instalación, con procesamiento en el servidor.'
++              ? 'Estas herramientas tienen instrucciones en español. Elige un par compatible y revisa sus limitaciones. Los archivos se procesan en servidores; no necesitas una cuenta para convertir un archivo.'
+               : 'Every format pair BookConv can handle, in one place. Pick a source and target, then convert free in your browser — no account, no installer, server-side processing.'}
+           </p>
+           <p className="mt-4 max-w-2xl text-base text-gray-600">
+@@ -109,7 +120,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+         </header>
+ 
+         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+-          {items.map((item) => (
++          {localizedItems.map((item) => (
+             <Link
+               key={item.slug}
+               href={isEs ? esConvertHref(item.slug) : `/convert/${item.slug}`}
+@@ -128,8 +139,9 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
+           ))}
+         </section>
+ 
++        {isEs && <aside className="mt-8 rounded border p-5"><h2 className="font-semibold">Otros formatos y limitaciones</h2><p className="mt-2">BookConv no exporta DOC antiguo. Consulta la <Link href="/es/convert/epub-to-doc" className="underline">explicación de EPUB a DOC</Link>. Para herramientas sin instrucciones en español, visita el <Link href="/convert" className="underline">directorio completo (en inglés)</Link>.</p></aside>}
+         <div className="mt-12 pt-6 border-t">
+-          <Link href="/" className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
++          <Link href={isEs ? '/es' : '/'} className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+             {chrome('backToHome', isEs)}
+           </Link>
+         </div>
+diff --git a/ebook-converter/src/app/[locale]/page.tsx b/ebook-converter/src/app/[locale]/page.tsx
+index 6f898f4..1c6edc9 100644
+--- a/ebook-converter/src/app/[locale]/page.tsx
++++ b/ebook-converter/src/app/[locale]/page.tsx
+@@ -1,354 +1,49 @@
+-"use client"
+-
+-import Link from "next/link"
+-import { useState, useMemo } from "react"
+-import {
+-  ArrowRight, Zap, Shield, Globe, Search,
+-  BookOpen, FileText, Image, Newspaper,
+-  Sparkles, ChevronRight,
+-} from "lucide-react"
+-import { useTranslations } from "next-intl"
+-import { KEYWORDS } from "@/lib/constants"
+-import { getSlug } from "@/lib/utils"
+-import { FORMAT_DISPLAY_NAMES, getConversion } from "@/lib/conversion-map"
+-import { TestimonialsSection } from "@/components/tools/TestimonialsSection"
+-
+-const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+-  eBook: BookOpen,
+-  Document: FileText,
+-  Image: Image,
+-  Comic: Newspaper,
++import type { Metadata } from 'next'
++import Link from 'next/link'
++import HomePageClient from './HomePageClient'
++import { CONTENT_MAP } from '@/data/content'
++import { ESP_CONVERT_SLUGS } from '@/lib/es-routes'
++import { getConversion } from '@/lib/conversion-map'
++import { unsupportedConversionInfo } from '@/lib/unsupported-conversions'
++import { buildAlternates } from '@/lib/seo/alternates'
++
++export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
++  const { locale } = await params
++  const alternates = buildAlternates({ locale, slugPath: '/', pageType: 'home' })
++  return locale === 'es' ? {
++    title: 'Convertidor de libros electrónicos online',
++    description: 'Convierte libros electrónicos con BookConv. Consulta las herramientas en español, los límites de subida y las comprobaciones de calidad.',
++    alternates,
++    openGraph: { title: 'Convertidor de libros electrónicos online', description: 'Herramientas y guías de BookConv en español.', url: alternates.canonical, locale: 'es_ES', type: 'website' },
++  } : { alternates }
+ }
+ 
+-const CATEGORY_ORDER = ["eBook", "Document", "Image", "Comic"]
+-
+-function getCategory(sourceFormat: string) {
+-  const ebookFormats = ["epub", "azw3", "mobi", "lit", "fb2"]
+-  const docFormats = ["doc", "docx", "rtf", "txt", "html", "word", "text"]
+-  const imageFormats = ["jpg", "png"]
+-  const comicFormats = ["cbr"]
+-  if (ebookFormats.includes(sourceFormat)) return "eBook"
+-  if (docFormats.includes(sourceFormat)) return "Document"
+-  if (imageFormats.includes(sourceFormat)) return "Image"
+-  if (comicFormats.includes(sourceFormat)) return "Comic"
+-  return "Other"
+-}
+-
+-// Top converters for SEO internal linking
+-const TOP_CONVERTERS = [
+-  { label: "EPUB to MOBI", href: "/convert/epub-to-mobi" },
+-  { label: "PDF to EPUB", href: "/convert/pdf-to-epub" },
+-  { label: "AZW3 to EPUB", href: "/convert/azw3-to-epub" },
+-  { label: "MOBI to EPUB", href: "/convert/mobi-to-epub" },
+-  { label: "LIT to EPUB", href: "/convert/lit-to-epub" },
+-  { label: "EPUB to TXT", href: "/convert/epub-to-txt" },
+-  { label: "EPUB to AZW3", href: "/convert/epub-to-azw3" },
+-  { label: "EPUB to Word (DOCX)", href: "/convert/epub-to-word" },
+-  { label: "DOCX to EPUB", href: "/convert/docx-to-epub" },
+-  { label: "FB2 to EPUB", href: "/convert/fb2-to-epub" },
+-  { label: "EPUB to PDF", href: "/convert/epub-to-pdf" },
+-  { label: "TXT to EPUB", href: "/convert/txt-to-epub" },
+-]
+-
+-export default function HomePage() {
+-  const t = useTranslations()
+-  const [searchQuery, setSearchQuery] = useState("")
+-  const [selectedCategory, setSelectedCategory] = useState("All")
+-
+-  const filteredKeywords = useMemo(() => {
+-    // Only surface pairs that are actually supported (in CONVERSION_MAP).
+-    // Filtering out "planned" KEYWORDS pairs stops internally linking to 404s.
+-    let result = KEYWORDS.filter((k) => getConversion(k.source, k.target))
+-    if (searchQuery.trim()) {
+-      const q = searchQuery.toLowerCase()
+-      result = result.filter(
+-        (k) =>
+-          k.source.toLowerCase().includes(q) ||
+-          k.target.toLowerCase().includes(q) ||
+-          (FORMAT_DISPLAY_NAMES[k.source] || "").toLowerCase().includes(q) ||
+-          (FORMAT_DISPLAY_NAMES[k.target] || "").toLowerCase().includes(q)
+-      )
+-    }
+-    return result
+-  }, [searchQuery])
+-
+-  const groupedByCategory = useMemo(() => {
+-    const groups: Record<string, typeof KEYWORDS> = {}
+-    filteredKeywords.forEach((k) => {
+-      const cat = getCategory(k.source)
+-      if (!groups[cat]) groups[cat] = []
+-      groups[cat].push(k)
+-    })
+-    return groups
+-  }, [filteredKeywords])
+-
+-  const categories = ["All", ...CATEGORY_ORDER.filter((c) => groupedByCategory[c])]
+-
+-  return (
+-    <main>
+-      {/* Hero Section */}
+-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 sm:py-24">
+-        <div className="absolute inset-0 opacity-10">
+-          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white blur-3xl" />
+-          <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-yellow-300 blur-3xl" />
+-        </div>
+-
+-        <div className="relative mx-auto max-w-4xl px-4 text-center">
+-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-blue-100 mb-6">
+-            <Sparkles className="h-4 w-4" />
+-            {t('home.poweredByCalibre')}
+-          </div>
+-
+-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+-            <span dangerouslySetInnerHTML={{ __html: (t('home.heroTitle') || 'Free Online Ebook\nFormat Converter').replace('\n', '<br/>') }} />
+-          </h1>
+-
+-          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, free for personal use.').replace('\n', '<br/>') }} />
+-
+-          <div className="mx-auto mt-8 max-w-lg">
+-            <div className="relative">
+-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+-              <input
+-                type="text"
+-                placeholder={t('common.searchConversions')}
+-                value={searchQuery}
+-                onChange={(e) => setSearchQuery(e.target.value)}
+-                className="w-full rounded-xl border-0 bg-white py-3 pl-12 pr-4 text-gray-900 shadow-lg ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+-              />
+-            </div>
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* Converter Grid */}
+-      <section className="bg-white py-16">
+-        <div className="mx-auto max-w-5xl px-4">
+-          <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+-            <h2 className="text-2xl font-bold text-gray-900">{t('common.allFormats')}</h2>
+-            <div className="flex gap-2 flex-wrap">
+-              {categories.map((cat) => (
+-                <button
+-                  key={cat}
+-                  onClick={() => setSelectedCategory(cat)}
+-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+-                    selectedCategory === cat
+-                      ? 'bg-blue-600 text-white'
+-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+-                  }`}
+-                >
+-                  {cat === 'All' ? t('common.allFormats') : t(`common.${cat.toLowerCase()}`)}
+-                </button>
+-              ))}
+-            </div>
+-          </div>
+-
+-          {categories.map((cat) => {
+-            if (selectedCategory !== 'All' && selectedCategory !== cat) return null;
+-            const keywords = groupedByCategory[cat];
+-            if (!keywords) return null;
+-
+-            const Icon = CATEGORY_ICONS[cat] || BookOpen;
+-            return (
+-              <div key={cat} className="mb-10">
+-                <div className="flex items-center gap-2 mb-4">
+-                  <Icon className="h-5 w-5 text-blue-600" />
+-                  <h3 className="text-lg font-semibold text-gray-900">{t(`common.${cat.toLowerCase()}`)}</h3>
+-                </div>
+-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+-                  {keywords.map((kw) => (
+-                    <Link
+-                      key={`${kw.source}-${kw.target}`}
+-                      href={`/convert/${getSlug(kw.source, kw.target)}`}
+-                      className="group flex items-center justify-between rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md"
+-                    >
+-                      <div className="flex items-center gap-2">
+-                        <span className="font-medium text-gray-900 group-hover:text-blue-600">
+-                          {FORMAT_DISPLAY_NAMES[kw.source]} → {FORMAT_DISPLAY_NAMES[kw.target]}
+-                        </span>
+-                      </div>
+-                      <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
+-                      {" "}
+-                    </Link>
+-                  ))}
+-                </div>
+-              </div>
+-            );
+-          })}
+-        </div>
+-      </section>
+-
+-      {/* Popular conversions — SEO internal-link hub (P1: concentrate
+-          homepage authority onto the high-value convert pages) */}
+-      <section className="bg-gray-50 py-16">
+-        <div className="mx-auto max-w-5xl px-4">
+-          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">Popular Conversions</h2>
+-          <div className="flex flex-wrap justify-center gap-3">
+-            {TOP_CONVERTERS.map((c) => (
+-              <Link key={c.href} href={c.href} className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-blue-300 hover:text-blue-600">
+-                {c.label}
+-              </Link>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* Features */}
+-      <section className="bg-gray-50 py-16">
+-        <div className="mx-auto max-w-5xl px-4">
+-            <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">{t('common.freeOnlineEbookConverter')}</h2>
+-            <p className="mx-auto mb-10 max-w-3xl text-center text-lg text-gray-600">
+-              Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
+-            </p>
+-            <div className="grid gap-8 md:grid-cols-3">
+-            {[
+-              { icon: Zap, title: 'Fast Conversion', desc: 'Powered by Calibre engine for lightning-fast conversions.' },
+-              { icon: Shield, title: 'Secure & Private', desc: 'Files are transferred over HTTPS and processed server-side. See our privacy policy for handling details.' },
+-              { icon: Globe, title: 'No Account Needed', desc: 'Convert ebooks for free — no registration or software install required.' },
+-            ].map(({ icon: Icon, title, desc }) => (
+-              <div key={title} className="text-center">
+-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+-                  <Icon className="h-6 w-6 text-blue-600" />
+-                </div>
+-                <h3 className="mb-2 font-semibold text-gray-900">{title}</h3>
+-                <p className="text-sm text-gray-600">{desc}</p>
+-              </div>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
+-
+-
+-      {/* Explore: Blog & Guides entry points (internal linking R2) */}
+-      <section className="bg-white py-16">
+-        <div className="mx-auto max-w-5xl px-4">
+-          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.exploreTitle') || 'Learn More About Ebook Formats'}</h2>
+-          <div className="grid gap-6 sm:grid-cols-2">
+-            <Link href="/blog" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
+-              <div>
+-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.blog') || 'Blog'}</h3>
+-                <p className="mt-1 text-sm text-gray-500">Guides, how-tos, and format deep-dives.</p>
+-              </div>
+-              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+-            </Link>
+-            <Link href="/guide" className="group flex items-center justify-between rounded-xl border border-gray-200 p-6 transition-all hover:border-blue-300 hover:shadow-md">
+-              <div>
+-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{t('common.guide') || 'Guides'}</h3>
+-                <p className="mt-1 text-sm text-gray-500">Format comparisons and conversion explainers.</p>
+-              </div>
+-              <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+-            </Link>
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* Social Proof & Testimonials */}
+-      <section className="bg-white py-16">
+-        <div className="mx-auto max-w-4xl px-4 text-center mb-10">
+-          <p className="text-sm text-gray-600">Join thousands of satisfied users who trust BookConv for their ebook conversion needs.</p>
+-        </div>
+-      </section>
+-
+-              {/* Featured Video Tutorials */}
+-        <section className="bg-white py-16">
+-          <div className="mx-auto max-w-4xl px-4">
+-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('home.tutorialTitle')}</h2>
+-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+-              <Link href="/convert/lit-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+-                <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+-                  <span className="text-white text-4xl">▶</span>
+-                </div>
+-                <h3 className="font-semibold text-gray-900">LIT → EPUB</h3>
+-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialLitDesc')}</p>
+-              </Link>
+-              <Link href="/convert/pdf-to-epub" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+-                <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+-                  <span className="text-white text-4xl">▶</span>
+-                </div>
+-                <h3 className="font-semibold text-gray-900">PDF → EPUB</h3>
+-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialPdfDesc')}</p>
+-              </Link>
+-              <Link href="/convert/epub-to-txt" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+-                <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+-                  <span className="text-white text-4xl">▶</span>
+-                </div>
+-                <h3 className="font-semibold text-gray-900">EPUB → TXT</h3>
+-                <p className="text-sm text-gray-500 mt-1">{t('home.tutorialEpubDesc')}</p>
+-              </Link>
+-              <Link href="/convert/epub-to-azw3" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+-                <div className="aspect-video rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+-                  <span className="text-white text-4xl">▶</span>
+-                </div>
+-                <h3 className="font-semibold text-gray-900">EPUB → AZW3</h3>
+-                <p className="text-sm text-gray-500 mt-1">Kindle-native AZW3 from any EPUB in one click.</p>
+-              </Link>
+-              <Link href="/convert/epub-to-word" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+-                <div className="aspect-video rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+-                  <span className="text-white text-4xl">▶</span>
+-                </div>
+-                <h3 className="font-semibold text-gray-900">EPUB → Word (DOCX)</h3>
+-                <p className="text-sm text-gray-500 mt-1">Extract EPUB text into an editable DOCX; image and layout preservation is not guaranteed.</p>
+-              </Link>
+-            </div>
+-          </div>
+-        </section>
+-
+-<TestimonialsSection />
+-      {/* CTA */}
+-      <section className="bg-gradient-to-br from-blue-600 to-indigo-700 py-16">
+-        <div className="mx-auto max-w-4xl px-4 text-center">
+-          <h2 className="text-2xl font-bold text-white sm:text-3xl">{t('home.ctaReadyTitle')}</h2>
+-          <p className="mt-4 text-lg text-blue-100">{t('home.ctaReadyDesc')}</p>
+-          <Link href="/convert/epub-to-mobi" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3 text-base font-semibold text-blue-600 shadow-lg transition-colors hover:bg-blue-50">
+-            {t('common.startConvertingNow')} <ArrowRight className="h-5 w-5" />
+-          </Link>
+-        </div>
+-      </section>
+-
+-      {/* Homepage FAQ — visible accordion + FAQPage rich snippet (matches the
+-          visible accordion below so crawlers see consistent content). */}
+-      <script
+-        type="application/ld+json"
+-        dangerouslySetInnerHTML={{
+-          __html: JSON.stringify({
+-            '@context': 'https://schema.org',
+-            '@type': 'FAQPage',
+-            mainEntity: [1, 2, 3, 4, 5].map((i) => ({
+-              '@type': 'Question',
+-              name: t(`faq.q${i}`),
+-              acceptedAnswer: {
+-                '@type': 'Answer',
+-                text: t(`faq.a${i}`),
+-              },
+-            })),
+-          }),
+-        }}
+-      />
+-      <section className="bg-gray-50 py-16">
+-        <div className="mx-auto max-w-3xl px-4">
+-          <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{t('home.faqTitle')}</h2>
+-          <div className="space-y-4">
+-            {[1, 2, 3, 4, 5].map((i) => (
+-              <details key={i} className="rounded-xl border bg-white p-4">
+-                <summary className="cursor-pointer font-medium text-gray-900">{t(`faq.q${i}`)}</summary>
+-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{t(`faq.a${i}`)}</p>
+-              </details>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* SEO Footer */}
+-      <section className="border-t bg-white py-12">
+-        <div className="mx-auto max-w-5xl px-4">
+-          <h2 className="mb-4 text-xl font-bold text-gray-900">{t('home.supportedFormatsTitle')}</h2>
+-          <p className="mb-6 text-sm text-gray-600">{t('home.supportedFormatsDesc')}</p>
+-          <div className="flex flex-wrap gap-2">
+-            {["EPUB", "MOBI", "AZW3", "PDF", "DOCX", "TXT", "RTF", "HTML", "FB2", "LIT", "CBR", "DJVU", "JPG", "PNG", "Word"].map((fmt) => (
+-              <span key={fmt} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">{fmt}</span>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
+-    </main>
+-  )
++export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
++  const { locale } = await params
++  if (locale !== 'es') return <HomePageClient />
++  const slugs = ESP_CONVERT_SLUGS.filter(slug => {
++    const [source, target] = slug.split('-to-')
++    return CONTENT_MAP[slug]?.es && getConversion(source, target) && !unsupportedConversionInfo(source, target)
++  })
++  const faq = [
++    ['¿Qué formatos puedo convertir?', 'Elige una herramienta compatible de la lista. La disponibilidad depende del par de formatos; BookConv no convierte EPUB a DOC antiguo.'],
++    ['¿Cuál es el tamaño máximo?', 'Consulta el formulario. La subida directa de un archivo admite hasta 100 MB cuando está habilitada; la subida alternativa y cada archivo de un lote admiten 4 MB. Un archivo puede fallar aun dentro del límite.'],
++    ['¿Se conserva la maquetación?', 'No se garantiza. La fidelidad depende del formato y del método utilizado; algunas rutas extraen solo texto. Compara el resultado con el original.'],
++    ['¿Es gratuito?', 'La conversión por lotes es gratuita durante la beta pública. Pro está previsto para después de la beta. No necesitas una cuenta para convertir un archivo.'],
++    ['¿Se elimina DRM o se reconoce texto escaneado?', 'BookConv no elimina DRM y no incluye OCR. Utiliza archivos que tengas derecho a convertir.'],
++  ]
++  return <main className="mx-auto max-w-5xl px-4 py-16">
++    <h1 className="text-4xl font-bold">Convertidor de libros electrónicos online</h1>
++    <p className="mt-5 text-lg">Convierte un libro a otro formato y comprueba el resultado antes de compartirlo. Consulta las limitaciones de cada herramienta y conserva el archivo original.</p>
++    <h2 className="mt-10 text-2xl font-semibold">Herramientas en español</h2>
++    <div className="mt-5 grid gap-4 sm:grid-cols-2">{slugs.map(slug => <Link key={slug} href={`/es/convert/${slug}`} className="rounded-xl border p-5 text-blue-700">{CONTENT_MAP[slug].es?.title}</Link>)}</div>
++    <p className="mt-5"><Link href="/es/convert" className="text-blue-700 underline">Ver el directorio de conversiones</Link></p>
++    <h2 className="mt-10 text-2xl font-semibold">Cómo utilizar BookConv</h2>
++    <ol className="mt-4 list-decimal space-y-3 pl-6"><li>Elige el formato de origen y el de destino.</li><li>Sube el archivo desde la herramienta y respeta el límite indicado.</li><li>Descarga el resultado y revisa texto, caracteres, orden e imágenes.</li></ol>
++    <p className="mt-6">Los archivos se transfieren por HTTPS y se procesan en servidores. Algunas conversiones utilizan servicios de terceros. Consulta la <Link href="/es/privacy" className="text-blue-700 underline">política de privacidad</Link>.</p>
++    <p className="mt-5"><Link href="/es/blog" className="text-blue-700 underline">Leer guías y comparaciones en español</Link></p>
++    <h2 className="mt-10 text-2xl font-semibold">Preguntas frecuentes</h2>
++    {faq.map(([q,a]) => <details key={q} className="mt-4 rounded border p-4"><summary className="font-semibold">{q}</summary><p className="mt-3">{a}</p></details>)}
++    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: 'es', mainEntity: faq.map(([q,a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }) }} />
++  </main>
+ }
+diff --git a/ebook-converter/src/app/[locale]/privacy/page.tsx b/ebook-converter/src/app/[locale]/privacy/page.tsx
+index 8bb90a7..ec93ece 100644
+--- a/ebook-converter/src/app/[locale]/privacy/page.tsx
++++ b/ebook-converter/src/app/[locale]/privacy/page.tsx
+@@ -1,51 +1,25 @@
+-﻿import type { Metadata } from "next"
+-import Link from "next/link"
+-import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
++import type { Metadata } from 'next'
++import Link from 'next/link'
++import { buildAlternates } from '@/lib/seo/alternates'
+ 
+-export async function generateMetadata(): Promise<Metadata> {
+-  return {
+-    title: "Privacy Policy",
+-    alternates: {
+-      canonical: `https://www.bookconv.com/privacy`,
+-      languages: { en: '/privacy', 'x-default': '/privacy' },
+-    },
+-    openGraph: { url: `https://www.bookconv.com/privacy`, type: "website" },
+-  };
++export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
++  const { locale } = await params
++  const alternates = buildAlternates({ locale, slugPath: '/privacy', pageType: 'leaf', hasEsVersion: true })
++  return { title: locale === 'es' ? 'Política de privacidad' : 'Privacy Policy', description: locale === 'es' ? 'Cómo BookConv procesa archivos, utiliza servicios de terceros y gestiona cookies y datos operativos.' : 'How BookConv processes files, uses third-party services, and handles cookies and operational data.', alternates, openGraph: { url: alternates.canonical, locale: locale === 'es' ? 'es_ES' : 'en_US', type: 'website' } }
+ }
+-
+-export default async function PrivacyPage() {
+-  const locale = await getLocale();
+-  const messages = await getMessage(locale);
+-  const t = (key: string) => resolvePath(messages, key) || key;
+-
+-  return (
+-    <main className="mx-auto max-w-3xl px-4 py-16">
+-      <nav aria-label="Breadcrumb" className="mb-8">
+-        <ol className="flex items-center gap-2 text-sm text-gray-500">
+-          <li><Link href={locale === 'es' ? '/es' : '/'} className="hover:text-blue-600">{t('common.home')}</Link></li>
+-          <li>/</li>
+-          <li aria-current="page" className="font-medium text-gray-900">{t('common.privacyPolicy')}</li>
+-        </ol>
+-      </nav>
+-      <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('common.privacyPolicy')}</h1>
+-      <div className="prose max-w-none space-y-6">
+-        <section>
+-          <h2 className="text-2xl font-semibold text-gray-900 mt-6">File Handling &amp; Data Deletion</h2>
+-          <p>Files are transferred over HTTPS and processed on servers. Some conversions use third-party processing, including CloudConvert. Direct uploads use temporary object storage; converted outputs may be cached to serve an identical conversion again.</p>
+-        </section>
+-        <section>
+-          <h2 className="text-2xl font-semibold text-gray-900 mt-6">Data Collection</h2>
+-          <p>We process uploaded content and operational data to provide conversions. A route using a third-party conversion service sends the file to that processor. See CloudConvert’s privacy policy for its handling practices.</p>
+-        </section>
+-        <section>
+-          <h2 className="text-2xl font-semibold text-gray-900 mt-6">Cookies</h2>
+-          <p>The site uses cookies for language preference and sessions and may use analytics to understand site usage.</p>
+-        </section>
+-        <section>
+-          <h2 className="text-2xl font-semibold text-gray-900 mt-6">Contact</h2>
+-          <p>If you have questions about this policy, please contact us at privacy@bookconv.com.</p>
+-        </section>
+-      </div>
+-    </main>
+-  )
++export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
++  const { locale } = await params
++  const es = locale === 'es'
++  const sections = es ? [
++    ['Tratamiento de archivos y eliminación de datos', 'Los archivos se transfieren por HTTPS y se procesan en servidores. Algunas conversiones utilizan servicios de terceros, incluido CloudConvert. Las subidas directas utilizan almacenamiento temporal de objetos; los resultados convertidos pueden guardarse en caché para atender de nuevo una conversión idéntica.'],
++    ['Recopilación de datos', 'Procesamos el contenido subido y datos operativos para ofrecer las conversiones. Una ruta que utiliza un servicio de conversión de terceros envía el archivo a ese proveedor. Consulta la política de privacidad de CloudConvert para conocer sus prácticas de tratamiento.'],
++    ['Cookies', 'El sitio utiliza cookies para la preferencia de idioma y las sesiones, y puede utilizar analítica para comprender el uso del sitio.'],
++    ['Contacto', 'Si tienes preguntas sobre esta política, escríbenos a privacy@bookconv.com.'],
++  ] : [
++    ['File Handling & Data Deletion', 'Files are transferred over HTTPS and processed on servers. Some conversions use third-party processing, including CloudConvert. Direct uploads use temporary object storage; converted outputs may be cached to serve an identical conversion again.'],
++    ['Data Collection', 'We process uploaded content and operational data to provide conversions. A route using a third-party conversion service sends the file to that processor. See CloudConvert’s privacy policy for its handling practices.'],
++    ['Cookies', 'The site uses cookies for language preference and sessions and may use analytics to understand site usage.'],
++    ['Contact', 'If you have questions about this policy, please contact us at privacy@bookconv.com.'],
++  ]
++  return <main className="mx-auto max-w-3xl px-4 py-16"><nav aria-label={es ? 'Ruta de navegación' : 'Breadcrumb'}><Link href={es ? '/es' : '/'}>{es ? 'Inicio' : 'Home'}</Link></nav><h1 className="my-8 text-4xl font-bold">{es ? 'Política de privacidad' : 'Privacy Policy'}</h1><div className="space-y-6">{sections.map(([title,body]) => <section key={title}><h2 className="text-2xl font-semibold">{title}</h2><p className="mt-3">{body}</p></section>)}</div></main>
+ }
+diff --git a/ebook-converter/src/app/layout.tsx b/ebook-converter/src/app/layout.tsx
+index 56fb293..d125875 100644
+--- a/ebook-converter/src/app/layout.tsx
++++ b/ebook-converter/src/app/layout.tsx
+@@ -163,19 +163,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
+                   /es/pricing 等）不在 middleware P3-C 白名单（只放行白名单 slug 详情页）⇒ 裸 /es 前缀会 404。
+                   西语会话下头部/页脚导航一律回退英文路由（白名单外回退，与 es-routes.ts 同纪律）；
+                   locale='en' 时行为与链接逐字不变。 */}
+-              <Link href='/' className='flex items-center gap-2 font-bold text-blue-600' aria-label={`${t('common.siteName') || 'BookConv'} Home`}>
++              <Link href={locale === 'es' ? '/es' : '/'} className='flex items-center gap-2 font-bold text-blue-600' aria-label={`${t('common.siteName') || 'BookConv'} Home`}>
+                 <BookOpen className='h-6 w-6' />
+                 <span>{t('common.siteName') || 'BookConv'}</span>
+               </Link>
+               <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'} className='flex items-center gap-3 text-sm text-gray-600'>
+-                <Link href='/' className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
+-                <Link href='/convert' className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
+-                <Link href='/blog' className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
+-                <Link href='/guide' className='hover:text-blue-600'>{t('common.guide') || 'Guides'}</Link>
+-                <Link href='/pricing' className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}</Link>
+-                <Link href='/help' className='hover:text-blue-600'>{t('common.help') || 'Help'}</Link>
+-                <Link href='/about' className='hover:text-blue-600'>{t('common.about') || 'About'}</Link>
+-                <Link href='/founder' className='hover:text-blue-600'>{t('common.founder') || 'Founder'}</Link>
++                <Link href={locale === 'es' ? '/es' : '/'} className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
++                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
++                <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>
++                <Link href='/guide' className='hover:text-blue-600'>{t('common.guide') || 'Guides'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href='/pricing' className='hover:text-blue-600'>{t('common.pricing') || 'Pricing'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href='/help' className='hover:text-blue-600'>{t('common.help') || 'Help'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href='/about' className='hover:text-blue-600'>{t('common.about') || 'About'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href='/founder' className='hover:text-blue-600'>{t('common.founder') || 'Founder'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
+                 <LocaleSwitcher />
+                 <LoginButton />
+               </nav>
+@@ -188,12 +188,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
+             <div className='mx-auto max-w-5xl space-y-2 px-4'>
+               <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are deleted as soon as the conversion completes.'}</p>
+               <nav aria-label={locale === 'es' ? 'Navegación del pie de página' : 'Footer navigation'} className='flex flex-wrap justify-center gap-4'>
+-                <Link href='/convert' className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
+-                <Link href='/blog' className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
+-                <Link href='/guide' className='hover:text-gray-700'>{t('common.guide') || 'Guides'}</Link>
+-                <Link href='/privacy' className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
+-                <Link href='/help' className='hover:text-gray-700'>{t('common.help') || 'Help'}</Link>
+-                <Link href='/terms' className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}</Link>
++                <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
++                <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
++                <Link href='/guide' className='hover:text-gray-700'>{t('common.guide') || 'Guides'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
++                <Link href='/help' className='hover:text-gray-700'>{t('common.help') || 'Help'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
++                <Link href='/terms' className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
+               </nav>
+               <div className='flex flex-wrap justify-center gap-4 text-xs'>
+                 <a href='mailto:hello@bookconv.com' className='flex items-center gap-1 text-gray-500 hover:text-gray-700' aria-label={t('common.contact') || 'Contact'}>
+diff --git a/ebook-converter/src/app/sitemap.ts b/ebook-converter/src/app/sitemap.ts
+index b641943..4fdf035 100644
+--- a/ebook-converter/src/app/sitemap.ts
++++ b/ebook-converter/src/app/sitemap.ts
+@@ -4,7 +4,7 @@ import { getAllGuides } from '@/data/guides'
+ import { CONTENT_MAP } from '@/data/content'
+ import { SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
+ import { COMPAT_MAP } from '@/data/compat'
+-import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS, ESP_CONVERT_SLUGS } from '@/lib/es-routes'
++import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS, ESP_CONVERT_SLUGS, ESP_STATIC_PATHS } from '@/lib/es-routes'
+ 
+ // M3-2 decision (2026-09-27, per SEO/GEO V2.0 拆解表): admit /formats/* and
+ // /compat/* to the sitemap. Both carry independent information increment —
+@@ -191,6 +191,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+     // now would re-create the exact spam signal. They are restored in the
+     // [locale] rendering fix (see routing task), not here.
+     if (locale === 'es') {
++      for (const path of ESP_STATIC_PATHS) {
++        allUrls.push({ url: baseUrl + '/es' + (path === '/' ? '' : path), lastModified: new Date('2026-11-02'), changeFrequency: 'monthly', priority: path === '/' ? 1 : 0.6 })
++      }
+       // Only the 6 real Spanish blog posts emit /es/blog/* URLs.
+       for (const slug of ESP_BLOG_SLUGS) {
+         allUrls.push({
+diff --git a/ebook-converter/src/components/tools/BatchConversionGuide.tsx b/ebook-converter/src/components/tools/BatchConversionGuide.tsx
+index 56f0ef4..35c84f2 100644
+--- a/ebook-converter/src/components/tools/BatchConversionGuide.tsx
++++ b/ebook-converter/src/components/tools/BatchConversionGuide.tsx
+@@ -63,7 +63,7 @@ export function BatchConversionGuide({ sourceFormat, targetFormat, isEs = false
+           <Link href="/batch">
+             <Button className="gap-2 bg-blue-600 text-white hover:bg-blue-700">
+               <Sparkles className="h-4 w-4" />
+-              {isEs ? 'Abrir conversión por lotes' : 'Open batch converter'}
++              {isEs ? 'Abrir conversión por lotes (en inglés)' : 'Open batch converter'}
+               <ArrowRight className="h-4 w-4" />
+             </Button>
+           </Link>
+diff --git a/ebook-converter/src/components/ui/LocaleSwitcher.tsx b/ebook-converter/src/components/ui/LocaleSwitcher.tsx
+index f6c09fd..2c5fd55 100644
+--- a/ebook-converter/src/components/ui/LocaleSwitcher.tsx
++++ b/ebook-converter/src/components/ui/LocaleSwitcher.tsx
+@@ -1,5 +1,6 @@
+ ﻿"use client";
+ 
++import {spanishRoute} from '@/lib/es-routes';
+ import {useLocale, useTranslations} from 'next-intl';
+ import {useRouter, usePathname} from 'next/navigation';
+ 
+@@ -15,7 +16,7 @@ export function LocaleSwitcher() {
+     
+     const newPath = value === 'en'
+       ? pathname.replace(/\/(en|es)/, '').replace(/^\/\//, '/') || '/'
+-      : '/' + value + pathname.replace(/^\/(en|es)/, '');
++      : spanishRoute(pathname);
+     
+     router.push(newPath);
+   }
+diff --git a/ebook-converter/src/data/blog/txt-to-epub.ts b/ebook-converter/src/data/blog/txt-to-epub.ts
+index d5b9f9f..5c9771b 100644
+--- a/ebook-converter/src/data/blog/txt-to-epub.ts
++++ b/ebook-converter/src/data/blog/txt-to-epub.ts
+@@ -96,3 +96,59 @@ export const faqs = [
+     answer: `Yes. Kindle devices and the Kindle app read EPUB directly through Send to Kindle, or you can convert it onward to AZW3 for native sideloading.`,
+   }
+ ];
++
++export const es = {
++  "title": "Cómo convertir TXT a EPUB y revisar el resultado",
++  "metaTitle": "Convertir TXT a EPUB: texto, acentos y capítulos",
++  "content": {
++    "intro": "Un archivo TXT puede convertirse en un EPUB legible, pero el resultado no tiene por qué incluir capítulos detectados automáticamente, portada ni un índice detallado. Esta guía explica cómo preparar un texto en UTF-8, convertirlo y comprobar lo que contiene realmente el libro. Conserva siempre el archivo original.",
++    "sections": [
++      {
++        "heading": "Prepara el texto antes de subirlo",
++        "body": "Guarda una copia en UTF-8 y revisa las tildes, la ñ y los saltos de párrafo. Separa los párrafos con líneas en blanco cuando resulte útil. Escribe los títulos de capítulo de forma consistente para facilitar su edición posterior; esto no garantiza que el conversor los reconozca como capítulos. No cambies la extensión de un PDF para simular un TXT."
++      },
++      {
++        "heading": "Convierte el archivo paso a paso",
++        "body": "1. Abre la [herramienta TXT a EPUB (en inglés)](/convert/txt-to-epub).\n2. Sube el archivo respetando el límite que muestra el formulario.\n3. Descarga el EPUB y ábrelo en un lector compatible.\n4. Compara el principio, el final y varios fragmentos intermedios con el original. El tiempo depende del archivo y del método; no hay una duración garantizada."
++      },
++      {
++        "heading": "Qué mostró la prueba real",
++        "body": "Una muestra UTF-8 con Capítulo uno, Capítulo dos, tildes y ñ generó un EPUB descargable con esos textos. La ruta alternativa los guardó en párrafos dentro de un único documento. Su navegación tenía una sola entrada llamada Converted Document; los rótulos de capítulo del TXT no se convirtieron en capítulos separados. Una muestra con codificación antigua falló. Estos casos no prueban que cualquier documento funcione."
++      },
++      {
++        "heading": "Índice, portada y metadatos",
++        "body": "Si necesitas un índice por capítulos, abre el resultado en un editor EPUB, estructura los encabezados y genera la navegación allí. La ruta alternativa utiliza un título genérico y metadatos de idioma en inglés; revisa título, autor e idioma y corrígelos cuando corresponda. La interfaz en español no cambia automáticamente el idioma interno de tu libro."
++      },
++      {
++        "heading": "Comprueba la calidad antes de compartir",
++        "body": "Busca una frase del último párrafo, además de la primera. Revisa caracteres especiales, palabras repetidas, líneas cortadas y párrafos unidos. Abre el índice y confirma que sus enlaces llevan a las secciones correctas. El TXT no contiene imágenes ni estilos que puedan recuperarse por conversión. Si necesitas esos elementos, añádelos con un editor."
++      },
++      {
++        "heading": "Límites de subida y tratamiento de archivos",
++        "body": "Consulta el formulario: la subida directa de un archivo admite hasta 100 MB cuando está habilitada; la ruta alternativa y cada archivo por lotes admiten 4 MB. Un archivo puede fallar aun dentro del límite. Los lotes son gratuitos durante la beta pública; Pro está previsto para después. Los archivos se procesan en servidores y algunas conversiones utilizan terceros. Consulta la [política de privacidad](/es/privacy); esta guía no promete un plazo de eliminación."
++      },
++      {
++        "heading": "Cuándo conviene otro flujo",
++        "body": "Para un manuscrito con muchos capítulos, notas o ilustraciones, considera una herramienta de edición EPUB antes de distribuirlo. Para elegir formato consulta la [comparación de formatos de libros electrónicos](/es/blog/ebook-formats-explained). Puedes encontrar otras herramientas disponibles en el [directorio de conversiones](/es/convert)."
++      }
++    ]
++  },
++  "faqs": [
++    {
++      "question": "¿Se crea automáticamente un índice por capítulos?",
++      "answer": "No se garantiza. La prueba de la ruta alternativa produjo un único documento y una sola entrada de navegación; crea una estructura de capítulos con un editor si la necesitas."
++    },
++    {
++      "question": "¿Cómo evito caracteres incorrectos?",
++      "answer": "Guarda el TXT en UTF-8 y revisa el resultado. La muestra UTF-8 conservó tildes y ñ; una muestra con codificación antigua falló."
++    },
++    {
++      "question": "¿Cuánto tarda la conversión?",
++      "answer": "Depende del archivo y del método utilizado. Esta guía no promete un plazo de segundos."
++    },
++    {
++      "question": "¿Puedo conservar imágenes o maquetación?",
++      "answer": "Un TXT no contiene imágenes ni estilos de maquetación. La conversión no puede recuperarlos del texto."
++    }
++  ]
++};
+diff --git a/ebook-converter/src/data/content/html-to-epub.ts b/ebook-converter/src/data/content/html-to-epub.ts
+index 4c9988e..78182ab 100644
+--- a/ebook-converter/src/data/content/html-to-epub.ts
++++ b/ebook-converter/src/data/content/html-to-epub.ts
+@@ -157,3 +157,74 @@ One practical tip: if your HTML uses styled div elements instead of real heading
+     estimatedConversions: '10,000+ monthly'
+   }
+ };
++
++export const es = {
++  "title": "Convertir HTML a EPUB online",
++  "metaDescription": "Convierte un archivo HTML local a EPUB. Revisa texto, acentos y orden de lectura; no se garantiza conservar imágenes, estilos ni enlaces.",
++  "content": {
++    "hero": {
++      "title": "Convertir HTML a EPUB",
++      "subtitle": "Sube un archivo HTML local para obtener un EPUB. La ruta alternativa extrae texto; no se garantiza conservar imágenes, estilos, enlaces ni capítulos."
++    },
++    "sections": [
++      {
++        "heading": "Cómo convertir un archivo HTML",
++        "body": "1. Guarda el documento con codificación UTF-8.\n2. Sube el archivo .html o .htm en el formulario. Esta herramienta recibe archivos; no ofrece un campo para descargar una página mediante su URL.\n3. Descarga el EPUB y comprueba el texto con un lector compatible. Guarda el original y sus recursos."
++      },
++      {
++        "heading": "Qué puede cambiar durante la conversión",
++        "body": "BookConv puede utilizar un motor de conversión o una ruta alternativa de texto. En la prueba de la ruta alternativa se conservaron las palabras y los acentos, pero no la imagen, el color CSS ni el destino del enlace. El texto del enlace permaneció. El script de la muestra no apareció en el EPUB. Estos resultados no garantizan el comportamiento de cualquier HTML o del otro motor. No dependas de formularios, JavaScript o recursos externos."
++      },
++      {
++        "heading": "Imágenes, enlaces relativos y estilos",
++        "body": "Un archivo HTML suelto no incluye necesariamente sus imágenes ni hojas de estilo. Los recursos relativos pueden faltar al subir solo el documento. No se garantiza que BookConv descargue esos recursos, conserve enlaces navegables o reproduzca la maquetación. Si necesitas fidelidad visual, compara el resultado antes de elegir este flujo. El EPUB no debe sustituir el sitio original."
++      },
++      {
++        "heading": "Tamaño, lotes y precio",
++        "body": "Sigue el límite mostrado por el formulario: hasta 100 MB para la subida directa de un archivo cuando está habilitada; 4 MB en la ruta alternativa y por archivo en los lotes. Para este par, el lote admite hasta 3 archivos. Los lotes son gratuitos durante la beta pública; Pro está previsto para después. Los archivos complejos pueden fallar aun dentro del límite."
++      },
++      {
++        "heading": "Comparación entre HTML y EPUB",
++        "body": "| Formato | Uso | Comprobación |\n| --- | --- | --- |\n| HTML | Documento para navegador con recursos externos posibles | Codificación, enlaces y archivos asociados |\n| EPUB | Libro empaquetado para lectura | Orden del texto, navegación y recursos incluidos |\n\nCambiar la extensión no convierte el documento. La ruta alternativa crea un libro sencillo con texto y navegación básica, sin reconstruir automáticamente los capítulos."
++      },
++      {
++        "heading": "Cuándo utilizar esta herramienta",
++        "body": "Puede servir para leer offline una copia de texto de un artículo propio o de un documento que tengas derecho a convertir. No es una herramienta para capturar sitios completos ni para ejecutar páginas dinámicas. Para preparar un libro de varios capítulos con portada y metadatos precisos, utiliza un editor EPUB y revisa el paquete final."
++      },
++      {
++        "heading": "Lista de comprobación de calidad",
++        "body": "Busca una frase del inicio y otra del final. Revisa ñ, tildes, símbolos, párrafos y orden. Comprueba por separado las imágenes y los enlaces que necesites. La ruta alternativa puede utilizar el título Converted Document y metadatos de idioma en inglés aun cuando el texto sea español; corrígelos en un editor EPUB si son importantes para tu lector."
++      },
++      {
++        "heading": "Si el archivo falla",
++        "body": "Utiliza un archivo no vacío con texto legible y codificación UTF-8. Un documento aceptado no demuestra que todas sus etiquetas y recursos sean compatibles. No renombres un PDF u otro formato como HTML. Si el resultado es texto simplificado, puede haberse utilizado la ruta alternativa. Para otras opciones consulta el [directorio en español](/es/convert)."
++      }
++    ],
++    "faq": [
++      {
++        "q": "¿Puedo pegar una URL?",
++        "a": "No en esta herramienta. El formulario recibe un archivo local; no promete descargar una página mediante su URL."
++      },
++      {
++        "q": "¿Se conservan las imágenes y CSS?",
++        "a": "No se garantiza. La ruta alternativa extrae texto y no incluye las imágenes ni el estilo original."
++      },
++      {
++        "q": "¿El HTML puede contener JavaScript?",
++        "a": "No dependas de su ejecución. El EPUB generado no reproduce una página dinámica; comprueba siempre el resultado."
++      },
++      {
++        "q": "¿Se crean capítulos automáticamente?",
++        "a": "No se garantiza. La ruta alternativa produce un documento de texto con navegación básica, no un capítulo por cada encabezado."
++      },
++      {
++        "q": "¿Cuál es el límite por archivo?",
++        "a": "Consulta el formulario: subida directa hasta 100 MB cuando está habilitada; ruta alternativa y cada archivo por lotes hasta 4 MB."
++      },
++      {
++        "q": "¿Se conservan los acentos?",
++        "a": "La muestra UTF-8 conservó ñ y tildes. Comprueba tu archivo; otras codificaciones o documentos complejos pueden fallar."
++      }
++    ]
++  }
++};
+diff --git a/ebook-converter/src/i18n/utils.ts b/ebook-converter/src/i18n/utils.ts
+index 2d6b61a..d00bf37 100644
+--- a/ebook-converter/src/i18n/utils.ts
++++ b/ebook-converter/src/i18n/utils.ts
+@@ -10,21 +10,8 @@ type Locale = (typeof locales)[number];
+ export const defaultLocale: Locale = 'en';
+ 
+ export async function getLocale() {
+-  const cookieStore = await cookies();
+-  const localeFromCookie = cookieStore.get('locale')?.value as Locale | undefined;
+-
+-  if (localeFromCookie && locales.includes(localeFromCookie)) {
+-    return localeFromCookie;
+-  }
+-
+-  // M5-6（2026-10-22）：cookie 未设时从 middleware 注入的请求头取 locale。
+-  // 根因：根 layout（<html lang> / Header / 页脚 chrome）靠本函数取 locale，而直访
+-  // /es/guide/* 时 cookie 尚未写入（Set-Cookie 只对下一请求生效）⇒ 回退 en ⇒
+-  // 西语页出现「正文西语、导航英文」且 lang="en" 的错配（slug 页读 params 判 es
+-  // 是对的，错的是 layout 侧）。
+-  // middleware 对放行的 /es 路径用 NextResponse.next({ request: { headers } })
+-  // 注入 x-bookconv-locale，同请求下游渲染可读（Next 官方机制）。
+-  // 优先级：cookie（用户显式切换）> URL 前缀请求头 > defaultLocale；英文路径行为不变。
++  // The URL locale injected by middleware is authoritative, even when an old
++  // language cookie exists. Middleware overwrites this header for EN and ES.
+   try {
+     const { headers } = await import('next/headers');
+     const headerStore = await headers();
+@@ -36,6 +23,14 @@ export async function getLocale() {
+     // 静态渲染 / 无 headers 场景 ⇒ 静默回退 defaultLocale
+   }
+ 
++  const cookieStore = await cookies();
++  const localeFromCookie = cookieStore.get('locale')?.value as Locale | undefined;
++
++  if (localeFromCookie && locales.includes(localeFromCookie)) {
++    return localeFromCookie;
++  }
++
++
+   return defaultLocale;
+ }
+ 
+diff --git a/ebook-converter/src/lib/es-routes.ts b/ebook-converter/src/lib/es-routes.ts
+index 82c4990..f305634 100644
+--- a/ebook-converter/src/lib/es-routes.ts
++++ b/ebook-converter/src/lib/es-routes.ts
+@@ -23,6 +23,7 @@ export const ESP_BLOG_SLUGS: readonly string[] = [
+   'why-convert-lit-to-epub',
+   'epub-vs-pdf',
+   'epub-vs-mobi',
++  'txt-to-epub',
+ ]
+ 
+ export const ESP_GUIDE_SLUGS: readonly string[] = [
+@@ -46,6 +47,7 @@ export const ESP_GUIDE_SLUGS: readonly string[] = [
+ export const ESP_CONVERT_SLUGS: readonly string[] = [
+   'epub-to-doc',
+   'epub-to-word',
++  'html-to-epub',
+   'epub-to-txt',
+   'lit-to-epub',
+   'epub-to-mobi',
+@@ -83,3 +85,23 @@ export function localizeEsInternalLinks(markdown: string): string {
+       ESP_BLOG_SLUGS.includes(slug) ? `](/es/blog/${slug})` : m,
+     )
+ }
++
++
++/** Fully localized static destinations restored after the 2026-11-02 audit. */
++export const ESP_STATIC_PATHS: readonly string[] = ['/', '/convert', '/blog', '/privacy']
++/** Navigation-only collection; intentionally retains the existing tag noindex policy. */
++export const ESP_TAG_SLUGS: readonly string[] = ['epub']
++
++export function hasSpanishRoute(path: string): boolean {
++  const clean = path.replace(/^\/(?:en|es)(?=\/|$)/, '').replace(/\/$/, '') || '/'
++  return ESP_STATIC_PATHS.includes(clean)
++    || (clean.startsWith('/convert/') && ESP_CONVERT_SLUGS.includes(clean.slice(9)))
++    || (clean.startsWith('/guide/') && ESP_GUIDE_SLUGS.includes(clean.slice(7)))
++    || (clean.startsWith('/blog/tag/') && ESP_TAG_SLUGS.includes(clean.slice(10)))
++    || (clean.startsWith('/blog/') && ESP_BLOG_SLUGS.includes(clean.slice(6)))
++}
++
++export function spanishRoute(path: string): string {
++  const clean = path.replace(/^\/(?:en|es)(?=\/|$)/, '').replace(/\/$/, '') || '/'
++  return hasSpanishRoute(clean) ? (clean === '/' ? '/es' : `/es${clean}`) : '/es'
++}
+diff --git a/ebook-converter/src/lib/seo/alternates.ts b/ebook-converter/src/lib/seo/alternates.ts
+index 20dcf74..e72784f 100644
+--- a/ebook-converter/src/lib/seo/alternates.ts
++++ b/ebook-converter/src/lib/seo/alternates.ts
+@@ -1,14 +1,8 @@
+ /**
+  * 单一权威点：构建 canonical + hreflang alternate 语言组。
+  *
+- * 设计原则：
+- * - 首页 / 列表页（homepage / list）：永远只输出 en + x-default，不输出 es
+- *   （无真实西语译文的页面输出 es 是错误信号，会让 Google 误以为存在双向语言对）
+- * - convert / guide leaf page：当且仅当 hasEsVersion=true 时才输出完整三件套
+- *   （目前 3 个 convert 页有真实 es 翻译；guide 中有 10 篇有 es 译文，
+- *     其余为英文兜底 —— 调用方必须传 hasEsVersion，漏传会导致 /es/ 页
+- *     缺 hrefLang="es" 而被 Google 判为英文版的替代页）
+- * - blog leaf page：条件输出——真西语 blog（5 篇）输出三件套，其余 54 篇只输出 en + x-default
++ * 设计原则：仅已验收的 ESP_STATIC_PATHS 及 hasEsVersion 详情页输出双向语言组。
++ * 未开放的列表或未翻译详情不发 es 关联。西语首页规范路径为 /es。
+  *
+  * 为什么是单一权威点：未来新增一页只调一次 helper，不会再出现各 page 各自实现不一致的 bug。
+  *
+@@ -17,6 +11,8 @@
+  * @param opts.pageType 页面类型：'home' | 'list' | 'leaf'
+  * @param opts.hasEsVersion 仅 leaf page 用，true = 该 leaf 有真西语译本（默认 false）
+  */
++import { ESP_STATIC_PATHS } from '@/lib/es-routes';
++
+ export function buildAlternates(opts: {
+   locale: string;
+   slugPath: string;
+@@ -26,16 +22,16 @@ export function buildAlternates(opts: {
+   const baseUrl = 'https://www.bookconv.com';
+   const isEs = opts.locale === 'es';
+   const prefix = isEs ? '/es' : '';
+-  const canonical = `${baseUrl}${prefix}${opts.slugPath}`;
++  const canonical = `${baseUrl}${prefix}${opts.slugPath === '/' ? '' : opts.slugPath}`;
+ 
+-  if (opts.pageType === 'leaf' && opts.hasEsVersion === true) {
++  if ((opts.pageType === 'leaf' && opts.hasEsVersion === true) || ESP_STATIC_PATHS.includes(opts.slugPath)) {
+     // 三件套：en ↔ es 双向 + x-default 指回英文版（Google 官方推荐 x-default 指向主力语言）
+     return {
+       canonical,
+       languages: {
+-        en: `${baseUrl}${opts.slugPath}`,
+-        es: `${baseUrl}/es${opts.slugPath}`,
+-        'x-default': `${baseUrl}${opts.slugPath}`,
++        en: `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
++        es: `${baseUrl}/es${opts.slugPath === '/' ? '' : opts.slugPath}`,
++        'x-default': `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
+       },
+     };
+   }
+@@ -44,8 +40,8 @@ export function buildAlternates(opts: {
+   return {
+     canonical,
+     languages: {
+-      en: `${baseUrl}${opts.slugPath}`,
+-      'x-default': `${baseUrl}${opts.slugPath}`,
++      en: `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
++      'x-default': `${baseUrl}${opts.slugPath === '/' ? '' : opts.slugPath}`,
+     },
+   };
+ }
+diff --git a/ebook-converter/src/middleware.ts b/ebook-converter/src/middleware.ts
+index 3398677..dcd813f 100644
+--- a/ebook-converter/src/middleware.ts
++++ b/ebook-converter/src/middleware.ts
+@@ -1,7 +1,7 @@
+ import { NextResponse } from 'next/server';
+ import type { NextRequest } from 'next/server';
+ import { applySecurityHeaders } from './middleware/security';
+-import { ESP_BLOG_SLUGS, ESP_CONVERT_SLUGS, ESP_GUIDE_SLUGS } from './lib/es-routes';
++import { ESP_BLOG_SLUGS, ESP_CONVERT_SLUGS, ESP_GUIDE_SLUGS, ESP_STATIC_PATHS, ESP_TAG_SLUGS } from './lib/es-routes';
+ 
+ /**
+  * M5-6（2026-10-22）：放行 /es 路径时注入请求头 x-bookconv-locale=es。
+@@ -132,6 +132,9 @@ export async function middleware(request: NextRequest) {
+     // /es/* → P3-C rule (2026-09-05): only allow /es/blog/{slug} for the 6
+     // real Spanish blog posts. Everything else under /es/ (convert, guide,
+     // other blogs) is a pseudo-Spanish spam signal → return 404.
++    const esPath = pathname.slice(3).replace(/\/$/, '') || '/';
++    if (ESP_STATIC_PATHS.includes(esPath)) return esPassThrough(request);
++    if (esPath.startsWith('/blog/tag/') && ESP_TAG_SLUGS.includes(esPath.slice(10))) return esPassThrough(request);
+     if (pathname.startsWith('/es/blog/')) {
+       const slug = pathname.replace('/es/blog/', '');
+       // Validate slug is one of the 6 real Spanish blog posts
+@@ -201,7 +204,9 @@ export async function middleware(request: NextRequest) {
+   if (pathname === '/') {
+     const url = request.nextUrl.clone();
+     url.pathname = '/en/';
+-    const response = NextResponse.rewrite(url);
++    const englishHeaders = new Headers(request.headers);
++    englishHeaders.set('x-bookconv-locale', 'en');
++    const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
+     response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
+     return applySecurityHeaders(request, response);
+   }
+@@ -211,7 +216,9 @@ export async function middleware(request: NextRequest) {
+   //   while the browser URL stays unprefixed (clean, SEO-friendly).
+   const url = request.nextUrl.clone();
+   url.pathname = `/en${pathname}`;
+-  const response = NextResponse.rewrite(url);
++  const englishHeaders = new Headers(request.headers);
++  englishHeaders.set('x-bookconv-locale', 'en');
++  const response = NextResponse.rewrite(url, { request: { headers: englishHeaders } });
+   response.cookies.set('locale', defaultLocale, { maxAge: 31536000, path: '/' });
+   return applySecurityHeaders(request, response);
+ }
+diff --git a/ebook-converter/tests/unit/spanish-route-restoration.test.ts b/ebook-converter/tests/unit/spanish-route-restoration.test.ts
+new file mode 100644
+index 0000000..30a5cf0
+--- /dev/null
++++ b/ebook-converter/tests/unit/spanish-route-restoration.test.ts
+@@ -0,0 +1,63 @@
++import * as React from 'react'
++import { renderToStaticMarkup } from 'react-dom/server'
++import JSZip from 'jszip'
++import { buildAlternates } from '@/lib/seo/alternates'
++import { hasSpanishRoute, spanishRoute, ESP_STATIC_PATHS, ESP_BLOG_SLUGS } from '@/lib/es-routes'
++import { getAllPosts } from '@/data/blog'
++import sitemap from '@/app/sitemap'
++import ConvertIndex, { generateMetadata as convertMeta } from '@/app/[locale]/convert/page'
++import Privacy, { generateMetadata as privacyMeta } from '@/app/[locale]/privacy/page'
++import { executeConversion } from '@/lib/conversion'
++Object.assign(globalThis, { React })
++
++describe('Spanish historical route restoration', () => {
++  it('emits reciprocal language pairs only for real translated destinations', () => {
++    for (const path of ESP_STATIC_PATHS) {
++      const en = buildAlternates({ locale: 'en', slugPath: path, pageType: 'list' })
++      const es = buildAlternates({ locale: 'es', slugPath: path, pageType: 'list' })
++      expect(en.languages).toEqual(es.languages)
++      expect(es.canonical).toBe(`https://www.bookconv.com/es${path === '/' ? '' : path}`)
++    }
++    expect(buildAlternates({ locale: 'en', slugPath: '/guide', pageType: 'list' }).languages.es).toBeUndefined()
++    expect(spanishRoute('/convert/pdf-to-epub')).toBe('/es')
++    expect(spanishRoute('/blog/txt-to-epub')).toBe('/es/blog/txt-to-epub')
++    for (const p of ['/es/blog/tag/fb2', '/es/blog/tag/workflow', '/es/pricing']) expect(hasSpanishRoute(p)).toBe(false)
++  })
++  it('lists indexable restorations but excludes navigation-only tags and unavailable translations', async () => {
++    const urls = (await sitemap()).map(x => x.url)
++    for (const p of ['/es','/es/convert','/es/privacy','/es/blog','/es/blog/txt-to-epub','/es/convert/html-to-epub']) expect(urls).toContain('https://www.bookconv.com'+p)
++    for (const p of ['/es/blog/tag/epub','/es/blog/tag/fb2','/es/blog/tag/workflow']) expect(urls).not.toContain('https://www.bookconv.com'+p)
++    expect(ESP_BLOG_SLUGS.every(slug => getAllPosts().find(p => p.slug === slug)?.es)).toBe(true)
++  })
++  it('renders Spanish conversion data and actual destinations, keeping legacy DOC separate', async () => {
++    const props = { params: Promise.resolve({ locale: 'es' }) }
++    const html = renderToStaticMarkup(await ConvertIndex(props))
++    expect(html).toContain('/es/convert/html-to-epub')
++    expect(html).toContain('explicación de EPUB a DOC')
++    const ld = JSON.parse(html.match(/<script[^>]*>(.*?)<\/script>/)![1])
++    expect(ld.inLanguage).toBe('es')
++    expect(ld.itemListElement.every((x: { url: string }) => hasSpanishRoute(new URL(x.url).pathname))).toBe(true)
++    expect(ld.itemListElement.some((x: { url: string }) => x.url.endsWith('epub-to-doc'))).toBe(false)
++    expect(JSON.stringify(await convertMeta(props))).toContain('Herramientas')
++  })
++  it('translates policy without inventing a deletion deadline', async () => {
++    const props = { params: Promise.resolve({ locale: 'es' }) }
++    const html = renderToStaticMarkup(await Privacy(props))
++    expect(html).toContain('CloudConvert')
++    expect(html).toContain('almacenamiento temporal')
++    expect(html).not.toMatch(/24 horas|automáticamente después/)
++    expect((await privacyMeta(props)).alternates?.canonical).toBe('https://www.bookconv.com/es/privacy')
++  })
++  it.each([
++    ['txt', 'Capítulo uno\n\nAcción, niño y café.\n\nCapítulo dos'],
++    ['html', '<html><head><style>p{color:red}</style><script>SECRET_SCRIPT</script></head><body><h1>Capítulo uno</h1><p>Acción, niño y café.</p><img src="missing.png"><a href="other.html">Capítulo dos</a></body></html>'],
++  ])('validates real %s text fallback instead of promising original layout or chapter detection', async (source, input) => {
++    const result = await executeConversion(Buffer.from(input).toString('base64'), null, source, 'epub', `es-restore-${source}`)
++    const zip = await JSZip.loadAsync(Buffer.from(result.base64Data, 'base64'))
++    const body = await zip.file('OEBPS/content.xhtml')!.async('string')
++    expect(body).toContain('Acción, niño y café.')
++    expect(body).toContain('Capítulo dos')
++    expect(body).not.toMatch(/SECRET_SCRIPT|missing.png|color:red|href="other.html"/)
++    expect((await zip.file('OEBPS/nav.xhtml')!.async('string')).match(/<li>/g)).toHaveLength(1)
++  })
++})

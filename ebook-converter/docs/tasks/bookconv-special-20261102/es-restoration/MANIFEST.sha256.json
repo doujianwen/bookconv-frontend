@@ -1,0 +1,438 @@
+[
+  {
+    "path": "BASELINE.txt",
+    "sha256": "4bc72a413c492b5df50385d3bf521662c470aeda028f045ce07d714d6fe55ae2"
+  },
+  {
+    "path": "build.log",
+    "sha256": "6ab332d74bef8cbd76d09058f6aa7bb1b222740f6bc42883877aac37baebf56e"
+  },
+  {
+    "path": "code-critic.log",
+    "sha256": "976e9e5c2c5c18d44947ef320eff8b79745f13f01b54524a72bce430a06e4564"
+  },
+  {
+    "path": "commit.log",
+    "sha256": "f5db30803db669566273b3b16bbc2f91e0011f5bd99d8f7a8b024bbe250d30a5"
+  },
+  {
+    "path": "content-integrity.log",
+    "sha256": "680e8ee5f5767c3c1fee694330f9e374740297f8698f154c5f3f709693029c19"
+  },
+  {
+    "path": "dependency-audit-official.json",
+    "sha256": "b5923fc24e28002c5d7f831beccd15240cd649b625e89b70b0f78aebae899e6d"
+  },
+  {
+    "path": "dependency-audit.json",
+    "sha256": "4c1ed843d3a73d50d79126da1f059068e8bac087eb85c61e13901d1650c356e6"
+  },
+  {
+    "path": "deployment-check.mjs",
+    "sha256": "170c3573f722e528fa4040995da050b047698336f5db0707f89a322d24c729b2"
+  },
+  {
+    "path": "deployment.json",
+    "sha256": "9dd41a0be65ee91552447a1e122736dc74935d9f6964f744c3dc0f8e2ebe34b5"
+  },
+  {
+    "path": "details.py",
+    "sha256": "629e93f8ca2ad7b5d020ef02f3d0160479e37171cba8e2e49d0ae1de9917c219"
+  },
+  {
+    "path": "directories.py",
+    "sha256": "77d689acec1c52401dd2484f28152f3f9d8a065270ff7c430f79324bf0f5c045"
+  },
+  {
+    "path": "evidence-relocation.json",
+    "sha256": "7712ca336a3caff1fbaf78ee2e2406613fd7d7546f86d92af5ffec103142ff3b"
+  },
+  {
+    "path": "geo-content.log",
+    "sha256": "4a64faae313aa95141042826a2d475c6332397bd777a99f13b273f34e37f2ea9"
+  },
+  {
+    "path": "geo-guide.log",
+    "sha256": "f3e15a61b8de64df259af2cad3aed243ae44b9bbb15e6704ee9568d3c60349c2"
+  },
+  {
+    "path": "git-baseline.txt",
+    "sha256": "58fdb066b200c1bb8a230f7b27c0ae5e7e65eb6a9898fa0d7e05c92ef909431e"
+  },
+  {
+    "path": "github-CI.html",
+    "sha256": "62ac059749358b6717b468a77eb9db68242caedda2bbce9e8af3572760115d7b"
+  },
+  {
+    "path": "github-Deploy.html",
+    "sha256": "9ba19cbc30648eac0d064296136771cd428244826ed81e3e207c73658d2ab197"
+  },
+  {
+    "path": "github-QA.html",
+    "sha256": "34d14a69499003e74805fcf4c963a0f263e31f3090b58c17a1f4d18c2fe618de"
+  },
+  {
+    "path": "implement.py",
+    "sha256": "7162430f89df404aa9fbe60e2c0e3afb346d8d16e2b675c68bb980261338520b"
+  },
+  {
+    "path": "lint.log",
+    "sha256": "5cae9465a9d3ea0cb120c300eadb4b9a2b6a62c2cd1ecefc9095e398883b457b"
+  },
+  {
+    "path": "push.log",
+    "sha256": "bfb7f252e6d285f7c9f19085fcb595fcfd58316c470234a1b4125bf3473026df"
+  },
+  {
+    "path": "RED-TEAM.md",
+    "sha256": "4a27aa96c85bb07e8aa4029960b3e28eda464a90e1bf8d48f09f13556c7c69fe"
+  },
+  {
+    "path": "REPORT.md",
+    "sha256": "07db4edf3eade076974af68424d8692d823a799f653ed1128af7a7c17543df11"
+  },
+  {
+    "path": "restoration-tests.log",
+    "sha256": "c87081fc0d42ec4cf8f5ced8f40fe45dedd60df8f551d2a802c034c04aa61d2f"
+  },
+  {
+    "path": "review-fixes.py",
+    "sha256": "66b9ab54b0c8e96220e247354c1957a75fde2a81d7b182474c0b5e8fdd95fb8f"
+  },
+  {
+    "path": "runtime-check.py",
+    "sha256": "47506c2ab321c89d62e9fdabb3577eb8b3855551042255c0874ca2d9ee68b6ab"
+  },
+  {
+    "path": "seo-critic.log",
+    "sha256": "c4429b7acff46f06e9e0cd996f9751139200b2f561ea0cd3f8fb5db9a247ae0e"
+  },
+  {
+    "path": "source-change.patch",
+    "sha256": "faa99806d99f8a154e746f956d3b1750290fc5b28ddc161735ee9b4f650bef16"
+  },
+  {
+    "path": "tests-final.log",
+    "sha256": "892d67c7d11966fdb90d069c69df049b77b597baa3e69e612ff69a378ed42f30"
+  },
+  {
+    "path": "tests.log",
+    "sha256": "0e4a6598491d87fa6d2eac35908d334973d4b4b38027496308a015f2dfe8256d"
+  },
+  {
+    "path": "typecheck.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "verify-urls.py",
+    "sha256": "2cddf90bb8f70a4ecab773144f08dfc0200042573ea2efd36b1fec4b161d8976"
+  },
+  {
+    "path": "workflow-snapshot.mjs",
+    "sha256": "7b625b79f659fa7f38a66c52524c2d4d70d4258fa392e35339936b47385a911d"
+  },
+  {
+    "path": "workflow-status.json",
+    "sha256": "9242239f50669469c043340c74842c1d3d36aad25a009db0124d99e77385678c"
+  },
+  {
+    "path": "local/blog.html",
+    "sha256": "8634c3c073891f48095e95ecfabe4bb0bbec9d29dda23e8eff147f2d6c5e69e5"
+  },
+  {
+    "path": "local/blog_tag_fb2.html",
+    "sha256": "be6c245d165dc8512e001659e2ef99c3e6e8c20cca57e0df84abb426c59d1a47"
+  },
+  {
+    "path": "local/blog_tag_workflow.html",
+    "sha256": "a9191ddb1808fa9b5ad8bbeb4e390f1bac55825e70d87b4c96cb1d6ccee93891"
+  },
+  {
+    "path": "local/blog_txt-to-epub.html",
+    "sha256": "7d0103c2a170ade522963d383f7411ddbe31d94b8a92bf26d3eb4d5f6c7e5436"
+  },
+  {
+    "path": "local/convert.html",
+    "sha256": "75e7af21108a26f1faa4fadc916218bb7480c38c686f6e5f6b4c54aeb9f27184"
+  },
+  {
+    "path": "local/convert_epub-to-word.html",
+    "sha256": "7b019bb5a43d60d91f2f5faa3c295f8355a4bbe37eea9a2c37a455fae987a9b5"
+  },
+  {
+    "path": "local/convert_html-to-epub.html",
+    "sha256": "7228b414a126e4e38017236bcffe8e39a9573bd0d37118dfdb62aa1160ffa474"
+  },
+  {
+    "path": "local/convert_pdf-to-epub.html",
+    "sha256": "1328220b1ff07c7a85c854415c367f7b4dae39f8b0e5a3ed1017686687ad3f67"
+  },
+  {
+    "path": "local/es.html",
+    "sha256": "ecc08284c431cc333239bc08a7cbaba3317e918a647c5da3b8ee5e52e808d6cc"
+  },
+  {
+    "path": "local/es_blog.html",
+    "sha256": "a17831c142e015c16279cbd42a2a86443e9df8dd957bacead84bb10a5e28e035"
+  },
+  {
+    "path": "local/es_blog_tag_epub.html",
+    "sha256": "a9eb1c46f8cf7e81f02bd4db2b7f6952035a4cc8068845eb6d8c58194dfabbe8"
+  },
+  {
+    "path": "local/es_blog_tag_fb2.html",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "local/es_blog_tag_workflow.html",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "local/es_blog_txt-to-epub.html",
+    "sha256": "c500dac61492091aa2ff73863414dcb6350a26bd0cdff9a0832cbc0cf3c5849a"
+  },
+  {
+    "path": "local/es_convert.html",
+    "sha256": "0e753f351b617ec3ef42ebd636caa054967651e5c79b3c532e7bbe259587d639"
+  },
+  {
+    "path": "local/es_convert_epub-to-doc.html",
+    "sha256": "23e28fee0d37f64941f147b14759caef040c7cfbeb00e457cfddab1386361a10"
+  },
+  {
+    "path": "local/es_convert_html-to-epub.html",
+    "sha256": "c7db5b363682bb7f14e927f43e6d8be076f8fe17cc815cc24ed7c80907186c5a"
+  },
+  {
+    "path": "local/es_privacy.html",
+    "sha256": "50446199891bf366130a18d3cfbe189cc5e4fc39da2518bf10debb7516f783c5"
+  },
+  {
+    "path": "local/home.html",
+    "sha256": "70a3f039e8b1aa6b591e37816dc3e5c2245381f7ea400aea171f573bffea80ed"
+  },
+  {
+    "path": "local/privacy.html",
+    "sha256": "1c06f8152446cc2f7b634fa0c9ccdb8ee0767a01646f2a3030f17cdbe6061000"
+  },
+  {
+    "path": "local/results.json",
+    "sha256": "d1e90ac07a307439686f120d1c2ebef89ddef8c285cc5eea578bb4bf48641b3f"
+  },
+  {
+    "path": "online/blog.html",
+    "sha256": "756c950d206add8bf31af868b69e4880ac5e952b71d3a9f347a5592b1bd06d2a"
+  },
+  {
+    "path": "online/blog_tag_fb2.html",
+    "sha256": "8904ba0c4fe5d5f5fa2bc09cccaa072c87730ecc46612d576bf87965a52b62e3"
+  },
+  {
+    "path": "online/blog_tag_workflow.html",
+    "sha256": "07227d27a0f359ba072138013f124806b8447a85bb10e696509b7ea4a0e0ba52"
+  },
+  {
+    "path": "online/blog_txt-to-epub.html",
+    "sha256": "b789339a229f88e15000d9615898f1b2bfa840c63623312e71d3428adff1a3ec"
+  },
+  {
+    "path": "online/convert.html",
+    "sha256": "2940fb026676e8a477f6ce2fd635888947c59e12c8f0184bc7a6d27bc5a712c7"
+  },
+  {
+    "path": "online/convert_epub-to-word.html",
+    "sha256": "086c36e8b4190d67bcbd3ae7d9bb9a66236704245ed7f1255026008b8f1ce3ac"
+  },
+  {
+    "path": "online/convert_html-to-epub.html",
+    "sha256": "e1753c72ba93fa7a0c6cb5267aa88ee56160cefec558f62e2c1ad68dc4c7d58e"
+  },
+  {
+    "path": "online/convert_pdf-to-epub.html",
+    "sha256": "ce776fecd169606e76db78598a3b020b64ecd3a2980139f6bcbe21847f6aba2b"
+  },
+  {
+    "path": "online/es.html",
+    "sha256": "3b40beb51a12520911a4705edd1dcd15a05cd36327caffca06022507a1d1cc38"
+  },
+  {
+    "path": "online/es_blog.html",
+    "sha256": "9067aa9e24251e6901b56be2725944bc28232befa08239d471a187305c238452"
+  },
+  {
+    "path": "online/es_blog_tag_epub.html",
+    "sha256": "2bf80e16f26c565e7b688b40a1ab602631943b58881584d5a1ede5a60b7bdc02"
+  },
+  {
+    "path": "online/es_blog_tag_fb2.html",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "online/es_blog_tag_workflow.html",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "online/es_blog_txt-to-epub.html",
+    "sha256": "7297aa85826c6e1438e332f9c44312fe25e426aeab162b9993f3d2564755f0d2"
+  },
+  {
+    "path": "online/es_convert.html",
+    "sha256": "beee24f0bce76a83614320617cb60d92c93f3cd36e52b55dcd864ef77920f605"
+  },
+  {
+    "path": "online/es_convert_epub-to-doc.html",
+    "sha256": "7cb6df98578c80b8d0e51bfb067a991a955635664df782de2a08294361ee0159"
+  },
+  {
+    "path": "online/es_convert_html-to-epub.html",
+    "sha256": "edf982cc3e4ab68df2acf9429a1f345abdbe342285ea1975bdb047a32a2f9848"
+  },
+  {
+    "path": "online/es_privacy.html",
+    "sha256": "d132aabcabab9612e1b3f76207c301c666f01f8595bcd903308f363ecb4c7fd2"
+  },
+  {
+    "path": "online/home.html",
+    "sha256": "71a30126c4b9cdfba7eb28a3cbbe88b8950dce319a199ebf2335c159626fefbd"
+  },
+  {
+    "path": "online/privacy.html",
+    "sha256": "10aaf732f2bcae5d578af49693d1e91593cc58cf3672f2cdad50a3ec9b4ad31f"
+  },
+  {
+    "path": "online/results.json",
+    "sha256": "43320904c717cb183e1ebf7003edd2f8917908d495091ca25e4e6bd48d003bff"
+  },
+  {
+    "path": "runtime/empty.html",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runtime/html-empty.json",
+    "sha256": "b4a48677c8ec051bacff20aa5620967001af843f5c842a474f3e3b9b5d341c3d"
+  },
+  {
+    "path": "runtime/html-extension.epub",
+    "sha256": "b9f5a43b895a2c168a2d2bf865c9404f1a67aeb30f12f7a1f0766f5cc50553d5"
+  },
+  {
+    "path": "runtime/html-plain.epub",
+    "sha256": "bf43fd3c19e813132586211e74b57cb3ccc57fe003181e139858517c0f001ed8"
+  },
+  {
+    "path": "runtime/html-sample.epub",
+    "sha256": "e97dec45e09257228c3a527e514b1eb266088907277683ec60901a672cc69512"
+  },
+  {
+    "path": "runtime/legacy.txt",
+    "sha256": "caa9a4c545bd6eb16eb1d4b6b671a2ecd06b538068df044331a3b0d0480cbbd4"
+  },
+  {
+    "path": "runtime/plain.html",
+    "sha256": "26ba5dedd6876589c018f42f6d7a58cbf9e74f7d039f77902b68dbad8fe3915e"
+  },
+  {
+    "path": "runtime/results.json",
+    "sha256": "ca8d1a89a739e931ff5eb9e72b5ea41062fb024bd59e77acceaf5146f452fc63"
+  },
+  {
+    "path": "runtime/sample.htm",
+    "sha256": "a4bdc1ff4829e55e45237f5b011a05165eced09f1f724de9f0a23bb7a7f2ebf6"
+  },
+  {
+    "path": "runtime/sample.html",
+    "sha256": "01d4a39b3282096c43ff822ace36a8b6bd2d01fc4b8750a3cfaccc3a5590648f"
+  },
+  {
+    "path": "runtime/sample.txt",
+    "sha256": "b979fabb3fab1737b599d3a45056666d4f9cb986b0e2826a37e06fed09e5e480"
+  },
+  {
+    "path": "runtime/txt-legacy.json",
+    "sha256": "b4a48677c8ec051bacff20aa5620967001af843f5c842a474f3e3b9b5d341c3d"
+  },
+  {
+    "path": "runtime/txt-utf8.epub",
+    "sha256": "ba510d67f8ae7966518a048570700327faf8f29707a92f79aaebd5e362175cb2"
+  },
+  {
+    "path": "source-before/.gitignore.source.txt",
+    "sha256": "eb657d57f30dcd7cbdd8337540a0848f821ac6c9bb91830b061a040f59f067de"
+  },
+  {
+    "path": "source-before/messages/es.json.source.txt",
+    "sha256": "0f9674fb0503f0c91c3b46f320410d28c03b340866bef91ad505184754b9ec5f"
+  },
+  {
+    "path": "source-before/scripts/seo-critic.mjs.source.txt",
+    "sha256": "98f8a0460dcba2288634aa1306696b7a4e95a3ebd46f69de7dfc8e25e567693e"
+  },
+  {
+    "path": "source-before/src/middleware.ts.source.txt",
+    "sha256": "4cc751af93166c1f61827ec3eb35bcce0c852fd6968268a563b4f0185d469742"
+  },
+  {
+    "path": "source-before/src/app/layout.tsx.source.txt",
+    "sha256": "8570e2a77b3f5510a2d08ba18bdc1ec0e0ecf2fd7c2419e53a97ab1451e64411"
+  },
+  {
+    "path": "source-before/src/app/sitemap.ts.source.txt",
+    "sha256": "6d3dc8ca9531bf15637903ddca1e6db8b6e7b87169609278ca819a4ccacbf74f"
+  },
+  {
+    "path": "source-before/src/i18n/utils.ts.source.txt",
+    "sha256": "8ada736e87f3d80db8cb90a80148039e140b373b7043a7437dd1c2978f04d9bb"
+  },
+  {
+    "path": "source-before/src/lib/es-routes.ts.source.txt",
+    "sha256": "6c5834afbeb2a06ba87c46787ee2beefd1ae0ee93900ef37c844a4a32a8d6ad2"
+  },
+  {
+    "path": "source-before/src/app/[locale]/page.tsx.source.txt",
+    "sha256": "80f136410bb59d40fc115550e829d0af9240a8e9fa57c6e12a1ea1c6d0fcb0e4"
+  },
+  {
+    "path": "source-before/src/app/[locale]/blog/page.tsx.source.txt",
+    "sha256": "357f999078c1092353aa51b58d83d8f96280faf513a4a86595430e3d3ff01188"
+  },
+  {
+    "path": "source-before/src/app/[locale]/convert/page.tsx.source.txt",
+    "sha256": "62f7d7234d471dfd70cdb8c1e63a008792e91eec72e6d9935884696b9b78c034"
+  },
+  {
+    "path": "source-before/src/app/[locale]/privacy/page.tsx.source.txt",
+    "sha256": "3727992aaed04eaa087f55e8a649b42c4c67c5c781d02414a5e6b5605201611e"
+  },
+  {
+    "path": "source-before/src/app/[locale]/blog/[slug]/page.tsx.source.txt",
+    "sha256": "6bd1e208000903e3df6ecb3d14f59e608159b8444c30dd81486de7c34e5adcde"
+  },
+  {
+    "path": "source-before/src/app/[locale]/blog/tag/[tag]/page.tsx.source.txt",
+    "sha256": "7bec8249d4644c42fedefdc2ac0835aee395490668eeaa0d4e208c174dea9539"
+  },
+  {
+    "path": "source-before/src/app/[locale]/convert/[slug]/ToolPageClient.tsx.source.txt",
+    "sha256": "f50c995ebcf065060ee5ebace4144d636e9ec1383b806028e58657990faa3c5d"
+  },
+  {
+    "path": "source-before/src/components/tools/BatchConversionGuide.tsx.source.txt",
+    "sha256": "120647f6d43201717f672f69f189985a5393224961eb1293ef0f812122e96c78"
+  },
+  {
+    "path": "source-before/src/components/ui/LocaleSwitcher.tsx.source.txt",
+    "sha256": "7f1b752f3ab776edf27fc740648c83ad75c521b0be097f8061aa92a39da04ffa"
+  },
+  {
+    "path": "source-before/src/data/blog/txt-to-epub.ts.source.txt",
+    "sha256": "8c1745f93978a18d029fa201bc2e67283a49d938af33ad91a331fc07e3bc91be"
+  },
+  {
+    "path": "source-before/src/data/content/html-to-epub.ts.source.txt",
+    "sha256": "1c3cc8fa111bdc6d0d866c739c27f8504d67d8b9ce3f819a94a6cd406d00f163"
+  },
+  {
+    "path": "source-before/src/lib/seo/alternates.ts.source.txt",
+    "sha256": "f1090a945d5492400c6163f9e3d2ed772682ae0d87bf6d71a3fcc76d1dd651de"
+  }
+]

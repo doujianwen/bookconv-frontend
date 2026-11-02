@@ -1686,6 +1686,56 @@
           "statusNote": "[2026-11-02 用户决定：充值先暂停] 状态 todo→blocked（付费决策挂起，等待充值窗口重开）。连带影响：M11-5 R_post 的 ChatGPT 429 阻塞同步维持，解阻时两项一起动。"
         }
       ]
+    },
+    {
+      "id": "M12",
+      "name": "站级可见度恢复（2026-11-02 首次执行新增）",
+      "why": "2026-08-22 起 Google 站级展示 112/日→6/日（−95%），加权排名 54.9→71.5，近 91 天非品牌点击=0。在站级可见度恢复前，页面级标题/内容实验的期望收益低于测量噪声。本模块是全部 SEO 投入的前置门禁。",
+      "tier": "CORE",
+      "tasks": [
+        {
+          "id": "M12-1",
+          "action": "定位 Google 站级可见度坍塌根因（断崖日 2026-08-22）",
+          "detail": "三方证据已备：①GSC 逐日复算 08-21=142 → 08-22=32 → 08-23=8；A 段(8/1-8/21) 112.1 展示/日、排名 54.9 → C 段(9/18-10/24) 6.2 展示/日、排名 65.5。②Google 2026 年 8 月垃圾内容更新：8/18 09:27 PDT 起、8/21 01:49 PDT 完成、全球全语言（Search Status Dashboard + SEJ + SERoundtable 三源交叉）。③Bing AI 同期于 09-24 创峰值 1450 引用/日 ⇒ Google 单侧事件。需用户执行 GSC 三查：手动操作、安全风险、索引编制页数；并提供 8/15-8/31 站点变更记录。判定目标：抓取层问题 vs 垃圾判定层问题（两条路行动互斥）。",
+          "owner": "A→U",
+          "deliverable": "诊断_Google站级坍塌根因_2026-11.md（含三查结论 + 二分判定）",
+          "accept": "三查结论全部落纸，或明确写 UNKNOWN 并给出下一步取证；二分判定（抓取层 / 判定层）有结论；未判定前不得启动 S1 页面实验",
+          "due": "2026-11-17",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "2026-11-02 首次执行（CP1 D-01）建卡。阻塞于用户侧 GSC UI 登录，AI 无凭据。",
+          "note": "依据 docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP1 D-01/D-02"
+        },
+        {
+          "id": "M12-2",
+          "action": "按 Google spam policies 对 174 个 URL 逐条合规自查",
+          "detail": "针对 8 月垃圾内容更新逐条对照：scaled content abuse（大规模生成无增量价值页面）、doorway pages（程序化 convert 26 + guide 26 + blog 62 + es 31）、thin affiliate、cloaking。输出每 URL 分类（保留 / 合并 / 差异化 / noindex）。正向证据：/convert/epub-to-doc 是 30d 唯一仍被 Google 承接的 convert 意图词页（25 展示 pos 45.7），特点是内容差异化 + 诚实声明不可转换 ⇒ 指向差异化优于模板化的路线。",
+          "owner": "A",
+          "deliverable": "审计_Spam合规自查_174URL_2026-11.md",
+          "accept": "174 URL 100% 有分类且无未评项；每类给出动作与验收；不得直接删除有外链或 Bing AI 引用页",
+          "due": "2026-11-17",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "2026-11-02 首次执行（CP1 D-02）建卡。与 M12-1 并行，两者结论合并后决定 S1 路线。",
+          "note": "冻结名单（禁改正文）：/blog/best-ebook-reader-apps 7303 引用、/convert/epub-to-mobi 2511、/guide/epub-to-mobi-keep-formatting 1420、/guide/epub-to-azw3-for-kindle 1413"
+        },
+        {
+          "id": "M12-3",
+          "action": "恢复 HTML 边缘缓存（现全站 private,no-store）",
+          "detail": "实测 2026-11-02：12/12 优先 URL 返回 Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate 且 X-Vercel-Cache: MISS。next.config.ts:78-79 声明的 /blog public max-age=3600、/convert public max-age=300 未生效。机制：middleware（src/middleware.ts:210/222）对每请求 Set-Cookie locale=... ⇒ 响应判为个性化 ⇒ 动态渲染强制 no-store ⇒ 边缘缓存规则失效 ⇒ 每次 Googlebot 抓取为冷 SSR（TTFB 1.2-2.1s）。方案需解：locale 判定不依赖每请求 Set-Cookie（path 前缀 + 首次访问才写），或对已知爬虫 UA 走可缓存分支。属渲染层行为变更，发布需人工授权。",
+          "owner": "A",
+          "deliverable": "方案_HTML边缘缓存恢复_2026-11.md（含本地验证 + 回滚）",
+          "accept": "本地构建验证 locale 判定不变；发布后 3 个 URL 出现 Age>0 或 X-Vercel-Cache: HIT；/es 与 / 的 locale 分流回归通过",
+          "due": "2026-11-24",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "2026-11-02 首次执行（CP4 §4.2 / CP1 D-04）建卡。APPROVAL_REQUIRED，不得自动发布。该行为起始日期不可考，不主张其为 8/22 断崖成因。",
+          "note": "依据 docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP4 4.2"
+        }
+      ]
     }
   ],
   "openDecisions": [
