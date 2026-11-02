@@ -32,7 +32,7 @@ export interface UnsupportedConversionInfo {
  */
 export const UNSUPPORTED_CONVERSIONS: Record<string, UnsupportedConversionInfo> = {
   "epub-doc": {
-    alternativeHref: "/convert/epub-to-docx",
+    alternativeHref: "/convert/epub-to-word",
     alternativeLabel: "DOCX",
     noticeEn:
       "BookConv does not currently export legacy Word .doc files. Use DOCX for Word instead and inspect the downloaded document before replacing your source.",

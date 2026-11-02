@@ -45,6 +45,7 @@ export const ESP_GUIDE_SLUGS: readonly string[] = [
 
 export const ESP_CONVERT_SLUGS: readonly string[] = [
   'epub-to-doc',
+  'epub-to-word',
   'epub-to-txt',
   'lit-to-epub',
   'epub-to-mobi',

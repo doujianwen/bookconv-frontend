@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import Link from "next/link"
 import { useState, useMemo } from "react"
@@ -43,7 +43,7 @@ const TOP_CONVERTERS = [
   { label: "LIT to EPUB", href: "/convert/lit-to-epub" },
   { label: "EPUB to TXT", href: "/convert/epub-to-txt" },
   { label: "EPUB to AZW3", href: "/convert/epub-to-azw3" },
-  { label: "EPUB to DOC", href: "/convert/epub-to-doc" },
+  { label: "EPUB to Word (DOCX)", href: "/convert/epub-to-word" },
   { label: "DOCX to EPUB", href: "/convert/docx-to-epub" },
   { label: "FB2 to EPUB", href: "/convert/fb2-to-epub" },
   { label: "EPUB to PDF", href: "/convert/epub-to-pdf" },
@@ -281,12 +281,12 @@ export default function HomePage() {
                 <h3 className="font-semibold text-gray-900">EPUB → AZW3</h3>
                 <p className="text-sm text-gray-500 mt-1">Kindle-native AZW3 from any EPUB in one click.</p>
               </Link>
-              <Link href="/convert/epub-to-doc" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
+              <Link href="/convert/epub-to-word" className="group block rounded-xl border border-gray-200 p-4 transition-all hover:border-blue-300 hover:shadow-md">
                 <div className="aspect-video rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                   <span className="text-white text-4xl">▶</span>
                 </div>
-                <h3 className="font-semibold text-gray-900">EPUB → DOC</h3>
-                <p className="text-sm text-gray-500 mt-1">Turn an EPUB into an editable Word document.</p>
+                <h3 className="font-semibold text-gray-900">EPUB → Word (DOCX)</h3>
+                <p className="text-sm text-gray-500 mt-1">Extract EPUB text into an editable DOCX; image and layout preservation is not guaranteed.</p>
               </Link>
             </div>
           </div>

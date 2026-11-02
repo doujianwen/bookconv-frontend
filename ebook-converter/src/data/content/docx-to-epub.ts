@@ -17,7 +17,7 @@ export const content = {
 
 Going EPUB to DOCX makes sense when you have published or drafted a book and now need to revise it, hand it to an editor who works in Word, or repackage it for print. EPUB stores chapters as XHTML inside a ZIP, which reads beautifully on a Kobo and edits terribly in Word. DOCX puts the same text into a structure Word, LibreOffice Writer, Google Docs, and Pages all understand.
 
-The dedicated [EPUB to DOCX converter](/convert/epub-to-doc) runs the same Calibre engine in the opposite direction: it unpacks the EPUB, flattens the reflowable chapters into a single continuous document, converts headings into real Word heading styles so the navigation pane works, and inlines the images.
+The dedicated [EPUB to DOCX converter](/convert/epub-to-word) extracts EPUB chapter text and creates paragraphs in a DOCX document. The text-only fallback loses images, CSS layout and Word heading styles; backend preservation is not guaranteed.
 
 A practical caveat for the round trip: neither direction recovers what its format never stored. EPUB drops fixed page layout, so converting back to DOCX gives you clean flowing text, not the exact pages a print edition would have used.
 `
@@ -89,7 +89,7 @@ Keep DOCX for authoring. Convert to EPUB for publishing and reading. For that on
     { q: 'How long does DOCX to EPUB conversion take?', a: 'For documents under 100 pages, conversion typically takes 5-15 seconds. Larger documents with many images may take 1-2 minutes.' },
     { q: 'Can I edit the converted EPUB?', a: 'Yes. EPUB files can be edited with any EPUB editor like Sigil, Calibre Editor, or online tools. The converted file maintains clean, valid structure.' },
     { q: 'Will my Word heading styles become the table of contents?', a: 'Yes. The converter reads your Heading 1 and Heading 2 styles to build EPUB navigation. Documents that fake headings with big bold text get a flat table of contents, so apply real styles for the best result.' },
-    { q: 'Can you also convert EPUB back to DOCX?', a: 'Yes. The [EPUB to DOCX converter](/convert/epub-to-doc) unpacks the book, flattens the chapters into one document, and maps headings to real Word heading styles so the navigation pane works.' }
+    { q: 'Can you also convert EPUB back to DOCX?', a: 'Yes. The [EPUB to DOCX converter](/convert/epub-to-word) extracts chapter text into DOCX paragraphs. Preservation of images, CSS layout and Word heading styles is not guaranteed.' }
   ]
 ,
 

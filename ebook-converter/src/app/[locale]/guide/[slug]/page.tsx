@@ -266,8 +266,8 @@ export default async function GuidePage({ params }: GuideSlugProps) {
             <div className="grid gap-4 sm:grid-cols-2">
               {relatedBlogPostsForGuide.map((rp) => (
                 <Link key={rp.slug} href={isEs ? esBlogHref(rp.slug) : rp.href} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllPosts().find((p) => p.slug === rp.slug)?.es?.title ?? rp.title) : rp.title}</h3>
-                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{rp.excerpt}</p>
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllPosts().find((p) => p.slug === rp.slug)?.es?.title ?? `${rp.title} (en inglés)`) : rp.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{isEs ? (getAllPosts().find((p) => p.slug === rp.slug)?.es?.content.intro ?? rp.excerpt) : rp.excerpt}</p>
                 </Link>
               ))}
             </div>
@@ -280,8 +280,8 @@ export default async function GuidePage({ params }: GuideSlugProps) {
             <div className="grid gap-4 sm:grid-cols-2">
               {others.map((o) => (
                 <Link key={o.slug} href={isEs ? esGuideHref(o.slug) : `/guide/${o.slug}`} className="group block rounded-xl border bg-white p-5 transition-colors hover:border-blue-300 hover:bg-blue-50">
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{getAllGuides().find((g) => g.slug === o.slug)?.es?.title ?? o.title}</h3>
-                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{o.excerpt}</p>
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600">{isEs ? (getAllGuides().find((g) => g.slug === o.slug)?.es?.title ?? `${o.title} (en inglés)`) : o.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{isEs ? (getAllGuides().find((g) => g.slug === o.slug)?.es?.problem ?? o.excerpt) : o.excerpt}</p>
                 </Link>
               ))}
             </div>

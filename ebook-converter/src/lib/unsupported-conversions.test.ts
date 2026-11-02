@@ -2,7 +2,7 @@ import {
   UNSUPPORTED_CONVERSIONS,
   unsupportedConversionInfo,
 } from "./unsupported-conversions";
-import { CONVERSION_MAP } from "./conversion-map";
+import { normalizeFormat, CONVERSION_MAP } from "./conversion-map";
 
 /**
  * 防回归测试（2026-11-01，doc-epub 两头堵第三例）：
@@ -27,7 +27,7 @@ import { CONVERSION_MAP } from "./conversion-map";
 
 /** /convert/epub-to-docx → CONVERSION_MAP 键 epub-docx */
 function slugToMapKey(href: string): string {
-  return href.replace(/^\/convert\//, "").replace(/-to-/, "-");
+  return href.replace(/^\/convert\//, "").split("-to-").map(normalizeFormat).join("-");
 }
 
 describe("UNSUPPORTED_CONVERSIONS registry", () => {

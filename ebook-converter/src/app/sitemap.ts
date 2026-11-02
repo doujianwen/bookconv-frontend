@@ -4,7 +4,7 @@ import { getAllGuides } from '@/data/guides'
 import { CONTENT_MAP } from '@/data/content'
 import { SUPPORTED_FORMAT_SLUGS } from '@/data/formats'
 import { COMPAT_MAP } from '@/data/compat'
-import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS } from '@/lib/es-routes'
+import { ESP_BLOG_SLUGS, ESP_GUIDE_SLUGS, ESP_CONVERT_SLUGS } from '@/lib/es-routes'
 
 // M3-2 decision (2026-09-27, per SEO/GEO V2.0 拆解表): admit /formats/* and
 // /compat/* to the sitemap. Both carry independent information increment —
@@ -48,7 +48,8 @@ const CONTENT_DATES: Record<string, string> = {
   'doc-to-epub': '2026-11-01',
   'docx-to-epub': '2026-11-01',
   'epub-to-azw3': '2026-11-01',
-  'epub-to-doc': '2026-11-01',
+  'epub-to-doc': '2026-11-02',
+  'epub-to-word': '2026-11-02',
   'epub-to-html': '2026-11-01',
   'epub-to-jpg': '2026-11-01',
   'epub-to-mobi': '2026-11-01',
@@ -62,7 +63,7 @@ const CONTENT_DATES: Record<string, string> = {
   'mobi-to-epub': '2026-11-01',
   'mobi-to-pdf': '2026-11-01',
   'mobi-to-txt': '2026-11-01',
-  'pdf-to-epub': '2026-11-01',
+  'pdf-to-epub': '2026-11-02',
   'rtf-to-epub': '2026-11-01',
   'txt-to-epub': '2026-11-01',
 }
@@ -213,7 +214,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // 5 content (convert) pages have complete, human-grade Spanish translations
       // (hero + sections + faq). Middleware now allows /es/convert/{slug} for these
       // and the [locale] convert page renders the Spanish body. Emit their URLs too.
-      const ESP_CONVERT_SLUGS = ['epub-to-doc', 'epub-to-txt', 'lit-to-epub', 'epub-to-mobi', 'epub-to-azw3'];
       for (const slug of ESP_CONVERT_SLUGS) {
         allUrls.push({
           url: baseUrl + prefix + '/convert/' + slug,

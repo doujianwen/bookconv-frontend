@@ -15,6 +15,9 @@ import { CONTENT_MAP } from "@/data/content"
 import { generateConversionPageSchema } from "@/lib/seo/schema"
 import { getRelatedBlogPostsForConversion, getRelatedGuidesForConversion } from "@/lib/internal-links"
 import { buildAlternates } from "@/lib/seo/alternates"
+import { getPostBySlug } from "@/data/blog"
+import { getGuideBySlug } from "@/data/guides"
+import { esBlogHref, esGuideHref } from "@/lib/es-routes"
 import { clampMetaDescription } from "@/lib/seo/meta-description"
 
 // Lazy-load ToolPageClient with SSR disabled (it is fully client-side)
@@ -90,7 +93,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
           alt: title,
         },
       ],
-      locale: "en_US",
+      locale: isEs ? "es_ES" : "en_US",
     },
     twitter: {
       card: "summary_large_image",
@@ -134,9 +137,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
   }
 
   // Use dynamically imported component
-  const relatedBlogPosts = getRelatedBlogPostsForConversion(source, target)
-  const relatedGuides = getRelatedGuidesForConversion(source, target)
-  const jsonLd = generateConversionPageSchema(source, target, content)
+  const relatedBlogPosts = getRelatedBlogPostsForConversion(source, target).map(ref => {
+    const translated = isEs ? getPostBySlug(ref.slug)?.es : undefined
+    return isEs ? { ...ref, title: translated?.title ?? `${ref.title} (en inglés)`, excerpt: translated?.content.intro ?? ref.excerpt, href: esBlogHref(ref.slug) } : ref
+  })
+  const relatedGuides = getRelatedGuidesForConversion(source, target).map(ref => {
+    const translated = isEs ? getGuideBySlug(ref.slug)?.es : undefined
+    return isEs ? { ...ref, title: translated?.title ?? `${ref.title} (en inglés)`, excerpt: translated?.problem ?? ref.excerpt, href: esGuideHref(ref.slug) } : ref
+  })
+  const jsonLd = generateConversionPageSchema(source, target, content, locale)
   return (
     <>
       {/* Server-rendered structured data so crawlers / AI engines read it in
@@ -152,6 +161,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         keyword={keyword}
         tool={conversion.tool}
         description={conversion.description}
+        allowedConversionSlugs={Object.keys(CONTENT_MAP)}
         contentData={content}
         isEs={isEs}
         relatedBlogPosts={relatedBlogPosts}

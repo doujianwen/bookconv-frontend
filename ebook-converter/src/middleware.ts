@@ -47,8 +47,7 @@ const BLOG_REDIRECTS: Record<string, string> = {
   '/blog/how-to-convert-epub-to-mobi': '/blog/epub-to-mobi-guide',
   '/blog/epub-vs-azw3-vs-mobi': '/blog/ebook-formats-explained',
   '/blog/mobi-or-azw3-for-kindle': '/blog/azw3-vs-mobi',
-  // B-class P0 (2026-10-08): convert page merged to blog canonical
-  '/convert/epub-to-word': '/blog/epub-to-word',
+  // EPUB to Word is a real text-based DOCX tool again (2026-11-02).
   // D1 decision 2026-10-04: text merged into txt (near-duplicate pair).
   '/formats/text': '/formats/txt',
   // D1 decision 2026-10-04: word merged into docx (same format + gate flagged it).

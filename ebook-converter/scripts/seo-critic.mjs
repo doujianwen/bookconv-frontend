@@ -191,6 +191,12 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
   const files = dirs.flatMap((d) => listTs(d).map((f) => join(d, f)));
   const KNOWN = new Set(['/batch', '/help', '/about', '/guide', '/founder', '/data', '/compare/bookconv-vs-calibre', '/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
 
+  const esRouteSource = read(join(ROOT, 'src/lib/es-routes.ts')) || '';
+  const esRoutes = new Set();
+  for (const [group, name] of [['convert', 'ESP_CONVERT_SLUGS'], ['blog', 'ESP_BLOG_SLUGS'], ['guide', 'ESP_GUIDE_SLUGS']]) {
+    const block = esRouteSource.match(new RegExp(String.raw`export const ${name}[^=]*= \[([\s\S]*?)\]`))?.[1] || '';
+    for (const match of block.matchAll(/'([a-z0-9-]+)'/g)) esRoutes.add(`/es/${group}/${match[1]}`);
+  }
   for (const fp of files) {
     const src = read(fp);
     if (!src) continue;
@@ -203,6 +209,7 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
       if (!url.startsWith('/')) continue; // 外链跳过
       const where = `${fp.replace(ROOT + '/', '')}:${lineOf(src, m.index)}`;
 
+      if (esRoutes.has(url)) url = url.slice(3);
       if (KNOWN.has(url)) continue;
       if (url.startsWith('/blog/tag/')) continue; // 标签页动态
 

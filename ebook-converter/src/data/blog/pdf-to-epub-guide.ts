@@ -6,7 +6,7 @@ export const author = "BookConv Team";
 export const tags = ["PDF", "EPUB", "OCR", "BookConv", "conversion", "guide"];
 
 export const content = {
-  intro: `Upload your PDF and convert it to EPUB on BookConv in seconds — no software to install, no account needed. This guide shows you how to run it, how to tell in ten seconds whether your PDF will convert well or turn into a mess, and when you're better off keeping the PDF exactly as it is.`,
+  intro: `Upload your PDF and convert it to EPUB on BookConv online — no software to install, no account needed. This guide shows you how to run it, how to tell in ten seconds whether your PDF will convert well or turn into a mess, and when you're better off keeping the PDF exactly as it is.`,
   sections: [
     {
       heading: `Convert PDF to EPUB on BookConv in Three Steps`,
@@ -16,13 +16,13 @@ export const content = {
 2. Look at the metadata preview. It shows what BookConv could read out of the file, which is your first hint about whether the PDF has a real text layer or not.
 3. Convert, watch the progress bar, and download the EPUB.
 
-It runs on a server-side Calibre engine, so you get the same conversion logic desktop users get without installing or configuring anything. Free tier is 100 MB per file and 20 conversion requests per minute per IP, with no account. The 100 MB cap applies to every plan.
+It runs on a server-side Calibre engine, so you get the same conversion logic desktop users get without installing or configuring anything. Direct single-file uploads support up to 100 MB when enabled; fallback and batch uploads are limited to 4 MB per file. PDF batches accept up to 3 files. Batch is free during public beta, with Pro planned after beta. Follow the uploader display.
 
 ### A few practical notes
 
 PDFs run larger than most ebook formats — a scanned 300-page book can easily clear 100 MB while a plain text-layer PDF of the same book might be 2 MB. If you hit the size limit, that size difference is usually telling you something about what's inside the file.
 
-Big or slow conversions get handed to a background worker queue instead of tying up your browser, and the progress bar keeps ticking so you can see it's still working. Download links are **temporary** and converted files are deleted after a period, so grab the EPUB when it's ready rather than saving the link.
+Processing time depends on the file and active backend. Keep the page open until a result or error appears; large files may exceed processing limits. Download links are **temporary** and converted files are deleted after a period, so grab the EPUB when it's ready rather than saving the link.
 
 **DRM-protected files are rejected on upload.** Password-protected PDFs are the same story — remove the password yourself first if it's your file and you know it, then upload.
 
@@ -114,7 +114,7 @@ The honest test is what you plan to do with the file. Reading long-form prose on
     {
       heading: `Key Takeaways`,
       body: `- **Test the text layer first.** If you can't select and copy text, it's a scan — run OCR elsewhere before uploading, because BookConv doesn't do OCR.
-- **BookConv handles text PDFs in the browser.** Upload, convert, download. Free tier is 100 MB per file with no account and no install.
+- **BookConv handles text PDFs in the browser.** Upload, convert, download. Use the displayed upload limit: direct uploads up to 100 MB when enabled, fallback and batch 4 MB per file; no account or install for single-file jobs.
 - **Save the file right away.** Download links are temporary and converted files are deleted after a period.
 - **PDF stores position, not structure.** Every converter is guessing at paragraphs and chapters, which is why a novel converts cleanly and a textbook doesn't.
 - **Some PDFs shouldn't be converted.** Comics, sheet music, forms, and reference documents lose their meaning the moment text reflows.`
@@ -133,7 +133,7 @@ export const faqs = [
   },
   {
     question: `What's the file size limit?`,
-    answer: `100 MB per file, on every plan. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.`,
+    answer: `Up to 100 MB for enabled direct single-file uploads; 4 MB for fallback and each batch file. Check the uploader display. PDFs are bulkier than most ebook formats, so image-heavy documents hit these limits faster than plain text ones.`,
   },
   {
     question: `Can I convert a password-protected PDF?`,
@@ -149,6 +149,8 @@ export const faqs = [
   },
   {
     question: `My conversion is taking a while. Is it stuck?`,
-    answer: `Probably not. Large or slow files go through a background worker queue, and the progress bar keeps updating while that runs. Leave the page open until the download link appears.`,
+    answer: `Large or complex files may exceed processing limits or fail. Leave the page open until a download link or error appears; try a smaller file if processing fails.`,
   }
 ];
+
+export const lastUpdated = "2026-11-02";

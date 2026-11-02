@@ -1,3 +1,5 @@
+import { unsupportedConversionInfo } from '../unsupported-conversions'
+import { normalizeFormat } from '../conversion-map'
 import { SECURITY_FAQ } from './securityFaq'
 import { generateDefaultFAQs } from './conversion-faq'
 
@@ -118,18 +120,20 @@ export function generateConversionPageSchema(
   source: string,
   target: string,
   contentData?: ConversionContentLite,
+  locale = 'en',
 ): string {
   const baseUrl = 'https://www.bookconv.com';
   const sourceDisplay = source.toUpperCase();
   const targetDisplay = target.toUpperCase();
   const slug = source + '-to-' + target;
-  const pageUrl = baseUrl + '/convert/' + slug;
+  const pageUrl = baseUrl + (locale === 'es' ? '/es' : '') + '/convert/' + slug;
+  const unsupported = unsupportedConversionInfo(normalizeFormat(source), normalizeFormat(target));
   const baseFaqs: FAQItem[] = (contentData?.faq && contentData.faq.length > 0)
     ? contentData.faq.map((f) => ({ question: f.q, answer: f.a }))
     : defaultFaqsFor(source, target);
   // Always surface the security & privacy promise (Gemini/AI-engine trust
   // signal). Custom per-format FAQs must not silently drop it.
-  const faqs: FAQItem[] = baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
+  const faqs: FAQItem[] = (locale === 'es' || unsupported) ? baseFaqs : baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
     ? baseFaqs
     : [...baseFaqs, SECURITY_FAQ];
 
@@ -159,10 +163,10 @@ export function generateConversionPageSchema(
       '@type': 'WebPage',
       '@id': pageUrl,
       url: pageUrl,
-      name: 'Free Online ' + sourceDisplay + ' to ' + targetDisplay + ' Converter',
+      name: contentData?.hero?.title || (sourceDisplay + ' to ' + targetDisplay),
       description: contentData?.hero?.subtitle || ('Convert ' + sourceDisplay + ' to ' + targetDisplay + ' online for free.'),
       isPartOf: { '@id': baseUrl + '#website' },
-      inLanguage: 'en',
+      inLanguage: locale === 'es' ? 'es' : 'en',
     },
     {
       '@type': 'SoftwareApplication',
@@ -200,7 +204,10 @@ export function generateConversionPageSchema(
       url: pageUrl,
     },
   ];
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+  const honestGraph = unsupported
+    ? graph.filter(node => !['HowTo', 'SoftwareApplication'].includes(node['@type']))
+    : graph;
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': honestGraph }, null, 2);
 }
 
 const LOCALE_MAP = {

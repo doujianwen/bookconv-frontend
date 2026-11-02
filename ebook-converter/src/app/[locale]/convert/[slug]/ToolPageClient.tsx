@@ -24,6 +24,7 @@ import { uploadFileDirect } from "@/lib/client/direct-upload"
 import { mapDirectUploadError } from "@/lib/direct-upload-error"
 import { useUploadCapability } from "@/lib/client/upload-capability"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
+import { esConvertHref } from "@/lib/es-routes"
 import { unsupportedConversionInfo } from "@/lib/unsupported-conversions"
 import { FeedbackWidget } from "@/components/tools/FeedbackWidget"
 import { KeyFactsSection } from "@/components/tools/KeyFactsSection"
@@ -42,6 +43,7 @@ interface ToolPageClientProps {
   keyword: KeywordData
   tool: string
   description: string
+  allowedConversionSlugs: string[]
   contentData?: ContentData | null
   /** M5-6：西语页 chrome 本地化开关（服务端按 locale+es 译文存在性判定后传入） */
   isEs?: boolean
@@ -83,18 +85,18 @@ const VIDEO_TUTORIALS: Record<string, TutorialEntry> = {
   },
   'pdf-to-epub': {
     videoUrl: '/videos/pdf-to-epub.mp4',
-    title: 'PDF to EPUB: Preserve Layout & TOC',
+    title: 'PDF to EPUB: Check Text and Layout',
     description: 'Learn how to convert PDFs into reflowable EPUB format for the best reading experience.',
     steps: [
-      { title: 'Upload PDF', description: 'Supports scanned and text-based PDFs.' },
-      { title: 'Select EPUB format', description: 'System auto-optimizes layout.' },
+      { title: 'Upload PDF', description: 'Use a text-based PDF; run OCR separately for scans.' },
+      { title: 'Select EPUB format', description: 'Check the converted text and reading order.' },
       { title: 'Preview and download', description: 'Download immediately after conversion.' },
     ],
-    titleEs: 'PDF a EPUB: conserva maquetación e índice',
+    titleEs: 'PDF a EPUB: revisa texto y maquetación',
     descriptionEs: 'Aprende a convertir PDF a EPUB refluible para la mejor experiencia de lectura.',
     stepsEs: [
-      { title: 'Sube tu PDF', description: 'Admite PDF escaneados y basados en texto.' },
-      { title: 'Elige formato EPUB', description: 'El sistema optimiza la maquetación automáticamente.' },
+      { title: 'Sube tu PDF', description: 'Usa un PDF con texto; aplica OCR por separado a los escaneos.' },
+      { title: 'Elige formato EPUB', description: 'Revisa el texto y su orden de lectura.' },
       { title: 'Previsualiza y descarga', description: 'Descarga inmediatamente tras la conversión.' },
     ],
   },
@@ -117,7 +119,7 @@ const VIDEO_TUTORIALS: Record<string, TutorialEntry> = {
   },
 }
 
-export function ToolPageClient({ source, target, contentData, isEs = false, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
+export function ToolPageClient({ source, target, contentData, allowedConversionSlugs, isEs = false, relatedBlogPosts, relatedGuides }: ToolPageClientProps) {
   const [status, setStatus] = useState<ConversionStatus>("idle")
   // How large a file this deployment can actually take. Depends on whether the
   // presigned direct-upload path is live (R2 configured + bucket CORS in place),
@@ -154,7 +156,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
     : generateDefaultFAQs(source, target)
   // Always surface the security & privacy promise (Gemini/AI-engine trust
   // signal). Custom per-format FAQs must not silently drop it.
-  const faqs = baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
+  const faqs = (isEs || unsupported) ? baseFaqs : baseFaqs.some((f) => /secure|privacy|safe/i.test(f.question))
     ? baseFaqs
     : [...baseFaqs, SECURITY_FAQ]
   // Look up video tutorial for this conversion
@@ -322,7 +324,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             {chrome('quickAnswer', isEs)}
           </h2>
           <p className="text-sm text-blue-800 leading-relaxed">
-            {isEs ? (
+            {unsupported ? (isEs ? unsupported.noticeEs : unsupported.noticeEn) : isEs ? (
               <>
                 Para convertir <strong>{sourceDisplay}</strong> a <strong>{targetDisplay}</strong>:
                 sube tu archivo con el formulario de abajo, elige <strong>{targetDisplay}</strong> como formato de salida y pulsa Convertir.
@@ -370,19 +372,19 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
               </h2>
               <p className="text-sm text-amber-800 leading-relaxed">
                 {isEs ? unsupported.noticeEs : unsupported.noticeEn}{" "}
-                <Link href={unsupported.alternativeHref} className="font-semibold underline hover:text-amber-950">
+                <Link href={isEs && unsupported.alternativeHref.startsWith("/convert/") ? esConvertHref(unsupported.alternativeHref.slice("/convert/".length)) : unsupported.alternativeHref} className="font-semibold underline hover:text-amber-950">
                   {isEs ? `Convertir a ${unsupported.alternativeLabel} →` : `Convert to ${unsupported.alternativeLabel} →`}
                 </Link>
               </p>
             </div>
           )}
-          <FileDropZone
+          {!unsupported && <FileDropZone
             onFileSelect={handleFileSelect}
-            disabled={unsupported !== undefined || status === "uploading" || status === "converting"}
+            disabled={status === "uploading" || status === "converting"}
             accept={"." + source + ",." + source.toUpperCase()}
             maxFileSizeBytes={uploadCap.maxBytes}
             maxFileSizeMB={uploadCap.maxMB}
-          />
+          />}
           <ConversionProgress
             status={status}
             progress={status === "converting" ? progress : 0}
@@ -455,7 +457,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
           )}
         </div>
         {/* FAQ with Schema */}
-        <BatchConversionGuide sourceFormat={source} targetFormat={target} isEs={isEs} />
+        {!unsupported && <BatchConversionGuide sourceFormat={source} targetFormat={target} isEs={isEs} />}
         {/* Custom content sections */}
         {contentData?.sections ?
           contentData.sections.map((section, index) => (
@@ -609,7 +611,7 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
           </div>
         </section>
         {/* Related conversions */}
-        <RelatedConversions currentSource={source} currentTarget={target} isEs={isEs} />
+        <RelatedConversions currentSource={source} currentTarget={target} allowedSlugs={allowedConversionSlugs} isEs={isEs} />
       </main>
     </>
   )

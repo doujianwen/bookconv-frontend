@@ -62,7 +62,7 @@ Reach for this when the Linux machine is a locked-down work laptop, a borrowed b
       heading: `Which Method Should You Use`,
       body: `One file on a normal machine — the GUI. A folder of files or a script — the CLI. No install permission or a throwaway box — the browser converter. All three produce the same Calibre-based PDF, so the choice is purely about convenience.
 
-Going the other way? [PDF to EPUB](/convert/pdf-to-epub) is the move when you need editable, reflowable text instead of a fixed page. And if your EPUB started life as a Word document, [EPUB to DOC](/convert/epub-to-doc) gets it back into an editor.`
+Going the other way? [PDF to EPUB](/convert/pdf-to-epub) is the move when you need editable, reflowable text instead of a fixed page. And if your EPUB started life as a Word document, [EPUB to Word (DOCX)](/convert/epub-to-word) extracts editable text; images and layout are not preserved.`
     },
     {
       heading: `Key Takeaways`,

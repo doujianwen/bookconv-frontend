@@ -4,6 +4,7 @@ import * as epub_to_rtf from './epub-to-rtf';
 import * as epub_to_jpg from './epub-to-jpg';
 import * as epub_to_html from './epub-to-html';
 import * as epub_to_doc from './epub-to-doc';
+import * as epub_to_word from './epub-to-word';
 import * as fb2_to_epub from './fb2-to-epub';
 import * as epub_to_pdf from './epub-to-pdf';
 import * as rtf_to_epub from './rtf-to-epub';
@@ -77,6 +78,7 @@ export const CONTENT_MAP: Record<string, ConversionContentModule> = {
   'epub-to-jpg': epub_to_jpg,
   'epub-to-html': epub_to_html,
   'epub-to-doc': epub_to_doc,
+  'epub-to-word': epub_to_word,
   'fb2-to-epub': fb2_to_epub,
   'epub-to-pdf': epub_to_pdf,
   'rtf-to-epub': rtf_to_epub,
