@@ -25,7 +25,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { normalizeGaDate, dailyWindow } from './lib/ga-date.mjs'
-import { sumDirectUploadInfra, DIRECT_UPLOAD_INFRA_CODES } from './lib/ga-error-codes.mjs'
+import { sumDirectUploadInfra, DIRECT_UPLOAD_INFRA_CODES, USER_INPUT_CODES } from './lib/ga-error-codes.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -52,7 +52,7 @@ const live = readJson('ga4-live.json')
 // 非引擎类 error_code（与 ga-inspection splitFailures 同口径）。
 // ⚠️ 直传族四码走共享常量（scripts/lib/ga-error-codes.mjs）：这是 Part D 红队本身，
 // 漏改会让 D2 引擎失败漏报检查对新码误判（红队审计 2026-11-02 G3，最易被漏改的一处）。
-const NON_ENGINE = new Set(['FILE_TOO_LARGE', 'CONVERSION_QUOTA_EXCEEDED', ...DIRECT_UPLOAD_INFRA_CODES])
+const NON_ENGINE = new Set(['FILE_TOO_LARGE', 'CONVERSION_QUOTA_EXCEEDED', ...DIRECT_UPLOAD_INFRA_CODES, ...USER_INPUT_CODES])
 const isEngine = (code) => !!code && !NON_ENGINE.has(code)
 
 const checks = []

@@ -31,6 +31,39 @@ import {
 
 export const maxDuration = 300; // Vercel Pro 支持 300s；大文件（50+页EPUB→PDF经Calibre引擎）需 60-120s 处理时间
 
+/**
+ * 解析真实客户端 IP，供转发给自建后端做取证（2026-11-02）。
+ *
+ * 为什么需要：Vercel 出站 fetch **不转发客户端 IP**——实测从
+ * www.bookconv.com 发起、真实客户端 43.129.176.38 的请求，到后端时
+ * XFF/X-Real-IP 都是 Vercel egress（3.90.42.96）、UA 被改写为 node。
+ * 只靠后端 nginx 记 $http_x_forwarded_for 只能记到 Vercel 自己的 IP。
+ *
+ * 信任顺序（目的 = 取证归因，非访问控制）：
+ *   1. `x-vercel-forwarded-for` —— Vercel 专用头，客户端不可伪造，首选；
+ *   2. `x-forwarded-for` —— 回退，取**最后一段**：若上游为追加语义，首段可能是
+ *      客户端自带的伪造值，最后一段才是最近一跳代理写入的；
+ *   3. `x-real-ip` —— 最后回退。
+ * 全都缺失时返回 undefined（不编造值）。
+ *
+ * 不复用 rate-limit 的 getClientIp：它在 TRUST_PROXY=false 时直接回落到 socket
+ * 地址（Vercel 内部 IP），对取证无意义；其信任判据也是为限流设计的。
+ */
+function readClientIp(request: NextRequest): string | undefined {
+  const vercelFwd = request.headers.get("x-vercel-forwarded-for");
+  if (vercelFwd) {
+    const first = vercelFwd.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  const xff = request.headers.get("x-forwarded-for");
+  if (xff) {
+    const parts = xff.split(",").map((s) => s.trim()).filter(Boolean);
+    if (parts.length > 0) return parts[parts.length - 1];
+  }
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  return realIp || undefined;
+}
+
 export async function POST(request: NextRequest) {
   try {
     // --- Rate Limiting (per-IP, convertApi strategy: 20 req / 60s) ---
@@ -92,7 +125,18 @@ export async function POST(request: NextRequest) {
       }
 
       if (canDelegate) {
-        const backendResp = await delegateToBackend(formData, rateHeaders, { prebuiltFile });
+        // 捕获「为什么没走后端」，随同 convertAndStream 传给告警卡（2026-11-02）。
+        // 无此信息时，卡片只显示降级链末端的错误（如 "too small"），会把容量
+        // 故障误判成用户传错文件。用请求作用域的局部变量，不做模块级缓存
+        // （Serverless 同实例并发会串请求）。
+        let delegationFallback: string | undefined;
+        const backendResp = await delegateToBackend(formData, rateHeaders, {
+          prebuiltFile,
+          clientIp: readClientIp(request),
+          onFallback: (reason) => {
+            delegationFallback = reason;
+          },
+        });
         if (backendResp) {
           // Backend succeeded (200 + file bytes). Returned as-is. The R2 upload
           // object is no longer needed on the happy path (the client only reuses
@@ -102,11 +146,13 @@ export async function POST(request: NextRequest) {
           return backendResp;
         }
         // Backend down / unsupported / timeout -> fall through to CloudConvert below.
+        const ccHeaders = { ...rateHeaders, "X-Conversion-Backend": isPureJsConversion(sourceFormat, targetFormat) ? "local-js" : "miss-cloudconvert" };
+        return convertAndStream(formData, ccHeaders, { uploadKey, delegationFallback });
       }
 
-      // CloudConvert path: formats the backend can't emit, the upload_key (R2) path,
-      // backend-down, or circuit-open. X-Conversion-Backend header is for MON-style
-      // observability (hit vs miss).
+      // canDelegate 为 false（目标格式不属 Calibre 白名单 / 熔断打开 /
+      // epub→html 例外）：delegation 从未发生，直接走 CloudConvert。
+      // X-Conversion-Backend header is for MON-style observability (hit vs miss).
       const ccHeaders = { ...rateHeaders, "X-Conversion-Backend": isPureJsConversion(sourceFormat, targetFormat) ? "local-js" : "miss-cloudconvert" };
       return convertAndStream(formData, ccHeaders, { uploadKey });
     }

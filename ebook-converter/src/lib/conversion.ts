@@ -19,6 +19,7 @@ import { verifyConversion } from './conversion-verifier';
 import { convertWithCloudConvert, isCloudConvertConfigured } from './cloudconvert';
 import * as fsp from 'node:fs/promises';
 import { errorMessage } from './error-handler';
+import { MIN_INPUT_BYTES } from './file-size-limit';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
 import { epubToHtmlArchive } from './epub-html';
@@ -1205,12 +1206,18 @@ export async function executeConversion(
   if (inputFilePath && existsSync(inputFilePath)) {
     inputPath = inputFilePath;
   } else {
-    if (!fileBuffer) {
+    // 2026-11-02 根因修正：原写法 `if (!fileBuffer)` 把「空 buffer」误当成
+    // 「根本没提供 buffer」。0 字节上传的 base64 是空串（''），falsy ⇒ 抛出
+    // "Either fileBuffer or inputFilePath must be provided"——一条读起来像
+    // 编程错误的内部消息，掩盖了「用户传了空文件」这个事实（Job f3937005）。
+    // 现在只把 null/undefined 视为缺失；空串照常写盘，由下方体积守卫给出
+    // 如实的 "too small (0 bytes)"，语义与归因都正确。
+    if (fileBuffer === null || fileBuffer === undefined) {
       throw new Error('Either fileBuffer or inputFilePath must be provided');
     }
     inputPath = path.join(jobDir, jobId + '.' + sourceFormat);
     writeFileSync(inputPath, Buffer.from(fileBuffer, 'base64'));
-    if (Buffer.byteLength(fileBuffer, 'base64') < 30) {
+    if (Buffer.byteLength(fileBuffer, 'base64') < MIN_INPUT_BYTES) {
       throw new Error(`Invalid input file: too small (${Buffer.byteLength(fileBuffer, 'base64')} bytes)`);
     }
   }

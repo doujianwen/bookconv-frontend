@@ -18,7 +18,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import https from 'node:https';
-import { DIRECT_UPLOAD_INFRA_CODES } from './lib/ga-error-codes.mjs';
+import { DIRECT_UPLOAD_INFRA_CODES, USER_INPUT_CODES } from './lib/ga-error-codes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -126,7 +126,13 @@ function basicFromReport(report) {
 //     — 直传链路故障（presign/R2/网络），非引擎非客户端 ⇒ 单独展示，
 //     不计入 engineFailed（否则 1 次直传失败+0 完成会误报「引擎失败偏高」）。
 //     ⚠️ 漏改本集合 → 新码掉 else 被算成引擎失败 + 飞书误报系统侧红卡（红队审计 G2）。
-const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE']);
+// 2026-11-02：并入 USER_INPUT_CODES（当前仅 UPLOAD_EMPTY，单一事实源
+// ga-error-codes.mjs）。其真实语义不是「客户端拦截」而是「未进入引擎就被拒」——
+// 与 FILE_TOO_LARGE 在**排 engineFailed** 这件事上完全同族，故共用本集合；
+// 若散落在 else 分支，空文件会被算成引擎失败并触发飞书误报。
+// 注意 INPUT_TOO_SMALL 故意不在此集合（见 ga-error-codes.mjs 注释：后端实测能转
+// 13 字节 txt，该类失败实为容量/降级链问题，算成「未进引擎」会掩盖容量故障）。
+const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE', ...USER_INPUT_CODES]);
 const QUOTA_CODES = new Set(['CONVERSION_QUOTA_EXCEEDED']);
 const INFRA_CODES = new Set(DIRECT_UPLOAD_INFRA_CODES);
 

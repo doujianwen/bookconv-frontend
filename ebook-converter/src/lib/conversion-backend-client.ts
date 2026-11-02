@@ -24,6 +24,7 @@
 import { NextResponse } from "next/server";
 import { notifyConversionFailure } from "@/lib/alerts";
 import {
+  recordBackendBusy,
   recordBackendFailure,
   recordBackendSuccess,
   shouldUseBackend,
@@ -58,6 +59,28 @@ export interface DelegateOptions {
    * its own size cap; a non-200 there falls back to CloudConvert as usual.
    */
   prebuiltFile?: File;
+  /**
+   * 真实客户端 IP，由 route.ts 从入站请求头解析后传入（2026-11-02）。
+   *
+   * 为什么必须显式传：**Vercel 出站 fetch 不会转发客户端 IP**。实测（HK 后端
+   * tcpdump 抓 nginx→node）显示，从 www.bookconv.com 发起、真实客户端为
+   * 43.129.176.38 的请求，到达后端时 `X-Forwarded-For: 3.90.42.96`（Vercel
+   * egress），`X-Real-IP` 同值，UA 被改写成 `node`。即客户端 IP 在 Vercel
+   * 出站时就已丢失。仅在后端 nginx 侧记录 $http_x_forwarded_for 是无效的
+   * （只能记到 Vercel 自己的 IP），必须在出站请求里显式携带。
+   */
+  clientIp?: string;
+  /**
+   * 诊断回调：delegation 未能返回成功响应时，把**原因**回传给调用方
+   * （2026-11-02）。此前本函数只返回 null，原因被丢弃到一行 console.warn——
+   * 而 Vercel Hobby 日志仅留 1h，事后无法归因。后果实证：Job 729f7eae 的告警卡
+   * 只显示最终错误 `too small`，把值班人引向「用户传错文件」，真实原因是
+   * 后端 busy 429 → 回退 CloudConvert → CC 体积守卫拒绝。
+   *
+   * 之所以用回调而不是模块级变量：Serverless 同实例并发请求会互相污染
+   * （请求作用域的闭包变量才不会串）。也不会改变本函数的返回契约。
+   */
+  onFallback?: (reason: string) => void;
 }
 
 /**
@@ -76,10 +99,22 @@ export async function delegateToBackend(
     process.env.CONVERSION_BACKEND_TIMEOUT_MS || String(DEFAULT_BACKEND_TIMEOUT_MS),
     10,
   );
-  if (!BACKEND_URL || !INTERNAL_SECRET || !shouldUseBackend()) return null;
+  if (!BACKEND_URL || !INTERNAL_SECRET) {
+    opts.onFallback?.("backend not configured");
+    return null;
+  }
+  if (!shouldUseBackend()) {
+    // 熔断打开时根本没发请求——告警卡必须能区分「后端忙」和「熔断跳过」，
+    // 否则同样会误导（把一个被跳过 60s 的降级当成引擎问题）。
+    opts.onFallback?.("circuit open (delegation skipped)");
+    return null;
+  }
 
   const file = opts.prebuiltFile ?? formData.get("file");
-  if (!(file instanceof File)) return null; // upload_key without a prebuilt File: let convertAndStream handle it
+  if (!(file instanceof File)) {
+    opts.onFallback?.("no File in form (upload_key path)");
+    return null; // upload_key without a prebuilt File: let convertAndStream handle it
+  }
 
   const backendForm = new FormData();
   backendForm.append("file", file, file.name);
@@ -91,9 +126,12 @@ export async function delegateToBackend(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), BACKEND_TIMEOUT_MS);
   try {
+    const headers: Record<string, string> = { "x-internal-convert": INTERNAL_SECRET };
+    // 显式透传客户端 IP（默认的 XFF 在这里已被 Vercel 出站丢弃，见 opts.clientIp）
+    if (opts.clientIp) headers["x-client-ip"] = opts.clientIp;
     const res = await fetch(`${BACKEND_URL}/api/convert-internal`, {
       method: "POST",
-      headers: { "x-internal-convert": INTERNAL_SECRET },
+      headers,
       body: backendForm,
       signal: controller.signal,
     });
@@ -113,7 +151,27 @@ export async function delegateToBackend(
     }
 
     // Non-200: backend couldn't serve this request -> fall back to CloudConvert.
+    //
+    // 429 单独处理（2026-11-02 红队修正）：BACKEND_BUSY / 上游 limit_req 表达的是
+    // 「后端活着但排满了」，属**容量**信号而非健康失败。若计入熔断，连续 3 次
+    // 并发争用就会打开 60s 冷却，把「有点忙」放大成「整段不可用」——期间所有
+    // 请求绕过后端压给 CloudConvert（额度紧张 + 每次多 10–30s）。故只记观测数。
+    if (res.status === 429) {
+      let reason = "backend busy (429)";
+      try {
+        const body = (await res.clone().json()) as { code?: string };
+        if (body?.code) reason += ` ${body.code}`;
+      } catch {
+        /* 非 JSON body（如 nginx limit_req 的 HTML 页）——保留朴素原因即可 */
+      }
+      opts.onFallback?.(reason);
+      recordBackendBusy();
+      console.warn(`[convert] ${reason}; falling back to CloudConvert`);
+      return null;
+    }
+
     const outcome = recordBackendFailure();
+    opts.onFallback?.(`backend HTTP ${res.status}`);
     if (outcome.transitionedToOpen) {
       await notifyBackendDown(`backend returned HTTP ${res.status}`);
     } else {
@@ -124,6 +182,7 @@ export async function delegateToBackend(
     return null;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+    opts.onFallback?.(`backend error: ${message}`);
     const outcome = recordBackendFailure();
     if (outcome.transitionedToOpen) {
       await notifyBackendDown(message);

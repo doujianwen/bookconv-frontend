@@ -72,6 +72,18 @@ export interface ConversionFailureAlert {
   localValidationInferred?: 'passed' | 'failed' | 'unknown';
   /** 首个失败引擎（解析自错误串 trail 的首个 engine=XXX），n/a 表示无 */
   firstFailingEngine?: string;
+  /**
+   * 本次请求「为什么没走后端」。2026-11-02 新增——此前该原因在
+   * delegateToBackend 返回时被丢弃（只剩一行 console.warn，而 Vercel Hobby
+   * 日志仅留 1h），导致告警卡只显示降级链末端的错误。
+   *
+   * 实证代价：Job 729f7eae 的卡片写「too small (14 bytes)」，值班人据此判定
+   * 「用户传错文件」；真实链路是 backend busy 429 → 回退 CloudConvert →
+   * CC 体积守卫拒收。归因方向完全相反（用户错误 vs 容量问题）。
+   * 取值示例："backend busy (429) BACKEND_BUSY" / "circuit open (delegation
+   * skipped)" / "backend HTTP 500" / "backend error: ..."。
+   */
+  delegationFallback?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -95,6 +107,15 @@ const USER_SIDE_ERROR_CODES: ReadonlySet<ErrorCode> = new Set<ErrorCode>([
   'CORRUPT_INPUT',
   'FILE_TOO_LARGE',
   'VERIFICATION_FAILED',
+  // 2026-11-02 修订（第二稿）：只登记 UPLOAD_EMPTY。
+  // 第一稿曾把 INPUT_TOO_SMALL（1–29 字节）也判为用户侧，2026-11-02 服务器实测
+  // 证伪该前提：后端能正常把 13 字节 txt 转成 52KB epub（200）。这类请求失败
+  // 的真实原因是「自建后端并发锁忙（BACKEND_BUSY 429）→ 回退 CloudConvert →
+  // CC 的最小体积守卫拒绝」，属**容量/降级链**问题，不是用户传错文件。
+  // 故 INPUT_TOO_SMALL 保持系统侧（红卡），避免把容量故障伪装成用户错误。
+  // UPLOAD_EMPTY 不同：0 字节上传在任何场景都意味着客户端没带上文件，由
+  // convert-handler 前置 400 拦截，属用户侧。
+  'UPLOAD_EMPTY',
 ]);
 
 /**
@@ -259,6 +280,9 @@ export async function notifyConversionFailure(payload: ConversionFailureAlert): 
     '**Job:**', payload.jobId || 'n/a', '\n',
     '**Format:**', `${payload.sourceFormat || '?'} → ${payload.targetFormat || '?'}`, '\n',
     '**Error:**', (payload.error || 'unknown').slice(0, 200), '\n',
+    ...(payload.delegationFallback
+      ? ['**Backend delegation:**', `fell back — ${payload.delegationFallback}`, '\n']
+      : []),
     ...(payload.inputHash ? ['**Input hash:**', payload.inputHash, '\n'] : []),
     ...(payload.inputSize !== undefined
       ? ['**Input size:**', `${payload.inputSize} bytes`, '\n']

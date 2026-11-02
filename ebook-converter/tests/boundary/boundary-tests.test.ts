@@ -243,8 +243,12 @@ describe('Boundary: Corrupted input handling', () => {
     };
 
     // Real cause preserved on `.cause`; the user-facing message stays friendly.
+    // 2026-11-02：期望码由 INTERNAL_ERROR 改为 INPUT_TOO_SMALL。原断言编码的是
+    // 「too small 没有专属映射」这一**缺陷**——它导致空/过小输入被判成系统故障
+    // 红卡值班、GA4 里计成引擎失败（Job f3937005 / 729f7eae）。本断言的**本意**
+    // （拒绝 + 真实原因保留在 .cause + 用户看到友好文案）保持不变。
     await expect(processConversion(mockJob)).rejects.toMatchObject({
-      code: 'INTERNAL_ERROR',
+      code: 'INPUT_TOO_SMALL',
       cause: expect.objectContaining({ message: expect.stringContaining('too small') }),
     });
   });

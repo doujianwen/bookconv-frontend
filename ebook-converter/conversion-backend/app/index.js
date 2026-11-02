@@ -13,8 +13,17 @@
 //   GET  /health -> 200 { status:"ok" }
 //
 // Isolation: single in-flight conversion (concurrency=1) so a 2-core box is
-// never swamped; second concurrent request gets 429. Temp files live in
-// CONVERSION_TMP (a tmpfs on the server) and are always cleaned up.
+// never swamped. Temp files live in CONVERSION_TMP (a tmpfs on the server) and
+// are always cleaned up.
+//
+// 2026-11-02：并发=1 时不再「立即 429」，改为**有限排队**（BUSY_WAIT_MS，默认 5s）。
+// 依据：HK 实测单次转换 0.85s(162B html→epub) / 1.16s(16KB) / 2.57s(html→pdf)，
+// 而 Threads=1 的锁一旦被占，第二个请求原本毫秒级被拒、直接回退 CloudConvert。
+// 短重叠（1–3s）本可自然消解，却被当成失败 —— 既烧 CC 额度又多 10–30s 延迟。
+// 不提高并发度的原因：memory.peak = 474MB vs systemd MemoryMax=1.2G，并发 2
+// 余量不足，有 OOM 风险；排队不增加内存，是当前唯一安全的容量平滑手段。
+// 回滚开关：BUSY_WAIT_MS=0 即恢复「立即 429」旧行为。
+// 注意：等待期间仍占着连接，故必须检测客户端断开（Vercel abort）提前退出。
 import http from "node:http";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
@@ -30,6 +39,10 @@ const TMP = process.env.CONVERSION_TMP || "/opt/bookconv-conversion/data/tmp";
 const LOG_DIR = process.env.CONVERSION_LOG_DIR || "/opt/bookconv-conversion/logs";
 const MAX_FILE_BYTES = parseInt(process.env.MAX_FILE_BYTES || String(50 * 1024 * 1024), 10);
 const CALIBRE_TIMEOUT = parseInt(process.env.CALIBRE_TIMEOUT || "120000", 10);
+/** 锁被占时最多排队等待多久（毫秒）；0 = 旧行为（立即 429） */
+const BUSY_WAIT_MS = parseInt(process.env.BUSY_WAIT_MS ?? "5000", 10);
+/** 排队时的轮询间隔；越小越灵敏、越大越省 CPU */
+const BUSY_POLL_MS = 150;
 
 // MIME types for the formats this backend can emit
 const MIME = {
@@ -78,6 +91,38 @@ function log(...args) {
 
 // --- single-slot concurrency gate (concurrency = 1) ---
 let busy = false;
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * 尝试获取转换锁。锁空闲则立即取得；被占则在 waitMs 内轮询等待，
+ * 超时才返回 false（调用方据此回 429 BACKEND_BUSY）。
+ *
+ * 竞态说明：Node 单线程，`if (!busy) { busy = true; }` 之间无 await，
+ * 因此「检查 + 占位」是原子的，多个等待者不会同时拿到锁。
+ *
+ * @param {number} waitMs 最长等待毫秒数（<=0 表示不等待）
+ * @param {() => boolean} [isAborted] 客户端是否已断开；断开则立刻放弃等待
+ * @returns {Promise<boolean>} true = 已取得锁（调用方必须在 finally 释放）
+ */
+async function acquireConvertLock(waitMs, isAborted) {
+  if (!busy) {
+    busy = true;
+    return true;
+  }
+  if (!(waitMs > 0)) return false;
+
+  const deadline = Date.now() + waitMs;
+  while (Date.now() < deadline) {
+    await sleep(BUSY_POLL_MS);
+    if (isAborted && isAborted()) return false;
+    if (!busy) {
+      busy = true;
+      return true;
+    }
+  }
+  return false;
+}
 
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
@@ -216,10 +261,20 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, { status: "ok", ts: Date.now() });
     }
     if (req.method === "POST" && req.url === "/api/convert-internal") {
-      if (busy) {
+      const queuedAt = Date.now();
+      const acquired = await acquireConvertLock(
+        BUSY_WAIT_MS,
+        () => req.destroyed === true || res.writableEnded === true,
+      );
+      if (!acquired) {
+        const waited = Date.now() - queuedAt;
+        // 客户端已断开（Vercel abort）：不要再往已关闭的 socket 写响应
+        if (res.writableEnded || req.destroyed) return;
+        log("BUSY_REJECT", `waited=${waited}ms`);
         return json(res, 429, { error: "Backend busy, retry later.", code: "BACKEND_BUSY" });
       }
-      busy = true;
+      const waited = Date.now() - queuedAt;
+      if (waited > 0) log("BUSY_WAITED", `${waited}ms`);
       try {
         return await doConvert(req, res);
       } finally {

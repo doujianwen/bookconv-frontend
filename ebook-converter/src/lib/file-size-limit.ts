@@ -52,3 +52,23 @@ export const MAX_UPLOAD_FILE_SIZE_MB = parseInt(
 )
 
 export const MAX_UPLOAD_FILE_SIZE_BYTES = MAX_UPLOAD_FILE_SIZE_MB * 1024 * 1024
+
+// ---------------------------------------------------------------------------
+// Minimum accepted input size (2026-11-02)
+//
+// WHY: the multipart branch guarded against a missing file and an oversized
+// file, but NOT against an empty or near-empty one. A 0-byte upload produced
+// `buffer.toString('base64') === ''`, which conversion.ts treated as "no
+// buffer supplied" and threw `Either fileBuffer or inputFilePath must be
+// provided`; 1–29 bytes threw `Invalid input file: too small`. Both surfaced as
+// HTTP 500 and, because alerts.ts recognises no "too small" signature, were
+// escalated as 🚨 system-side faults (2026-11-02 job f3937005 / 729f7eae).
+//
+// The threshold lives here — not inline in conversion.ts — because TWO layers
+// now enforce it (convert-handler returns a clean 400, conversion.ts keeps its
+// throw as defence in depth). Two copies of "30" would drift.
+//
+// 30 bytes ≈ an empty .txt. No real ebook, HTML page or document is smaller.
+// ---------------------------------------------------------------------------
+
+export const MIN_INPUT_BYTES = 30

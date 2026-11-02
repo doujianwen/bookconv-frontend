@@ -39,6 +39,13 @@ export interface ConvertOptions {
    * lets files larger than the Vercel 4.5MB edge limit work at all.
    */
   uploadKey?: string;
+  /**
+   * 本次请求 delegation 到自建后端失败的原因（2026-11-02）。
+   * 由 route.ts 从 delegateToBackend 的诊断回调捕获后传入，仅用于告警卡归因：
+   * 没有它，卡片只会显示降级链末端引擎的错误（如 "too small"），把值班人
+   * 引向「用户传错文件」，而真实原因是后端 busy / 熔断 / 5xx。
+   */
+  delegationFallback?: string;
 }
 
 /**
@@ -109,6 +116,31 @@ function getLocalAlternatives(sourceFormat: string): string[] {
   return SUPPORTED_FORMATS.filter((t) => isPureJsConversion(sourceFormat, t));
 }
 
+/**
+ * 输入体积守卫（2026-11-02，第二稿）。
+ *
+ * ⚠️ 只拦「空文件」，**不再按体积大小拒绝**。第一稿曾用 `<MIN_INPUT_BYTES`
+ * 拦截 1–29 字节，2026-11-02 服务器实测证伪了该前提：
+ *   - 13 字节 txt → epub：后端返回 200 + 52,555 字节合法 epub；
+ *   - 0 字节 txt → epub：后端返回 200 + 75,128 字节（空书，但确实成功）。
+ * 同一个文件「后端空闲时 200、后端忙时被我 400 判为无效输入」——同样输入两种
+ * 裁定不自洽，且会把容量故障（后端并发锁 429）伪装成用户输入错误，掩盖真实故障。
+ * 故体积阈值仅保留在 conversion.ts 深层（那条路径确实过不了引擎），不在此处前置。
+ *
+ * 保留 0 字节拦截的理由是**产品策略**而非「有效性判据」：空上传在任何真实场景
+ * 下都意味着客户端没带上文件；返回明确 400 比让引擎产出一本空书更有用。
+ * 已知取舍：0 字节 txt 在后端空闲时本可产出空 epub，此处会提前拒绝——按当前
+ * 产品判断，空书没有交付价值。
+ */
+export function inputSizeRejection(
+  bytes: number,
+): { code: "UPLOAD_EMPTY"; error: string } | null {
+  if (bytes === 0) {
+    return { code: "UPLOAD_EMPTY", error: "Uploaded file is empty." };
+  }
+  return null;
+}
+
 export async function convertAndStream(
   formData: FormData,
   rateHeaders: Record<string, string> = {},
@@ -117,6 +149,7 @@ export async function convertAndStream(
   const sourceFormat = normalizeFormat(formData.get("source_format") as string);
   const targetFormat = normalizeFormat(formData.get("target_format") as string);
   const uploadKey = options.uploadKey;
+  const delegationFallback = options.delegationFallback;
 
   if (!sourceFormat || !targetFormat) {
     return NextResponse.json(
@@ -212,6 +245,20 @@ export async function convertAndStream(
     }
     buffer = Buffer.from(await file.arrayBuffer());
     fileName = file.name;
+  }
+
+  // --- 空文件守卫（2026-11-02，第二稿：只拦 0 字节）---
+  // 位置论证：
+  //   * 必须在 R2 / multipart 两路汇合之后——否则只堵其中一路；
+  //   * 必须在缓存查询与预算闸门之前——省掉一次无意义的上游调用。
+  // 不再按体积（1–29 字节）拒绝：2026-11-02 服务器实测显示后端能正常转换
+  // 13 字节 txt（200 + 52KB epub），按体积拒绝会把「后端忙」伪装成「文件无效」。
+  const rejected = inputSizeRejection(buffer.length);
+  if (rejected) {
+    return NextResponse.json(
+      { error: rejected.error, code: rejected.code },
+      { status: 400, headers: rateHeaders },
+    );
   }
 
   const jobId = crypto.randomUUID();
@@ -316,6 +363,7 @@ export async function convertAndStream(
       inputSize,
       localValidationInferred,
       firstFailingEngine,
+      delegationFallback,
     });
     // Surface raw error only when CC_DEBUG is explicitly enabled (prod-safe)
     const debugRaw = process.env.CC_DEBUG === '1' ? { _raw: convMsg } : {};

@@ -1,5 +1,5 @@
 // src/lib/error-handler.ts
-import { MAX_FILE_SIZE_MB } from "@/lib/file-size-limit";
+import { MAX_FILE_SIZE_MB, MIN_INPUT_BYTES } from "@/lib/file-size-limit";
 
 export type ErrorCode =
   | "FILE_NOT_FOUND"
@@ -28,6 +28,12 @@ export type ErrorCode =
   | "UNSUPPORTED_CONVERSION"
   | "UPLOAD_NOT_FOUND"
   | "UPLOAD_EMPTY"
+  // 2026-11-02：输入体积过小（1–29 字节）。此前该情形以自由文本错误串抛出，
+  // 不匹配 ERROR_CODE_MAP 任何键 ⇒ 塌缩为 INTERNAL_ERROR（系统侧）⇒ 用户误传
+  // 空/极小文件被当作系统故障红卡值班，GA4 也计成引擎失败。独立成码后
+  // ① 告警走 alerts.ts USER_SIDE_ERROR_CODES 判灰；② GA4 走 ga-error-codes.mjs
+  // USER_INPUT_CODES 剥离。阈值单一事实源 = file-size-limit.ts MIN_INPUT_BYTES。
+  | "INPUT_TOO_SMALL"
   | "INVALID_UPLOAD_KEY";
 
 export interface ErrorResponse {
@@ -50,6 +56,11 @@ const ERROR_CODE_MAP: Record<string, ErrorCode> = {
   'Zip error': 'CORRUPT_INPUT',
   'Invalid zip file': 'CORRUPT_INPUT',
   'Invalid or missing opf': 'CORRUPT_INPUT',
+  // 2026-11-02：conversion.ts:1213 的体积守卫。必须在此独立映射，否则该串不匹配
+  // 任何键 ⇒ INTERNAL_ERROR ⇒ 告警红卡 + GA4 算引擎失败（Job 729f7eae 实证）。
+  // 语义上是「文件小到不可能是有效文档」，与 CORRUPT_INPUT 的区别在于可操作性：
+  // 提示用户上传真实文件，而不是让用户去「重新下载原文件」。
+  'invalid input file: too small': 'INPUT_TOO_SMALL',
   'DRM': 'DRM_PROTECTED',
   'failed verification': 'VERIFICATION_FAILED',
   // M8-13（2026-10-31）：§3.5 漏检、却溜到 CloudConvert 报 "Input task has failed" 的
@@ -119,6 +130,9 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   // ERROR_MESSAGES，isErrorCode 判 unknown → GA4 conversion_failed 塌缩 UNKNOWN。
   'UPLOAD_NOT_FOUND': { message: 'Uploaded file could not be retrieved. Please upload it again.', retryable: true },
   'UPLOAD_EMPTY': { message: 'The uploaded file is empty. Please upload a valid file.', retryable: true },
+  // 2026-11-02：与 UPLOAD_EMPTY 分开——空文件多半是上传中断（可重试），
+  // 而 1–29 字节几乎总是选错了文件/发了占位符（重试同一个文件不会变好）。
+  'INPUT_TOO_SMALL': { message: `The uploaded file is too small to be a valid document (under ${MIN_INPUT_BYTES} bytes). Please upload the real file.`, retryable: false },
   'INVALID_UPLOAD_KEY': { message: 'Upload session expired or invalid. Please upload the file again.', retryable: true },
 };
 

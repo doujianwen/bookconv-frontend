@@ -3,6 +3,7 @@
 import {
   breakerState,
   breakerSnapshot,
+  recordBackendBusy,
   recordBackendFailure,
   recordBackendSuccess,
   shouldUseBackend,
@@ -71,5 +72,45 @@ describe("conversion circuit breaker", () => {
     recordBackendSuccess();
     expect(breakerState()).toBe("closed");
     expect(shouldUseBackend()).toBe(true);
+  });
+
+  // 2026-11-02 新增：容量忙（429 BACKEND_BUSY）与健康失败必须分离。
+  // 反向约束——若有人把 429 重新接回 recordBackendFailure，下列用例立刻变红。
+  describe("capacity-busy signal is NOT a health failure", () => {
+    it("never opens the circuit, no matter how many busies pile up", () => {
+      for (let i = 0; i < 20; i += 1) recordBackendBusy();
+      expect(breakerState()).toBe("closed");
+      expect(shouldUseBackend()).toBe(true);
+      expect(breakerSnapshot().failures).toBe(0);
+      expect(breakerSnapshot().busyCount).toBe(20);
+    });
+
+    it("does not add to the failure count that drives the threshold", () => {
+      recordBackendFailure();
+      recordBackendFailure();
+      recordBackendBusy(); // must NOT be the 3rd strike
+      expect(breakerState()).toBe("closed");
+      expect(shouldUseBackend()).toBe(true);
+      expect(breakerSnapshot().failures).toBe(2);
+    });
+
+    it("does not re-open a half-open circuit by itself", () => {
+      const t0 = 3_000_000;
+      recordBackendFailure(t0);
+      recordBackendFailure(t0);
+      recordBackendFailure(t0); // open
+      const afterCooldown = t0 + 60_001;
+      expect(breakerState(afterCooldown)).toBe("half-open");
+      recordBackendBusy(); // a busy trial must not slam it shut
+      expect(breakerState(afterCooldown)).toBe("half-open");
+      expect(shouldUseBackend(afterCooldown)).toBe(true);
+    });
+
+    it("is cleared by a success, like the failure count", () => {
+      recordBackendBusy();
+      recordBackendBusy();
+      recordBackendSuccess();
+      expect(breakerSnapshot().busyCount).toBe(0);
+    });
   });
 });

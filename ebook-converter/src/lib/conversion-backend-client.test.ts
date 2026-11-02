@@ -12,8 +12,10 @@ import {
 } from "@/lib/conversion-backend-client";
 import {
   breakerSnapshot,
+  breakerState,
   recordBackendFailure,
   recordBackendSuccess,
+  shouldUseBackend,
 } from "@/lib/conversion-circuit-breaker";
 
 const ENV = process.env;
@@ -149,6 +151,54 @@ describe("conversion backend client", () => {
       expect(after.failures).toBe(before.failures + 1);
     });
 
+    // 2026-11-02 红队修正：429 是容量信号（后端活着但排满了），不是健康失败。
+    // 反向约束——若有人把 429 重新接回 recordBackendFailure，本组用例立刻变红。
+    it("429 is capacity, not outage: does not increment failures", async () => {
+      setEnv();
+      global.fetch = jest.fn(
+        async () =>
+          new Response(JSON.stringify({ error: "Backend busy", code: "BACKEND_BUSY" }), {
+            status: 429,
+          }),
+      ) as unknown as typeof global.fetch;
+      const before = breakerSnapshot();
+      expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      const after = breakerSnapshot();
+      expect(after.failures).toBe(before.failures); // 关键：健康失败数不增
+      expect(after.busyCount).toBe(before.busyCount + 1); // 只计观测数
+      expect(after.state).toBe("closed");
+    });
+
+    it("three consecutive 429s do NOT open the circuit (would have before the fix)", async () => {
+      setEnv();
+      const fetchMock = jest.fn(async () => new Response("busy", { status: 429 }));
+      global.fetch = fetchMock as unknown as typeof global.fetch;
+
+      for (let i = 0; i < 3; i += 1) {
+        expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      }
+
+      expect(breakerState()).toBe("closed");
+      expect(shouldUseBackend()).toBe(true);
+      // 第三次仍然真的发了请求（没被熔断提前挡掉）
+      expect(fetchMock).toHaveBeenCalledTimes(3);
+    });
+
+    it("a 429 does not swallow the failure budget of a real outage", async () => {
+      setEnv();
+      // 两次真实故障 + 两次忙：仍是 2 次健康失败，未达阈值
+      global.fetch = jest.fn(async () => new Response("boom", { status: 500 })) as unknown as typeof global.fetch;
+      await delegateToBackend(makeForm(), {});
+      await delegateToBackend(makeForm(), {});
+      global.fetch = jest.fn(async () => new Response("busy", { status: 429 })) as unknown as typeof global.fetch;
+      await delegateToBackend(makeForm(), {});
+      await delegateToBackend(makeForm(), {});
+
+      expect(breakerState()).toBe("closed");
+      expect(breakerSnapshot().failures).toBe(2);
+      expect(breakerSnapshot().busyCount).toBe(2);
+    });
+
     it("returns null on network error (failover to CloudConvert)", async () => {
       setEnv();
       global.fetch = jest.fn(async () => {
@@ -215,6 +265,107 @@ describe("conversion backend client", () => {
 
       const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
       expect((init.body as FormData).get("quality")).toBe("high");
+    });
+
+    // 2026-11-02：delegation 失败原因必须能回传给调用方（告警卡归因）。
+    // 反向约束——若有人把 onFallback 删掉或忘了某个分支，下列用例变红。
+    describe("fallback reason reporting (alert attribution)", () => {
+      it("reports busy + backend code for 429", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () =>
+            new Response(JSON.stringify({ error: "Backend busy", code: "BACKEND_BUSY" }), {
+              status: 429,
+            }),
+        ) as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(reason).toBe("backend busy (429) BACKEND_BUSY");
+      });
+
+      it("reports a plain busy reason when the 429 body is not JSON (nginx limit_req)", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () => new Response("<html>503</html>", { status: 429 }),
+        ) as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(reason).toBe("backend busy (429)");
+      });
+
+      it("reports the HTTP status for a real server error", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () => new Response("boom", { status: 502 }),
+        ) as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(reason).toBe("backend HTTP 502");
+      });
+
+      it("reports circuit-open WITHOUT attempting a request", async () => {
+        setEnv();
+        recordBackendFailure();
+        recordBackendFailure();
+        recordBackendFailure(); // opens the circuit
+        const fetchMock = jest.fn();
+        global.fetch = fetchMock as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(reason).toContain("circuit open");
+        expect(fetchMock).not.toHaveBeenCalled();
+      });
+
+      it("reports the network error message", async () => {
+        setEnv();
+        global.fetch = jest.fn(async () => {
+          throw new Error("ECONNREFUSED 10.0.0.1:443");
+        }) as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(reason).toBe("backend error: ECONNREFUSED 10.0.0.1:443");
+      });
+
+      it("stays silent on success (no false alarm in the card)", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () => new Response(new Blob([Buffer.from("OK")]), { status: 200 }),
+        ) as unknown as typeof global.fetch;
+        let reason: string | undefined;
+        const resp = await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(resp).not.toBeNull();
+        expect(reason).toBeUndefined();
+      });
+    });
+
+    // 2026-11-02：Vercel 出站不转发客户端 IP，必须显式带上，否则后端永远
+    // 只能看到 Vercel egress。反向约束——若有人删掉这个头，本组用例变红。
+    describe("client IP passthrough", () => {
+      it("sends x-client-ip when the route resolved one", async () => {
+        setEnv();
+        const fetchMock = jest.fn(
+          async () => new Response(new Blob([Buffer.from("OK")]), { status: 200 }),
+        );
+        global.fetch = fetchMock as unknown as typeof global.fetch;
+
+        await delegateToBackend(makeForm(), {}, { clientIp: "203.0.113.7" });
+
+        const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+        expect((init.headers as Record<string, string>)["x-client-ip"]).toBe("203.0.113.7");
+      });
+
+      it("omits the header entirely when IP is unknown (never sends empty)", async () => {
+        setEnv();
+        const fetchMock = jest.fn(
+          async () => new Response(new Blob([Buffer.from("OK")]), { status: 200 }),
+        );
+        global.fetch = fetchMock as unknown as typeof global.fetch;
+
+        await delegateToBackend(makeForm(), {}, {});
+
+        const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+        expect("x-client-ip" in (init.headers as Record<string, string>)).toBe(false);
+      });
     });
   });
 });

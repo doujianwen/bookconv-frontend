@@ -45,3 +45,78 @@ describe('alerts 分级红队反向验证 (M8-13 / M8-14)', () => {
     expect(sev).toBe('system');
   });
 });
+
+// ---------------------------------------------------------------------------
+// 2026-11-02：告警卡必须带上「为什么没走后端」（delegation 归因）
+//
+// 动机（真实误诊）：Job 729f7eae 的卡片只写 `Invalid input file: too small
+// (14 bytes)`，据此判断是「用户传错文件」；真实链路是 backend busy 429 →
+// 回退 CloudConvert → CC 体积守卫拒收。归因方向完全相反（容量 vs 用户）。
+// 反向约束：若有人删掉 delegationFallback 的渲染，本组用例变红。
+// ---------------------------------------------------------------------------
+import { notifyConversionFailure } from '@/lib/alerts';
+
+describe('告警卡 delegation 归因透传（2026-11-02）', () => {
+  const ENV = process.env;
+
+  beforeEach(() => {
+    process.env = { ...ENV, FEISHU_WEBHOOK_URL: 'https://feishu.test/hook' };
+  });
+
+  afterAll(() => {
+    process.env = ENV;
+  });
+
+  function captureCards(): Array<Record<string, unknown>> {
+    const bodies: Array<Record<string, unknown>> = [];
+    global.fetch = jest.fn(async (_url: unknown, init?: RequestInit) => {
+      bodies.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      return new Response(JSON.stringify({ code: 0 }), { status: 200 });
+    }) as unknown as typeof global.fetch;
+    return bodies;
+  }
+
+  it('渲染 Backend delegation 行，说明是后端忙而非文件坏', async () => {
+    const bodies = captureCards();
+    await notifyConversionFailure({
+      kind: 'conversion-error',
+      jobId: 'job-attrib-1',
+      sourceFormat: 'txt',
+      targetFormat: 'epub',
+      // 与真实告警同款错误串；错误文本不同以避免 10 分钟节流命中
+      error: 'Invalid input file: too small (14 bytes) [attrib-case-1]',
+      delegationFallback: 'backend busy (429) BACKEND_BUSY',
+    });
+
+    expect(bodies).toHaveLength(1);
+    const card = JSON.stringify(bodies[0]);
+    expect(card).toContain('Backend delegation');
+    expect(card).toContain('backend busy (429) BACKEND_BUSY');
+  });
+
+  it('未提供归因时不渲染该行（不给历史调用方凭空加噪声）', async () => {
+    const bodies = captureCards();
+    await notifyConversionFailure({
+      kind: 'conversion-error',
+      jobId: 'job-attrib-2',
+      sourceFormat: 'txt',
+      targetFormat: 'epub',
+      error: 'Invalid input file: too small (14 bytes) [attrib-case-2]',
+    });
+
+    expect(bodies).toHaveLength(1);
+    expect(JSON.stringify(bodies[0])).not.toContain('Backend delegation');
+  });
+
+  it('熔断跳过也可见（区分「后端忙」与「根本没请求」）', async () => {
+    const bodies = captureCards();
+    await notifyConversionFailure({
+      kind: 'conversion-error',
+      jobId: 'job-attrib-3',
+      error: 'Invalid input file: too small (14 bytes) [attrib-case-3]',
+      delegationFallback: 'circuit open (delegation skipped)',
+    });
+
+    expect(JSON.stringify(bodies[0])).toContain('circuit open (delegation skipped)');
+  });
+});

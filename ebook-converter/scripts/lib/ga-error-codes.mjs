@@ -31,3 +31,23 @@ export function sumDirectUploadInfra(failedByErrorCode) {
   const fec = failedByErrorCode || {};
   return DIRECT_UPLOAD_INFRA_CODES.reduce((s, c) => s + (Number(fec[c]) || 0), 0);
 }
+
+// 用户输入类 = 请求已发出，但在**进入任何转换引擎之前**就被判定为无效输入。
+//
+// 2026-11-02 起因：UPLOAD_EMPTY 此前只会从 R2 路径返回 400，multipart 路径遇到
+// 空文件反而抛深层错误 → 500 + INTERNAL_ERROR → 经 G2 fallthrough 计成引擎失败
+// → 日报假报警。现在 multipart 也前置 400，故纳入本集合。
+//
+// ⚠️ INPUT_TOO_SMALL **故意不在此集合**：2026-11-02 服务器实测显示后端能把 13 字节
+// txt 转成 52KB epub（200），这类请求在 CC 回退路径失败的真实原因是「后端并发锁忙
+// （BACKEND_BUSY 429）→ 回退 → CC 体积守卫拒绝」，属容量/降级链问题。把它算成
+// 「未进入引擎」会掩盖容量故障，因此仍按引擎侧统计。
+//
+// ⚠️ 新码归类纪律（同 DIRECT_UPLOAD_INFRA_CODES）：新增码若要进本集合，必须同时
+// 确认 G2/G3 消费处经本文件引用，禁在门禁里再硬编码字面量。
+//
+// 注：不进 G1（B6 preUploadFailures 剥离）——客户端在收到 400 前已发 file_upload，
+// 「完成+失败 ≤ 上传 + TOL」天然成立，不需要剥离。
+export const USER_INPUT_CODES = [
+  "UPLOAD_EMPTY", // 空文件：R2 路径既有码；2026-11-02 起 multipart 路径同样返回
+];
