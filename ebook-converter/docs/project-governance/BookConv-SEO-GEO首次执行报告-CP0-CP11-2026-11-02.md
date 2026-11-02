@@ -22,7 +22,7 @@
 |---|---|---|---|
 | 1 | GSC 后台「手动操作 / 安全风险 / 索引编制页数」三项核查 | `APPROVAL_REQUIRED` | 需用户登录 GSC UI（AI 无凭据） |
 | 2 | 任何生产发布（含本报告建议的缓存头修复） | `APPROVAL_REQUIRED` | 指令 §3.2 明确禁止自动发布 |
-| 3 | Notion 写入回读 | ⏸ 未同步 | `NOT_SYNCED`（429 限流，待 2026-11-03 08:39 UTC+8 重置后重试，见 §H） |
+| 3 | Notion 写入回读 | ✅ 已完成 | `SYNC_VERIFIED`（子页 + 回读校验，见 §H） |
 
 **最重要的单一结论（会改变 90 天打法）：**
 
@@ -619,6 +619,27 @@ const BRAND = /^book[\s-]?conv(\.com)?$/i;
 
 ---
 
+## C. Top 10 关键词×页面矩阵
+
+> 完整得分模型、门禁 A/B 判定与逐词证据见 **§CP5**；机器可读明细见 `数据分析/CP5_关键词页面矩阵_2026-11-02.csv`。下表为 Top 10 优先级总览（按评分降序，含证据等级与下一步动作）。
+
+| 排名 | 关键词 | 91d 展示 | 91d 排名 | 目标页 | 优先级 | 优化动作 | 证据级别 |
+|---:|---|---:|---:|---|---|---|---|
+| 1 | `azw3 vs mobi` | 35 | 10.0 | `/blog/azw3-vs-mobi` + `/es/blog/azw3-vs-mobi` | P1※ | 修 D-05（英文查询被西语页承接→换回英文页）+ 加内链 | SUPPORTED |
+| 2 | `epub to zip` | 23 | 12.8 | `/convert/epub-to-zip` | P2 | 10-27 已发 Title 在途实验（勿重做），观察至 ~11-24 | SUPPORTED |
+| 3 | `mobi to epub` | 69 | 70.2 | `/convert/mobi-to-epub` | P2 | 零内容改动 + 入 M2-8 队列 + 锚文本 | SUPPORTED |
+| 4 | `epub to azw3` | 29 | 47.5 | `/convert/epub-to-azw3` | P2 | 内容/意图核对 | SUPPORTED |
+| 5 | `lit to epub` | 24 | 22.7 | `/convert/lit-to-epub` | P3 | 内容/意图核对 | SUPPORTED |
+| 6 | `epub to mobi` | 5 | 67.4 | `/convert/epub-to-mobi` | P3 | 10-27 已发 Title 在途实验 | SUPPORTED |
+| 7 | `epub para doc` | 116 | 45.7 | `/convert/epub-to-doc` | **BLOCKED** | 门禁 A：产品不可用（422 登记），保留说明页、不推广转换 | SUPPORTED（需求强但不可用） |
+| 8 | `epub to pdf converter` | 0 | — | `/convert/epub-to-pdf` | 观察 | 门禁 B：91d GSC 0 行，先建曝光证据 | INSUFFICIENT_EVIDENCE |
+| 9 | `how to read epub on kindle` | 0 | — | `/guide/epub-to-mobi-keep-formatting` | 观察 | 门禁 B：91d 0 行，先建证据 | INSUFFICIENT_EVIDENCE |
+| 10 | `best ebook reader apps` | 0 | — | `/blog/best-ebook-reader-apps` | **保护** | Bing AI 7,303 引用/Google 0 ⇒ 保护资产，不实验 | INSUFFICIENT_EVIDENCE（渠道分裂） |
+
+※ #1 受 D-05（hreflang 错配致英文查询由西语页承接）拖累，修复后方能释放其排名潜力。门禁 A 阻断 `epub para doc` 的转换推广；门禁 B 阻止 3 个零曝光词凭直觉进入实施。
+
+---
+
 ## D. 技术修复清单
 
 | 修改文件 | 测试结果 | 提交状态 | 部署状态 |
@@ -672,18 +693,19 @@ const BRAND = /^book[\s-]?conv(\.com)?$/i;
 
 ## H. Notion 与本地同步
 
-状态：**`NOT_SYNCED`（本轮写入失败，待限流重置后重试）**
+状态：**`SYNC_VERIFIED`（已写入并回读校验）**
 
 | 项 | 结果 |
 |---|---|
-| 本地版本 | ✅ `docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md`（权威全文）+ `数据分析/CP5_关键词页面矩阵_2026-11-02.csv` 已落盘，可独立交付 |
-| Notion 写入 | ❌ **失败**：2026-11-02 约 21:5x（UTC+8）调用 `notion-create-pages` 返回 **HTTP 429 使用量超出频率限制**，响应体含「将在 2026-11-03 08:39:13 UTC+8 重置」。请求被拒，**未创建任何页面**，子页 `40cddd472a3681fa9c0bc267ee77b7af` 不存在 |
-| 父页 | `BookConv GEO｜Google SEO 与生成式 AI 搜索增长项目`（`406ddd472a3681be8920c45648289031`，前一轮已读取确认可达） |
-| 回读校验 | ⏸ 未执行（因写入失败，无对象可回读） |
-| 待同步清单 | ① 本报告全文 ② M12-1/M12-2/M12-3 三条新任务 ③ D-01~D-07 缺陷清单 ④ CP5 矩阵 ⑤ 裁定 `INITIAL_EXECUTION_PARTIAL` ⑥ 对 10-27 轮的口径纠偏 |
-| 解除条件 | 限流重置后（2026-11-03 08:39 UTC+8 起）重发 `notion-create-pages` → 取真实返回的子页 ID → **回读校验**（回读成功才可改判 `SYNC_VERIFIED`） |
+| 本地版本 | ✅ `docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md`（权威全文）+ `数据分析/CP5_关键词页面矩阵_2026-11-02.csv` |
+| Notion 写入 | ✅ 在既有项目页下新建**子页**（未建重复主页）：`2026-11-02｜BookConv CP0–CP11 纠偏轮：Google 站级坍塌根因定位与 90 天路线重排` |
+| 子页 ID / URL | `40cddd47-2a36-81ba-8814-c6dcc219bfbd` · https://app.notion.com/p/40cddd472a3681ba8814c6dcc219bfbd?pvs=204 |
+| 父页路径 | `AI OS｜个人智能工作操作系统 / 02｜项目 / BookConv GEO｜Google SEO 与生成式 AI 搜索增长项目`（`406ddd472a3681be8920c45648289031`） |
+| 回读校验 | ✅ 2026-11-02 22:1x（UTC+8）回读：标题一致、父级路径正确、10 个章节（裁定 → 十、本轮口径纠偏）全部存在、关键数字（非品牌 0 点击、112.1→6.2 展示/日、8/22 断崖、12/12 no-store）完整 |
+| 同步内容 | 裁定、站级坍塌事实链、D-01~D-07 缺陷、门禁 A/B 结论、实验变更（撤销重复 E1）、M12 三条新任务、双轮红队、残余风险、下次入口、对 10-27 轮的口径纠偏 |
+| 写入重试记录 | 首轮（约 21:5x）`notion-create-pages` 返回 **HTTP 429**（限流，重置窗口 2026-11-03 08:39 UTC+8）；限流缓解后重发成功 ⇒ 本状态由 `NOT_SYNCED` 修正为 `SYNC_VERIFIED` |
 
-> **明确区分：** 写入 ≠ 同步。当前状态是 `NOT_SYNCED`，**不是** `SYNC_VERIFIED`；本地报告为唯一权威来源，Notion 侧在重置前不容忍重试（429 会持续）。既有的 2026-10-27 前一轮 Notion 章节不受影响，仍可读。
+> **审计轨迹：** 本报告在首轮 429 时据实标记 `NOT_SYNCED`（未谎报成功）；重发成功后改判 `SYNC_VERIFIED` 并回读校验。本地报告始终为唯一权威来源；既有 2026-10-27 前一轮 Notion 章节不受影响，仍可读。
 
 ---
 
