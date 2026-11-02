@@ -71,3 +71,72 @@ describe('getRateLimitHeaders', () => {
     expect(headers['Retry-After']).toBe('30');
   });
 });
+
+// ---------------------------------------------------------------------------
+// 限流标识必须按客户端区分（2026-11-02 实测事故回归）
+//
+// 事故形态：生产上 Next 16 已无 `request.ip`、TRUST_PROXY 未配、App Router
+// 无 socket ⇒ 三个分支全部落空 ⇒ 标识恒为 `ip:unknown` ⇒ 全站共用一个桶。
+// 现场证据：两个完全不同的客户端（HK IPv4 / 本机 IPv6）连续递减同一计数器
+// （remaining 19 → 18 → 17 → 16）。任何人 20 次请求即可让全站转换 429。
+//
+// 反向约束：把 getClientIp 改回「只读 request.ip / socket」，本组立即变红。
+// ---------------------------------------------------------------------------
+import { getRateLimitIdentifier } from '@/lib/rate-limit';
+
+describe('getRateLimitIdentifier（按客户端区分，2026-11-02）', () => {
+  const ENV = process.env;
+
+  beforeEach(() => {
+    process.env = { ...ENV };
+  });
+
+  afterAll(() => {
+    process.env = ENV;
+  });
+
+  function reqWith(map: Record<string, string>) {
+    return {
+      headers: {
+        get(name: string): string | null {
+          const key = Object.keys(map).find((k) => k.toLowerCase() === name.toLowerCase());
+          return key ? map[key] : null;
+        },
+      },
+    };
+  }
+
+  it('Vercel 运行时：不同客户端得到不同标识（共享桶的直接反例）', () => {
+    process.env.VERCEL = '1';
+    const hk = getRateLimitIdentifier(reqWith({ 'x-forwarded-for': '43.129.176.38' }));
+    const cn = getRateLimitIdentifier(reqWith({ 'x-forwarded-for': '2401:ce20:7::7' }));
+    expect(hk).toBe('ip:43.129.176.38');
+    expect(cn).toBe('ip:2401:ce20:7::7');
+    expect(hk).not.toBe(cn);
+  });
+
+  it('Vercel 运行时：同一个客户端得到稳定标识（不能每次请求都变，否则限流形同虚设）', () => {
+    process.env.VERCEL = '1';
+    const a = getRateLimitIdentifier(reqWith({ 'x-forwarded-for': '43.129.176.38' }));
+    const b = getRateLimitIdentifier(reqWith({ 'x-forwarded-for': '43.129.176.38' }));
+    expect(a).toBe(b);
+  });
+
+  it('Vercel 运行时：XFF 多段时取链尾（平台追加值），不受链首伪造影响', () => {
+    process.env.VERCEL = '1';
+    expect(
+      getRateLimitIdentifier(reqWith({ 'x-forwarded-for': '1.2.3.4, 43.129.176.38' })),
+    ).toBe('ip:43.129.176.38');
+  });
+
+  it('非 Vercel 且无任何 IP 来源：退化为 unknown（保持原语义，但不再是唯一可达分支）', () => {
+    delete process.env.VERCEL;
+    delete process.env.TRUST_PROXY;
+    expect(getRateLimitIdentifier(reqWith({}))).toBe('ip:unknown');
+  });
+
+  it('已登录用户走 userId，不依赖 IP', () => {
+    process.env.VERCEL = '1';
+    expect(getRateLimitIdentifier(reqWith({}), 'user-123')).toBe('user:user-123');
+  });
+});

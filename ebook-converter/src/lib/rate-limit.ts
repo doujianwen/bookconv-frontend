@@ -1,7 +1,8 @@
-﻿// src/lib/rate-limit.ts
+// src/lib/rate-limit.ts
 import { requireRedisClient } from './redis';
 import { errorMessage } from './error-handler';
 import { loggers as log } from './logger';
+import { readClientIp, type HeaderSource } from './client-ip';
 
 /**
  * Minimal structural view of the request fields the IP helpers actually read.
@@ -213,51 +214,85 @@ export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number
 }
 
 /**
- * Internal helper: parse the first (leftmost) IP from an x-forwarded-for header.
- * Only used within getClientIp() when TRUST_PROXY is enabled.
- * External callers should use getClientIp() directly.
- */
-function extractFirstIp(headerValue: string | null): string {
-  if (!headerValue) return '';
-  return headerValue.split(',')[0].trim();
-}
-
-/**
  * Determine the real client IP from a request, respecting trust-proxy config.
  *
- * Priority:
- * 1. ``request.ip`` — Next.js built-in (most reliable when available)
- * 2. ``x-forwarded-for`` — only trusted when behind a known proxy
- * 3. Socket address (`request.socket.remoteAddress`)
- * 4. ``"unknown"`` as last resort
+ * 2026-11-02 重写。原实现有两个缺陷，二者叠加导致**全站共用一个限流桶**：
+ *
+ *   ① 生产环境三个分支全部落空：Next 16 已移除 `request.ip`（类型层无此字段），
+ *      `TRUST_PROXY` 未配置（默认 false ⇒ 跳过 XFF），App Router 的
+ *      `NextRequest` 也没有 `socket`；于是恒返回 `'unknown'`，
+ *      Redis 键固定为 `ratelimit:ip:unknown`。
+ *   ② 即使设了 `TRUST_PROXY=true` 也修不好：原代码用 `isTrustedSource(firstIp)`
+ *      校验**链首**（那是客户端 IP），而注释要校验的是「立即对端（链尾）」。
+ *      客户端 IP 永远不在可信代理名单里 ⇒ 分支被跳过 ⇒ 仍旧 `'unknown'`。
+ *
+ * 实测证据（诊断报告 §12）：两个完全不同的客户端（HK IPv4 与 本机 IPv6）
+ * 连续递减同一个计数器（19 → 18 → 17 → 16）。即任何人 20 次请求即可让
+ * 全站转换在窗口剩余时间内全部 429。
+ *
+ * 现顺序：
+ *   1. Vercel 运行时：采信平台规范化后的转发头（伪造测试见 client-ip.ts 注释）
+ *   2. 自托管 + `TRUST_PROXY=true`：多跳时校验链尾为已知代理，单跳时按声明采信
+ *   3. `request.ip` / socket 地址（非 Vercel 环境的兜底）
+ *   4. `'unknown'`：保留原语义，但改为**首次出现时告警**——这种降级必须可见，
+ *      否则限流会静默退化成全站共享桶（正是本次故障的形态）。
  */
 function getClientIp(request: IpRequestLike): string {
-  // 1. Next.js built-in IP — already resolved by framework
+  // 1. Vercel：平台会覆盖客户端自带的转发头，可直接采信
+  if (isVercelRuntime()) {
+    const fromHeaders = readClientIp(request.headers as HeaderSource | undefined);
+    if (fromHeaders) return fromHeaders;
+  }
+
+  // 2. Trusted reverse-proxy path（自托管场景，需显式声明 TRUST_PROXY=true）
+  if (TRUST_PROXY) {
+    const chain = parseForwardedChain(request.headers?.get?.('x-forwarded-for'));
+    if (chain.length >= 2) {
+      // 多跳：链尾是最近一跳代理，校验通过才采信链首（原始客户端）
+      const peer = chain[chain.length - 1];
+      if (isTrustedSource(peer)) return chain[0];
+    } else if (chain.length === 1) {
+      // 单跳：链上只有客户端本身，无从校验对端；采信由 TRUST_PROXY 声明兜底
+      return chain[0];
+    }
+  }
+
+  // 3. Framework-provided IP
   if (request.ip) {
     return String(request.ip);
   }
 
-  // 2. Trusted reverse-proxy path
-  if (TRUST_PROXY) {
-    const xff = request.headers?.get?.('x-forwarded-for');
-    if (xff) {
-      const firstIp = extractFirstIp(xff);
-      // Validate that the immediate peer (last hop in XFF chain) is trusted
-      // or belongs to a known CDN range.
-      if (isTrustedSource(firstIp)) {
-        return firstIp;
-      }
-    }
-  }
-
-  // 3. Fall back to socket address
   const socketAddr = request.socket?.remoteAddress;
   if (socketAddr && socketAddr !== '::1' && socketAddr !== '127.0.0.1') {
     return socketAddr;
   }
 
-  // 4. Last resort
+  // 4. Last resort — 降级必须可见（2026-11-02）
+  if (!warnedUnknownIdentifier) {
+    warnedUnknownIdentifier = true;
+    log.rateLimit.warn(
+      'Client IP could not be determined; rate limiting degrades to a single shared bucket',
+      { hint: 'Check TRUST_PROXY / platform forwarded headers if this is unexpected' },
+    );
+  }
   return 'unknown';
+}
+
+/** 读环境变量而非模块常量：便于测试按用例切换运行时，且不影响现有 TRUST_PROXY 语义。 */
+function isVercelRuntime(): boolean {
+  return process.env.VERCEL === '1';
+}
+
+/** 告警只打一次，避免每个请求刷屏。 */
+let warnedUnknownIdentifier = false;
+
+/** 拆 XFF 链并只保留合法 IP；链首→链尾 = 原始客户端→最近一跳代理。 */
+function parseForwardedChain(headerValue: string | null | undefined): string[] {
+  if (!headerValue) return [];
+  return headerValue
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0 && /^[0-9a-fA-F:.]{2,45}$/.test(s));
 }
 
 /** Check whether an IP is trusted (explicit list or Cloudflare CIDR). */

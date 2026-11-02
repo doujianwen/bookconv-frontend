@@ -28,41 +28,14 @@ import {
   isCalibreTarget,
   shouldUseBackend,
 } from "@/lib/conversion-backend-client";
+import { readClientIp } from "@/lib/client-ip";
 
 export const maxDuration = 300; // Vercel Pro 支持 300s；大文件（50+页EPUB→PDF经Calibre引擎）需 60-120s 处理时间
 
-/**
- * 解析真实客户端 IP，供转发给自建后端做取证（2026-11-02）。
- *
- * 为什么需要：Vercel 出站 fetch **不转发客户端 IP**——实测从
- * www.bookconv.com 发起、真实客户端 43.129.176.38 的请求，到后端时
- * XFF/X-Real-IP 都是 Vercel egress（3.90.42.96）、UA 被改写为 node。
- * 只靠后端 nginx 记 $http_x_forwarded_for 只能记到 Vercel 自己的 IP。
- *
- * 信任顺序（目的 = 取证归因，非访问控制）：
- *   1. `x-vercel-forwarded-for` —— Vercel 专用头，客户端不可伪造，首选；
- *   2. `x-forwarded-for` —— 回退，取**最后一段**：若上游为追加语义，首段可能是
- *      客户端自带的伪造值，最后一段才是最近一跳代理写入的；
- *   3. `x-real-ip` —— 最后回退。
- * 全都缺失时返回 undefined（不编造值）。
- *
- * 不复用 rate-limit 的 getClientIp：它在 TRUST_PROXY=false 时直接回落到 socket
- * 地址（Vercel 内部 IP），对取证无意义；其信任判据也是为限流设计的。
- */
-function readClientIp(request: NextRequest): string | undefined {
-  const vercelFwd = request.headers.get("x-vercel-forwarded-for");
-  if (vercelFwd) {
-    const first = vercelFwd.split(",")[0]?.trim();
-    if (first) return first;
-  }
-  const xff = request.headers.get("x-forwarded-for");
-  if (xff) {
-    const parts = xff.split(",").map((s) => s.trim()).filter(Boolean);
-    if (parts.length > 0) return parts[parts.length - 1];
-  }
-  const realIp = request.headers.get("x-real-ip")?.trim();
-  return realIp || undefined;
-}
+// 客户端 IP 解析已收敛到 `@/lib/client-ip`（唯一事实源，2026-11-02）。
+// 为什么必须共用：这里要转发给自建后端做取证，`rate-limit.ts` 用它做限流键。
+// 历史上是两份实现，限流那份退化成常量，导致全站共用一个 20 req/60s 的桶
+// （实测两个不同客户端递减同一计数器）。取证与限流若各写一套，必然再次分叉。
 
 export async function POST(request: NextRequest) {
   try {
@@ -132,7 +105,7 @@ export async function POST(request: NextRequest) {
         let delegationFallback: string | undefined;
         const backendResp = await delegateToBackend(formData, rateHeaders, {
           prebuiltFile,
-          clientIp: readClientIp(request),
+          clientIp: readClientIp(request.headers),
           onFallback: (reason) => {
             delegationFallback = reason;
           },
