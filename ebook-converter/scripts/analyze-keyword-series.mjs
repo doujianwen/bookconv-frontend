@@ -41,14 +41,12 @@ const gscHi = gscPos.filter(x => x.imp >= 20).sort((a, b) => b.imp - a.imp);
 
 // ---------- Bing 流量 + 可比/单点 ----------
 let bImp = 0, bClk = 0, bCmp = 0, bSingle = 0;
-const bingPos = bing.map(k => {
+bing.forEach(k => {
   const pts = k.points || [];
   const last = pts[pts.length - 1];
   if (last) { bImp += last.impressions || 0; bClk += last.clicks || 0; }
   if (pts.length >= 2) bCmp++; else bSingle++;
-  return { q: k.query, pos: last && last.impressionPosition != null ? last.impressionPosition : null, imp: last ? last.impressions : 0, clk: last ? last.clicks : 0 };
 });
-const bingHi = bingPos.filter(x => x.imp >= 5).sort((a, b) => b.imp - a.imp);
 
 // ---------- 双引擎重叠分歧 ----------
 const overlap = gsc.filter(k => bkMap[k.query]).map(k => {
