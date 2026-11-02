@@ -545,6 +545,21 @@ function main() {
       return new Map();
     }
   })();
+  // Absolute-position tier (2026-11-02): position Δ alone is nearly flat by
+  // construction (91-day average / sparse Bing points), so tier + impression/
+  // click deltas carry the real signal. Tiers: top3 / top10 / top50 / bottom50+.
+  const posTier = (p) => {
+    const n = Number(p);
+    if (!isFinite(n) || n <= 0) return '';
+    if (n <= 3) return 'top3';
+    if (n <= 10) return 'top10';
+    if (n <= 50) return 'top50';
+    return 'bottom50+';
+  };
+  const trendNum = (latest, prev) =>
+    latest === null || latest === undefined || prev === null || prev === undefined
+      ? ''
+      : Number(latest) - Number(prev);
   {
     const rows = [];
     if (bing) {
@@ -554,13 +569,18 @@ function main() {
           Query: k.query,
           LatestDate: k.latest?.date ?? '',
           LatestPos: k.latest?.impressionPosition ?? '',
+          PosTier: posTier(k.latest?.impressionPosition),
           PrevDate: k.previous?.date ?? '',
           PrevPos: k.previous?.impressionPosition ?? '',
           SpanDays: k.spanDays ?? '',
           Delta: k.delta === null ? '' : k.delta,
           Trend: k.delta === null ? 'no-baseline' : k.delta > 0 ? 'up' : k.delta < 0 ? 'down' : 'flat',
           Impressions: k.latest?.impressions ?? '',
+          ImprPrev: k.previous?.impressions ?? '',
+          ImprDelta: trendNum(k.latest?.impressions, k.previous?.impressions),
           Clicks: k.latest?.clicks ?? '',
+          ClicksPrev: k.previous?.clicks ?? '',
+          ClicksDelta: trendNum(k.latest?.clicks, k.previous?.clicks),
           Observations: k.observations,
           Reasons: reasonMap.get(k.query) ?? '',
         });
@@ -574,13 +594,18 @@ function main() {
           Query: k.query,
           LatestDate: k.latest?.date ?? '',
           LatestPos: k.latest?.position ?? '',
+          PosTier: posTier(k.latest?.position),
           PrevDate: k.previous?.date ?? '',
           PrevPos: k.previous?.position ?? '',
           SpanDays: k.spanDays ?? '',
           Delta: hasDelta ? k.delta : '',
           Trend: !gsc.comparable ? 'n-a' : k.delta === null ? 'no-baseline' : k.delta > 0 ? 'up' : k.delta < 0 ? 'down' : 'flat',
           Impressions: k.latest?.impressions ?? '',
+          ImprPrev: k.previous?.impressions ?? '',
+          ImprDelta: trendNum(k.latest?.impressions, k.previous?.impressions),
           Clicks: k.latest?.clicks ?? '',
+          ClicksPrev: k.previous?.clicks ?? '',
+          ClicksDelta: trendNum(k.latest?.clicks, k.previous?.clicks),
           Observations: k.observations,
           Reasons: reasonMap.get(k.query) ?? '',
         });
@@ -590,7 +615,7 @@ function main() {
     const fp = join(DATA_DIR, 'keyword-rank-latest.csv');
     writeCsvBestEffort(
       fp,
-      toCsv(rows, ['Source', 'Query', 'LatestDate', 'LatestPos', 'PrevDate', 'PrevPos', 'SpanDays', 'Delta', 'Trend', 'Impressions', 'Clicks', 'Observations', 'Reasons']),
+      toCsv(rows, ['Source', 'Query', 'LatestDate', 'LatestPos', 'PosTier', 'PrevDate', 'PrevPos', 'SpanDays', 'Delta', 'Trend', 'Impressions', 'ImprPrev', 'ImprDelta', 'Clicks', 'ClicksPrev', 'ClicksDelta', 'Observations', 'Reasons']),
       rows.length,
       `bing ${bing ? bing.keywords.length : 0} · gsc ${gsc ? gsc.keywords.length : 0}`,
     );

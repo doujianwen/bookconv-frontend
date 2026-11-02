@@ -6,7 +6,7 @@
     "Δ 的定义：上一期排名 − 本期排名。正数 = 名次上升（数字变小），负数 = 下降。",
     "只有 ≥2 个观测点的词才有 Δ；单点词无法判断趋势，已标 observations=1。"
   ],
-  "generatedAt": "2026-11-02T00:28:59.479Z",
+  "generatedAt": "2026-11-02T00:41:18.915Z",
   "d0": "2026-09-27",
   "bing": {
     "label": "Bing Webmaster API · GetQueryStats",
