@@ -9,17 +9,24 @@
 //
 // Requires an R2 bucket CORS rule allowing PUT from the site origin — see
 // docs/DIRECT_UPLOAD.md. Without it the PUT fails and the caller falls back.
+//
+// Error taxonomy (2026-11-02): every failure is thrown as a STAGE-TYPED error
+// from src/lib/direct-upload-error.ts so GA4 can localize the failed stage —
+// the old flat throws collapsed presign-503 / presign-4xx / R2-PUT failures
+// into one code (2026-11-01: 8 failures, root cause unknowable). Use
+// mapDirectUploadError() in the caller to derive the GA4 error_code.
+
+import {
+  DirectUploadUnavailableError,
+  DirectUploadPresignError,
+  DirectUploadPutError,
+} from "../direct-upload-error";
+
+// Re-export for backward compatibility with existing importers.
+export { DirectUploadUnavailableError };
 
 export interface DirectUploadResult {
   key: string;
-}
-
-/** Thrown when the deployment has no direct-upload capability at all. */
-export class DirectUploadUnavailableError extends Error {
-  constructor(message = 'Direct upload is not available on this deployment.') {
-    super(message);
-    this.name = 'DirectUploadUnavailableError';
-  }
 }
 
 export async function uploadFileDirect(
@@ -27,16 +34,24 @@ export async function uploadFileDirect(
   sourceFormat: string,
   signal?: AbortSignal,
 ): Promise<DirectUploadResult> {
-  const presignRes = await fetch('/api/upload/presign', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sourceFormat,
-      size: file.size,
-      fileName: file.name,
-    }),
-    signal,
-  });
+  let presignRes: Response;
+  try {
+    presignRes = await fetch("/api/upload/presign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sourceFormat,
+        size: file.size,
+        fileName: file.name,
+      }),
+      signal,
+    });
+  } catch (err) {
+    // Network failure before any response arrived — stage: presign.
+    throw new DirectUploadPresignError(
+      `Could not start upload (${err instanceof Error ? err.message : "network error"}).`,
+    );
+  }
 
   if (presignRes.status === 503) {
     throw new DirectUploadUnavailableError();
@@ -45,7 +60,13 @@ export async function uploadFileDirect(
     const payload = (await presignRes.json().catch(() => null)) as
       | { error?: string; code?: string }
       | null;
-    throw new Error(payload?.error || `Could not start upload (${presignRes.status}).`);
+    // Preserve the presign contract's own code (route returns e.g.
+    // "FILE_TOO_LARGE" for a 413). It was previously discarded, so >100MB
+    // files were mis-reported as direct-upload infra failures (R-B).
+    throw new DirectUploadPresignError(
+      payload?.error || `Could not start upload (${presignRes.status}).`,
+      { status: presignRes.status, code: payload?.code },
+    );
   }
 
   const presigned = (await presignRes.json()) as {
@@ -55,16 +76,25 @@ export async function uploadFileDirect(
     contentType?: string;
   };
 
-  const putRes = await fetch(presigned.uploadUrl, {
-    method: presigned.method || 'PUT',
-    // Must match the Content-Type that was signed, or R2 rejects the signature.
-    headers: { 'Content-Type': presigned.contentType || 'application/octet-stream' },
-    body: file,
-    signal,
-  });
+  let putRes: Response;
+  try {
+    putRes = await fetch(presigned.uploadUrl, {
+      method: presigned.method || "PUT",
+      // Must match the Content-Type that was signed, or R2 rejects the signature.
+      headers: { "Content-Type": presigned.contentType || "application/octet-stream" },
+      body: file,
+      signal,
+    });
+  } catch (err) {
+    // CORS preflight rejection and network drops both surface here as a
+    // TypeError — stage: R2 PUT (the classic 2026-10-29/30 CORS failure).
+    throw new DirectUploadPutError(
+      `Upload to storage failed (${err instanceof Error ? err.message : "network error"}).`,
+    );
+  }
 
   if (!putRes.ok) {
-    throw new Error(`Upload to storage failed (${putRes.status}).`);
+    throw new DirectUploadPutError(`Upload to storage failed (${putRes.status}).`, putRes.status);
   }
 
   return { key: presigned.key };

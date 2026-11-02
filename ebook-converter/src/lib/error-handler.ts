@@ -17,6 +17,14 @@ export type ErrorCode =
   | "VERIFICATION_FAILED"
   | "FILE_TOO_LARGE"
   | "DIRECT_UPLOAD_FAILED"
+  // 2026-11-02 三码拆分（红队审计 GO-WITH-CONDITIONS）：原聚合码把 presign-503 /
+  // presign-4xx / R2-PUT 三种根因坍缩为一个，GA4 无法定位失败阶段。
+  // DIRECT_UPLOAD_FAILED 保留作「阶段未知」兜底 + 历史数据兼容。
+  // ⚠️ 门禁同步铁律：新码必须同时进 scripts/lib/ga-error-codes.mjs 的
+  // DIRECT_UPLOAD_INFRA_CODES（喂 B6 / INFRA_CODES / NON_ENGINE 三道门禁）。
+  | "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE"
+  | "DIRECT_UPLOAD_PRESIGN_ERROR"
+  | "DIRECT_UPLOAD_PUT_FAILED"
   | "UNSUPPORTED_CONVERSION"
   | "UPLOAD_NOT_FOUND"
   | "UPLOAD_EMPTY"
@@ -101,6 +109,11 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   // 2026-10-31：直传失败是基础设施故障（presign/R2 CORS/网络），不是用户文件问题。
   // 之前借用 FILE_TOO_LARGE 被 GA 巡检误分类为「客户端拦截」，掩盖根因（10-29/10-30 R2 CORS 实锤）。
   'DIRECT_UPLOAD_FAILED': { message: 'Large-file upload is temporarily unavailable. Please try a smaller file (under the multipart limit) or retry later.', retryable: true },
+  // 2026-11-02 三码拆分：直传失败按阶段定位（presign 能力关 / presign 请求关 / R2 PUT 关）。
+  // 与 scripts/lib/ga-error-codes.mjs DIRECT_UPLOAD_INFRA_CODES 保持同步（门禁单一事实源）。
+  'DIRECT_UPLOAD_PRESIGN_UNAVAILABLE': { message: 'Large-file upload is temporarily unavailable. Please try a smaller file (under the multipart limit) or retry later.', retryable: true },
+  'DIRECT_UPLOAD_PRESIGN_ERROR': { message: 'Large-file upload could not be started. Please try a smaller file (under the multipart limit) or retry later.', retryable: true },
+  'DIRECT_UPLOAD_PUT_FAILED': { message: 'Large-file upload to storage failed. Please retry in a moment or try a smaller file.', retryable: true },
   'UNSUPPORTED_CONVERSION': { message: 'This format combination is not supported by any available conversion engine. Please try the suggested alternative format.', retryable: false },
   // 2026-11-01：convert-handler 自造码（R2 直传取回失败族）纳入全集——此前不在
   // ERROR_MESSAGES，isErrorCode 判 unknown → GA4 conversion_failed 塌缩 UNKNOWN。

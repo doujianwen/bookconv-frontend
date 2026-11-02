@@ -108,6 +108,13 @@ batch-verify.zip
 # …竞品排名序列（data/competitor-series.json）是 fetch+build 的产物，但它是
 #   表③的实际数据，push 后要随仓库走，故也入库（原始 /数据分析/ 快照仍忽略）
 !/data/competitor-series.json
+# …关键词排名序列（data/keyword-series.json）是 build-keyword-series.mjs 的主产物，
+#   承载 Bing+GSC 双渠道的全部时序点（看板/周报/分析脚本都读它）。它早已被跟踪，
+#   但此前**漏了这条 `!` 例外** —— 依赖的是「先入库、后加忽略规则」的历史巧合。
+#   隐患：一旦该文件被删除后重新生成，`/data/*.json` 会直接把它吞掉（git 不再跟踪
+#   ⇒ 整个时序数据随工作目录消失、无法从仓库恢复）。
+#   2026-11-02 补上显式例外，与 competitor-series.json 保持同一口径。
+!/data/keyword-series.json
 # …候选原因（data/keyword-reason-candidates.json）是 suggest 脚本产物，但它是
 #   表②候选层的数据，push 后要随仓库走，故也入库（原始 数据分析/ 报告仍忽略）
 !/data/keyword-reason-candidates.json

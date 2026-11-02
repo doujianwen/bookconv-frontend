@@ -20,7 +20,8 @@ import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
-import { uploadFileDirect, DirectUploadUnavailableError } from "@/lib/client/direct-upload"
+import { uploadFileDirect } from "@/lib/client/direct-upload"
+import { mapDirectUploadError } from "@/lib/direct-upload-error"
 import { useUploadCapability } from "@/lib/client/upload-capability"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { unsupportedConversionInfo } from "@/lib/unsupported-conversions"
@@ -228,18 +229,19 @@ export function ToolPageClient({ source, target, contentData, isEs = false, rela
             const direct = await uploadFileDirect(file, source)
             uploadKey = direct.key
           } catch (uploadErr) {
-            // Any direct-upload failure must surface an actionable message.
-            // Re-throwing the raw error leaks things like "Failed to fetch"
-            // (R2 bucket CORS not configured) or "Upload to storage failed (403)"
-            // while the drop zone advertises the large-file cap — i.e. we would
-            // promise 100MB and deliver a cryptic dead end.
+            // Any direct-upload failure must surface an actionable message, and
+            // the GA4 error_code must identify the failed STAGE (presign 503 /
+            // presign 4xx / R2 PUT) — the old single DIRECT_UPLOAD_FAILED code
+            // collapsed them, making incidents like 2026-11-01 (8 failures)
+            // permanently undiagnosable (2026-11-02 red-team audit).
             const sizeMB = (file.size / 1024 / 1024).toFixed(1)
-            const unavailable = uploadErr instanceof DirectUploadUnavailableError
+            const duCode = mapDirectUploadError(uploadErr)
+            const unavailable = duCode === "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE"
             throw new Error(
               isEs
                 ? `Este archivo (${sizeMB}MB) requiere carga directa, que ${unavailable ? "no está disponible en este momento" : "falló"}. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
                 : `This file (${sizeMB}MB) needs direct upload, which ${unavailable ? "is unavailable right now" : "failed"}. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
-              { cause: { code: "DIRECT_UPLOAD_FAILED" } },
+              { cause: { code: duCode } },
             )
           }
         }

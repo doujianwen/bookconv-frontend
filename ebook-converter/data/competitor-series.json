@@ -11,7 +11,7 @@
     "若上期快照观测深度不足（observedDepth < 5），本行会跳过该基准并置 shallowBaselineSkipped=true，Δ 留空——宁可说「无法比较」，不发布一个由限流伪造出来的涨跌。",
     "2026-10-19 之前的快照没有记录 observedDepth（UNKNOWN），按可用处理，不因此判FAIL。"
   ],
-  "generatedAt": "2026-11-02T00:23:28.281Z",
+  "generatedAt": "2026-11-02T00:28:59.895Z",
   "d0": "2026-09-27",
   "config": {
     "competitors": [
