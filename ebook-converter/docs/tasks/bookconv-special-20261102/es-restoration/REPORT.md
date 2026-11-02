@@ -32,4 +32,12 @@ FB2/workflow标签保持404，当前没有真实西语集合或明确等价迁�
 
 ## 发布与线上验收
 
-待实际提交/发布后追加，当前文档不提前宣称发布成功。
+源码提交：25dacb8563d4a435397fd1ee1d9219cd9af5d26d，已推main；生产实际返回新西语内容。线上20URL及语言、meta、sitemap、ES内链、旧cookie/相反请求头共85/85断言通过（online/results.json）。7个目标URL为200，FB2/workflow为预期404。6个恢复页进入sitemap，noindex的EPUB标签未进入。Google重新抓取/收录仍待观察，不以HTTP200宣称已收录。
+
+远程CI：Success，3m17s；QA：Success，58s；部署触发工作流：Success，7s。GitHub API匿名额度耗尽403，改从公开工作流页面核对并保存HTML及workflow-status.json，没有冒称API成功或把部署触发当完成；生产逐页成功另作独立上线证据。
+
+- [CI](https://github.com/doujianwen/bookconv-frontend/actions/runs/41404861704)
+- [QA](https://github.com/doujianwen/bookconv-frontend/actions/runs/41404861528)
+- [部署触发](https://github.com/doujianwen/bookconv-frontend/actions/runs/41404862407)
+
+补充依赖风险：本地镜像registry缺审计API，返回404，已换官方registry真实复核。npm audit --omit=dev报告21项依赖告警（3 critical、10 high、8 moderate）；不等于21项已证实可被当前线上利用的漏洞，需逐项判断路径及部署条件。依赖和lockfile本轮未改，这些是现有版本待评估风险。现CI依赖任务的audit使用 || true、outdated使用continue-on-error，故工作流Success不能证明无漏洞；本轮没有降低或修改门槛。原始输出dependency-audit-official.json仅本地项目保存。应单独做依赖补丁兼容性验证与安全门禁治理，不能在本次语言页面恢复中盲目批量升级。

@@ -171,3 +171,7 @@ SEO_BACKUP_PHASE2_TITLE_2026-10-07/
 /docs/tasks/bookconv-special-20261102/es-restoration/source-before/
 /docs/tasks/bookconv-special-20261102/es-restoration/local/
 /docs/tasks/bookconv-special-20261102/es-restoration/online/
+/docs/tasks/bookconv-special-20261102/es-restoration/github-*.html
+/docs/tasks/bookconv-special-20261102/es-restoration/dependency-audit*.json
+/docs/tasks/bookconv-special-20261102/es-restoration/deployment.json
+/docs/tasks/bookconv-special-20261102/es-restoration/workflow-status.json
