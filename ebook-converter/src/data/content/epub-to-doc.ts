@@ -2,51 +2,26 @@ export const slug = "epub-to-doc";
 export const title = "EPUB to DOC: Limits and DOCX Alternative";
 export const metaDescription = "BookConv does not export legacy DOC. Learn how to create a text-based DOCX for Word instead, and what formatting is lost.";
 export const level = "B";
-export const wordCount = 444;
+export const wordCount = 447;
 export const content = {
-  "hero": {
-    "title": "EPUB to DOC: Legacy Word Limits and the DOCX Alternative",
-    "subtitle": "BookConv does not export legacy .doc files. For an editable Word document, use the EPUB to Word tool to create a text-based .docx."
-  },
-  "sections": [
-    {
-      "heading": "Can BookConv convert EPUB to DOC?",
-      "body": "No. Legacy DOC (Word 97–2003) export is unavailable in BookConv. This page explains the format difference and the supported alternative; it does not provide a DOC uploader. Use [EPUB to Word (DOCX)](/convert/epub-to-word) if the receiving application accepts modern Word documents."
-    },
-    {
-      "heading": "DOC and DOCX are different formats",
-      "body": "DOC is the older binary Word format. DOCX is an Office Open XML document. Renaming a .docx file to .doc does not convert it. If a submission portal specifically requires Word 97–2003, check its requirements before proceeding."
-    },
-    {
-      "heading": "How to get an editable Word document",
-      "body": "1. Open the [EPUB to Word converter](/convert/epub-to-word).\n2. Upload a DRM-free EPUB within the limit displayed by the uploader.\n3. Download the .docx and open it in Word or another compatible editor.\n4. Check the text, accents, paragraph order and missing elements against the original EPUB.\n\nA conversion backend may retain some formatting. The text-only DOCX fallback extracts chapter text into paragraphs and discards images, CSS layout and Word heading styles. Preservation is not guaranteed. Keep your original file."
-    },
-    {
-      "heading": "If a system requires legacy .doc",
-      "body": "Create the DOCX first, then use a word processor that supports saving to Word 97–2003 .doc. This second step happens outside BookConv. Inspect the saved document and test it in the receiving system. BookConv does not guarantee that external conversion or compatibility."
-    },
-    {
-      "heading": "Choose an alternative for your task",
-      "body": "For editable text use [EPUB to Word](/convert/epub-to-word). For plain text use [EPUB to TXT](/convert/epub-to-txt). For a fixed reading copy, see [EPUB to PDF](/convert/epub-to-pdf). In the reverse direction use [DOCX to EPUB](/convert/docx-to-epub); legacy DOC input must first be saved as DOCX outside BookConv. DRM is not removed."
-    }
+  hero: {"title": "EPUB to DOC: Legacy Word Limits and the DOCX Alternative", "subtitle": "BookConv does not export legacy .doc files. For an editable Word document, use the EPUB to Word tool to create a text-based .docx."},
+  sections: [
+    { heading: 'Can BookConv convert EPUB to DOC?', body: 'No. Legacy DOC (Word 97–2003) export is unavailable in BookConv. This page explains the format difference and the supported alternative; it does not provide a DOC uploader. Use [EPUB to Word (DOCX)](/convert/epub-to-word) if the receiving application accepts modern Word documents.' },
+    { heading: 'DOC and DOCX are different formats', body: 'DOC is the older binary Word format. DOCX is an Office Open XML document. Renaming a .docx file to .doc does not convert it. If a submission portal specifically requires Word 97–2003, check its requirements before proceeding.' },
+    { heading: 'How to get an editable Word document', body: '1. Open the [EPUB to Word converter](/convert/epub-to-word).\n2. Upload a DRM-free EPUB within the limit displayed by the uploader.\n3. Download the .docx and open it in Word or another compatible editor.\n4. Check the text, accents, paragraph order and missing elements against the original EPUB.\n\nA conversion backend may retain some formatting. The text-only DOCX fallback extracts chapter text into paragraphs and discards images, CSS layout and Word heading styles. Preservation is not guaranteed. Keep your original file.' },
+    { heading: 'If a system requires legacy .doc', body: 'Create the DOCX first, then use a word processor that supports saving to Word 97–2003 .doc. This second step happens outside BookConv. Inspect the saved document and test it in the receiving system. BookConv does not guarantee that external conversion or compatibility.' },
+    { heading: 'Choose an alternative for your task', body: 'For editable text use [EPUB to Word](/convert/epub-to-word). For plain text use [EPUB to TXT](/convert/epub-to-txt). For a fixed reading copy, see [EPUB to PDF](/convert/epub-to-pdf). In the reverse direction use [DOCX to EPUB](/convert/docx-to-epub); legacy DOC input must first be saved as DOCX outside BookConv. DRM is not removed.' },
+    { heading: 'When to use the DOCX alternative', body: 'Use DOCX when the recipient needs editable text and accepts modern Word files. If a legacy upload portal requires .doc specifically, ask whether it also accepts DOCX before converting. For reading on an ebook device, keeping the original EPUB is usually more useful than creating a Word document. The alternative is intended for text editing, not for reproducing the original page design.' },
+    { heading: 'EPUB vs DOC vs DOCX: comparison', body: '| Format | Purpose | BookConv output |\n| --- | --- | --- |\n| EPUB | Reflowable ebook for reading | Keep your original source |\n| DOC | Legacy Word binary document | Not available |\n| DOCX | Editable modern Word document | Available through EPUB to Word; preservation varies |\n\nDOCX and DOC are different containers. A receiving system that validates file contents may reject a renamed file even if its filename ends in .doc.' },
+    { heading: 'Quality checklist for a Word editing copy', body: 'Compare the first, middle and final chapters with the original. Check accents and special characters, missing paragraphs, repeated headings and chapter order. If images matter, inspect every figure: the text-only fallback does not include them. Do not assume footnotes, links or a table of contents survived. Keep the EPUB and manually repair the editing copy before sending it to someone else.' },
   ],
-  "faq": [
-    {
-      "q": "Is there a free EPUB to DOC converter here?",
-      "a": "BookConv does not create .doc files. The EPUB to Word tool creates a text-based .docx without requiring an account."
-    },
-    {
-      "q": "Will the DOCX keep images and heading styles?",
-      "a": "Not guaranteed. A conversion backend may retain some elements; the text-only fallback rebuilds chapter text as paragraphs without images, CSS layout or Word heading styles."
-    },
-    {
-      "q": "Can I rename DOCX to DOC?",
-      "a": "No. Use a word processor that can save to the required legacy format and check its output."
-    },
-    {
-      "q": "What are the upload limits for the alternative?",
-      "a": "Use the limit shown by the Word uploader. Direct single-file upload supports up to 100 MB when enabled; fallback uploads are limited to 4 MB. A size limit is not a guarantee of conversion success."
-    }
+  faq: [
+    { q: 'Is there a free EPUB to DOC converter here?', a: 'BookConv does not create .doc files. The EPUB to Word tool creates a text-based .docx without requiring an account.' },
+    { q: 'Will the DOCX keep images and heading styles?', a: 'Not guaranteed. A conversion backend may retain some elements; the text-only fallback rebuilds chapter text as paragraphs without images, CSS layout or Word heading styles.' },
+    { q: 'Can I rename DOCX to DOC?', a: 'No. Use a word processor that can save to the required legacy format and check its output.' },
+    { q: 'What are the upload limits for the alternative?', a: 'Use the limit shown by the Word uploader. Direct single-file upload supports up to 100 MB when enabled; fallback uploads are limited to 4 MB. A size limit is not a guarantee of conversion success.' },
+    { q: 'When should I keep EPUB instead?', a: 'Keep EPUB for ebook reading and as your original source. DOCX is an editing copy whose formatting and images need inspection.' },
+    { q: 'Does BookConv remove DRM for Word conversion?', a: 'No. Use files you have the right to convert and retain the original EPUB. Protected content may fail to convert.' },
   ]
 };
 export const es = {

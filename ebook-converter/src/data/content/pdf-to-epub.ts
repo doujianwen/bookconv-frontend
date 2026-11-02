@@ -1,6 +1,6 @@
 export const slug = 'pdf-to-epub';
 export const title = 'Free PDF to EPUB Converter — No Sign-up';
-export const metaDescription = 'Convert PDF to EPUB for free online — no sign-up. Turn fixed-layout PDFs into reflowable ebooks with adjustable fonts. Check text, images and reading order after conversion.';
+export const metaDescription = 'Convert text-based PDF to EPUB online for free. No sign-up. Scans need external OCR. Check images, text and reading order after conversion.';
 export const level = 'S' as const;
 export const wordCount = 3500;
 
