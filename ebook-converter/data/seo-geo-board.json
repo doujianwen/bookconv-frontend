@@ -1712,13 +1712,13 @@
           "action": "按 Google spam policies 对 174 个 URL 逐条合规自查",
           "detail": "针对 8 月垃圾内容更新逐条对照：scaled content abuse（大规模生成无增量价值页面）、doorway pages（程序化 convert 26 + guide 26 + blog 62 + es 31）、thin affiliate、cloaking。输出每 URL 分类（保留 / 合并 / 差异化 / noindex）。正向证据：/convert/epub-to-doc 是 30d 唯一仍被 Google 承接的 convert 意图词页（25 展示 pos 45.7），特点是内容差异化 + 诚实声明不可转换 ⇒ 指向差异化优于模板化的路线。",
           "owner": "A",
-          "deliverable": "审计_Spam合规自查_174URL_2026-11.md",
+          "deliverable": "审计_Spam合规自查_174URL_2026-11-03.md",
           "accept": "174 URL 100% 有分类且无未评项；每类给出动作与验收；不得直接删除有外链或 Bing AI 引用页",
           "due": "2026-11-17",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "2026-11-02 首次执行（CP1 D-02）建卡。与 M12-1 并行，两者结论合并后决定 S1 路线。",
+          "status": "done",
+          "statusNote": "2026-11-03 经脚本实测完成（174/174 抓取成功，0 失败，缓存于 数据分析/seo-audit/）。四维度结论：①scaled content abuse=命中 15 个 /formats/* 模板化薄页(avg 180词)，convert/guide/blog/es 实为厚实(2480/1856/1566/1865词)——建卡假设的 convert/guide/es 风险被实测推翻；②doorway=0 近重复簇(板块内最大 Jaccard 0.36)；③thin affiliate=0 联盟链接(仅 1 处良性 Amazon Kindle 产品提及)；④cloaking=4 样本 UA 对照词数 delta=0。分类：保留110 / 法务工具页15 / 有外链价值30 / 冻结4 / 差异化改写(充实)15。整改收敛为 15 个格式页充实或合并，S1 定为整改+观察。交付 docs/审计_Spam合规自查_174URL_2026-11-03.md + 数据分析/seo-audit/audit.csv。",
           "note": "冻结名单（禁改正文）：/blog/best-ebook-reader-apps 7303 引用、/convert/epub-to-mobi 2511、/guide/epub-to-mobi-keep-formatting 1420、/guide/epub-to-azw3-for-kindle 1413"
         },
         {
