@@ -132,9 +132,12 @@ try {
   const conversionRate = upload > 0 ? Math.round((complete / upload) * 100) + '%' : '—'
 
   // ②-b 失败明细：按 error_code 分组（customEvent:error_code 已注册为 custom dimension）。
-  // 用途：区分「客户端拦截」（FILE_TOO_LARGE 未到引擎 / QUOTA_EXCEEDED 额度跳过）
+  // 用途：区分「未到上传阶段的前置失败」（FILE_TOO_LARGE 客户端护栏拦截 /
+  // QUOTA_EXCEEDED 额度跳过 / DIRECT_UPLOAD_FAILED R2 直传基础设施失败，三者均不发 file_upload）
   // 与「服务端引擎失败」（其余 code）——2026-10-28 实证：8 天窗口 13 次 FILE_TOO_LARGE
   // 全是客户端拦截，CC 后台同窗 0 失败；不分组会把 UX 问题误报成引擎故障。
+  // ⚠️ 口径同步铁律：新增 error_code 须同步更新 ga4-redteam.mjs B6 的 preUploadFailures 剥离集合，
+  // 否则红队会把真实前置失败误判为"口径错乱"（2026-11-02 DIRECT_UPLOAD_FAILED 漏剥 → 假 FAIL 实证）。
   let failedByErrorCode = null
   try {
     const failReport = await runReport(token, {

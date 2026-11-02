@@ -515,7 +515,8 @@ D1/D2 的**真实验收**应为：
 | M17 | 页面级定位 + 跨渠道交叉验证 | §十 小节「### M17 页面级定位与交叉验证 / M18 …」 | ✅ 2026-10-13 done（未接入周自动化） |
 | M18 | Bing 页面级时序缝合（消费 PageTraffic 快照） | 同上小节 | ✅ 2026-10-13 done |
 | M19 | 因果观测（长周期占位） | 同上小节 | ⏳ 明确不做，除非满足前提 |
-| M20 | 关键词/竞品周报流水线的 3 处口径与命名修复（2026-10-26 新增） | §十 小节「### M20」 | ⏳ 待修（见小节） |
+| M20 | 关键词/竞品周报流水线的 3 处口径与命名修复（2026-10-26 新增） | §十 小节「### M20」 | ✅ 2026-11-02 M20-1/M20-2 已修并结案；M20-3 转 M21-7 |
+| M21 | 周报流水线的 3 个 P0 级测量缺陷修复（2026-11-02 新增） | §十 小节「### M21」 | 🟠 M21-1~5 已修并验证；M21-6~8 待办 |
 
 > 🔴 **两套编号体系**：作战台 `data/seo-geo-board.json` modules 的 M0–M10 与本文档 §十 M 系列是**不同体系**，勿混引。
 > 🔴 **已知文档瑕疵（2026-10-10 登记，最小侵入不重排）**：① §七 changelog 存在乱序——10-09 的 b6 行（`9446a9b`）插在 10-08 的 b1 行（`75ce218`）之前；② M3-5 小节表格中混入 1 行 B7 日期行（2026-10-05 Day 10），属错位待归位。
@@ -628,13 +629,31 @@ D1/D2 的**真实验收**应为：
 
 | ID | 优先级 | 项 | 实测证据 | 验收 | 状态 |
 |----|--------|----|---------|------|------|
-| **M20-1** | 🟠 P1 | 修 `src/lib/keywords/candidates.ts:162/165` 的「未进入 Top-100」口径 | 该文案模板是 `no-competitor` 候选最终写入 `data/keyword-reason-candidates.json` 与候选报告的文字；2026-10-19 已实测证伪 `rank=0` = 「未进入观测窗口 top ~9」。上轮修复只覆盖 `build-competitor-series.mjs` 的 `_readme` 与 `fetch-competitor-serp.mjs`，**漏了文案模板本身** | 候选文案不再出现「未进 Top-100」；同步清理 `data/keyword-reasons.json` 已确认条目正文中的错误表述 | ⏳ |
-| **M20-2** | 🟠 P1 | 修 `suggest-keyword-reasons.mjs` 的候选报告文件名（取运行当日而非 `series.d0`） | 产物恒为 `数据分析/keyword-reason-candidates-2026-09-27.md`（`d0=2026-09-27`），**连续 3 轮覆盖同名文件，候选历史持续丢失** | 产物名含运行当日（如 `keyword-reason-candidates-2026-10-26.md`），旧文件保留 | ⏳ |
-| **M20-3** | 🟡 P2 | 决定是否把竞品监测词扩到「实际会动的词」 | 本轮达标变动词（\|Δ\|≥3）8 个与竞品监测词 12 个**交集 = 0** ⇒ 候选机制持续空转，候选原因永远只有 `no-competitor` 类型。属**监控配置问题，非工具故障** | 要么把实际会动的词加入 `data/competitor-config.json` 的 `keywords`，要么在报告里明确「候选机制仅作 no-competitor 排除性提示」 | ⏳ |
+| **M20-1** | 🟠 P1 | 修 `src/lib/keywords/candidates.ts:162/165` 的「未进入 Top-100」口径 | 该文案模板是 `no-competitor` 候选最终写入 `data/keyword-reason-candidates.json` 与候选报告的文字；2026-10-19 已实测证伪 `rank=0` = 「未进入观测窗口 top ~9」。上轮修复只覆盖 `build-competitor-series.mjs` 的 `_readme` 与 `fetch-competitor-serp.mjs`，**漏了文案模板本身** | 候选文案不再出现「未进 Top-100」；同步清理 `data/keyword-reasons.json` 已确认条目正文中的错误表述 | ✅ **2026-11-02 已修**（文案改为「未出现在观测窗口内」，并注明观测深度仅 6–9 条 ≠ Top-100；已实跑验证渲染结果中「进入 Top-100」断言 = false） |
+| **M20-2** | 🟠 P1 | 修 `suggest-keyword-reasons.mjs` 的候选报告文件名（取运行当日而非 `series.d0`） | 产物恒为 `数据分析/keyword-reason-candidates-2026-09-27.md`（`d0=2026-09-27`），**连续 3 轮覆盖同名文件，候选历史持续丢失** | 产物名含运行当日（如 `keyword-reason-candidates-2026-10-26.md`），旧文件保留 | ✅ **2026-11-02 结案**（本轮产物 `keyword-reason-candidates-2026-11-01.md`，10-26 的 `...-2026-09-27.md` 未被覆盖） |
+| **M20-3** | 🟡 P2 | 决定是否把竞品监测词扩到「实际会动的词」 | 本轮达标变动词（\|Δ\|≥3）8 个与竞品监测词 12 个**交集 = 0** ⇒ 候选机制持续空转，候选原因永远只有 `no-competitor` 类型。属**监控配置问题，非工具故障** | 要么把实际会动的词加入 `data/competitor-config.json` 的 `keywords`，要么在报告里明确「候选机制仅作 no-competitor 排除性提示」 | ⏳ 未修 → 转 **M21-7** 承接（2026-11-02 实测交集 = 1，仍近似空转） |
 
 **下期复核项（不单独编号，随周报执行）**
 
 - 🟡 **2026-10-26 竞品快照观测深度 min 7（10-19 为 min 8）**，且 `convert epub to mobi` / `mobi to epub` / `epub to zip` 三个词的监测竞品命中数由 3/4/1 归零 ⇒ **无法区分「竞品真掉出」与「窗口变浅刚好切掉边缘位次」**。下期周报须对照观察是否恢复。
+  - ✅ **2026-11-02 已澄清**：本轮 16 条「掉出」中仅 1 条伴随观测深度缩小（9→8），其余 15 条深度不变或变深 ⇒ **掉出主要由真实排名变化解释，非窗口变浅造成**。该待办结案。
+
+### M21 周报流水线的 3 个 P0 级测量缺陷修复（2026-11-02 新增）
+
+> 来源：周报流水线第 4 次执行（2026-11-02）实测。报告：`数据分析/关键词排名竞品周报-2026-11-02.md`。
+> 三项均为**实测复现 + 反向验证通过**的缺陷，非推测。根因优先于表面修补，故一并修掉了上轮数据污染的源头。
+
+| ID | 优先级 | 项 | 实测证据 | 验收 | 状态 |
+|----|--------|----|---------|------|------|
+| **M21-1** | 🔴 P0 | 修 `scripts/fetch-competitor-serp.mjs` 的 SerpApi 跳转包装假阴性 | Google 会把部分结果包成 `https://www.google.com/goto?url=<opaque>`，脚本只读 `link` ⇒ `hostOf()` 得到 `google.com` ⇒ 竞品被判 rank=0。**同一份实时 SERP：盲匹配命中 12 个竞品，goto 感知命中 23 个（漏报 48%）**。后果：快照命中 11（修复后 20）、7 条虚假「掉出」、且上轮唯一的候选原因（「7 个竞品均未进 Top-100」）本身就是该缺陷产物（CloudConvert 实测在 #5） | 新增 `isRedirectWrapper/resolveUrl/hostOfResult` + `selfTest()` 自检门禁（匹配器退化 ⇒ 拒绝抓取并 exit 1）；**反向验证已实跑**：注入故障 ⇒ exit 1，恢复 ⇒ exit 0；**独立复核**：同 per-query key 重查 95 个竞品×词位 ⇒ match 95 / mismatch 0 | ✅ **2026-11-02 已修** |
+| **M21-2** | 🔴 P0 | 修 `scripts/fetch-gsc-webmaster.mjs` 的代理不可用 | 本机需代理访问 Google。实测：环境变量所指系统代理 `127.0.0.1:62030` 对 Baidu 200 但 googleapis **超时**；隧道代理 `127.0.0.1:12450` 对 googleapis **401**（通路可用）。且 Node 22 的 `fetch` **默认不读 `*_proxy` 环境变量**（需 `NODE_USE_ENV_PROXY=1`）⇒ 「开着代理」也未必生效。本轮 step2 首次实跑 **exit 1**（`FAILED: fetch failed`） | 脚本逐个候选代理**实测连通性**（真发请求，任意 HTTP 状态即视为通路可用），选首个可用者，可用 `GSC_PROXY` 覆盖；全不通时明确报「网络不可达，非脚本缺陷」并 exit 1。**🔴 不得硬编码端口**——代理端口会变（实测 11-02 上午环境变量已从 62030 切到 50512） | ✅ **2026-11-02 已修**（不带任何手工 env 直接跑 ⇒ 自动选中可用代理 ⇒ exit 0，取到真实数据 397 行 / 14 点击 / 1569 曝光）。**2026-11-02 08:00 复跑**：代理端口变更后自动选中 50512（而非旧兜底 12450）⇒ 证明未硬编码、对代理切换鲁棒 |
+| **M21-3** | 🔴 P0 | 修 `scripts/build-keyword-series.mjs` 的「锁死便利 CSV 拖垮主产物」 | `数据分析/keyword-rank-latest.csv` 被外部进程独占打开（并行会话 / Excel），`writeFileSync` 抛 `EBUSY`，脚本**在写主产物 `data/keyword-series.json` 之前就崩溃** ⇒ 一个 git-ignored 的便利 CSV 锁死，拖垮了真正入库的产物。实测锁定持续 >10 分钟，rename 亦失败（EPERM） | ① **顺序倒置**：主产物 JSON 先写，CSV 改尽力而为（失败只告警并点名被占用文件）；② **原子写 + 退避重试**（先写 `*.tmp-<pid>` 再 rename，EBUSY/EPERM/EACCES 重试，临时文件必清理） | ✅ **2026-11-02 已修**。**严格 A/B 对照已实跑**（PowerShell `FileShare.None` 独占锁 = 与 Excel 同构，同一把锁下分别跑原版与修复版）：原版 **exit 1 + 主产物丢失**，修复版 **exit 0 + 主产物保住** ⇒ 修复确凿有效 |
+| **M21-4** | 🟡 P1 | 候选证据混入已停用竞品域名 | `competitor-series.json` 的 matrix 仍带 2026-09-27 已移出配置的 `onlineconvert.com` / `anyconv.com`，候选文案因此称「已监测的 **7** 个竞品」，而实际在监仅 5 个 | `suggest-keyword-reasons.mjs` 过滤为仅当前监测域名 | ✅ **2026-11-02 已修** |
+| **M21-5** | 🟠 P1 | 防止**跨匹配方法**的基准被发布为「竞品新进」 | 旧快照（11-01 前）用 `naive-host-v1` 匹配，其 null **不能证明缺席**（可能只是跳转包装漏报）。若与 goto-aware 快照直接比，会把「本来就在」发布成「新进入 Top-100」——正是 10-19 踩过的坑 | `build-competitor-series.mjs` 引入 `methodVersion` 标记 + `absenceVerifiable()`：旧方法基准的 null 不可证明缺席 ⇒ 该类行 trend 强制降级为 `no-baseline` 并标 `baselineUnverified=true` | ✅ **2026-11-02 已修**（本轮 10 对降级为 `no-baseline`，「新进」如实为 0） |
+| **M21-9** | 🔴 P0 | 修 `scripts/fetch-gsc-webmaster.mjs` 的快照文件名不含窗口长度 ⇒ 同日互相覆盖 | 产物名原为 `GSC_API_query_<endDate>.json`，而 endDate 只由「今天−2 天」决定、**与 `--days` 无关** ⇒ 任何 `--days` 值在同一天写同一个文件，后写者直接覆盖前者。**实测 2026-11-02 07:51：另一次 `--days 10` 的抓取把同日 `--days 90` 的 397 行 / 91 天窗口快照覆盖成 20 行 / 10 天窗口**（startDate 从 08-01 变 10-21）⇒ `build-keyword-series` 缝出 3 607 行而非 3 984 行（少 377 行），**而日志正常输出、exit 0 ⇒ 一次静默的数据丢失，看起来像一次正常重建**。GSC 的 position 是窗口内平均排名，10 天与 91 天**不是同一个量**；被覆盖的数据**不可恢复**（API 无历史） | ① 产物名带窗口长度 `GSC_API_query_<endDate>_d<days>.json`，不同窗口不再互相覆盖；② `build-keyword-series.mjs` 增加**同日多份导出去重**（同导出日取行数多者），且**丢弃动作必须显式打印 + 写入 `supersededSnapshots`**，绝不静默取舍 | ✅ **2026-11-02 已修**。**反向验证已实跑**：造同日冲突（394 行 d90 vs 20 行 d10）⇒ 正确保留 394 行、快照数不翻倍（23 而非 24）、points 不重复、丢弃动作被打印 |
+| **M21-6** | 🟠 P1 | 监测词顺序与 SerpApi key 轮换映射**强耦合** | 实测同一关键词同一时刻，**KEY1 与 KEY2 返回不同的 SERP**（`ebook converter`：KEY1 首位 `ebook.online-convert.com`，KEY2 首位 `reddit.com`），但各自稳定可复现。脚本按查询下标确定性轮换 key ⇒ 现因 `competitor-config.json` 未变而周期间可比 | **改动 `data/competitor-config.json` 的 `keywords` 顺序前，必须先固定 key 映射**（否则轮换映射被打乱，历史可比性断裂）；建议后续把 key 绑定写进 config 而非依赖下标 | ⏳ 待办 |
+| **M21-7** | 🟠 P1 | 承接 M20-3：竞品监测词与实际变动词交集过小 | 2026-11-02 实测：达标变动词（\|Δ\|≥3）9 个与监测词 19 个**交集 = 1**，候选机制基本空转。**且该唯一交集词的候选前提已被 M21-1 证伪**（竞品实际在 #5），故本轮候选为 0 | 把实际会动的词（如 `convertir epub a mobi`、`epub/azw3/mobi/pdf/txt`、`project-to-epub`、`read epub on kindle`）纳入 `data/competitor-config.json` 的 `keywords`，或明确「候选机制仅作排除性提示」 | ⏳ 待办 |
+| **M21-8** | 🟡 P2 | `数据分析/keyword-rank-latest.csv` 被外部进程长期占用 | 锁定方不明（Excel / 并行会话），锁定持续 >10 分钟且 rename 失败 | 已由 M21-3 降级为**非阻塞告警**（主产物不受影响）；如需彻底解决需排查锁定进程 | ✅ **2026-11-02 08:00 复跑已释放并正常写入（1548 行），关闭**。但**保留 M21-3 的结构性修复**（主产物先写 + 原子写）——缺陷本质是「一个便利 CSV 的锁能毁掉真正入库的产物」，与锁当前是否存在无关 |
 
 ### M3-5 抓取与渲染可解析性（2026-10-04 收口 done）
 

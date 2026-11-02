@@ -30,6 +30,104 @@ function hostOf(u) {
   }
 }
 
+// Google sometimes serves a result as a redirect wrapper
+// (`https://www.google.com/goto?url=<opaque>` / `.../url?sa=t&...&url=<opaque>`).
+// The opaque payload is NOT a readable URL, but SerpApi also returns
+// `displayed_link` — the human-facing breadcrumb ("https://www.freeconvert.com ›
+// ebook-converter") — from which the real origin and path can be recovered.
+//
+// MEASURED 2026-11-02 (this file): matching on `link` alone missed 11 of 23
+// real competitor hits (blind 12 vs goto-aware 23 over 19 monitored queries) and
+// produced 7 FALSE "gone" rows — rivals that were actually still ranking.
+// Blind matching reads the wrapper's host ("google.com") and scores every such
+// rival as rank=0, i.e. "outside the observed window" — a false negative that
+// then shows up next week as a fabricated ranking collapse.
+//
+// So: resolve the true host through `displayed_link` whenever `link` is a
+// wrapper. Never let a wrapper degrade into "not found" — if we cannot resolve
+// it, we must say UNKNOWN rather than invent a rank.
+function isRedirectWrapper(link) {
+  return /(^|\.)google\.[a-z.]+\/(goto|url)\?/i.test(link || '');
+}
+
+/** The real landing URL for an organic result, unwrapping Google redirects. */
+function resolveUrl(o) {
+  const link = o?.link || '';
+  if (!isRedirectWrapper(link)) return link || null;
+  const dl = o?.displayed_link || '';
+  if (!dl) return null;
+  const parts = dl.split('›').map((s) => s.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  const origin = parts[0];
+  // Breadcrumb crumbs are path segments; drop query-ish ones ("id=...", "detail").
+  const crumbs = parts
+    .slice(1)
+    .filter((p) => !p.includes('=') && !p.includes('?') && !/^detail$/i.test(p));
+  return origin.replace(/\/+$/, '') + (crumbs.length ? '/' + crumbs.join('/') : '/');
+}
+
+/** The real hostname for an organic result, unwrapping Google redirects. */
+function hostOfResult(o) {
+  const link = o?.link || '';
+  if (!isRedirectWrapper(link)) return hostOf(link);
+  const real = resolveUrl(o);
+  return real ? hostOf(real) : '';
+}
+
+// Self-test: the wrapper-unwrapping must keep working. A silent regression here
+// does not crash — it just starts under-reporting rivals again, which is
+// indistinguishable from "rivals dropped out" downstream. So we assert it here
+// and fail loudly instead of publishing a quiet lie.
+//
+// Fixture shape taken from a real SerpApi response captured 2026-11-02:
+//   link          = https://www.google.com/goto?url=<opaque>
+//   displayed_link= https://www.freeconvert.com › ebook-converter
+function selfTest() {
+  const cases = [
+    {
+      name: 'goto wrapper is unwrapped',
+      o: {
+        link: 'https://www.google.com/goto?url=CAESZgHrOzAV5cMxc4Oy3wnq9nrlOLvg4OGgL8',
+        displayed_link: 'https://www.freeconvert.com › ebook-converter',
+      },
+      wantHost: 'freeconvert.com',
+      wantUrl: 'https://www.freeconvert.com/ebook-converter',
+    },
+    {
+      name: 'bare-origin wrapper is unwrapped',
+      o: {
+        link: 'https://www.google.com/goto?url=CAESVQHrOzAVhXHcJdOo9lqnrC6AeozjLi1UsI',
+        displayed_link: 'https://calibre-ebook.com',
+      },
+      wantHost: 'calibre-ebook.com',
+      wantUrl: 'https://calibre-ebook.com/',
+    },
+    {
+      name: 'plain link passes through',
+      o: { link: 'https://cloudconvert.com/ebook-converter' },
+      wantHost: 'cloudconvert.com',
+      wantUrl: 'https://cloudconvert.com/ebook-converter',
+    },
+  ];
+  const failures = [];
+  for (const c of cases) {
+    const gotHost = hostOfResult(c.o);
+    const gotUrl = resolveUrl(c.o);
+    if (gotHost !== c.wantHost) failures.push(`${c.name}: host got "${gotHost}" want "${c.wantHost}"`);
+    if (gotUrl !== c.wantUrl) failures.push(`${c.name}: url got "${gotUrl}" want "${c.wantUrl}"`);
+    // The naive matcher must be the one that fails, otherwise the fixture no
+    // longer proves the bug is fixed.
+    if (c.o.link.includes('/goto?') && hostOf(c.o.link) === c.wantHost) {
+      failures.push(`${c.name}: fixture no longer reproduces the blind-matcher bug`);
+    }
+  }
+  if (failures.length) {
+    console.error('✗ SerpApi 匹配器自检失败（拒绝抓取，避免发布被污染的排名）：');
+    for (const f of failures) console.error(`    - ${f}`);
+    process.exit(1);
+  }
+}
+
 function loadConfig() {
   if (!existsSync(CONFIG)) {
     console.error(`✗ 缺少配置 ${CONFIG}（应从 git 拉到）。`);
@@ -63,16 +161,16 @@ async function serpapiRanks(q, competitors, key, ownDomain) {
   const j = await r.json();
   const organic = Array.isArray(j.organic_results) ? j.organic_results : [];
   const rankings = competitors.map((c) => {
-    const idx = organic.findIndex((o) => hostOf(o.link) === c.domain);
-    return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? organic[idx].link : null };
+    const idx = organic.findIndex((o) => hostOfResult(o) === c.domain);
+    return { domain: c.domain, name: c.name, rank: idx >= 0 ? idx + 1 : 0, url: idx >= 0 ? resolveUrl(organic[idx]) : null };
   });
   // Own-domain rank: tracks where BOOKCONV itself ranks for each target
   // keyword, so "BookConv 出局头部" stops being an inference and becomes a
   // measured rank. Added 2026-10-26 (red-team M-7). rank=0 = outside observed
   // window, same caveat as rivals — NOT "not in top 100".
-  const ownIdx = ownDomain ? organic.findIndex((o) => hostOf(o.link) === ownDomain) : -1;
+  const ownIdx = ownDomain ? organic.findIndex((o) => hostOfResult(o) === ownDomain) : -1;
   const ownRank = ownIdx >= 0 ? ownIdx + 1 : 0;
-  const ownUrl = ownIdx >= 0 ? organic[ownIdx].link : null;
+  const ownUrl = ownIdx >= 0 ? resolveUrl(organic[ownIdx]) : null;
   // MEASURED 2026-10-19: we ask for num=100 but SerpApi returns only 8-10
   // organic rows for these head queries. So rank=0 does NOT mean "not in the
   // top 100" — it means "outside the observed window", whose depth we did not
@@ -124,6 +222,7 @@ function median(xs) {
 
 async function main() {
   loadDotEnv();
+  selfTest();
   const cfg = loadConfig();
   const keys = [process.env.SERPAPI_KEY, process.env.SERPAPI_KEY_2].filter(Boolean);
   const bingKey = process.env.BING_WEB_SEARCH_KEY;
@@ -210,6 +309,13 @@ async function main() {
     fetchedAt: new Date().toISOString(),
     source,
     ownDomain: ownDomain || null,
+    // Which matching method produced these ranks. Snapshots before
+    // 2026-11-02 used the naive `hostOf(link)` matcher, which silently MISSED
+    // every rival whose SerpApi link is a `google.com/goto?url=…` redirect
+    // wrapper — a false negative, not a real absence. Mixing those snapshots
+    // with goto-aware ones would make "rival appeared" look like a genuine
+    // entrance. build-competitor-series.mjs refuses to publish such a Δ.
+    methodVersion: 'goto-aware-v2',
     quality: {
       hits: totalHits,
       minObservedDepth: minDepth,

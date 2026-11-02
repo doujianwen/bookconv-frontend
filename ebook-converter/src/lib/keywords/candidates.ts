@@ -152,17 +152,23 @@ export function buildCandidates(opts: {
         relatedNotCausal: true,
       });
     } else if (comps.length > 0 && comps.every((c) => c.latestRank === null)) {
-      // We looked and none of the monitored rivals is in the Top-100. That is
-      // itself evidence: it narrows the cause AWAY from these rivals — but it
-      // does not rule out rivals we are not tracking, nor non-competitor causes.
+      // We looked and none of the monitored rivals showed up in the observed
+      // window. That is itself evidence: it narrows the cause AWAY from these
+      // rivals — but it does not rule out rivals we are not tracking, nor
+      // non-competitor causes.
+      //
+      // 🔴 M20-1 (2026-10-26 发现，2026-11-02 修正文案): 观测窗口实测只有
+      // 6–9 条（我们请求 num=100，SerpApi 实际只返 8–10 条 organic_results），
+      // 所以「未观测到」≠「未进 Top-100」。旧文案写成「均未进入 Top-100」
+      // 是一句可被证伪的假陈述，必须改为「未出现在观测窗口内」。
       items.push({
         type: 'no-competitor',
         confidence: 'medium',
         text:
-          `「${k.query}」${direction}（${prevPos ?? '?'}→${latestPos ?? '?'}），但已监测的 ${comps.length} 个竞品在本词**均未进入 Top-100**。` +
+          `「${k.query}」${direction}（${prevPos ?? '?'}→${latestPos ?? '?'}），但已监测的 ${comps.length} 个竞品在本词**均未出现在观测窗口内**。` +
           `未见已监测竞品的挤压；不排除未监测竞品、算法更新、季节性或自身页面改动所致。` +
           `建议人工核对 SERP 实际结果，以及该词对应页面近期是否改动。`,
-        evidence: `competitor-series.json 中该 query 的 ${comps.length} 个竞品 latestRank 全为 null（Top-100 外）；你方 Δ=${k.delta}。`,
+        evidence: `competitor-series.json 中该 query 的 ${comps.length} 个竞品 latestRank 全为 null（未进入观测窗口；观测深度仅 6–9 条，**不等于**未进 Top-100）；你方 Δ=${k.delta}。`,
         source: 'competitor-series.json',
         relatedNotCausal: true,
       });

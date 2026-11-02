@@ -63,9 +63,21 @@ async function main() {
   const candMod = await import(pathToFileURL(transpile('src/lib/keywords/candidates.ts')).href);
   const { buildCandidates } = candMod;
 
+  // Only CURRENTLY monitored competitors may be cited as evidence. The matrix
+  // also carries legacy domains (onlineconvert.com / anyconv.com) that were
+  // dropped from the config on 2026-09-27 but still appear in old snapshots —
+  // counting them inflated "已监测的 N 个竞品" (7) above the real monitored set
+  // (5) and could let a dead domain stand in for a live one.
+  const monitored = new Set(
+    (competitor?.config?.competitors ?? []).map((c) => c.domain),
+  );
+  const matrix = (competitor?.matrix ?? []).filter(
+    (r) => monitored.size === 0 || monitored.has(r.domain),
+  );
+
   const doc = buildCandidates({
     keywords: series.bing.keywords,
-    competitorMatrix: competitor?.matrix ?? [],
+    competitorMatrix: matrix,
     algoUpdates: algoDoc.updates ?? [],
     threshold,
     d0: series.d0,

@@ -32,7 +32,7 @@
 // NOTE: 数据分析/ is git-ignored, so the raw snapshots have no version control.
 // The JSON written to data/ IS tracked — it is the durable copy of this series.
 
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, renameSync, unlinkSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -42,6 +42,38 @@ const DATA_DIR = join(ROOT, '数据分析');
 const OUT_JSON = join(ROOT, 'data', 'keyword-series.json');
 
 const D0 = '2026-09-27'; // project day-zero, used only for reporting
+
+// Windows can hand back EBUSY when another process (Excel, a parallel agent
+// session, an indexer) holds the target open for writing. MEASURED
+// 2026-11-02: 数据分析/keyword-rank-latest.csv was held open by a parallel
+// process for the whole run — the plain writeFileSync threw and the script
+// died BEFORE reaching its canonical output (data/keyword-series.json), losing
+// the primary artifact because of a locked convenience CSV.
+//
+// So: write to a temp file and rename it into place (atomic replace), and
+// retry briefly on EBUSY/EPERM. Rename-over-target also needs the lock
+// released, so the retry is what actually buys us the recovery.
+function writeFileAtomic(filePath, content, { retries = 5, delayMs = 400 } = {}) {
+  const tmp = `${filePath}.tmp-${process.pid}`;
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      writeFileSync(tmp, content, 'utf8');
+      renameSync(tmp, filePath);
+      return true;
+    } catch (e) {
+      lastErr = e;
+      try { if (existsSync(tmp)) unlinkSync(tmp); } catch { /* best effort */ }
+      // EBUSY/EPERM = someone else holds the file; worth waiting.
+      // ENOENT/EACCES = a real path problem; retrying will not help.
+      if (!['EBUSY', 'EPERM', 'EACCES'].includes(e.code)) break;
+      const wait = delayMs * (attempt + 1);
+      const end = Date.now() + wait;
+      while (Date.now() < end) { /* spin-wait: keeps this script synchronous */ }
+    }
+  }
+  throw lastErr;
+}
 
 // ────────────────────────────────────────────────────────────── CSV parsing
 // Bing's Query column can contain commas (and we have seen a malformed quoted
@@ -217,16 +249,50 @@ function buildBing() {
 // --days 90), so two consecutive exports ARE comparable and we compute a real Δ.
 // When an older mismatched-window export is still in 数据分析/, `comparable` flips
 // to false and we deliberately stop emitting Δ rather than averaging apples/oranges.
+
+// Minimum number of days between the two windows being compared.
+//
+// 🔴 MEASURED 2026-11-02: GSC `position` is the AVERAGE position across the
+// rolling window. Two 91-day windows ending 1 day apart share 90 of 91 days,
+// so their averages differ almost by construction. Measured on this site's own
+// data: pairing 10-30→10-31 (1-day gap) produced 402/405 "flat" and ZERO
+// |Δ|≥3 — a structural false "nothing changed", with real movement averaged
+// away. The week-apart pairing 10-24→10-31 (7-day gap) produced 11 up /
+// 19 down / 375 flat and 3 keywords with |Δ|≥3.
+//
+// 7 days = one reporting week, and it leaves ~7 of 91 days non-overlapping.
+// This constant applies ONLY to GSC (rolling-window averages). Bing uses
+// consecutive-observation semantics (daily snapshots, no window averaging)
+// and is deliberately left alone.
+const MIN_GSC_PAIR_GAP_DAYS = 7;
+
 function buildGsc() {
   if (!existsSync(DATA_DIR)) return null;
   const files = readdirSync(DATA_DIR)
-    .filter((f) => /^GSC_API_query_\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    // Accept both naming schemes:
+    //   GSC_API_query_<endDate>.json        (legacy — window length unknown)
+    //   GSC_API_query_<endDate>_d<days>.json (since 2026-11-02 — carries the
+    //   window length, so a 10-day and a 90-day export of the same end date
+    //   stop overwriting each other).
+    .filter((f) => /^GSC_API_query_\d{4}-\d{2}-\d{2}(_d\d+)?\.json$/.test(f))
     .sort();
   if (files.length === 0) return null;
 
   const windows = [];
   const byQuery = new Map();
+  const superseded = [];
 
+  // Load every candidate snapshot first, then pick ONE per export date.
+  //
+  // 🔴 MEASURED 2026-11-02: two exports of the same end date can coexist —
+  // e.g. `GSC_API_query_2026-10-30.json` (a 10-day window, 20 rows) and
+  // `GSC_API_query_2026-10-30_d90.json` (the 90-day window, 397 rows).
+  // Reading both would give every query TWO points on the same date, which
+  // double-counts observations and makes "latest" ambiguous.
+  //
+  // Tie-break: prefer the snapshot with MORE rows (it covers more of the
+  // query set — the weekly pipeline's --days 90 export beats a short one).
+  const candidates = [];
   for (const f of files) {
     const fetchedAt = f.match(/(\d{4}-\d{2}-\d{2})/)[1];
     let j;
@@ -242,19 +308,33 @@ function buildGsc() {
       start && end
         ? Math.round((Date.parse(end + 'T00:00:00Z') - Date.parse(start + 'T00:00:00Z')) / 86400000) + 1
         : null;
-    windows.push({ fetchedAt, start, end, windowDays, rows: rows.length });
+    candidates.push({ fetchedAt, start, end, windowDays, rows, file: f });
+  }
 
-    for (const r of rows) {
+  const byDate = new Map();
+  for (const c of candidates) {
+    const prev = byDate.get(c.fetchedAt);
+    if (!prev || c.rows.length > prev.rows.length) {
+      if (prev) superseded.push(`${c.fetchedAt}: kept ${c.file} (${c.rows.length} rows) over ${prev.file} (${prev.rows.length} rows)`);
+      byDate.set(c.fetchedAt, c);
+    } else {
+      superseded.push(`${c.fetchedAt}: kept ${prev.file} (${prev.rows.length} rows) over ${c.file} (${c.rows.length} rows)`);
+    }
+  }
+
+  for (const c of [...byDate.values()].sort((a, b) => a.fetchedAt.localeCompare(b.fetchedAt))) {
+    windows.push({ fetchedAt: c.fetchedAt, start: c.start, end: c.end, windowDays: c.windowDays, rows: c.rows.length });
+    for (const r of c.rows) {
       const q = Array.isArray(r.keys) ? r.keys[0] : r.keys;
       if (!q) continue;
       if (!byQuery.has(q)) byQuery.set(q, []);
       byQuery.get(q).push({
-        date: fetchedAt,
+        date: c.fetchedAt,
         position: typeof r.position === 'number' ? r.position : null,
         clicks: r.clicks ?? 0,
         impressions: r.impressions ?? 0,
         ctr: r.ctr ?? null,
-        windowDays,
+        windowDays: c.windowDays,
       });
     }
   }
@@ -278,12 +358,32 @@ function buildGsc() {
     // previous = most recent earlier point sharing latest's window length. This
     // skips interleaved stale short-window exports so a real Δ survives, and
     // yields null (no false Δ) when no same-window history exists.
+    //
+    // 🔴 MEASURED 2026-11-02: matching on window length ALONE is not enough.
+    // GSC's `position` is the AVERAGE position over the rolling window, so two
+    // 91-day windows that end one day apart overlap for 90 of 91 days — the
+    // average barely moves and Δ collapses toward 0. Measured: pairing
+    // 10-30→10-31 (1-day gap) yielded 402/405 "flat" and zero |Δ|≥3, while the
+    // honest week-apart pairing 10-24→10-31 (7-day gap) yielded 11 up / 19
+    // down / 375 flat. The 1-day version was a structural false "everything is
+    // stable" — real movement was averaged out of existence.
+    //
+    // ⇒ A same-window previous point must ALSO be at least MIN_GSC_PAIR_GAP_DAYS
+    // away, so the comparison spans a meaningful slice of non-overlapping time.
+    // Below the threshold we keep walking back; if nothing qualifies, previous
+    // stays null and Δ is withheld (never a false 0).
     let previous = null;
     if (latest) {
       for (let i = sorted.length - 2; i >= 0; i--) {
         if (sorted[i].windowDays !== null && sorted[i].windowDays === latest.windowDays) {
-          previous = sorted[i];
-          break;
+          const gap = Math.round(
+            (Date.parse(latest.date + 'T00:00:00Z') - Date.parse(sorted[i].date + 'T00:00:00Z')) / 86400000
+          );
+          if (gap >= MIN_GSC_PAIR_GAP_DAYS) {
+            previous = sorted[i];
+            break;
+          }
+          // Same window but too close in time → keep walking further back.
         }
       }
     }
@@ -307,6 +407,7 @@ function buildGsc() {
     distinctWindowDays: distinctWindows,
     comparable,
     keywords,
+    supersededSnapshots: superseded,
     totals: {
       keywords: keywords.length,
       multiPoint: keywords.filter((k) => k.observations > 1).length,
@@ -319,7 +420,7 @@ function buildGsc() {
     caveats: comparable
       ? [
           `最新两次同窗口导出（${latestWindow} 天滚动窗口）可比，Δ 已计算。`,
-          'GSC 的 position 是该窗口内的平均排名；两次 91 天窗口起点各相差约 7 天，跨窗口对比近似有效。',
+          'GSC 的 position 是该窗口内的平均排名；两次窗口的间隔见各词 spanDays（至少 7 天，避免 91 天窗只挪 1 天导致的自比假稳定）。',
           '早期 10/31 天的零散导出已自动绕开，不参与 Δ 计算（避免把不同跨度平均值相减）。',
         ]
       : [
@@ -338,6 +439,22 @@ function toCsv(rows, fields) {
   return [fields.join(','), ...rows.map((r) => fields.map((f) => esc(r[f])).join(','))].join('\n');
 }
 
+// A CSV under 数据分析/ is a convenience export, not the deliverable. If
+// another process holds it open on Windows (EBUSY), we must NOT fail the whole
+// run — the canonical JSON has already been written by then. We warn loudly
+// and continue, so the report can state which export is stale.
+function writeCsvBestEffort(filePath, content, rowCount, extra = '') {
+  try {
+    writeFileAtomic(filePath, content);
+    console.log(`  wrote ${filePath}  (${rowCount} rows${extra ? ' · ' + extra : ''})`);
+    return true;
+  } catch (e) {
+    console.error(`  ⚠ 未能写入 ${filePath}：${e.code || e.message}`);
+    console.error(`    （该文件被其他进程占用，可能是 Excel / 并行会话打开着；主产物 data/keyword-series.json 已正常写出）`);
+    return false;
+  }
+}
+
 function main() {
   const bing = buildBing();
   const gsc = buildGsc();
@@ -347,7 +464,31 @@ function main() {
     process.exit(1);
   }
 
-  // ── long series CSV ──
+  // ── JSON for the workbench (CANONICAL — written FIRST) ──
+  // Order matters: data/keyword-series.json is the tracked, durable copy of
+  // this series. The CSVs under 数据分析/ are git-ignored convenience exports
+  // that a parallel process can hold open on Windows (EBUSY, measured
+  // 2026-11-02). Writing the canonical JSON first means a locked CSV can
+  // never destroy the primary artifact — the run still produces its real
+  // output, and only the convenience export is skipped.
+  const out = {
+    $schema: 'SEO/GEO 作战台 · 关键词排名序列（由 scripts/build-keyword-series.mjs 生成）',
+    _readme: [
+      '本文件由 scripts/build-keyword-series.mjs 从 数据分析/ 下的原始快照合并生成，不要手改。',
+      '重跑：node scripts/build-keyword-series.mjs',
+      'Δ 的定义：上一期排名 − 本期排名。正数 = 名次上升（数字变小），负数 = 下降。',
+      '只有 ≥2 个观测点的词才有 Δ；单点词无法判断趋势，已标 observations=1。',
+    ],
+    generatedAt: new Date().toISOString(),
+    d0: D0,
+    bing,
+    gsc,
+  };
+  if (!existsSync(join(ROOT, 'data'))) mkdirSync(join(ROOT, 'data'));
+  writeFileAtomic(OUT_JSON, JSON.stringify(out, null, 2));
+  console.log(`  wrote ${OUT_JSON}`);
+
+  // ── long series CSV (best-effort convenience export) ──
   {
     const rows = [];
     if (bing) {
@@ -384,12 +525,7 @@ function main() {
     }
     rows.sort((a, b) => a.Query.localeCompare(b.Query) || a.Date.localeCompare(b.Date));
     const fp = join(DATA_DIR, 'keyword-rank-series.csv');
-    writeFileSync(
-      fp,
-      toCsv(rows, ['Query', 'Date', 'Clicks', 'Impressions', 'AvgClickPosition', 'AvgImpressionPosition', 'Source', 'FetchedAt']),
-      'utf8'
-    );
-    console.log(`  wrote ${fp}  (${rows.length} rows)`);
+    writeCsvBestEffort(fp, toCsv(rows, ['Query', 'Date', 'Clicks', 'Impressions', 'AvgClickPosition', 'AvgImpressionPosition', 'Source', 'FetchedAt']), rows.length);
   }
 
   // ── latest/previous + Δ CSV (with human reasons merged in) ──
@@ -452,31 +588,13 @@ function main() {
     }
     rows.sort((a, b) => a.Source.localeCompare(b.Source) || a.Query.localeCompare(b.Query));
     const fp = join(DATA_DIR, 'keyword-rank-latest.csv');
-    writeFileSync(
+    writeCsvBestEffort(
       fp,
       toCsv(rows, ['Source', 'Query', 'LatestDate', 'LatestPos', 'PrevDate', 'PrevPos', 'SpanDays', 'Delta', 'Trend', 'Impressions', 'Clicks', 'Observations', 'Reasons']),
-      'utf8'
+      rows.length,
+      `bing ${bing ? bing.keywords.length : 0} · gsc ${gsc ? gsc.keywords.length : 0}`,
     );
-    console.log(`  wrote ${fp}  (${rows.length} rows · bing ${bing ? bing.keywords.length : 0} · gsc ${gsc ? gsc.keywords.length : 0})`);
   }
-
-  // ── JSON for the workbench ──
-  const out = {
-    $schema: 'SEO/GEO 作战台 · 关键词排名序列（由 scripts/build-keyword-series.mjs 生成）',
-    _readme: [
-      '本文件由 scripts/build-keyword-series.mjs 从 数据分析/ 下的原始快照合并生成，不要手改。',
-      '重跑：node scripts/build-keyword-series.mjs',
-      'Δ 的定义：上一期排名 − 本期排名。正数 = 名次上升（数字变小），负数 = 下降。',
-      '只有 ≥2 个观测点的词才有 Δ；单点词无法判断趋势，已标 observations=1。',
-    ],
-    generatedAt: new Date().toISOString(),
-    d0: D0,
-    bing,
-    gsc,
-  };
-  if (!existsSync(join(ROOT, 'data'))) mkdirSync(join(ROOT, 'data'));
-  writeFileSync(OUT_JSON, JSON.stringify(out, null, 2), 'utf8');
-  console.log(`  wrote ${OUT_JSON}`);
 
   // ── summary ──
   console.log('\nkeyword series');
@@ -494,6 +612,12 @@ function main() {
     console.log(`        窗口长度：${gsc.distinctWindowDays.join(' / ')} 天 → 可比性 = ${gsc.comparable ? '是' : '否'}`);
     if (gsc.comparable) {
       console.log(`        可比 ${gt.comparable} → 上升 ${gt.up} / 下降 ${gt.down} / 持平 ${gt.flat} · 单点词 ${gt.singlePoint}`);
+    }
+    // Never let a discarded snapshot disappear silently — it means two exports
+    // of the same date competed and one lost.
+    if (gsc.supersededSnapshots?.length) {
+      console.log(`  ⚠ 同日多份导出，取行数多者（丢弃 ${gsc.supersededSnapshots.length} 份）：`);
+      for (const s of gsc.supersededSnapshots) console.log(`      - ${s}`);
     }
   }
   console.log('─'.repeat(64));

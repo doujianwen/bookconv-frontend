@@ -35,9 +35,27 @@ function loadSnapshots() {
     .sort((a, b) => a.date.localeCompare(b.date));
 }
 
-function pointFrom(rank, url, date, depth) {
-  return { date, rank: rank > 0 ? rank : null, url: url ?? null, observedDepth: depth ?? null };
+function pointFrom(rank, url, date, depth, methodVersion) {
+  return {
+    date,
+    rank: rank > 0 ? rank : null,
+    url: url ?? null,
+    observedDepth: depth ?? null,
+    methodVersion: methodVersion || METHOD_NAIVE,
+  };
 }
+
+// Matching method stamped by fetch-competitor-serp.mjs.
+//   METHOD_NAIVE : the old matcher — `hostOf(link)`. It MISSED every rival
+//                  whose SerpApi link is a `google.com/goto?url=…` redirect
+//                  wrapper. It never invented a rank, so a rank it DID report
+//                  is trustworthy; but a null it reported may be a false
+//                  negative (rival was actually there).
+//   METHOD_GOTO  : the fixed matcher — unwraps the redirect via displayed_link.
+//                  Proof it matters: on one live SERP (2026-11-02) the naive
+//                  matcher found 12 rivals where the goto-aware one found 23.
+const METHOD_NAIVE = 'naive-host-v1';
+const METHOD_GOTO = 'goto-aware-v2';
 
 // A snapshot is only trustworthy as a COMPARISON BASELINE when the provider
 // actually returned a deep result set. fetch-competitor-serp.mjs records
@@ -70,6 +88,22 @@ function trendOf(latest, prev, shallowSkipped) {
   return latest < prev ? 'up' : 'down';
 }
 
+// A null rank means "not observed that day" — but only a goto-aware snapshot
+// can actually PROVE absence. A naive-method snapshot that reports null may
+// simply have missed the rival behind a redirect wrapper (proved 2026-11-02:
+// on one live SERP naive found 12 rivals where goto-aware found 23).
+//
+// Consequence: "rival appeared" (prev null, latest present) can only be
+// claimed when the BASELINE was goto-aware. If the baseline was naive, its
+// null is not evidence of absence, so the row must read "cannot compare"
+// rather than "new entrant".
+//
+// The reverse direction is safe: the naive matcher never invented a rank, so
+// a rank it DID report is trustworthy, and a goto-aware null is a real absence.
+function absenceVerifiable(point) {
+  return point.methodVersion === METHOD_GOTO;
+}
+
 function main() {
   const cfg = loadConfig();
   const snapshots = loadSnapshots();
@@ -99,11 +133,12 @@ function main() {
   // index: query -> domain -> points[]
   const seriesMap = new Map();
   for (const snap of snapshots) {
+    const method = snap.methodVersion || METHOD_NAIVE;
     for (const res of snap.results || []) {
       const byDomain = seriesMap.get(res.query) || new Map();
       for (const c of res.rankings || []) {
         const pts = byDomain.get(c.domain) || [];
-        pts.push(pointFrom(c.rank, c.url, snap.date, res.observedDepth));
+        pts.push(pointFrom(c.rank, c.url, snap.date, res.observedDepth, method));
         byDomain.set(c.domain, pts);
       }
       seriesMap.set(res.query, byDomain);
@@ -126,9 +161,28 @@ function main() {
       const prevRank = prev ? prev.rank : null;
       const delta = latestRank != null && prevRank != null ? prevRank - latestRank : null;
       const shallowSkipped = Boolean(rawPrev && !prev);
-      const trend = trendOf(latestRank, prevRank, shallowSkipped);
+      // The baseline cannot prove absence if it was collected with the naive
+      // matcher — its nulls may be redirect-wrapper misses, not real absences.
+      //
+      // This matters ONLY where the null would be read as a change:
+      //   prev null + latest present → "rival appeared". A naive baseline's
+      //   null is not evidence of absence, so this must NOT be published as
+      //   "new entrant" → trend degrades to 'no-baseline'.
+      //   prev null + latest null   → "no data" either way; no false claim,
+      //   so it keeps its 'no-data' trend (and is still flagged).
+      //   prev present + latest null → "gone"; SAFE. The naive matcher never
+      //   invented a rank, so prev is trustworthy, and a goto-aware null is a
+      //   real absence.
+      const baselineCanProveAbsence = !rawPrev || absenceVerifiable(rawPrev);
+      const unverifiedBaseline =
+        Boolean(rawPrev) && prevRank === null && !baselineCanProveAbsence;
+      const falseEntrantRisk = unverifiedBaseline && latestRank !== null;
+      const trend = falseEntrantRisk
+        ? 'no-baseline'
+        : trendOf(latestRank, prevRank, shallowSkipped);
       const name = (cfg.competitors.find((c) => c.domain === domain) || {}).name || domain;
       if (shallowSkipped) totals.shallowBaselineSkipped = (totals.shallowBaselineSkipped || 0) + 1;
+      if (unverifiedBaseline) totals.unverifiedBaseline = (totals.unverifiedBaseline || 0) + 1;
       // Legacy snapshots (pre-2026-10-19) carry no observedDepth. We refuse to
       // discard real history over a missing field, but the row must SAY that its
       // baseline is unverifiable — otherwise `new` reads as a confirmed entrant.
@@ -153,6 +207,14 @@ function main() {
         // false = 上期快照没有记录观测深度（2026-10-19 之前的老快照），
         // 此时 trend=new 只意味着「无有效前期基准」，不可表述为「新进入 Top-100」。
         baselineDepthKnown,
+        // 🔴 true = 上期基准由旧匹配器采集，其 null 只代表「没观测到」，
+        // 不能证明「竞品当时不在结果里」。此时若本期观测到该竞品，
+        // trend 强制降级为 no-baseline，绝不发布一个由测量缺陷伪造的新进信号。
+        // （上期 null、本期也 null 时不构成虚假变化，trend 仍为 no-data。）
+        baselineUnverified: unverifiedBaseline,
+        // 本行两期各自使用的匹配方法，便于判断 Δ 是否跨方法。
+        latestMethod: latest.methodVersion || METHOD_NAIVE,
+        prevMethod: rawPrev ? rawPrev.methodVersion || METHOD_NAIVE : null,
       });
       totals.pairs++;
       if (trend === 'up') totals.up++;
@@ -172,6 +234,8 @@ function main() {
       'Δ = 上期排名 − 本期排名；正数 = 竞品名次上升（对它有利）。',
       '🔴 rank 为 null 只表示「该日未进入观测窗口」，**不等于**「未进 Top-100」：实测（2026-10-19）我们请求 num=100，SerpApi 实际只返回 8–10 条 organic_results。观测深度见 observedDepth。',
       '🔴 trend=new / prevRank=null 只能读作「无有效前期基准」，不得表述为「新进入 Top-100」。',
+      '🔴 2026-11-02 起快照带 methodVersion=goto-aware-v2。此前快照用旧匹配器（naive-host-v1），会把 google.com/goto 跳转包装的竞品误判为「未观测到」——这是漏报不是真缺席。',
+      '🔴 因此：旧方法基准的 null 不能证明「竞品当时不在结果里」。这类行的 trend 强制降级为 no-baseline 并标记 baselineUnverified=true，绝不发布为「新进」。反方向安全（旧方法报出的名次可信，goto-aware 的 null 是真缺席）。',
       '若上期快照观测深度不足（observedDepth < 5），本行会跳过该基准并置 shallowBaselineSkipped=true，Δ 留空——宁可说「无法比较」，不发布一个由限流伪造出来的涨跌。',
       '2026-10-19 之前的快照没有记录 observedDepth（UNKNOWN），按可用处理，不因此判FAIL。',
     ],
@@ -189,6 +253,9 @@ function main() {
   if (totals.shallowBaselineSkipped > 0) {
     console.log(`  ⚠ 跳过浅基准 ${totals.shallowBaselineSkipped} 对（上期观测深度 < ${MIN_BASELINE_DEPTH}，Δ 留空而非伪造）`);
   }
+      if (totals.unverifiedBaseline > 0) {
+        console.log(`  ⚠ 基准不可验证 ${totals.unverifiedBaseline} 对（上期用旧匹配器，其 null 不能证明缺席 → 伪造「新进」的行已降级为 no-baseline）`);
+      }
 }
 
 main();
