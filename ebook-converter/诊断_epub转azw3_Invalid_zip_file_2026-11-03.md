@@ -154,8 +154,18 @@ Calibre 的 stderr **第一行恒为 dpkg 噪声**（`dpkg: warning: failed to o
 #### 3.2 建议（替代方案）
 
 - **不实施原方案**。它改不动任何用户可见结果，却要动一条被 10-19 事故验证过的防线。
-- 若要留痕，只做**零控制流变更**的一处：EOCD 缺失时把日志从 `Invalid zip file` 细化为 `EOCD missing (no central directory; size=N)`，纯可观测性，无行为风险。是否值得单独发一版由用户定。
-- 真正的改进方向不在判据，而在**减少「后端瞬时失败」这个窗口本身**（熔断恢复、重试），那才是唯一能让这类文件多一次机会的地方。
+- **日志细化已实施（2026-11-04）**：`conversion.ts:262` 改为
+  `Invalid zip file (no central directory; N bytes)`。
+  ⚠️ 措辞修正：早先称「零控制流变更」不准确——`'Invalid zip file'` 实际被三处依赖
+  （`error-handler.ts:57` 映射键、`conversion.ts:426` 与 `queue.ts:263` 的 `includes` 守卫）。
+  实测确认**子串匹配**特性：只要新串**以 `Invalid zip file` 开头当前缀**，三者全部继续命中，
+  分级（CORRUPT_INPUT 灰卡）与放行判定不变。故这是「前缀保留的子串安全变更」，非纯日志。
+  死代码 `queue.ts:202` 未动（改动即无效 churn）。
+- **契约锁**：`tests/reverse-verify-alerts-redteam.test.ts` 新增用例，断言新串仍灰卡 user，
+  防未来有人删前缀导致静默错分为系统故障。
+- 真正的改进方向不在判据，而在**减少「后端瞬时失败」这个窗口本身**（熔断恢复、重试），
+  那才是唯一能让这类文件多一次机会的地方。该任务风险更大、需单独设计与红队，**不捆绑在
+  本次告警清理内**。
 
 ---
 
