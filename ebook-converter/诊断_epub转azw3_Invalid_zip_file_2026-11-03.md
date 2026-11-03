@@ -114,30 +114,48 @@ Calibre 的 stderr **第一行恒为 dpkg 噪声**（`dpkg: warning: failed to o
 
 修法：非 200 分支也 `await res.clone().json()`，把 `code` + `error` 摘要拼进 fallback reason（截断 120 字符）。
 
-### P2-C｜本地 EOCD 判据比 Calibre 严格，会误杀引擎能转的文件
+### P2-C｜本地 EOCD 判据：**红队裁定「否决原方案」**（2026-11-03 23:40 复核，见 §3.1）
 
-`src/lib/conversion.ts:253-264` 要求全文存在 `PK\x05\x06`，否则 `Invalid zip file`。实测（§2.1 / §2.2）：
+**原方案（EOCD 缺失 → 放行给引擎）已作废**，不是优先级问题，是方案不成立。
 
-- 尾部截 50–200 B → **Calibre 成功**（575 / 551 ms），我们判死；
-- 流式 ZIP（从未写中央目录）→ **Calibre 成功**（516 ms），我们判死。
+`src/lib/conversion.ts:253-264` 要求全文存在 `PK\x05\x06`，否则 `Invalid zip file`。Calibre 确实能转这类文件（§2.1/§2.2 实测），但**删掉这道判据并不能放行**——因为它后面还有一道 JSZip 深校验（同文件 `:309`），而 JSZip 与 Calibre 不同，必须依赖中央目录。
 
-成因类别（不是边界个例）：凡「中央目录缺失但顺序数据完整」的文件，我们一律判 `CORRUPT_INPUT` 并提示用户「重新下载」——**而文件其实可用**。
+#### 3.1 红队回执（P2-C 方案审查 · L2 + 双实现独立复核）
 
-影响面（必须区分路径，别夸大）：
+**断言与裁定**
 
-| 路径 | 是否受害 |
-|---|---|
-| 后端正常收到（epub→azw3/pdf/mobi 等 calibre 目标） | **不受影响**：后端先跑，Calibre 直接成功 200，本地校验根本不会执行 |
-| 后端失败 / 熔断打开 / 未配置后端 → 回退 | **受害**：本地校验在回退链最前端，先判死，用户得到「文件损坏」的错误归因 |
-| 本地纯 JS 路径（epub→txt/rtf/docx/fb2 等） | 判死本身没错——JSZip 同样依赖中央目录、也转不了，只是错误串不同 |
+| # | 断言（原方案赖以成立的前提） | 攻击方式 | 裁定 |
+|---|---|---|---|
+| A1 | 删掉 EOCD 判据即可让 Calibre 可修复文件通过 | jest 探针（`validateInputFile` + `JSZip.loadAsync` 同批 5 个用例）+ Python `zipfile` 独立复核 | **推翻** |
+| A2 | 误杀发生在用户正常转换时 | 读 `route.ts:69-123` 调用顺序 | **推翻** |
+| A3 | 异步队列路径也会误杀（`queue.ts:320` 先校验后调 Calibre） | 查引用：全仓无 `.add()` 调用、无模块 import 其成员 | **推翻（死代码，不构成现网风险）** |
+| A4 | 放行后失败仍会是灰卡（用户输入类） | `error-handler.ts:52-73` + `alerts.ts:262-276` 映射；CC 各错误串分流 | **未确证（UNKNOWN）** |
+| A5 | 该改动有真实收益 | 收益需「后端不可用 × 文件可修 × CC 也能修」三重交集 | **推翻** |
+| A6 | 现文案给了「错误的可操作建议」 | 现 message = "it may be corrupted… Try re-downloading" | **部分推翻（我此前夸大）** |
 
-修法（分层，不要一刀切）：
+**实测证据（A1，决定性）**
 
-1. **交给引擎的路径**：EOCD 缺失不再立即判死，改为记诊断日志后放行，由引擎（Calibre / CloudConvert）决定成败；失败仍归 `CORRUPT_INPUT`。
-2. **本地纯 JS 路径**：保持现状（JSZip 反正读不了）。
-3. 落地前须补一条反向用例：无中央目录 EPUB 走纯 JS 路径必须仍失败且错误码不劣化。
+| 用例 | `validateInputFile` | `JSZip.loadAsync` | Python `zipfile` |
+|---|---|---|---|
+| A 完整 EPUB（对照，71,866 B） | PASS | loaded OK | OK, 4 members |
+| B 尾截 50 B | `Invalid zip file` | **throw** `can't find end of central directory` | **BadZipFile** |
+| C 尾截 200 B | `Invalid zip file` | **throw** 同上 | **BadZipFile** |
+| D 尾截 3000 B | `Invalid zip file` | **throw** 同上 | **BadZipFile** |
+| E 流式 ZIP（从无中央目录） | `Invalid zip file` | **throw** 同上 | **BadZipFile** |
 
-⚠️ 上一版把此项列为「暂缓」，是因为当时误判成因只是边界截断。§2.2 实测后**建议提前**——但它仍应排在 P1-A / P1-B 之后：没有可读的后端错误，就无法确认改动后误杀是否真的减少。
+⇒ 删掉第 2 道判据后，第 3 道（local header 扫 container/opf，这些文件通常能过）之后仍会撞上第 4 道 JSZip 深校验，错误串从 `Invalid zip file` 变成 `corrupt epub: (zip load failed: Corrupted zip: can't find end of central directory)`。**两者同映射 `CORRUPT_INPUT`、同一句用户文案、同样 `retryable:false`（`error-handler.ts:55/57 → 116`）**——用户可见结果完全相同，改动是纯 no-op。
+
+**A2 证据（真正的误杀窗口有多窄）**：`route.ts:100-123` 先 `delegateToBackend`，本地 `convertAndStream`（内含 `validateInputFile`）只在委托失败后执行。后端正常时，可修复文件直接由 Calibre 成功返回，本地校验根本不跑。窗口仅剩「后端瞬时失败/熔断/未配置」。
+
+**结构性矛盾（这是否决的核心理由）**：豁免只在「后端不可用或该次失败」时有意义，但豁免的价值又依赖「后端能修这个文件」。后端失败若源于文件本身（如本次 Job f547b469），再给它一次机会没有意义；若源于瞬时故障，被放行的文件会落到 CloudConvert——**这正是 §3.5 深校验在 10-19 事故后要堵的「白烧一个 CC job + 270s 轮询」**。收益与既有设计目标直接冲突。
+
+**A4 为什么是 UNKNOWN**：放行后由 CC 报错。`'input task has failed'` 映射 `CORRUPT_INPUT`（灰卡），但 `'Error converting book'` 映射 `CONVERSION_FAILED`（🔴 红卡 + "investigate now"）。究竟命中哪条取决于 CC 返回串，而 CC 凭据已耗尽（402）无法实测 ⇒ 存在「用户输入问题被升级成系统故障告警」的可能，未确证。
+
+#### 3.2 建议（替代方案）
+
+- **不实施原方案**。它改不动任何用户可见结果，却要动一条被 10-19 事故验证过的防线。
+- 若要留痕，只做**零控制流变更**的一处：EOCD 缺失时把日志从 `Invalid zip file` 细化为 `EOCD missing (no central directory; size=N)`，纯可观测性，无行为风险。是否值得单独发一版由用户定。
+- 真正的改进方向不在判据，而在**减少「后端瞬时失败」这个窗口本身**（熔断恢复、重试），那才是唯一能让这类文件多一次机会的地方。
 
 ---
 
@@ -163,6 +181,7 @@ Calibre 的 stderr **第一行恒为 dpkg 噪声**（`dpkg: warning: failed to o
 - **首轮有两处是"讲道理"过关，复审才补测**：
   1. A3（91395 是否为原始大小）——首轮纯推理，复审时用 `ToolPageClient.tsx:228` 的 4 MB 分支把它变成代码可证；
   2. A5 的成因范围——首轮只测尾部截断，就写成「误杀窗口小」；复审补测流式 ZIP 后，结论从"边界个例"升级为"整个成因类别"，**P2-C 的优先级也随之从「暂缓」改为「提前」**。
+- **⚠️ 上一条的"提前"于 2026-11-03 23:40 被再次推翻**：第二道判据之后还有 JSZip 深校验，同样拒绝无中央目录文件（§3.1 实测 + Python 独立复核），所以「提前修」这个结论是错的——不是优先级问题，是**原方案不成立**。教训：**改了优先级之前，先确认方案本身可执行**；「引擎能做」不等于「删掉本地判据就能交给引擎」。
 - **一次结论扩大化的自我纠正**：首轮把 P2-C 的影响面写成"量小但提示错误"，实际必须按路径区分（后端正常时零影响，回退链才受害，纯 JS 路径判死正确），已在 §3 P2-C 补表。
 - **仍为 UNKNOWN 的**：A2（Calibre 的具体异常类型）。原始 stderr 已随后端 `finally` 删除输入而永久丢失，只能靠耗时形态类比，不构成直接观测。
 
@@ -174,8 +193,8 @@ Calibre 的 stderr **第一行恒为 dpkg 噪声**（`dpkg: warning: failed to o
 |---|---|---|---|
 | 1 | P1-A 后端错误提取：剥离 dpkg 噪声 + 保留异常签名行 + 完整 stderr 落日志 | ~15 行 | 从此每次后端失败都能直接看到 `BadZipfile`/`DRM`/具体异常 |
 | 2 | P1-B 透传后端错误体到告警卡 | ~10 行 | 告警卡自带真因，不用再 SSH 查日志 |
-| 3 | 观察 7 天 `CORRUPT_INPUT` 频次 | 0 | 决定 P2-C 要不要改；同时验证本次是否为孤立事件 |
-| 4 | P2-C 分层放宽 EOCD 判据（引擎路径放行、纯 JS 路径保留） | 中 | §2.2 实测后已从「暂缓」提前；仍需 1+2 的错误数据支撑改动效果 |
+| 3 | 观察 7 天 `CORRUPT_INPUT` 频次 | 0 | 验证本次是否为孤立事件（原「决定 P2-C 要不要改」的作用已随 P2-C 否决而消失） |
+| 4 | ~~P2-C 分层放宽 EOCD 判据~~ | — | **已否决**（§3.1 红队：删判据是 no-op，JSZip 同判；收益与 §3.5 目标冲突） |
 
 **本次告警本身：无需处置。** 用户侧文件不可转换，`CORRUPT_INPUT` 提示「重新下载或重新导出」是对的。
 
