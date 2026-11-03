@@ -215,7 +215,24 @@ Calibre 的 stderr **第一行恒为 dpkg 噪声**（`dpkg: warning: failed to o
 | 组件 | 状态 | 回滚方式 |
 |---|---|---|
 | HK 后端 | ✅ 已重启（`index.js` md5 `52aa4647…`、`calibre.js` md5 `da500163…`） | `cp app/calibre.js.bak-20261103-2318 app/calibre.js && cp app/index.js.bak-20261103-2320 app/index.js && systemctl restart bookconv-conversion` |
-| Vercel 前端 | ⏳ **未部署**（P1-B 需 push 才生效） | 未变更，无需回滚 |
+| Vercel 前端 | ✅ 已 push（`b555a59..b0b5318`）+ 生产实测确认新代码在跑（见 §6.5） | `git revert b0b5318` 后 push，或 Vercel 面板 rollback 到上一部署 |
 
-**残留（必须说清）**：P1-A 只在后端日志与 500 响应体上生效；**告警卡要看到真因，必须等 P1-B 部署**。在此之前卡片仍显示 `backend HTTP 500`。
+**残留（必须说清）**：P1-A 只在后端日志与 500 响应体上生效；**告警卡要看到真因，必须等 P1-B 部署**。此句原为「待部署」状态，已于 §6.5 解除。
+
+### 6.5 生产端到端验证（2026-11-03 23:31，部署后真机实测）
+
+**为什么要做**：`vercel-deploy.yml` 是 `continue-on-error` 的 API 触发，CI 绿 ≠ Vercel 构建成功；且本项目没有任何客户端可见探针能判断新部署是否上线（`/admin/board` 不服务端渲染任务 ID，先拿既有 `M12-2` 做对照已证伪该探针）。因此只能靠**生产行为**验证。
+
+**方法**：本地造一个 17,462 B 的 EPUB（`PK` magic 正常、EOCD 缺失 = 尾部截断 3,000 B，属 Calibre 不可修复类别），以 `deploy-verify-20261103.epub` 命名提交 `POST https://www.bookconv.com/api/convert`（`epub → azw3`）。
+
+**结果（前后对照，取自飞书群「窦红建的智能体团队」真实送达消息）**：
+
+| | 22:48 用户原始告警（旧代码） | 23:31 本次合成告警（新代码） |
+|---|---|---|
+| 后端行 | `fell back — backend HTTP 500` | `fell back — backend HTTP 500 — CONVERSION_FAILED: Conversion failed: ValueError: Invalid ZIP file, local header is damaged` |
+| 结论 | 真因零可见 | 真因完整可见 |
+
+- 请求侧：`HTTP=500` `{"code":"CORRUPT_INPUT"}`，耗时 7.6 s（后端失败 + CC 回退失败），`Input size: 17462 bytes` 与上传字节一致。
+- **这一张卡片同时证明了三件事**：①P1-A 后端错误提取生效（`ValueError` 而非 `dpkg:` 前缀）；②P1-B 前端透传生效（真因穿到告警卡）；③Vercel 新构建已上线（旧代码不可能产出该字符串）。
+- ⚠️ **统计口径污染**：Job `e0804948-7848-42eb-8966-9db5c0016807`（23:31，输入哈希 `b13d9afcc954`）为**合成探针**，不是真实用户事故。做 `conversion_failed` 频次/成功率统计时必须剔除，否则会高估 11-03 失败量 1 次。
 
