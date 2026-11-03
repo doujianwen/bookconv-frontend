@@ -1718,7 +1718,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "2026-11-03 经脚本实测完成（174/174 抓取成功，0 失败，缓存于 数据分析/seo-audit/）。四维度结论：①scaled content abuse=命中 15 个 /formats/* 模板化薄页(avg 180词)，convert/guide/blog/es 实为厚实(2480/1856/1566/1865词)——建卡假设的 convert/guide/es 风险被实测推翻；②doorway=0 近重复簇(板块内最大 Jaccard 0.36)；③thin affiliate=0 联盟链接(仅 1 处良性 Amazon Kindle 产品提及)；④cloaking=4 样本 UA 对照词数 delta=0。分类：保留110 / 法务工具页15 / 有外链价值30 / 冻结4 / 差异化改写(充实)15。整改收敛为 15 个格式页充实或合并，S1 定为整改+观察。交付 docs/审计_Spam合规自查_174URL_2026-11-03.md + 数据分析/seo-audit/audit.csv。",
+          "statusNote": "2026-11-03 经脚本实测完成（174/174 抓取成功，0 失败，缓存于 数据分析/seo-audit/）。四维度结论：①scaled content abuse=命中 15 个 /formats/* 模板化薄页(avg 180词)，convert/guide/blog/es 实为厚实(2480/1856/1566/1865词)——建卡假设的 convert/guide/es 风险被实测推翻；②doorway=0 近重复簇(板块内最大 Jaccard 0.36)；③thin affiliate=0 联盟链接(仅 1 处良性 Amazon Kindle 产品提及)；④cloaking=4 样本 UA 对照词数 delta=0。分类：保留110 / 法务工具页15 / 有外链价值30 / 冻结4 / 差异化改写(充实)15。整改收敛为 15 个格式页充实或合并，S1 定为整改+观察。交付 docs/审计_Spam合规自查_174URL_2026-11-03.md + 数据分析/seo-audit/audit.csv。2026-11-03 已执行整改：15 个 /formats/* 页差异化充实（每页补格式专属技术细节，非模板填充），commit 5fa0d4f；未改 FORMAT_LASTMOD、0 外链/0 引用页仅充实不删。",
           "note": "冻结名单（禁改正文）：/blog/best-ebook-reader-apps 7303 引用、/convert/epub-to-mobi 2511、/guide/epub-to-mobi-keep-formatting 1420、/guide/epub-to-azw3-for-kindle 1413"
         },
         {
@@ -1731,8 +1731,8 @@
           "due": "2026-11-24",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "2026-11-02 首次执行（CP4 §4.2 / CP1 D-04）建卡。APPROVAL_REQUIRED，不得自动发布。该行为起始日期不可考，不主张其为 8/22 断崖成因。",
+          "status": "done",
+          "statusNote": "2026-11-03 经红队实测证伪后执行（用户授权发布）：移除 middleware 3 处每请求 Set-Cookie + request.ts getLocale 改 header 优先（path 驱动）。红队实测：locale cookie 值不改页面内容/SEO（title/lang/canonical 三变体一致），仅影响 LocaleSwitcher 外观 ⇒ 按 URL 缓存安全；/ 与 /es 分流不变。本地回归：Set-Cookie 消失、/blog /convert 恢复 public max-age（no-store 根因解除）。commit f6d309f 已 push，两道门禁放行。未给 /es/ 加整段缓存规则（/es/auth 登录页不可缓存，已核验）。剩余：发布后外部 vantage 复核 Age>0/HIT 为确认点（本地绿≠线上绿）。",
           "note": "依据 docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP4 4.2"
         }
       ]
