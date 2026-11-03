@@ -441,8 +441,134 @@ describe("conversion backend client", () => {
         await delegateToBackend(makeForm(), {}, {});
 
         const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
-        expect("x-client-ip" in (init.headers as Record<string, string>)).toBe(false);
-      });
+      expect("x-client-ip" in (init.headers as Record<string, string>)).toBe(false);
     });
   });
+
+  // 2026-11-04（任务 #1）：后端瞬时 5xx 是本次告警 f547b469 的本质——
+  // 单次 5xx 直接回退 CC 会把本可在后端成功的 job 白烧。对快速返回的 5xx 重试
+  // 一次，挽救瞬时抖动；超时/网络/429/4xx 一律不重试（fail-safe）。
+  describe("5xx transient retry (task #1)", () => {
+    it("retries a single 5xx and succeeds on the retry", async () => {
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        if (calls === 1) return new Response("boom", { status: 500 });
+        return new Response(new Blob([Buffer.from("RETRY-OK")]), { status: 200 });
+      }) as unknown as typeof global.fetch;
+
+      const before = breakerSnapshot();
+      const resp = await delegateToBackend(makeForm(), {});
+      const after = breakerSnapshot();
+
+      expect(resp).not.toBeNull();
+      expect(resp!.status).toBe(200);
+      expect(await resp!.text()).toBe("RETRY-OK");
+      expect(calls).toBe(2); // 重试发生了
+      expect(after.failures).toBe(before.failures); // 重试成功 → 故障数不增
+    });
+
+    it("two 5xx (after retry) records exactly ONE failure, not two", async () => {
+      setEnv();
+      global.fetch = jest.fn(
+        async () => new Response("boom", { status: 500 }),
+      ) as unknown as typeof global.fetch;
+
+      const before = breakerSnapshot();
+      expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      const after = breakerSnapshot();
+
+      expect(after.failures).toBe(before.failures + 1); // 关键：重试失败只计 1 次
+    });
+
+    it("does NOT retry on timeout (slow failure)", async () => {
+      setEnv();
+      process.env.CONVERSION_BACKEND_TIMEOUT_MS = "100";
+      let calls = 0;
+      global.fetch = jest.fn(
+        (_url: string, init?: RequestInit) => {
+          calls += 1;
+          return new Promise<Response>((_resolve, reject) => {
+            init?.signal?.addEventListener("abort", () =>
+              reject(new Error("The operation was aborted")),
+            );
+          });
+        },
+      ) as unknown as typeof global.fetch;
+
+      const started = Date.now();
+      const resp = await delegateToBackend(makeForm(), {});
+      expect(resp).toBeNull();
+      expect(Date.now() - started).toBeLessThan(5_000);
+      expect(calls).toBe(1); // 超时绝不重试
+    });
+
+    it("does NOT retry on network error", async () => {
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        throw new Error("ECONNREFUSED");
+      }) as unknown as typeof global.fetch;
+
+      expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      expect(calls).toBe(1); // 网络错误不重试
+    });
+
+    it("does NOT retry on 429 (capacity signal)", async () => {
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        return new Response("busy", { status: 429 });
+      }) as unknown as typeof global.fetch;
+
+      const before = breakerSnapshot();
+      expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      const after = breakerSnapshot();
+
+      expect(calls).toBe(1); // 429 不重试
+      expect(after.failures).toBe(before.failures); // 不计入熔断
+      expect(after.busyCount).toBe(before.busyCount + 1);
+    });
+
+    it("retry sends a fresh, valid FormData to the backend", async () => {
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        if (calls === 1) return new Response("boom", { status: 500 });
+        return new Response(new Blob([Buffer.from("X")]), { status: 200 });
+      }) as unknown as typeof global.fetch;
+
+      await delegateToBackend(makeForm(), {});
+      expect(calls).toBe(2);
+      const secondCall = (global.fetch as jest.Mock).mock.calls[1] as unknown as [string, RequestInit];
+      const sent = secondCall[1].body as FormData;
+      expect(sent).toBeInstanceOf(FormData);
+      expect(sent.get("file")).toBeInstanceOf(File);
+      expect(sent.get("source_format")).toBe("epub");
+      expect(sent.get("target_format")).toBe("mobi");
+    });
+
+    it("reports the backend root cause without a retry tag (alert-card format unchanged)", async () => {
+      setEnv();
+      const backendError = "Conversion failed: calibre.utils.zipfile.BadZipfile";
+      global.fetch = jest.fn(
+        async () =>
+          new Response(JSON.stringify({ error: backendError, code: "CONVERSION_FAILED" }), {
+            status: 500,
+          }),
+      ) as unknown as typeof global.fetch;
+      let reason: string | undefined;
+      await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+      // onFallback 串与现状一致（不含 "after 1 retry"），保证既有告警卡解析不变
+      expect(reason).toContain("backend HTTP 500");
+      expect(reason).toContain("CONVERSION_FAILED");
+      expect(reason).toContain("BadZipfile");
+      expect(reason).not.toContain("after 1 retry");
+    });
+  });
+});
 });

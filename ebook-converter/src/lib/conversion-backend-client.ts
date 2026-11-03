@@ -123,85 +123,136 @@ export async function delegateToBackend(
   const quality = formData.get("quality");
   if (typeof quality === "string" && quality) backendForm.append("quality", quality);
 
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), BACKEND_TIMEOUT_MS);
-  try {
-    const headers: Record<string, string> = { "x-internal-convert": INTERNAL_SECRET };
-    // 显式透传客户端 IP（默认的 XFF 在这里已被 Vercel 出站丢弃，见 opts.clientIp）
-    if (opts.clientIp) headers["x-client-ip"] = opts.clientIp;
-    const res = await fetch(`${BACKEND_URL}/api/convert-internal`, {
-      method: "POST",
-      headers,
-      body: backendForm,
-      signal: controller.signal,
-    });
+  const headers: Record<string, string> = { "x-internal-convert": INTERNAL_SECRET };
+  // 显式透传客户端 IP（默认的 XFF 在这里已被 Vercel 出站丢弃，见 opts.clientIp）
+  if (opts.clientIp) headers["x-client-ip"] = opts.clientIp;
 
-    if (res.status === 200) {
-      recordBackendSuccess();
-      const headers = new Headers();
-      res.headers.forEach((v, k) => {
-        const lk = k.toLowerCase();
-        if (lk === "content-type" || lk === "content-disposition" || lk === "cache-control") {
-          headers.set(k, v);
-        }
+  /**
+   * 单次后端调用。自带 AbortController + 超时；返回 {res} 或 {err}（超时/网络错误）。
+   * 抽出来是为了在 5xx 瞬时失败场景下「重试一次」而无需重复超时/清理样板。
+   */
+  async function attemptOnce(): Promise<{ res: Response } | { err: string }> {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), BACKEND_TIMEOUT_MS);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/convert-internal`, {
+        method: "POST",
+        headers,
+        body: backendForm,
+        signal: controller.signal,
       });
-      for (const [k, v] of Object.entries(rateHeaders)) headers.set(k, v);
-      headers.set("X-Conversion-Backend", "hit");
-      return new NextResponse(res.body, { status: 200, headers });
+      return { res };
+    } catch (e) {
+      return { err: e instanceof Error ? e.message : String(e) };
+    } finally {
+      clearTimeout(timer);
     }
+  }
 
-    // Non-200: backend couldn't serve this request -> fall back to CloudConvert.
-    //
-    // 429 单独处理（2026-11-02 红队修正）：BACKEND_BUSY / 上游 limit_req 表达的是
-    // 「后端活着但排满了」，属**容量**信号而非健康失败。若计入熔断，连续 3 次
-    // 并发争用就会打开 60s 冷却，把「有点忙」放大成「整段不可用」——期间所有
-    // 请求绕过后端压给 CloudConvert（额度紧张 + 每次多 10–30s）。故只记观测数。
-    if (res.status === 429) {
-      let reason = "backend busy (429)";
-      try {
-        const body = (await res.clone().json()) as { code?: string };
-        if (body?.code) reason += ` ${body.code}`;
-      } catch {
-        /* 非 JSON body（如 nginx limit_req 的 HTML 页）——保留朴素原因即可 */
+  /** 把后端 200 响应流式回传（成功路径与重试成功共用，保证字节完全一致）。 */
+  function streamBackendHit(res: Response): NextResponse {
+    const outHeaders = new Headers();
+    res.headers.forEach((v, k) => {
+      const lk = k.toLowerCase();
+      if (lk === "content-type" || lk === "content-disposition" || lk === "cache-control") {
+        outHeaders.set(k, v);
       }
-      opts.onFallback?.(reason);
-      recordBackendBusy();
-      console.warn(`[convert] ${reason}; falling back to CloudConvert`);
-      return null;
-    }
+    });
+    for (const [k, v] of Object.entries(rateHeaders)) outHeaders.set(k, v);
+    outHeaders.set("X-Conversion-Backend", "hit");
+    return new NextResponse(res.body, { status: 200, headers: outHeaders });
+  }
 
+  /**
+   * 统一处理「最终放弃」：记录一次故障 + 告警卡归因 + 必要时通知熔断开启。
+   * retryTag 仅进 console.warn（运维日志），不进 onFallback（告警卡串格式保持
+   * 现状，避免破坏既有 5xx 测试与值班人阅读习惯）。
+   */
+  async function failWith(retryTag: string, statusOrMsg: string, detail: string): Promise<void> {
+    opts.onFallback?.(`backend HTTP ${statusOrMsg}${detail}`);
     const outcome = recordBackendFailure();
-    // 2026-11-03（Job f547b469 复盘）：非 200 分支此前只记 status，把后端 261 B
-    // 响应体里的 `{"error":"Conversion failed: ...BadZipfile...","code":
-    // "CONVERSION_FAILED"}` 整条丢弃，告警卡只剩 "backend HTTP 500"——值班人
-    // 无从知道后端为什么失败，只能去 SSH 翻日志。429 分支早就在读 body.code，
-    // 5xx 分支是漏掉的另一半。读取失败必须静默降级为纯 status（诊断不能反过来
-    // 影响降级路径本身）。
-    opts.onFallback?.(`backend HTTP ${res.status}${await readBackendDetail(res)}`);
     if (outcome.transitionedToOpen) {
-      await notifyBackendDown(`backend returned HTTP ${res.status}`);
+      await notifyBackendDown(`backend returned HTTP ${statusOrMsg}`);
     } else {
       console.warn(
-        `[convert] backend delegation non-200 (${res.status}); falling back to CloudConvert`,
+        `[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`,
       );
     }
-    return null;
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    opts.onFallback?.(`backend error: ${message}`);
+  }
+
+  const first = await attemptOnce();
+
+  // 路径 1：网络错误 / 超时（慢失败）→ 不重试（后端明显扛不住或挂了，重试只增耗时）。
+  if ("err" in first) {
+    opts.onFallback?.(`backend error: ${first.err}`);
     const outcome = recordBackendFailure();
     if (outcome.transitionedToOpen) {
-      await notifyBackendDown(message);
+      await notifyBackendDown(first.err);
     } else {
       console.warn(
         "[convert] backend delegation failed (falling back to CloudConvert):",
-        message,
+        first.err,
       );
     }
     return null;
-  } finally {
-    clearTimeout(timer);
   }
+
+  const res = first.res;
+
+  // 路径 2：成功。
+  if (res.status === 200) {
+    recordBackendSuccess();
+    return streamBackendHit(res);
+  }
+
+  // 路径 3：429 容量信号 → 不重试（重试徒增负载），只记观测数。
+  if (res.status === 429) {
+    let reason = "backend busy (429)";
+    try {
+      const body = (await res.clone().json()) as { code?: string };
+      if (body?.code) reason += ` ${body.code}`;
+    } catch {
+      /* 非 JSON body（如 nginx limit_req 的 HTML 页）——保留朴素原因即可 */
+    }
+    opts.onFallback?.(reason);
+    recordBackendBusy();
+    console.warn(`[convert] ${reason}; falling back to CloudConvert`);
+    return null;
+  }
+
+  // 路径 4：确定性 4xx（后端拒绝该请求，非健康失败）→ 不重试（重试必失败），
+  // 但仍计入熔断（与历史行为一致：delegation 路径上 4xx 极罕见，格式已在 route 校验）。
+  if (res.status >= 400 && res.status < 500) {
+    await failWith("", String(res.status), await readBackendDetail(res));
+    return null;
+  }
+
+  // 路径 5：5xx 瞬时失败（响应快，毫秒级）→ 重试一次再放弃。
+  // 只对「快速返回的 5xx」重试，不对超时/网络错误重试（避免 90s×2 逼近函数上限、
+  // 也避免对已挂后端无意义加压）。重试前再确认熔断未开（防御性）。
+  if (!shouldUseBackend()) {
+    opts.onFallback?.("circuit open (delegation skipped before retry)");
+    const outcome = recordBackendFailure();
+    if (outcome.transitionedToOpen) await notifyBackendDown("circuit opened before retry");
+    return null;
+  }
+  const retry = await attemptOnce();
+  if ("err" in retry) {
+    opts.onFallback?.(`backend error: ${retry.err}`);
+    const outcome = recordBackendFailure();
+    if (outcome.transitionedToOpen) await notifyBackendDown(retry.err);
+    else console.warn(
+      `[convert] backend delegation failed (after 1 retry): ${retry.err}; falling back to CloudConvert`,
+    );
+    return null;
+  }
+  if (retry.res.status === 200) {
+    recordBackendSuccess();
+    return streamBackendHit(retry.res);
+  }
+  // 重试仍 5xx → 放弃，计入 1 次故障（重试失败不额外计数，避免放大熔断）。
+  await failWith(" (after 1 retry)", String(retry.res.status), await readBackendDetail(retry.res));
+  return null;
 }
 
 /**
