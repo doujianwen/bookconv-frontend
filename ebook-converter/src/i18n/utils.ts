@@ -3,34 +3,30 @@ export async function generateStaticParams() {
 }
 
 import { getRequestConfig } from 'next-intl/server';
-import { cookies } from 'next/headers';
 
 const locales = ['en', 'es'] as const;
 type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'en';
 
-export async function getLocale() {
-  // The URL locale injected by middleware is authoritative, even when an old
-  // language cookie exists. Middleware overwrites this header for EN and ES.
+export async function getLocale(): Promise<Locale> {
+  // 2026-11-03 M12-3 静态化：locale 只来自 URL 路由参数（next/root-params，
+  // [locale] 是根布局路径上的动态段）。不再读 headers()/cookies()——渲染树里
+  // 任何动态 API 都会把页面钉死在动态渲染，Vercel 强制 no-store ⇒ 边缘缓存
+  // 失效（M12-3 线上实测根因）。middleware 的 x-bookconv-locale 头保留但不再
+  // 是渲染依据（path 驱动语义不变：/→en、/es/→es，已实测）。
+  // 非 [locale] 树（auth/api-docs）无该参数、Route Handler/Jest 不支持
+  // root-params ⇒ 回退 defaultLocale（与旧行为无 cookie 时一致）。
   try {
-    const { headers } = await import('next/headers');
-    const headerStore = await headers();
-    const fromUrl = headerStore.get('x-bookconv-locale') as Locale | undefined;
-    if (fromUrl && locales.includes(fromUrl)) {
-      return fromUrl;
+    const mod = (await import('next/root-params')) as { locale?: () => unknown };
+    if (typeof mod.locale === 'function') {
+      const value = await mod.locale();
+      if (typeof value === 'string' && (locales as readonly string[]).includes(value)) {
+        return value as Locale;
+      }
     }
   } catch {
-    // 静态渲染 / 无 headers 场景 ⇒ 静默回退 defaultLocale
+    // 非渲染上下文（Route Handler / 测试）⇒ 回退
   }
-
-  const cookieStore = await cookies();
-  const localeFromCookie = cookieStore.get('locale')?.value as Locale | undefined;
-
-  if (localeFromCookie && locales.includes(localeFromCookie)) {
-    return localeFromCookie;
-  }
-
-
   return defaultLocale;
 }
 

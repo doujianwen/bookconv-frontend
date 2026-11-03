@@ -95,7 +95,11 @@ const config: NextConfig = {
       { source: "/(.*)", has: [{ type: "header", key: "x-forwarded-proto", value: "http" }], destination: "https://www.bookconv.com/$1", permanent: true },
     ]
   },
-  experimental: {},
+  experimental: {
+    // M12-3 静态化：next/root-params 提供根布局动态段参数（locale），
+    // 让 getLocale() 摆脱 headers()/cookies() ⇒ 页面可静态化 ⇒ 边缘缓存生效
+    rootParams: true,
+  },
   compress: true,
 };
 
