@@ -171,7 +171,13 @@ export async function delegateToBackend(
     }
 
     const outcome = recordBackendFailure();
-    opts.onFallback?.(`backend HTTP ${res.status}`);
+    // 2026-11-03（Job f547b469 复盘）：非 200 分支此前只记 status，把后端 261 B
+    // 响应体里的 `{"error":"Conversion failed: ...BadZipfile...","code":
+    // "CONVERSION_FAILED"}` 整条丢弃，告警卡只剩 "backend HTTP 500"——值班人
+    // 无从知道后端为什么失败，只能去 SSH 翻日志。429 分支早就在读 body.code，
+    // 5xx 分支是漏掉的另一半。读取失败必须静默降级为纯 status（诊断不能反过来
+    // 影响降级路径本身）。
+    opts.onFallback?.(`backend HTTP ${res.status}${await readBackendDetail(res)}`);
     if (outcome.transitionedToOpen) {
       await notifyBackendDown(`backend returned HTTP ${res.status}`);
     } else {
@@ -195,6 +201,35 @@ export async function delegateToBackend(
     return null;
   } finally {
     clearTimeout(timer);
+  }
+}
+
+/**
+ * 从后端非 200 响应体里摘出可读原因，拼成 ` — CODE: message` 片段。
+ *
+ * 契约（三条都不能破）：
+ *  1. 任何解析失败（非 JSON、空体、body 已被消费）→ 返回空串，绝不抛；
+ *  2. 输出压平为单行（告警卡按行渲染，内嵌换行会撑破 markdown）；
+ *  3. 硬上限 180 字符——`alerts.ts` 直接内插该字段、不截断，长度必须在源头控制。
+ */
+async function readBackendDetail(res: Response): Promise<string> {
+  try {
+    const text = await res.clone().text();
+    if (!text) return "";
+    let code = "";
+    let msg = "";
+    try {
+      const body = JSON.parse(text) as { code?: unknown; error?: unknown };
+      code = typeof body?.code === "string" ? body.code : "";
+      msg = typeof body?.error === "string" ? body.error : "";
+    } catch {
+      msg = text; // nginx / 网关的 HTML 错误页：原样带一段上去
+    }
+    const joined = [code, msg].filter(Boolean).join(": ").replace(/\s+/g, " ").trim();
+    if (!joined) return "";
+    return ` — ${joined.slice(0, 180)}`;
+  } catch {
+    return "";
   }
 }
 

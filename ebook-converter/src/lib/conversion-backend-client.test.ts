@@ -293,14 +293,91 @@ describe("conversion backend client", () => {
         expect(reason).toBe("backend busy (429)");
       });
 
-      it("reports the HTTP status for a real server error", async () => {
+      it("reports the HTTP status AND the backend's own error body", async () => {
         setEnv();
         global.fetch = jest.fn(
           async () => new Response("boom", { status: 502 }),
         ) as unknown as typeof global.fetch;
         let reason: string | undefined;
         await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
-        expect(reason).toBe("backend HTTP 502");
+        // 2026-11-03 行为变更：非 200 分支开始透传响应体（此前只有 "backend HTTP 502"）。
+        expect(reason).toBe("backend HTTP 502 — boom");
+      });
+
+      // 2026-11-03（Job f547b469）：后端 500 的 261 B 响应体里本来就有真因
+      // （`Conversion failed: ...BadZipfile...`），此前被整条丢弃，告警卡只剩
+      // "backend HTTP 500"，值班人只能 SSH 翻日志。反向约束——若有人删掉
+      // readBackendDetail，本组用例立刻变红。
+      describe("5xx body passthrough (root-cause visibility)", () => {
+        it("includes code + error from a JSON body", async () => {
+          setEnv();
+          const backendError =
+            "Conversion failed: calibre.utils.zipfile.BadZipfile: File is not a zip file";
+          global.fetch = jest.fn(
+            async () =>
+              new Response(JSON.stringify({ error: backendError, code: "CONVERSION_FAILED" }), {
+                status: 500,
+              }),
+          ) as unknown as typeof global.fetch;
+          let reason: string | undefined;
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+          expect(reason).toContain("backend HTTP 500");
+          expect(reason).toContain("CONVERSION_FAILED");
+          expect(reason).toContain("BadZipfile"); // 真因必须可见
+        });
+
+        it("flattens newlines so the alert card keeps one line per field", async () => {
+          setEnv();
+          global.fetch = jest.fn(
+            async () =>
+              new Response(
+                JSON.stringify({ error: "line1\n\nline2\r\nline3", code: "CONVERSION_FAILED" }),
+                { status: 500 },
+              ),
+          ) as unknown as typeof global.fetch;
+          let reason: string | undefined;
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+          expect(reason).not.toMatch(/[\r\n]/);
+          expect(reason).toContain("line1 line2 line3");
+        });
+
+        it("caps the appended detail at 180 chars (alerts.ts does not truncate)", async () => {
+          setEnv();
+          const huge = "X".repeat(5000);
+          global.fetch = jest.fn(
+            async () =>
+              new Response(JSON.stringify({ error: huge, code: "CONVERSION_FAILED" }), {
+                status: 500,
+              }),
+          ) as unknown as typeof global.fetch;
+          let reason: string | undefined;
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+          expect(reason!.length).toBeLessThanOrEqual("backend HTTP 500 — ".length + 180);
+        });
+
+        it("degrades to plain status when the body is empty", async () => {
+          setEnv();
+          global.fetch = jest.fn(
+            async () => new Response(null, { status: 500 }),
+          ) as unknown as typeof global.fetch;
+          let reason: string | undefined;
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+          expect(reason).toBe("backend HTTP 500");
+        });
+
+        it("degrades to plain status when reading the body throws (already consumed)", async () => {
+          setEnv();
+          const broken = new Response("x", { status: 500 });
+          Object.defineProperty(broken, "clone", {
+            value: () => {
+              throw new TypeError("Body is unusable");
+            },
+          });
+          global.fetch = jest.fn(async () => broken) as unknown as typeof global.fetch;
+          let reason: string | undefined;
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+          expect(reason).toBe("backend HTTP 500"); // 诊断失败绝不能影响降级路径
+        });
       });
 
       it("reports circuit-open WITHOUT attempting a request", async () => {

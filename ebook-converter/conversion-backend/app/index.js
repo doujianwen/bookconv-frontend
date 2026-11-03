@@ -230,6 +230,12 @@ async function doConvert(req, res) {
   if (!result.success) {
     try { await fsp.unlink(outPath); } catch {}
     log("FAIL", sourceFormat, "->", targetFormat, result.error);
+    // 完整 stderr 单行落盘（2026-11-03，Job f547b469）：上一行只有 200 字符摘要，
+    // 看得到异常类型却看不到上下文（哪一步、哪个成员、哪个路径）。压平换行是为了
+    // 守住「一条日志一行」的格式——既有分析脚本都按行 grep。截 1500 字符控体积。
+    if (result.rawStderr) {
+      log("STDERR", String(result.rawStderr).replace(/\s+/g, " ").trim().slice(0, 1500));
+    }
     return json(res, 500, { error: result.error, code: "CONVERSION_FAILED" });
   }
 
