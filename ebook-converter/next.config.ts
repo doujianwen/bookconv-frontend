@@ -75,8 +75,13 @@ const config: NextConfig = {
           // no-store）优先级更高，不受影响。
           { key: "Cache-Control", value: "no-store" },
         ]},
-      { source: "/blog/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }] },
-      { source: "/convert/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=300, stale-while-revalidate=3600" }] },
+      // 2026-11-03 M12-3：补 s-maxage（Vercel Edge Cache 计时口径，max-age 只管
+      // 浏览器）。注意：线上动态路由的 headers() 会被渲染默认 no-store 覆盖，
+      // 真正生效的是 middleware/security.ts 的 HTML_CACHE_RULES——两处保持同步。
+      { source: "/blog/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400" }] },
+      { source: "/convert/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=300, s-maxage=300, stale-while-revalidate=3600" }] },
+      { source: "/guide/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400" }] },
+      { source: "/formats/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400" }] },
     ]
   },
   async redirects() {
