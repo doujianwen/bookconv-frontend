@@ -5,8 +5,29 @@
     "每条候选是 HYPOTHESIS（相关≠因果），需人确认后才写入 data/keyword-reasons.json（真相文件）。",
     "晋升：node scripts/confirm-keyword-reason.mjs \"<query>\" <itemIndex>"
   ],
-  "generatedAt": "2026-11-02T00:40:40.678Z",
+  "generatedAt": "2026-11-02T23:58:10.914Z",
   "d0": "2026-09-27",
   "threshold": 3,
-  "candidates": []
+  "candidates": [
+    {
+      "query": "is azw3 compatible with kindle",
+      "observed": {
+        "prevPos": 2,
+        "latestPos": 9,
+        "delta": -7,
+        "prevDate": "2026-09-04",
+        "latestDate": "2026-09-18"
+      },
+      "items": [
+        {
+          "type": "no-competitor",
+          "confidence": "medium",
+          "text": "「is azw3 compatible with kindle」本词你方排名下降（2→9），但已监测的 5 个竞品在本词**均未出现在观测窗口内**。未见已监测竞品的挤压；不排除未监测竞品、算法更新、季节性或自身页面改动所致。建议人工核对 SERP 实际结果，以及该词对应页面近期是否改动。",
+          "evidence": "competitor-series.json 中该 query 的 5 个竞品 latestRank 全为 null（未进入观测窗口；观测深度仅 6–9 条，**不等于**未进 Top-100）；你方 Δ=-7。",
+          "source": "competitor-series.json",
+          "relatedNotCausal": true
+        }
+      ]
+    }
+  ]
 }
