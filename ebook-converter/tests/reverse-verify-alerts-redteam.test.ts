@@ -32,6 +32,17 @@ describe('alerts 分级红队反向验证 (M8-13 / M8-14)', () => {
     expect(sev).toBe('user');
   });
 
+  it('契约锁：新串（带诊断后缀仍前缀 Invalid zip file）仍被正确分级为灰卡 user', () => {
+    // 2026-11-04：validateInputFile 改为 `Invalid zip file (no central directory; N bytes)`。
+    // 前缀保留是硬契约——error-handler.ts 映射键与两道 includes 守卫均为子串匹配。
+    // 若有人删掉前缀，本用例变红，防止静默错分为系统故障。
+    const sev = classifyAlertSeverity(
+      'conversion-error',
+      'CORRUPT_INPUT: Invalid zip file (no central directory; 17462 bytes)',
+    );
+    expect(sev).toBe('user');
+  });
+
   it('对比项：真系统故障（backend-unavailable 503）仍红卡 system', () => {
     const sev = classifyAlertSeverity('backend-unavailable', 'VPS 503 forwarding failed');
     expect(sev).toBe('system');

@@ -260,7 +260,11 @@ export async function validateInputFile(inputPath: string, sourceFormat: string)
         }
       }
       if (cdOffset === -1) {
-        throw new Error('Invalid zip file');
+        // 前缀保留 'Invalid zip file'：error-handler.ts 映射键与 conversion.ts:426 /
+        // queue.ts:263 的 includes 守卫均为子串匹配，改后缀不影响分级与放行判定。
+        // 附加 (no central directory; N bytes) 仅作诊断信息——本次排查的盲区正是
+        // "看不到文件到底坏在哪"。N 字节可区分 0 字节/过小/截断各类损坏。
+        throw new Error(`Invalid zip file (no central directory; ${data.length} bytes)`);
       }
 
       // Check for META-INF/container.xml presence in the ZIP
