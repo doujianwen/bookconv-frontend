@@ -276,6 +276,7 @@ function readRedteam(name) {
 // ── ③ 组装简报 ────────────────────────────────────────────────────────
 function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
   const lines = [];
+  let engineHardAlarm = false; // 2026-11-03 F15 收紧：系统侧(引擎类)失败 ≥3 次硬告警
   lines.push('📊 [bookconv] GA4 每日巡检');
   lines.push('');
 
@@ -348,8 +349,14 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
       const userStr = Object.entries(sides.userSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       const sysStr = Object.entries(sides.systemSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       lines.push(`• 统一健康裁定: 用户侧(灰) ${sides.userSide.total} 次 [${userStr}] / 系统侧(红) ${sides.systemSide.total} 次 [${sysStr}]`);
-      // 盲区：日报引擎结论=正常（未 abnormal）但存在系统侧失败签名 ⇒ 阈值漏判，建议人工核对实时飞书告警
-      if (sides.systemSide.total > 0 && !basic.abnormal && sides.systemSide.total >= 2) {
+      // 硬告警（2026-11-03 F15 收紧）：系统侧=引擎类失败（INTERNAL_ERROR/UNKNOWN/超时/CORRUPT_INPUT 等，
+      // 已排除直传 INFRA/客户端拦截/额度）。主阈值「引擎失败>完成 或 成功率<50%」对低流量站过松——
+      // 11-01 引擎失败4、完成153 不触发；11-02 系统侧5 亦只落软警告。当系统侧(引擎类)失败 ≥3 次即升级硬告警，
+      // 避免引擎故障被埋入「正常」结论（红队要消灭的叙述层假成功）。
+      if (sides.systemSide.total >= 3) {
+        engineHardAlarm = true;
+        lines.push(`• 🚨 引擎硬告警: 系统侧(引擎类)失败 ${sides.systemSide.total} 次（≥3），日报主阈值（引擎失败>完成 或 成功率<50%）未触发但已达硬告警线，立即核查引擎日志与实时飞书卡`);
+      } else if (sides.systemSide.total > 0 && !basic.abnormal && sides.systemSide.total >= 2) {
         lines.push(`• 🔍 检测盲区: 系统侧失败 ${sides.systemSide.total} 次但日报引擎阈值未触发（成功率/引擎失败数未达告警线），建议人工核对当日飞书实时告警卡`);
       }
     }
@@ -396,7 +403,7 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
 
   const basicBad = basic.abnormal === true || basic.batch?.triggered === true;
   const basicUndecided = basic.undecided === true;
-  const hasFail = syntax.ok === false || geo.ok === false || !basic.ok || !adv.ok || basicBad;
+  const hasFail = syntax.ok === false || geo.ok === false || !basic.ok || !adv.ok || basicBad || engineHardAlarm;
   const notRun = syntax.ok === null || geo.ok === null;
   const rtB = redteam?.overall;
   const rtD = redteamAnalysis?.overall;
