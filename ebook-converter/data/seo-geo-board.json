@@ -1732,7 +1732,7 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "2026-11-03 经红队实测证伪后执行（用户授权发布）：移除 middleware 3 处每请求 Set-Cookie + request.ts getLocale 改 header 优先（path 驱动）。红队实测：locale cookie 值不改页面内容/SEO（title/lang/canonical 三变体一致），仅影响 LocaleSwitcher 外观 ⇒ 按 URL 缓存安全；/ 与 /es 分流不变。本地回归：Set-Cookie 消失、/blog /convert 恢复 public max-age（no-store 根因解除）。commit f6d309f 已 push，两道门禁放行。未给 /es/ 加整段缓存规则（/es/auth 登录页不可缓存，已核验）。剩余：发布后外部 vantage 复核 Age>0/HIT 为确认点（本地绿≠线上绿）。",
+          "statusNote": "2026-11-03 tabbit外部实测：1) Set-Cookie移除+header优先——线上无效(Vercel动态渲染强制no-store，config headers/middleware响应头均被覆盖)。2) 根因=动态渲染(SSG前全站ƒ)。3) 多根布局静态化(删app/layout.tsx→[locale]/auth/api-docs各带根布局，getLocale改rootParams)→构建● SSG→tabbit验证5/5 URL x-vercel-cache=HIT + Age>0 + locale分流正确 + 无Set-Cookie。commit 496cf13。",
           "note": "依据 docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP4 4.2"
         }
       ]
