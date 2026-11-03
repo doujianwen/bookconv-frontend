@@ -2162,6 +2162,36 @@
           "status": "todo",
           "statusNote": "数据未齐明确延至首个完整可用日",
           "statusAudit": "plan-redteam-2026-11-01"
+        },
+        {
+          "id": "M13-31",
+          "action": "[复查] F11 · ES lit-to-epub 索引翻转确认",
+          "detail": "11/3 已对 es/blog/why-convert-lit-to-epub 发起 GSC 编入索引申请(实测:coverage 已发现→已抓取,Googlebot 抓取 2026-11-03 19:09:30 成功);复查是否转为'已编入索引'。详见 docs/F11-lit-to-epub-GSC重提-2026-11-03.md",
+          "owner": "A→O",
+          "deliverable": "docs/F11-lit-to-epub-GSC重提-2026-11-03.md",
+          "accept": "GSC 复查 es/blog/why-convert-lit-to-epub = 已编入索引(或仍抓取中则记录下次复查时间点)",
+          "due": "2026-11-06",
+          "recheck": "2026-11-06",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "11/5–11/6 回 GSC 复查;若仍未编入索引记录下次时间点",
+          "statusAudit": "f11-gsc-2026-11-03"
+        },
+        {
+          "id": "M13-32",
+          "action": "[验收] F14 · R2 直传失败连续3日≤2次/日验收",
+          "detail": "11/3 实测:R2 直传失败趋势 8→3(偶发非系统性),生产 presign→R2 PUT 自检 200 链路健康;验收标准=连续3日 DIRECT_UPLOAD_FAILED ≤2次/日,当前未达标需续观测。详见 docs/F14-R2直传失败排查-2026-11-03.md",
+          "owner": "A→O",
+          "deliverable": "docs/F14-R2直传失败排查-2026-11-03.md",
+          "accept": "连续3日 DIRECT_UPLOAD_FAILED ≤2次/日(否则延长观测并记录)",
+          "due": "2026-11-07",
+          "recheck": "2026-11-06",
+          "priority": "P2",
+          "tier": "SUPP",
+          "status": "todo",
+          "statusNote": "每日看 GA4 DIRECT_UPLOAD_FAILED;11/3=3,需续3日观测",
+          "statusAudit": "f14-r2-2026-11-03"
         }
       ]
     }
