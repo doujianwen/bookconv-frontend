@@ -74,6 +74,28 @@ function hostOfResult(o) {
   return real ? hostOf(real) : '';
 }
 
+// FIXED 2026-11-04 (red-team finding, see docs/竞品①-谁在抢同一个答案-2026-11-04.md §六):
+// until today we only recorded the rank of the five FRESHLY-CONFIGURED rival
+// domains. Every other organic result was thrown away, so a keyword where all
+// five rivals happened to be absent wrote `all null` — which reads as
+// "no competitor" but actually means "we never looked". On 2026-11-04 that was
+// 12 of 23 keywords, each with 5–9 organic rows we could not name.
+//
+// `topDomains` keeps the first N organic rows as they came: host + rank + url.
+// It does not change any rank we already publish (purely additive field), but it
+// makes the "who owns this answer" question answerable at all.
+//
+// A row whose wrapper cannot be resolved is kept with `domain: ''` on purpose:
+// dropping it would silently shorten the list and hide a real SERP slot.
+export function topDomainsOf(organic, limit = 10) {
+  const rows = Array.isArray(organic) ? organic : [];
+  return rows.slice(0, limit).map((o, i) => ({
+    rank: i + 1,
+    domain: hostOfResult(o) || '',
+    url: resolveUrl(o),
+  }));
+}
+
 // Self-test: the wrapper-unwrapping must keep working. A silent regression here
 // does not crash — it just starts under-reporting rivals again, which is
 // indistinguishable from "rivals dropped out" downstream. So we assert it here
@@ -121,6 +143,42 @@ function selfTest() {
       failures.push(`${c.name}: fixture no longer reproduces the blind-matcher bug`);
     }
   }
+  // topDomains must survive refactors: the 2026-11-04 fix depends on it keeping
+  // non-configured domains AND unresolved rows (as '') instead of trimming them.
+  const organicFixture = [
+    { link: 'https://www.google.com/goto?url=CAESZgHrOzAV5cMx', displayed_link: 'https://www.freeconvert.com › ebook-converter' },
+    { link: 'https://www.google.com/goto?url=CAESVQHrOzAV5cMx' }, // wrapper, no breadcrumb → host unknown
+    { link: 'https://epubor.com/best-ebook-converter.html' },
+    { link: 'https://bookconv.com/convert/epub-to-pdf' },
+  ];
+  const td = topDomainsOf(organicFixture, 10);
+  const wantTd = ['freeconvert.com', '', 'epubor.com', 'bookconv.com'];
+  if (td.length !== wantTd.length) {
+    failures.push(`topDomains: length got ${td.length} want ${wantTd.length}`);
+  } else {
+    td.forEach((row, i) => {
+      if (row.domain !== wantTd[i]) failures.push(`topDomains[${i}].domain got "${row.domain}" want "${wantTd[i]}"`);
+      if (row.rank !== i + 1) failures.push(`topDomains[${i}].rank got ${row.rank} want ${i + 1}`);
+    });
+  }
+  // A refactor that filters out empty hosts would still pass the case above only
+  // if it also kept positions 1:1; assert the count explicitly so a "drop
+  // unknown" regression cannot slip through as a shorter, cleaner-looking list.
+  if (topDomainsOf(organicFixture, 2).length !== 2) {
+    failures.push('topDomains: limit 2 did not return 2 rows');
+  }
+
+  // The request string itself is a comparability contract: if it silently
+  // changes, every Δ across the change is suspect. Only assertable when no
+  // locale env is set (with them set, the string legitimately grows).
+  if (!process.env.SERPAPI_GL && !process.env.SERPAPI_HL && !process.env.SERPAPI_LOCATION) {
+    const wantParams = 'engine=google&q=ebook%20reader%20app&num=100';
+    const gotParams = serpParams('ebook reader app');
+    if (gotParams !== wantParams) {
+      failures.push(`serpParams: request string changed\n      got  "${gotParams}"\n      want "${wantParams}"`);
+    }
+  }
+
   if (failures.length) {
     console.error('✗ SerpApi 匹配器自检失败（拒绝抓取，避免发布被污染的排名）：');
     for (const f of failures) console.error(`    - ${f}`);
@@ -154,8 +212,35 @@ function loadDotEnv() {
   }
 }
 
+// RECORDED 2026-11-04: the request used to send only `engine/q/num`, so SerpApi
+// picked its own default locale per call. Snapshots recorded neither the locale
+// nor which key produced them, which makes a two-day Δ unattributable: on
+// 2026-11-02→04 six keywords moved hard (epub to pdf 0→4 rivals) while four
+// others stayed pixel-identical. Both "Google really moved" and "we asked from a
+// different locale" fit that evidence.
+//
+// Fix is opt-in and additive: if SERPAPI_GL / SERPAPI_HL / SERPAPI_LOCATION are
+// set they are now actually sent (and recorded in the snapshot). Left unset the
+// request string is byte-identical to before, so this does NOT silently
+// re-baseline the history. Setting them later IS a regime change — bump
+// methodVersion when you do.
+//
+// NOTE (red-team 2026-11-04): a first draft built this with URLSearchParams,
+// which encodes spaces as `+` (`q=ebook+reader+app`) instead of `%20`. That is
+// legal form-encoding and probably fine — but "probably fine" is not "identical",
+// and a changed request string is exactly the kind of silent regime change this
+// snapshot series cannot survive. So we assemble it by hand and assert the exact
+// string in selfTest().
+function serpParams(q) {
+  const parts = ['engine=google', `q=${encodeURIComponent(q)}`, 'num=100'];
+  if (process.env.SERPAPI_GL) parts.push(`gl=${encodeURIComponent(process.env.SERPAPI_GL)}`);
+  if (process.env.SERPAPI_HL) parts.push(`hl=${encodeURIComponent(process.env.SERPAPI_HL)}`);
+  if (process.env.SERPAPI_LOCATION) parts.push(`location=${encodeURIComponent(process.env.SERPAPI_LOCATION)}`);
+  return parts.join('&');
+}
+
 async function serpapiRanks(q, competitors, key, ownDomain) {
-  const url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(q)}&num=100&api_key=${key}`;
+  const url = `https://serpapi.com/search.json?${serpParams(q)}&api_key=${key}`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`SerpApi ${r.status}`);
   const j = await r.json();
@@ -176,7 +261,7 @@ async function serpapiRanks(q, competitors, key, ownDomain) {
   // top 100" — it means "outside the observed window", whose depth we did not
   // record before. Depth is recorded now so a shallow day is visible instead of
   // being silently read as a real ranking change.
-  return { rankings, observedDepth: organic.length, requestedDepth: 100, ownRank, ownUrl };
+  return { rankings, observedDepth: organic.length, requestedDepth: 100, ownRank, ownUrl, topDomains: topDomainsOf(organic) };
 }
 
 async function bingRanks(q, competitors, key, ownDomain) {
@@ -192,7 +277,7 @@ async function bingRanks(q, competitors, key, ownDomain) {
   const ownIdx = ownDomain ? vals.findIndex((v) => hostOf(v.url) === ownDomain) : -1;
   const ownRank = ownIdx >= 0 ? ownIdx + 1 : 0;
   const ownUrl = ownIdx >= 0 ? vals[ownIdx].url : null;
-  return { rankings, observedDepth: vals.length, requestedDepth: 100, ownRank, ownUrl };
+  return { rankings, observedDepth: vals.length, requestedDepth: 100, ownRank, ownUrl, topDomains: topDomainsOf(vals) };
 }
 
 // Historical hit counts from earlier snapshots, so "today found fewer rivals
@@ -223,6 +308,13 @@ function median(xs) {
 async function main() {
   loadDotEnv();
   selfTest();
+  // `--self-test` runs the matcher assertions only and exits BEFORE any network
+  // call, so the checks can be run in CI / before a red-team review without
+  // burning SerpApi credits. Without it the old behaviour is unchanged.
+  if (process.argv.includes('--self-test')) {
+    console.log('✓ selfTest 通过：goto 包装解包 + topDomains 提取（未发起任何网络请求）');
+    return;
+  }
   const cfg = loadConfig();
   const keys = [process.env.SERPAPI_KEY, process.env.SERPAPI_KEY_2].filter(Boolean);
   const bingKey = process.env.BING_WEB_SEARCH_KEY;
@@ -249,14 +341,18 @@ async function main() {
 
   console.log(`SERP 源：${srcNote} · 词 ${cfg.keywords.length} 个 · 竞品 ${cfg.competitors.length} 个${ownDomain ? ` · 本站 ${ownDomain}` : ''}`);
   const results = [];
+  const keyLog = [];
   let fetchErrors = 0;
   for (const q of cfg.keywords) {
     try {
-      const { rankings, observedDepth, requestedDepth, ownRank, ownUrl } = await fetchRanks(q, cfg.competitors, nextKey(), ownDomain);
+      const keyIdx = ki % keys.length;
+      const { rankings, observedDepth, requestedDepth, ownRank, ownUrl, topDomains } = await fetchRanks(q, cfg.competitors, nextKey(), ownDomain);
       const found = rankings.filter((r) => r.rank > 0).map((r) => `${r.name}#${r.rank}`).join(', ') || '无';
+      const top = (topDomains || []).slice(0, 3).map((d) => d.domain || 'UNRESOLVED').join(' > ') || '—';
       const ownStr = ownRank > 0 ? ` · 本站 #${ownRank}` : ' · 本站 —';
-      console.log(`  · ${q} → ${found}${observedDepth < requestedDepth ? `（观测深度 ${observedDepth}/${requestedDepth}）` : ''}${ownStr}`);
-      results.push({ query: q, rankings, observedDepth, requestedDepth, ownRank, ownUrl });
+      console.log(`  · ${q} → ${found}${observedDepth < requestedDepth ? `（观测深度 ${observedDepth}/${requestedDepth}）` : ''}${ownStr} · 头部 ${top}`);
+      keyLog.push({ query: q, keyIndex: keyIdx });
+      results.push({ query: q, rankings, observedDepth, requestedDepth, ownRank, ownUrl, topDomains });
     } catch (e) {
       fetchErrors++;
       console.error(`  ✗ ${q} 抓取失败：${e.message}`);
@@ -267,6 +363,7 @@ async function main() {
         requestedDepth: 100,
         ownRank: 0,
         ownUrl: null,
+        topDomains: [],
         error: e.message,
       });
     }
@@ -316,6 +413,20 @@ async function main() {
     // with goto-aware ones would make "rival appeared" look like a genuine
     // entrance. build-competitor-series.mjs refuses to publish such a Δ.
     methodVersion: 'goto-aware-v2',
+    // Everything needed to decide whether two snapshots are comparable.
+    // gl/hl/location = null means "we did not pin the locale", i.e. the provider
+    // chose it per call — a cross-day Δ then cannot be attributed to Google.
+    collection: {
+      engine: keys.length ? 'google' : 'bing-web-v7',
+      num: 100,
+      gl: process.env.SERPAPI_GL || null,
+      hl: process.env.SERPAPI_HL || null,
+      location: process.env.SERPAPI_LOCATION || null,
+      keys: keys.length,
+      keyIndexByQuery: keyLog,
+      topDomainsPerQuery: 10,
+      note: 'gl/hl/location 为 null = 未固定（脚本默认行为，SerpApi 用其默认地区）；未固定时跨日 Δ 不可归因到真实排名变化。keyIndexByQuery 用于排查「不同 key 返回不同 SERP」。',
+    },
     quality: {
       hits: totalHits,
       minObservedDepth: minDepth,

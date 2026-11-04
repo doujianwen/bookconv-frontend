@@ -1739,6 +1739,9 @@
         },
         {
           "id": "M12-1-S1",
+          "tier": "CORE",
+          "owner": "A→O",
+          "detail": "由 M12-1 拆解：M12-1 已判定为「判定层质量重分类」（非抓取层/非手动惩罚/非安全风险），故 S1 定性为「整改+观察」而非增长实验。范围=内容质量与规范入口的整改清单，不含页面实验、不动实验页。拆分理由：与 11/10、11/12 首批页面实验隔离，避免互相干扰。",
           "status": "todo",
           "priority": "P0",
           "due": "2026-11-18",
@@ -1810,7 +1813,7 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "先用11/2回答证据,不重复全量采集\n2026-11-04 产出 docs/竞品①-谁在抢同一个答案-2026-11-04.md：基于 data/competitor-series.json(2026-11-02,goto-aware-v2)+data/competitor-config.json(固定5家)；SERP 视角 CloudConvert #1 主导核心转档词；AI 被引本地仅本站、第三方来源标「未观察到」（不补猜测）。标 done。\n[2026-11-04 收尾] competitor-config.json keywords 扩 4 词覆盖 6 核心任务缺口（ebook reader app/open epub file/send to kindle/kindle vs kobo，现 23 词），并加 _changelog 诚实标注。第三方 AI 被引来源抽取：经 normalized_bing_ai.csv 的 domain 列核验 = bookconv 单域（non-bookconv=0），确认本地无第三方被引数据 → 标 UNKNOWN/未观察到，禁编造。红队：L2 · 裁定 通过（诚实边界已落）· 回执见对话。\n[2026-11-04 四词 fetch 闭环] 已跑 fetch-competitor-serp.mjs（serpapi 2 key 轮换，23 词全抓）→ build 入 data/competitor-series.json（149 对/10 快照）。4 新词真实结论：ebook reader app/open epub file/send to kindle/kindle vs kobo 在观测深度 5-8/100 内 5 家固定竞品均 latestRank=null（观测窗内无竞品命中，真实数据非 UNKNOWN）。文档 §五.3 已同步。红队 L2·裁定 通过。",
+          "statusNote": "先用11/2回答证据,不重复全量采集\n2026-11-04 产出 docs/竞品①-谁在抢同一个答案-2026-11-04.md：基于 data/competitor-series.json(2026-11-02,goto-aware-v2)+data/competitor-config.json(固定5家)；SERP 视角 CloudConvert #1 主导核心转档词；AI 被引本地仅本站、第三方来源标「未观察到」（不补猜测）。标 done。\n[2026-11-04 收尾] competitor-config.json keywords 扩 4 词覆盖 6 核心任务缺口（ebook reader app/open epub file/send to kindle/kindle vs kobo，现 23 词），并加 _changelog 诚实标注。第三方 AI 被引来源抽取：经 normalized_bing_ai.csv 的 domain 列核验 = bookconv 单域（non-bookconv=0），确认本地无第三方被引数据 → 标 UNKNOWN/未观察到，禁编造。红队：L2 · 裁定 通过（诚实边界已落）· 回执见对话。\n[2026-11-04 四词 fetch 闭环] 已跑 fetch-competitor-serp.mjs（serpapi 2 key 轮换，23 词全抓）→ build 入 data/competitor-series.json（149 对/10 快照）。4 新词真实结论：ebook reader app/open epub file/send to kindle/kindle vs kobo 在观测深度 5-8/100 内 5 家固定竞品均 latestRank=null（观测窗内无竞品命中，真实数据非 UNKNOWN）。文档 §五.3 已同步。红队 L2·裁定 通过。\n[2026-11-04 口径修正] docs/竞品①-谁在抢同一个答案-2026-11-04.md 已按 11-04 快照重写 §一/§二/§四：①epub to pdf 的 11-02「5家全null」结论被 11-04 实测推翻（CloudConvert #1 / Convertio #3 / Zamzar #7 / FreeConvert #8）；②新增 §六 动态发现层结构性盲区——fetch-competitor-serp.mjs 只落固定5家，12/23 词固定5家0命中却各有 5-9 条 organic，头部是谁=未知，原「动态发现」层结论降为 UNKNOWN；③新增跨日不可归因 UNKNOWN（11-02→04 六词大幅移动 vs 四词逐位不变；脚本未固定 gl/hl/location 且快照不记 key）。修复：脚本已加 topDomains + collection 元数据（--self-test 通过、反向验证注入→exit1 恢复→exit0、build 回归 149 对不变），待 11-09 首跑生效。另：本日每日故障检查已完成——生产 epub→pdf 200/31KB/后端 hit、epub→txt 200/local-js；GA4 11-03 upload16/complete12/failed5（PUT_FAILED 2、UNKNOWN 2、CORRUPT_INPUT 1），B6 剥直传族后 PASS。",
           "statusAudit": "plan-redteam-2026-11-01",
           "statusAudited": "2026-11-04 残余分流"
         },
@@ -1881,7 +1884,7 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo",
-          "statusNote": "不默认必须选Send to Kindle",
+          "statusNote": "不默认必须选Send to Kindle\n2026-11-04 追加：本次周评审须含 fetch-competitor-serp.mjs 首跑，验证 topDomains 与 collection 元数据真实落盘；跑前先备份当日快照（脚本按当天日期覆盖写，重跑会覆盖已有快照）。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
