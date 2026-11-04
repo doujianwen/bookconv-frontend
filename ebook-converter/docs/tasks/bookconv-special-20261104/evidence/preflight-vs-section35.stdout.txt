@@ -1,0 +1,342 @@
+[31m[2026-11-04T15:12:48.411Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/missing.xhtml (manifest reference missing)","decompressedSoFar":648,"sourceFormat":"epub"}
+[31m[2026-11-04T15:12:48.419Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/missing.xhtml (manifest reference missing)","decompressedSoFar":475,"sourceFormat":"epub"}
+[31m[2026-11-04T15:12:48.424Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/missing.xhtml (manifest reference missing)","decompressedSoFar":648,"sourceFormat":"epub"}
+[31m[2026-11-04T15:12:48.428Z] [ERROR] [conversion][0m {"brokenMember":"mimetype (expected application/epub+zip, got \"application/zip\")","decompressedSoFar":1125,"sourceFormat":"epub"}
+[31m[2026-11-04T15:12:48.442Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/nav.xhtml (manifest reference missing)","decompressedSoFar":751,"sourceFormat":"epub"}
+[31m[2026-11-04T15:12:48.477Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/nav.xhtml (manifest reference missing)","decompressedSoFar":1049327,"sourceFormat":"epub"}
+  console.log
+    
+    ===== REDTEAM COMPARISON START =====
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:211:11)
+
+  console.log
+    TABLE_JSON=[{"id":"S1","desc":"合法最小 EPUB（基线）","format":"epub","size":1175,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"S2","desc":"合法 EPUB，但 OPF 注释里含 <item href=\"ghost.xhtml\">","format":"epub","size":1201,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member OEBPS/ghost.xhtml (manifest reference missing) failed deep validation","section35":"PASS","section35Msg":"","verdict":"NEW_FALSE_POSITIVE"},{"id":"S3","desc":"合法 EPUB，item 带非标准 data-href 属性","format":"epub","size":1186,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"S3b","desc":"合法 EPUB，data-href 排在真 href 之后","format":"epub","size":1185,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member OEBPS/ghost.xhtml (manifest reference missing) failed deep validation","section35":"PASS","section35Msg":"","verdict":"NEW_FALSE_POSITIVE"},{"id":"S4","desc":"真断链，但 href 用单引号（合法 XML）","format":"epub","size":942,"preflight":"PASS","preflightReason":"","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ","verdict":"NEW_FALSE_NEGATIVE"},{"id":"S5","desc":"真断链，item 带命名空间前缀 <opf:item>","format":"epub","size":854,"preflight":"PASS","preflightReason":"","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ","verdict":"NEW_FALSE_NEGATIVE"},{"id":"S6","desc":"标准 manifest 断链（双引号，告警同签名）","format":"epub","size":938,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ","verdict":"SAME"},{"id":"S7","desc":"mimetype 存在但内容错误","format":"epub","size":1767,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member mimetype (expected application/epub+zip, got \"application/zip\") failed deep validation","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member mimetype (expected application/epub+zip, got \"application/zip\") failed deep validation — the file is damaged (trunc","verdict":"SAME"},{"id":"S8","desc":"截断 ZIP（无 EOCD，告警同签名）","format":"epub","size":1130,"preflight":"CORRUPT","preflightReason":"Invalid zip file (no central directory or truncated; 1130 bytes)","section35":"CORRUPT","section35Msg":"Invalid zip file (no central directory; 1130 bytes)","verdict":"SAME"},{"id":"F1","desc":"合法 FB2（纯 XML，项目 P0 流量词 fb2→epub）","format":"fb2","size":254,"preflight":"CORRUPT","preflightReason":"not a valid eBook format: an fb2 must be a ZIP archive (starts with PK\\x03\\x04). The upload starts with 0x3c3f786d.","section35":"PASS","section35Msg":"","verdict":"NEW_FALSE_POSITIVE"},{"id":"F2","desc":"合法 LIT（MOBI 派生，项目 P0 流量词 lit→epub）","format":"lit","size":200,"preflight":"CORRUPT","preflightReason":"not a valid eBook format: an lit must be a ZIP archive (starts with PK\\x03\\x04). The upload starts with 0x54657374.","section35":"PASS","section35Msg":"","verdict":"NEW_FALSE_POSITIVE"},{"id":"F3","desc":"合法 OEB（ZIP 容器）","format":"oeb","size":132,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME_BUT_NON_EPUB"},{"id":"F4","desc":"合法 DOCX（OOXML ZIP）","format":"docx","size":146,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME_BUT_NON_EPUB"},{"id":"F5","desc":"合法 TXT（对照：不在 ZIP_BASED_SOURCES）","format":"txt","size":15,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME_BUT_NON_EPUB"},{"id":"R1","desc":"仓库真实样本 tests/fixtures/valid.epub","format":"epub","size":1095,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, brok","verdict":"SAME"},{"id":"R2","desc":"仓库真实样本 tests/fixtures/valid-large.epub","format":"epub","size":1049781,"preflight":"CORRUPT","preflightReason":"corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation","section35":"CORRUPT","section35Msg":"corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, brok","verdict":"SAME"},{"id":"R3","desc":"仓库真实样本 tests/fixtures/test-content.epub","format":"epub","size":2431,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R4","desc":"仓库真实样本 public/data/conversion-samples/bookconv-txt-regular.epub","format":"epub","size":2522,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R5","desc":"仓库真实样本 public/data/conversion-samples/bookconv-txt-spine-order.epub","format":"epub","size":2531,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R6","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/evidence/runtime/input.epub","format":"epub","size":879,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R7","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/evidence/runtime/pdf-epub.epub","format":"epub","size":72399,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R8","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/txt-utf8.epub","format":"epub","size":1725,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R9","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-sample.epub","format":"epub","size":1737,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R10","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-plain.epub","format":"epub","size":158852,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"},{"id":"R11","desc":"仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-extension.epub","format":"epub","size":192238,"preflight":"PASS","preflightReason":"","section35":"PASS","section35Msg":"","verdict":"SAME"}]
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:212:11)
+
+  console.log
+    [
+     {
+      "id": "S1",
+      "desc": "合法最小 EPUB（基线）",
+      "format": "epub",
+      "size": 1175,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "S2",
+      "desc": "合法 EPUB，但 OPF 注释里含 <item href=\"ghost.xhtml\">",
+      "format": "epub",
+      "size": 1201,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member OEBPS/ghost.xhtml (manifest reference missing) failed deep validation",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "NEW_FALSE_POSITIVE"
+     },
+     {
+      "id": "S3",
+      "desc": "合法 EPUB，item 带非标准 data-href 属性",
+      "format": "epub",
+      "size": 1186,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "S3b",
+      "desc": "合法 EPUB，data-href 排在真 href 之后",
+      "format": "epub",
+      "size": 1185,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member OEBPS/ghost.xhtml (manifest reference missing) failed deep validation",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "NEW_FALSE_POSITIVE"
+     },
+     {
+      "id": "S4",
+      "desc": "真断链，但 href 用单引号（合法 XML）",
+      "format": "epub",
+      "size": 942,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ",
+      "verdict": "NEW_FALSE_NEGATIVE"
+     },
+     {
+      "id": "S5",
+      "desc": "真断链，item 带命名空间前缀 <opf:item>",
+      "format": "epub",
+      "size": 854,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ",
+      "verdict": "NEW_FALSE_NEGATIVE"
+     },
+     {
+      "id": "S6",
+      "desc": "标准 manifest 断链（双引号，告警同签名）",
+      "format": "epub",
+      "size": 938,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member OEBPS/missing.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, ",
+      "verdict": "SAME"
+     },
+     {
+      "id": "S7",
+      "desc": "mimetype 存在但内容错误",
+      "format": "epub",
+      "size": 1767,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member mimetype (expected application/epub+zip, got \"application/zip\") failed deep validation",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member mimetype (expected application/epub+zip, got \"application/zip\") failed deep validation — the file is damaged (trunc",
+      "verdict": "SAME"
+     },
+     {
+      "id": "S8",
+      "desc": "截断 ZIP（无 EOCD，告警同签名）",
+      "format": "epub",
+      "size": 1130,
+      "preflight": "CORRUPT",
+      "preflightReason": "Invalid zip file (no central directory or truncated; 1130 bytes)",
+      "section35": "CORRUPT",
+      "section35Msg": "Invalid zip file (no central directory; 1130 bytes)",
+      "verdict": "SAME"
+     },
+     {
+      "id": "F1",
+      "desc": "合法 FB2（纯 XML，项目 P0 流量词 fb2→epub）",
+      "format": "fb2",
+      "size": 254,
+      "preflight": "CORRUPT",
+      "preflightReason": "not a valid eBook format: an fb2 must be a ZIP archive (starts with PK\\x03\\x04). The upload starts with 0x3c3f786d.",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "NEW_FALSE_POSITIVE"
+     },
+     {
+      "id": "F2",
+      "desc": "合法 LIT（MOBI 派生，项目 P0 流量词 lit→epub）",
+      "format": "lit",
+      "size": 200,
+      "preflight": "CORRUPT",
+      "preflightReason": "not a valid eBook format: an lit must be a ZIP archive (starts with PK\\x03\\x04). The upload starts with 0x54657374.",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "NEW_FALSE_POSITIVE"
+     },
+     {
+      "id": "F3",
+      "desc": "合法 OEB（ZIP 容器）",
+      "format": "oeb",
+      "size": 132,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME_BUT_NON_EPUB"
+     },
+     {
+      "id": "F4",
+      "desc": "合法 DOCX（OOXML ZIP）",
+      "format": "docx",
+      "size": 146,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME_BUT_NON_EPUB"
+     },
+     {
+      "id": "F5",
+      "desc": "合法 TXT（对照：不在 ZIP_BASED_SOURCES）",
+      "format": "txt",
+      "size": 15,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME_BUT_NON_EPUB"
+     },
+     {
+      "id": "R1",
+      "desc": "仓库真实样本 tests/fixtures/valid.epub",
+      "format": "epub",
+      "size": 1095,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, brok",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R2",
+      "desc": "仓库真实样本 tests/fixtures/valid-large.epub",
+      "format": "epub",
+      "size": 1049781,
+      "preflight": "CORRUPT",
+      "preflightReason": "corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation",
+      "section35": "CORRUPT",
+      "section35Msg": "corrupt epub: ZIP member OEBPS/nav.xhtml (manifest reference missing) failed deep validation — the file is damaged (truncated download, brok",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R3",
+      "desc": "仓库真实样本 tests/fixtures/test-content.epub",
+      "format": "epub",
+      "size": 2431,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R4",
+      "desc": "仓库真实样本 public/data/conversion-samples/bookconv-txt-regular.epub",
+      "format": "epub",
+      "size": 2522,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R5",
+      "desc": "仓库真实样本 public/data/conversion-samples/bookconv-txt-spine-order.epub",
+      "format": "epub",
+      "size": 2531,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R6",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/evidence/runtime/input.epub",
+      "format": "epub",
+      "size": 879,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R7",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/evidence/runtime/pdf-epub.epub",
+      "format": "epub",
+      "size": 72399,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R8",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/txt-utf8.epub",
+      "format": "epub",
+      "size": 1725,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R9",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-sample.epub",
+      "format": "epub",
+      "size": 1737,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R10",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-plain.epub",
+      "format": "epub",
+      "size": 158852,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     },
+     {
+      "id": "R11",
+      "desc": "仓库真实样本 docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-extension.epub",
+      "format": "epub",
+      "size": 192238,
+      "preflight": "PASS",
+      "preflightReason": "",
+      "section35": "PASS",
+      "section35Msg": "",
+      "verdict": "SAME"
+     }
+    ]
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:213:11)
+
+  console.log
+    SUMMARY={"total":25,"newFalsePositive":["S2(epub) 合法 EPUB，但 OPF 注释里含 <item href=\"ghost.xhtml\">","S3b(epub) 合法 EPUB，data-href 排在真 href 之后","F1(fb2) 合法 FB2（纯 XML，项目 P0 流量词 fb2→epub）","F2(lit) 合法 LIT（MOBI 派生，项目 P0 流量词 lit→epub）"],"newFalseNegative":["S4(epub) 真断链，但 href 用单引号（合法 XML）","S5(epub) 真断链，item 带命名空间前缀 <opf:item>"]}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:216:11)
+
+  console.log
+    ALERT_IMPACT={"id":"S2","code":"CORRUPT_INPUT","severity":"user"}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:223:13)
+
+  console.log
+    ALERT_IMPACT={"id":"S3b","code":"CORRUPT_INPUT","severity":"user"}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:223:13)
+
+  console.log
+    ALERT_IMPACT={"id":"F1","code":"CORRUPT_INPUT","severity":"user"}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:223:13)
+
+  console.log
+    ALERT_IMPACT={"id":"F2","code":"CORRUPT_INPUT","severity":"user"}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:223:13)
+
+  console.log
+    ===== REDTEAM COMPARISON END =====
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:229:11)
+
+  console.log
+    COST_JSON={"compressedEpubBytes":20978974,"uncompressedBodyBytes":20971520,"arrayBufferMs":7.7,"preflightMs":91.2,"section35Ms":510.5,"preflightCorrupt":false,"section35":"PASS","heapDeltaAfterPreflightMB":-0.1,"heapDeltaAfterSection35MB":-3.1,"rssMB":252}
+
+      at Object.log (docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts:260:11)
+
+PASS docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts
+  √ REDTEAM: preflight vs §3.5 comparison table (272 ms)
+  √ REDTEAM: incremental cost on a LEGIT large EPUB (20MB incompressible body) (1817 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        2.632 s
+Ran all test suites within paths "docs/tasks/bookconv-special-20261104/evidence/redteam-preflight-compare.test.ts".

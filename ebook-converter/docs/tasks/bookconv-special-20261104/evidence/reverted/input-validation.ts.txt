@@ -1,0 +1,191 @@
+// src/lib/input-validation.ts
+//
+// 边缘预检（edge pre-flight）：在把请求转发给自建 Calibre 后端 / 消耗一次
+// CloudConvert job 之前，廉价地拦截「结构损坏 / 非电子书」的上传。
+//
+// 背景（2026-11-04，Job 7a9b3d76 / e6b90936 复盘）：
+// 两条告警都是 epub→pdf 的用户侧损坏输入，错误串与既有 §3.5 validateInputFile
+// 完全一致（"no central directory; N bytes" / "corrupt epub: ZIP member …
+// failed deep validation"），说明损坏已被正确识别并拒为 CORRUPT_INPUT 灰卡。
+// 但失败链路是：后端(Calibre)先 500（Spine is empty / Premature end of file）
+// + 1 次重试 → 回退 CloudConvert 路径 → runConversion 内的 validateInputFile
+// 才最终拦下。即每个损坏 EPUB 都白烧了「后端 2 次 Calibre 调用 + 重试延迟」
+// 才拿到本该早给的结论。本模块把同一套判定前移到边缘，损坏输入直接 400，
+// 省掉后端往返与重试，用户也更快拿到明确指引。
+//
+// 设计铁律（与 §3.5 一致、且更严格）：
+//   1. FAIL-OPEN：本函数**永远不抛**。任何意外（jszip 解析异常、XML 解析失败、
+//      读取失败、未知格式）一律回退为 { corrupt:false }，绝不让合法文件被误杀。
+//      只有「高置信损坏」才返回 corrupt:true。
+//   2. 只拦确定性损坏：无 manifest / 无 item / 远程 href / mimetype 缺失
+//      全部放行（与 conversion.ts findMissingManifestTarget 同口径），避免误杀。
+//   3. 廉价：jszip.loadAsync 只读中央目录（不解压大成员），meta 文件（mimetype/
+//      container.xml/OPF）体积极小，即使 50MB 合法 EPUB 也只毫秒级。
+
+import JSZip from 'jszip';
+
+export interface PreflightResult {
+  /** true = 高置信损坏，应在边缘直接拒绝；false = 放行（含「无法判定」的 fail-open） */
+  corrupt: boolean;
+  /** 人类可读的损坏原因（命中 ERROR_CODE_MAP 子串，下游映射为 CORRUPT_INPUT） */
+  reason?: string;
+}
+
+// 仅对「ZIP 类电子书源」做边缘预检；其余格式（mobi/azw3 走魔数偏移 60、
+// txt/rtf/html 等）交给引擎层既有逻辑，避免误杀与无谓开销。
+const ZIP_BASED_SOURCES = new Set([
+  'epub', 'zip', 'docx', 'xlsx', 'pptx', 'fb2', 'lit', 'oeb',
+]);
+
+/** 解析 META-INF/container.xml 取 rootfile 的 full-path（OPF 路径）。失败返回 null（放行）。 */
+function parseContainerRootfile(xml: string): string | null {
+  if (!xml || !xml.trim()) return null;
+  const m = xml.match(/full-path="([^"]+)"/i);
+  return m ? m[1] : null;
+}
+
+/**
+ * 校验 OPF manifest 引用的本地文件是否都存在于 ZIP 内（断链 = CC import 必拒的
+ * 语义级损坏，如 Job 7a9b3d76 的 nav.xhtml 缺失）。无缺失返回 null；缺失返回
+ * 与 §3.5 同构的描述串。远程/协议 href 一律放行。
+ */
+function findMissingManifestTarget(
+  opfXml: string,
+  opfPath: string,
+  names: Set<string>,
+): string | null {
+  if (!opfXml || !opfXml.trim()) return `${opfPath} (empty OPF)`;
+  const hrefs: string[] = [];
+  const re = /<item\b[^>]*\bhref="([^"]+)"[^>]*>/gi;
+  let mm: RegExpExecArray | null;
+  while ((mm = re.exec(opfXml)) !== null) hrefs.push(mm[1]);
+  const dir = opfPath.includes('/') ? opfPath.replace(/[^/]+$/, '') : '';
+  for (const raw of hrefs) {
+    const clean = raw.split('#')[0].split('?')[0];
+    if (!clean) continue;
+    // 远程/协议类 href（http:/https:/data:/mailto: 等）不校验，合法 EPUB 也常引用外部资源
+    if (/^[a-z][a-z0-9+.-]*:/i.test(clean)) continue;
+    const resolved = clean.startsWith('/') ? clean.slice(1) : posixJoin(dir, clean);
+    let exists = names.has(resolved);
+    if (!exists) {
+      try {
+        // href 可能带百分号编码（空格 %20），jszip key 是原始字符——解码后再试一次
+        exists = names.has(decodeURIComponent(resolved));
+      } catch {
+        /* 非法百分号编码：按未命中处理，不当损坏 */
+      }
+    }
+    if (!exists) return `${resolved} (manifest reference missing)`;
+  }
+  return null;
+}
+
+/** 极简 posix 路径拼接 + 归一（仅用于 OPF 相对 href 解析）。 */
+function posixJoin(dir: string, file: string): string {
+  if (!dir) return file;
+  if (file.startsWith('/')) return file.replace(/^\/+/, '');
+  const parts = `${dir.replace(/\/+$/, '')}/${file}`.split('/');
+  const stack: string[] = [];
+  for (const p of parts) {
+    if (p === '' || p === '.') continue;
+    if (p === '..') stack.pop();
+    else stack.push(p);
+  }
+  return stack.join('/');
+}
+
+/**
+ * 边缘预检：检测损坏 / 非电子书输入。详见文件头注释。
+ *
+ * @param buffer 上传文件字节（multipart 的 file 或 R2 预拉取的 prebuiltFile）
+ * @param sourceFormat 归一化后的源格式
+ * @returns { corrupt, reason? }
+ */
+export async function preflightValidateInput(
+  buffer: Buffer,
+  sourceFormat: string,
+): Promise<PreflightResult> {
+  const sf = (sourceFormat || '').toLowerCase();
+  if (!ZIP_BASED_SOURCES.has(sf)) return { corrupt: false };
+  if (!buffer || buffer.length === 0) return { corrupt: false }; // 空文件由上游专门拦截
+
+  // 1) 魔数快检：ZIP 必须以 PK\x03\x04（本地头）/ PK\x05\x06（空归档）/ PK\x07\x08（分卷）开头
+  const h0 = buffer[0];
+  const h1 = buffer[1];
+  const h2 = buffer[2];
+  const isZipMagic =
+    h0 === 0x50 && h1 === 0x4b && (h2 === 0x03 || h2 === 0x05 || h2 === 0x07);
+  if (!isZipMagic) {
+    return {
+      corrupt: true,
+      reason: `not a valid eBook format: an ${sf} must be a ZIP archive (starts with PK\\x03\\x04). The upload starts with 0x${buffer.subarray(0, 4).toString('hex')}.`,
+    };
+  }
+
+  // 2) ZIP 完整性（jszip 只读中央目录，大文件也快）。加载失败 ⇒ 高置信损坏。
+  let zip: JSZip | null = null;
+  try {
+    zip = await JSZip.loadAsync(buffer);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    // 只把明确的 ZIP 解析失败判为损坏；其他异常（zip64/加密等 jszip 不支持）
+    // fail-open 放行，交给引擎层既有逻辑，避免误杀合法文件。
+    if (
+      /end of data|invalid zip|corrupt|central directory|premature|truncated|bad zip|cannot|no such|string expected|wrong|expected/i.test(
+        msg,
+      )
+    ) {
+      return {
+        corrupt: true,
+        reason: `Invalid zip file (no central directory or truncated; ${buffer.length} bytes)`,
+      };
+    }
+    return { corrupt: false };
+  }
+
+  // 3) EPUB 语义级结构校验（只读极小 meta 文件，不触碰正文大成员）
+  if (sf === 'epub') {
+    try {
+      const names = new Set(Object.keys(zip.files));
+      const containerName = [...names].find((f) => /meta-inf\/container\.xml$/i.test(f));
+      if (!containerName) {
+        return { corrupt: true, reason: 'Invalid or missing opf: EPUB has no META-INF/container.xml' };
+      }
+      // mimetype 若存在，内容必须为 application/epub+zip（存在但内容错 = 确定性损坏）。
+      // reason 必须自带 `corrupt epub` 前缀：它同时喂给告警卡（alerts.ts
+      // classifyAlertSeverity）与 mapErrorCode。若只写 "mimetype (...)"，不匹配
+      // ERROR_CODE_MAP 任何键 ⇒ 塌缩 INTERNAL_ERROR ⇒ 用户坏文件误报系统侧红卡。
+      // 对齐 §3.5 的既有串格式，保证灰卡分级与 GA4 归因。
+      const mt = zip.files['mimetype'];
+      if (mt) {
+        const mtContent = (await mt.async('string')).trim();
+        if (mtContent && mtContent !== 'application/epub+zip') {
+          return {
+            corrupt: true,
+            reason: `corrupt epub: ZIP member mimetype (expected application/epub+zip, got "${mtContent.slice(0, 60)}") failed deep validation`,
+          };
+        }
+      }
+      const containerXml = await zip.file(containerName)!.async('string');
+      const opfPath = parseContainerRootfile(containerXml);
+      if (opfPath) {
+        const opf = zip.files[opfPath];
+        if (opf) {
+          const opfXml = await opf.async('string');
+          const missing = findMissingManifestTarget(opfXml, opfPath, names);
+          if (missing) {
+            return {
+              corrupt: true,
+              reason: `corrupt epub: ZIP member ${missing} failed deep validation`,
+            };
+          }
+        }
+      }
+    } catch {
+      // 任何解析意外 ⇒ fail-open 放行，绝不误杀
+      return { corrupt: false };
+    }
+  }
+
+  return { corrupt: false };
+}

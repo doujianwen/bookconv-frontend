@@ -1,0 +1,180 @@
+diff --git a/ebook-converter/src/app/api/convert/route.ts b/ebook-converter/src/app/api/convert/route.ts
+index 59509f7..94aaf7b 100644
+--- a/ebook-converter/src/app/api/convert/route.ts
++++ b/ebook-converter/src/app/api/convert/route.ts
+@@ -11,12 +11,16 @@
+ //      backend's /api/convert-internal endpoint and stream its response back. This
+ //      lets Vercel stay the front door while the heavy lifting runs where Calibre
+ //      lives (the Docker/VPS image). Secret-protected via CONVERSION_INTERNAL_SECRET.
++import { createHash } from "node:crypto";
+ import { NextRequest, NextResponse } from "next/server";
+ import {
+   checkRateLimitWithStrategy,
+   getRateLimitHeaders,
+   RATE_LIMIT_STRATEGIES,
+ } from "@/lib/rate-limit";
++import { notifyConversionFailure } from "@/lib/alerts";
++import { getFriendlyMessage } from "@/lib/error-handler";
++import { preflightValidateInput } from "@/lib/input-validation";
+ import { convertAndStream, scheduleUploadCleanup } from "@/lib/convert-handler";
+ import { normalizeFormat } from "@/lib/conversion-map";
+ import { isPureJsConversion } from "@/lib/conversion";
+@@ -97,6 +101,42 @@ export async function POST(request: NextRequest) {
+         }
+       }
+ 
++      // --- 边缘预检（2026-11-04）：把「结构损坏 / 非电子书」输入拦在后端委托之前。
++      // 损坏 EPUB 若先打到自建 Calibre 后端，会白烧一次 500 + 1 次重试才被回退路径
++      // 拦下（Job 7a9b3d76 / e6b90936 实证）。这里用廉价校验（ZIP 中央目录 + EPUB
++      // meta）高置信拦截，直接 400，省掉后端往返与重试延迟。FAIL-OPEN：任何校验异常
++      // 都放行到原链路，绝不误杀合法文件。仅对 ZIP 类源（epub/zip/docx…）生效。
++      // 注意：仅覆盖「会走后端委托」的路径；非委托路径由 convertAndStream 内的
++      // runConversion→validateInputFile 兜底，行为不变。
++      const probeFile: File | null = prebuiltFile ?? (formData.get("file") as File | null);
++      if (probeFile instanceof File && probeFile.size > 0) {
++        try {
++          const probeBuf = Buffer.from(await probeFile.arrayBuffer());
++          const pf = await preflightValidateInput(probeBuf, sourceFormat);
++          if (pf.corrupt) {
++            const inputHash = createHash("sha256").update(probeBuf).digest("hex").slice(0, 12);
++            // 保留灰卡告警以维持监控连续性（alerts.ts 内 10 分钟节流，不会刷屏）。
++            await notifyConversionFailure({
++              kind: "conversion-error",
++              jobId: crypto.randomUUID(),
++              sourceFormat,
++              targetFormat,
++              error: pf.reason || "corrupt input",
++              inputHash,
++              inputSize: probeBuf.length,
++              localValidationInferred: "failed",
++              firstFailingEngine: "n/a",
++            });
++            return NextResponse.json(
++              { error: getFriendlyMessage("CORRUPT_INPUT"), code: "CORRUPT_INPUT" },
++              { status: 400, headers: rateHeaders },
++            );
++          }
++        } catch {
++          // 预检自身异常：放行，退回原链路（绝不阻塞合法请求）
++        }
++      }
++
+       if (canDelegate) {
+         // 捕获「为什么没走后端」，随同 convertAndStream 传给告警卡（2026-11-02）。
+         // 无此信息时，卡片只显示降级链末端的错误（如 "too small"），会把容量
+diff --git a/ebook-converter/src/lib/conversion-backend-client.test.ts b/ebook-converter/src/lib/conversion-backend-client.test.ts
+index 86928c7..e1ba938 100644
+--- a/ebook-converter/src/lib/conversion-backend-client.test.ts
++++ b/ebook-converter/src/lib/conversion-backend-client.test.ts
+@@ -555,6 +555,48 @@ describe("conversion backend client", () => {
+       expect(sent.get("target_format")).toBe("mobi");
+     });
+ 
++    it("does NOT retry a deterministic CONVERSION_FAILED 500 (bad user file)", async () => {
++      // 2026-11-04：Job 7a9b3d76 / e6b90936 的 500 都是 CONVERSION_FAILED
++      // （Calibre 拒收损坏 EPUB）。重试同一个文件必再败 → 只应发生 1 次请求。
++      // 但告警串 / 故障计数 / 回退行为必须与其它 5xx 完全一致（输出不变）。
++      setEnv();
++      let calls = 0;
++      global.fetch = jest.fn(async () => {
++        calls += 1;
++        return new Response(
++          JSON.stringify({ error: "Conversion failed: OEBError: Spine is empty", code: "CONVERSION_FAILED" }),
++          { status: 500 },
++        );
++      }) as unknown as typeof global.fetch;
++
++      const before = breakerSnapshot();
++      let reason: string | undefined;
++      const resp = await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
++      const after = breakerSnapshot();
++
++      expect(resp).toBeNull(); // 仍回退 CloudConvert
++      expect(calls).toBe(1); // 关键：跳过必败重试
++      expect(after.failures).toBe(before.failures + 1); // 仍计 1 次故障（不放大）
++      expect(reason).toContain("backend HTTP 500");
++      expect(reason).toContain("CONVERSION_FAILED");
++      expect(reason).not.toContain("after 1 retry"); // 告警卡格式不变
++    });
++
++    it("still retries a generic 5xx WITHOUT a CONVERSION_FAILED code (transient infra fault)", async () => {
++      // 反向约束：只有确定性转换失败才跳过重试；进程抖动/重启类 5xx 仍重试挽救。
++      setEnv();
++      let calls = 0;
++      global.fetch = jest.fn(async () => {
++        calls += 1;
++        if (calls === 1) return new Response("boom", { status: 500 });
++        return new Response(new Blob([Buffer.from("OK")]), { status: 200 });
++      }) as unknown as typeof global.fetch;
++
++      const resp = await delegateToBackend(makeForm(), {});
++      expect(resp).not.toBeNull();
++      expect(calls).toBe(2);
++    });
++
+     it("reports the backend root cause without a retry tag (alert-card format unchanged)", async () => {
+       setEnv();
+       const backendError = "Conversion failed: calibre.utils.zipfile.BadZipfile";
+diff --git a/ebook-converter/src/lib/conversion-backend-client.ts b/ebook-converter/src/lib/conversion-backend-client.ts
+index 2ac19a2..c49d1a9 100644
+--- a/ebook-converter/src/lib/conversion-backend-client.ts
++++ b/ebook-converter/src/lib/conversion-backend-client.ts
+@@ -227,6 +227,23 @@ export async function delegateToBackend(
+     return null;
+   }
+ 
++  // 路径 5 前置：确定性转换失败（code === "CONVERSION_FAILED"）→ 不重试。
++  //
++  // 依据（2026-11-04 红队复核 §C2 / 诊断_后端瞬时失败窗口重试 §7 P2）：后端对
++  // 「Calibre 拒收坏文件」也返回 HTTP 500 + code=CONVERSION_FAILED。这类 500 是
++  // **快速响应**（后端活着、已完整处理请求），不是进程抖动/重启，重试同一个文件
++  // 必再败，只是多一次后端往返 + 轻微加负。两条生产告警（Job 7a9b3d76 /
++  // e6b90936）的 "backend HTTP 500 — CONVERSION_FAILED" 正是此类。
++  //
++  // 刻意保持其余行为完全不变：onFallback 串、计 1 次故障、回退 CloudConvert
++  // 全部沿用 failWith——既有 36 个用例与告警卡解析零破坏。区别仅在省掉一次必败
++  // attemptOnce()。前端的边缘预检（input-validation.ts）已拦下大部分结构损坏，
++  // 这里兜底覆盖预检漏掉的类型（CRC/deflate 级损坏、DRM 等）。
++  if (res.status >= 500 && (await readBackendCode(res)) === "CONVERSION_FAILED") {
++    await failWith("", String(res.status), await readBackendDetail(res));
++    return null;
++  }
++
+   // 路径 5：5xx 瞬时失败（响应快，毫秒级）→ 重试一次再放弃。
+   // 只对「快速返回的 5xx」重试，不对超时/网络错误重试（避免 90s×2 逼近函数上限、
+   // 也避免对已挂后端无意义加压）。重试前再确认熔断未开（防御性）。
+@@ -263,6 +280,15 @@ export async function delegateToBackend(
+  *  2. 输出压平为单行（告警卡按行渲染，内嵌换行会撑破 markdown）；
+  *  3. 硬上限 180 字符——`alerts.ts` 直接内插该字段、不截断，长度必须在源头控制。
+  */
++async function readBackendCode(res: Response): Promise<string> {
++  try {
++    const body = JSON.parse(await res.clone().text()) as { code?: unknown };
++    return typeof body?.code === "string" ? body.code : "";
++  } catch {
++    return ""; // 非 JSON / 空体 / body 已消费 → 按「非确定性失败」处理，走原重试路径
++  }
++}
++
+ async function readBackendDetail(res: Response): Promise<string> {
+   try {
+     const text = await res.clone().text();
+diff --git a/ebook-converter/tests/unit/convert-route-cleanup.test.ts b/ebook-converter/tests/unit/convert-route-cleanup.test.ts
+index 3339a87..3290127 100644
+--- a/ebook-converter/tests/unit/convert-route-cleanup.test.ts
++++ b/ebook-converter/tests/unit/convert-route-cleanup.test.ts
+@@ -47,6 +47,14 @@ jest.mock('@/lib/conversion-backend-client', () => ({
+   delegateToBackend: jest.fn(),
+ }));
+ 
++// 2026-11-04：本文件只验证「R2 upload 对象清理」的编排，fixture 用
++// Buffer.from('fake-epub-bytes') 伪造 R2 字节（并非真实 ZIP）。边缘预检
++// (input-validation.ts) 会正确判其为损坏并提前 400，故在此隔离——否则
++// delegate/cleanup 根本不会走到，测试就失去它要守护的语义。
++jest.mock('@/lib/input-validation', () => ({
++  preflightValidateInput: jest.fn(async () => ({ corrupt: false })),
++}));
++
+ import { POST } from '@/app/api/convert/route';
+ import { NextRequest } from 'next/server';
+ import { convertAndStream, scheduleUploadCleanup } from '@/lib/convert-handler';

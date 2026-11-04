@@ -227,6 +227,23 @@ export async function delegateToBackend(
     return null;
   }
 
+  // 路径 5 前置：确定性转换失败（code === "CONVERSION_FAILED"）→ 不重试。
+  //
+  // 依据（后端代码契约 + 2026-11-04 红队复核 §C2 / 诊断_后端瞬时失败窗口重试 §7 P2）：
+  // conversion-backend/app/index.js 在 Calibre 转换失败时固定返回
+  // HTTP 500 + { code: "CONVERSION_FAILED" }，与进程抖动/重启无关。这类 500 是
+  // **快速响应**（后端活着、已完整处理请求），重试同一个输入必再败，只是多一次
+  // 后端往返 + 轻微加负。判定只依赖响应体 code，不依赖任何特定告警或输入来源
+  // （2026-11-04 红队曾推翻以两条告警作为实证的写法，故此处只述代码契约）。
+  //
+  // 刻意保持其余行为完全不变：onFallback 串、计 1 次故障、回退 CloudConvert
+  // 全部沿用 failWith——既有 36 个用例与告警卡解析零破坏。区别仅在省掉一次必败
+  // attemptOnce()。输入有效性仍由回退路径的 runConversion→validateInputFile 负责。
+  if (res.status >= 500 && (await readBackendCode(res)) === "CONVERSION_FAILED") {
+    await failWith("", String(res.status), await readBackendDetail(res));
+    return null;
+  }
+
   // 路径 5：5xx 瞬时失败（响应快，毫秒级）→ 重试一次再放弃。
   // 只对「快速返回的 5xx」重试，不对超时/网络错误重试（避免 90s×2 逼近函数上限、
   // 也避免对已挂后端无意义加压）。重试前再确认熔断未开（防御性）。
@@ -263,6 +280,15 @@ export async function delegateToBackend(
  *  2. 输出压平为单行（告警卡按行渲染，内嵌换行会撑破 markdown）；
  *  3. 硬上限 180 字符——`alerts.ts` 直接内插该字段、不截断，长度必须在源头控制。
  */
+async function readBackendCode(res: Response): Promise<string> {
+  try {
+    const body = JSON.parse(await res.clone().text()) as { code?: unknown };
+    return typeof body?.code === "string" ? body.code : "";
+  } catch {
+    return ""; // 非 JSON / 空体 / body 已消费 → 按「非确定性失败」处理，走原重试路径
+  }
+}
+
 async function readBackendDetail(res: Response): Promise<string> {
   try {
     const text = await res.clone().text();

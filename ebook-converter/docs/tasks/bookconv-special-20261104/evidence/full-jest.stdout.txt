@@ -1,0 +1,753 @@
+[31m[2026-11-04T15:13:07.659Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-perf-uploads'"}
+[31m[2026-11-04T15:13:07.955Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-21268'"}
+[31m[2026-11-04T15:13:08.223Z] [ERROR] [conversion][0m {"jobId":"boundary-empty-b64","attempt":null,"maxRetries":3,"error":"An unexpected error occurred. Please try again later.","rawError":"Either fileBuffer or inputFilePath must be provided","code":"INTERNAL_ERROR"}
+[31m[2026-11-04T15:13:08.267Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml","decompressedSoFar":652,"sourceFormat":"epub"}
+[31m[2026-11-04T15:13:08.292Z] [ERROR] [conversion][0m {"jobId":"boundary-corrupted","attempt":null,"maxRetries":3,"error":"The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.","rawError":"not a valid eBook format","code":"CORRUPT_INPUT"}
+[31m[2026-11-04T15:13:08.306Z] [ERROR] [conversion][0m {"jobId":"boundary-truncated-zip","attempt":null,"maxRetries":3,"error":"The uploaded file is too small to be a valid document (under 30 bytes). Please upload the real file.","rawError":"Invalid input file: too small (6 bytes)","code":"INPUT_TOO_SMALL"}
+PASS tests/boundary/boundary-tests.test.ts
+  Boundary: File size limits
+    √ should handle near-maximum file size (1MB mock) (133 ms)
+    √ should handle exactly 1MB file (50 ms)
+    √ should handle very small files (47 ms)
+  Boundary: Special character filenames
+    √ should handle Unicode job IDs (38 ms)
+    √ should handle job IDs with spaces and hyphens (29 ms)
+    √ should handle job IDs with special symbols (37 ms)
+  Boundary: Empty and zero-byte files
+    √ should reject empty base64 string (15 ms)
+    √ should handle whitespace-only content (min size) (32 ms)
+  Boundary: Corrupted input handling
+    √ should reject completely random binary data as corrupt (29 ms)
+    √ should reject truncated ZIP data (too small) (22 ms)
+  Boundary: MAX_RETRIES configuration
+    √ should have MAX_RETRIES set to 3 by default (1 ms)
+
+[31m[2026-11-04T15:13:08.357Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml (CRC32 mismatch)","decompressedSoFar":4373,"sourceFormat":"epub"}
+[31m[2026-11-04T15:13:08.370Z] [ERROR] [conversion][0m {"brokenMember":"META-INF/container.xml (empty container.xml)","decompressedSoFar":67,"sourceFormat":"epub"}
+[31m[2026-11-04T15:13:08.376Z] [ERROR] [conversion][0m {"magicHex":"3c68746d","sourceFormat":"epub","guess":"一段以「<htm」开头的文本文件（可能是 .txt/.html/.xml，被改名为 .epub）"}
+[31m[2026-11-04T15:13:08.396Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml (manifest reference missing)","decompressedSoFar":652,"sourceFormat":"epub"}
+PASS src/lib/conversion-backend-client.test.ts
+  conversion backend client
+    isCalibreTarget (whitelist mirrors backend BACKEND_TARGETS)
+      √ accepts formats Calibre can emit (13 ms)
+      √ rejects unknown/unsupported formats and null (3 ms)
+      √ strips a leading dot and lowercases (3 ms)
+    backendConfigured
+      √ false when either env var is missing (2 ms)
+    delegateToBackend
+      √ returns null when backend is not configured (fail-open to CloudConvert) (4 ms)
+      √ returns null when the circuit is open (no request attempted) (3 ms)
+      √ returns null when the form has no File (upload_key path -> CloudConvert) (3 ms)
+      √ returns a 200 NextResponse streaming the backend bytes on success (16 ms)
+      √ returns null on 5xx (failover to CloudConvert) and records a failure (8 ms)
+      √ 429 is capacity, not outage: does not increment failures (11 ms)
+      √ three consecutive 429s do NOT open the circuit (would have before the fix) (8 ms)
+      √ a 429 does not swallow the failure budget of a real outage (7 ms)
+      √ returns null on network error (failover to CloudConvert) (2 ms)
+      √ aborts a slow backend quickly and falls back (timeout path) (117 ms)
+      √ forwards a prebuiltFile (R2 upload_key path) to the backend (4 ms)
+      √ forwards the quality field when present (2 ms)
+      fallback reason reporting (alert attribution)
+        √ reports busy + backend code for 429 (2 ms)
+        √ reports a plain busy reason when the 429 body is not JSON (nginx limit_req) (2 ms)
+        √ reports the HTTP status AND the backend's own error body (3 ms)
+        √ reports circuit-open WITHOUT attempting a request (2 ms)
+        √ reports the network error message (2 ms)
+        √ stays silent on success (no false alarm in the card) (3 ms)
+        5xx body passthrough (root-cause visibility)
+          √ includes code + error from a JSON body (3 ms)
+          √ flattens newlines so the alert card keeps one line per field (3 ms)
+          √ caps the appended detail at 180 chars (alerts.ts does not truncate) (3 ms)
+          √ degrades to plain status when the body is empty (3 ms)
+          √ degrades to plain status when reading the body throws (already consumed) (2 ms)
+      client IP passthrough
+        √ sends x-client-ip when the route resolved one (1 ms)
+        √ omits the header entirely when IP is unknown (never sends empty) (1 ms)
+      5xx transient retry (task #1)
+        √ retries a single 5xx and succeeds on the retry (4 ms)
+        √ two 5xx (after retry) records exactly ONE failure, not two (3 ms)
+        √ does NOT retry on timeout (slow failure) (120 ms)
+        √ does NOT retry on network error (8 ms)
+        √ does NOT retry on 429 (capacity signal) (3 ms)
+        √ retry sends a fresh, valid FormData to the backend (3 ms)
+        √ does NOT retry a deterministic CONVERSION_FAILED 500 (bad user file) (3 ms)
+        √ still retries a generic 5xx WITHOUT a CONVERSION_FAILED code (transient infra fault) (23 ms)
+        √ reports the backend root cause without a retry tag (alert-card format unchanged) (3 ms)
+
+[31m[2026-11-04T15:13:08.414Z] [ERROR] [conversion][0m {"brokenMember":"mimetype (expected application/epub+zip, got \"application/zip\")","decompressedSoFar":4368,"sourceFormat":"epub"}
+PASS tests/reverse-verify-epub-deep-validation.test.ts
+  reverse-verify: §3.5 EPUB deep decompression validation (2026-10-19)
+    √ 正常 EPUB 通过深度校验（不误杀） (124 ms)
+    √ 成员 deflate 数据损坏的 EPUB 被拦下（corrupt epub → CORRUPT_INPUT） (85 ms)
+    √ 成员 CRC32 校验和损坏的 EPUB 被拦下（M8-12：CRC 盲区关闭，deflate 完好仍可解压） (27 ms)
+    √ container.xml 为空内容的 EPUB 被拦下 (12 ms)
+    √ 非 ZIP 文件仍走原有浅校验（not a valid eBook format，行为不变） (6 ms)
+    √ M8-12 盲区#2：manifest 引用缺失文件的 EPUB 被拦下（断链语义损坏 → corrupt epub） (21 ms)
+    √ M8-12 盲区#2：mimetype 存在但内容错误的 EPUB 被拦下（语义损坏 → corrupt epub） (41 ms)
+
+PASS tests/unit/purejs-mobi-azw3-smoke.test.ts
+  mobi/azw3 fixtures are genuine (real MOBI/AZW3, not the 1KB stub)
+    √ mobi fixture is a real MOBI/AZW3 (15 ms)
+    √ azw3 fixture is a real MOBI/AZW3 (3 ms)
+  pure-JS MOBI/AZW3 source conversions (real fixtures)
+    √ mobi -> epub (55 ms)
+    √ mobi -> rtf (31 ms)
+    √ mobi -> docx (36 ms)
+    √ mobi -> fb2 (18 ms)
+    √ mobi -> txt (22 ms)
+    √ azw3 -> epub (27 ms)
+    √ azw3 -> rtf (20 ms)
+    √ azw3 -> docx (28 ms)
+    √ azw3 -> fb2 (22 ms)
+    √ azw3 -> txt (30 ms)
+
+PASS tests/unit/convert-route-cleanup.test.ts
+  POST /api/convert: R2 upload cleanup on the backend path
+    √ schedules cleanup when the backend delegation succeeds (34 ms)
+    √ does NOT schedule cleanup when falling back to CloudConvert (convertAndStream owns it) (5 ms)
+    √ does not schedule cleanup when there is no upload_key (6 ms)
+
+[31m[2026-11-04T15:13:08.610Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-27808'"}
+PASS tests/unit/unsupported-conversions.test.ts
+  unsupported conversion registry
+    √ registers the four pairs currently unavailable in BookConv (10 ms)
+    √ lookup is case-safe via normalized lowercase keys (3 ms)
+    √ every entry points at a working alternative format pair (3 ms)
+  convertAndStream 422 interception
+    √ blocks epub → doc with 422 + UNSUPPORTED_CONVERSION + alternative (11 ms)
+    √ blocks epub → jpg with 422 + UNSUPPORTED_CONVERSION + alternative (7 ms)
+    √ blocks epub → png with 422 + UNSUPPORTED_CONVERSION + alternative (2 ms)
+    √ blocks doc → epub with 422 + UNSUPPORTED_CONVERSION + alternative (2 ms)
+    √ does NOT intercept supported combos (they proceed past validation) (3 ms)
+    √ does NOT intercept the supported DOCX input path (2 ms)
+
+PASS tests/unit/queue.test.ts
+  processConversion
+    √ should process a valid conversion successfully (73 ms)
+    √ should handle htmlz extension mapping (34 ms)
+    √ should respect MAX_RETRIES setting (1 ms)
+    √ should return proper mimeType for common formats (293 ms)
+  getJobStatus
+    √ should return null for non-existent jobs (2 ms)
+
+PASS tests/performance/performance.test.ts
+  Performance: Concurrent conversion throughput
+    √ should handle 5 sequential conversions within timeout (284 ms)
+    √ should handle 20 sequential conversions (569 ms)
+    √ should handle mixed-format conversions (139 ms)
+  Performance: Memory usage monitoring
+    √ should measure baseline memory for a single conversion (1 ms)
+    √ should handle multiple conversions without unbounded memory growth (2 ms)
+    √ should track memory for large base64 encoding (2 ms)
+  Performance: Conversion speed benchmark
+    √ should complete a conversion in under 1 second (mock baseline) (44 ms)
+    √ should benchmark 10 sequential conversions (367 ms)
+  Performance: Queue throughput simulation
+    √ should simulate rapid job enqueuing (2 ms)
+    √ should calculate throughput rate (1 ms)
+
+[32m[2026-11-04T15:13:09.032Z] [INFO] [conversion][0m {"targetFormat":"txt","sourceFormat":"epub","pass":false,"count":1}
+PASS tests/input-validation.test.ts
+  preflightValidateInput
+    √ 合法 EPUB 放行（不误杀） (42 ms)
+    √ 非 ZIP 类源（mobi）直接放行，不做边缘校验 (15 ms)
+    √ 空字节放行（由上游专门拦截） (1 ms)
+    √ 截断下载 / 无中央目录的 ZIP → 判损坏（Job e6b90936 同类） (55 ms)
+    √ 非 EPUB（HTML 文本）伪装成 epub → 魔数拦截 (7 ms)
+    √ manifest 引用缺失成员（nav.xhtml 被删）→ 判损坏（Job 7a9b3d76 同类） (63 ms)
+    √ mimetype 存在但内容错误 → 判损坏 (11 ms)
+    √ 缺失 META-INF/container.xml → 判损坏 (3 ms)
+    √ 远程 href 引用不误杀（合法 EPUB 可引用外部资源） (6 ms)
+    每条损坏 reason 都必须映射为 CORRUPT_INPUT 灰卡
+      √ 截断 ZIP（无中央目录） → CORRUPT_INPUT + 灰卡 (7 ms)
+      √ 非 EPUB 文本 → CORRUPT_INPUT + 灰卡 (1 ms)
+      √ manifest 断链 → CORRUPT_INPUT + 灰卡 (19 ms)
+      √ mimetype 内容错误 → CORRUPT_INPUT + 灰卡 (12 ms)
+      √ 缺失 container.xml → CORRUPT_INPUT + 灰卡 (3 ms)
+
+PASS src/lib/conversion-verifier.test.ts
+  verifyConversion
+    √ passes epub -> pdf (CloudConvert output): magic-verified, no false content-loss veto (114 ms)
+    √ passes epub -> mobi (CloudConvert output): BOOKMOBI magic recognized (36 ms)
+    √ reverse: offset-0 BOOKMOBI variant is still detected as mobi (not text) (40 ms)
+    √ still vetoes epub -> txt when output is a tiny stub (content-loss intact) (50 ms)
+    √ passes epub -> txt with near-full text preserved (48 ms)
+
+PASS tests/unit/keywords.test.ts
+  isMoving
+    √ is false when there is no baseline (delta null) (4 ms)
+    √ is false when the position is unchanged (delta 0) (1 ms)
+    √ is true for any non-zero movement, up or down (1 ms)
+  sortRows
+    √ sorts by delta desc, pushing nulls to the bottom (3 ms)
+    √ sorts by delta asc, still pushing nulls to the bottom (1 ms)
+    √ sorts by position asc using latest.impressionPosition (1 ms)
+    √ sorts by query alphabetically (22 ms)
+    √ never mutates the input array
+  loadKeywordSeries
+    √ loads the generated series when present (1 ms)
+    √ bing totals reconcile: comparable = up + down + flat (2 ms)
+    √ gsc comparability follows the rolling-window rule (the honesty guard) (1 ms)
+  mergedKeywordRows
+    √ flattens Bing + GSC into one table tagged by source (32 ms)
+    √ maps GSC position onto impressionPosition so the panel can render it (18 ms)
+    √ preserves GSC raw deltas when comparable (and none when not) (3 ms)
+    √ never produces a GSC delta across mismatched windows (161 ms)
+  latestReasonByQuery
+    √ keeps the most recent reason per query (2 ms)
+    √ returns an empty map for no input
+  loadKeywordReasons
+    √ returns an array (never null) even when curated by hand (4 ms)
+  loadKeywordReasonCandidates
+    √ returns an array (never null) when not generated yet (5 ms)
+  buildCandidates
+    √ flags competitor pressure as a high-confidence hypothesis (related != causal) (10 ms)
+    √ reports unobserved rivals without inferring they are outside Top-100 (4 ms)
+    √ stays silent when rivals are present but there is no baseline (no false "newly entered") (1 ms)
+    √ stays silent about competitors for a query that is not tracked at all (3 ms)
+    √ flags an algorithm-update window as a medium-confidence hypothesis (1 ms)
+    √ ignores movements below the threshold (5 ms)
+    √ skips keywords with no baseline (delta null) (1 ms)
+    √ respects a custom threshold (1 ms)
+  latestCandidateByQuery / pickCandidate
+    √ maps each query to its candidate entry (1 ms)
+    √ picks a candidate item by query + index (1 ms)
+
+PASS tests/unit/board.test.ts
+  board data file
+    √ passes structural validation (2 ms)
+    √ numbers every module M0..M(n) contiguously, with no gap and no duplicate (3 ms)
+    √ keeps every module populated and never shrinks below the measured baseline (3 ms)
+    √ uses unique task ids (1 ms)
+    √ rejects an invalid status rather than rendering a blank cell (52 ms)
+    √ rejects an invalid priority (17 ms)
+    √ rejects duplicate task ids (7 ms)
+    √ marks every task as either a spec clause or a documented supplement (99 ms)
+    √ carries five anchors and two social channels (1 ms)
+    √ declares at least one open decision for the owner (2 ms)
+  date helpers
+    √ recognises ISO dates only (2 ms)
+    √ computes day deltas (1 ms)
+    √ maps weekdays stably (1 ms)
+    √ treats done and dropped as closed (1 ms)
+  recurrence
+    √ fires daily task every day (2 ms)
+    √ fires weekly tasks on Monday only (2 ms)
+    √ fires monthly-first-week only in the first 7 days on a Monday (1 ms)
+    √ fires monthly-end only in the last three days (1 ms)
+    √ fires quarterly only in the first week of Jan/Apr/Jul/Oct on a Monday (1 ms)
+    √ never auto-lists event-driven tasks (per-change / per-round)
+    √ classifies the three standing cadences and nothing else (2 ms)
+    √ labels every cadence that appears in the data file (14 ms)
+    √ does not treat non-recurring fixed-date tasks as recurring
+    √ anchors the every-2-days parity to D0, not to run time
+  board derivation
+    √ reports the totals straight from the data file (2 ms)
+    √ lists fixed-date tasks due today (1 ms)
+    √ lists recurring tasks on a firing day (1 ms)
+    √ routes standing cadences out of the dated list (1 ms)
+    √ keeps a firing day actionable by excluding standing discipline (1 ms)
+    √ reports per-module standing counts without polluting nextDue (2 ms)
+    √ carries the task status and cadence label into the due item (1 ms)
+    √ has nothing overdue on day zero
+    √ surfaces a task as overdue the day after its due date (2 ms)
+    √ keeps overdue items accumulating rather than dropping off (1 ms)
+    √ sorts due-today by priority, P0 first (7 ms)
+    √ counts module progress from statuses only
+    √ reflects a completed task in module progress and totals (9 ms)
+    √ excludes dropped tasks from the open count (4 ms)
+    √ counts blocked tasks separately (18 ms)
+    √ counts down to anchors and flips them to passed (7 ms)
+    √ marks an anchor as today when the date matches (2 ms)
+    √ sorts anchors soonest first
+    √ surfaces the scheduled X slot for its date (2 ms)
+    √ keeps Reddit in warm-up until the window opens (2 ms)
+    √ never returns an empty recheck queue shape (it is a list, possibly empty)
+    √ routes a task into the recheck queue once it has a recheck date (5 ms)
+    √ surfaces COMPLETED work for recheck — that is the whole point of a recheck (4 ms)
+    √ does not list a completed task as still due (3 ms)
+    √ never rechecks a dropped task (4 ms)
+    √ is pure: same input yields the same view (2 ms)
+    √ does not mutate the input data (3 ms)
+    √ exposes a convenience loader for a given day (2 ms)
+  board honesty
+    √ labels supplement tasks as SUPP so they are never read as spec clauses (1 ms)
+    √ keeps the spec-clause tasks marked CORE (1 ms)
+    √ never presents a citation count as a traffic promise (2 ms)
+    √ states the supplement discipline in the readme so the file is self-explaining
+
+[31m[2026-11-04T15:13:09.557Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-19800'"}
+PASS tests/unit/integration-pipeline.test.ts
+  Integration: Full pipeline verification
+    √ should produce valid conversion result (86 ms)
+    √ should track progress updates during conversion (35 ms)
+    √ should handle all image output formats correctly (60 ms)
+    √ should call execFile with correct arguments (1 ms)
+
+PASS tests/unit/input-size-guard.test.ts
+  inputSizeRejection 判据真值（只拦空文件）
+    √ 0 字节 → UPLOAD_EMPTY (5 ms)
+    √ 1 字节放行（后端可转换小文件，禁止前置误伤） (2 ms)
+    √ 14 字节放行（后端可转换小文件，禁止前置误伤） (1 ms)
+    √ 29 字节放行（后端可转换小文件，禁止前置误伤） (1 ms)
+    √ 30 字节放行（后端可转换小文件，禁止前置误伤） (1 ms)
+    √ 1024 字节放行（后端可转换小文件，禁止前置误伤） (11 ms)
+    √ 回归护栏：14 字节必须放行（第一稿曾错误拦截，实测后端返回 200）
+  convertAndStream 全链路接线（旧行为是 500 + 红卡）
+    √ 0 字节 → 400 UPLOAD_EMPTY，不再是 500 (20 ms)
+    √ 缺 file 字段仍走原有 400（守卫未顶掉既有校验） (2 ms)
+  归因真值（too small 属容量/降级链，不是用户输入错误）
+    √ 真实 14B 错误串 → INPUT_TOO_SMALL（而非 INTERNAL_ERROR） (1 ms)
+    √ 真实 14B 错误串仍判 system 红卡（后端忙 + 回退引擎拒绝 = 我方容量问题） (1 ms)
+    √ 反向否定：0B 的深层错误串判 system（null buffer 属编程缺陷） (1 ms)
+    √ 真系统故障仍是红卡
+
+PASS tests/unit/txt-epub-contract.test.ts
+  √ packages UTF-8 text as one document with blank-line paragraphs (75 ms)
+
+PASS tests/unit/seo-index-remediation.test.ts
+  indexing remediation
+    √ does not recommend canonical aliases or demonstration reports in the sitemap (29 ms)
+    √ withdraws unverified device results instead of presenting placeholder numbers as a test (23 ms)
+    √ keeps English takeaway sections in English (12 ms)
+    √ keeps default structured FAQs identical to the visible default FAQ data (5 ms)
+    √ links real translations without generating unsupported Spanish routes (5 ms)
+
+PASS tests/unit/epub-docx-capability.test.ts
+  EPUB to DOCX actual output contract
+    √ preserves Unicode chapter text in readable OOXML, without promising images or heading styles (105 ms)
+
+PASS src/lib/conversion-purejs-epub.test.ts
+  pure-JS mobi/azw3 -> epub
+    √ mobi -> epub produces a valid EPUB that passes magic + structure checks (87 ms)
+    √ azw3 -> epub also routes through the pure-JS path (59 ms)
+
+PASS tests/unit/spanish-route-restoration.test.ts
+  Spanish historical route restoration
+    √ emits reciprocal language pairs only for real translated destinations (31 ms)
+    √ lists indexable restorations but excludes navigation-only tags and unavailable translations (14 ms)
+    √ renders Spanish conversion data and actual destinations, keeping legacy DOC separate (42 ms)
+    √ translates policy without inventing a deletion deadline (4 ms)
+    √ validates real txt text fallback instead of promising original layout or chapter detection (92 ms)
+    √ validates real html text fallback instead of promising original layout or chapter detection (55 ms)
+
+PASS src/lib/epub-html.test.ts
+  √ preserves chapter and resource bytes and indexes spine order (75 ms)
+  √ does not overwrite an existing root index (21 ms)
+  √ rejects missing chapters and unsafe archive paths (42 ms)
+  √ executes the real local conversion and returns a ZIP (92 ms)
+
+PASS src/lib/utils.test.ts
+  formatBytes
+    √ returns 0 B for zero bytes (4 ms)
+    √ formats bytes correctly (1 ms)
+    √ handles large numbers (1 ms)
+  getSlug
+    √ creates a slug from source and target formats (1 ms)
+    √ handles mixed case input (1 ms)
+  getDisplayName
+    √ converts slug to display name (1 ms)
+    √ handles single-word slugs (1 ms)
+  cn
+    √ merges class names with clsx and twMerge (23 ms)
+    √ handles conditional classes (1 ms)
+    √ omits falsy values
+
+PASS tests/boundary/infrastructure-boundaries.test.ts
+  Boundary: Environment configuration
+    √ should have reasonable default UPLOAD_DIR (3 ms)
+    √ should have CALIBRE_PATH configured (1 ms)
+    √ should have NEXT_PUBLIC_MAX_FILE_SIZE_MB set (5 ms)
+    √ should have WORKER_CONCURRENCY set (1 ms)
+  Boundary: Worker lifecycle exports
+    √ should have startWorker and closeWorker functions exported (114 ms)
+    √ should have getJobStatus function exported (1 ms)
+    √ should have startQueueEvents function exported (2 ms)
+    √ should have closeQueueEvents function exported (2 ms)
+  Boundary: Redis connection exports
+    √ should have getRedisClient function exported (1 ms)
+    √ should have closeRedis function exported (2 ms)
+    √ should have requireRedisClient function exported (4 ms)
+  Boundary: Type definitions
+    √ should have valid ConversionJobResult structure (4 ms)
+
+PASS tests/unit/conversion-map.test.ts
+  CONVERSION_MAP
+    √ should have exactly 60 conversion paths (7 ms)
+    √ should contain all expected conversion keys (24 ms)
+    √ should have tool type and description for every conversion (38 ms)
+  SUPPORTED_FORMATS
+    √ should include all source and target formats from conversion map (2 ms)
+    √ should be sorted alphabetically (2 ms)
+    √ should not contain duplicates (1 ms)
+  getConversionKey
+    √ should produce lowercase hyphenated format pair (1 ms)
+  getConversion
+    √ should return the conversion entry for valid pairs (3 ms)
+    √ should return undefined for unsupported pairs (1 ms)
+    √ should be case-insensitive (1 ms)
+  FORMAT_DISPLAY_NAMES
+    √ should have display names for all supported formats (2 ms)
+    √ should have reasonable display names (1 ms)
+  normalizeFormat
+    √ should lowercase and remove dots (1 ms)
+    √ should resolve display name aliases (1 ms)
+
+PASS tests/unit/regression-all-paths.test.ts
+  CONVERSION_MAP Regression
+    √ should have exactly 60 conversion paths (1 ms)
+    √ should have tool type and description for every conversion (36 ms)
+  API validation logic
+    √ should reject unsupported source formats (1 ms)
+    √ should normalize format strings (1 ms)
+    √ should enforce 10MB file size limit
+  Error code mapping
+    √ should map known OS errors to application codes
+    √ should map conversion failure (1 ms)
+    √ should default to INTERNAL_ERROR for unknown errors
+  Error sanitization
+    √ should strip internal paths from error messages (2 ms)
+    √ should strip stack traces from error messages (1 ms)
+  EPUB ZIP signature check
+    √ should recognize valid EPUB magic bytes
+    √ should reject non-ZIP files as EPUB (1 ms)
+
+[31m[2026-11-04T15:13:10.197Z] [ERROR] [rate-limit][0m {"error":"redis.eval is not a function"}
+[33m[2026-11-04T15:13:10.211Z] [WARN] [rate-limit][0m {"hint":"Check TRUST_PROXY / platform forwarded headers if this is unexpected"}
+PASS tests/unit/rate-limit.test.ts
+  RATE_LIMIT_STRATEGIES
+    √ should define all expected strategies (2 ms)
+    √ should have reasonable limits per strategy (1 ms)
+    √ should use 60s window for most strategies (2 ms)
+  checkRateLimit
+    √ should allow requests within the limit (3 ms)
+  getRateLimitHeaders
+    √ should include standard rate limit headers (1 ms)
+    √ should include Retry-After when rate limited (3 ms)
+  getRateLimitIdentifier（按客户端区分，2026-11-02）
+    √ Vercel 运行时：不同客户端得到不同标识（共享桶的直接反例） (4 ms)
+    √ Vercel 运行时：同一个客户端得到稳定标识（不能每次请求都变，否则限流形同虚设） (2 ms)
+    √ Vercel 运行时：XFF 多段时取链尾（平台追加值），不受链首伪造影响 (2 ms)
+    √ 非 Vercel 且无任何 IP 来源：退化为 unknown（保持原语义，但不再是唯一可达分支） (1 ms)
+    √ 已登录用户走 userId，不依赖 IP (2 ms)
+
+[33m[2026-11-04T15:13:10.351Z] [WARN] [conversion][0m {"error":"redis.incrby is not a function"}
+PASS tests/unit/conversion-budget-cache.test.ts
+  isPureJsConversion
+    √ classifies pure-JS pairs as local (no credit consumed) (13 ms)
+    √ classifies CloudConvert-dependent pairs as non-local (3 ms)
+    √ is case-insensitive and safe on empty input
+  computeCacheKey
+    √ is deterministic for identical inputs (1 ms)
+    √ is sensitive to source format, target format, and bytes (1 ms)
+    √ bumps with schema version (old entries unreachable) (1 ms)
+  validateCachedOutput
+    √ accepts valid ZIP-family outputs (1 ms)
+    √ rejects non-ZIP bytes for ZIP-family outputs (1 ms)
+    √ accepts valid PDF / MOBI-family outputs (1 ms)
+    √ rejects empty and wrong-magic outputs (1 ms)
+    √ validates text-family signatures (2 ms)
+  conversion-budget
+    √ defaults the daily limit to 10 (CloudConvert free tier) (1 ms)
+    √ secondsUntilUtcMidnight stays within (0, 86400] (1 ms)
+    √ allows conversion when no spend recorded (mock redis get → null) (1 ms)
+    √ recordCreditSpend never throws when the redis command is unavailable (fail-open) (2 ms)
+    √ degrades to allow when Redis client is null (fail-open) (4 ms)
+  conversion-cache
+    √ defaults the TTL to 30 days (privacy) (1 ms)
+    √ serves a miss (null) when R2 is not configured (3 ms)
+    √ skips storing when R2 is not configured (no orphan objects) (20 ms)
+
+PASS src/lib/constants.test.ts
+  KEYWORDS data
+    √ has keywords defined (1 ms)
+    √ all keywords have required fields (45 ms)
+    √ phases are valid (4 ms)
+  getKeywordsByPhase
+    √ filters keywords by phase (2 ms)
+    √ returns empty array for non-existent phase
+  getP0Keywords
+    √ returns only P0 keywords (3 ms)
+
+PASS tests/unit/upload-presign.test.ts
+  isValidUploadKey
+    √ accepts a key produced by buildUploadKey (2 ms)
+    √ accepts the canonical minted shape
+    √ rejects path traversal
+    √ rejects absolute paths (1 ms)
+    √ rejects keys outside the uploads/ prefix (e.g. conversion cache objects) (1 ms)
+    √ rejects malformed dates and ids (1 ms)
+    √ rejects a missing extension (1 ms)
+    √ rejects non-strings and over-long input (1 ms)
+  buildUploadKey
+    √ always produces a key that passes validation (4 ms)
+    √ uses the source format as the extension and never leaks unsafe characters (2 ms)
+    √ falls back to .bin for an empty format (1 ms)
+    √ produces unique keys (1 ms)
+    √ is date-partitioned (for the lifecycle rule that sweeps orphans) (1 ms)
+  fileNameFromUploadKey
+    √ derives a download name from the source format (2 ms)
+    √ never returns an empty extension
+  isDirectUploadEnabled
+    √ is false when R2 credentials are absent (fail closed) (1 ms)
+    √ is TRUE in Calibre-backend (self-hosted) mode when R2 is present (2026-10-28)
+    √ is true when R2 is configured and no backend is set (1 ms)
+  size cap invariants
+    √ the direct-upload cap is strictly larger than the multipart cap (1 ms)
+    √ the direct-upload cap is large enough for real DJVU / comic files
+    √ presigned URLs expire (1 ms)
+
+PASS tests/unit/keyword-meta.test.ts
+  deriveTargetUrl
+    √ maps a plain "X to Y" keyword to its convert page (8 ms)
+    √ ignores surrounding words (4 ms)
+    √ resolves format aliases to the slug the site actually ships (25 ms)
+    √ returns null when no real page exists — never invents a URL (4 ms)
+  deriveIntent
+    √ classifies the documented buckets (3 ms)
+    √ puts the instructional reading of an IP keyword in 操作指南, not IP内容 (1 ms)
+    √ falls back to 其他 for a query with no signal (1 ms)
+  competitorsForQuery
+    √ returns the competitors whose overlap list contains the keyword (exact, case-insensitive) (1 ms)
+    √ returns [] for an untracked keyword or missing config (1 ms)
+  decision ledger helpers
+    √ keeps the most recent keyword decision per query (30 ms)
+    √ keys competitor decisions by domain|query (1 ms)
+  decision loaders
+    √ always return arrays (the ledgers are optional and hand-curated) (22 ms)
+
+[32m[2026-11-04T15:13:10.480Z] [INFO] [conversion][0m
+[32m[2026-11-04T15:13:10.483Z] [INFO] [conversion][0m
+[32m[2026-11-04T15:13:10.486Z] [INFO] [conversion][0m
+PASS tests/reverse-verify-alerts-redteam.test.ts
+  alerts 分级红队反向验证 (M8-13 / M8-14)
+    √ 真实告警2（Input task has failed）降级灰卡 user，而非系统红卡 system (2 ms)
+    √ 双层保险：USER_SIDE_PATTERNS 命中 或 mapErrorCode→CORRUPT_INPUT 任一降级
+    √ 对比项：真实告警1（Invalid zip file）仍灰卡 user
+    √ 契约锁：新串（带诊断后缀仍前缀 Invalid zip file）仍被正确分级为灰卡 user
+    √ 对比项：真系统故障（backend-unavailable 503）仍红卡 system
+    √ 反向否定：不含用户侧签名的引擎故障仍 system（防止双层保险误伤）
+  告警卡 delegation 归因透传（2026-11-02）
+    √ 渲染 Backend delegation 行，说明是后端忙而非文件坏 (11 ms)
+    √ 未提供归因时不渲染该行（不给历史调用方凭空加噪声） (3 ms)
+    √ 熔断跳过也可见（区分「后端忙」与「根本没请求」） (3 ms)
+
+[32m[2026-11-04T15:13:10.509Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128,"ttlDays":30}
+[32m[2026-11-04T15:13:10.510Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128}
+[32m[2026-11-04T15:13:10.512Z] [INFO] [conversion][0m {"targetFormat":"mobi","size":128,"ttlDays":30}
+[32m[2026-11-04T15:13:10.517Z] [INFO] [conversion][0m {"targetFormat":"mobi","size":128,"ttlDays":30}
+PASS tests/unit/storage-retention.test.ts
+  √ cleans expired local results without scanning or deleting the R2 bucket (90 ms)
+
+[33m[2026-11-04T15:13:10.523Z] [WARN] [conversion][0m {"targetFormat":"azw3","reason":"not a PalmDB/MOBI container"}
+[32m[2026-11-04T15:13:10.525Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128,"ttlDays":30}
+PASS tests/unit/conversion-cache-roundtrip.test.ts
+  A1 缓存 store→get 命中路径（epub→azw3/mobi 402 缓解核心）
+    √ 存入合法 azw3 输出后，同输入同格式二次查询命中并返回一致字节 (13 ms)
+    √ 不同输入（不同文件）命中失败 —— 证明缓存不跨文件生效（诚实边界） (1 ms)
+    √ 不同目标格式命中失败 —— epub→mobi 不串到 epub→azw3 (4 ms)
+    √ 损坏/错格式字节既不被存入、也不被命中返回（validateCachedOutput 门禁） (7 ms)
+    √ 过期 meta → 命中失败（防陈旧，R7） (2 ms)
+  validateCachedOutput 边界（红队 R8 复验）
+    √ accepts BOOKMOBI/azw3 magic (1 ms)
+    √ rejects empty output (1 ms)
+
+PASS src/lib/direct-upload-error.test.ts
+  mapDirectUploadError（阶段分流）
+    √ presign 503 → DIRECT_UPLOAD_PRESIGN_UNAVAILABLE (10 ms)
+    √ R-B：presign 413 带 FILE_TOO_LARGE 合同码 → 保留 FILE_TOO_LARGE (2 ms)
+    √ R-A：presign 返回未知字面量（如 DIRECT_UPLOAD_UNAVAILABLE）→ 不透传，归 PRESIGN_ERROR (2 ms)
+    √ presign 400/429/网络（无合同码）→ DIRECT_UPLOAD_PRESIGN_ERROR (4 ms)
+    √ R2 PUT 失败（CORS/网络/非2xx）→ DIRECT_UPLOAD_PUT_FAILED (1 ms)
+    √ 未知抛出（阶段不明）→ 兜底 DIRECT_UPLOAD_FAILED（历史/门禁兼容）
+  门禁同步不变量（改能力必须同步改门禁基线）
+    √ 直传族四码全部通过 isErrorCode（= 已进 ERROR_MESSAGES 单一真相） (1 ms)
+  uploadFileDirect 抛出点的阶段类型（fetch 桩）
+    √ presign 503 → DirectUploadUnavailableError → 映射 PRESIGN_UNAVAILABLE (6 ms)
+    √ presign 413 合同码 → 映射 FILE_TOO_LARGE（R-B 端到端） (1 ms)
+    √ presign 网络失败 → DirectUploadPresignError → PRESIGN_ERROR (1 ms)
+    √ PUT 网络失败（CORS 假象）→ DirectUploadPutError → PUT_FAILED (1 ms)
+    √ PUT 非 2xx → DirectUploadPutError → PUT_FAILED (1 ms)
+
+PASS src/lib/api-error.test.ts
+  extractApiError：后端真实 error_code 透传（防白名单漂移复发）
+    √ 透传 UNSUPPORTED_CONVERSION（HTTP 422），不再塌缩 UNKNOWN (2 ms)
+    √ 透传 FILE_TOO_LARGE（HTTP 413），不再塌缩 UNKNOWN (1 ms)
+    √ 透传 R2 取回族码 UPLOAD_NOT_FOUND（HTTP 400） (1 ms)
+    √ 透传 R2 取回族码 UPLOAD_EMPTY（HTTP 400）
+    √ 透传 R2 取回族码 INVALID_UPLOAD_KEY（HTTP 400）
+    √ ErrorCode 全集内的既有码仍然透传（无回归）
+    √ ErrorCode 全集之外的码仍判 undefined（不做无差别放行） (8 ms)
+    √ 非 JSON 响应（如 502 HTML）无 code，仅给可读 message (1 ms)
+
+PASS tests/unit/toc-structure.test.ts
+  TOC Preservation: Structural integrity
+    √ should have consistent tool type across all conversions (22 ms)
+    √ should use calibre tool for standard conversions (1 ms)
+    √ should use libreoffice for doc->epub
+    √ should use imagemagick for epub->jpg/png (1 ms)
+
+PASS src/lib/conversion-circuit-breaker.test.ts
+  conversion circuit breaker
+    √ starts closed and allows backend attempts (3 ms)
+    √ does not open before the failure threshold (3 ms)
+    √ opens on the 3rd consecutive failure and blocks the backend (11 ms)
+    √ a success resets the failure count (closed again) (4 ms)
+    √ re-opens immediately when a half-open trial fails (1 ms)
+    √ closes again when the half-open trial succeeds (1 ms)
+    capacity-busy signal is NOT a health failure
+      √ never opens the circuit, no matter how many busies pile up (1 ms)
+      √ does not add to the failure count that drives the threshold
+      √ does not re-open a half-open circuit by itself (1 ms)
+      √ is cleared by a success, like the failure count (1 ms)
+
+PASS tests/unit/governance-schema.test.ts
+  conversion capability and language signals
+    √ does not advertise unavailable DOC as a usable application or tutorial (en) (3 ms)
+    √ does not advertise unavailable DOC as a usable application or tutorial (es) (1 ms)
+    √ keeps the working Word application and registers its real translation (2 ms)
+
+PASS tests/unit/client-ip.test.ts
+  readClientIp
+    √ 优先采信 x-vercel-forwarded-for 链首 (8 ms)
+    √ XFF 取最后一段（最近一跳代理写入的值），不是可伪造的链首 (1 ms)
+    √ XFF 单段时取该段 (1 ms)
+    √ 回退到 x-real-ip (1 ms)
+    √ 支持 IPv6
+    √ 跳过垃圾值，改用下一个合法来源（不把 unknown 当 IP） (1 ms)
+    √ 全部缺失时返回 undefined，不编造值 (3 ms)
+    √ headless 对象（无 get）不抛错 (1 ms)
+  looksLikeIp
+    √ 接受合法 IPv4/IPv6 (2 ms)
+    √ 拒绝越界与垃圾 (3 ms)
+
+PASS src/lib/unsupported-conversions.test.ts
+  UNSUPPORTED_CONVERSIONS registry
+    √ doc-epub（两头堵第三例，2026-11-01）已登记且指向纯 JS 替代路径 (2 ms)
+    √ 已登记的三个 epub 出发方向（2026-10-28 方案 A）保持登记 (1 ms)
+    √ 每个登记条目的替代路径真实存在且自身不是死组合 (2 ms)
+    √ 未登记的正常组合保持放行（注册表不得误伤） (1 ms)
+
+PASS tests/unit/schema.test.ts
+  generateSchema
+    √ should generate valid JSON-LD (50 ms)
+    √ should include BreadcrumbList in graph (1 ms)
+    √ should identify the actual BookConv tool without asserting a universal engine (2 ms)
+    √ should include SoftwareApplication with free pricing (1 ms)
+    √ should include Article with author (5 ms)
+    √ should include FAQ when provided (1 ms)
+    √ should NOT include FAQ when empty (2 ms)
+    √ should not emit fabricated Review entries (1 ms)
+    √ should use correct page URL pattern (1 ms)
+
+PASS tests/unit/api-validation.test.ts
+  API: Request validation logic
+    √ should reject requests missing file field (1 ms)
+    √ should reject unsupported source formats (1 ms)
+    √ should accept all supported formats as source (4 ms)
+    √ should normalize format strings (remove dots, lowercase) (2 ms)
+    √ should enforce 10MB file size limit (1 ms)
+  API: Error code mapping
+    √ should map known OS errors to application codes
+    √ should default to CONVERSION_FAILED for unknown errors
+
+PASS tests/unit/competitor.test.ts
+  sortCompetitorRows
+    √ sorts by delta desc, pushing nulls to the bottom (2 ms)
+    √ sorts by latestRank asc (1 ms)
+  TREND_LABEL
+    √ covers all six trends (3 ms)
+  loaders
+    √ loadCompetitorConfig returns the tracked config (2 ms)
+    √ loadCompetitorSeries returns an object (matrix may be empty until fetched) (3 ms)
+
+PASS tests/unit/metadata.test.ts
+  extractEbookMetadata - stub tests (no real files)
+    √ should resolve with empty metadata for unsupported extensions (1 ms)
+    √ should handle EPUB ZIP signature check (1 ms)
+    √ should reject non-ZIP files as EPUB (2 ms)
+  Page count estimation logic
+    √ should estimate pages for PDF based on size (stub)
+    √ should estimate pages for EPUB based on size (stub)
+    √ should handle zero-byte files (stub) (1 ms)
+
+PASS tests/unit/mime-types.test.ts
+  Storage: MIME type mapping
+    √ should return correct MIME types for all common formats (3 ms)
+    √ should return octet-stream for unknown formats (1 ms)
+    √ should handle image-specific MIME types (1 ms)
+    √ should handle comic book formats
+    √ should cover all output extensions used in the conversion map (4 ms)
+
+PASS tests/unit/workbench.test.ts (6.716 s)
+  workbench panel registry
+    √ registers the operational panels plus the self-sourced ones (15 ms)
+    √ keeps every self-sourced panel out of the provider contract (1 ms)
+    √ gives every panel a unique href inside /admin (3 ms)
+    √ assigns every panel to a known group (3 ms)
+    √ stamps a snapshot date on every static panel (2 ms)
+    √ does not stamp a snapshot date on derived or remote panels (9 ms)
+    √ maps every panel to a distinct provider getter (1 ms)
+    √ resolves paths, including the locale prefix, to the right panel (1 ms)
+    √ falls back to overview for unknown admin slugs (2 ms)
+    √ throws on an unknown panel key rather than returning undefined (34 ms)
+  repository fact extraction
+    √ derives the conversion pair count from conversion-map.ts (1 ms)
+    √ derives distinct format identifiers covering from- and to-sides (1 ms)
+    √ finds registered blog posts and noindex flags
+    √ counts guide and format pages
+    √ reports abandoned queue modules without asserting their removal (1 ms)
+  differentiation output parsing
+    √ parses a PASS tally (2 ms)
+    √ parses a FAIL tally
+    √ returns null when nothing matches, instead of inventing a number (1 ms)
+  provider registry
+    √ exposes the repo provider as the default (1 ms)
+    √ throws a helpful error for an unknown provider (7 ms)
+    √ implements every getter the panel map expects (1 ms)
+  provider payload contract
+    √ returns a well-formed payload for overview (4002 ms)
+    √ returns a well-formed payload for domain (2 ms)
+    √ returns a well-formed payload for deploy (33 ms)
+    √ returns a well-formed payload for content (30 ms)
+    √ returns a well-formed payload for seo (275 ms)
+    √ returns a well-formed payload for analytics (4 ms)
+    √ returns a well-formed payload for extensions (26 ms)
+    √ returns a well-formed payload for users (1 ms)
+    √ returns a well-formed payload for security (1 ms)
+    √ returns a well-formed payload for notifications (1 ms)
+    √ returns a well-formed payload for feedback (2 ms)
+    √ marks static panels as static and never as live
+    √ keeps SEO and GEO metrics in separate panels (260 ms)
+    √ qualifies the Bing citation figure instead of presenting it as traffic (1 ms)
+    √ returns all provider-backed panels from the bulk fetch (432 ms)
+  workbench access control
+    √ denies everyone when no allowlist is configured (fail closed) (2 ms)
+    √ denies when AUTH_SECRET is missing, because the public default is forgeable
+    √ denies when AUTH_SECRET is still the shipped placeholder
+    √ denies an unauthenticated caller even with a valid allowlist
+    √ denies a signed-in non-operator (customer auth is not operator auth) (2 ms)
+    √ allows an allowlisted operator with a valid session (1 ms)
+    √ treats the allowlist as case-insensitive and whitespace-tolerant
+    √ denies rather than throwing when the session resolver blows up
+    √ checks configuration before identity, so a broken config never grants
+    √ parses allowlists without keeping junk entries (2 ms)
+    √ rejects the placeholder secret but accepts a real one
+    √ gives every denial reason an operator-facing hint (1 ms)
+
+[31m[2026-11-04T15:13:21.914Z] [ERROR] [conversion][0m {"magicHex":"74686973","sourceFormat":"epub","guess":"一段以「this」开头的文本文件（可能是 .txt/.html/.xml，被改名为 .epub）"}
+PASS tests/reverse-verify-conversion-fixes.test.ts (17.526 s)
+  reverse-verify: CloudConvert fixes 2026-10-12
+    √ #1a import/upload failure is retried with a fresh job and succeeds (4033 ms)
+    √ #1d import failure cascaded to export task is still retried (real-world task ordering) (4030 ms)
+    √ #1b convert-task failure (engine downgrade) is still retried and succeeds (4009 ms)
+    √ #1c non-convert/non-import job error is NOT retried (covers the timeout branch, no 270s wait) (2028 ms)
+    √ #2 poll budget constant is 135 (270s) — guard against silent revert (2 ms)
+    √ #3 invalid EPUB surfaces ZIP magic bytes in the error (actionable + traceable) (125 ms)
+    √ M8-14 corrupt-input signature is NOT retried (permanent failure short-circuit) (2014 ms)
+    √ M8-13 corrupt-input signature maps to CORRUPT_INPUT (not cloudconvert catch-all) (2 ms)
+
+Test Suites: 46 passed, 46 total
+Tests:       508 passed, 508 total
+Snapshots:   0 total
+Time:        18.165 s

@@ -1,0 +1,179 @@
+/**
+ * 边缘预检 preflightValidateInput 单元测试（2026-11-04）。
+ *
+ * 覆盖两类真实损坏（与 Job 7a9b3d76 / e6b90936 同签名）：
+ *   - 截断下载 / 无中央目录 ZIP（"Invalid zip file (no central directory …)"）
+ *   - EPUB manifest 引用缺失成员（"corrupt epub: ZIP member … (manifest reference missing)"）
+ * 以及不误杀：合法 EPUB 放行、非 ZIP 类源放行、空字节放行。
+ */
+import JSZip from 'jszip';
+import { preflightValidateInput } from '@/lib/input-validation';
+import { mapErrorCode } from '@/lib/error-handler';
+import { classifyAlertSeverity } from '@/lib/alerts';
+
+/** 构造结构合法的最小 EPUB（mimetype STORE + container.xml + opf + xhtml） */
+async function buildValidEpub(): Promise<Buffer> {
+  const zip = new JSZip();
+  zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+  zip.file(
+    'META-INF/container.xml',
+    `<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">` +
+      `<rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>`,
+  );
+  zip.file(
+    'OEBPS/content.opf',
+    `<?xml version="1.0"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="id">` +
+      `<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="id">urn:uuid:test</dc:identifier>` +
+      `<dc:title>t</dc:title><dc:language>en</dc:language></metadata>` +
+      `<manifest><item id="c1" href="chapter1.xhtml" media-type="application/xhtml+xml"/></manifest>` +
+      `<spine><itemref idref="c1"/></spine></package>`,
+  );
+  zip.file(
+    'OEBPS/chapter1.xhtml',
+    `<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>c1</title></head>` +
+      `<body><p>${'Hello epub world. '.repeat(200)}</p></body></html>`,
+  );
+  return (await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' })) as Buffer;
+}
+
+/** 截掉 EOCD（中央目录结束记录），制造「无中央目录」的截断 ZIP */
+function truncateAtEocd(buf: Buffer): Buffer {
+  const EOCD = Buffer.from([0x50, 0x4b, 0x05, 0x06]);
+  const idx = buf.lastIndexOf(EOCD);
+  if (idx === -1) throw new Error('test setup: EOCD not found');
+  return buf.subarray(0, idx); // 删掉 EOCD 及其后的中央目录
+}
+
+describe('preflightValidateInput', () => {
+  it('合法 EPUB 放行（不误杀）', async () => {
+    const buf = await buildValidEpub();
+    const r = await preflightValidateInput(buf, 'epub');
+    expect(r.corrupt).toBe(false);
+  });
+
+  it('非 ZIP 类源（mobi）直接放行，不做边缘校验', async () => {
+    const buf = await buildValidEpub();
+    const r = await preflightValidateInput(buf, 'mobi');
+    expect(r.corrupt).toBe(false);
+  });
+
+  it('空字节放行（由上游专门拦截）', async () => {
+    const r = await preflightValidateInput(Buffer.alloc(0), 'epub');
+    expect(r.corrupt).toBe(false);
+  });
+
+  it('截断下载 / 无中央目录的 ZIP → 判损坏（Job e6b90936 同类）', async () => {
+    const good = await buildValidEpub();
+    const broken = truncateAtEocd(good);
+    const r = await preflightValidateInput(broken, 'epub');
+    expect(r.corrupt).toBe(true);
+    expect(r.reason).toMatch(/invalid zip file/i);
+  });
+
+  it('非 EPUB（HTML 文本）伪装成 epub → 魔数拦截', async () => {
+    const html = Buffer.from('<!DOCTYPE html><html><body>x</body></html>', 'utf8');
+    const r = await preflightValidateInput(html, 'epub');
+    expect(r.corrupt).toBe(true);
+    expect(r.reason).toMatch(/not a valid eBook format/i);
+  });
+
+  it('manifest 引用缺失成员（nav.xhtml 被删）→ 判损坏（Job 7a9b3d76 同类）', async () => {
+    const data = await buildValidEpub();
+    const zip = await JSZip.loadAsync(data);
+    zip.remove('OEBPS/chapter1.xhtml'); // 删除 manifest 仍在引用的成员
+    const broken = (await zip.generateAsync({
+      type: 'nodebuffer',
+      compression: 'DEFLATE',
+    })) as Buffer;
+    const r = await preflightValidateInput(broken, 'epub');
+    expect(r.corrupt).toBe(true);
+    expect(r.reason).toMatch(/manifest reference missing/);
+  });
+
+  it('mimetype 存在但内容错误 → 判损坏', async () => {
+    const data = await buildValidEpub();
+    const zip = await JSZip.loadAsync(data);
+    zip.file('mimetype', 'application/zip', { compression: 'STORE' });
+    const broken = (await zip.generateAsync({
+      type: 'nodebuffer',
+      compression: 'DEFLATE',
+    })) as Buffer;
+    const r = await preflightValidateInput(broken, 'epub');
+    expect(r.corrupt).toBe(true);
+    expect(r.reason).toMatch(/mimetype/);
+  });
+
+  it('缺失 META-INF/container.xml → 判损坏', async () => {
+    const zip = new JSZip();
+    zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+    zip.file('OEBPS/content.opf', '<package/>');
+    const broken = (await zip.generateAsync({
+      type: 'nodebuffer',
+      compression: 'DEFLATE',
+    })) as Buffer;
+    const r = await preflightValidateInput(broken, 'epub');
+    expect(r.corrupt).toBe(true);
+    expect(r.reason).toMatch(/container\.xml/);
+  });
+
+  // 2026-11-04 回归：预检命中的 reason 会直接进 notifyConversionFailure，
+  // 若漏配 ERROR_CODE_MAP 键，用户坏文件会塌缩 INTERNAL_ERROR ⇒ 系统侧红卡误报
+  // + GA4 归因错乱（alerts.ts 反复强调的「单一事实源」）。锁死全部损坏分支。
+  describe('每条损坏 reason 都必须映射为 CORRUPT_INPUT 灰卡', () => {
+    const corruptCases: Array<[string, () => Promise<Buffer>]> = [
+      ['截断 ZIP（无中央目录）', async () => truncateAtEocd(await buildValidEpub())],
+      ['非 EPUB 文本', async () => Buffer.from('<!DOCTYPE html><html>x</html>', 'utf8')],
+      [
+        'manifest 断链',
+        async () => {
+          const zip = await JSZip.loadAsync(await buildValidEpub());
+          zip.remove('OEBPS/chapter1.xhtml');
+          return (await zip.generateAsync({ type: 'nodebuffer' })) as Buffer;
+        },
+      ],
+      [
+        'mimetype 内容错误',
+        async () => {
+          const zip = await JSZip.loadAsync(await buildValidEpub());
+          zip.file('mimetype', 'application/zip', { compression: 'STORE' });
+          return (await zip.generateAsync({ type: 'nodebuffer' })) as Buffer;
+        },
+      ],
+      [
+        '缺失 container.xml',
+        async () => {
+          const zip = new JSZip();
+          zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+          zip.file('OEBPS/content.opf', '<package/>');
+          return (await zip.generateAsync({ type: 'nodebuffer' })) as Buffer;
+        },
+      ],
+    ];
+
+    it.each(corruptCases)('%s → CORRUPT_INPUT + 灰卡', async (_label, build) => {
+      const r = await preflightValidateInput(await build(), 'epub');
+      expect(r.corrupt).toBe(true);
+      expect(mapErrorCode(r.reason || '')).toBe('CORRUPT_INPUT');
+      expect(classifyAlertSeverity('conversion-error', r.reason || '')).toBe('user');
+    });
+  });
+
+  it('远程 href 引用不误杀（合法 EPUB 可引用外部资源）', async () => {
+    const zip = new JSZip();
+    zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+    zip.file(
+      'META-INF/container.xml',
+      `<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">` +
+        `<rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>`,
+    );
+    zip.file(
+      'OEBPS/content.opf',
+      `<package xmlns="http://www.idpf.org/2007/opf" version="3.0"><metadata/>` +
+        `<manifest><item id="c1" href="https://example.com/remote.xhtml" media-type="application/xhtml+xml"/></manifest>` +
+        `<spine><itemref idref="c1"/></spine></package>`,
+    );
+    const ok = (await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' })) as Buffer;
+    const r = await preflightValidateInput(ok, 'epub');
+    expect(r.corrupt).toBe(false);
+  });
+});

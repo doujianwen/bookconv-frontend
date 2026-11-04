@@ -555,6 +555,48 @@ describe("conversion backend client", () => {
       expect(sent.get("target_format")).toBe("mobi");
     });
 
+    it("does NOT retry a deterministic CONVERSION_FAILED 500 (bad user file)", async () => {
+      // 后端契约：conversion-backend/app/index.js 对 Calibre 转换失败固定返回
+      // 500 + code=CONVERSION_FAILED，与瞬时故障无关；重试同一输入必再败。
+      // 但告警串 / 故障计数 / 回退行为必须与其它 5xx 完全一致（输出不变）。
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        return new Response(
+          JSON.stringify({ error: "Conversion failed: OEBError: Spine is empty", code: "CONVERSION_FAILED" }),
+          { status: 500 },
+        );
+      }) as unknown as typeof global.fetch;
+
+      const before = breakerSnapshot();
+      let reason: string | undefined;
+      const resp = await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+      const after = breakerSnapshot();
+
+      expect(resp).toBeNull(); // 仍回退 CloudConvert
+      expect(calls).toBe(1); // 关键：跳过必败重试
+      expect(after.failures).toBe(before.failures + 1); // 仍计 1 次故障（不放大）
+      expect(reason).toContain("backend HTTP 500");
+      expect(reason).toContain("CONVERSION_FAILED");
+      expect(reason).not.toContain("after 1 retry"); // 告警卡格式不变
+    });
+
+    it("still retries a generic 5xx WITHOUT a CONVERSION_FAILED code (transient infra fault)", async () => {
+      // 反向约束：只有确定性转换失败才跳过重试；进程抖动/重启类 5xx 仍重试挽救。
+      setEnv();
+      let calls = 0;
+      global.fetch = jest.fn(async () => {
+        calls += 1;
+        if (calls === 1) return new Response("boom", { status: 500 });
+        return new Response(new Blob([Buffer.from("OK")]), { status: 200 });
+      }) as unknown as typeof global.fetch;
+
+      const resp = await delegateToBackend(makeForm(), {});
+      expect(resp).not.toBeNull();
+      expect(calls).toBe(2);
+    });
+
     it("reports the backend root cause without a retry tag (alert-card format unchanged)", async () => {
       setEnv();
       const backendError = "Conversion failed: calibre.utils.zipfile.BadZipfile";

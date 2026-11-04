@@ -1,0 +1,273 @@
+/**
+ * 红队独立对比实验（2026-11-04）· 只打印、不 assert。
+ *
+ * 目的：对**同一批样本**比较「新增边缘预检 preflightValidateInput」与
+ * 「既有 §3.5 validateInputFile」的判定。任何不一致 = 新增行为偏移的直接证据。
+ *
+ * 重跑：npx jest --config jest.config.cjs --runTestsByPath tests/redteam-preflight-compare.test.ts
+ *
+ * 本文件刻意不写 expect(...)：红队阶段不修改产品代码、不污染测试套件的通过率，
+ * 结论以 stdout 的 JSON 表为准，归档于
+ * docs/tasks/bookconv-special-20261104/evidence/。
+ */
+import JSZip from 'jszip';
+import { randomBytes } from 'node:crypto';
+import * as fsp from 'node:fs/promises';
+import * as os from 'node:os';
+import * as path from 'node:path';
+import { preflightValidateInput } from '@/lib/input-validation';
+import { validateInputFile } from '@/lib/conversion';
+import { mapErrorCode } from '@/lib/error-handler';
+import { classifyAlertSeverity } from '@/lib/alerts';
+
+const CONTAINER = (opfPath: string) =>
+  `<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">` +
+  `<rootfiles><rootfile full-path="${opfPath}" media-type="application/oebps-package+xml"/></rootfiles></container>`;
+
+const OPF_HEAD = (manifest: string, ns = 'http://www.idpf.org/2007/opf') =>
+  `<?xml version="1.0"?><package xmlns="${ns}" version="3.0" unique-identifier="id">` +
+  `<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="id">urn:uuid:x</dc:identifier>` +
+  `<dc:title>t</dc:title><dc:language>en</dc:language></metadata>` +
+  `<manifest>${manifest}</manifest><spine><itemref idref="c1"/></spine></package>`;
+
+const XHTML =
+  `<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>c1</title></head>` +
+  `<body><p>${'Hello epub world. '.repeat(20)}</p></body></html>`;
+
+async function buildEpub(opfXml: string, files: Record<string, string | Buffer> = {}): Promise<Buffer> {
+  const zip = new JSZip();
+  zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+  zip.file('META-INF/container.xml', CONTAINER('OEBPS/content.opf'));
+  zip.file('OEBPS/content.opf', opfXml);
+  for (const [name, content] of Object.entries(files)) zip.file(name, content as string);
+  return (await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' })) as Buffer;
+}
+
+function truncateAtEocd(buf: Buffer): Buffer {
+  const idx = buf.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06]));
+  return idx === -1 ? buf : buf.subarray(0, idx);
+}
+
+async function minimalZip(entries: Record<string, string>): Promise<Buffer> {
+  const zip = new JSZip();
+  for (const [n, c] of Object.entries(entries)) zip.file(n, c);
+  return (await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' })) as Buffer;
+}
+
+/** 合法 FB2：纯 XML，非 ZIP */
+const FB2_XML =
+  `<?xml version="1.0" encoding="utf-8"?>` +
+  `<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0">` +
+  `<description><title-info><book-title>Test</book-title></title-info></description>` +
+  `<body><section><p>Hello FictionBook.</p></section></body></FictionBook>`;
+
+/** 合法 LIT：MOBI 派生，标识在偏移 60，非 ZIP */
+function buildLit(): Buffer {
+  const b = Buffer.alloc(200, 0);
+  b.write('Test Book Title', 0, 'latin1');
+  b.write('BOOKMOBI', 60, 'latin1');
+  b.write('TEXtREPLACE', 60 + 16, 'latin1');
+  return b;
+}
+
+type Row = {
+  id: string;
+  desc: string;
+  format: string;
+  size: number;
+  preflight: 'CORRUPT' | 'PASS';
+  preflightReason: string;
+  section35: 'CORRUPT' | 'PASS' | 'ERROR';
+  section35Msg: string;
+  verdict: 'SAME' | 'NEW_FALSE_POSITIVE' | 'NEW_FALSE_NEGATIVE' | 'SAME_BUT_NON_EPUB';
+};
+
+async function run(): Promise<Row[]> {
+  const tmp = await fsp.mkdtemp(path.join(os.tmpdir(), 'redteam-preflight-'));
+  const rows: Row[] = [];
+
+  const samples: Array<{ id: string; desc: string; format: string; buf: Buffer }> = [
+    // --- EPUB 语义口径对比 ---
+    {
+      id: 'S1', desc: '合法最小 EPUB（基线）', format: 'epub',
+      buf: await buildEpub(OPF_HEAD('<item id="c1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>'), { 'OEBPS/chapter1.xhtml': XHTML }),
+    },
+    {
+      id: 'S2', desc: '合法 EPUB，但 OPF 注释里含 <item href="ghost.xhtml">', format: 'epub',
+      buf: await buildEpub(
+        OPF_HEAD('<!-- retired: <item id="old" href="ghost.xhtml" media-type="application/xhtml+xml"/> -->' +
+          '<item id="c1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>'),
+        { 'OEBPS/chapter1.xhtml': XHTML },
+      ),
+    },
+    {
+      id: 'S3', desc: '合法 EPUB，item 带非标准 data-href 属性', format: 'epub',
+      buf: await buildEpub(
+        OPF_HEAD('<item id="c1" data-href="ghost.xhtml" href="chapter1.xhtml" media-type="application/xhtml+xml"/>'),
+        { 'OEBPS/chapter1.xhtml': XHTML },
+      ),
+    },
+    {
+      id: 'S3b', desc: '合法 EPUB，data-href 排在真 href 之后', format: 'epub',
+      buf: await buildEpub(
+        OPF_HEAD('<item id="c1" href="chapter1.xhtml" data-href="ghost.xhtml" media-type="application/xhtml+xml"/>'),
+        { 'OEBPS/chapter1.xhtml': XHTML },
+      ),
+    },
+    {
+      id: 'S4', desc: '真断链，但 href 用单引号（合法 XML）', format: 'epub',
+      buf: await buildEpub(OPF_HEAD("<item id='c1' href='missing.xhtml' media-type='application/xhtml+xml'/>")),
+    },
+    {
+      id: 'S5', desc: '真断链，item 带命名空间前缀 <opf:item>', format: 'epub',
+      buf: await buildEpub(
+        `<?xml version="1.0"?><opf:package xmlns:opf="http://www.idpf.org/2007/opf" version="3.0">` +
+        `<opf:metadata/><opf:manifest><opf:item id="c1" href="missing.xhtml" media-type="application/xhtml+xml"/>` +
+        `</opf:manifest><opf:spine/></opf:package>`,
+      ),
+    },
+    {
+      id: 'S6', desc: '标准 manifest 断链（双引号，告警同签名）', format: 'epub',
+      buf: await buildEpub(OPF_HEAD('<item id="c1" href="missing.xhtml" media-type="application/xhtml+xml"/>')),
+    },
+    {
+      id: 'S7', desc: 'mimetype 存在但内容错误', format: 'epub',
+      buf: await (async () => {
+        const z = await JSZip.loadAsync(
+          await buildEpub(OPF_HEAD('<item id="c1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>'), { 'OEBPS/chapter1.xhtml': XHTML }),
+        );
+        z.file('mimetype', 'application/zip', { compression: 'STORE' });
+        return (await z.generateAsync({ type: 'nodebuffer' })) as Buffer;
+      })(),
+    },
+    {
+      id: 'S8', desc: '截断 ZIP（无 EOCD，告警同签名）', format: 'epub',
+      buf: truncateAtEocd(await buildEpub(OPF_HEAD('<item id="c1" href="chapter1.xhtml"/>'), { 'OEBPS/chapter1.xhtml': XHTML })),
+    },
+    // --- 非 EPUB 源格式：增量行为检查 ---
+    { id: 'F1', desc: '合法 FB2（纯 XML，项目 P0 流量词 fb2→epub）', format: 'fb2', buf: Buffer.from(FB2_XML, 'utf8') },
+    { id: 'F2', desc: '合法 LIT（MOBI 派生，项目 P0 流量词 lit→epub）', format: 'lit', buf: buildLit() },
+    { id: 'F3', desc: '合法 OEB（ZIP 容器）', format: 'oeb', buf: await minimalZip({ 'content.opf': '<package/>' }) },
+    { id: 'F4', desc: '合法 DOCX（OOXML ZIP）', format: 'docx', buf: await minimalZip({ '[Content_Types].xml': '<Types/>' }) },
+    { id: 'F5', desc: '合法 TXT（对照：不在 ZIP_BASED_SOURCES）', format: 'txt', buf: Buffer.from('plain text book', 'utf8') },
+  ];
+
+  // 追加仓库内真实 EPUB 样本
+  const repoRoot = process.cwd();
+  const realSamples: Array<[string, string]> = [
+    ['R1', 'tests/fixtures/valid.epub'],
+    ['R2', 'tests/fixtures/valid-large.epub'],
+    ['R3', 'tests/fixtures/test-content.epub'],
+    ['R4', 'public/data/conversion-samples/bookconv-txt-regular.epub'],
+    ['R5', 'public/data/conversion-samples/bookconv-txt-spine-order.epub'],
+    ['R6', 'docs/tasks/bookconv-special-20261102/evidence/runtime/input.epub'],
+    ['R7', 'docs/tasks/bookconv-special-20261102/evidence/runtime/pdf-epub.epub'],
+    ['R8', 'docs/tasks/bookconv-special-20261102/es-restoration/runtime/txt-utf8.epub'],
+    ['R9', 'docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-sample.epub'],
+    ['R10', 'docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-plain.epub'],
+    ['R11', 'docs/tasks/bookconv-special-20261102/es-restoration/runtime/html-extension.epub'],
+  ];
+  for (const [id, rel] of realSamples) {
+    try {
+      const buf = await fsp.readFile(path.join(repoRoot, rel));
+      samples.push({ id, desc: `仓库真实样本 ${rel}`, format: 'epub', buf });
+    } catch { /* 样本缺失则跳过 */ }
+  }
+
+  for (const s of samples) {
+    const pf = await preflightValidateInput(s.buf, s.format);
+    let s35: Row['section35'] = 'PASS';
+    let s35Msg = '';
+    const p = path.join(tmp, `${s.id}.bin`);
+    await fsp.writeFile(p, s.buf);
+    try {
+      await validateInputFile(p, s.format);
+    } catch (e) {
+      s35 = 'CORRUPT';
+      s35Msg = (e instanceof Error ? e.message : String(e)).slice(0, 140);
+    }
+
+    const pfCorrupt = pf.corrupt;
+    const s35Corrupt = s35 === 'CORRUPT';
+    let verdict: Row['verdict'] = 'SAME';
+    if (pfCorrupt && !s35Corrupt) verdict = 'NEW_FALSE_POSITIVE';
+    else if (!pfCorrupt && s35Corrupt) verdict = 'NEW_FALSE_NEGATIVE';
+    else if (s.format !== 'epub' && pfCorrupt === s35Corrupt) verdict = 'SAME_BUT_NON_EPUB';
+
+    rows.push({
+      id: s.id, desc: s.desc, format: s.format, size: s.buf.length,
+      preflight: pfCorrupt ? 'CORRUPT' : 'PASS',
+      preflightReason: (pf.reason || '').slice(0, 120),
+      section35: s35, section35Msg: s35Msg,
+      verdict,
+    });
+  }
+  await fsp.rm(tmp, { recursive: true, force: true });
+  return rows;
+}
+
+it('REDTEAM: preflight vs §3.5 comparison table', async () => {
+  const rows = await run();
+  console.log('\n===== REDTEAM COMPARISON START =====');
+  console.log('TABLE_JSON=' + JSON.stringify(rows));
+  console.log(JSON.stringify(rows, null, 1));
+  const fp = rows.filter((r) => r.verdict === 'NEW_FALSE_POSITIVE');
+  const fn = rows.filter((r) => r.verdict === 'NEW_FALSE_NEGATIVE');
+  console.log('SUMMARY=' + JSON.stringify({
+    total: rows.length,
+    newFalsePositive: fp.map((r) => `${r.id}(${r.format}) ${r.desc}`),
+    newFalseNegative: fn.map((r) => `${r.id}(${r.format}) ${r.desc}`),
+  }));
+  // 附加：误杀分支的告警分级后果
+  for (const r of fp) {
+    console.log('ALERT_IMPACT=' + JSON.stringify({
+      id: r.id,
+      code: mapErrorCode(r.preflightReason),
+      severity: classifyAlertSeverity('conversion-error', r.preflightReason),
+    }));
+  }
+  console.log('===== REDTEAM COMPARISON END =====');
+}, 120000);
+
+it('REDTEAM: incremental cost on a LEGIT large EPUB (20MB incompressible body)', async () => {
+  // 必须用不可压缩随机字节：'x'.repeat() 会被 DEFLATE 压成 11KB，测不到真实大文件成本。
+  const body = randomBytes(20 * 1024 * 1024);
+  const epub = await buildEpub(
+    OPF_HEAD('<item id="c1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>'),
+    { 'OEBPS/chapter1.xhtml': body },
+  );
+  const asFile = new File([new Uint8Array(epub)], 'big.epub');
+  const tmp = await fsp.mkdtemp(path.join(os.tmpdir(), 'redteam-cost-'));
+  const p = path.join(tmp, 'big.epub');
+  await fsp.writeFile(p, epub);
+
+  const m0 = process.memoryUsage();
+  let t0 = performance.now();
+  const ab = await asFile.arrayBuffer();
+  const tArrayBuffer = performance.now() - t0;
+  const probeBuf = Buffer.from(ab);
+  t0 = performance.now();
+  const pf = await preflightValidateInput(probeBuf, 'epub');
+  const tPreflight = performance.now() - t0;
+  const m1 = process.memoryUsage();
+
+  t0 = performance.now();
+  let s35 = 'PASS';
+  try { await validateInputFile(p, 'epub'); } catch { s35 = 'CORRUPT'; }
+  const tSection35 = performance.now() - t0;
+  const m2 = process.memoryUsage();
+
+  console.log('COST_JSON=' + JSON.stringify({
+    compressedEpubBytes: epub.length,
+    uncompressedBodyBytes: body.length,
+    arrayBufferMs: +tArrayBuffer.toFixed(1),
+    preflightMs: +tPreflight.toFixed(1),
+    section35Ms: +tSection35.toFixed(1),
+    preflightCorrupt: pf.corrupt,
+    section35: s35,
+    heapDeltaAfterPreflightMB: +((m1.heapUsed - m0.heapUsed) / 1048576).toFixed(1),
+    heapDeltaAfterSection35MB: +((m2.heapUsed - m0.heapUsed) / 1048576).toFixed(1),
+    rssMB: +(m2.rss / 1048576).toFixed(1),
+  }));
+  await fsp.rm(tmp, { recursive: true, force: true });
+}, 120000);
