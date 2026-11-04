@@ -26,17 +26,23 @@ describe('board data file', () => {
     expect(() => validateBoardData(data)).not.toThrow();
   });
 
-  it('covers all twelve modules M0–M11', () => {
-    // M11 (Bing Topic Portfolio) added 2026-10; board grew from 11 to 12 modules.
-    expect(data.modules.map((m) => m.id)).toEqual([
-      'M0', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11',
-    ]);
+  it('numbers every module M0..M(n) contiguously, with no gap and no duplicate', () => {
+    // 原先这里硬编码 ['M0'..'M11'] 整份清单。计划每扩一个模块（M12/M13 已上线）它必红，
+    // 于是每次都要手改测试——这正是「判据写死易变值」。改为断言不变量：模块号从 M0
+    // 起连续递增且无重复；漏编号、重复编号仍会被抓到，正常扩模块则无需改测试。
+    const nums = data.modules.map((m) => Number(String(m.id).replace(/^M/, '')));
+    expect(nums.every((n) => Number.isInteger(n) && n >= 0)).toBe(true);
+    expect(nums).toEqual(nums.map((_, i) => i));
   });
 
-  it('has 104 tasks (board grew from 66; M11 module + many supplements added through Oct)', () => {
-    // Measured against the live board on 2026-11-01 (was 101 on 2026-10-25;
-    // M8-12/13/14 remediation + GA4 红队线新增任务使总数继续增长).
-    expect(data.modules.flatMap((m) => m.tasks)).toHaveLength(104);
+  it('keeps every module populated and never shrinks below the measured baseline', () => {
+    // 2026-11-04 实测：14 模块 / 140 任务。总数是随计划增长的活数据，写死会让每次
+    // 正常新增任务都变红（历史事实：`=== 104` 在 M12/M13 上线后失效，CI 红灯两天）。
+    // 改为两条不变量：没有模块被清空；总数不低于已实测下限（防误删/误覆盖）。
+    const perModule = data.modules.map((m) => (m.tasks ?? []).length);
+    const total = data.modules.flatMap((m) => m.tasks).length;
+    expect(perModule.filter((n) => n === 0)).toEqual([]);
+    expect(total).toBeGreaterThanOrEqual(140);
   });
 
   it('uses unique task ids', () => {
@@ -202,7 +208,7 @@ describe('board derivation', () => {
     // Validate the live data rather than freezing yesterday's completion counts.
     const tasks = data.modules.flatMap((m) => m.tasks);
     const openCount = tasks.filter((t) => ['todo', 'doing', 'blocked'].includes(t.status)).length;
-    expect(view.totals.tasks).toBe(104);
+    expect(view.totals.tasks).toBe(tasks.length);
     expect(view.totals.done).toBe(tasks.filter((t) => t.status === 'done').length);
     expect(view.totals.open).toBe(openCount);
     expect(view.totals.coreOpen + view.totals.suppOpen).toBe(openCount);
@@ -464,7 +470,9 @@ describe('board derivation', () => {
   it('exposes a convenience loader for a given day', () => {
     const v = getBoardView('2026-09-27');
     expect(v.today).toBe('2026-09-27');
-    expect(v.totals.tasks).toBe(104); // live board 2026-11-01
+    // 与数据源对齐，不钉死当日总数（原为 `toBe(104)` + 注释「live board 2026-11-01」，
+    // 该值随后涨到 140，测试即红；真要守住的是「loader 与数据文件同源」）。
+    expect(v.totals.tasks).toBe(data.modules.flatMap((m) => m.tasks).length);
   });
 });
 

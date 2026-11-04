@@ -80,6 +80,11 @@ export async function buildSiteMetadata(locale: string): Promise<Metadata> {
 export function RootHead({ locale, messages }: { locale: string; messages: Messages }) {
   const t = (key: string) => resolvePath(messages, key) || key
   return (
+    // `@next/next/no-head-element` 是为 pages router 设计的规则（提示改用 next/head），
+    // 但 App Router 下 next/head 不可用，本组件是 [locale] / auth / api-docs 三个
+    // root layout 唯一的 <head> 出口。实测生产 HTML（2026-11-04 / 首页）：head 标签
+    // 成对且 preconnect、manifest、theme-color、GTM 均正确产出，属规则误报，故定点豁免。
+    // eslint-disable-next-line @next/next/no-head-element
     <head>
       {/* Preconnect to external domains to reduce connection latency */}
       <link rel="preconnect" href="https://www.googletagmanager.com" />
