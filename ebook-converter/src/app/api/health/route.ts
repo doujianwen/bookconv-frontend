@@ -219,12 +219,22 @@ export async function GET(req: NextRequest) {
 
   // Production non-verbose: minimal response
   if (process.env.NODE_ENV === 'production' && !verbose && allowed) {
-    return NextResponse.json({ status, timestamp: new Date().toISOString() }, { status: statusCode });
+    // 2026-11-04（红队审计 C6 闭环）：暴露部署构建的 commit SHA 与环境，
+    // 使「线上是否为某次推送构建」可被独立核对（无需 Vercel 后台）。
+    // VERCEL_GIT_COMMIT_SHA 由 Vercel 在 Git 构建时注入；本地/非 Git 部署为 null。
+    return NextResponse.json({
+      status,
+      timestamp: new Date().toISOString(),
+      commitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+      environment: process.env.VERCEL_ENV ?? null,
+    }, { status: statusCode });
   }
 
   return NextResponse.json({
     status,
     timestamp: new Date().toISOString(),
+    commitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+    environment: process.env.VERCEL_ENV ?? null,
     checks,
   }, { status: statusCode });
 }
