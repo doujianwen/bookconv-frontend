@@ -445,9 +445,12 @@ describe("conversion backend client", () => {
     });
   });
 
-  // 2026-11-04（任务 #1）：后端瞬时 5xx 是本次告警 f547b469 的本质——
-  // 单次 5xx 直接回退 CC 会把本可在后端成功的 job 白烧。对快速返回的 5xx 重试
-  // 一次，挽救瞬时抖动；超时/网络/429/4xx 一律不重试（fail-safe）。
+  // 2026-11-04（任务 #1）· 2026-11-04 红队审计校正：
+  // 注意「立论校正」——f547b469 那次 500 实为 CONVERSION_FAILED（用户坏文件），
+  // 不是基础设施瞬时 5xx，重试救不了它。本重试逻辑是**通用的 fail-safe**：针对
+  // 后端进程抖动/重启/GC 这类真·瞬时 5xx，挽救本可成功的 job，避免白烧 CC；
+  // 对「转换失败 500」（坏文件）是净开销，但安全（重试必再败，只计 1 次故障）。
+  // 超时/网络/429/4xx 一律不重试。
   describe("5xx transient retry (task #1)", () => {
     it("retries a single 5xx and succeeds on the retry", async () => {
       setEnv();
