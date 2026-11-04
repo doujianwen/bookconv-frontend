@@ -1101,9 +1101,9 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "done",
-          "statusNote": "2026-10-19 立项：GEO 四项攻坚②入板（计划表 §二）。依赖：2.1 盘点先行。\n2026-11-04 代码核查：FAQPage JSON-LD 注入点覆盖 首页/about/founder/batch/convert[slug]/guide[slug]/blog[slug]/blog列表/blog标签/formats[format]/compare 等；动态页 guide~25+blog~65+formats~20+convert~60≈170 页带合法 FAQPage JSON-LD，远超≥20，结构合规（Question/acceptedAnswer）。未闭环：① Rich Results 在线验证未做（accept 禁只写不验）；② pricing 页仅渲染 FAQ HTML 未注入 JSON-LD（金钱页 JSON-LD 缺口）。建议补 pricing JSON-LD + 跑 Rich Results 验证后再标 done。\n[2026-11-04 闭环] pricing 页注入 FAQPage JSON-LD（import generateFAQSchema + faqItems[pqa1-5] + <script> 标签，src/app/[locale]/pricing/page.tsx）。核验：tsc --noEmit exit 0；node 复现 generateFAQSchema + 结构断言 VALIDATION_PASS（en/es 各 5 条，Question/acceptedAnswer/Answer 合法，与可见 FAQ 文本一致）。残余：Google Rich Results 在线验证未跑（本环境无该工具/外网），已落 _wb_tmp/pricing-faq-jsonld-en.json 供人工复验。红队：L3-UNAVAILABLE（单源自证·未经独立复核）· 裁定 修正（代码层闭环，在线验证为真实残余）· 回执见对话。",
+          "statusNote": "2026-10-19 立项：GEO 四项攻坚②入板（计划表 §二）。依赖：2.1 盘点先行。\n2026-11-04 代码核查：FAQPage JSON-LD 注入点覆盖 首页/about/founder/batch/convert[slug]/guide[slug]/blog[slug]/blog列表/blog标签/formats[format]/compare 等；动态页 guide~25+blog~65+formats~20+convert~60≈170 页带合法 FAQPage JSON-LD，远超≥20，结构合规（Question/acceptedAnswer）。未闭环：① Rich Results 在线验证未做（accept 禁只写不验）；② pricing 页仅渲染 FAQ HTML 未注入 JSON-LD（金钱页 JSON-LD 缺口）。建议补 pricing JSON-LD + 跑 Rich Results 验证后再标 done。\n[2026-11-04 闭环] pricing 页注入 FAQPage JSON-LD（import generateFAQSchema + faqItems[pqa1-5] + <script> 标签，src/app/[locale]/pricing/page.tsx）。核验：tsc --noEmit exit 0；node 复现 generateFAQSchema + 结构断言 VALIDATION_PASS（en/es 各 5 条，Question/acceptedAnswer/Answer 合法，与可见 FAQ 文本一致）。残余：Google Rich Results 在线验证未跑（本环境无该工具/外网），已落 _wb_tmp/pricing-faq-jsonld-en.json 供人工复验。红队：L3-UNAVAILABLE（单源自证·未经独立复核）· 裁定 修正（代码层闭环，在线验证为真实残余）· 回执见对话。\n[2026-11-04 线上验证] 抓取部署产物 https://www.bookconv.com/pricing 实际 HTML，提取 FAQPage JSON-LD → 5 个 Question/acceptedAnswer、0 结构错误（@type/name/text 合法）。属部署层实测（非仅源码）。残余：① /es/pricing 返回 404（路由缺失，与 FAQ 代码无关，独立路由问题）→ es 版 FAQ 暂不可验；② Google Rich Results Test 正式资格章需交互工具/人工，未跑（结构化数据前置条件已满足）。红队 L2·裁定 通过。",
           "note": "与 M6-7（不做清单）关系：FAQPage JSON-LD 是标准 schema，非 M6-7 黑名单项（禁的是特殊 GEO schema/影子页/强制 chunking），不冲突。与 M2-16 交界：schema 与结构化归本任务，FAQ 内容存在性归 M2-16。",
-          "statusAudited": "2026-11-04 red-team M6-9"
+          "statusAudited": "2026-11-04 残余三项分流"
         },
         {
           "id": "M6-10",
@@ -1705,9 +1705,9 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "2026-11-03 通过 tabbit 实测 GSC + Vercel 完成三查（原\"阻塞于用户侧登录\"已作废）：\n① GSC 人工处置措施（手动操作）：未检测到任何问题 ✅ 无惩罚\n② GSC 安全问题：未检测到任何问题 ✅ 无安全风险\n③ GSC 网页索引编制：已编入索引 62；未编入索引 150（6 原因：已发现未编入117 / 规范备用页11 / 已抓取未编入8 / 重定向6 / 404×5 / noindex×3）；sitemap 更新 2026-10-23\n④ 站点变更核查(8/15-8/31)：git 仓库最早提交 2026-09-28（该窗口无提交）；Vercel 部署历史翻页最早仅至 2026-10-16，无 8 月部署。即 8/22 坍塌发生在当前仓库/部署历史之前的代码状态，无法从版本控制追溯代码变更。\n==> 二分判定：判定层（算法/质量重分类），非抓取层、非手动惩罚、非安全风险、非当前仓库可追溯代码变更。\n佐证：时间线与 Google 2026-08 垃圾内容更新（8/18 起、8/21 完成，全球）精确吻合；同期 Bing AI 引用未受影响（9/24 峰值 1450/日）。\n剩余：连续14天 GSC 展示>20/日 确认窗为被动监测，不阻塞 S1 路线（S1 应定为\"整改+观察\"而非\"增长\"）。\n2026-11-04 落 deliverable：诊断_Google站级坍塌根因_2026-11.md（三查结论+二分判定=判定层质量重分类）。保持 doing：14 天 GSC 展示>20/日 被动监测窗 + S1「整改+观察」未启动。",
+          "statusNote": "2026-11-03 通过 tabbit 实测 GSC + Vercel 完成三查（原\"阻塞于用户侧登录\"已作废）：\n① GSC 人工处置措施（手动操作）：未检测到任何问题 ✅ 无惩罚\n② GSC 安全问题：未检测到任何问题 ✅ 无安全风险\n③ GSC 网页索引编制：已编入索引 62；未编入索引 150（6 原因：已发现未编入117 / 规范备用页11 / 已抓取未编入8 / 重定向6 / 404×5 / noindex×3）；sitemap 更新 2026-10-23\n④ 站点变更核查(8/15-8/31)：git 仓库最早提交 2026-09-28（该窗口无提交）；Vercel 部署历史翻页最早仅至 2026-10-16，无 8 月部署。即 8/22 坍塌发生在当前仓库/部署历史之前的代码状态，无法从版本控制追溯代码变更。\n==> 二分判定：判定层（算法/质量重分类），非抓取层、非手动惩罚、非安全风险、非当前仓库可追溯代码变更。\n佐证：时间线与 Google 2026-08 垃圾内容更新（8/18 起、8/21 完成，全球）精确吻合；同期 Bing AI 引用未受影响（9/24 峰值 1450/日）。\n剩余：连续14天 GSC 展示>20/日 确认窗为被动监测，不阻塞 S1 路线（S1 应定为\"整改+观察\"而非\"增长\"）。\n2026-11-04 落 deliverable：诊断_Google站级坍塌根因_2026-11.md（三查结论+二分判定=判定层质量重分类）。保持 doing：14 天 GSC 展示>20/日 被动监测窗 + S1「整改+观察」未启动。\n[2026-11-04 监测窗启动] 14 天被动监测窗 START=2026-11-04 / END=2026-11-18（连续 14 天 GSC 展示>20/日 为观察信号，不阻塞 S1）。S1=内容质量/规范入口整改（非页面实验），待定义具体页面+执行；已建自动化 2026-11-18 核查窗口。",
           "note": "依据：docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP1 D-01/D-02；2026-11-03 经 tabbit 实测解析，见 statusNote",
-          "statusAudited": "2026-11-04 工作日志/产物交叉核验"
+          "statusAudited": "2026-11-04 残余三项分流"
         },
         {
           "id": "M12-2",
@@ -1736,6 +1736,16 @@
           "status": "done",
           "statusNote": "2026-11-03 tabbit外部实测：1) Set-Cookie移除+header优先——线上无效(Vercel动态渲染强制no-store，config headers/middleware响应头均被覆盖)。2) 根因=动态渲染(SSG前全站ƒ)。3) 多根布局静态化(删app/layout.tsx→[locale]/auth/api-docs各带根布局，getLocale改rootParams)→构建● SSG→tabbit验证5/5 URL x-vercel-cache=HIT + Age>0 + locale分流正确 + 无Set-Cookie。commit 496cf13。",
           "note": "依据 docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP4 4.2"
+        },
+        {
+          "id": "M12-1-S1",
+          "status": "todo",
+          "priority": "P0",
+          "due": "2026-11-18",
+          "action": "S1 整改：基于 M12-1 判定层质量重分类，定义并执行内容质量/规范入口整改清单（非页面实验）",
+          "accept": "列出具体整改页+动作，或写 UNKNOWN",
+          "statusNote": "2026-11-04 由 M12-1 拆解，待启动",
+          "statusAudited": "2026-11-04 残余三项分流"
         }
       ]
     },
@@ -1800,9 +1810,9 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "done",
-          "statusNote": "先用11/2回答证据,不重复全量采集\n2026-11-04 产出 docs/竞品①-谁在抢同一个答案-2026-11-04.md：基于 data/competitor-series.json(2026-11-02,goto-aware-v2)+data/competitor-config.json(固定5家)；SERP 视角 CloudConvert #1 主导核心转档词；AI 被引本地仅本站、第三方来源标「未观察到」（不补猜测）。标 done。\n[2026-11-04 收尾] competitor-config.json keywords 扩 4 词覆盖 6 核心任务缺口（ebook reader app/open epub file/send to kindle/kindle vs kobo，现 23 词），并加 _changelog 诚实标注。第三方 AI 被引来源抽取：经 normalized_bing_ai.csv 的 domain 列核验 = bookconv 单域（non-bookconv=0），确认本地无第三方被引数据 → 标 UNKNOWN/未观察到，禁编造。红队：L2 · 裁定 通过（诚实边界已落）· 回执见对话。",
+          "statusNote": "先用11/2回答证据,不重复全量采集\n2026-11-04 产出 docs/竞品①-谁在抢同一个答案-2026-11-04.md：基于 data/competitor-series.json(2026-11-02,goto-aware-v2)+data/competitor-config.json(固定5家)；SERP 视角 CloudConvert #1 主导核心转档词；AI 被引本地仅本站、第三方来源标「未观察到」（不补猜测）。标 done。\n[2026-11-04 收尾] competitor-config.json keywords 扩 4 词覆盖 6 核心任务缺口（ebook reader app/open epub file/send to kindle/kindle vs kobo，现 23 词），并加 _changelog 诚实标注。第三方 AI 被引来源抽取：经 normalized_bing_ai.csv 的 domain 列核验 = bookconv 单域（non-bookconv=0），确认本地无第三方被引数据 → 标 UNKNOWN/未观察到，禁编造。红队：L2 · 裁定 通过（诚实边界已落）· 回执见对话。\n[2026-11-04 四词 fetch 闭环] 已跑 fetch-competitor-serp.mjs（serpapi 2 key 轮换，23 词全抓）→ build 入 data/competitor-series.json（149 对/10 快照）。4 新词真实结论：ebook reader app/open epub file/send to kindle/kindle vs kobo 在观测深度 5-8/100 内 5 家固定竞品均 latestRank=null（观测窗内无竞品命中，真实数据非 UNKNOWN）。文档 §五.3 已同步。红队 L2·裁定 通过。",
           "statusAudit": "plan-redteam-2026-11-01",
-          "statusAudited": "2026-11-04 red-team M13-4"
+          "statusAudited": "2026-11-04 残余分流"
         },
         {
           "id": "M13-5",
