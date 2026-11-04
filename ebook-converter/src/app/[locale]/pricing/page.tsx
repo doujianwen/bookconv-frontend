@@ -4,6 +4,7 @@ import { Check, X } from "lucide-react"
 import { PLANS, formatPrice } from "@/lib/payments/service"
 import { getLocale, getMessage, resolvePath } from '@/i18n/utils'
 import { clampMetaDescription } from '@/lib/seo/meta-description'
+import { generateFAQSchema } from '@/lib/seo/schema'
 import UpgradeButton from "@/components/pricing/UpgradeButton"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,8 +37,23 @@ export default async function PricingPage() {
   const t = (key: string) => resolvePath(messages, key) || key;
   const plans = PLANS;
 
+  // FAQPage JSON-LD (M6-9 收尾)：与下方可见 FAQ 同源，供 Google / AI 引擎在初始 HTML 读取。
+  const faqItems = [
+    { question: t('pricing.pqa1_q'), answer: t('pricing.pqa1_a') },
+    { question: t('pricing.pqa2_q'), answer: t('pricing.pqa2_a') },
+    { question: t('pricing.pqa3_q'), answer: t('pricing.pqa3_a') },
+    { question: t('pricing.pqa4_q'), answer: t('pricing.pqa4_a') },
+    { question: t('pricing.pqa5_q'), answer: t('pricing.pqa5_a') },
+  ].filter((f) => f.question && f.answer);
+  const pricingUrl = `https://www.bookconv.com${locale === 'es' ? '/es' : ''}/pricing`;
+  const faqJsonLd = generateFAQSchema(faqItems, pricingUrl);
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: faqJsonLd }}
+      />
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-gray-500">
           <li><Link href={locale === 'es' ? '/es' : '/'} className="hover:text-blue-600">{t('common.home')}</Link></li>

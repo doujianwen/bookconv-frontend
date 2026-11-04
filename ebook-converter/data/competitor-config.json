@@ -65,7 +65,15 @@
     "ebook converter online",
     "mobi vs azw3",
     "epub to zip",
-    "can i use calibre online without installing"
+    "can i use calibre online without installing",
+    "ebook reader app",
+    "open epub file",
+    "send to kindle",
+    "kindle vs kobo"
   ],
-  "ownDomain": "bookconv.com"
+  "ownDomain": "bookconv.com",
+  "_changelog": [
+    "2026-11-04 (M13-4 收尾)：keywords 扩充 4 词覆盖 6 核心任务缺口——ebook reader app / open epub file / send to kindle / kindle vs kobo（原仅含 epub to pdf、epub to mobi）。仅扩展监控集，未触发抓取；新词需下次 fetch-competitor-serp.mjs 运行才进入 competitor-series.json。",
+    "2026-11-04 (M13-4 诚实边界)：本地 Bing AI 引用数据（normalized_bing_ai.csv 的 domain 列、AIPerformance pageRows）仅含 bookconv 自引，non-bookconv 域名数=0。故『第三方 AI 被引来源』子任务在本环境无可抽数据，标 UNKNOWN/未观察到，禁止编造竞品被引。"
+  ]
 }
