@@ -9,7 +9,7 @@ export const tags = ["EPUB", "MOBI", "Ebook Formats", "Kindle", "BookConv", "Cal
 export const content = {
   intro: `EPUB and MOBI are the two format names most readers recognize, and they could not have come from more different worlds. EPUB is the open standard almost every non-Kindle reader uses; MOBI is Amazon's older format that now mostly lives on legacy Kindles. If you are deciding which to save your books in, or which to convert to, the answer follows straight from where you read. This is the practical comparison, not the spec-sheet version.
 
-> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our privacy policy for file handling details. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `At a Glance`,
@@ -123,7 +123,7 @@ export const es = {
   content: {
     intro: `EPUB y MOBI son los dos nombres de formato que la mayoría de los lectores reconoce, y no podrían venir de mundos más distintos. EPUB es el estándar abierto que usa casi cualquier lector que no es Kindle; MOBI es el formato más antiguo de Amazon que hoy vive sobre todo en Kindles legacy. Si decides en qué guardar tus libros o a qué convertirlos, la respuesta sigue directa de dónde lees. Esta es la comparación práctica, no la versión de ficha técnica.
 
-> BookConv procesa tu archivo en servidores; algunas rutas utilizan terceros y los resultados pueden guardarse en caché. Consulta la [seguridad de archivos](/es/file-security). Los archivos se cifran en tránsito y no se requiere cuenta ni instalación de software.`,
+> BookConv procesa tu archivo en servidores; algunas rutas utilizan terceros y los resultados pueden guardarse en caché. Consulta la política de privacidad para conocer el tratamiento de los archivos. Los archivos se cifran en tránsito y no se requiere cuenta ni instalación de software.`,
     sections: [
       {
         heading: `De un vistazo`,

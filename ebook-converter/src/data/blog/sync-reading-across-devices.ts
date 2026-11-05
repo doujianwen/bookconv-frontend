@@ -9,7 +9,7 @@ export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `E
 export const content = {
   intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.
 
-> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our privacy policy for file handling details. Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `Why Sync Fails Between Devices`,

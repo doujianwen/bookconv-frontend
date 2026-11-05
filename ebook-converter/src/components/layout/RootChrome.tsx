@@ -182,7 +182,7 @@ export function RootBodyShell({
           {t('common.skipToMainContent') || 'Skip to main content'}
         </a>
         <header className='border-b bg-white' role='banner'>
-          <div className='mx-auto flex max-w-5xl items-center justify-between px-4 py-3'>
+          <div className='mx-auto flex max-w-5xl flex-col items-start justify-between gap-3 px-4 py-3 lg:flex-row lg:items-center'>
             {/* M5-6（2026-10-22）：/es 索引页与静态页（/es/convert、/es/blog、/es/guide、
                 /es/pricing 等）不在 middleware P3-C 白名单（只放行白名单 slug 详情页）⇒ 裸 /es 前缀会 404。
                 西语会话下头部/页脚导航一律回退英文路由（白名单外回退，与 es-routes.ts 同纪律）；
@@ -191,7 +191,7 @@ export function RootBodyShell({
               <BookOpen className='h-6 w-6' />
               <span>{t('common.siteName') || 'BookConv'}</span>
             </Link>
-            <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'} className='flex items-center gap-3 text-sm text-gray-600'>
+            <nav aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'} className='flex max-w-full flex-wrap items-center gap-3 text-sm text-gray-600'>
               <Link href={locale === 'es' ? '/es' : '/'} className='hover:text-blue-600'>{t('common.home') || 'Home'}</Link>
               <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-blue-600'>{t('common.convert') || 'Convert'}</Link>
               <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-blue-600'>{t('common.blog') || 'Blog'}</Link>

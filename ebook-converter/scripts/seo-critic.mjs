@@ -189,7 +189,7 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
   blogRedirectLinkHits = 0;
   const dirs = [BLOG_DIR, CONTENT_DIR].filter(existsSync);
   const files = dirs.flatMap((d) => listTs(d).map((f) => join(d, f)));
-  const KNOWN = new Set(['/batch', '/help', '/about', '/guide', '/founder', '/data', '/compare/bookconv-vs-calibre', '/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
+  const KNOWN = new Set(['/batch', '/help', '/about', '/guide', '/founder', '/data', '/compare/bookconv-vs-calibre', '/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/file-security', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
 
   const esRouteSource = read(join(ROOT, 'src/lib/es-routes.ts')) || '';
   const esRoutes = new Set();
