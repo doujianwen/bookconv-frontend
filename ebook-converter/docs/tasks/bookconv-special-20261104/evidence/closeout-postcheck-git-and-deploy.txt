@@ -1,0 +1,89 @@
+收口后事后核验 · 2026-11-04 23:44 +0800
+================================================================
+触发：上一轮最后一步 `git status` / `git diff --stat` 均为空，与此前
+      「工作区仍有 2 个 M 文件 / 68 insertions」的记录冲突，需判定是
+      「改动被还原」还是「改动被提交」。
+
+【结论】不是改动被还原，而是外部 nightly-sync 定时任务把收口结果
+        commit + push，并经由 push-to-main 的 Vercel 部署链路同步到生产。
+        本会话助手未执行 git add / commit / push / revert / reset。
+
+----------------------------------------------------------------
+1. 仓库根与状态
+   git rev-parse --show-toplevel = E:/一人公司/电子书格式转换站
+   git status --short            = (空)
+   git diff --stat               = (空)
+   git diff --name-status        = (空)
+   HEAD                          = 969a3d487ffbf2b93bc3278bded33ce55f6838f9
+   origin/main                   = 同上，无 ahead / behind
+
+2. 两条外部自动提交
+   a1f8051  2026-11-04 23:30:21 +0800
+            [nightly-sync] 2026-11-04 自动同步当日变更
+            14 files changed, 3088 insertions(+)
+            = evidence 12 个文件
+            + src/lib/conversion-backend-client.ts        (+26)
+            + src/lib/conversion-backend-client.test.ts   (+42)
+            后两者合计 +68，与收口记录「2 files / 68 insertions」精确吻合。
+   969a3d4  2026-11-04 23:34:16 +0800
+            [nightly-sync] 2026-11-04 自动同步当日变更（补收尾证据文件）
+            1 file changed, 3 insertions(+)  → closeout-receipt-check.txt
+
+   author = committer = 豆豆妈 <7701484@qq.com>（两条一致）
+   git log --all --grep='nightly-sync'：自 2026-10-21 起十余条同类提交，
+           证明是仓库既有自动同步机制，非本会话临时操作。
+   git reflog show origin/main:
+           969a3d4 refs/remotes/origin/main@{0}: fetch origin: fast-forward
+           a1f8051 refs/remotes/origin/main@{1}: fetch origin: fast-forward
+           4d68381 refs/remotes/origin/main@{2}: update by push
+           → 远端已含这两条提交。
+
+3. 已入库内容正确性（关键：带 P0 风险的预检没有上线）
+   git show HEAD:ebook-converter/src/app/api/convert/route.ts
+        | grep -n "preflight|input-validation"  → CLEAN_NO_PREFLIGHT
+   git ls-tree -r --name-only a1f8051
+        | grep "src/lib/input-validation|tests/input-validation" → NOT_COMMITTED
+   HEAD:.../conversion-backend-client.ts:242
+        保留 `if (res.status >= 500 && (await readBackendCode(res)) === "CONVERSION_FAILED")`
+   HEAD:.../conversion-backend-client.ts:283
+        保留 `readBackendCode()`（res.clone().text()）
+   HEAD:.../conversion-backend-client.ts:230-240
+        注释为红队修正后的「后端代码契约」措辞，无「两条生产告警实证 / 边缘预检兜底」
+   a1f8051 中 L76 命中「后果实证：Job 729f7eae」属既有历史注释，与本轮无关，未动。
+   工作区：src/lib/input-validation.ts = NO，tests/input-validation.test.ts = NO
+   归档：evidence/reverted/*.ts.txt 三份，逐字节保留、不参与 tsc 编译。
+
+4. 生产部署状态（决定性 · 双通道）
+   .github/workflows/vercel-deploy.yml:
+        on.push.branches = [main]；依赖 secrets.VERCEL_DEPLOY_TOKEN
+        （未配置时脚本跳过）；continue-on-error: true。
+   实测 https://www.bookconv.com/api/health
+        curl 原始响应（CURL_EXIT=0）：
+        {"status":"ok","timestamp":"2026-11-04T15:43:55.306Z",
+         "commitSha":"969a3d487ffbf2b93bc3278bded33ce55f6838f9",
+         "environment":"production"}
+        WebFetch 独立通道（timestamp 15:43:57.806Z）返回同一完整 SHA。
+   → 生产 commitSha == 本地 HEAD == origin/main，精确一致
+     ⇒ push-to-deploy 链路实际生效，收口结果已上线生产。
+
+5. 在已入库 969a3d4 的干净工作区上复跑三项门禁
+   JEST_EXIT=0  → Test Suites: 45 passed / 45；Tests: 494 passed / 494
+   TSC_EXIT=0   → 无输出
+   LINT_EXIT=0  → Tracked source lint: 472 files, PASS
+   留痕：closeout-head-jest.stdout.txt / closeout-head-tsc.stdout.txt /
+         closeout-head-lint.stdout.txt
+
+6. 对既有结论的影响
+   - 红队报告 §5 L329-331、工作日志 L123-125
+     「未 commit、未 push；是否提交保留改动由用户拍板」→ 已失效。
+   - 报告 §2 A9「未 push / 未部署 → 通过」、§5 L289「未 git add -A、未 commit、
+     未 push」、回执 #9 → 均为审计时点快照，当时成立，不代表收口后状态。
+   - 「收口内容本身正确」不变：撤回预检、保留跳过必败重试、注释已修正、门禁全绿。
+   - 新治理残余：用户批准的「不 commit、不 push」被外部自动机制绕过，
+     且生产部署已发生，「是否提交」的决策窗口已关闭。
+     需人工决定：接受现状 / 调整 nightly-sync / 调整 push-to-deploy / 回滚。
+     **助手未做任何回滚动作，回滚属破坏性操作、须用户明确批准。**
+
+7. 本文件产生后未执行
+   git add / commit / push / revert / reset 一律未执行；未改动任何产品代码。
+   本文件与报告 §5、工作日志的更正均为纯留痕。

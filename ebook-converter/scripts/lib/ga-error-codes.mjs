@@ -51,3 +51,29 @@ export function sumDirectUploadInfra(failedByErrorCode) {
 export const USER_INPUT_CODES = [
   "UPLOAD_EMPTY", // 空文件：R2 路径既有码；2026-11-02 起 multipart 路径同样返回
 ];
+
+// ── 告警分级（用户侧灰卡 / 系统侧红卡）────────────────────────────────
+//
+// 权威源 = src/lib/alerts.ts:105 USER_SIDE_ERROR_CODES（生产飞书告警卡的判据）。
+// 2026-11-04 起因：GA4 巡检此前把「未进入引擎」与「告警判灰」两套语义复用同一个
+// USER_INPUT_CODES，导致 CORRUPT_INPUT 被 classifyFailureSides 算进「系统侧(引擎类)/红」，
+// 与生产告警卡实测的灰卡（诊断_epub转azw3_Invalid_zip_file_2026-11-03.md §4 A4）
+// 直接矛盾，并在 11-03 数据上凑满 3 次触发假「🚨 引擎硬告警」。
+//
+// ⚠️ 语义边界（不要合并回 USER_INPUT_CODES）：
+//   USER_INPUT_CODES      = 未进入任何引擎，用于 splitFailures / B6 / D2 的 engineFailed 剥离。
+//   USER_SIDE_ALERT_CODES = 告警卡判用户侧，只用于展示层健康裁定与硬告警。
+//   两者不是一回事：CORRUPT_INPUT / VERIFICATION_FAILED 可能已经过 Calibre 尝试
+//   （后端 500 → 回退 → 本地校验才报错），若拿去剥离 engineFailed 会虚高引擎侧
+//   成功率并让 Part A 与 D2 的比对口径失配。故本集合**禁止**进入 splitFailures、
+//   B6 或 ga4-redteam-analysis.mjs 的 NON_ENGINE。
+//
+// ⚠️ 同步纪律：改 alerts.ts 的 USER_SIDE_ERROR_CODES 必须同步本集合；
+//   ga-inspection.mjs 只准 import，不准再硬编码字面量。
+export const USER_SIDE_ALERT_CODES = [
+  "DRM_PROTECTED",
+  "CORRUPT_INPUT",
+  "FILE_TOO_LARGE",
+  "VERIFICATION_FAILED",
+  "UPLOAD_EMPTY",
+];

@@ -1,0 +1,1244 @@
+  console.error
+    [CloudConvert] job failed. detail= Import failed: transient upstream error | failedTask= {"id":"t1","name":"import-file","operation":"import/upload","status":"error","result":{"message":"Import failed: transient upstream error","code":"import_failed"}} | allTasks= [{"op":"import/upload","name":"import-file","status":"error","result":{"message":"Import failed: transient upstream error","code":"import_failed"}},{"op":"convert","name":"convert-file","status":"pending"},{"op":"export/url","name":"export-file","status":"pending"}]
+
+    [0m [90m 293 |[39m       [36mconst[39m detail [33m=[39m describeJobFailure(finished)[33m;[39m
+     [90m 294 |[39m       [90m// 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因[39m
+    [31m[1m>[22m[39m[90m 295 |[39m       console[33m.[39merror(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 296 |[39m         [32m'[CloudConvert] job failed. detail='[39m[33m,[39m
+     [90m 297 |[39m         detail[33m,[39m
+     [90m 298 |[39m         [32m'| failedTask='[39m[33m,[39m[0m
+
+      at error (src/lib/cloudconvert.ts:295:15)
+      at convertWithCloudConvert (src/lib/cloudconvert.ts:406:24)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:195:20)
+
+  console.warn
+    [CloudConvert] transient failure; retrying with a fresh job {
+      sourceFormat: 'epub',
+      targetFormat: 'html',
+      reason: 'import/upload task failed',
+      firstAttempt: 'CloudConvert job failed: Import failed: transient upstream error'
+    }
+
+    [0m [90m 439 |[39m         (isEngineDowngrade [33m||[39m isTransientImport)[33m;[39m
+     [90m 440 |[39m       [36mif[39m ([33m![39mretryable) [36mbreak[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 441 |[39m       console[33m.[39mwarn([32m'[CloudConvert] transient failure; retrying with a fresh job'[39m[33m,[39m {
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 442 |[39m         sourceFormat[33m,[39m
+     [90m 443 |[39m         targetFormat[33m,[39m
+     [90m 444 |[39m         reason[33m:[39m isTransientImport [33m?[39m [32m'import/upload task failed'[39m [33m:[39m [32m'convert task failed'[39m[33m,[39m[0m
+
+      at warn (src/lib/cloudconvert.ts:441:15)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:195:20)
+
+  console.error
+    [CloudConvert] job failed. detail= Import failed: transient upstream error | failedTask= {"id":"t1","name":"import-file","operation":"import/upload","status":"error","result":{"message":"Import failed: transient upstream error","code":"input_failed"}} | allTasks= [{"op":"import/upload","name":"import-file","status":"error","result":{"message":"Import failed: transient upstream error","code":"input_failed"}},{"op":"convert","name":"convert-file","status":"pending"},{"op":"export/url","name":"export-file","status":"pending"}]
+
+    [0m [90m 293 |[39m       [36mconst[39m detail [33m=[39m describeJobFailure(finished)[33m;[39m
+     [90m 294 |[39m       [90m// 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因[39m
+    [31m[1m>[22m[39m[90m 295 |[39m       console[33m.[39merror(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 296 |[39m         [32m'[CloudConvert] job failed. detail='[39m[33m,[39m
+     [90m 297 |[39m         detail[33m,[39m
+     [90m 298 |[39m         [32m'| failedTask='[39m[33m,[39m[0m
+
+      at error (src/lib/cloudconvert.ts:295:15)
+      at convertWithCloudConvert (src/lib/cloudconvert.ts:406:24)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:265:20)
+
+  console.warn
+    [CloudConvert] transient failure; retrying with a fresh job {
+      sourceFormat: 'epub',
+      targetFormat: 'pdf',
+      reason: 'import/upload task failed',
+      firstAttempt: 'CloudConvert job failed: Import failed: transient upstream error'
+    }
+
+    [0m [90m 439 |[39m         (isEngineDowngrade [33m||[39m isTransientImport)[33m;[39m
+     [90m 440 |[39m       [36mif[39m ([33m![39mretryable) [36mbreak[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 441 |[39m       console[33m.[39mwarn([32m'[CloudConvert] transient failure; retrying with a fresh job'[39m[33m,[39m {
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 442 |[39m         sourceFormat[33m,[39m
+     [90m 443 |[39m         targetFormat[33m,[39m
+     [90m 444 |[39m         reason[33m:[39m isTransientImport [33m?[39m [32m'import/upload task failed'[39m [33m:[39m [32m'convert task failed'[39m[33m,[39m[0m
+
+      at warn (src/lib/cloudconvert.ts:441:15)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:265:20)
+
+  console.error
+    [CloudConvert] job failed. detail= Conversion failed: unsupported output | failedTask= {"id":"t2","name":"convert-file","operation":"convert","status":"error","result":{"message":"Conversion failed: unsupported output","code":"convert_failed"}} | allTasks= [{"op":"import/upload","name":"import-file","status":"finished","result":{}},{"op":"convert","name":"convert-file","status":"error","result":{"message":"Conversion failed: unsupported output","code":"convert_failed"}},{"op":"export/url","name":"export-file","status":"pending"}]
+
+    [0m [90m 293 |[39m       [36mconst[39m detail [33m=[39m describeJobFailure(finished)[33m;[39m
+     [90m 294 |[39m       [90m// 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因[39m
+    [31m[1m>[22m[39m[90m 295 |[39m       console[33m.[39merror(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 296 |[39m         [32m'[CloudConvert] job failed. detail='[39m[33m,[39m
+     [90m 297 |[39m         detail[33m,[39m
+     [90m 298 |[39m         [32m'| failedTask='[39m[33m,[39m[0m
+
+      at error (src/lib/cloudconvert.ts:295:15)
+      at convertWithCloudConvert (src/lib/cloudconvert.ts:406:24)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:279:20)
+
+  console.warn
+    [CloudConvert] transient failure; retrying with a fresh job {
+      sourceFormat: 'epub',
+      targetFormat: 'pdf',
+      reason: 'convert task failed',
+      firstAttempt: 'CloudConvert job failed: Conversion failed: unsupported output'
+    }
+
+    [0m [90m 439 |[39m         (isEngineDowngrade [33m||[39m isTransientImport)[33m;[39m
+     [90m 440 |[39m       [36mif[39m ([33m![39mretryable) [36mbreak[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 441 |[39m       console[33m.[39mwarn([32m'[CloudConvert] transient failure; retrying with a fresh job'[39m[33m,[39m {
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 442 |[39m         sourceFormat[33m,[39m
+     [90m 443 |[39m         targetFormat[33m,[39m
+     [90m 444 |[39m         reason[33m:[39m isTransientImport [33m?[39m [32m'import/upload task failed'[39m [33m:[39m [32m'convert task failed'[39m[33m,[39m[0m
+
+      at warn (src/lib/cloudconvert.ts:441:15)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:279:20)
+
+  console.error
+    [CloudConvert] job failed. detail= export failed | failedTask= {"id":"t3","name":"export-file","operation":"export/url","status":"error","result":{"message":"export failed","code":"export_failed"}} | allTasks= [{"op":"import/upload","name":"import-file","status":"finished","result":{}},{"op":"convert","name":"convert-file","status":"finished","result":{}},{"op":"export/url","name":"export-file","status":"error","result":{"message":"export failed","code":"export_failed"}}]
+
+    [0m [90m 293 |[39m       [36mconst[39m detail [33m=[39m describeJobFailure(finished)[33m;[39m
+     [90m 294 |[39m       [90m// 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因[39m
+    [31m[1m>[22m[39m[90m 295 |[39m       console[33m.[39merror(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 296 |[39m         [32m'[CloudConvert] job failed. detail='[39m[33m,[39m
+     [90m 297 |[39m         detail[33m,[39m
+     [90m 298 |[39m         [32m'| failedTask='[39m[33m,[39m[0m
+
+      at error (src/lib/cloudconvert.ts:295:15)
+      at convertWithCloudConvert (src/lib/cloudconvert.ts:406:24)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:292:5)
+
+[31m[2026-11-04T15:42:05.146Z] [ERROR] [conversion][0m {"magicHex":"74686973","sourceFormat":"epub","guess":"一段以「this」开头的文本文件（可能是 .txt/.html/.xml，被改名为 .epub）"}
+  console.error
+    [CloudConvert] job failed. detail= Input task has failed | failedTask= {"id":"t1","name":"import-file","operation":"import/upload","status":"error","result":{"message":"Input task has failed","code":"input_failed"}} | allTasks= [{"op":"import/upload","name":"import-file","status":"error","result":{"message":"Input task has failed","code":"input_failed"}},{"op":"convert","name":"convert-file","status":"pending"},{"op":"export/url","name":"export-file","status":"pending"}]
+
+    [0m [90m 293 |[39m       [36mconst[39m detail [33m=[39m describeJobFailure(finished)[33m;[39m
+     [90m 294 |[39m       [90m// 服务端日志：把失败任务的完整内容打出来，便于在 Vercel 函数日志里定位真实原因[39m
+    [31m[1m>[22m[39m[90m 295 |[39m       console[33m.[39merror(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 296 |[39m         [32m'[CloudConvert] job failed. detail='[39m[33m,[39m
+     [90m 297 |[39m         detail[33m,[39m
+     [90m 298 |[39m         [32m'| failedTask='[39m[33m,[39m[0m
+
+      at error (src/lib/cloudconvert.ts:295:15)
+      at convertWithCloudConvert (src/lib/cloudconvert.ts:406:24)
+      at Object.<anonymous> (tests/reverse-verify-conversion-fixes.test.ts:382:5)
+
+PASS tests/reverse-verify-conversion-fixes.test.ts (16.735 s)
+  reverse-verify: CloudConvert fixes 2026-10-12
+    √ #1a import/upload failure is retried with a fresh job and succeeds (4075 ms)
+    √ #1d import failure cascaded to export task is still retried (real-world task ordering) (4036 ms)
+    √ #1b convert-task failure (engine downgrade) is still retried and succeeds (4029 ms)
+    √ #1c non-convert/non-import job error is NOT retried (covers the timeout branch, no 270s wait) (2032 ms)
+    √ #2 poll budget constant is 135 (270s) — guard against silent revert (2 ms)
+    √ #3 invalid EPUB surfaces ZIP magic bytes in the error (actionable + traceable) (197 ms)
+    √ M8-14 corrupt-input signature is NOT retried (permanent failure short-circuit) (2007 ms)
+    √ M8-13 corrupt-input signature maps to CORRUPT_INPUT (not cloudconvert catch-all)
+
+PASS tests/unit/workbench.test.ts
+  workbench panel registry
+    √ registers the operational panels plus the self-sourced ones (2 ms)
+    √ keeps every self-sourced panel out of the provider contract
+    √ gives every panel a unique href inside /admin
+    √ assigns every panel to a known group (1 ms)
+    √ stamps a snapshot date on every static panel (1 ms)
+    √ does not stamp a snapshot date on derived or remote panels (1 ms)
+    √ maps every panel to a distinct provider getter
+    √ resolves paths, including the locale prefix, to the right panel
+    √ falls back to overview for unknown admin slugs (1 ms)
+    √ throws on an unknown panel key rather than returning undefined (12 ms)
+  repository fact extraction
+    √ derives the conversion pair count from conversion-map.ts (1 ms)
+    √ derives distinct format identifiers covering from- and to-sides
+    √ finds registered blog posts and noindex flags (1 ms)
+    √ counts guide and format pages
+    √ reports abandoned queue modules without asserting their removal
+  differentiation output parsing
+    √ parses a PASS tally (1 ms)
+    √ parses a FAIL tally
+    √ returns null when nothing matches, instead of inventing a number (1 ms)
+  provider registry
+    √ exposes the repo provider as the default
+    √ throws a helpful error for an unknown provider (2 ms)
+    √ implements every getter the panel map expects
+  provider payload contract
+    √ returns a well-formed payload for overview (1830 ms)
+    √ returns a well-formed payload for domain
+    √ returns a well-formed payload for deploy (23 ms)
+    √ returns a well-formed payload for content (25 ms)
+    √ returns a well-formed payload for seo (184 ms)
+    √ returns a well-formed payload for analytics
+    √ returns a well-formed payload for extensions (22 ms)
+    √ returns a well-formed payload for users
+    √ returns a well-formed payload for security (1 ms)
+    √ returns a well-formed payload for notifications (1 ms)
+    √ returns a well-formed payload for feedback
+    √ marks static panels as static and never as live
+    √ keeps SEO and GEO metrics in separate panels (182 ms)
+    √ qualifies the Bing citation figure instead of presenting it as traffic
+    √ returns all provider-backed panels from the bulk fetch (287 ms)
+  workbench access control
+    √ denies everyone when no allowlist is configured (fail closed) (1 ms)
+    √ denies when AUTH_SECRET is missing, because the public default is forgeable
+    √ denies when AUTH_SECRET is still the shipped placeholder
+    √ denies an unauthenticated caller even with a valid allowlist
+    √ denies a signed-in non-operator (customer auth is not operator auth) (1 ms)
+    √ allows an allowlisted operator with a valid session
+    √ treats the allowlist as case-insensitive and whitespace-tolerant
+    √ denies rather than throwing when the session resolver blows up (1 ms)
+    √ checks configuration before identity, so a broken config never grants
+    √ parses allowlists without keeping junk entries
+    √ rejects the placeholder secret but accepts a real one (1 ms)
+    √ gives every denial reason an operator-facing hint
+
+PASS tests/unit/seo-index-remediation.test.ts
+  indexing remediation
+    √ does not recommend canonical aliases or demonstration reports in the sitemap (3 ms)
+    √ withdraws unverified device results instead of presenting placeholder numbers as a test (10 ms)
+    √ keeps English takeaway sections in English (8 ms)
+    √ keeps default structured FAQs identical to the visible default FAQ data (2 ms)
+    √ links real translations without generating unsupported Spanish routes (3 ms)
+
+PASS tests/unit/spanish-route-restoration.test.ts
+  Spanish historical route restoration
+    √ emits reciprocal language pairs only for real translated destinations (1 ms)
+    √ lists indexable restorations but excludes navigation-only tags and unavailable translations (4 ms)
+    √ renders Spanish conversion data and actual destinations, keeping legacy DOC separate (7 ms)
+    √ translates policy without inventing a deletion deadline (1 ms)
+    √ validates real txt text fallback instead of promising original layout or chapter detection (44 ms)
+    √ validates real html text fallback instead of promising original layout or chapter detection (18 ms)
+
+[31m[2026-11-04T15:42:11.564Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-perf-uploads'"}
+PASS tests/performance/performance.test.ts
+  Performance: Concurrent conversion throughput
+    √ should handle 5 sequential conversions within timeout (75 ms)
+    √ should handle 20 sequential conversions (226 ms)
+    √ should handle mixed-format conversions (59 ms)
+  Performance: Memory usage monitoring
+    √ should measure baseline memory for a single conversion (1 ms)
+    √ should handle multiple conversions without unbounded memory growth (1 ms)
+    √ should track memory for large base64 encoding (2 ms)
+  Performance: Conversion speed benchmark
+    √ should complete a conversion in under 1 second (mock baseline) (18 ms)
+    √ should benchmark 10 sequential conversions (111 ms)
+  Performance: Queue throughput simulation
+    √ should simulate rapid job enqueuing (1 ms)
+    √ should calculate throughput rate
+
+PASS tests/unit/unsupported-conversions.test.ts
+  unsupported conversion registry
+    √ registers the four pairs currently unavailable in BookConv (1 ms)
+    √ lookup is case-safe via normalized lowercase keys (1 ms)
+    √ every entry points at a working alternative format pair
+  convertAndStream 422 interception
+    √ blocks epub → doc with 422 + UNSUPPORTED_CONVERSION + alternative (5 ms)
+    √ blocks epub → jpg with 422 + UNSUPPORTED_CONVERSION + alternative
+    √ blocks epub → png with 422 + UNSUPPORTED_CONVERSION + alternative
+    √ blocks doc → epub with 422 + UNSUPPORTED_CONVERSION + alternative (1 ms)
+    √ does NOT intercept supported combos (they proceed past validation) (1 ms)
+    √ does NOT intercept the supported DOCX input path (1 ms)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:149:14)
+
+  console.warn
+    [convert] backend busy (429) BACKEND_BUSY; falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:165:14)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:178:16)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:178:16)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:178:16)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:191:7)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:192:7)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:194:7)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:195:7)
+
+  console.warn
+    [convert] backend delegation failed (falling back to CloudConvert): ECONNREFUSED
+
+    [0m [90m 190 |[39m       [36mawait[39m notifyBackendDown(first[33m.[39merr)[33m;[39m
+     [90m 191 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 192 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 193 |[39m         [32m"[convert] backend delegation failed (falling back to CloudConvert):"[39m[33m,[39m
+     [90m 194 |[39m         first[33m.[39merr[33m,[39m
+     [90m 195 |[39m       )[33m;[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:192:15)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:207:14)
+
+  console.warn
+    [convert] backend delegation failed (falling back to CloudConvert): The operation was aborted
+
+    [0m [90m 190 |[39m       [36mawait[39m notifyBackendDown(first[33m.[39merr)[33m;[39m
+     [90m 191 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 192 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 193 |[39m         [32m"[convert] backend delegation failed (falling back to CloudConvert):"[39m[33m,[39m
+     [90m 194 |[39m         first[33m.[39merr[33m,[39m
+     [90m 195 |[39m       )[33m;[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:192:15)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:222:20)
+
+  console.warn
+    [convert] backend busy (429) BACKEND_BUSY; falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:282:9)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:292:9)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (502); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:302:9)
+
+  console.warn
+    [convert] backend delegation failed (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:243:11)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:323:11)
+
+  console.warn
+    [convert] backend delegation failed (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:243:11)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:339:11)
+
+  console.warn
+    [convert] backend delegation failed (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:243:11)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:354:11)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:364:11)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:378:11)
+
+  console.warn
+    [convert] backend delegation failed (falling back to CloudConvert): ECONNREFUSED 10.0.0.1:443
+
+    [0m [90m 190 |[39m       [36mawait[39m notifyBackendDown(first[33m.[39merr)[33m;[39m
+     [90m 191 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 192 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 193 |[39m         [32m"[convert] backend delegation failed (falling back to CloudConvert):"[39m[33m,[39m
+     [90m 194 |[39m         first[33m.[39merr[33m,[39m
+     [90m 195 |[39m       )[33m;[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:192:15)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:402:9)
+
+  console.warn
+    [convert] backend delegation failed (after 1 retry) (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:271:9)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:482:14)
+
+  console.warn
+    [convert] backend delegation failed (falling back to CloudConvert): The operation was aborted
+
+    [0m [90m 190 |[39m       [36mawait[39m notifyBackendDown(first[33m.[39merr)[33m;[39m
+     [90m 191 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 192 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 193 |[39m         [32m"[convert] backend delegation failed (falling back to CloudConvert):"[39m[33m,[39m
+     [90m 194 |[39m         first[33m.[39merr[33m,[39m
+     [90m 195 |[39m       )[33m;[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:192:15)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:504:20)
+
+  console.warn
+    [convert] backend delegation failed (falling back to CloudConvert): ECONNREFUSED
+
+    [0m [90m 190 |[39m       [36mawait[39m notifyBackendDown(first[33m.[39merr)[33m;[39m
+     [90m 191 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 192 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 193 |[39m         [32m"[convert] backend delegation failed (falling back to CloudConvert):"[39m[33m,[39m
+     [90m 194 |[39m         first[33m.[39merr[33m,[39m
+     [90m 195 |[39m       )[33m;[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:192:15)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:518:14)
+
+  console.warn
+    [convert] backend busy (429); falling back to CloudConvert
+
+    [0m [90m 217 |[39m     opts[33m.[39monFallback[33m?[39m[33m.[39m(reason)[33m;[39m
+     [90m 218 |[39m     recordBackendBusy()[33m;[39m
+    [31m[1m>[22m[39m[90m 219 |[39m     console[33m.[39mwarn([32m`[convert] ${reason}; falling back to CloudConvert`[39m)[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 220 |[39m     [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 221 |[39m   }
+     [90m 222 |[39m[0m
+
+      at warn (src/lib/conversion-backend-client.ts:219:13)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:531:14)
+
+  console.warn
+    [convert] backend delegation failed (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:243:11)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:574:20)
+
+  console.warn
+    [convert] backend delegation failed (500); falling back to CloudConvert
+
+    [0m [90m 175 |[39m       [36mawait[39m notifyBackendDown([32m`backend returned HTTP ${statusOrMsg}`[39m)[33m;[39m
+     [90m 176 |[39m     } [36melse[39m {
+    [31m[1m>[22m[39m[90m 177 |[39m       console[33m.[39mwarn(
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 178 |[39m         [32m`[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`[39m[33m,[39m
+     [90m 179 |[39m       )[33m;[39m
+     [90m 180 |[39m     }[0m
+
+      at warn (src/lib/conversion-backend-client.ts:177:15)
+      at failWith (src/lib/conversion-backend-client.ts:243:11)
+      at Object.<anonymous> (src/lib/conversion-backend-client.test.ts:610:7)
+
+PASS src/lib/conversion-backend-client.test.ts
+  conversion backend client
+    isCalibreTarget (whitelist mirrors backend BACKEND_TARGETS)
+      √ accepts formats Calibre can emit (2 ms)
+      √ rejects unknown/unsupported formats and null
+      √ strips a leading dot and lowercases (1 ms)
+    backendConfigured
+      √ false when either env var is missing
+    delegateToBackend
+      √ returns null when backend is not configured (fail-open to CloudConvert) (1 ms)
+      √ returns null when the circuit is open (no request attempted) (1 ms)
+      √ returns null when the form has no File (upload_key path -> CloudConvert)
+      √ returns a 200 NextResponse streaming the backend bytes on success (4 ms)
+      √ returns null on 5xx (failover to CloudConvert) and records a failure (27 ms)
+      √ 429 is capacity, not outage: does not increment failures (3 ms)
+      √ three consecutive 429s do NOT open the circuit (would have before the fix) (9 ms)
+      √ a 429 does not swallow the failure budget of a real outage (14 ms)
+      √ returns null on network error (failover to CloudConvert) (3 ms)
+      √ aborts a slow backend quickly and falls back (timeout path) (112 ms)
+      √ forwards a prebuiltFile (R2 upload_key path) to the backend (2 ms)
+      √ forwards the quality field when present
+      fallback reason reporting (alert attribution)
+        √ reports busy + backend code for 429 (2 ms)
+        √ reports a plain busy reason when the 429 body is not JSON (nginx limit_req) (3 ms)
+        √ reports the HTTP status AND the backend's own error body (4 ms)
+        √ reports circuit-open WITHOUT attempting a request (1 ms)
+        √ reports the network error message (3 ms)
+        √ stays silent on success (no false alarm in the card) (2 ms)
+        5xx body passthrough (root-cause visibility)
+          √ includes code + error from a JSON body (5 ms)
+          √ flattens newlines so the alert card keeps one line per field (5 ms)
+          √ caps the appended detail at 180 chars (alerts.ts does not truncate) (3 ms)
+          √ degrades to plain status when the body is empty (3 ms)
+          √ degrades to plain status when reading the body throws (already consumed) (5 ms)
+      client IP passthrough
+        √ sends x-client-ip when the route resolved one (1 ms)
+        √ omits the header entirely when IP is unknown (never sends empty) (1 ms)
+      5xx transient retry (task #1)
+        √ retries a single 5xx and succeeds on the retry (1 ms)
+        √ two 5xx (after retry) records exactly ONE failure, not two (5 ms)
+        √ does NOT retry on timeout (slow failure) (119 ms)
+        √ does NOT retry on network error (3 ms)
+        √ does NOT retry on 429 (capacity signal) (4 ms)
+        √ retry sends a fresh, valid FormData to the backend (2 ms)
+        √ does NOT retry a deterministic CONVERSION_FAILED 500 (bad user file) (3 ms)
+        √ still retries a generic 5xx WITHOUT a CONVERSION_FAILED code (transient infra fault) (2 ms)
+        √ reports the backend root cause without a retry tag (alert-card format unchanged) (3 ms)
+
+PASS tests/unit/convert-route-cleanup.test.ts
+  POST /api/convert: R2 upload cleanup on the backend path
+    √ schedules cleanup when the backend delegation succeeds (6 ms)
+    √ does NOT schedule cleanup when falling back to CloudConvert (convertAndStream owns it) (1 ms)
+    √ does not schedule cleanup when there is no upload_key (1 ms)
+
+[31m[2026-11-04T15:42:13.263Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml","decompressedSoFar":652,"sourceFormat":"epub"}
+[31m[2026-11-04T15:42:13.338Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml (CRC32 mismatch)","decompressedSoFar":4373,"sourceFormat":"epub"}
+[31m[2026-11-04T15:42:13.350Z] [ERROR] [conversion][0m {"brokenMember":"META-INF/container.xml (empty container.xml)","decompressedSoFar":67,"sourceFormat":"epub"}
+[31m[2026-11-04T15:42:13.361Z] [ERROR] [conversion][0m {"magicHex":"3c68746d","sourceFormat":"epub","guess":"一段以「<htm」开头的文本文件（可能是 .txt/.html/.xml，被改名为 .epub）"}
+[31m[2026-11-04T15:42:13.376Z] [ERROR] [conversion][0m {"brokenMember":"OEBPS/chapter1.xhtml (manifest reference missing)","decompressedSoFar":652,"sourceFormat":"epub"}
+[31m[2026-11-04T15:42:13.385Z] [ERROR] [conversion][0m {"brokenMember":"mimetype (expected application/epub+zip, got \"application/zip\")","decompressedSoFar":4368,"sourceFormat":"epub"}
+PASS tests/reverse-verify-epub-deep-validation.test.ts
+  reverse-verify: §3.5 EPUB deep decompression validation (2026-10-19)
+    √ 正常 EPUB 通过深度校验（不误杀） (22 ms)
+    √ 成员 deflate 数据损坏的 EPUB 被拦下（corrupt epub → CORRUPT_INPUT） (74 ms)
+    √ 成员 CRC32 校验和损坏的 EPUB 被拦下（M8-12：CRC 盲区关闭，deflate 完好仍可解压） (13 ms)
+    √ container.xml 为空内容的 EPUB 被拦下 (12 ms)
+    √ 非 ZIP 文件仍走原有浅校验（not a valid eBook format，行为不变） (9 ms)
+    √ M8-12 盲区#2：manifest 引用缺失文件的 EPUB 被拦下（断链语义损坏 → corrupt epub） (15 ms)
+    √ M8-12 盲区#2：mimetype 存在但内容错误的 EPUB 被拦下（语义损坏 → corrupt epub） (8 ms)
+
+PASS tests/unit/purejs-mobi-azw3-smoke.test.ts
+  mobi/azw3 fixtures are genuine (real MOBI/AZW3, not the 1KB stub)
+    √ mobi fixture is a real MOBI/AZW3 (1 ms)
+    √ azw3 fixture is a real MOBI/AZW3 (1 ms)
+  pure-JS MOBI/AZW3 source conversions (real fixtures)
+    √ mobi -> epub (15 ms)
+    √ mobi -> rtf (9 ms)
+    √ mobi -> docx (13 ms)
+    √ mobi -> fb2 (8 ms)
+    √ mobi -> txt (7 ms)
+    √ azw3 -> epub (12 ms)
+    √ azw3 -> rtf (7 ms)
+    √ azw3 -> docx (16 ms)
+    √ azw3 -> fb2 (9 ms)
+    √ azw3 -> txt (7 ms)
+
+[31m[2026-11-04T15:42:13.707Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-12680'"}
+[31m[2026-11-04T15:42:13.805Z] [ERROR] [conversion][0m {"jobId":"boundary-empty-b64","attempt":null,"maxRetries":3,"error":"An unexpected error occurred. Please try again later.","rawError":"Either fileBuffer or inputFilePath must be provided","code":"INTERNAL_ERROR"}
+[31m[2026-11-04T15:42:13.843Z] [ERROR] [conversion][0m {"jobId":"boundary-corrupted","attempt":null,"maxRetries":3,"error":"The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the original file.","rawError":"not a valid eBook format","code":"CORRUPT_INPUT"}
+[31m[2026-11-04T15:42:13.851Z] [ERROR] [conversion][0m {"jobId":"boundary-truncated-zip","attempt":null,"maxRetries":3,"error":"The uploaded file is too small to be a valid document (under 30 bytes). Please upload the real file.","rawError":"Invalid input file: too small (6 bytes)","code":"INPUT_TOO_SMALL"}
+PASS tests/boundary/boundary-tests.test.ts
+  Boundary: File size limits
+    √ should handle near-maximum file size (1MB mock) (32 ms)
+    √ should handle exactly 1MB file (21 ms)
+    √ should handle very small files (14 ms)
+  Boundary: Special character filenames
+    √ should handle Unicode job IDs (14 ms)
+    √ should handle job IDs with spaces and hyphens (14 ms)
+    √ should handle job IDs with special symbols (14 ms)
+  Boundary: Empty and zero-byte files
+    √ should reject empty base64 string (10 ms)
+    √ should handle whitespace-only content (min size) (21 ms)
+  Boundary: Corrupted input handling
+    √ should reject completely random binary data as corrupt (12 ms)
+    √ should reject truncated ZIP data (too small) (12 ms)
+  Boundary: MAX_RETRIES configuration
+    √ should have MAX_RETRIES set to 3 by default (1 ms)
+
+PASS tests/unit/input-size-guard.test.ts
+  inputSizeRejection 判据真值（只拦空文件）
+    √ 0 字节 → UPLOAD_EMPTY
+    √ 1 字节放行（后端可转换小文件，禁止前置误伤）
+    √ 14 字节放行（后端可转换小文件，禁止前置误伤）
+    √ 29 字节放行（后端可转换小文件，禁止前置误伤）
+    √ 30 字节放行（后端可转换小文件，禁止前置误伤）
+    √ 1024 字节放行（后端可转换小文件，禁止前置误伤）
+    √ 回归护栏：14 字节必须放行（第一稿曾错误拦截，实测后端返回 200）
+  convertAndStream 全链路接线（旧行为是 500 + 红卡）
+    √ 0 字节 → 400 UPLOAD_EMPTY，不再是 500 (1 ms)
+    √ 缺 file 字段仍走原有 400（守卫未顶掉既有校验） (1 ms)
+  归因真值（too small 属容量/降级链，不是用户输入错误）
+    √ 真实 14B 错误串 → INPUT_TOO_SMALL（而非 INTERNAL_ERROR） (1 ms)
+    √ 真实 14B 错误串仍判 system 红卡（后端忙 + 回退引擎拒绝 = 我方容量问题）
+    √ 反向否定：0B 的深层错误串判 system（null buffer 属编程缺陷）
+    √ 真系统故障仍是红卡 (1 ms)
+
+PASS tests/unit/epub-docx-capability.test.ts
+  EPUB to DOCX actual output contract
+    √ preserves Unicode chapter text in readable OOXML, without promising images or heading styles (25 ms)
+
+PASS tests/unit/upload-presign.test.ts
+  isValidUploadKey
+    √ accepts a key produced by buildUploadKey (1 ms)
+    √ accepts the canonical minted shape
+    √ rejects path traversal
+    √ rejects absolute paths
+    √ rejects keys outside the uploads/ prefix (e.g. conversion cache objects)
+    √ rejects malformed dates and ids (1 ms)
+    √ rejects a missing extension
+    √ rejects non-strings and over-long input (1 ms)
+  buildUploadKey
+    √ always produces a key that passes validation (1 ms)
+    √ uses the source format as the extension and never leaks unsafe characters
+    √ falls back to .bin for an empty format (1 ms)
+    √ produces unique keys
+    √ is date-partitioned (for the lifecycle rule that sweeps orphans) (1 ms)
+  fileNameFromUploadKey
+    √ derives a download name from the source format
+    √ never returns an empty extension (1 ms)
+  isDirectUploadEnabled
+    √ is false when R2 credentials are absent (fail closed) (1 ms)
+    √ is TRUE in Calibre-backend (self-hosted) mode when R2 is present (2026-10-28) (1 ms)
+    √ is true when R2 is configured and no backend is set
+  size cap invariants
+    √ the direct-upload cap is strictly larger than the multipart cap (1 ms)
+    √ the direct-upload cap is large enough for real DJVU / comic files
+    √ presigned URLs expire (1 ms)
+
+[33m[2026-11-04T15:42:14.430Z] [WARN] [conversion][0m {"error":"redis.incrby is not a function"}
+PASS tests/unit/conversion-budget-cache.test.ts
+  isPureJsConversion
+    √ classifies pure-JS pairs as local (no credit consumed) (2 ms)
+    √ classifies CloudConvert-dependent pairs as non-local (4 ms)
+    √ is case-insensitive and safe on empty input (1 ms)
+  computeCacheKey
+    √ is deterministic for identical inputs (1 ms)
+    √ is sensitive to source format, target format, and bytes (1 ms)
+    √ bumps with schema version (old entries unreachable)
+  validateCachedOutput
+    √ accepts valid ZIP-family outputs (1 ms)
+    √ rejects non-ZIP bytes for ZIP-family outputs
+    √ accepts valid PDF / MOBI-family outputs (1 ms)
+    √ rejects empty and wrong-magic outputs
+    √ validates text-family signatures (1 ms)
+  conversion-budget
+    √ defaults the daily limit to 10 (CloudConvert free tier) (1 ms)
+    √ secondsUntilUtcMidnight stays within (0, 86400]
+    √ allows conversion when no spend recorded (mock redis get → null) (1 ms)
+    √ recordCreditSpend never throws when the redis command is unavailable (fail-open) (1 ms)
+    √ degrades to allow when Redis client is null (fail-open) (2 ms)
+  conversion-cache
+    √ defaults the TTL to 30 days (privacy)
+    √ serves a miss (null) when R2 is not configured
+    √ skips storing when R2 is not configured (no orphan objects) (1 ms)
+
+[31m[2026-11-04T15:42:14.510Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-12680'"}
+PASS tests/unit/queue.test.ts
+  processConversion
+    √ should process a valid conversion successfully (17 ms)
+    √ should handle htmlz extension mapping (12 ms)
+    √ should respect MAX_RETRIES setting (1 ms)
+    √ should return proper mimeType for common formats (73 ms)
+  getJobStatus
+    √ should return null for non-existent jobs (1 ms)
+
+PASS tests/unit/governance-schema.test.ts
+  conversion capability and language signals
+    √ does not advertise unavailable DOC as a usable application or tutorial (en) (1 ms)
+    √ does not advertise unavailable DOC as a usable application or tutorial (es) (1 ms)
+    √ keeps the working Word application and registers its real translation (1 ms)
+
+[31m[2026-11-04T15:42:14.803Z] [ERROR] [storage][0m {"error":"Error: ENOENT: no such file or directory, scandir 'C:\\Users\\29537\\AppData\\Local\\Temp\\ebook-test-uploads-12680'"}
+PASS tests/unit/integration-pipeline.test.ts
+  Integration: Full pipeline verification
+    √ should produce valid conversion result (20 ms)
+    √ should track progress updates during conversion (14 ms)
+    √ should handle all image output formats correctly (24 ms)
+    √ should call execFile with correct arguments (1 ms)
+
+PASS tests/unit/keywords.test.ts
+  isMoving
+    √ is false when there is no baseline (delta null) (1 ms)
+    √ is false when the position is unchanged (delta 0) (1 ms)
+    √ is true for any non-zero movement, up or down (3 ms)
+  sortRows
+    √ sorts by delta desc, pushing nulls to the bottom
+    √ sorts by delta asc, still pushing nulls to the bottom
+    √ sorts by position asc using latest.impressionPosition (1 ms)
+    √ sorts by query alphabetically (10 ms)
+    √ never mutates the input array
+  loadKeywordSeries
+    √ loads the generated series when present (1 ms)
+    √ bing totals reconcile: comparable = up + down + flat
+    √ gsc comparability follows the rolling-window rule (the honesty guard) (1 ms)
+  mergedKeywordRows
+    √ flattens Bing + GSC into one table tagged by source (1 ms)
+    √ maps GSC position onto impressionPosition so the panel can render it (1 ms)
+    √ preserves GSC raw deltas when comparable (and none when not) (1 ms)
+    √ never produces a GSC delta across mismatched windows (20 ms)
+  latestReasonByQuery
+    √ keeps the most recent reason per query (1 ms)
+    √ returns an empty map for no input
+  loadKeywordReasons
+    √ returns an array (never null) even when curated by hand (1 ms)
+  loadKeywordReasonCandidates
+    √ returns an array (never null) when not generated yet (1 ms)
+  buildCandidates
+    √ flags competitor pressure as a high-confidence hypothesis (related != causal) (1 ms)
+    √ reports unobserved rivals without inferring they are outside Top-100 (1 ms)
+    √ stays silent when rivals are present but there is no baseline (no false "newly entered") (1 ms)
+    √ stays silent about competitors for a query that is not tracked at all (1 ms)
+    √ flags an algorithm-update window as a medium-confidence hypothesis (1 ms)
+    √ ignores movements below the threshold
+    √ skips keywords with no baseline (delta null)
+    √ respects a custom threshold
+  latestCandidateByQuery / pickCandidate
+    √ maps each query to its candidate entry
+    √ picks a candidate item by query + index (1 ms)
+
+[32m[2026-11-04T15:42:15.160Z] [INFO] [conversion][0m {"targetFormat":"txt","sourceFormat":"epub","pass":false,"count":1}
+PASS src/lib/conversion-verifier.test.ts
+  verifyConversion
+    √ passes epub -> pdf (CloudConvert output): magic-verified, no false content-loss veto (15 ms)
+    √ passes epub -> mobi (CloudConvert output): BOOKMOBI magic recognized (10 ms)
+    √ reverse: offset-0 BOOKMOBI variant is still detected as mobi (not text) (11 ms)
+    √ still vetoes epub -> txt when output is a tiny stub (content-loss intact) (11 ms)
+    √ passes epub -> txt with near-full text preserved (11 ms)
+
+PASS tests/unit/keyword-meta.test.ts
+  deriveTargetUrl
+    √ maps a plain "X to Y" keyword to its convert page (1 ms)
+    √ ignores surrounding words
+    √ resolves format aliases to the slug the site actually ships (1 ms)
+    √ returns null when no real page exists — never invents a URL
+  deriveIntent
+    √ classifies the documented buckets (2 ms)
+    √ puts the instructional reading of an IP keyword in 操作指南, not IP内容
+    √ falls back to 其他 for a query with no signal (1 ms)
+  competitorsForQuery
+    √ returns the competitors whose overlap list contains the keyword (exact, case-insensitive) (1 ms)
+    √ returns [] for an untracked keyword or missing config
+  decision ledger helpers
+    √ keeps the most recent keyword decision per query (1 ms)
+    √ keys competitor decisions by domain|query
+  decision loaders
+    √ always return arrays (the ledgers are optional and hand-curated) (2 ms)
+
+[31m[2026-11-04T15:42:15.336Z] [ERROR] [rate-limit][0m {"error":"redis.eval is not a function"}
+[33m[2026-11-04T15:42:15.342Z] [WARN] [rate-limit][0m {"hint":"Check TRUST_PROXY / platform forwarded headers if this is unexpected"}
+PASS tests/unit/rate-limit.test.ts
+  RATE_LIMIT_STRATEGIES
+    √ should define all expected strategies (1 ms)
+    √ should have reasonable limits per strategy
+    √ should use 60s window for most strategies (1 ms)
+  checkRateLimit
+    √ should allow requests within the limit (1 ms)
+  getRateLimitHeaders
+    √ should include standard rate limit headers
+    √ should include Retry-After when rate limited (1 ms)
+  getRateLimitIdentifier（按客户端区分，2026-11-02）
+    √ Vercel 运行时：不同客户端得到不同标识（共享桶的直接反例） (1 ms)
+    √ Vercel 运行时：同一个客户端得到稳定标识（不能每次请求都变，否则限流形同虚设）
+    √ Vercel 运行时：XFF 多段时取链尾（平台追加值），不受链首伪造影响
+    √ 非 Vercel 且无任何 IP 来源：退化为 unknown（保持原语义，但不再是唯一可达分支） (1 ms)
+    √ 已登录用户走 userId，不依赖 IP
+
+PASS tests/unit/board.test.ts
+  board data file
+    √ passes structural validation (1 ms)
+    √ numbers every module M0..M(n) contiguously, with no gap and no duplicate (1 ms)
+    √ keeps every module populated and never shrinks below the measured baseline (1 ms)
+    √ uses unique task ids
+    √ rejects an invalid status rather than rendering a blank cell (17 ms)
+    √ rejects an invalid priority (2 ms)
+    √ rejects duplicate task ids (1 ms)
+    √ marks every task as either a spec clause or a documented supplement (7 ms)
+    √ carries five anchors and two social channels
+    √ declares at least one open decision for the owner (1 ms)
+  date helpers
+    √ recognises ISO dates only (1 ms)
+    √ computes day deltas
+    √ maps weekdays stably (1 ms)
+    √ treats done and dropped as closed
+  recurrence
+    √ fires daily task every day
+    √ fires weekly tasks on Monday only (1 ms)
+    √ fires monthly-first-week only in the first 7 days on a Monday (1 ms)
+    √ fires monthly-end only in the last three days (1 ms)
+    √ fires quarterly only in the first week of Jan/Apr/Jul/Oct on a Monday
+    √ never auto-lists event-driven tasks (per-change / per-round)
+    √ classifies the three standing cadences and nothing else (1 ms)
+    √ labels every cadence that appears in the data file (2 ms)
+    √ does not treat non-recurring fixed-date tasks as recurring (1 ms)
+    √ anchors the every-2-days parity to D0, not to run time
+  board derivation
+    √ reports the totals straight from the data file
+    √ lists fixed-date tasks due today
+    √ lists recurring tasks on a firing day (1 ms)
+    √ routes standing cadences out of the dated list
+    √ keeps a firing day actionable by excluding standing discipline (1 ms)
+    √ reports per-module standing counts without polluting nextDue (1 ms)
+    √ carries the task status and cadence label into the due item
+    √ has nothing overdue on day zero (1 ms)
+    √ surfaces a task as overdue the day after its due date
+    √ keeps overdue items accumulating rather than dropping off (1 ms)
+    √ sorts due-today by priority, P0 first (1 ms)
+    √ counts module progress from statuses only
+    √ reflects a completed task in module progress and totals (1 ms)
+    √ excludes dropped tasks from the open count (3 ms)
+    √ counts blocked tasks separately (2 ms)
+    √ counts down to anchors and flips them to passed (1 ms)
+    √ marks an anchor as today when the date matches
+    √ sorts anchors soonest first (1 ms)
+    √ surfaces the scheduled X slot for its date (1 ms)
+    √ keeps Reddit in warm-up until the window opens (1 ms)
+    √ never returns an empty recheck queue shape (it is a list, possibly empty)
+    √ routes a task into the recheck queue once it has a recheck date (2 ms)
+    √ surfaces COMPLETED work for recheck — that is the whole point of a recheck (1 ms)
+    √ does not list a completed task as still due (2 ms)
+    √ never rechecks a dropped task (2 ms)
+    √ is pure: same input yields the same view
+    √ does not mutate the input data (1 ms)
+    √ exposes a convenience loader for a given day (1 ms)
+  board honesty
+    √ labels supplement tasks as SUPP so they are never read as spec clauses (1 ms)
+    √ keeps the spec-clause tasks marked CORE (1 ms)
+    √ never presents a citation count as a traffic promise (1 ms)
+    √ states the supplement discipline in the readme so the file is self-explaining
+
+PASS tests/unit/toc-structure.test.ts
+  TOC Preservation: Structural integrity
+    √ should have consistent tool type across all conversions (8 ms)
+    √ should use calibre tool for standard conversions (1 ms)
+    √ should use libreoffice for doc->epub
+    √ should use imagemagick for epub->jpg/png
+
+PASS tests/boundary/infrastructure-boundaries.test.ts
+  Boundary: Environment configuration
+    √ should have reasonable default UPLOAD_DIR (1 ms)
+    √ should have CALIBRE_PATH configured (1 ms)
+    √ should have NEXT_PUBLIC_MAX_FILE_SIZE_MB set
+    √ should have WORKER_CONCURRENCY set
+  Boundary: Worker lifecycle exports
+    √ should have startWorker and closeWorker functions exported (32 ms)
+    √ should have getJobStatus function exported
+    √ should have startQueueEvents function exported (1 ms)
+    √ should have closeQueueEvents function exported (1 ms)
+  Boundary: Redis connection exports
+    √ should have getRedisClient function exported (1 ms)
+    √ should have closeRedis function exported
+    √ should have requireRedisClient function exported (1 ms)
+  Boundary: Type definitions
+    √ should have valid ConversionJobResult structure (1 ms)
+
+PASS tests/unit/competitor.test.ts
+  sortCompetitorRows
+    √ sorts by delta desc, pushing nulls to the bottom (1 ms)
+    √ sorts by latestRank asc (2 ms)
+  TREND_LABEL
+    √ covers all six trends
+  loaders
+    √ loadCompetitorConfig returns the tracked config (2 ms)
+    √ loadCompetitorSeries returns an object (matrix may be empty until fetched) (1 ms)
+
+PASS src/lib/epub-html.test.ts
+  √ preserves chapter and resource bytes and indexes spine order (14 ms)
+  √ does not overwrite an existing root index (8 ms)
+  √ rejects missing chapters and unsafe archive paths (9 ms)
+  √ executes the real local conversion and returns a ZIP (20 ms)
+
+PASS src/lib/constants.test.ts
+  KEYWORDS data
+    √ has keywords defined
+    √ all keywords have required fields (11 ms)
+    √ phases are valid (3 ms)
+  getKeywordsByPhase
+    √ filters keywords by phase (1 ms)
+    √ returns empty array for non-existent phase
+  getP0Keywords
+    √ returns only P0 keywords (1 ms)
+
+PASS tests/unit/schema.test.ts
+  generateSchema
+    √ should generate valid JSON-LD (10 ms)
+    √ should include BreadcrumbList in graph (1 ms)
+    √ should identify the actual BookConv tool without asserting a universal engine (1 ms)
+    √ should include SoftwareApplication with free pricing (1 ms)
+    √ should include Article with author (1 ms)
+    √ should include FAQ when provided
+    √ should NOT include FAQ when empty
+    √ should not emit fabricated Review entries (1 ms)
+    √ should use correct page URL pattern (1 ms)
+
+PASS src/lib/utils.test.ts
+  formatBytes
+    √ returns 0 B for zero bytes (1 ms)
+    √ formats bytes correctly (3 ms)
+    √ handles large numbers
+  getSlug
+    √ creates a slug from source and target formats (1 ms)
+    √ handles mixed case input
+  getDisplayName
+    √ converts slug to display name
+    √ handles single-word slugs (1 ms)
+  cn
+    √ merges class names with clsx and twMerge (6 ms)
+    √ handles conditional classes (1 ms)
+    √ omits falsy values
+
+PASS tests/unit/conversion-map.test.ts
+  CONVERSION_MAP
+    √ should have exactly 60 conversion paths (4 ms)
+    √ should contain all expected conversion keys (3 ms)
+    √ should have tool type and description for every conversion (9 ms)
+  SUPPORTED_FORMATS
+    √ should include all source and target formats from conversion map (1 ms)
+    √ should be sorted alphabetically (1 ms)
+    √ should not contain duplicates (1 ms)
+  getConversionKey
+    √ should produce lowercase hyphenated format pair (1 ms)
+  getConversion
+    √ should return the conversion entry for valid pairs (1 ms)
+    √ should return undefined for unsupported pairs (1 ms)
+    √ should be case-insensitive
+  FORMAT_DISPLAY_NAMES
+    √ should have display names for all supported formats (1 ms)
+    √ should have reasonable display names
+  normalizeFormat
+    √ should lowercase and remove dots
+    √ should resolve display name aliases (1 ms)
+
+[32m[2026-11-04T15:42:16.358Z] [INFO] [conversion][0m
+[32m[2026-11-04T15:42:16.362Z] [INFO] [conversion][0m
+[32m[2026-11-04T15:42:16.364Z] [INFO] [conversion][0m
+PASS tests/reverse-verify-alerts-redteam.test.ts
+  alerts 分级红队反向验证 (M8-13 / M8-14)
+    √ 真实告警2（Input task has failed）降级灰卡 user，而非系统红卡 system (1 ms)
+    √ 双层保险：USER_SIDE_PATTERNS 命中 或 mapErrorCode→CORRUPT_INPUT 任一降级 (1 ms)
+    √ 对比项：真实告警1（Invalid zip file）仍灰卡 user
+    √ 契约锁：新串（带诊断后缀仍前缀 Invalid zip file）仍被正确分级为灰卡 user
+    √ 对比项：真系统故障（backend-unavailable 503）仍红卡 system (1 ms)
+    √ 反向否定：不含用户侧签名的引擎故障仍 system（防止双层保险误伤）
+  告警卡 delegation 归因透传（2026-11-02）
+    √ 渲染 Backend delegation 行，说明是后端忙而非文件坏 (4 ms)
+    √ 未提供归因时不渲染该行（不给历史调用方凭空加噪声） (2 ms)
+    √ 熔断跳过也可见（区分「后端忙」与「根本没请求」） (1 ms)
+
+[32m[2026-11-04T15:42:16.448Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128,"ttlDays":30}
+[32m[2026-11-04T15:42:16.448Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128}
+[32m[2026-11-04T15:42:16.450Z] [INFO] [conversion][0m {"targetFormat":"mobi","size":128,"ttlDays":30}
+[32m[2026-11-04T15:42:16.451Z] [INFO] [conversion][0m {"targetFormat":"mobi","size":128,"ttlDays":30}
+[33m[2026-11-04T15:42:16.453Z] [WARN] [conversion][0m {"targetFormat":"azw3","reason":"not a PalmDB/MOBI container"}
+[32m[2026-11-04T15:42:16.455Z] [INFO] [conversion][0m {"targetFormat":"azw3","size":128,"ttlDays":30}
+PASS tests/unit/conversion-cache-roundtrip.test.ts
+  A1 缓存 store→get 命中路径（epub→azw3/mobi 402 缓解核心）
+    √ 存入合法 azw3 输出后，同输入同格式二次查询命中并返回一致字节 (2 ms)
+    √ 不同输入（不同文件）命中失败 —— 证明缓存不跨文件生效（诚实边界） (1 ms)
+    √ 不同目标格式命中失败 —— epub→mobi 不串到 epub→azw3 (1 ms)
+    √ 损坏/错格式字节既不被存入、也不被命中返回（validateCachedOutput 门禁） (2 ms)
+    √ 过期 meta → 命中失败（防陈旧，R7） (1 ms)
+  validateCachedOutput 边界（红队 R8 复验）
+    √ accepts BOOKMOBI/azw3 magic
+    √ rejects empty output
+
+PASS tests/unit/storage-retention.test.ts
+  √ cleans expired local results without scanning or deleting the R2 bucket (25 ms)
+
+PASS tests/unit/regression-all-paths.test.ts
+  CONVERSION_MAP Regression
+    √ should have exactly 60 conversion paths (1 ms)
+    √ should have tool type and description for every conversion (8 ms)
+  API validation logic
+    √ should reject unsupported source formats (2 ms)
+    √ should normalize format strings (1 ms)
+    √ should enforce 10MB file size limit
+  Error code mapping
+    √ should map known OS errors to application codes (1 ms)
+    √ should map conversion failure (1 ms)
+    √ should default to INTERNAL_ERROR for unknown errors
+  Error sanitization
+    √ should strip internal paths from error messages (1 ms)
+    √ should strip stack traces from error messages (1 ms)
+  EPUB ZIP signature check
+    √ should recognize valid EPUB magic bytes (1 ms)
+    √ should reject non-ZIP files as EPUB
+
+PASS src/lib/conversion-purejs-epub.test.ts
+  pure-JS mobi/azw3 -> epub
+    √ mobi -> epub produces a valid EPUB that passes magic + structure checks (24 ms)
+    √ azw3 -> epub also routes through the pure-JS path (16 ms)
+
+PASS src/lib/conversion-circuit-breaker.test.ts
+  conversion circuit breaker
+    √ starts closed and allows backend attempts (1 ms)
+    √ does not open before the failure threshold (1 ms)
+    √ opens on the 3rd consecutive failure and blocks the backend (1 ms)
+    √ a success resets the failure count (closed again) (1 ms)
+    √ re-opens immediately when a half-open trial fails (2 ms)
+    √ closes again when the half-open trial succeeds (1 ms)
+    capacity-busy signal is NOT a health failure
+      √ never opens the circuit, no matter how many busies pile up (1 ms)
+      √ does not add to the failure count that drives the threshold (1 ms)
+      √ does not re-open a half-open circuit by itself (1 ms)
+      √ is cleared by a success, like the failure count (1 ms)
+
+PASS src/lib/api-error.test.ts
+  extractApiError：后端真实 error_code 透传（防白名单漂移复发）
+    √ 透传 UNSUPPORTED_CONVERSION（HTTP 422），不再塌缩 UNKNOWN (1 ms)
+    √ 透传 FILE_TOO_LARGE（HTTP 413），不再塌缩 UNKNOWN
+    √ 透传 R2 取回族码 UPLOAD_NOT_FOUND（HTTP 400） (1 ms)
+    √ 透传 R2 取回族码 UPLOAD_EMPTY（HTTP 400） (1 ms)
+    √ 透传 R2 取回族码 INVALID_UPLOAD_KEY（HTTP 400）
+    √ ErrorCode 全集内的既有码仍然透传（无回归）
+    √ ErrorCode 全集之外的码仍判 undefined（不做无差别放行）
+    √ 非 JSON 响应（如 502 HTML）无 code，仅给可读 message (1 ms)
+
+PASS tests/unit/txt-epub-contract.test.ts
+  √ packages UTF-8 text as one document with blank-line paragraphs (21 ms)
+
+PASS src/lib/direct-upload-error.test.ts
+  mapDirectUploadError（阶段分流）
+    √ presign 503 → DIRECT_UPLOAD_PRESIGN_UNAVAILABLE (1 ms)
+    √ R-B：presign 413 带 FILE_TOO_LARGE 合同码 → 保留 FILE_TOO_LARGE (1 ms)
+    √ R-A：presign 返回未知字面量（如 DIRECT_UPLOAD_UNAVAILABLE）→ 不透传，归 PRESIGN_ERROR (1 ms)
+    √ presign 400/429/网络（无合同码）→ DIRECT_UPLOAD_PRESIGN_ERROR (1 ms)
+    √ R2 PUT 失败（CORS/网络/非2xx）→ DIRECT_UPLOAD_PUT_FAILED
+    √ 未知抛出（阶段不明）→ 兜底 DIRECT_UPLOAD_FAILED（历史/门禁兼容）
+  门禁同步不变量（改能力必须同步改门禁基线）
+    √ 直传族四码全部通过 isErrorCode（= 已进 ERROR_MESSAGES 单一真相） (4 ms)
+  uploadFileDirect 抛出点的阶段类型（fetch 桩）
+    √ presign 503 → DirectUploadUnavailableError → 映射 PRESIGN_UNAVAILABLE (3 ms)
+    √ presign 413 合同码 → 映射 FILE_TOO_LARGE（R-B 端到端） (1 ms)
+    √ presign 网络失败 → DirectUploadPresignError → PRESIGN_ERROR (1 ms)
+    √ PUT 网络失败（CORS 假象）→ DirectUploadPutError → PUT_FAILED (1 ms)
+    √ PUT 非 2xx → DirectUploadPutError → PUT_FAILED (2 ms)
+
+PASS tests/unit/mime-types.test.ts
+  Storage: MIME type mapping
+    √ should return correct MIME types for all common formats (1 ms)
+    √ should return octet-stream for unknown formats
+    √ should handle image-specific MIME types (1 ms)
+    √ should handle comic book formats
+    √ should cover all output extensions used in the conversion map (3 ms)
+
+PASS src/lib/unsupported-conversions.test.ts
+  UNSUPPORTED_CONVERSIONS registry
+    √ doc-epub（两头堵第三例，2026-11-01）已登记且指向纯 JS 替代路径 (2 ms)
+    √ 已登记的三个 epub 出发方向（2026-10-28 方案 A）保持登记 (1 ms)
+    √ 每个登记条目的替代路径真实存在且自身不是死组合 (1 ms)
+    √ 未登记的正常组合保持放行（注册表不得误伤） (3 ms)
+
+PASS tests/unit/metadata.test.ts
+  extractEbookMetadata - stub tests (no real files)
+    √ should resolve with empty metadata for unsupported extensions (1 ms)
+    √ should handle EPUB ZIP signature check (1 ms)
+    √ should reject non-ZIP files as EPUB (1 ms)
+  Page count estimation logic
+    √ should estimate pages for PDF based on size (stub) (1 ms)
+    √ should estimate pages for EPUB based on size (stub) (2 ms)
+    √ should handle zero-byte files (stub) (1 ms)
+
+PASS tests/unit/api-validation.test.ts
+  API: Request validation logic
+    √ should reject requests missing file field (1 ms)
+    √ should reject unsupported source formats (1 ms)
+    √ should accept all supported formats as source (3 ms)
+    √ should normalize format strings (remove dots, lowercase) (1 ms)
+    √ should enforce 10MB file size limit (1 ms)
+  API: Error code mapping
+    √ should map known OS errors to application codes
+    √ should default to CONVERSION_FAILED for unknown errors
+
+PASS tests/unit/client-ip.test.ts
+  readClientIp
+    √ 优先采信 x-vercel-forwarded-for 链首 (1 ms)
+    √ XFF 取最后一段（最近一跳代理写入的值），不是可伪造的链首 (2 ms)
+    √ XFF 单段时取该段 (1 ms)
+    √ 回退到 x-real-ip (1 ms)
+    √ 支持 IPv6
+    √ 跳过垃圾值，改用下一个合法来源（不把 unknown 当 IP）
+    √ 全部缺失时返回 undefined，不编造值 (1 ms)
+    √ headless 对象（无 get）不抛错 (1 ms)
+  looksLikeIp
+    √ 接受合法 IPv4/IPv6 (1 ms)
+    √ 拒绝越界与垃圾 (1 ms)
+
+Test Suites: 45 passed, 45 total
+Tests:       494 passed, 494 total
+Snapshots:   0 total
+Time:        27.42 s, estimated 55 s
+Ran all test suites.

@@ -18,7 +18,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import https from 'node:https';
-import { DIRECT_UPLOAD_INFRA_CODES, USER_INPUT_CODES } from './lib/ga-error-codes.mjs';
+import { DIRECT_UPLOAD_INFRA_CODES, USER_INPUT_CODES, USER_SIDE_ALERT_CODES } from './lib/ga-error-codes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -135,6 +135,8 @@ function basicFromReport(report) {
 const CLIENT_INTERCEPT_CODES = new Set(['FILE_TOO_LARGE', ...USER_INPUT_CODES]);
 const QUOTA_CODES = new Set(['CONVERSION_QUOTA_EXCEEDED']);
 const INFRA_CODES = new Set(DIRECT_UPLOAD_INFRA_CODES);
+// 展示层告警分级专用集合（不可并入 CLIENT_INTERCEPT_CODES，语义见 ga-error-codes.mjs）
+const ALERT_USER_CODES = new Set(USER_SIDE_ALERT_CODES);
 
 function splitFailures(failed, failedByErrorCode) {
   const f = Number(failed);
@@ -157,8 +159,14 @@ function splitFailures(failed, failedByErrorCode) {
 // F5（2026-11-01 红队复核）：把当日失败签名按「用户侧(灰)/系统侧(红)」二分，
 // 产出统一健康裁定；当「日报 Part A 引擎结论=正常」却仍存在系统侧失败签名时，
 // 发检测盲区告警（实时红卡/系统失败被日报阈值漏判的场景）。
-// 判定：命中 CLIENT/QUOTA/INFRA 三集合的归用户侧；其余（含 engine/CORRUPT_INPUT/
-// INPUT 类/超时等）归系统侧。failedByErrorCode 为 null/缺失→decided:false（不臆断）。
+// 判定（2026-11-04 修正）：展示层告警分级，对齐生产飞书告警卡
+// src/lib/alerts.ts USER_SIDE_ERROR_CODES，单一事实源 = ga-error-codes.mjs
+// USER_SIDE_ALERT_CODES。命中 CLIENT/QUOTA/INFRA/USER_SIDE_ALERT 四集合归用户侧(灰)，
+// 其余（INTERNAL_ERROR / UNKNOWN / 超时等引擎或归因缺失类）归系统侧(红)。
+// ⚠️ 这里刻意**不改 splitFailures**：CORRUPT_INPUT 可能已由 Calibre 尝试过，
+// 从 engineFailed 剥离会虚高引擎侧成功率并让 Part A 与 D2 口径失配。
+// 即「告警归用户侧」与「是否到过引擎」是两件事，不许再复用同一集合。
+// failedByErrorCode 为 null/缺失→decided:false（不臆断）。
 function classifyFailureSides(failedByErrorCode) {
   const userSide = { codes: {}, total: 0 };
   const systemSide = { codes: {}, total: 0 };
@@ -166,7 +174,7 @@ function classifyFailureSides(failedByErrorCode) {
   for (const [code, n] of Object.entries(failedByErrorCode)) {
     const v = Number(n) || 0;
     if (v <= 0) continue;
-    if (CLIENT_INTERCEPT_CODES.has(code) || QUOTA_CODES.has(code) || INFRA_CODES.has(code)) {
+    if (CLIENT_INTERCEPT_CODES.has(code) || QUOTA_CODES.has(code) || INFRA_CODES.has(code) || ALERT_USER_CODES.has(code)) {
       userSide.codes[code] = v; userSide.total += v;
     } else {
       systemSide.codes[code] = v; systemSide.total += v;
@@ -337,7 +345,10 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
         const d2evidence = d2 ? d2.evidence : '深度分析未产出 D2 检查项，失败分流不可验证';
         lines.push(`• 转化失败率：⚠️ 引擎结论不可验证（深度分析 D2=${d2verdict}：${d2evidence}）`);
       } else {
-        lines.push('• 转化失败率：正常（引擎侧无异常失败）');
+        // 2026-11-04：去掉「正常 / 引擎侧无异常失败」的绝对表述。它只代表
+        // 日报主阈值未触发（engineFailed ≤ 完成 且 完成率 ≥ 50%），并不代表没有
+        // 系统侧失败签名；下方健康裁定/硬告警可能同时给出红项，旧文案与之自相矛盾。
+        lines.push('• 转化失败率：日报主阈值未触发（引擎失败数未超完成数、完成率≥50%）；分项归因见下方健康裁定');
       }
     }
     // F5（2026-11-01 红队复核）：统一健康裁定 + 检测盲区告警（复用上方 D2 已校验过的
@@ -349,20 +360,24 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
       const userStr = Object.entries(sides.userSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       const sysStr = Object.entries(sides.systemSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       lines.push(`• 统一健康裁定: 用户侧(灰) ${sides.userSide.total} 次 [${userStr}] / 系统侧(红) ${sides.systemSide.total} 次 [${sysStr}]`);
-      // 硬告警（2026-11-03 F15 收紧）：系统侧=引擎类失败（INTERNAL_ERROR/UNKNOWN/超时/CORRUPT_INPUT 等，
-      // 已排除直传 INFRA/客户端拦截/额度）。主阈值「引擎失败>完成 或 成功率<50%」对低流量站过松——
-      // 11-01 引擎失败4、完成153 不触发；11-02 系统侧5 亦只落软警告。当系统侧(引擎类)失败 ≥3 次即升级硬告警，
-      // 避免引擎故障被埋入「正常」结论（红队要消灭的叙述层假成功）。
+      // 硬告警（2026-11-03 F15 收紧；2026-11-04 分级修正）：系统侧 = 引擎/归因缺失类
+      // （INTERNAL_ERROR / UNKNOWN / 超时等），已排除直传 INFRA、客户端拦截、额度，
+      // 以及 2026-11-04 起按生产告警卡归用户侧的 DRM/CORRUPT_INPUT/VERIFICATION_FAILED。
+      // 主阈值「引擎失败>完成 或 成功率<50%」对低流量站过松——11-01 引擎失败4、完成153
+      // 不触发；11-02 系统侧5 亦只落软警告。当系统侧失败 ≥3 次即升级硬告警，避免引擎故障
+      // 被埋入「正常」结论（红队要消灭的叙述层假成功）。
+      // ⚠️ 分级来源 = USER_SIDE_ALERT_CODES（对齐 alerts.ts）；这里只作展示与告警，
+      // 不改 splitFailures 的 engineFailed 口径，故 B6 / D2 数字不受影响。
       if (sides.systemSide.total >= 3) {
         engineHardAlarm = true;
-        lines.push(`• 🚨 引擎硬告警: 系统侧(引擎类)失败 ${sides.systemSide.total} 次（≥3），日报主阈值（引擎失败>完成 或 成功率<50%）未触发但已达硬告警线，立即核查引擎日志与实时飞书卡`);
+        lines.push(`• 🚨 引擎硬告警: 系统侧(引擎/归因缺失类)失败 ${sides.systemSide.total} 次（≥3），日报主阈值（引擎失败>完成 或 成功率<50%）未触发但已达硬告警线，立即核查引擎日志与实时飞书卡`);
       } else if (sides.systemSide.total > 0 && !basic.abnormal && sides.systemSide.total >= 2) {
         lines.push(`• 🔍 检测盲区: 系统侧失败 ${sides.systemSide.total} 次但日报引擎阈值未触发（成功率/引擎失败数未达告警线），建议人工核对当日飞书实时告警卡`);
       }
     }
     // P1-4 批量异常告警（v2 手册模块 7）
     const b = basic.batch;
-    if (b?.decided && b.triggered) lines.push(`• 🚨 批量异常：${b.reason}（引擎/额度根因需人工分流，衔接 error_code 维度）`);
+    if (b?.decided && b.triggered) lines.push(`• 🚨 批量异常：${b.reason}（前置拦截/直传链路失败需人工分流，衔接 error_code 维度）`);
     if (basic.source === 'ga4-report-md') lines.push(`• 结论: ${basic.conclusion}`);
   } else {
     lines.push('【基础分析】⚠️ ' + basic.note);
