@@ -1,6 +1,7 @@
 export const slug = `background-workers`;
 export const title = `How BookConv Runs Your Conversions in the Background`;
 export const date = `2026-07-30`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = [`architecture`, `worker`, `queue`, `technical`];
 // Engineering/internal reference doc — keep reachable for operators but out of
@@ -49,7 +50,7 @@ The status tells BookConv — and you — what it needs to know:
 - **attempt** — which retry you're on, if any
 - **eta** — a rough estimate of seconds left
 
-When the bar fills, your download link appears. Those links are **temporary** — BookConv deletes the file after a set period, so grab it as soon as it's ready. If a link expires before you do, the [download troubleshooting guide](/blog/download-troubleshooting) walks through the usual causes. Lighter pairs like [EPUB to MOBI](/convert/epub-to-mobi) finish fast; heavier ones like [PDF to EPUB](/convert/pdf-to-epub) take longer because they have to rebuild structure the source never stored.`
+When the bar fills, your download link appears. Those links are **temporary** — link availability and file retention are separate, so grab it as soon as it's ready. If a link expires before you do, the [download troubleshooting guide](/blog/download-troubleshooting) walks through the usual causes. Lighter pairs like [EPUB to MOBI](/convert/epub-to-mobi) finish fast; heavier ones like [PDF to EPUB](/convert/pdf-to-epub) take longer because they have to rebuild structure the source never stored.`
     },
     {
       heading: `Retries, timeouts, and failure on BookConv`,
@@ -64,7 +65,7 @@ When a job is truly stuck, BookConv can fire an [HMAC-signed webhook](/blog/webh
       body: `- **Asynchronous by design.** Uploads return a job ID right away; conversion runs on a worker, so slow files never block your request.
 - **Redis and BullMQ coordinate it.** One queue holds every job, and the same Redis backs the rate limiter that enforces BookConv's free-tier limits.
 - **Throttling keeps things fast.** Limited concurrency means Calibre conversions stay predictable instead of starving each other.
-- **Links are temporary.** BookConv deletes finished files after a period, so download as soon as the bar completes.
+- **Links are temporary.** link expiry does not prove all stored copies are deleted, so download as soon as the bar completes.
 - **Retries belong to the queue.** Three attempts with backoff and clear error messages when a file is genuinely unrecoverable.`
     }
   ]
@@ -97,6 +98,6 @@ export const faqs = [
   },
   {
     question: `Are my converted files kept forever?`,
-    answer: `No. Download links are temporary and BookConv deletes files after a set period, so save your result as soon as it's ready. If a link expires, re-run the conversion to get a fresh one.`,
+    answer: `No. Download links are temporary and link availability and file retention are separate, so save your result as soon as it's ready. If a link expires, re-run the conversion to get a fresh one.`,
   }
 ];

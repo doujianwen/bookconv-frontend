@@ -2,6 +2,7 @@ export const slug = `download-troubleshooting`;
 export const title = `BookConv File Won't Download or Open? Fixes That Actually Work`;
 export const metaTitle = `Ebook Download Troubleshooting Guide`;
 export const date = `2026-07-30`;
+export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = [`Download`, `Troubleshooting`, `BookConv`, `Ebook`, `FAQ`];
 
@@ -51,10 +52,10 @@ Large or slow files hand off to a background worker queue, and the download butt
 One habit worth building: read the metadata preview before you confirm. It shows the title and author BookConv pulled out of the file, which is the fastest way to spot a source that isn't what you thought it was.`
     },
     {
-      heading: `Expired Links: The File Is Already Gone`,
-      body: `Converted files don't live on our servers. Download links are temporary, and once the window closes the file is deleted — that's the point, since we'd rather not keep your books.
+      heading: `Expired Links: Download Access Has Ended`,
+      body: `Download links are temporary, but their expiry does not prove that every stored copy has been deleted. BookConv processes files on servers and may cache converted results; see our [file security information](/file-security).
 
-So if you see an expired-link error, there's nothing to recover on our side. Convert again and save the result immediately. It takes seconds, and on the free tier it costs nothing but one of your five hourly conversions.
+If you see an expired-link error, that link can no longer be used to retrieve the result. Convert again and save the result immediately. It takes seconds, and on the free tier it costs nothing but one of your five hourly conversions.
 
 Three habits that avoid the problem entirely:
 
@@ -83,7 +84,7 @@ That's source quality, not a download failure. Messy markup carries straight thr
     {
       heading: `Key Takeaways`,
       body: `- **Browser first** — silent blocking and interfering extensions cause more failed downloads than our servers ever do.
-- **Links are temporary** — converted files are deleted after a while, so save the result as soon as it appears and re-convert if you miss the window.
+- **Links are temporary** — file retention varies by processing route, so save the result as soon as it appears and re-convert if you miss the window.
 - **Limits are upfront** — 100 MB per file on every plan, with rejections at upload instead of halfway through.
 - **DRM stops at the door** — protected files are refused on upload, and there's no workaround on our end.
 - **Wrong device, not bad file** — most unopenable books just need converting to the format the reader supports.`

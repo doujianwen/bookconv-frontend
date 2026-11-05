@@ -2,6 +2,7 @@ export const slug = `txt-to-epub`;
 export const title = `How to Turn a Plain TXT File into an EPUB with a Table of Contents`;
 export const metaTitle = `Turn a TXT File into an EPUB with a TOC`
 export const date = `2026-08-02`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["TXT", "EPUB", "table of contents", "ebook", "BookConv", "conversion", "guide"];
 
@@ -29,7 +30,7 @@ The free tier handles files up to 100 MB — enough for a long novel several tim
 
 ### Two things to know before you upload
 
-- **Download links are temporary.** Converted files are deleted after a period, so save the .epub to your device right after the progress bar finishes.
+- **Download links are temporary.** File retention varies by processing route, so save the .epub to your device right after the progress bar finishes.
 - **Encoding matters.** Save your .txt as UTF-8. A file saved in an old code page will show garbled characters for accents and non-Latin scripts.`
     },
     {
@@ -69,7 +70,7 @@ If you later want a Kindle-native file from the same text, convert the EPUB onwa
 - **Three steps on BookConv.** Upload, convert, download — no install, no account, 4 MB free tier.
 - **Pre-format for clean chapters.** Blank-line breaks and consistent "Chapter N" headings get the best TOC.
 - **Save as UTF-8.** Old code pages produce garbled characters.
-- **Save immediately.** Download links are temporary and files are deleted after a period. The [TXT format reference](/formats/txt) covers the encoding and metadata limits worth knowing before you convert.`
+- **Save immediately.** Download links are temporary and file retention varies by processing route. The [TXT format reference](/formats/txt) covers the encoding and metadata limits worth knowing before you convert.`
     }
   ]
 };

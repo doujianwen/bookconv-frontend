@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const aboutFaqs = [
   { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service. Personal conversions require no registration." },
   { q: 'How long are my files stored?', a: 'Retention depends on the processing route. Some converted outputs may be cached and third-party copies follow their own policies. Immediate deletion of every copy is not guaranteed; see our privacy policy.' },
-  { q: 'Do you sell my data?', a: "Absolutely not. We don't sell user data, and we don't use your files for any purpose other than conversion. Your privacy is our priority — that's why we don't even require account creation." },
+  { q: 'Who processes my files?', a: 'BookConv processes files on servers. Some routes use CloudConvert and results may be cached. Read our file security information and privacy policy before uploading confidential documents.' },
   { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },
   { q: 'Is BookConv the same as BookReverb or BookConvert?', a: 'No. BookConv (bookconv.com) is an independent, free online converter using format-specific conversion methods. It is not affiliated with, related to, or endorsed by BookReverb, BookConvert, or any similar-named product. If you have been referred to one of those names, this site is bookconv.com only.' },
 ];
@@ -121,7 +121,7 @@ export default async function AboutPage() {
             </li>
           </ul>
           <p className="mt-4 text-gray-700 leading-relaxed">
-            BookConv auto-deletes your uploaded files after the conversion completes and encrypts them in transit — no account or software install required.
+            BookConv transfers files over HTTPS and processes them on servers; some routes use third-party services — no account or software install required.
           </p>
       </section>
 

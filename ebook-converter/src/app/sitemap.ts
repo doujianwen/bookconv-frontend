@@ -40,27 +40,27 @@ BLOG_POSTS.forEach((p) => { BLOG_DATES[p.slug] = p.lastUpdated || p.date; })
 // entry here should be bumped to match.
 const CONTENT_DATES: Record<string, string> = {
   'azw-to-mobi': '2026-11-01',
-  'azw3-to-epub': '2026-11-01',
+  'azw3-to-epub': '2026-11-05',
   'azw3-to-mobi': '2026-11-01',
-  'azw3-to-pdf': '2026-11-01',
+  'azw3-to-pdf': '2026-11-05',
   'cbr-to-pdf': '2026-11-01',
   'djvu-to-pdf': '2026-11-01',
-  'doc-to-epub': '2026-11-01',
-  'docx-to-epub': '2026-11-01',
+  'doc-to-epub': '2026-11-05',
+  'docx-to-epub': '2026-11-05',
   'epub-to-azw3': '2026-11-01',
   'epub-to-doc': '2026-11-02',
   'epub-to-word': '2026-11-02',
   'epub-to-html': '2026-11-01',
   'epub-to-jpg': '2026-11-01',
-  'epub-to-mobi': '2026-11-01',
+  'epub-to-mobi': '2026-11-05',
   'epub-to-pdf': '2026-11-01',
   'epub-to-png': '2026-11-01',
   'epub-to-rtf': '2026-11-01',
-  'epub-to-txt': '2026-11-01',
+  'epub-to-txt': '2026-11-05',
   'epub-to-zip': '2026-11-01',
   'fb2-to-epub': '2026-11-01',
   'html-to-epub': '2026-11-01',
-  'mobi-to-epub': '2026-11-01',
+  'mobi-to-epub': '2026-11-05',
   'mobi-to-pdf': '2026-11-01',
   'mobi-to-txt': '2026-11-01',
   'pdf-to-epub': '2026-11-02',
@@ -117,12 +117,13 @@ const STATIC_DATES: Record<string, string> = {
   '/blog': '2026-08-07',
   '/tutorial': '2026-08-08',
   '/help': '2026-11-01',
-  '/privacy': '2026-11-01',
+  '/privacy': '2026-11-05',
+  '/file-security': '2026-11-05',
   '/terms': '2026-11-01',
   '/api-docs': '2026-07-28',
-  '/about': '2026-11-01',
-  '/founder': '2026-09-25',
-  '/compare/bookconv-vs-calibre': '2026-11-01',
+  '/about': '2026-11-05',
+  '/founder': '2026-11-05',
+  '/compare/bookconv-vs-calibre': '2026-11-05',
   // M4-2 (2026-10-15): public citable dataset pages under /data/*
   '/data': '2026-10-15',
   '/data/bing-ai-citations': '2026-10-15',
@@ -162,6 +163,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { path: '/blog', frequency: 'weekly', priority: 0.7, date: STATIC_DATES['/blog'] },
       { path: '/tutorial', frequency: 'monthly', priority: 0.5, date: STATIC_DATES['/tutorial'] },
       { path: '/help', frequency: 'monthly', priority: 0.6, date: STATIC_DATES['/help'] },
+      { path: '/file-security', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/file-security'] },
       { path: '/privacy', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/privacy'] },
       { path: '/terms', frequency: 'yearly', priority: 0.3, date: STATIC_DATES['/terms'] },
       // GEO P0 (2026-09-18): About = brand entity page (E-E-A-T baseline),
@@ -192,7 +194,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // [locale] rendering fix (see routing task), not here.
     if (locale === 'es') {
       for (const path of ESP_STATIC_PATHS) {
-        allUrls.push({ url: baseUrl + '/es' + (path === '/' ? '' : path), lastModified: new Date('2026-11-02'), changeFrequency: 'monthly', priority: path === '/' ? 1 : 0.6 })
+        allUrls.push({ url: baseUrl + '/es' + (path === '/' ? '' : path), lastModified: new Date(STATIC_DATES[path] || '2026-11-02'), changeFrequency: 'monthly', priority: path === '/' ? 1 : 0.6 })
       }
       // Only the 6 real Spanish blog posts emit /es/blog/* URLs.
       for (const slug of ESP_BLOG_SLUGS) {

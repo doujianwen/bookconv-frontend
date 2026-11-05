@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import React from "react"
+import Link from 'next/link'
 import { useCallback, useState, useRef } from "react"
 import { useLocale } from "next-intl"
 import {
@@ -349,6 +350,13 @@ export function FileDropZone({
           accept={accept}
         />
       </div>
+
+      <p className="text-center text-xs leading-relaxed text-gray-600">
+        {isEs ? 'BookConv procesa archivos en servidores; algunas conversiones utilizan CloudConvert. ' : 'BookConv processes files on servers; some conversions use CloudConvert. '}
+        <Link href={isEs ? '/es/file-security' : '/file-security'} className="text-blue-700 underline">
+          {isEs ? 'Seguridad y privacidad de archivos' : 'File security and privacy'}
+        </Link>
+      </p>
 
       {/* Expanded metadata panel */}
       {!metaLoading && !fileInfo?.error && metaFields.length > 0 && (

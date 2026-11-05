@@ -2,14 +2,14 @@ export const slug = `sync-reading-across-devices`;
 export const title = `How to Transfer Ebooks Between Devices`;
 export const metaTitle = `Sync Ebooks & Reading Progress Across Devices`
 export const date = `2026-08-15`;
-export const lastUpdated = `2026-09-18`;
+export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = [`Sync`, `Multi-device`, `Kindle`, `Kobo`, `Apple Books`, `Ebook`, `Transfer Ebooks`, `Reading Progress`];
 
 export const content = {
   intro: `Learn how to transfer ebooks between devices and sync reading progress across Kindle, Kobo, Apple Books, and more. This step-by-step guide covers format conversion, cloud sync methods, and why EPUB is the universal format for multi-device reading.
 
-> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.`,
+> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.`,
   sections: [
     {
       heading: `Why Sync Fails Between Devices`,

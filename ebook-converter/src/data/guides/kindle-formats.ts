@@ -5,7 +5,7 @@ export const title = 'What Format Does Kindle Use? AZW3, KFX, MOBI & EPUB Explai
 export const metaTitle = 'What Format Does Kindle Use? AZW3, KFX, MOBI'
 export const problem = 'AZW3, KFX, MOBI, EPUB - Kindle formats confuse everyone. This guide explains what each means, the safest format to convert to today, and how BookConv converts free in your browser with no software to install.'
 export const date = '2026-08-07'
-export const updatedAt = '2026-10-23'
+export const updatedAt = '2026-11-05'
 export const tags = ['kindle formats', 'what format does kindle use', 'azw3', 'kfx', 'mobi', 'send to kindle', 'epub vs kindle']
 export const keyTakeaways = [
   'Amazon’s Send to Kindle accepts EPUB and AZW3 and converts them for your device.',
@@ -15,7 +15,7 @@ export const keyTakeaways = [
 ]
 export const formats = { source: 'epub', target: 'azw3' }
 export const content = {
-  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.\n\n> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.',
+  intro: 'Kindle readers don’t take “any ebook.” Over the years Amazon moved from MOBI to AZW3 and now to KFX, while Send to Kindle added EPUB support. This page untangles the formats so you convert to the right one instead of a file your Kindle rejects.\n\n> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.',
   sections: [
     {
       heading: 'The Kindle format landscape',
@@ -135,7 +135,7 @@ export const es = {
     'Para carga lateral, AZW3 es el formato más compatible que BookConv puede generar.',
   ],
   content: {
-    intro: 'Los lectores Kindle no aceptan "cualquier ebook". Con los años Amazon pasó de MOBI a AZW3 y ahora a KFX, mientras Send to Kindle añadió soporte EPUB. Esta página desenreda los formatos para que conviertas al correcto en lugar de a un archivo que tu Kindle rechaza.\n\n> BookConv procesa tu archivo en nuestros servidores y lo elimina automáticamente en menos de 1 hora. Los archivos viajan cifrados y no se requiere cuenta ni instalación de software.',
+    intro: 'Los lectores Kindle no aceptan "cualquier ebook". Con los años Amazon pasó de MOBI a AZW3 y ahora a KFX, mientras Send to Kindle añadió soporte EPUB. Esta página desenreda los formatos para que conviertas al correcto en lugar de a un archivo que tu Kindle rechaza.\n\n> BookConv procesa tu archivo en servidores; algunas rutas utilizan terceros y los resultados pueden guardarse en caché. Consulta la [seguridad de archivos](/es/file-security). Los archivos viajan cifrados y no se requiere cuenta ni instalación de software.',
     sections: [
       {
         heading: 'El panorama de formatos de Kindle',

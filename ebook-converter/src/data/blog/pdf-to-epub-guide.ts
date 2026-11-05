@@ -22,7 +22,7 @@ It runs on a server-side Calibre engine, so you get the same conversion logic de
 
 PDFs run larger than most ebook formats — a scanned 300-page book can easily clear 100 MB while a plain text-layer PDF of the same book might be 2 MB. If you hit the size limit, that size difference is usually telling you something about what's inside the file.
 
-Processing time depends on the file and active backend. Keep the page open until a result or error appears; large files may exceed processing limits. Download links are **temporary** and converted files are deleted after a period, so grab the EPUB when it's ready rather than saving the link.
+Processing time depends on the file and active backend. Keep the page open until a result or error appears; large files may exceed processing limits. Download links are **temporary** and file retention varies by processing route, so grab the EPUB when it's ready rather than saving the link.
 
 **DRM-protected files are rejected on upload.** Password-protected PDFs are the same story — remove the password yourself first if it's your file and you know it, then upload.
 
@@ -115,7 +115,7 @@ The honest test is what you plan to do with the file. Reading long-form prose on
       heading: `Key Takeaways`,
       body: `- **Test the text layer first.** If you can't select and copy text, it's a scan — run OCR elsewhere before uploading, because BookConv doesn't do OCR.
 - **BookConv handles text PDFs in the browser.** Upload, convert, download. Use the displayed upload limit: direct uploads up to 100 MB when enabled, fallback and batch 4 MB per file; no account or install for single-file jobs.
-- **Save the file right away.** Download links are temporary and converted files are deleted after a period.
+- **Save the file right away.** Download links are temporary and file retention varies by processing route.
 - **PDF stores position, not structure.** Every converter is guessing at paragraphs and chapters, which is why a novel converts cleanly and a textbook doesn't.
 - **Some PDFs shouldn't be converted.** Comics, sheet music, forms, and reference documents lose their meaning the moment text reflows.`
     }
@@ -153,4 +153,4 @@ export const faqs = [
   }
 ];
 
-export const lastUpdated = "2026-11-02";
+export const lastUpdated = '2026-11-05';

@@ -191,7 +191,7 @@ export default async function FounderPage() {
             Try BookConv — the Free eBook Converter
           </h2>
           <p className="mb-6 text-emerald-100">
-            The product behind this research. Convert EPUB, MOBI, AZW3, PDF, DOCX and more in seconds — no registration, files deleted after the conversion completes.
+            The product behind this research. Convert EPUB, MOBI, AZW3, PDF, DOCX and more in seconds — no registration, server-side processing; see our privacy policy.
           </p>
           <Link
             href="/"

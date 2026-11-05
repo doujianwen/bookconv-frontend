@@ -1,7 +1,7 @@
 export const slug = `kfx-vs-azw3`;
 export const title = `KFX vs AZW3: Which Kindle Format Should You Use?`;
 export const date = `2026-10-13`;
-export const lastUpdated = `2026-10-13`;
+export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = ["Kindle", "KFX", "AZW3", "MOBI", "EPUB", "Ebook Formats", "BookConv"];
 
@@ -64,7 +64,7 @@ The table's most important row is the second one. DRM is the real dividing line 
 | AZW3 books needed on Kobo / phone | Convert AZW3 to EPUB |
 | File that only opens in the Kindle app | It is DRM-wrapped; re-obtain in an open format |
 
-The short version: KFX is Amazon's lane and stays there. Every conversion decision you will actually make involves AZW3, MOBI, and EPUB — and [BookConv's free browser converter](/convert/epub-to-azw3) handles those in any direction without an account, with files deleted after the conversion completes.`
+The short version: KFX is Amazon's lane and stays there. Every conversion decision you will actually make involves AZW3, MOBI, and EPUB — and [BookConv's free browser converter](/convert/epub-to-azw3) handles those in any direction without an account, with server-side processing; see our privacy policy.`
     },
   ],
 };

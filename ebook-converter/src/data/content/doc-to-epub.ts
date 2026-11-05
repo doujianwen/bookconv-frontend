@@ -161,7 +161,7 @@ If the TOC is flat or missing, apply proper heading styles in Word and reconvert
 - **Strip any password** — encrypted DOC files cannot be read
 - **Save a backup** of the original before converting
 
-The converter handles the rest once the file is in .docx form. BookConv is free, requires no sign-up, adds no watermark, handles files up to 100 MB, and deletes them an hour after processing.`
+The converter handles the rest once the file is in .docx form. BookConv is free, requires no sign-up, adds no watermark, handles files up to 100 MB, and processes files on servers; see the privacy policy for retention details.`
     }
   ],
 

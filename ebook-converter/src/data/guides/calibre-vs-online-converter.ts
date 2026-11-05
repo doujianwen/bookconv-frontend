@@ -5,7 +5,7 @@ export const title = 'Calibre vs Online Converters: Which Should You Actually Us
 export const metaTitle = 'Calibre vs Online Converters: Which to Use?'
 export const problem = 'Calibre is powerful but heavy. Online converters are instant but raise privacy questions. Here is the honest trade-off — and when each one wins.'
 export const date = '2026-08-02'
-export const updatedAt = '2026-10-22'
+export const updatedAt = '2026-11-05'
 export const tags = ['calibre', 'online converter', 'privacy', 'ebook tools']
 export const keyTakeaways = [
   'Calibre wins for batch jobs, device-specific tweaks, and offline/private workflows.',
@@ -26,7 +26,7 @@ export const content = {
     },
     {
       heading: 'Privacy: who sees your file',
-      body: `This is the real dividing line. Calibre runs **entirely offline** — the file never leaves your computer. Reputable online converters (including BookConv) transfer over encrypted HTTPS and **delete the file automatically within an hour**, but the file does touch a server during conversion.\n\nFor a public-domain novel, that difference barely matters. For a manuscript, tax document, or anything sensitive, keep it local with Calibre.`,
+      body: `This is the real dividing line. Calibre runs **entirely offline** — the file never leaves your computer. Reputable online converters (including BookConv) transfer files over HTTPS, but processing takes place on servers. BookConv may use third-party services and cache results; see its [file security information](/file-security).\n\nFor a public-domain novel, that difference barely matters. For a manuscript, tax document, or anything sensitive, keep it local with Calibre.`,
     },
     {
       heading: 'Speed and batch work',
@@ -45,7 +45,7 @@ If you want those pages on their own rather than inside a PDF, [EPUB to JPG](/co
 }
 export const faqs: BlogFaq[] = [
   { question: 'Is Calibre better than online converters?', answer: 'For bulk and offline work, yes. For a single quick file, an online converter is faster and needs no setup. Neither is universally "better" — it depends on volume, control, and privacy needs.' },
-  { question: 'Are online ebook converters safe for private files?', answer: 'Reputable ones use encrypted HTTPS and auto-delete files shortly after (BookConv deletes after the conversion completes). But the file does touch a server. For sensitive documents, prefer Calibre, which runs fully offline.' },
+  { question: 'Are online ebook converters safe for private files?', answer: 'BookConv uses HTTPS and processes files on servers. Some routes use third-party services and results may be cached; see the privacy policy. For sensitive documents, prefer Calibre, which runs fully offline.' },
   { question: 'Does BookConv use Calibre?', answer: 'Yes. BookConv is built on the open-source Calibre conversion engine, so it inherits Calibre’s format support while adding a browser UI and automatic image/cover handling.' },
   { question: 'Can I batch convert with an online converter?', answer: 'Generally no — online converters are designed for one file at a time. For true batch work, Calibre (or its command-line tools) is the right choice.' },
   { question: 'Which is faster, Calibre or an online converter?', answer: 'For one file, the online converter wins because there is no install or setup. For hundreds of files, Calibre wins because you automate the job once.' },
@@ -83,7 +83,7 @@ export const es = {
       },
       {
         heading: 'Privacidad: quién ve tu archivo',
-        body: `Esta es la verdadera línea divisoria. Calibre funciona **completamente sin conexión**: el archivo nunca sale de tu ordenador. Los conversores online de confianza (incluido BookConv) transfieren por HTTPS cifrado y **eliminan el archivo automáticamente en menos de una hora**, pero el archivo sí pasa por un servidor durante la conversión.\n\nPara una novela de dominio público, esa diferencia apenas importa. Para un manuscrito, un documento fiscal o cualquier material sensible, manténlo local con Calibre.`,
+        body: `Esta es la verdadera línea divisoria. Calibre funciona **completamente sin conexión**: el archivo nunca sale de tu ordenador. Los conversores online de confianza (incluido BookConv) transfieren archivos por HTTPS, pero los procesan en servidores. BookConv puede utilizar terceros y guardar resultados en caché; consulta la [seguridad de archivos](/es/file-security).\n\nPara una novela de dominio público, esa diferencia apenas importa. Para un manuscrito, un documento fiscal o cualquier material sensible, manténlo local con Calibre.`,
       },
       {
         heading: 'Velocidad y trabajo por lotes',
@@ -97,7 +97,7 @@ export const es = {
   },
   faqs: [
     { question: '¿Es Calibre mejor que los conversores online?', answer: 'Para trabajo masivo y sin conexión, sí. Para un archivo rápido, un conversor online es más rápido y no requiere configuración. Ninguno es "mejor" en términos absolutos: depende del volumen, el control y las necesidades de privacidad.' },
-    { question: '¿Son seguros los conversores de ebooks online para archivos privados?', answer: 'Los de confianza usan HTTPS cifrado y eliminan los archivos automáticamente en aproximadamente una hora (BookConv elimina en 1 hora). Pero el archivo sí pasa por un servidor. Para documentos sensibles, prefiere Calibre, que funciona completamente sin conexión.' },
+    { question: '¿Son seguros los conversores de ebooks online para archivos privados?', answer: 'BookConv utiliza HTTPS y procesa archivos en servidores. Algunas rutas utilizan terceros y los resultados pueden guardarse en caché; consulta la política de privacidad. Para documentos sensibles, prefiere Calibre, que funciona completamente sin conexión.' },
     { question: '¿BookConv usa Calibre?', answer: 'Sí. BookConv se basa en el motor de conversión de código abierto Calibre, así que hereda su soporte de formatos y añade una interfaz de navegador y la gestión automática de imágenes y portadas.' },
     { question: '¿Puedo convertir por lotes con un conversor online?', answer: 'En general no: los conversores online están diseñados para un archivo a la vez. Para trabajo por lotes de verdad, Calibre (o sus herramientas de línea de comandos) es la opción correcta.' },
     { question: '¿Qué es más rápido, Calibre o un conversor online?', answer: 'Para un archivo, gana el conversor online porque no hay instalación ni configuración. Para cientos de archivos, gana Calibre porque automatizas el trabajo una sola vez.' },

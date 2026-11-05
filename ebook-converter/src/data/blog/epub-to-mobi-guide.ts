@@ -1,7 +1,7 @@
 export const slug = `epub-to-mobi-guide`;
 export const title = `EPUB to MOBI: Still Needed? Send-to-Kindle & AZW3`;
 export const date = `2026-07-30`;
-export const lastUpdated = `2026-09-04`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Kindle", "BookConv", "conversion", "guide"];
 
@@ -28,7 +28,7 @@ If you're converting a big illustrated book or a photography-heavy title, note t
 
 ### Two things to know before you upload
 
-Download links are **temporary**. Files get deleted after a period, so save the MOBI to your device or your Kindle right away rather than bookmarking the link and coming back tomorrow. If a link has already expired, our [download troubleshooting notes](/blog/download-troubleshooting) cover what to do.
+Download links are **temporary**. File retention varies by processing route, so save the MOBI to your device or your Kindle right away rather than bookmarking the link and coming back tomorrow. If a link has already expired, our [download troubleshooting notes](/blog/download-troubleshooting) cover what to do.
 
 **DRM-protected files are rejected at upload.** That's not a limitation we can tune around — DRM encrypts the book's contents, and no converter can read encrypted text. Library loans and most retail purchases fall into this category. Books you own DRM-free convert fine.`
     },
@@ -110,7 +110,7 @@ Migrating an old library the other direction? [MOBI to EPUB](/convert/mobi-to-ep
     {
       heading: `Key Takeaways`,
       body: `- **BookConv is the fast path.** Upload, check the metadata preview, convert, download — no install, no account, 100 MB per file and 20 conversion requests per minute on the free tier.
-- **Save your file immediately.** Download links are temporary and converted files are deleted after a period, so don't treat a link as storage.
+- **Save your file immediately.** Download links are temporary and file retention varies by processing route, so don't treat a link as storage.
 - **Check your Kindle first.** Anything made after roughly 2015 reads EPUB through Send to Kindle, which makes MOBI conversion unnecessary for a lot of people.
 - **MOBI is legacy.** Amazon stopped accepting it through Send to Kindle in August 2022, and AZW3 is the better sideload target for any modern device.
 - **Fix problems at the source.** Bad encoding, missing nav documents, and absent covers live in the EPUB, and no output setting repairs them after the fact.`
@@ -125,7 +125,7 @@ export const faqs = [
   },
   {
     question: `How long does the download link stay active?`,
-    answer: `Not indefinitely. Links are temporary and converted files are deleted after a period, so download the MOBI as soon as the progress bar completes rather than saving the link for later.`,
+    answer: `Not indefinitely. Links are temporary and file retention varies by processing route, so download the MOBI as soon as the progress bar completes rather than saving the link for later.`,
   },
   {
     question: `Why was my file rejected on upload?`,

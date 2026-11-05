@@ -2,6 +2,7 @@ export const slug = `ebook-formats-explained`;
 export const title = `EPUB vs AZW3 vs MOBI: Which Ebook Format Should You Use?`;
 export const metaTitle = `EPUB vs AZW3 vs MOBI: Which to Use?`
 export const date = `2026-07-12`;
+export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = [`Ebook Formats`, `EPUB`, `AZW3`, `MOBI`, `Kindle`, `Convert Ebook`];
 
@@ -101,7 +102,7 @@ Upload the file, pick the target format, watch the progress bar, download the re
 
 **When you need more room:** every plan stops at **100 MB per file**, so illustrated books and scanned PDFs need compression or splitting rather than a bigger plan.
 
-Two things worth knowing before you upload. **DRM-protected files are rejected on upload** — we don't strip protection, so there's nothing to work around. And **download links are temporary**: converted files are deleted after a while, so save the result when it's ready instead of bookmarking the page.
+Two things worth knowing before you upload. **DRM-protected files are rejected on upload** — we don't strip protection, so there's nothing to work around. And **download links are temporary**: file retention varies by processing route, so save the result when it's ready instead of bookmarking the page.
 
 The routes people take most:
 - [EPUB to AZW3](/convert/epub-to-azw3) for a modern Kindle

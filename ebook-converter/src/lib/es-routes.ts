@@ -88,7 +88,7 @@ export function localizeEsInternalLinks(markdown: string): string {
 
 
 /** Fully localized static destinations restored after the 2026-11-02 audit. */
-export const ESP_STATIC_PATHS: readonly string[] = ['/', '/convert', '/blog', '/privacy']
+export const ESP_STATIC_PATHS: readonly string[] = ['/', '/convert', '/blog', '/privacy', '/file-security']
 /** Navigation-only collection; intentionally retains the existing tag noindex policy. */
 export const ESP_TAG_SLUGS: readonly string[] = ['epub']
 

@@ -274,13 +274,13 @@ Comparing formats before committing? See our [EPUB vs MOBI comparison](/blog/epu
 |---------|----------|--------------|-----------|--------|
 | **Browser-based** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
 | **No registration** | ✅ Yes | ❌ Requires account | ❌ Requires account | ❌ Requires account |
-| **Auto-delete files** | ✅ 1 hour | ⚠️ Varies | ❌ 24 hours | ❌ 2 hours |
+| **File handling** | Server processing; see privacy policy | Check provider policy | Check provider policy | Check provider policy |
 | **Calibre engine** | ✅ Yes | ⚠️ Proprietary | ⚠️ Proprietary | ⚠️ Proprietary |
 | **File size limit (free)** | ✅ 100MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
 | **Batch conversion** | ✅ Pro plan | ✅ Paid | ✅ Paid | ✅ Paid |
 | **Open source backend** | ✅ Calibre | ❌ Closed | ❌ Closed | ❌ Closed |
 
-**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Combined with our privacy-first approach (delete files after the conversion completes), it's the best choice for personal ebook conversion.
+**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Files are processed on servers and some results may be cached. Review our privacy policy before uploading.
 
 For more on choosing between online and desktop tools, see our [Calibre vs Online Converter guide](/guide/calibre-vs-online-converter).`,
     }
@@ -296,10 +296,10 @@ For more on choosing between online and desktop tools, see our [Calibre vs Onlin
     { q: 'Does conversion preserve the table of contents?', a: 'Absolutely! Your EPUB table of contents is converted to MOBI navigation (NCX format), allowing you to jump between chapters in your Kindle reader.' },
     { q: 'Can I convert EPUB to MOBI for Send to Kindle?', a: 'Yes! MOBI is the recommended format for Amazon\'s "Send to Kindle" email service on older devices. Simply upload your EPUB, convert to MOBI, and email the file to your Kindle address.' },
     { q: 'Why would I choose MOBI over AZW3?', a: 'MOBI has broader compatibility with older Kindle models (pre-2012). If you have a Kindle Paperwhite 1st-3rd gen or Kindle Keyboard, MOBI is your best option. Modern Kindles prefer AZW3 for better typography.' },
-    { q: 'Is BookConv the best free EPUB to MOBI converter?', a: 'For a quick, no-install conversion it\'s among the fastest: runs the same Calibre engine as desktop software, keeps your chapters and images, deletes the file after processing, and adds no watermark.' },
+    { q: 'Is BookConv the best free EPUB to MOBI converter?', a: 'For a quick, no-install conversion it\'s among the fastest: runs the same Calibre engine as desktop software, keeps your chapters and images, processes files on servers, and adds no watermark.' },
     { q: 'Why is my converted MOBI file smaller than the original EPUB?', a: 'MOBI compresses more aggressively than EPUB, especially for images. This is intentional — older Kindles have limited storage and slower processors. If you need better image quality, try AZW3 instead.' },
     { q: 'Can I convert EPUB to MOBI and then back to EPUB?', a: 'Yes, but you\'ll lose some quality. MOBI strips advanced formatting and fonts. For lossless round-trip conversion, keep the original EPUB and use AZW3 for Kindle devices.' },
-    { q: 'Does BookConv store my converted files?', a: 'No. Your file is processed in a single request and deleted immediately after download. We don\'t store, share, or use your files for anything else.' }
+    { q: 'Does BookConv store my converted files?', a: 'Converted results may be cached. Processing can involve third-party services. Immediate deletion of every copy is not guaranteed; see our privacy policy.' }
   ],
 
   authorship: {
@@ -581,13 +581,13 @@ La compresión MOBI es más agresiva que EPUB, haciéndolo ideal para:
 |---------------|----------|--------------|-----------|--------|
 | **Basado en navegador** | ✅ Sí | ✅ Sí | ✅ Sí | ✅ Sí |
 | **Sin registro** | ✅ Sí | ❌ Requiere cuenta | ❌ Requiere cuenta | ❌ Requiere cuenta |
-| **Eliminación automática** | ✅ 1 hora | ⚠️ Varía | ❌ 24 horas | ❌ 2 horas |
+| **Tratamiento de archivos** | En servidores; consulta la política | Consulta al proveedor | Consulta al proveedor | Consulta al proveedor |
 | **Motor Calibre** | ✅ Sí | ⚠️ Propietario | ⚠️ Propietario | ⚠️ Propietario |
 | **Límite de tamaño (gratis)** | ✅ 100MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
 | **Conversión por lotes** | ✅ Gratis durante la beta (4 MB/archivo) | ✅ Pagado | ✅ Pagado | ✅ Pagado |
 | **Backend open source** | ✅ Calibre | ❌ Cerrado | ❌ Cerrado | ❌ Cerrado |
 
-**Ventaja clave:** BookConv usa el mismo motor Calibre que la aplicación de escritorio, garantizando salida de alta calidad. Combinado con nuestro enfoque privacy-first (eliminación automática después de 1 hora), es la mejor opción para conversión personal de ebooks.
+**Ventaja clave:** BookConv usa el mismo motor Calibre que la aplicación de escritorio, garantizando salida de alta calidad. Los archivos se procesan en servidores y algunos resultados pueden guardarse en caché. Consulta nuestra política de privacidad antes de subirlos.
 
 Para más sobre elegir entre herramientas online y de escritorio, mira nuestra [guía Calibre vs Conversor Online](/guide/calibre-vs-online-converter).`
       }
@@ -605,7 +605,7 @@ Para más sobre elegir entre herramientas online y de escritorio, mira nuestra [
       { q: '¿Es BookConv el mejor conversor gratuito de EPUB a MOBI?', a: 'Para una conversión rápida sin instalación, está entre los más rápidos: ejecuta el mismo motor Calibre que software de escritorio, mantiene tus capítulos e imágenes, elimina el archivo después del procesamiento, y no añade marca de agua.' },
       { q: '¿Por qué mi archivo MOBI convertido es más pequeño que el EPUB original?', a: 'MOBI comprime más agresivamente que EPUB, especialmente para imágenes. Esto es intencional — Kindles antiguos tienen almacenamiento limitado y procesadores más lentos. Si necesitas mejor calidad de imagen, intenta AZW3 en cambio.' },
       { q: '¿Puedo convertir EPUB a MOBI y luego volver a EPUB?', a: 'Sí, pero perderás algo de calidad. MOBI elimina formato avanzado y fuentes. Para conversión round-trip sin pérdida, guarda el EPUB original y usa AZW3 para dispositivos Kindle.' },
-      { q: '¿BookConv almacena mis archivos convertidos?', a: 'No. Tu archivo se procesa en una sola solicitud y se elimina inmediatamente después de la descarga. No almacenamos, compartimos ni usamos tus archivos para nada más.' }
+      { q: '¿BookConv almacena mis archivos convertidos?', a: 'Los resultados pueden guardarse en caché y el procesamiento puede incluir servicios de terceros. No se garantiza la eliminación inmediata de todas las copias; consulta la política de privacidad.' }
     ]
   }
 };

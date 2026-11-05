@@ -4,6 +4,7 @@ export const slug = 'djvu-to-pdf'
 export const title = 'DJVU to PDF: Convert Scanned Books to a Readable PDF'
 export const problem = 'You have a scanned book in DJVU that no reader app opens and no one can print. Converting DJVU to PDF makes it readable everywhere. Here’s how to do it free with BookConv in your browser, no software to install, without losing quality.'
 export const date = '2026-08-02'
+export const updatedAt = '2026-11-05';
 export const tags = ['djvu', 'pdf', 'scanned books', 'ebook conversion']
 export const formats = { source: 'djvu', target: 'pdf' }
 export const keyTakeaways = [
@@ -81,13 +82,13 @@ If you are choosing between a desktop tool and an online converter, see [/guide/
 |---------|----------|--------------|-----------|--------|
 | **Browser-based** | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
 | **No registration** | ✅ Yes | ❌ Requires account | ❌ Requires account | ❌ Requires account |
-| **Auto-delete files** | ✅ 1 hour | ⚠️ Varies | ❌ 24 hours | ❌ 2 hours |
+| **File handling** | Server processing; see privacy policy | Check provider policy | Check provider policy | Check provider policy |
 | **Calibre engine** | ✅ Yes | ⚠️ Proprietary | ⚠️ Proprietary | ⚠️ Proprietary |
 | **File size limit (free)** | ✅ 100MB | ⚠️ 100MB | ⚠️ 100MB | ⚠️ 50MB |
 | **Batch conversion** | ✅ Pro plan | ✅ Paid | ✅ Paid | ✅ Paid |
 | **Open source backend** | ✅ Calibre | ❌ Closed | ❌ Closed | ❌ Closed |
 
-**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Combined with our privacy-first approach (delete files after the conversion completes), it's the best choice for sensitive documents like scanned books with personal information.
+**Key advantage:** BookConv uses the same Calibre engine as the desktop application, ensuring high-quality output. Files are processed on servers and some results may be cached. For scans containing personal information, consider an offline workflow.
 
 For more on choosing between online and desktop tools, see our [Calibre vs Online Converter guide](/guide/calibre-vs-online-converter).`,
     },
@@ -145,7 +146,7 @@ export const faqs: BlogFaq[] = [
   { question: 'Is BookConv free for DJVU to PDF?', answer: 'Yes. BookConv converts DJVU to PDF in the browser at no cost for standard files, with nothing to install.' },
   { question: 'DJVU or PDF — which should I keep?', answer: 'Keep PDF. It is the universal format every device and printer opens, while DJVU is a niche archive format almost nothing supports today.' },
   { question: 'What devices can open PDF files?', answer: 'PDF opens on virtually every device: iPhones, iPads, Android phones and tablets, Kindle e-readers, Kobo, Nook, desktop computers (Mac, Windows, Linux), web browsers, and can be printed on any printer. This is why converting DJVU to PDF solves your compatibility problem.' },
-  { question: 'How does BookConv compare to CloudConvert or Convertio for DJVU?', answer: 'BookConv uses the open-source Calibre engine (same as the desktop app) and deletes files after 1 hour for privacy. CloudConvert and Convertio require account registration and have different file retention policies. For sensitive scanned documents, BookConv\'s auto-delete feature provides better privacy protection.' },
+  { question: 'How does BookConv compare to CloudConvert or Convertio for DJVU?', answer: 'BookConv processes files on servers, some routes use CloudConvert, and results may be cached. Compare current provider policies rather than assuming a deletion advantage. For sensitive scanned documents, consider an offline workflow.' },
   { question: 'Can I make my DJVU PDF searchable with OCR?', answer: 'Yes. BookConv converts DJVU to PDF with page images preserved. To add searchable text, use an online OCR service like OCR.space, or convert via Calibre with the "Searchable PDF" option enabled. Professional tools like ABBYY FineReader produce the highest quality OCR results.' },
   { question: 'Why are some pages rotated in my converted PDF?', answer: 'Some DJVU files have incorrect page orientation metadata. PDF viewers usually auto-correct this, but if not, you can fix it in most PDF editors by selecting pages and rotating them 90 degrees.' },
   { question: 'Is it better to keep DJVU or always convert to PDF?', answer: 'It depends on your needs. Convert to PDF for daily reading, printing, and sharing. Keep DJVU as backup or archival format since it offers better compression for scanned books. Many users maintain both formats for different purposes.' },

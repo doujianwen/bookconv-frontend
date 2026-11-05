@@ -49,7 +49,7 @@ export const faqs = [
   },
   {
     question: "Is it safe to use online ebook converters?",
-    answer: "Reputable online converters delete uploaded files after a short period (usually one hour). However, for sensitive or unpublished manuscripts, offline tools like JADe or Epubor are safer choices to protect your intellectual property."
+    answer: "Online converters have different processing and retention policies; do not assume a universal deletion period. However, for sensitive or unpublished manuscripts, offline tools like JADe or Epubor are safer choices to protect your intellectual property."
   },
   {
     question: "How do I remove DRM before converting my ebooks?",
@@ -64,4 +64,4 @@ export const faqs = [
     answer: "Direct conversion from Kindle (AZW/KFX) to EPUB is difficult due to DRM. Without removing DRM first, most free tools will fail. Once DRM is removed, you can use almost any converter, including BookConv, to transform the file into a widely compatible EPUB format."
   }
 ];
-export const lastUpdated = '2026-11-01';
+export const lastUpdated = '2026-11-05';

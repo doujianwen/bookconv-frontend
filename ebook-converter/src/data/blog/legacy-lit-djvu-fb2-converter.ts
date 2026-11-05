@@ -1,6 +1,7 @@
 export const slug = "legacy-lit-djvu-fb2-converter";
 export const title = "Convert Legacy LIT, DJVU, FB2, RTF to EPUB & PDF Free";
 export const date = "2026-08-26";
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["LIT", "DJVU", "FB2", "RTF", "EPUB", "PDF", "Kindle", "Legacy Formats"];
 
@@ -87,7 +88,7 @@ export const faqs = [
   },
   {
     question: "Is it safe to upload old ebooks to an online converter?",
-    answer: "Most reputable online converters process files temporarily and delete them shortly after conversion. However, for sensitive or unpublished works, it is always safer to use offline software like Calibre. For public domain or personal library management, online tools are generally considered secure."
+    answer: "Online converters have different processing and retention policies. BookConv processes files on servers, some routes use third-party services, and results may be cached. For sensitive or unpublished works, consider a local workflow and review its cloud features."
   },
   {
     question: "Can I convert multiple RTF files into one single PDF?",

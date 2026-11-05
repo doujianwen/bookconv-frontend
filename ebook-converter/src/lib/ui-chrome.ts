@@ -90,7 +90,7 @@ export const UI_CHROME = {
   bacSizeChange: { en: 'Size change:', es: 'Cambio de tamaño:' },
   bacGrew: { en: '↑ File grew', es: '↑ El archivo creció' },
   bacShrunk: { en: '↓ File shrunk', es: '↓ El archivo se redujo' },
-  bacLinkExpires: { en: 'Link expires in 5 minutes. Files are automatically deleted after download.', es: 'El enlace caduca en 5 minutos. Los archivos se eliminan automáticamente tras la descarga.' },
+  bacLinkExpires: { en: 'Download links are temporary. Link expiry does not mean every stored copy has been deleted.', es: 'Los enlaces son temporales. Su caducidad no implica que se hayan eliminado todas las copias almacenadas.' },
   // 子组件：FileDropZone（其余已在组件内 en/es 表，这里补缺失静态标签）
   fdzDropPrompt: { en: 'Drag & drop your file here', es: 'Arrastra y suelta tu archivo aquí' },
   fdzOrBrowse: { en: 'or click to browse', es: 'o haz clic para buscar' },
@@ -117,7 +117,7 @@ export const UI_CHROME = {
   fwClose: { en: 'Close', es: 'Cerrar' },
   fwPlaceholder: { en: 'Describe what happened or share your idea…', es: 'Describe qué pasó o comparte tu idea…' },
   fwEmailPlaceholder: { en: 'Your email (optional, so we can reply)', es: 'Tu correo (opcional, para responderte)' },
-  fwPrivacy: { en: 'We only collect this message and your optional email. Your files never leave your device.', es: 'Solo recopilamos este mensaje y tu correo opcional. Tus archivos nunca salen de tu dispositivo.' },
+  fwPrivacy: { en: 'This feedback form sends your message, optional email, page and conversion context. It does not attach your file. Do not include confidential information.', es: 'Este formulario envía tu mensaje, correo opcional, página y contexto de conversión. No adjunta tu archivo. No incluyas información confidencial.' },
   fwError: { en: 'Something went wrong. Please email hello@bookconv.com instead.', es: 'Algo salió mal. Escríbenos a hello@bookconv.com.' },
   fwThanks: { en: "Thanks! We'll look into it.", es: '¡Gracias! Lo revisaremos.' },
   fwSending: { en: 'Sending…', es: 'Enviando…' },

@@ -5,7 +5,7 @@ export const title = 'EPUB to AZW3: Send Your Ebook to Kindle Without Losing For
 export const metaTitle = 'EPUB to AZW3: Send to Kindle Without Losing Format'
 export const problem = 'You have an EPUB and a Kindle, and emailing it gives you a broken layout. AZW3 is the format that keeps your styling intact.'
 export const date = '2026-08-02'
-export const updatedAt = '2026-10-23'
+export const updatedAt = '2026-11-05'
 export const tags = ['epub', 'azw3', 'kindle', 'formatting', 'ebook conversion']
 export const formats = { source: 'epub', target: 'azw3' }
 export const keyTakeaways = [
@@ -54,7 +54,7 @@ For the MOBI path (very old Kindles only): [/guide/epub-to-mobi-keep-formatting]
       body: `- **AZW3 is Amazon's KF8, announced in 2011** with over 150 new formatting features including HTML5 and CSS3 support (source: Amazon KF8 announcement, Kindle Publisher Tools documentation).
 - **Send to Kindle dropped MOBI in August 2022** and now auto-converts emailed EPUBs to KF8 instead (source: Amazon Send to Kindle help documentation).
 - **Every e-ink Kindle since the Paperwhite 3 (2015) reads AZW3 natively** (source: Amazon Paperwhite release timeline, 2012–2024).
-- **BookConv's converter runs on a Calibre-derived engine and deletes uploaded files after the conversion completes** (source: BookConv privacy note on this page).`,
+- **BookConv processes files on servers; some routes use third-party services and results may be cached** (source: BookConv privacy note on this page).`,
     },
     {
       heading: 'Step-by-Step: Sideload AZW3 to Your Kindle',
@@ -163,7 +163,7 @@ Para la vía MOBI (solo Kindles muy antiguos): [/guide/epub-to-mobi-keep-formatt
         body: `- **AZW3 es el KF8 de Amazon, anunciado en 2011** con más de 150 nuevas funciones de formato, incluido soporte de HTML5 y CSS3 (fuente: anuncio de KF8 de Amazon, documentación de Kindle Publisher Tools).
 - **Send to Kindle eliminó MOBI en agosto de 2022** y ahora autoconvierte los EPUB enviados por correo a KF8 (fuente: documentación de ayuda de Send to Kindle de Amazon).
 - **Todos los Kindle de tinta electrónica desde el Paperwhite 3 (2015) leen AZW3 de forma nativa** (fuente: cronología de lanzamiento de Paperwhite de Amazon, 2012–2024).
-- **El conversor de BookConv funciona con un motor derivado de Calibre y elimina los archivos subidos en menos de 1 hora** (fuente: nota de privacidad de BookConv en esta página).`,
+- **BookConv procesa archivos en servidores; algunas rutas utilizan terceros y los resultados pueden guardarse en caché** (fuente: nota de privacidad de BookConv en esta página).`,
       },
       {
         heading: 'Paso a paso: carga AZW3 en tu Kindle',

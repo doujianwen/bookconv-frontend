@@ -2,7 +2,7 @@ export const slug = `which-kindle-books-can-you-convert-drm-free-checklist`;
 export const title = `Which Kindle Books Can You Convert? (DRM-Free Checklist)`;
 export const metaTitle = `Which Kindle Books Can You Convert? DRM-Free List`
 export const date = `2026-10-03`;
-export const lastUpdated = `2026-10-03`;
+export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = ["Kindle", "DRM", "MOBI", "AZW3", "EPUB", "BookConv", "Ebook Formats", "Calibre"];
 
@@ -154,7 +154,7 @@ export const faqs = [
   },
   {
     question: `Can I convert Kindle books to EPUB on a computer or phone?`,
-    answer: `Yes, as long as the file is DRM-free. On a computer, unzip the file to check for readable markup, then convert it. On a phone you can convert through a web browser using an online tool — BookConv runs entirely in your browser session, requires no install, and deletes your file within an hour. Either way, DRM-wrapped files cannot be converted by any method.`
+    answer: `Yes, as long as the file is DRM-free. On a computer, unzip the file to check for readable markup, then convert it. On a phone you can convert through a web browser using an online tool — BookConv requires no install but processes files on servers; some routes use third-party services and results may be cached. Either way, DRM-wrapped files cannot be converted by any method.`
   },
   {
     question: `Do I need to convert Kindle books to read EPUB?`,

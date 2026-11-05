@@ -86,7 +86,7 @@
       "title": "Tu Privacidad y Seguridad",
       "secure": {
         "title": "Transferencias Cifradas",
-        "desc": "Todos los archivos se transfieren sobre HTTPS con cifrado de extremo a extremo. Usamos TLS 1.3 estándar de la industria para proteger tus datos en tránsito."
+        "desc": "Los archivos se transfieren por HTTPS y se procesan en servidores. HTTPS protege los datos en tránsito; no impide el acceso o almacenamiento en servidores."
       },
       "delete": {
         "title": "Tratamiento y retención",
@@ -97,8 +97,8 @@
         "desc": "Algunos resultados pueden almacenarse en caché; no se garantiza la eliminación inmediata de todas las copias."
       },
       "no-read": {
-        "title": "No Leemos Tu Contenido",
-        "desc": "Nuestro motor de conversión automatizado procesa archivos sin revisión humana. Nadie en BookConv lee, analiza o distribuye el contenido de tus ebooks."
+        "title": "Conversión en servidores",
+        "desc": "Las herramientas procesan tus archivos en servidores. Algunas rutas utilizan CloudConvert; consulta la política de privacidad antes de subir documentos confidenciales."
       },
       "footer": "Para más detalles, consulta nuestra [Política de Privacidad](/privacy)."
     }
@@ -229,7 +229,7 @@
     "step5Desc": "Cuando termine la conversión, haz clic en el botón de descarga para guardar tu archivo",
     "tipsTitle": "Consejos",
     "tip1": "Tamaño máximo de archivo admitido: 100 MB",
-    "tip2": "Todos los archivos se eliminan automáticamente después de 1 hora para proteger tu privacidad",
+    "tip2": "Los archivos se procesan en servidores; consulta la información de seguridad de archivos",
     "tip3": "Compatible con subida por arrastrar y soltar para mayor comodidad",
     "tip4": "Para cualquier duda, contacta al servicio de atención en línea o consulta la documentación de ayuda en cualquier momento",
     "goHome": "Volver al inicio"

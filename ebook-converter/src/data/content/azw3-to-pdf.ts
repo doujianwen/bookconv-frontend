@@ -34,7 +34,7 @@ Drag your .azw3 file into the upload zone, or click to pick it from your compute
 Our Calibre-based engine reads the AZW3 container, extracts the embedded fonts and images, and lays the book out as fixed pages. Most novels finish in a few seconds; image-heavy illustrated books take a little longer.
 
 **Step 3 — Download your PDF**
-Click Download to save a print-ready PDF. Chapter bookmarks, page numbers, and your original image resolution are all preserved. The uploaded file is deleted automatically after processing.`
+Click Download to save a print-ready PDF. Chapter bookmarks, page numbers, and your original image resolution are all preserved. Files are processed on servers and results may be cached; see our privacy policy.`
     },
     {
       heading: 'Before You Convert: Check Your AZW3',
@@ -128,7 +128,7 @@ If you mainly read on a Kindle and only need to print one chapter or cite a pass
     { q: 'What is the typical file size increase?', a: 'PDF files are typically 20-40% larger than AZW3 due to embedded fonts and higher image resolution. This is normal and ensures print quality.' },
     { q: 'Can I convert a DRM-protected AZW3 file?', a: 'No. AZW3 files purchased from Amazon usually carry DRM that prevents any converter from opening them. Our tool can only process DRM-free AZW3 files. For personal backups of books you own, desktop Calibre with the DeDRM plugin is the common route, but that is outside this browser tool.' },
     { q: 'Will my Kindle highlights and notes be included?', a: 'No. Highlights and notes are stored in your Amazon account, not inside the AZW3 file. They are not part of the converted PDF. Export them separately from your Kindle library if you need them.' },
-    { q: 'Is my uploaded file kept private?', a: 'Yes. The file is processed in your browser session and deleted automatically after conversion. Nothing is retained on our servers, and the transfer uses encrypted HTTPS.' }
+    { q: 'Is my uploaded file kept private?', a: 'Files are transferred over HTTPS and processed on servers. Some routes use third-party services and results may be cached. See our privacy policy; consider an offline tool for sensitive documents.' }
   ]
 ,
 

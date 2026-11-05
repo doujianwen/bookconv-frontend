@@ -2,7 +2,7 @@ export const slug = `best-epub-reader-android`;
 export const title = `Best EPUB Reader Apps for Android`;
 export const metaTitle = `Best EPUB Reader Apps for Android (2026)`
 export const date = `2026-09-24`;
-export const lastUpdated = `2026-09-24`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["EPUB", "Android", "Apps", "Ebook Readers", "BookConv"];
 
@@ -41,7 +41,7 @@ All three are free. If you only install one, ReadEra covers the most formats wit
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.
 
 - **ReadEra** is the offline, no-account default — and it opens DRM-free AZW3, which almost nothing else does.
 - **Moon+ Reader** is the typography tool: per-book margins, spacing, and CSS overrides in the free tier.

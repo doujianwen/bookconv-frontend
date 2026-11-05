@@ -58,6 +58,6 @@ export const faqs = [
   { question: "Can I convert DRM-protected AZW3 files to MOBI?", answer: `No, DRM-protected files cannot be legally converted without authorization. Only convert ebooks you own or have rights to modify.` },
   { question: "What's the difference between MOBI and EPUB?", answer: `MOBI is an older format with broader compatibility, while EPUB supports more advanced styling and is widely used on non-Amazon devices. EPUB is generally preferred for modern e-readers.` },
   { question: "How long does conversion take?", answer: `Conversion is typically fast, taking only a few seconds to minutes depending on file size and internet speed. BookConv aims for quick processing times.` },
-  { question: "Are online converters safe to use?", answer: `Reputable services like BookConv delete uploaded files after conversion and do not store personal data. Always use trusted platforms and avoid sharing sensitive information.` },
+  { question: "Are online converters safe to use?", answer: `BookConv processes files on servers, some routes use third-party services, and results may be cached. Read the privacy policy before uploading. For sensitive files, consider an offline workflow.` },
 ];
-export const lastUpdated = '2026-11-01';
+export const lastUpdated = '2026-11-05';

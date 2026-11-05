@@ -1,6 +1,7 @@
 export const slug = `best-ebook-reader-apps`;
 export const title = `Best Free Ebook Reader Apps for Every Device (2026)`;
 export const date = `2026-08-09`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["Ebook Readers", "Apps", "EPUB", "Kindle", "Kobo", "BookConv"];
 
@@ -50,7 +51,7 @@ Pick the app by device, then convert only when the file format does not match. B
     },
     {
       heading: `Key Takeaways`,
-      body: `> BookConv processes your file on our servers and automatically deletes it after the conversion completes. Files are encrypted in transit, and no account or software install is required.
+      body: `> BookConv processes your file on servers; some routes use third-party services and results may be cached. See our [file security information](/file-security). Files are encrypted in transit, and no account or software install is required.
 
 - **Free and capable** readers exist on every platform — you rarely need to pay.
 - **Apple Books** (iOS/macOS) and **Google Play Books** (Android) are the zero-setup defaults for EPUB.

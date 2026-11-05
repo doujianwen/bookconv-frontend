@@ -2,6 +2,7 @@ export const slug = `webhook-integration`;
 export const title = `BookConv Webhooks: Get a Signed Notification the Second Your Conversion Finishes`;
 export const metaTitle = `BookConv Webhooks: Get a Signed Conversion Alert`
 export const date = `2026-07-30`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["webhook", "automation", "integration", "bookconv", "technical"];
 
@@ -34,7 +35,7 @@ Two product behaviours shape the handler you write.
 
 Free accounts get 20 conversion requests per minute per IP. If your automation submits in bursts, expect to hit that ceiling and back off rather than retrying in a tight loop.
 
-Download links are also temporary — converted files are deleted after a period, which is good for privacy and bad for a script that saves the URL for tomorrow. Treat the webhook as a starting gun and fetch promptly. If a download fails, [our download troubleshooting notes](/blog/download-troubleshooting) cover the usual causes.
+Download links are also temporary — file retention and link availability are separate. Do not save a download URL for tomorrow. Treat the webhook as a starting gun and fetch promptly. If a download fails, [our download troubleshooting notes](/blog/download-troubleshooting) cover the usual causes.
 
 ### What the notification carries
 
@@ -105,7 +106,7 @@ Start with one event and one consumer. Confirm it works end to end before fannin
 - **Verify every request** with an HMAC over the raw body, a constant-time comparison, and a hard 401 on mismatch. An unverified endpoint is an open door.
 - **Assume duplicates.** Idempotent handlers keyed on the job or event ID turn retries into a non-event.
 - **Acknowledge first, work later.** Return 2xx quickly and push heavy processing onto your own queue.
-- **Fetch results promptly**, because download links are temporary and converted files get deleted after a period.`
+- **Fetch results promptly**, because download links are temporary and file retention varies by processing route.`
     }
   ]
 };

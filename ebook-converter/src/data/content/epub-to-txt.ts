@@ -354,7 +354,7 @@ Alimenta tus libros directamente a herramientas de resumen de IA, extractores de
 No hay un trabajo del lado del servidor que programar, así que la conversión comienza en el momento en que subes el archivo. Una novela típica termina en segundos en lugar de minutos, y nunca quedas detrás del lote de otra persona.
 
 **Tu texto permanece privado**
-El texto plano se extrae y devuelve sin enviar tu libro a un servicio de conversión separado. Los archivos se mueven por HTTPS cifrado y se eliminan automáticamente en una hora, así nada queda después.
+El texto plano se extrae y devuelve sin enviar tu libro a un servicio de conversión separado. Los archivos se transfieren por HTTPS y los resultados pueden guardarse en caché. Consulta la política de privacidad para conocer el tratamiento de los archivos.
 
 **Predecible y ligero**
 Sin un motor pesado en el camino, el resultado es consistente en archivos de cualquier longitud. Poemas, ensayos y novelas completas toman el mismo camino rápido.

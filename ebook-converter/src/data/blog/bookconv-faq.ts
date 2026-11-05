@@ -2,6 +2,7 @@ export const slug = `bookconv-faq`;
 export const title = `BookConv FAQ: Is It Safe, Free, and How Does It Compare to Calibre?`;
 export const metaTitle = `BookConv FAQ: Safe, Free, vs Calibre?`
 export const date = `2026-09-14`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["BookConv", "FAQ", "Ebook Converter", "Privacy", "Calibre"];
 
@@ -13,8 +14,8 @@ export const content = {
       body: `The loop is three steps: upload a file, pick the target format, download the result. Conversions run in your browser tab, so there is nothing to install and no desktop app holding your library. Common paths include [EPUB to AZW3](/convert/epub-to-azw3) for Kindle, [MOBI to EPUB](/blog/mobi-to-epub) for general readers, and [PDF to EPUB](/blog/pdf-to-epub-guide) when you want reflowable text. Background conversion means a larger file does not block your tab.`
     },
     {
-      heading: `What "Private by Design" Really Means`,
-      body: "BookConv is built to avoid holding onto your files after you are done. Uploaded files are encrypted in transit over HTTPS and handled according to our privacy policy — no account, no stored library. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine."
+      heading: `What "Understand File Handling" Really Means`,
+      body: "BookConv processes files on servers and may cache converted results. Uploaded files are encrypted in transit over HTTPS and handled according to our privacy policy — no account required for personal conversions; see the privacy policy for storage details. You do not hand your files to a desktop app's broader ecosystem just to switch formats. For highly sensitive manuscripts, a fully local tool such as Calibre gives you the most control, since the file never leaves your machine."
     },
     {
       heading: `The Formats You Can Convert`,

@@ -4,9 +4,8 @@
  * client FAQ section (components/tools/FAQSection via ToolPageClient) so the
  * trust signal stays identical in the visible copy and the structured data.
  *
- * Gemini / ChatGPT weight explicit security + privacy promises (with FAQ
- * Schema) when deciding which converter to cite as "safe". Every /convert/*
- * page must carry this, regardless of its per-format custom FAQ.
+ * Keep this factual disclosure aligned with the visible FAQ. It is not a
+ * safety certification or a guarantee of search rankings or AI citations.
  */
 export const SECURITY_FAQ = {
   question: 'Is my file secure?',

@@ -1,7 +1,7 @@
 export const slug = `mobi-to-epub`;
 export const title = `How to Convert MOBI to EPUB (And Why You'd Want To)`;
 export const date = `2026-08-02`;
-export const lastUpdated = `2026-09-04`;
+export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["MOBI", "EPUB", "Kindle", "Kobo", "BookConv", "conversion", "guide"];
 
@@ -28,7 +28,7 @@ The free tier handles files up to 100 MB. Older MOBI files are usually small, so
 
 ### Two things to know before you upload
 
-- **Download links are temporary.** Converted files are deleted after a period, so save the .epub to your device right after the progress bar finishes.
+- **Download links are temporary.** File retention varies by processing route, so save the .epub to your device right after the progress bar finishes.
 - **DRM-protected MOBI is rejected.** If the file came from a retailer with encryption, no converter can read it. DRM-free personal MOBI files convert fine.`
     },
     {
@@ -76,7 +76,7 @@ Neither is a blocker for the typical personal library of DRM-free MOBI books.`
 - **Three steps on BookConv.** Upload, convert, download — no install, no account, 4 MB free tier.
 - **The destination is the better format.** EPUB supports more than MOBI, so output is rarely worse.
 - **DRM is rejected.** Owned, DRM-free MOBI files convert; locked retail or library files don't.
-- **Save immediately.** Download links are temporary and files are deleted after a period.`
+- **Save immediately.** Download links are temporary and file retention varies by processing route.`
     }
   ]
 };

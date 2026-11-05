@@ -210,11 +210,12 @@ export function RootBodyShell({
         </main>
         <footer className='mt-16 border-t bg-white py-8 text-center text-sm text-gray-500' role='contentinfo'>
           <div className='mx-auto max-w-5xl space-y-2 px-4'>
-            <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. All files are deleted as soon as the conversion completes.'}</p>
+            <p>{t('common.siteName') || 'BookConv'} — {t('home.formatsSectionDesc') || 'Free online ebook converter. Files are processed on servers; see our file security information.'}</p>
             <nav aria-label={locale === 'es' ? 'Navegación del pie de página' : 'Footer navigation'} className='flex flex-wrap justify-center gap-4'>
               <Link href={locale === 'es' ? '/es/convert' : '/convert'} className='hover:text-gray-700'>{t('common.convert') || 'Convert'}</Link>
               <Link href={locale === 'es' ? '/es/blog' : '/blog'} className='hover:text-gray-700'>{t('common.blog') || 'Blog'}</Link>
               <Link href='/guide' className='hover:text-gray-700'>{t('common.guide') || 'Guides'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
+              <Link href={locale === 'es' ? '/es/file-security' : '/file-security'} className='hover:text-gray-700'>{locale === 'es' ? 'Seguridad de archivos' : 'File Security'}</Link>
               <Link href={locale === 'es' ? '/es/privacy' : '/privacy'} className='hover:text-gray-700'>{t('common.privacyPolicy') || 'Privacy Policy'}</Link>
               <Link href='/help' className='hover:text-gray-700'>{t('common.help') || 'Help'}{locale === 'es' ? ' (en inglés)' : ''}</Link>
               <Link href='/terms' className='hover:text-gray-700'>{t('common.termsOfService') || 'Terms of Service'}{locale === 'es' ? ' (en inglés)' : ''}</Link>

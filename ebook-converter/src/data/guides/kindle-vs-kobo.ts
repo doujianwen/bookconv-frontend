@@ -5,7 +5,7 @@ export const title = 'Kindle vs Kobo: Which E-Reader Fits Your Book Library?'
 export const metaTitle = 'Kindle vs Kobo: Which E-Reader Fits Your Books'
 export const problem = 'Kindle and Kobo disagree on the one thing that decides everything: which files they open. Here is the format difference, the library and DRM mechanics, and the exact conversion bridges if you ever switch sides.'
 export const date = '2026-10-22'
-export const updatedAt = '2026-10-22'
+export const updatedAt = '2026-11-05'
 export const tags = ['kindle vs kobo', 'kindle', 'kobo', 'epub', 'ereader comparison', 'ebook conversion']
 export const formats = { source: 'epub', target: 'azw3' }
 export const keyTakeaways = [
@@ -195,7 +195,7 @@ Si la elección acaba con dispositivos de ambos bandos, no pasa nada: EPUB es la
     { question: '¿Cargar archivos es más fácil en Kindle o en Kobo?', answer: 'En Kobo —arrastras un EPUB sin DRM por USB y se abre tal cual. En Kindle, el destino fiable por USB es AZW3, así que los EPUB necesitan primero un paso de conversión que gestionas tú. Para libros con estilo, ese paso de conversión produce justo el resultado más fiel en el dispositivo.' },
     { question: '¿Los libros de Kindle Unlimited funcionan en Kobo?', answer: 'No. Los títulos de Kindle Unlimited llevan DRM y están atados a la suscripción Amazon, así que solo abren en Kindles y en la app de Kindle. El equivalente en Kobo es Kobo Plus, que igualmente está bloqueado a dispositivos y apps Kobo.' },
     { question: '¿Qué formatos admite cada uno, Kindle y Kobo?', answer: 'Kindle: AZW3 de forma nativa, KFX para compras en tienda, MOBI para sideload legacy (solo archivos existentes), PDF, y EPUB solo por Send to Kindle. Kobo: EPUB y PDF de forma nativa, más cómics CBZ/CBR y MOBI en la mayoría de modelos actuales.' },
-    { question: '¿BookConv convierte entre formatos Kindle y Kobo?', answer: 'Sí. BookConv convierte AZW3 y MOBI a EPUB para Kobo, y EPUB a AZW3 para cargar en Kindle —gratis en el navegador, sin cuenta ni instalación, con archivos eliminados automáticamente en menos de una hora. Las compras en tienda con DRM no se pueden procesar.' },
+    { question: '¿BookConv convierte entre formatos Kindle y Kobo?', answer: 'Sí. BookConv convierte AZW3 y MOBI a EPUB para Kobo, y EPUB a AZW3 para cargar en Kindle —gratis en el navegador, sin cuenta ni instalación, con procesamiento en servidores y posible caché de resultados. Las compras en tienda con DRM no se pueden procesar.' },
   ],
 } satisfies import('./types').GuideEs
 export const faqs: BlogFaq[] = [

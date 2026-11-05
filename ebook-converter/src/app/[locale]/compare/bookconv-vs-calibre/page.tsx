@@ -91,7 +91,7 @@ export default async function ComparePage() {
                 <li>• Quick conversions on the go</li>
                 <li>• No software installation</li>
                 <li>• Using shared/public computers</li>
-                <li>• Value privacy (auto-deletion)</li>
+                <li>• Need to understand server-side file handling</li>
               </ul>
             </div>
             <div className="rounded-xl border border-gray-200 bg-white p-4">
