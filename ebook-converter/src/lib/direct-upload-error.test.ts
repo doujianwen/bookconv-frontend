@@ -12,6 +12,7 @@ import {
   diagnosticPrefix,
   extractDiagnosticContext,
   buildDirectUploadErrorPrefix,
+  attachDirectUploadCause,
   type DiagnosticContext,
 } from "@/lib/direct-upload-error";
 import { isErrorCode } from "@/lib/error-handler";
@@ -281,6 +282,54 @@ describe("F20 P1：纯函数 extractDiagnosticContext / buildDirectUploadErrorPr
   test("buildDirectUploadErrorPrefix：裸 Error / undefined → 空串（不得抛、不得污染 GA4 error）", () => {
     expect(buildDirectUploadErrorPrefix(new Error("unknown"))).toBe("");
     expect(buildDirectUploadErrorPrefix(undefined)).toBe("");
+  });
+});
+
+describe("F20 R-A 组件级链路（inner→outer→GA4 前缀不丢，无需 React）", () => {
+  // 这些测试复刻 ToolPageClient 的真实调用路径：
+  //   inner catch:  throw new Error(msg, { cause: attachDirectUploadCause(uploadErr) })
+  //   outer catch:  buildDirectUploadErrorPrefix(err)
+  // 把此前未受测试守护的内联 cause 构造抽成纯函数后，端到端前缀链路可单测。
+
+  test("attachDirectUploadCause：PutError 透传 code + duDiag", () => {
+    const put = new DirectUploadPutError("PUT 403", { status: 403, elapsedMs: 2000, online: true });
+    const cause = attachDirectUploadCause(put);
+    expect(cause.code).toBe("DIRECT_UPLOAD_PUT_FAILED");
+    expect(cause.duDiag).toEqual({ stage: "put", status: 403, elapsedMs: 2000, online: true });
+  });
+
+  test("attachDirectUploadCause：PresignError（无码）→ PRESIGN_ERROR + duDiag", () => {
+    const pre = new DirectUploadPresignError("presign 503", { status: 503, elapsedMs: 8000, online: false });
+    const cause = attachDirectUploadCause(pre);
+    expect(cause.code).toBe("DIRECT_UPLOAD_PRESIGN_ERROR");
+    expect(cause.duDiag).toEqual({ stage: "presign", status: 503, elapsedMs: 8000, online: false });
+  });
+
+  test("attachDirectUploadCause：UnavailableError → PRESIGN_UNAVAILABLE", () => {
+    expect(attachDirectUploadCause(new DirectUploadUnavailableError()).code).toBe(
+      "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE",
+    );
+  });
+
+  test("attachDirectUploadCause：非直传 Error → DIRECT_UPLOAD_FAILED + duDiag undefined", () => {
+    const cause = attachDirectUploadCause(new Error("plain backend error"));
+    expect(cause.code).toBe("DIRECT_UPLOAD_FAILED");
+    expect(cause.duDiag).toBeUndefined();
+  });
+
+  test("端到端：inner 构造 wrapped Error → outer 重建前缀不丢", () => {
+    const put = new DirectUploadPutError("PUT 403", { status: 403, elapsedMs: 2000, online: true });
+    const wrapped = new Error("This file needs direct upload, which failed.", {
+      cause: attachDirectUploadCause(put),
+    });
+    expect(buildDirectUploadErrorPrefix(wrapped)).toBe("PUT:HTTP403:on=1:1-5s:");
+  });
+
+  test("端到端：非直传 wrapped → 前缀空串（不污染 GA4 error）", () => {
+    const wrapped = new Error("conversion failed", {
+      cause: attachDirectUploadCause(new Error("plain backend error")),
+    });
+    expect(buildDirectUploadErrorPrefix(wrapped)).toBe("");
   });
 });
 

@@ -22,9 +22,8 @@ import { trackGAEvent } from "@/lib/ga"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect } from "@/lib/client/direct-upload"
 import {
-  mapDirectUploadError,
   type DiagnosticContext,
-  extractDiagnosticContext,
+  attachDirectUploadCause,
   buildDirectUploadErrorPrefix,
 } from "@/lib/direct-upload-error"
 import { useUploadCapability } from "@/lib/client/upload-capability"
@@ -242,18 +241,18 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
             // collapsed them, making incidents like 2026-11-01 (8 failures)
             // permanently undiagnosable (2026-11-02 red-team audit).
             const sizeMB = (file.size / 1024 / 1024).toFixed(1)
-            const duCode = mapDirectUploadError(uploadErr)
-            const unavailable = duCode === "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE"
-            // F20: pull the stage-typed diagnostic context off the thrown error
-            // (status / elapsedMs / onLine) and carry it through to the GA4
-            // error field so 2026-11-04-style PUT failures become classifiable.
-            // Extraction is a pure function (F20 P1) — testable without React.
-            const duDiag = extractDiagnosticContext(uploadErr)
+            // F20 R-A (2026-11-05): build the stage-typed diagnostic cause (code +
+            // duDiag) via a pure function so the inner→outer→GA4 prefix chain is
+            // testable without rendering React. duDiag carries status/elapsedMs/
+            // onLine so 2026-11-04-style PUT failures become classifiable; the
+            // outer catch reads it back via buildDirectUploadErrorPrefix.
+            const duCause = attachDirectUploadCause(uploadErr)
+            const unavailable = duCause.code === "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE"
             throw new Error(
               isEs
                 ? `Este archivo (${sizeMB}MB) requiere carga directa, que ${unavailable ? "no está disponible en este momento" : "falló"}. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
                 : `This file (${sizeMB}MB) needs direct upload, which ${unavailable ? "is unavailable right now" : "failed"}. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
-              { cause: { code: duCode, duDiag } },
+              { cause: duCause },
             )
           }
         }

@@ -169,6 +169,28 @@ export function buildDirectUploadErrorPrefix(err: unknown): string {
 }
 
 /**
+ * Build the `cause` object a direct-upload failure carries into the wrapping
+ * Error thrown from the inner catch toward the outer catch. Encapsulates the
+ * `mapDirectUploadError` + `extractDiagnosticContext` pairing so the
+ * inner → outer → GA4 `error` prefix chain becomes a single testable seam
+ * (F20 R-A, 2026-11-05).
+ *
+ * `duDiag` is `undefined` for non-direct-upload errors; the outer catch reads
+ * it back via `buildDirectUploadErrorPrefix(err)` to rebuild the diagnostic
+ * prefix. If this step is ever dropped, the prefix silently collapses to "" —
+ * which is exactly the component-level gap R-A closes with a unit test.
+ */
+export function attachDirectUploadCause(err: unknown): {
+  code: ErrorCode;
+  duDiag?: DiagnosticContext;
+} {
+  return {
+    code: mapDirectUploadError(err),
+    duDiag: extractDiagnosticContext(err),
+  };
+}
+
+/**
  * Map a thrown direct-upload error to the GA4 error_code that best localizes
  * the failed stage. Pure function — no React, no network — unit-testable.
  *
