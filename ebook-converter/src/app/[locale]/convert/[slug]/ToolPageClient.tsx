@@ -21,7 +21,12 @@ import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect } from "@/lib/client/direct-upload"
-import { mapDirectUploadError } from "@/lib/direct-upload-error"
+import {
+  mapDirectUploadError,
+  type DiagnosticContext,
+  extractDiagnosticContext,
+  buildDirectUploadErrorPrefix,
+} from "@/lib/direct-upload-error"
 import { useUploadCapability } from "@/lib/client/upload-capability"
 import { sniffFileFormat } from "@/lib/file-format-sniffer"
 import { esConvertHref } from "@/lib/es-routes"
@@ -239,11 +244,16 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
             const sizeMB = (file.size / 1024 / 1024).toFixed(1)
             const duCode = mapDirectUploadError(uploadErr)
             const unavailable = duCode === "DIRECT_UPLOAD_PRESIGN_UNAVAILABLE"
+            // F20: pull the stage-typed diagnostic context off the thrown error
+            // (status / elapsedMs / onLine) and carry it through to the GA4
+            // error field so 2026-11-04-style PUT failures become classifiable.
+            // Extraction is a pure function (F20 P1) — testable without React.
+            const duDiag = extractDiagnosticContext(uploadErr)
             throw new Error(
               isEs
                 ? `Este archivo (${sizeMB}MB) requiere carga directa, que ${unavailable ? "no está disponible en este momento" : "falló"}. Intenta con un archivo más pequeño (máx. ${MAX_FILE_SIZE_MB}MB) o inténtalo más tarde.`
                 : `This file (${sizeMB}MB) needs direct upload, which ${unavailable ? "is unavailable right now" : "failed"}. Try a smaller file (max ${MAX_FILE_SIZE_MB}MB) or retry later.`,
-              { cause: { code: duCode } },
+              { cause: { code: duCode, duDiag } },
             )
           }
         }
@@ -285,13 +295,21 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err) {
         // Extract error code and friendly message from response data if available
-        const errObj = err as { cause?: { errorCode?: string; code?: string }; message?: string } | undefined
+        const errObj = err as {
+          cause?: { errorCode?: string; code?: string; duDiag?: DiagnosticContext }
+          message?: string
+        } | undefined
         const cause = errObj?.cause
         const rawCode = cause?.errorCode || cause?.code
         // 单一事实源校验（isErrorCode 派生自 error-handler 的 ErrorCode 全集），
         // 替换旧的手写白名单正则——后者已静默漂移：配额/CloudConvert 类错误码
         // 不在白名单里，被丢成 undefined，GA4 里只能看到 UNKNOWN。
         const mappedCode = isErrorCode(rawCode) ? rawCode : undefined
+        // F20: prepend the stage-typed diagnostic prefix (status/elapsedMs/onLine)
+        // when this failure came through the direct-upload path. Empty string for
+        // non-direct-upload failures, so the GA4 error field is unchanged there.
+        // Pure, testable seam (F20 P1) — reads cause.duDiag off the wrapped error.
+        const diagPrefix = buildDirectUploadErrorPrefix(err)
         setErrorCode(mappedCode)
         setErrorMessage(errObj?.message || (isEs ? "La conversión falló" : "Conversion failed"))
         setStatus("error")
@@ -299,7 +317,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
           source_format: source,
           target_format: target,
           error_code: mappedCode || "UNKNOWN",
-          error: (errObj?.message || "unknown").slice(0, 100),
+          error: (diagPrefix + (errObj?.message || "unknown")).slice(0, 100),
           file_size: file.size,
         })
       }

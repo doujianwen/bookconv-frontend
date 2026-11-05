@@ -21,6 +21,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { fileURLToPath } from 'node:url'
+import { parseDiagnosticPrefix, aggregateDiagnosticErrors } from './lib/direct-upload-diagnostic.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -77,6 +78,85 @@ function rows(reportJson, dimNames) {
     ;(reportJson.metricHeaders || []).forEach((m, i) => { o[m.name] = Number(row.metricValues?.[i]?.value) || 0 })
     return o
   })
+}
+
+// ── 联合模块校验（2026-11-05 增补）──────────────────────────────────
+// 纪律：判据无法执行 / 自相矛盾时绝不静默出数（项目 MEMORY：静默假成功是头号敌人）。
+//  ① 新模块与 2f(date × error_code) 的 eventCount 合计必须闭合；
+//  ② 全 null / 全 (not set) 视为维度映射假阴性 —— 2026-11-05 独立探针踩过：
+//     自定义维度按 header 字面量映射错位时全返 null，却不报错，会造成假阴性。
+function assertJointClosure(data, base) {
+  const sum = (a) => (Array.isArray(a) ? a.reduce((s, x) => s + (Number(x.eventCount) || 0), 0) : null)
+  const baseSum = sum(base)
+  const newSum = sum(data)
+  if (baseSum === null) throw new Error('UNKNOWN: 2f 模块降级，无法校验闭合')
+  if (baseSum !== newSum) throw new Error(`闭合失败: 2f=${baseSum} 2g=${newSum}`)
+  if (data.length && data.every((x) => x.error_code === null || x.error_code === '(not set)')) {
+    throw new Error('疑似维度映射假阴性: error_code 全为 null/(not set)')
+  }
+  return true
+}
+
+// ── 归因完整性判据（2026-11-05 增补，防第 3 次复发）──────────────────
+// 复发史：2026-10-31 待办 §三已撤销「66% 失败无错误码，P0 修埋点」；
+//         2026-11-05 分期红队报告 §4 P0-2 又把「PRE 期 44 次 (not set)」立项为
+//         「给 conversion_failed 加兜底 error_code」。两次都是把「埋点上线前的
+//         历史存量」误读成「当前埋点缺陷」。本判据只看最近 7 天，历史存量
+//         永不参与判定；无失败事件时显式 UNKNOWN，绝不 fallthrough 到 PASS。
+function checkAttributionFreshness(codeRows, end) {
+  const endKey = end.replace(/-/g, '')
+  if (!Array.isArray(codeRows)) return { verdict: 'UNKNOWN', reason: '2f 模块降级，不可判定' }
+  const cutoff = new Date(end + 'T00:00:00Z')
+  cutoff.setUTCDate(cutoff.getUTCDate() - 6)
+  const from = cutoff.toISOString().slice(0, 10).replace(/-/g, '')
+  const recent = codeRows.filter((x) => x.date >= from)
+  const total = recent.reduce((s, x) => s + (Number(x.eventCount) || 0), 0)
+  if (total === 0) return { verdict: 'UNKNOWN', reason: '最近 7 天无失败事件，不可判定', window: [from, endKey] }
+  const notSet = recent.filter((x) => x.error_code === '(not set)').reduce((s, x) => s + x.eventCount, 0)
+  return {
+    verdict: notSet > 0 ? 'FAIL' : 'PASS',
+    window: [from, endKey],
+    recentFailures: total,
+    recentNotSet: notSet,
+    note: notSet > 0
+      ? '当前埋点疑似缺陷：最近 7 天仍有 (not set)，须立项排查'
+      : '当前归因健康：历史 (not set) 属埋点上线前存量，禁止据此立项「修埋点」',
+  }
+}
+
+// 自检门禁（可复跑，含反向验证：注入事故→exit 1，恢复→exit 0）
+//   node scripts/ga4-advanced-analysis.mjs --self-test
+if (process.argv.includes('--self-test')) {
+  const base = [{ date: '20261101', error_code: 'INTERNAL_ERROR', eventCount: 3 }]
+  const good = [
+    { date: '20261101', error_code: 'INTERNAL_ERROR', file_size: '1024', eventCount: 2 },
+    { date: '20261101', error_code: 'INTERNAL_ERROR', file_size: '2048', eventCount: 1 },
+  ]
+  const cases = [
+    ['正常闭合 → PASS', () => assertJointClosure(good, base) === true, true],
+    ['注入少一行 → 拒绝出数', () => { try { assertJointClosure(good.slice(0, 1), base); return false } catch { return true } }, true],
+    ['2f 降级 → UNKNOWN 拒绝出数', () => { try { assertJointClosure(good, { _error: 'x' }); return false } catch (e) { return /UNKNOWN/.test(e.message) } }, true],
+    ['全 (not set) → 假阴性拒绝出数', () => { try { assertJointClosure([{ error_code: '(not set)', eventCount: 3 }], [{ error_code: '(not set)', eventCount: 3 }]); return false } catch (e) { return /假阴性/.test(e.message) } }, true],
+    ['恢复原始数据 → PASS', () => assertJointClosure(good, base) === true, true],
+    ['归因健康 → PASS', () => checkAttributionFreshness([{ date: '20261101', error_code: 'UNKNOWN', eventCount: 2 }], '2026-11-04').verdict === 'PASS', true],
+    ['注入当前 (not set) → FAIL', () => checkAttributionFreshness([{ date: '20261101', error_code: '(not set)', eventCount: 2 }], '2026-11-04').verdict === 'FAIL', true],
+    ['仅历史 (not set) → 仍 PASS', () => checkAttributionFreshness([{ date: '20261005', error_code: '(not set)', eventCount: 14 }, { date: '20261101', error_code: 'UNKNOWN', eventCount: 2 }], '2026-11-04').verdict === 'PASS', true],
+    ['2f 降级 → UNKNOWN', () => checkAttributionFreshness({ _error: 'x' }, '2026-11-04').verdict === 'UNKNOWN', true],
+    ['近 7 天无失败 → UNKNOWN', () => checkAttributionFreshness([], '2026-11-04').verdict === 'UNKNOWN', true],
+    // F20 P2：诊断前缀解析器
+    ['解析直传前缀 PUT HTTP403 → 结构化维度', () => { const p = parseDiagnosticPrefix('PUT:HTTP403:on=1:>15s:'); return p.valid && p.stage === 'PUT' && p.kind === 'HTTP' && p.httpStatus === 403 && p.online === '1' && p.msBucket === '>15s' }, true],
+    ['解析 CORS/网络失败 → NETWORK 无 status', () => { const p = parseDiagnosticPrefix('PUT:NETWORK:on=1:1-5s:'); return p.valid && p.kind === 'NETWORK' && p.httpStatus === null }, true],
+    ['非直传 error → valid:false 且非异常', () => { const p = parseDiagnosticPrefix('Conversion failed'); return p.valid === false && p.malformed === false }, true],
+    ['漂移头部 → malformed:true（契约漂移告警）', () => { const p = parseDiagnosticPrefix('PUT:NETWORK:on=2:1-5s:'); return p.malformed === true }, true],
+  ]
+  let bad = 0
+  for (const [name, fn, want] of cases) {
+    const got = fn()
+    console.log(`${got === want ? '✅' : '❌'} ${name}`)
+    if (got !== want) bad++
+  }
+  console.log(bad === 0 ? `✅ selfTest ${cases.length}/${cases.length} PASS` : `❌ selfTest ${bad} 项失败`)
+  process.exit(bad === 0 ? 0 : 1)
 }
 
 const out = {
@@ -248,6 +328,25 @@ try {
     return rows(r, ['date', 'error'])
   })
 
+  // 模块 2e-d：failed_by_date_error 的诊断前缀结构化派生（F20 P2，2026-11-05）
+  // 目的：2e 的 `error` 字段对直传失败是 `诊断前缀 + 友好文案`，但此前 failed_by_date_error
+  // 只按整串分组，无法回答「PUT 阶段里 NETWORK(CORS/网络) 与 HTTP403 各占多少」。
+  // 本模块复用 2e 已拉取的数据，逐行解析诊断前缀 → 按 date × stage × kind × httpStatus
+  // × online × msBucket 聚合，使直传失败可根因归类（aggregateDiagnosticErrors 已抽为纯函数，
+  // 可在 selfTest 中直接复跑验证，避免内联副本无守护）。
+  // 纪律：解析器永不抛；非直传错误（无前缀）是期望态，计入 nonDiagnostic、绝不报异常；
+  // malformed>0 才是真告警（producer/parser 契约漂移），交由 meta.diagnosticPrefixParse 暴露。
+  await safe('failed_by_date_error_diagnostic', async () => {
+    const src = out.modules.failed_by_date_error
+    if (!Array.isArray(src)) throw new Error('UNKNOWN: 2e 模块降级，无法派生诊断维度')
+    const { detail, parse } = aggregateDiagnosticErrors(src)
+    // 防假阴性：有失败事件却零解析且零 malformed = 整个 error 维度塌陷，拒绝出数
+    if (parse.total > 0 && parse.valid === 0 && parse.malformed === 0 && parse.nonDiagnostic === parse.total) {
+      throw new Error('疑似维度映射假阴性: 2e 全部 error 行均无可解析的诊断前缀（error 维度可能整体未注册/塌陷）')
+    }
+    return { detail, parse }
+  })
+
   // 模块 2f：conversion_failed 按 date × error_code（2026-10-31 增补，与 fetch-ga4-daily 同维度）
   // 目的：提供「与 Part A 同源的 error_code 时间序列」，供红队 Part D 做 apples-to-apples 引擎失败比对，
   // 避免 failed_by_date_error（customEvent:error，可能未注册降级）不可比导致的误判。
@@ -262,6 +361,43 @@ try {
     })
     return rows(r, ['date', 'error_code'])
   })
+
+  // 模块 2g：conversion_failed 按 date × error_code × file_size（2026-11-05 增补）
+  // 来源：红队报告 `红队审计_GA4三十天分析与1027分期_2026-11-05.md` §4 P0-1 建议动作
+  // 「按 date × error_code × file_size 建监控」。此前只能人工把 2f（无 size）与
+  // 2d（无 code）两表按日期拼起来推断「29~40MB 大文件落在 PUT 阶段」，拼表结论
+  // 不可复跑且易错。本模块把三者合一，使监控判据变成单查询、可复跑。
+  // 闭合 / 假阴性校验见 assertJointClosure；失败由 safe() 降级为 _error
+  // （Part D D4 会显式列出），绝不静默出数。
+  await safe('failed_by_date_error_code_size', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'date' }, { name: 'customEvent:error_code' }, { name: 'customEvent:file_size' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'conversion_failed' } } },
+      orderBys: [{ dimension: { dimensionName: 'date' } }],
+      limit: 10000,
+    })
+    const data = rows(r, ['date', 'error_code', 'file_size'])
+    assertJointClosure(data, out.modules.failed_by_date_error_code)
+    return data
+  })
+
+  // 写盘前固化归因完整性判据（机器可读，随每日 Part C 产物落盘）
+  out.meta.attributionGuard = checkAttributionFreshness(out.modules.failed_by_date_error_code, END)
+  const guard = out.meta.attributionGuard
+  console.error(`🛡️ 归因完整性: ${guard.verdict} — ${guard.note || guard.reason}`)
+
+  // F20 P2：诊断前缀解析覆盖摘要（malformed>0 = producer/parser 契约漂移告警）
+  const diagMod = out.modules.failed_by_date_error_diagnostic
+  if (diagMod && !diagMod._error && diagMod.parse) {
+    out.meta.diagnosticPrefixParse = diagMod.parse
+    if (diagMod.parse.malformed > 0) {
+      console.error(`⚠️ 诊断前缀漂移告警: ${diagMod.parse.malformed} 行匹配直传头部但无法解析（producer/parser 契约可能已漂移）`)
+    } else {
+      console.error(`🔎 诊断前缀解析: 有效 ${diagMod.parse.valid} / 非直传 ${diagMod.parse.nonDiagnostic} / 漂移 ${diagMod.parse.malformed}`)
+    }
+  }
 
   // 写盘
   const file = path.join(ROOT, '_wb_tmp', `ga4-advanced-${END}.json`)

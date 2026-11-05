@@ -35,6 +35,7 @@ export async function uploadFileDirect(
   signal?: AbortSignal,
 ): Promise<DirectUploadResult> {
   let presignRes: Response;
+  const presignStart = Date.now();
   try {
     presignRes = await fetch("/api/upload/presign", {
       method: "POST",
@@ -48,8 +49,14 @@ export async function uploadFileDirect(
     });
   } catch (err) {
     // Network failure before any response arrived — stage: presign.
+    // F20: capture elapsed + onLine so a CORS preflight drop is distinguishable
+    // from an offline client.
     throw new DirectUploadPresignError(
       `Could not start upload (${err instanceof Error ? err.message : "network error"}).`,
+      {
+        elapsedMs: Date.now() - presignStart,
+        online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+      },
     );
   }
 
@@ -65,7 +72,12 @@ export async function uploadFileDirect(
     // files were mis-reported as direct-upload infra failures (R-B).
     throw new DirectUploadPresignError(
       payload?.error || `Could not start upload (${presignRes.status}).`,
-      { status: presignRes.status, code: payload?.code },
+      {
+        status: presignRes.status,
+        code: payload?.code,
+        elapsedMs: Date.now() - presignStart,
+        online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+      },
     );
   }
 
@@ -77,6 +89,7 @@ export async function uploadFileDirect(
   };
 
   let putRes: Response;
+  const putStart = Date.now();
   try {
     putRes = await fetch(presigned.uploadUrl, {
       method: presigned.method || "PUT",
@@ -88,13 +101,23 @@ export async function uploadFileDirect(
   } catch (err) {
     // CORS preflight rejection and network drops both surface here as a
     // TypeError — stage: R2 PUT (the classic 2026-10-29/30 CORS failure).
+    // F20: capture elapsed + onLine; a CORS preflight rejection and an offline
+    // client both land here with no `status`, so onLine is the only discriminant.
     throw new DirectUploadPutError(
       `Upload to storage failed (${err instanceof Error ? err.message : "network error"}).`,
+      {
+        elapsedMs: Date.now() - putStart,
+        online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+      },
     );
   }
 
   if (!putRes.ok) {
-    throw new DirectUploadPutError(`Upload to storage failed (${putRes.status}).`, putRes.status);
+    throw new DirectUploadPutError(`Upload to storage failed (${putRes.status}).`, {
+      status: putRes.status,
+      elapsedMs: Date.now() - putStart,
+      online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+    });
   }
 
   return { key: presigned.key };

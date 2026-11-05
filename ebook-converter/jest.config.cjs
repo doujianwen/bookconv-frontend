@@ -3,6 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest'],
+    '\\.mjs$': ['@swc/jest'],
   },
   testMatch: ['**/tests/**/*.test.ts', '**/src/**/*.test.ts'],
   verbose: true,
