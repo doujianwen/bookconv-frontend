@@ -1,5 +1,6 @@
 ﻿import type { NextConfig } from "next"
 import withNextIntl from "next-intl/plugin";
+import { buildContentSecurityPolicy } from "./src/lib/csp";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bookconv.com';
 const CORS_ORIGINS = (process.env.CORS_ORIGINS || APP_URL)
@@ -56,7 +57,10 @@ const config: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-          { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: ${CORS_ORIGINS.map((o) => o.replace(/^https?:\/\//, '')).join(' ')}; font-src 'self' data:; connect-src 'self' ${CORS_ORIGINS.join(' ')} https://www.google-analytics.com https://stats.g.doubleclick.net https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';` },
+          // 2026-11-06 P0 根因修复：connect-src 必须放行 R2 直传 PUT 的 host。
+          // 未放行时浏览器在发请求前就拒绝（TypeError / 无 status / <1s），
+          // 即 GA4 诊断前缀 PUT:NETWORK:on=1:<1s 的真因；见 src/lib/csp.ts。
+          { key: "Content-Security-Policy", value: buildContentSecurityPolicy(CORS_ORIGINS, process.env.R2_ENDPOINT) },
           { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
         ],
       },

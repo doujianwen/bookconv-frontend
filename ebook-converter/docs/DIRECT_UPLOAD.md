@@ -75,6 +75,7 @@ R2 → 桶 → Settings → Object Lifecycle Rules：
 | 5 | 对象被清理 | 转换成功后 R2 `uploads/<日期>/` 下对象消失 |
 | 6 | 降级路径 | 把 `R2_ENDPOINT` 清空重启 → `GET /api/upload/presign` 返回 `enabled:false`，>4MB 文件给出明确提示而非静默 413 |
 | 7 | **CORS 预检**（2026-10-31 新增，事故后教训） | 对真实 presigned URL 发 `OPTIONS` 带 `Origin: https://www.bookconv.com` + `Access-Control-Request-Method: PUT` → 必须 200 且含 `Access-Control-Allow-Origin`。**curl/脚本身不做 CORS 预检，探针绿≠浏览器绿**（10-29/10-30 直传连续失败根因：桶 CORS 403，仅真浏览器受影响） |
+| 8 | **CSP connect-src**（2026-11-06 新增，P0 事故后教训） | CORS 与 CSP 是**两道独立门禁**，CORS 绿不代表浏览器能发请求。必须：① 读线上响应头 `Content-Security-Policy`，确认 `connect-src` 含 `https://*.r2.cloudflarestorage.com`（或精确 R2 host）；② 在**真实浏览器页面上下文**执行 `fetch(presignUrl, {method:'PUT',...})` 并断言 200。**Node/curl 不执行 CSP，一律不得作为本项判据**。2026-11-06 实测：R2 CORS 预检 204、1–65MB PUT 200（Node 视角全绿），但真实 Chromium 在带线上 CSP 的页面下 **2ms 内 `TypeError: Failed to fetch`**；把 R2 host 加进 connect-src 后 PUT 200。该缺陷导致 30 天内 **0 个 >4MB 文件上传成功**。门禁：`npx jest src/lib/csp.test.ts`（含反向验证：删掉 R2 源必 FAIL） |
 
 ## 6. 回滚
 

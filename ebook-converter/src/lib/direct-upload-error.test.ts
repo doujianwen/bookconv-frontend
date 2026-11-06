@@ -16,7 +16,7 @@ import {
   type DiagnosticContext,
 } from "@/lib/direct-upload-error";
 import { isErrorCode } from "@/lib/error-handler";
-import { uploadFileDirect } from "@/lib/client/direct-upload";
+import { uploadFileDirect, isRetryablePutError } from "@/lib/client/direct-upload";
 import { parseDiagnosticPrefix } from "../../scripts/lib/direct-upload-diagnostic.mjs";
 
 const fakeFile = { size: 5_000_000, name: "probe.epub" } as unknown as File;
@@ -118,7 +118,7 @@ describe("uploadFileDirect 抛出点的阶段类型（fetch 桩）", () => {
     });
   });
 
-  test("PUT 网络失败（CORS 假象）→ DirectUploadPutError → PUT_FAILED", async () => {
+  test("PUT 网络失败（CORS 假象）→ DirectUploadPutError → PUT_FAILED（重试后仍失败）", async () => {
     const fetchMock = jest.spyOn(global, "fetch");
     fetchMock.mockResolvedValueOnce(
       jsonRes(200, {
@@ -128,7 +128,8 @@ describe("uploadFileDirect 抛出点的阶段类型（fetch 桩）", () => {
         contentType: "application/octet-stream",
       }),
     );
-    fetchMock.mockRejectedValueOnce(new TypeError("Failed to fetch")); // CORS 预检失败的表现形态
+    // 所有重试尝试的 PUT 都网络失败 → 穷尽重试后仍抛 PUT_FAILED（不漏真实网络调用）
+    fetchMock.mockRejectedValue(new TypeError("Failed to fetch")); // CORS 预检失败的表现形态
     await uploadFileDirect(fakeFile, "epub").catch((e) => {
       expect(e).toBeInstanceOf(DirectUploadPutError);
       expect(mapDirectUploadError(e)).toBe("DIRECT_UPLOAD_PUT_FAILED");
@@ -145,6 +146,69 @@ describe("uploadFileDirect 抛出点的阶段类型（fetch 桩）", () => {
       expect(e).toBeInstanceOf(DirectUploadPutError);
       expect(mapDirectUploadError(e)).toBe("DIRECT_UPLOAD_PUT_FAILED");
     });
+  });
+});
+
+describe("2026-11-06 直传 PUT 重试（仅网络层失败重试，HTTP 非2xx 不重试）", () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  const presignJson = {
+    ok: true,
+    status: 200,
+    json: async () => ({
+      key: "uploads/x.epub",
+      uploadUrl: "https://r2.example/put",
+      method: "PUT",
+      contentType: "application/octet-stream",
+    }),
+  } as unknown as Response;
+
+  test("PUT 首次网络失败、第二次成功 → uploadFileDirect 解析成功（重试生效）", async () => {
+    const fetchMock = jest.spyOn(global, "fetch");
+    fetchMock.mockResolvedValueOnce(presignJson); // presign
+    fetchMock.mockRejectedValueOnce(new TypeError("Failed to fetch")); // 第1次 PUT 网络失败
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200 } as unknown as Response); // 第2次 PUT 成功
+    const result = await uploadFileDirect(fakeFile, "epub");
+    expect(result).toEqual({ key: "uploads/x.epub" });
+    // presign(1) + PUT(2) = 3 次 fetch
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  test("isRetryablePutError：网络 TypeError / 非 abort DOMException 可重试，HTTP/abort 不可重试", () => {
+    expect(isRetryablePutError(new TypeError("Failed to fetch"))).toBe(true);
+    expect(isRetryablePutError(new DOMException("boom"))).toBe(true);
+    expect(isRetryablePutError(new DOMException("aborted", "AbortError"))).toBe(false);
+    expect(isRetryablePutError(new Error("HTTP 403"))).toBe(false);
+    expect(isRetryablePutError(undefined)).toBe(false);
+  });
+
+  test("PUT 返回 403（确定性 R2 拒绝）→ 不重试，仅 2 次 fetch（presign+PUT）", async () => {
+    const fetchMock = jest.spyOn(global, "fetch");
+    fetchMock.mockResolvedValueOnce(presignJson);
+    fetchMock.mockResolvedValue({ ok: false, status: 403 } as unknown as Response); // 所有 PUT 都 403
+    await uploadFileDirect(fakeFile, "epub").catch((e) => {
+      expect(e).toBeInstanceOf(DirectUploadPutError);
+      expect(mapDirectUploadError(e)).toBe("DIRECT_UPLOAD_PUT_FAILED");
+    });
+    // 403 不重试：presign(1) + PUT(1) = 2 次，而非 1+3
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  test("PUT 被 abort → 不进入重试循环（presign+1次PUT=2次fetch）", async () => {
+    const fetchMock = jest.spyOn(global, "fetch");
+    const ctrl = new AbortController();
+    fetchMock.mockResolvedValueOnce(presignJson);
+    fetchMock.mockImplementationOnce(() => {
+      ctrl.abort();
+      return Promise.reject(new DOMException("aborted", "AbortError"));
+    });
+    // abort 与既有行为一致：被外层包装为 DirectUploadPutError（PUT_FAILED），
+    // 关键不变量是「不重试」→ fetch 仅 2 次。
+    await uploadFileDirect(fakeFile, "epub", ctrl.signal).catch((e) => {
+      expect(e).toBeInstanceOf(DirectUploadPutError);
+      expect(mapDirectUploadError(e)).toBe("DIRECT_UPLOAD_PUT_FAILED");
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2); // presign + 1 次 PUT（无重试）
   });
 });
 
