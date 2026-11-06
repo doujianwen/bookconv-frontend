@@ -1,0 +1,42 @@
+{
+  "d1": {
+    "prompt": "can kobo read epub files",
+    "chars": 0,
+    "hasGrounding": false,
+    "groundingCount": 0,
+    "bookconvMention": false,
+    "textPreview": ""
+  },
+  "d2": {
+    "prompt": "what format does kindle use",
+    "chars": 0,
+    "hasGrounding": false,
+    "groundingCount": 0,
+    "bookconvMention": false,
+    "textPreview": ""
+  },
+  "d3": {
+    "prompt": "how to transfer ebooks between different e-readers",
+    "chars": 0,
+    "hasGrounding": false,
+    "groundingCount": 0,
+    "bookconvMention": false,
+    "textPreview": ""
+  },
+  "d4": {
+    "prompt": "can kindle read azw3 files",
+    "chars": 0,
+    "hasGrounding": false,
+    "groundingCount": 0,
+    "bookconvMention": false,
+    "textPreview": ""
+  },
+  "d5": {
+    "prompt": "epub or mobi for kindle paperwhite",
+    "chars": 0,
+    "hasGrounding": false,
+    "groundingCount": 0,
+    "bookconvMention": false,
+    "textPreview": ""
+  }
+}

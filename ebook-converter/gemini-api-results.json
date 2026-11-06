@@ -1,0 +1,51 @@
+{
+ "p1": {
+  "prompt": "azw3 vs mobi which is better for kindle",
+  "chars": 1918,
+  "hasGrounding": true,
+  "groundingCount": 12,
+  "bookconvMention": false
+ },
+ "p2": {
+  "prompt": "best free online ebook converter",
+  "chars": 2049,
+  "hasGrounding": true,
+  "groundingCount": 3,
+  "bookconvMention": false
+ },
+ "p3": {
+  "prompt": "how to convert lit to epub",
+  "chars": 3753,
+  "hasGrounding": true,
+  "groundingCount": 7,
+  "bookconvMention": false
+ },
+ "p4": {
+  "prompt": "convert epub to zip file online free",
+  "chars": 2240,
+  "hasGrounding": true,
+  "groundingCount": 6,
+  "bookconvMention": false
+ },
+ "p5": {
+  "prompt": "epub to word converter online free",
+  "chars": 2547,
+  "hasGrounding": true,
+  "groundingCount": 10,
+  "bookconvMention": false
+ },
+ "p6": {
+  "prompt": "kfx vs azw3 which format should i use for kindle",
+  "chars": 3118,
+  "hasGrounding": true,
+  "groundingCount": 20,
+  "bookconvMention": false
+ },
+ "p7": {
+  "prompt": "convertir epub a doc online gratis",
+  "chars": 2810,
+  "hasGrounding": true,
+  "groundingCount": 13,
+  "bookconvMention": false
+ }
+}

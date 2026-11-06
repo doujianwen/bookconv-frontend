@@ -1,0 +1,301 @@
+{
+ "p1": {
+  "prompt": "azw3 vs mobi which is better for kindle",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed4541-df98-83ea-9ebb-76ebaf9f28b6",
+    "chars": 1879,
+    "mentioned": true,
+    "cited": false,
+    "domains": [],
+    "text": "AZW3 vs MOBI Kindle Comparison\n分享\n你说：\nazw3 vs mobi which is better for kindle\nChatGPT 说：\n\nFor Kindle, AZW3 is generally better than MOBI. If you are choosing a format for your personal ebook library, I recommend AZW3.\n\nAZW3 vs MOBI: Key differences\n\nAZW3\n\nRecommended\n\nBetter typography\n\nSupports advanced formatting\n\nSupports embedded fonts\n\nSupports CSS styling\n\nBetter for complex layouts\n\nMOBI\n\nLegacy format\n\nOlder Kindle format\n\nMore limited formatting\n\nLess flexible typography\n\nSuitable for simple ebooks\n\nLimited modern feature support\n\nDetailed comparison\n\nFeature\n\n\t\n\nAZW3\n\n\t\n\nMOBI\n\n\n\n\nKindle compatibility\n\n\t\n\nGood\n\n\t\n\nGood on older devices\n\n\n\n\nTypography\n\n\t\n\nBetter\n\n\t\n\nBasic\n\n\n\n\nEmbedded fonts\n\n\t\n\nYes\n\n\t\n\nLimited\n\n\n\n\nCSS formatting\n\n\t\n\nAdvanced\n\n\t\n\nLimited\n\n\n\n\nComplex layouts\n\n\t\n\nBetter\n\n\t\n\nWeaker\n\n\n\n\nFile size\n\n\t\n\nVaries\n\n\t\n\nVaries\n\n\n\n\nModern Kindle suitability\n\n\t\n\nBetter\n\n\t\n\nLegacy\n\nWhich format should you choose?\n\nMy recommendations:\n\nFor Kindle reading: Choose AZW3 over MOBI.\n\nFor ebook conversion: Convert EPUB to AZW3 if you need a locally stored Kindle-compatible file.\n\nFor sending books to modern Kindle devices: EPUB is also a good source format. Amazon Send to Kindle supports EPUB and converts it automatically.\n\nFor ebook archiving: Keep the original EPUB rather than converting everything to AZW3.\n\nOne important distinction\n\nAmazon has moved beyond the old MOBI ecosystem. MOBI is no longer recommended for modern Send to Kindle workflows.\n\nMy final recommendation:\n\nReading on Kindle: AZW3\n\nSending books through Amazon: EPUB\n\nLong-term ebook library: EPUB\n\nAvoid choosing MOBI for new conversions.\n\nIf you're developing an ebook conversion website like BookConv, I would also prioritize EPUB → AZW3 and EPUB → MOBI as separate conversion options, while clearly labeling MOBI as a legacy format.\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": true,
+    "url": "https://gemini.google.com/app/0bf9d9c28705152f",
+    "chars": 3723,
+    "mentioned": false,
+    "cited": false,
+    "domains": [],
+    "text": "Gemini\nsearch\n发起新对话\n库\n已安排\n自定义\n视频\n笔记本\n新建笔记本\nGEO\n美客多项目\n小红书\n全部\nAI 绘画提示词生成指南\nAZW3 vs MOBI for Kindle\nConvertir EPUB a DOC online\nFree Ebook Converter Search\nKindle Formats and LIT Conversion\nOstrich Ink Purchase Error\nHistoric Chinese Fountain Pen Inks\nChinese Fountain Pen Ink Brands\nChinese Fountain Pen Ink Brands\nBest Tools for Word-to-EPUB Conversion\n无法转换PDF文件\nConverting PDFs to EPUB With Images\nFree Online MOBI to EPUB Conversion\nBest Free PDF to EPUB Converters\nConverting Scanned PDFs to EPUB\nConverting EPUB to PDF Without Losing Formatting\nFailed PDF to EPUB Conversion\nWord to ePub Converter Help\nConverting Scanned PDF to EPUB\nHow to Read EPUB on Kindle\nBest Formats for Harry Potter Digital Books Across Multiple Devices\nCalibre vs. Online Ebook Converters\nFree Alternatives to Calibre\nAndy Dou\nPro\n与 Gemini 对话\n你说 azw3 vs mobi which is better for kindle\n\nazw3 vs mobi which is better for kindle\n\nGemini 说\n\nBetween AZW3 and MOBI, AZW3 (KF8) is significantly better for modern Kindle devices and apps.\n\nHere is a direct comparison of why AZW3 is the superior format, along with the few edge cases where MOBI might still be relevant:\n\nComparison at a Glance\nFeature\tAZW3 (Kindle Format 8)\tMOBI (MOBI7 / Legacy)\tWinner\nTypography & Layout\tModern CSS3/HTML5 support, custom font weights, drop caps\tBasic HTML3.2 formatting, rigid margins\tAZW3\nCustom Fonts\tFull support for embedding and sideloading custom fonts\tVery limited or no support for custom fonts\tAZW3\nComplex Formatting\tTables, callouts, footnotes, and math render cleanly\tOften breaks complex tables and layouts\tAZW3\nHyphenation & Kerning\tAdvanced typography engine support\tBasic or non-existent\tAZW3\nFile Transfer via USB\tSupported on all modern Kindles (Paperwhite, Oasis, Scribe, etc.)\tSupported on all Kindles\tTie\nAmazon \"Send to Kindle\"\tNot supported\tDeprecated (EPUB preferred)\tNeither\nWhy AZW3 is Better\n\nSuperior Typography & Styling:\n\nAZW3 is Amazon's version of EPUB3 wrapped in their proprietary container. It supports modern CSS, meaning you get proper indentations, margins, drop caps, and styled chapter headers.\n\nMOBI is built on a 20+ year-old format (PalmDOC/MOBI7) and often renders text with awkward line breaks or rigid spacing.\n\nCustom Fonts & Layout Engine:\n\nIf you sideload an AZW3 book via USB, you can choose custom fonts you’ve installed on your Kindle, adjust boldness levels, and take advantage of Kindle's enhanced typesetting engine.\n\nMOBI files lock down formatting, often disabling custom fonts and advanced spacing sliders.\n\nTables, Images, and Footnotes:\n\nAZW3 handles embedded images, multi-column tables, technical blocks, and pop-up footnotes seamlessly. MOBI frequently distorts tables or displays footnotes at the very end of the chapter rather than in a pop-up.\n\nThe One Catch: How You Put Books on Your Kindle\n\nYour choice also depends on your transfer method:\n\nIf you transfer via USB cable (e.g., using Calibre):\n\nAlways choose AZW3. It gives you the best reading experience, full font control, and flawless layouts.\n\nIf you use Amazon’s \"Send to Kindle\" (Email, Web, or App):\n\nAmazon has deprecated MOBI for Send to Kindle services, and Send to Kindle does not accept .azw3 files directly.\n\nThe best format for Send to Kindle is EPUB. When you send an .epub file via Send to Kindle, Amazon automatically converts it into their modern format (KFX/AZW3) in the cloud before delivering it to your device with Whispersync support.\n\nSummary Recommendation\n\nSideloading via USB (Calibre): Convert to AZW3 (or KFX if using Calibre's KFX plugins).\n\nWireless via Send to Kindle: Use EPUB.\n\nMOBI: Avoid MOBI unless you are reading on an ancient e-ink Kindle (pre-2011 Kindle 1 or 2).\n\n\n\n\nFlash\n\nGemini 是一款 AI 工具，其回答未必正确无误。",
+    "note": "完整"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/4752a9d9-e191-45a6-ba42-114857bee4ef",
+    "chars": 1583,
+    "mentioned": true,
+    "cited": true,
+    "domains": [
+     "bookconv.com",
+     "youloveepub.com"
+    ],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:11\n\nazw3 vs mobi which is better for kindle\n\n已完成\n4秒\n\nAZW3 is generally better than MOBI for a compatible Kindle—especially when you transfer books by USB. It supports richer formatting, embedded fonts, and more sophisticated layouts; MOBI is the older, more limited format.\nadobe\n+1\n\nWhich should you choose?\nHow you’ll read or transfer the book\tBest choice\tWhy\nCopying books to a compatible Kindle via USB\tAZW3\tPreserves more styling and font information than legacy MOBI. \nbookconv\n\nSending books wirelessly through Send to Kindle or email\tEPUB—not either of these\tAmazon accepts EPUB for these services; neither AZW3 nor MOBI is on its supported upload list. \namazon\n+1\n\nUsing a very old Kindle or legacy reader\tMOBI, if required\tSome older devices or software need the legacy format. \nyouloveepub\nWill you notice a difference?\n\nFor a plain-text novel, the difference may be small. For books with custom fonts, illustrations, or more elaborate formatting, AZW3 can preserve details that older MOBI formats cannot. However, converting an existing MOBI into AZW3 won’t restore formatting or fonts already lost—use the original, higher-quality source when available.\nbookconv\n\n20 个来源\nAZW3 vs MOBI vs EPUB comparison: formatting features, file sizes, and Amazon's current Kindle support rules\nComputer\nConvert legacy MOBI files to modern AZW3 or EPUB formats: a step-by-step conversion and batch-processing guide\nComputer\nHow do I convert EPUB to AZW3\nHow does Send to Kindle handle formats\nWhat formats does Kindle support natively\n⠇\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p2": {
+  "prompt": "best free online ebook converter",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed4594-ce6c-83e9-a796-03a349590862",
+    "chars": 2445,
+    "mentioned": true,
+    "cited": true,
+    "domains": [
+     "bookconv.com"
+    ],
+    "text": "Free Ebook Converters\n分享\n你说：\nbest free online ebook converter\n思考了 24s\nChatGPT 说：\n\nIf you're looking for the best free online ebook converter in 2026, I recommend starting with ConvertKitty, FreeConvert, or BookConv, depending on the formats you need.\n\nTop 6 free online ebook converters\n\n1. ConvertKitty\n\nBest for ebook formats\n\nSupports EPUB, MOBI, AZW3, LIT, FB2 and more.\n\n10 free credits daily.\n\nNo registration required.\n\nVisit ConvertKitty\n\n2. FreeConvert\n\nBest overall features\n\nSupports 30+ ebook conversions.\n\nAdvanced conversion settings.\n\nSupports files up to 1 GB on its listed free workflow.\n\nVisit FreeConvert\n\n3. BookConv\n\nBest for ebook and document conversion\n\nSupports 28+ formats.\n\nEPUB, MOBI, AZW3, PDF, DOCX, LIT and more.\n\nFree personal conversions, no registration.\n\nPowered by the Calibre engine.\n\nVisit BookConv\n\n4. Ebook2Edit\n\nEPUB, MOBI, AZW3, PDF, DOCX and more.\n\nMultiple files supported.\n\nFree everyday conversions without an account.\n\nVisit Ebook2Edit\n\n5. iFormat.io\n\n170+ format conversion combinations.\n\nFree guest conversions.\n\n50 MB guest file limit.\n\nFiles reportedly deleted within one hour.\n\nVisit iFormat.io\n\n6. Epub Studio\n\nBrowser-based conversion.\n\nFiles stay on your device.\n\nNo registration or conversion quota.\n\nParticularly useful for EPUB, PDF and DOCX.\n\nVisit Epub Studio\nQuick comparison\n\nConverter\n\n\t\n\nFree usage\n\n\t\n\nMain advantage\n\n\n\n\nConvertKitty\n\n\t\n\n10 credits/day\n\n\t\n\nEbook formats\n\n\n\n\nFreeConvert\n\n\t\n\nFree tier\n\n\t\n\nAdvanced settings\n\n\n\n\nBookConv\n\n\t\n\nFree personal use\n\n\t\n\nBroad format support\n\n\n\n\nEbook2Edit\n\n\t\n\nFree everyday use\n\n\t\n\nDocument conversion\n\n\n\n\niFormat.io\n\n\t\n\n5 guest conversions/day\n\n\t\n\nFormat variety\n\n\n\n\nEpub Studio\n\n\t\n\nFree, no quota\n\n\t\n\nLocal processing/privacy\n\nWhich one should you choose?\n\nEPUB to PDF: FreeConvert or Epub Studio.\n\nEPUB to Word (DOCX): BookConv or Ebook2Edit.\n\nMOBI to EPUB: ConvertKitty or BookConv.\n\nAZW3 to EPUB: BookConv or ConvertKitty.\n\nLIT to EPUB: BookConv or ConvertKitty.\n\nPrivacy-sensitive documents: Epub Studio, where the supported conversions run locally in your browser.\n\nOne important point: DRM-protected ebooks cannot simply be converted by these services. Also, PDF-to-EPUB conversion may require substantial layout reconstruction.\n\nMy overall recommendation: FreeConvert for general-purpose conversion, Epub Studio for privacy, and BookConv for a broad range of ebook and document formats.\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\n即时"
+   },
+   "gemini": {
+    "produced": true,
+    "url": "https://gemini.google.com/app/6e4314f9b9369531",
+    "chars": 3220,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "cloudconvert.com",
+     "freeconvert.com",
+     "convertio.co",
+     "ebook.online-convert.com",
+     "zamzar.com"
+    ],
+    "text": "Gemini\nsearch\n发起新对话\n库\n已安排\n自定义\n视频\n笔记本\n新建笔记本\nGEO\n美客多项目\n小红书\n全部\nAI 绘画提示词生成指南\nBest Free Online Ebook Converters\nAZW3 vs MOBI for Kindle\nHow to Convert EPUB to ZIP\nConvertir EPUB a DOC online\nFree Ebook Converter Search\nKindle Formats and LIT Conversion\nOstrich Ink Purchase Error\nHistoric Chinese Fountain Pen Inks\nChinese Fountain Pen Ink Brands\nChinese Fountain Pen Ink Brands\nBest Tools for Word-to-EPUB Conversion\n无法转换PDF文件\nConverting PDFs to EPUB With Images\nFree Online MOBI to EPUB Conversion\nBest Free PDF to EPUB Converters\nBest EPUB Readers for Android\nBest Tools to Convert Word to EPUB\nConverting Scanned PDFs to EPUB\nConverting EPUB to PDF Without Losing Formatting\nFailed PDF to EPUB Conversion\nWord to ePub Converter Help\nConverting Scanned PDF to EPUB\nHow to Read EPUB on Kindle\nAndy Dou\nPro\n与 Gemini 对话\n你说 best free online ebook converter\n\nbest free online ebook converter\n\nGemini 说\n\nThe best free online ebook converter depends on whether you need format versatility, large file allowances, or advanced formatting tweaks:\n\nComparison of Top Free Online Converters\nTool\tKey Strengths\tFile Size Limit (Free)\tBest For\nCloudConvert\tClean formatting, granular font/margin settings, cloud imports\tUp to 1 GB (25 conversion credits/day)\tHigh-fidelity EPUB/MOBI/AZW3 conversion\nFreeConvert\tGenerous free upload size, batch processing, advanced metadata/layout options\tUp to 1 GB per file\tLarge books or graphic-heavy PDFs\nConvertio\tFast drag-and-drop, wide range of legacy ebook formats (FB2, LRF, TCR, etc.)\t100 MB per file\tQuick, everyday file conversions\nOnline-Convert\tTarget-device presets (Kindle, Kobo, iPad, Sony)\t100 MB per file\tConverting directly for a specific e-reader brand\nZamzar\tSimple workflow, direct email delivery option\t50 MB per file\tSmall, straightforward EPUB-to-PDF or MOBI conversions\nDetailed Breakdown\n\nCloudConvert (Best Overall Quality): Excellent at preserving complex tables of contents, image layouts, and typography. It lets you manually adjust target base font sizes, page orientation, and character encoding directly in the browser.\n\nFreeConvert (Best for Large Ebooks): If your ebook has rich graphics, maps, or scanned pages that exceed typical 50–100 MB web caps, FreeConvert handles files up to 1 GB on the free tier. It also features heuristic processing options to fix broken paragraph tags.   \nMapify\n\nConvertio (Best for Uncommon Formats): Beyond standard EPUB, MOBI, and AZW3, Convertio supports niche and older formats like FB2, LIT, DJVU, and CBZ/CBR (comic archives).   \nMapify\n\nImportant Considerations\n\nDRM Protection: No free online tool can convert copy-protected books (such as Kindle KFX or Adobe DRM-locked purchases). You must convert DRM-free files.\n\nKindle Note: Amazon Kindle devices and the \"Send to Kindle\" service prefer EPUB format (Amazon phased out MOBI support for personal document delivery). Converting files directly into EPUB ensures standard reading compatibility across modern e-readers and apps.\n\nLarge Batches or Offline Needs: For converting hundreds of books at once or stripping metadata offline, the free open-source desktop program Calibre remains superior to any web-based tool.   \nHow to Convert\n\n\n\n\nFlash\n\nGemini 是一款 AI 工具，其回答未必正确无误。",
+    "note": "末尾 How to Convert 小节截断，主体结论完整"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/66cacfc3-97b7-4d84-9f5f-86a539eea5e4",
+    "chars": 2098,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "zamzar.com",
+     "freeconvert.com",
+     "ebook2edit.com"
+    ],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:12\n\nbest free online ebook converter\n\n已完成\n1秒\nzamzar\nhttps://www.zamzar.com/converters/ebook/\neBook Converter - Convert your eBook files for Free Online - Zamzar\nDo you need to convert your eBook file? Don't download software - use Zamzar's eBook Converter to convert it for free online.\n\nMy pick is Zamzar for a straightforward, free online ebook conversion: it requires no account for free conversions and supports a broad range of ebook formats, including EPUB, MOBI, AZW3, and FB2. It’s a good starting point for occasional use—not a claim that it produces the best formatting for every book.\nzamzar\n\nBest options by need\nConverter\tBest reason to choose it\tFree-tier considerations\nZamzar\tSimple, no-registration conversion across many ebook formats.\tFree converted files are stored for a maximum of 24 hours; check the upload page for applicable limits. \nzamzar\n\nFreeConvert\tA useful alternative for converting ebooks and documents to EPUB, MOBI, AZW3, and more.\tAdvertises free conversion, HTTPS uploads, and automatic file deletion after eight hours. \nfreeconvert\n\nEbook2Edit\tAn ebook-focused toolkit with broad ebook and document format support.\tEveryday conversions require no account; larger files, batch processing, and priority processing are paid features. \nebook2edit\nWhich should you use?\n\nStart with Zamzar for a one-off conversion. If you need ebook-specific tools or more format options, try Ebook2Edit. Both offer browser-based conversion without installing software. Their free services have restrictions, so “free” should not be read as unlimited use.\nzamzar\n+1\n\nWhat format are you converting from and to—for example, PDF → EPUB or EPUB → PDF?\n\n10 个来源\nCalibre vs Zamzar vs Ebook2Edit — pricing, file size limits, and batch conversion capabilities compared in a side-by-side matrix\nComputer\nFormat support matrix: EPUB, MOBI, AZW3, PDF, FB2 and LIT across Calibre, Zamzar, Ebook2Edit, and Online Convert compared\nComputer\nconvert epub to mobi for kindle\nhow to convert pdf to epub cleanly\nconvert azw3 to epub without software\n⠧\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p3": {
+  "prompt": "how to convert lit to epub",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed45d7-2cb0-83ea-9af6-f8c439d9e858",
+    "chars": 1685,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "manual.calibre-ebook.com",
+     "calibre-ebook.com",
+     "softzone.es",
+     "zamzar.com",
+     "convertio.co"
+    ],
+    "text": "Convert LIT to EPUB\n分享\n你说：\nhow to convert lit to epub\nChatGPT 说：\n\nYou can convert a Microsoft Reader LIT file to EPUB using Calibre. It is free and works on Windows, macOS, and Linux.\n\nMethod 1: Using Calibre (Recommended)\nmanual.calibre-ebook.com\n\nDownload and install Calibre: https://calibre-ebook.com/download\n\nOpen Calibre.\n\nClick Add books and select your .lit file.\n\nSelect the imported book.\n\nClick Convert books.\n\nSet the output format to EPUB (top-right corner).\n\nClick OK.\n\nWhen conversion finishes, right-click the book and select Open book folder to find your EPUB file.\n\nImportant: Calibre may not support some older LIT files directly, particularly DRM-protected files.\n\nMethod 2: Online conversion\nsoftzone.es\n\nYou can also try:\n\nZamzar – LIT to EPUB\n\nConvertio – LIT to EPUB\n\nUpload your LIT file, select EPUB, and download the converted file.\n\nOnline converters may have file-size limits and may not support every LIT variant.\n\nMethod 3: If Calibre cannot open the LIT file\n\nOlder Microsoft Reader LIT files may need to be converted to OEB/HTML first, then packaged as EPUB.\n\nThe appropriate approach depends on whether the file is:\n\nUnprotected LIT: Usually possible to convert with compatible conversion tools.\n\nDRM-protected LIT: Requires legitimate access to the original content; ordinary converters cannot process the protection.\n\nMy recommendation\n\nStart with Calibre. It is the most practical option for managing and converting ebook formats.\n\nOne question: Does your LIT file open normally in Calibre, or does Calibre report that the format is unsupported? I can help you find the appropriate conversion route.\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": false,
+    "note": "停在「正在搜索网络」/等待态，本轮不可判定（见 02 §4.2）"
+   },
+   "gemini_api": {
+    "produced": true,
+    "model": "gemini-2.5-flash",
+    "method": "REST API + googleSearch tool",
+    "chars": 3753,
+    "mentioned": false,
+    "cited": false,
+    "groundingChunks": 7,
+    "note": "API 补测（2026-11-06 12:15），p3 问题，完整作答，未提及 BookConv"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/814809ed-4ecf-4454-8bba-252f710909cd",
+    "chars": 1592,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "freeconvert.com",
+     "manual.calibre-ebook.com",
+     "cloudconvert.com"
+    ],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:13\n\nhow to convert lit to epub\n\n已完成\n4秒\nfreeconvert\nhttps://www.freeconvert.com/lit-to-epub\nLIT to EPUB Converter - FreeConvert.com\nLIT to EPUB converter. Best way to convert LIT to EPUB online at the highest quality. This tool is free, secure, and works on any web browser.\n\nUse Calibre to convert a Microsoft Reader .lit ebook to .epub. It supports LIT as an input format and EPUB as an output format.\nmanual.calibre-ebook\n\nConvert with Calibre\n\nInstall and open Calibre.\n\nClick “Add books” and select your .lit file—or drag the file into the Calibre window.\n\nSelect the book and click “Convert books.”\n\nSet “Output format” to “EPUB,” then click “OK.”\n\nWait for the conversion to finish, then click “View” to check the result.\nmanual.calibre-ebook\n+1\n\nTo export the EPUB, open the “Save to disk” menu, choose “Save single format to disk…,” and select EPUB.\nmanual.calibre-ebook\n\nWithout installing software\n\nCloudConvert offers an online LIT-to-EPUB converter: upload the .lit file, select EPUB, run the conversion, and download the result. This means uploading your book to a third-party service rather than converting it locally.\ncloudconvert\n\nIf conversion fails\n\nCheck whether the book has DRM (digital rights management). Calibre does not convert DRM-protected ebooks; the steps above are for unprotected LIT files.\nmanual.calibre-ebook\n\n20 个来源\nHow to remove DRM from LIT files\nWhat if the conversion gives an error\nCan I use Calibre to edit the metadata\nHow to transfer the EPUB to my e-reader\nWhat other formats does Calibre support\n⠋\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p4": {
+  "prompt": "convert epub to zip file online free",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed4639-1128-83e9-8fae-91ae6bf7170b",
+    "chars": 1155,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "ezyzip.com",
+     "products.aspose.app"
+    ],
+    "text": "Convert EPUB to ZIP\n分享\n你说：\nconvert epub to zip file online free\nChatGPT 说：\n\nYou can convert an EPUB to ZIP for free without actually converting the file.\n\nAn EPUB file is essentially a ZIP archive containing HTML, images, stylesheets, fonts, and metadata.\n\nMethod 1: Rename EPUB to ZIP (fastest and free)\n\nDownload your .epub file.\n\nFind the file on your computer.\n\nRename book.epub to book.zip.\n\nConfirm the extension change.\n\nOpen the ZIP file using Windows Explorer, WinRAR, or 7-Zip.\n\nNo upload required Completely free\n\nMethod 2: Online EPUB to ZIP converter\n\nezyZip\n\nRecommended\n\nFree, no registration required.\n\nProcesses files locally in your browser.\n\nSupports batch conversion.\n\nNo need to upload your ebook to a server.\n\nConvert EPUB to ZIP with ezyZip\n\nSource: ezyZip\n\nAspose EPUB to ZIP\n\nOnline conversion.\n\nSupports multiple EPUB files.\n\nFiles are deleted from its servers after 24 hours.\n\nOpen Aspose EPUB to ZIP converter\n\nMy recommendation: Use ezyZip. If your goal is simply to inspect the contents of an EPUB, you don't even need to create a ZIP file—just rename .epub to .zip. \nezyZip\n+1\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": false,
+    "note": "停在「正在搜索网络」/等待态，本轮不可判定（见 02 §4.2）"
+   },
+   "gemini_api": {
+    "produced": true,
+    "model": "gemini-2.5-flash",
+    "method": "REST API + googleSearch tool",
+    "chars": 2240,
+    "mentioned": false,
+    "cited": false,
+    "groundingChunks": 6,
+    "note": "API 补测（2026-11-06 12:15），p4 问题，完整作答，未提及 BookConv"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/d205f91c-d776-4085-9eb2-bd5593be96a7",
+    "chars": 1162,
+    "mentioned": true,
+    "cited": true,
+    "domains": [
+     "ezyzip.com",
+     "bookconv.com"
+    ],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:15\n\nconvert epub to zip file online free\n\n已完成\n1秒\n\nUse ezyZip for a free online option: \nOpen EPUB-to-ZIP converter\n. It runs in your browser, and the site says your files are not uploaded to a server.\nezyzip\n\nClick “Select EPUB files to convert.”\n\nChoose your .epub file.\n\nClick “Convert to ZIP,” then “Save ZIP File.”\nezyzip\n\nIf you want to access the files inside the ebook\n\nYou don’t actually need a converter: an EPUB is already a ZIP archive. Make a copy of your file, rename book.epub to book.zip, then extract it to access its text, images, and stylesheets.\nbookconv\n\nThe distinction matters: ezyZip packages the EPUB file inside a new ZIP; renaming the extension lets you open the ebook’s existing internal archive.\nezyzip\n+1\n\n10 个来源\nHow EPUB is actually a ZIP archive in disguise — rename the extension or extract XHTML, CSS, and images instantly\nComputer\nCompare free online EPUB-to-ZIP tools like ezyZip, FreeFileConvert, and Online-Convert for privacy and batch speed\nComputer\nHow do I rename the file extension safely\nWhat tools can open the extracted files\nCan I do this offline without a browser\n⠇\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p5": {
+  "prompt": "epub to word converter online free",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed46ae-a888-83e9-bcd1-f378063a350b",
+    "chars": 1433,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "epubinspector.online",
+     "convertfly.io",
+     "epub.studio",
+     "taptoconvert.com"
+    ],
+    "text": "EPUB转Word工具\n分享\n你说：\nepub to word converter online free\nChatGPT 说：\n\nIf you want to convert EPUB to Word (DOCX) online for free, these are worth trying:\n\nBest free EPUB to Word converters\n\n1. EPUB Inspector Best overall\n\nFree, no registration\n\nPreserves headings, images, tables and links\n\nConversion happens locally in your browser\n\nConvert EPUB to Word\n\n2. ConvertFly\n\n10 free conversions per day\n\nSupports files up to 500 MB\n\nNo registration required\n\nConvert EPUB to DOCX\n\n3. Epub Studio\n\nFree, no registration\n\nPreserves chapter structure, headings and lists\n\nProcesses files locally\n\nConvert EPUB to DOCX\n\n4. TapToConvert\n\nUses Calibre conversion technology\n\nPreserves text, images, tables and formatting\n\nFree, no registration; 25 MB per file\n\nConvert EPUB to DOCX\nMy recommendation\n\nYour requirement\n\n\t\n\nRecommended\n\n\n\n\nBest overall formatting\n\n\t\n\nEPUB Inspector\n\n\n\n\nLarge EPUB files\n\n\t\n\nConvertFly\n\n\n\n\nPrivacy (no upload)\n\n\t\n\nEPUB Inspector\n\n\n\n\nBetter conversion fidelity\n\n\t\n\nTapToConvert\n\nImportant:\n\nDOCX is the modern Microsoft Word format.\n\nDRM-protected EPUB files generally cannot be converted.\n\nEPUB and Word use different layout systems, so exact page formatting cannot always be preserved.\n\nIf you're converting ebooks containing lots of illustrations, tables and images, I'd start with EPUB Inspector and check the output before choosing another tool.\n\n到目前为止，这段对话对你有帮助吗？\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": false,
+    "note": "停在「正在搜索网络」/等待态，本轮不可判定（见 02 §4.2）"
+   },
+   "gemini_api": {
+    "produced": true,
+    "model": "gemini-2.5-flash",
+    "method": "REST API + googleSearch tool",
+    "chars": 2547,
+    "mentioned": false,
+    "cited": false,
+    "groundingChunks": 10,
+    "note": "API 补测（2026-11-06 12:15），p5 问题，完整作答，未提及 BookConv"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/285eeee5-097d-4872-b6bc-20767430ac8a",
+    "chars": 1248,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "freeconvert.com",
+     "products.aspose.app",
+     "word.to"
+    ],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:17\n\nepub to word converter online free\n\n已完成\n1秒\n\nTry FreeConvert for a straightforward free online EPUB-to-Word conversion.\n\nConverter\tWhat to know\n\nFreeConvert\n\tFree, browser-based EPUB-to-Word conversion; supports batch conversion. The site says uploaded files are automatically deleted after 8 hours. \nfreeconvert\n\n\nAspose\n\tFree with no signup or software installation; accepts up to 10 files per operation. Files are deleted after 24 hours. \nproducts.aspose\n\n\nWORD.to\n\tSimple alternative; its free plan allows 1 conversion per hour, one file at a time. \nword\nHow to convert\n\nOn FreeConvert, click “Choose Files,” select your EPUB, click “Convert to WORD,” then download the converted document when it’s ready.\nfreeconvert\n\nFor confidential material, keep in mind that these services upload your file to their servers for processing.\nfreeconvert\n+1\n\n10 个来源\nCompare free online EPUB to Word converters: Zamzar vs Convertio vs EPUB.to vs Aspose — file size limits, formatting retention, and privacy\nComputer\nAre there offline tools to convert EPUB to Word\nHow to convert EPUB to Word using Calibre\nWhy is my converted Word document formatting broken\nHow to convert large EPUB files without limits\n⠙\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p6": {
+  "prompt": "kfx vs azw3 which format should i use for kindle",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed448e-9978-83e9-b276-48f7e4805676",
+    "chars": 1355,
+    "mentioned": false,
+    "cited": false,
+    "domains": [],
+    "text": "Kindle Format Comparison\n分享\n你说：\nkfx vs azw3 which format should i use for kindle\nChatGPT 说：\n\nFor most Kindle users, KFX is the better format if you read exclusively on modern Kindle devices. AZW3 is the better choice if you want greater flexibility, compatibility with Calibre, and easier ebook library management.\n\nNeither format is universally better. The right choice depends on how you use your Kindle.\n\nKFX vs AZW3: Detailed comparison\n\nFeature\n\n\t\n\nKFX\n\n\t\n\nAZW3\n\n\n\n\nTypography\n\n\t\n\nExcellent\n\n\t\n\nVery good\n\n\n\n\nFont rendering\n\n\t\n\nAdvanced\n\n\t\n\nGood\n\n\n\n\nHyphenation\n\n\t\n\nAdvanced\n\n\t\n\nMore limited\n\n\n\n\nKerning & ligatures\n\n\t\n\nYes\n\n\t\n\nMore limited\n\n\n\n\nCSS formatting\n\n\t\n\nAdvanced\n\n\t\n\nGood\n\n\n\n\nEmbedded fonts\n\n\t\n\nYes\n\n\t\n\nYes\n\n\n\n\nCalibre compatibility\n\n\t\n\nLimited\n\n\t\n\nExcellent\n\n\n\n\nConversion flexibility\n\n\t\n\nLimited\n\n\t\n\nExcellent\n\n\n\n\nThird-party tool support\n\n\t\n\nLimited\n\n\t\n\nBroad\n\n\n\n\nKindle compatibility\n\n\t\n\nModern Kindle\n\n\t\n\nModern Kindle\n\n\n\n\nLibrary management\n\n\t\n\nMore complicated\n\n\t\n\nEasier\n\nKFX's main advantage is Enhanced Typesetting, which improves word spacing, hyphenation, kerning and overall page appearance. \nkindlegen.s3.amazonaws.com\n+2\n\nWhich should you choose?\n\nChoose KFX if:\n\nYou primarily read on Kindle.\n\nYou want the best typography.\n\nYou don't need to edit or convert books frequently.\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": false,
+    "note": "停在「正在搜索网络」/等待态，本轮不可判定（见 02 §4.2）"
+   },
+   "gemini_api": {
+    "produced": true,
+    "model": "gemini-2.5-flash",
+    "method": "REST API + googleSearch tool",
+    "chars": 3118,
+    "mentioned": false,
+    "cited": false,
+    "groundingChunks": 20,
+    "note": "API 补测（2026-11-06 12:15），p6 问题，完整作答，未提及 BookConv"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/37e30cde-5f48-448a-acf0-863d8fc7488e",
+    "chars": 2038,
+    "mentioned": false,
+    "cited": false,
+    "domains": [],
+    "text": "答案\n链接\n图片\n分享\n下载 Comet\n11:08\n\nkfx vs azw3 which format should i use for kindle\n\n已完成\n2秒\n\nUse AZW3 for straightforward USB sideloading; choose KFX if you want better typography and don’t mind extra conversion setup. On a compatible Kindle, KFX offers the more polished reading experience, but AZW3 is easier to work with for personal ebooks.\nwikipedia\n+2\n\nWhat’s the difference?\n\tAZW3\tKFX\nReading appearance\tGood formatting, including rich layouts and embedded fonts\tEnhanced typesetting, including automatic hyphenation, kerning, and ligatures\nConverting your own books\tSimpler workflow in Calibre\tCalibre conversion uses the additional KFX Output plugin\nCompatibility\tBroader support across older Kindle models\tRequires a Kindle model and firmware that support KFX\nBest reason to choose it\tConvenience and compatibility\tBetter text layout and spacing\n\nThe format and compatibility differences are documented in the Kindle format overview; the KFX conversion workflow is described by the KFX plugin developer on MobileRead.\nwikipedia\n+2\n\nMy recommendation\n\nFor a modern Kindle, if you’re willing to configure KFX conversion, use KFX—especially if uneven spacing in justified text bothers you. Its enhanced typesetting is the main advantage.\nwikipedia\n+1\n\nIf you just want to convert a book, copy it over USB, and read, use AZW3. It supports rich formatting without the additional KFX conversion workflow.\nkfxtool\n+1\n\nIf your books are already in AZW3 and look good, there’s little reason to convert your entire library solely for typography. KFX’s benefit is improved presentation, not a requirement for readable, well-formatted books.\nwikipedia\n+1\n\n10 个来源\nKFX vs AZW3 comparison: typography, device compatibility, file size, and Calibre editing support compared side-by-side\nComputer\nCalibre conversion guide: turning EPUB into KFX vs AZW3 for sideloading on older vs newer Kindle devices\nComputer\nHow do I convert epub to azw3 in calibre\nHow to install the kfx output plugin\nCompare kfx azw3 and epub for kindle\n⠇\n\n\n\n\n提出后续问题\n搜索\nComputer\n模型"
+   }
+  }
+ },
+ "p7": {
+  "prompt": "convertir epub a doc online gratis",
+  "platforms": {
+   "chatgpt": {
+    "produced": true,
+    "url": "https://chatgpt.com/c/6aed50e9-8cd0-83ea-be73-e3b2fedc6888",
+    "chars": 1038,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "convertio.co",
+     "products.aspose.app",
+     "fileopia.com"
+    ],
+    "text": "Convertir EPUB a DOC\n分享\n你说：\nconvertir epub a doc online gratis\nChatGPT 说：\n\nPuedes convertir un archivo EPUB a DOC online gratis sin instalar ningún programa.\n\nCómo convertir EPUB a DOC\n\nAbre un conversor online compatible con EPUB.\n\nSube tu archivo .epub.\n\nSelecciona DOC (Word) como formato de salida.\n\nHaz clic en Convertir.\n\nDescarga el documento convertido.\n\nConsejo: Si no necesitas específicamente el formato .doc, elige .docx, que es más moderno y compatible con Microsoft Word.\n\nConversores gratuitos recomendados\n\nConvertio – EPUB a DOC: conversión directa a Word, con límites en la versión gratuita.\n\nAspose – EPUB a DOC: conversión gratuita desde el navegador.\n\nFileopia – EPUB a DOC: ofrece procesamiento local en el navegador, sin registro.\n\nEstos servicios anuncian compatibilidad con EPUB a DOC. \nConvertio\n+2\n\nImportante: Las imágenes, tablas y diseños complejos pueden requerir ajustes después de convertir el archivo. Los EPUB protegidos con DRM pueden no ser compatibles.\n\nChatGPT 可能会出错。请核查重要信息。\n最新一条回复\n\n\n\n\n思考强度\nInstant"
+   },
+   "gemini": {
+    "produced": false,
+    "note": "停在「正在搜索网络」/等待态，本轮不可判定（见 02 §4.2）"
+   },
+   "gemini_api": {
+    "produced": true,
+    "model": "gemini-2.5-flash",
+    "method": "REST API + googleSearch tool",
+    "chars": 2810,
+    "mentioned": false,
+    "cited": false,
+    "groundingChunks": 13,
+    "note": "API 补测（2026-11-06 12:15），p7 西语问题，完整作答，未提及 BookConv"
+   },
+   "perplexity": {
+    "produced": true,
+    "url": "https://www.perplexity.ai/search/43c64791-29e5-4200-bc8a-a5ba2fd7d316",
+    "chars": 676,
+    "mentioned": false,
+    "cited": false,
+    "domains": [
+     "products.groupdocs.app",
+     "products.aspose.app",
+     "onlineconverter.com"
+    ],
+    "text": "Puedes convertir EPUB a DOC online gratis con estas opciones:\n\nHerramienta\tQué ofrece\n\nGroupDocs\n\tConversión directa de EPUB a DOC, gratuita y sin registro. \nproducts.groupdocs\n\n\nAspose\n\tConvierte hasta 10 archivos a la vez, con un máximo de 10 MB por archivo. \nproducts.aspose\nCómo hacerlo\n\nAbre GroupDocs con el enlace de arriba.\n\nSube tu archivo .epub.\n\nSelecciona DOC como formato de salida y pulsa «Convertir».\n\nDescarga el archivo convertido. No necesitas instalar ningún programa.\nproducts.groupdocs\n\nSi también te sirve el formato DOCX, \nOnline Converter\n ofrece conversión gratuita con archivos de hasta 200 MB. No admite libros cifrados o protegidos.\nonlineconverter"
+   }
+  }
+ }
+}
