@@ -21,6 +21,7 @@ import {
   DirectUploadPresignError,
   DirectUploadPutError,
 } from "../direct-upload-error";
+import { detectCspBlock, hostOf, installCspViolationRecorder } from "./csp-violation";
 
 // Re-export for backward compatibility with existing importers.
 export { DirectUploadUnavailableError };
@@ -59,6 +60,17 @@ export function isRetryablePutError(err: unknown): boolean {
  * (TypeError / non-abort DOMException) are retried up to PUT_RETRY_MAX extra
  * times with a linear backoff. Aborts propagate immediately.
  *
+ * R-2 (2026-11-06): a CSP block also surfaces as a TypeError, but it is
+ * DETERMINISTIC — retrying can never succeed. Checking the CSP recorder inside
+ * the loop does two things:
+ *   1. stops immediately instead of burning ~1.2s of backoff on a blocked
+ *      request (and avoids 3 stacked violation events),
+ *   2. keeps `elapsedMs` in the historical `<1s` bucket. The 10-day P0's
+ *      signature was exactly `PUT:NETWORK:on=1:<1s:`; letting retries stretch a
+ *      CSP block to `1-5s` would break comparability with that baseline.
+ * The outcome is written to `state` rather than thrown, so the caller keeps its
+ * existing error wrapping.
+ *
  * The File/Blob body is re-readable, so replaying the same `body` across
  * attempts is safe.
  */
@@ -68,7 +80,8 @@ const PUT_RETRY_BACKOFF_MS = 400;
 async function putToR2WithRetry(
   presigned: { uploadUrl: string; method?: string; contentType?: string },
   file: File,
-  signal?: AbortSignal,
+  signal: AbortSignal | undefined,
+  state: { cspBlocked?: boolean },
 ): Promise<Response> {
   let lastErr: unknown;
   for (let attempt = 0; attempt <= PUT_RETRY_MAX; attempt++) {
@@ -76,6 +89,7 @@ async function putToR2WithRetry(
       if (signal?.aborted) throw new DOMException("Upload aborted", "AbortError");
       await new Promise((r) => setTimeout(r, PUT_RETRY_BACKOFF_MS * attempt));
     }
+    const attemptStart = Date.now();
     try {
       const res = await fetch(presigned.uploadUrl, {
         method: presigned.method || "PUT",
@@ -89,7 +103,16 @@ async function putToR2WithRetry(
     } catch (err) {
       lastErr = err;
       if (!isRetryablePutError(err)) throw err; // HTTP/abort/unknown — surface now
-      // else: network drop — loop and retry after backoff
+      // CSP block? Deterministic → no retry, record it and surface immediately.
+      const csp = await detectCspBlock({
+        since: attemptStart,
+        expectedHost: hostOf(presigned.uploadUrl),
+      });
+      if (csp) {
+        state.cspBlocked = true;
+        throw err;
+      }
+      // else: genuine network drop — loop and retry after backoff
     }
   }
   throw lastErr;
@@ -99,6 +122,17 @@ export interface DirectUploadResult {
   key: string;
 }
 
+/**
+ * Host the same-origin presign request targets (e.g. "www.bookconv.com").
+ * Used to attribute a CSP violation to the presign fetch instead of blaming it
+ * on whatever else the page happens to be loading. Returns null outside a
+ * browser, which makes attribution fall back to "no CSP signal" (NETWORK).
+ */
+function sameOriginHost(): string | null {
+  if (typeof location === "undefined" || !location.host) return null;
+  return location.host;
+}
+
 export async function uploadFileDirect(
   file: File,
   sourceFormat: string,
@@ -106,6 +140,9 @@ export async function uploadFileDirect(
 ): Promise<DirectUploadResult> {
   let presignRes: Response;
   const presignStart = Date.now();
+  // R-2: the listener must exist BEFORE the request, otherwise a CSP block on
+  // the very first attempt is unattributable.
+  installCspViolationRecorder();
   try {
     presignRes = await fetch("/api/upload/presign", {
       method: "POST",
@@ -120,12 +157,18 @@ export async function uploadFileDirect(
   } catch (err) {
     // Network failure before any response arrived — stage: presign.
     // F20: capture elapsed + onLine so a CORS preflight drop is distinguishable
-    // from an offline client.
+    // from an offline client. R-2: a CSP block surfaces as the same TypeError,
+    // so ask the recorder which one it actually was.
+    const csp = await detectCspBlock({
+      since: presignStart,
+      expectedHost: sameOriginHost(),
+    });
     throw new DirectUploadPresignError(
       `Could not start upload (${err instanceof Error ? err.message : "network error"}).`,
       {
         elapsedMs: Date.now() - presignStart,
         online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+        cspBlocked: !!csp,
       },
     );
   }
@@ -160,20 +203,23 @@ export async function uploadFileDirect(
 
   let putRes: Response;
   const putStart = Date.now();
+  installCspViolationRecorder(); // idempotent — defensive for direct calls
+  const putState: { cspBlocked?: boolean } = {};
   try {
-    putRes = await putToR2WithRetry(presigned, file, signal);
+    putRes = await putToR2WithRetry(presigned, file, signal, putState);
   } catch (err) {
     // CORS preflight rejection and network drops both surface here as a
     // TypeError — stage: R2 PUT (the classic 2026-10-29/30 CORS failure).
-    // F20: capture elapsed + onLine; a CORS preflight rejection and an offline
-    // client both land here with no `status`, so onLine is the only discriminant.
-    // 2026-11-06 retry: network-type failures are retried inside
-    // putToR2WithRetry; a non-retryable error (HTTP non-2xx, abort) surfaces here.
+    // F20: capture elapsed + onLine.
+    // R-2 (2026-11-06): onLine is NOT the discriminant — the 10-day P0 was
+    // CSP-blocked with onLine=1 for every user. `putState.cspBlocked` is set by
+    // the retry loop when a violation was attributed to THIS upload host.
     throw new DirectUploadPutError(
       `Upload to storage failed (${err instanceof Error ? err.message : "network error"}).`,
       {
         elapsedMs: Date.now() - putStart,
         online: typeof navigator !== "undefined" ? navigator.onLine : undefined,
+        cspBlocked: !!putState.cspBlocked,
       },
     );
   }

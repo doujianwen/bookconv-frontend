@@ -263,6 +263,24 @@ describe("F20 诊断上下文（elapsedMs / online / status 携带 + GA4 前缀�
     expect(diagnosticPrefix(diag)).toBe("PUT:NETWORK:on=?:?:");
   });
 
+  test("R-2：CSP 是第三态 —— 优先于 status，且与 NETWORK 必须可分", () => {
+    expect(diagnosticPrefix({ stage: "put", cspBlocked: true, online: true, elapsedMs: 100 })).toBe(
+      "PUT:CSP:on=1:<1s:",
+    );
+    expect(
+      diagnosticPrefix({ stage: "presign", cspBlocked: true, online: true, elapsedMs: 100 }),
+    ).toBe("PRESIGN:CSP:on=1:<1s:");
+    // CSP 与 status 实际互斥（请求根本没发出），若同时出现必须 CSP 胜出，
+    // 不能报成 HTTPxxx 掩盖确定性拦截。
+    expect(
+      diagnosticPrefix({ stage: "put", cspBlocked: true, status: 403, online: true, elapsedMs: 100 }),
+    ).toBe("PUT:CSP:on=1:<1s:");
+    // 反向验证：未置 cspBlocked 时仍是 NETWORK —— 证明 CSP 分支不是无条件触发。
+    expect(
+      diagnosticPrefix({ stage: "put", cspBlocked: false, online: true, elapsedMs: 100 }),
+    ).toBe("PUT:NETWORK:on=1:<1s:");
+  });
+
   test("diagnosticPrefix：elapsedMs 桶边界（<1s / 5-15s / 缺省）", () => {
     expect(diagnosticPrefix({ stage: "put", elapsedMs: 999 })).toBe("PUT:NETWORK:on=?:<1s:");
     expect(diagnosticPrefix({ stage: "put", elapsedMs: 5000 })).toBe("PUT:NETWORK:on=?:5-15s:");
@@ -404,29 +422,53 @@ describe("F20 P1×P2 跨模块契约（真实 producer .ts ↔ 真实 parser .mj
   const contexts: DiagnosticContext[] = [];
   for (const stage of ["put", "presign"] as const) {
     for (const status of [undefined, 403, 500, 503]) {
-      for (const online of [undefined, true, false]) {
-        for (const elapsedMs of [undefined, 500, 2000, 8000, 20000]) {
-          contexts.push({ stage, status, elapsedMs, online });
+      // R-2: cspBlocked is a third classifier — the parser must round-trip it
+      // to kind "CSP" and never degrade it to NETWORK.
+      for (const cspBlocked of [undefined, true]) {
+        for (const online of [undefined, true, false]) {
+          for (const elapsedMs of [undefined, 500, 2000, 8000, 20000]) {
+            contexts.push({ stage, status, elapsedMs, online, cspBlocked });
+          }
         }
       }
     }
   }
 
-  test("diagnosticPrefix 产出的全部前缀均可被 parseDiagnosticPrefix 无损还原（120 组合）", () => {
-    expect(contexts.length).toBe(120);
+  test("diagnosticPrefix 产出的全部前缀均可被 parseDiagnosticPrefix 无损还原（240 组合）", () => {
+    expect(contexts.length).toBe(240);
     for (const ctx of contexts) {
       const produced = diagnosticPrefix(ctx);
       const p = parseDiagnosticPrefix(produced);
       expect(p.valid).toBe(true);
       expect(p.stage).toBe(ctx.stage === "put" ? "PUT" : "PRESIGN");
-      if (ctx.status === undefined) {
+      if (ctx.cspBlocked) {
+        expect(p.kind).toBe("CSP");
+        expect(p.httpStatus).toBeNull();
+        expect(p.cspBlocked).toBe(true);
+      } else if (ctx.status === undefined) {
         expect(p.kind).toBe("NETWORK");
         expect(p.httpStatus).toBeNull();
+        expect(p.cspBlocked).toBe(false);
       } else {
         expect(p.kind).toBe("HTTP");
         expect(p.httpStatus).toBe(ctx.status);
+        expect(p.cspBlocked).toBe(false);
       }
       expect(p.online).toBe(ctx.online === undefined ? "?" : ctx.online ? "1" : "0");
+      // round-trip: the parser's own serializer must reproduce the prefix
+      expect(p.prefix).toBe(produced);
     }
+  });
+
+  test("反向验证：把 CSP 从 producer 摘掉后，契约测试会失败（证明断言真的在测 CSP）", () => {
+    // 模拟「回归」：若 diagnosticPrefix 退回只认 status/NETWORK（丢掉 CSP 分支），
+    // 则 cspBlocked=true 会被产出成 NETWORK，下面的断言必须失败——
+    // 这条用例的作用是证明上一条测试不是「恒绿空转」。
+    const cspCtx: DiagnosticContext = { stage: "put", cspBlocked: true, online: true, elapsedMs: 100 };
+    const produced = diagnosticPrefix(cspCtx);
+    expect(produced).toBe("PUT:CSP:on=1:<1s:");
+    const p = parseDiagnosticPrefix(produced);
+    // 若 producer 丢掉 CSP 分支，produced 会是 PUT:NETWORK:... 且此断言失败
+    expect(p.kind).toBe("CSP");
   });
 });

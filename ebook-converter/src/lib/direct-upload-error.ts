@@ -46,10 +46,18 @@ export class DirectUploadPresignError extends Error {
   code?: string;
   elapsedMs?: number;
   online?: boolean;
+  /** R-2: true when a CSP violation was attributed to this failed request. */
+  cspBlocked?: boolean;
 
   constructor(
     message: string,
-    opts?: { status?: number; code?: string; elapsedMs?: number; online?: boolean },
+    opts?: {
+      status?: number;
+      code?: string;
+      elapsedMs?: number;
+      online?: boolean;
+      cspBlocked?: boolean;
+    },
   ) {
     super(message);
     this.name = "DirectUploadPresignError";
@@ -57,6 +65,7 @@ export class DirectUploadPresignError extends Error {
     this.code = opts?.code;
     this.elapsedMs = opts?.elapsedMs;
     this.online = opts?.online;
+    this.cspBlocked = opts?.cspBlocked;
   }
 }
 
@@ -72,16 +81,19 @@ export class DirectUploadPutError extends Error {
   status?: number;
   elapsedMs?: number;
   online?: boolean;
+  /** R-2: true when a CSP violation was attributed to this failed request. */
+  cspBlocked?: boolean;
 
   constructor(
     message: string,
-    opts?: { status?: number; elapsedMs?: number; online?: boolean },
+    opts?: { status?: number; elapsedMs?: number; online?: boolean; cspBlocked?: boolean },
   ) {
     super(message);
     this.name = "DirectUploadPutError";
     this.status = opts?.status;
     this.elapsedMs = opts?.elapsedMs;
     this.online = opts?.online;
+    this.cspBlocked = opts?.cspBlocked;
   }
 }
 
@@ -94,6 +106,13 @@ export interface DiagnosticContext {
   status?: number;
   elapsedMs?: number;
   online?: boolean;
+  /**
+   * R-2 (2026-11-06): the request was blocked by Content-Security-Policy
+   * (attributed via a `securitypolicyviolation` event for this exact host),
+   * NOT by a transient network drop. Emitted as the `CSP` kind token so the
+   * coarse `NETWORK` bucket can never again hide a deterministic CSP defect.
+   */
+  cspBlocked?: boolean;
 }
 
 /** Bucket elapsed ms into coarse ranges so the GA4 `error` prefix stays a
@@ -112,18 +131,28 @@ function bucketMs(ms?: number): string {
  * that direct-upload failures become root-cause classifiable after the fact
  * (F20). Pure function — unit-testable, no browser APIs.
  *
- * Format:  "<PUT|PRESIGN>:<HTTP<status>|NETWORK>:on=<0|1|?>:<ms-bucket>:"
+ * Format:  "<PUT|PRESIGN>:<HTTP<status>|CSP|NETWORK>:on=<0|1|?>:<ms-bucket>:"
  *   - HTTP<status>  → R2 answered with a non-2xx (e.g. 403 / 503) — server-side
- *   - NETWORK       → no response at all — CORS preflight rejection OR network drop
+ *   - CSP           → no request was ever sent: Content-Security-Policy blocked
+ *                     it (R-2, 2026-11-06). Deterministic — retrying cannot help.
+ *   - NETWORK       → no response and no CSP violation — a genuine network drop
+ *                     (or a browser that does not report the CSP event)
  *   - on=0          → browser reported navigator.onLine=false (client offline)
  *   - >15s bucket   → strong timeout signal
- * Example: "PUT:NETWORK:on=1:1-5s:"  (CORS/network failure, online, failed in 1-5s)
- *          "PUT:HTTP403:on=1:>15s:"   (R2 rejected with 403 after a 15s+ hang)
+ * Example: "PUT:CSP:on=1:<1s:"      (CSP blocked it, online, failed instantly)
+ *          "PUT:NETWORK:on=1:1-5s:" (network drop, online, failed in 1-5s)
+ *          "PUT:HTTP403:on=1:>15s:" (R2 rejected with 403 after a 15s+ hang)
  * Returns "" when no diagnostic context is present (non-direct-upload failures).
  */
 export function diagnosticPrefix(diag?: DiagnosticContext): string {
   if (!diag) return "";
-  const kind = typeof diag.status === "number" ? `HTTP${diag.status}` : "NETWORK";
+  // CSP outranks status: when the browser refuses to send the request there is
+  // no HTTP status to report, and CSP is the strictly more specific cause.
+  const kind = diag.cspBlocked
+    ? "CSP"
+    : typeof diag.status === "number"
+      ? `HTTP${diag.status}`
+      : "NETWORK";
   const online = diag.online === undefined ? "?" : diag.online ? "1" : "0";
   const tag = diag.stage === "put" ? "PUT" : "PRESIGN";
   return `${tag}:${kind}:on=${online}:${bucketMs(diag.elapsedMs)}:`;
@@ -141,10 +170,22 @@ export function diagnosticPrefix(diag?: DiagnosticContext): string {
  */
 export function extractDiagnosticContext(err: unknown): DiagnosticContext | undefined {
   if (err instanceof DirectUploadPutError) {
-    return { stage: "put", status: err.status, elapsedMs: err.elapsedMs, online: err.online };
+    return {
+      stage: "put",
+      status: err.status,
+      elapsedMs: err.elapsedMs,
+      online: err.online,
+      cspBlocked: err.cspBlocked,
+    };
   }
   if (err instanceof DirectUploadPresignError) {
-    return { stage: "presign", status: err.status, elapsedMs: err.elapsedMs, online: err.online };
+    return {
+      stage: "presign",
+      status: err.status,
+      elapsedMs: err.elapsedMs,
+      online: err.online,
+      cspBlocked: err.cspBlocked,
+    };
   }
   return undefined;
 }

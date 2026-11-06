@@ -148,6 +148,10 @@ if (process.argv.includes('--self-test')) {
     ['解析 CORS/网络失败 → NETWORK 无 status', () => { const p = parseDiagnosticPrefix('PUT:NETWORK:on=1:1-5s:'); return p.valid && p.kind === 'NETWORK' && p.httpStatus === null }, true],
     ['非直传 error → valid:false 且非异常', () => { const p = parseDiagnosticPrefix('Conversion failed'); return p.valid === false && p.malformed === false }, true],
     ['漂移头部 → malformed:true（契约漂移告警）', () => { const p = parseDiagnosticPrefix('PUT:NETWORK:on=2:1-5s:'); return p.malformed === true }, true],
+    // R-2 (2026-11-06)：CSP 必须与 NETWORK 分成两个桶，不得被粗桶吞并
+    ['解析 CSP 拦截前缀 → kind=CSP 且 cspBlocked', () => { const p = parseDiagnosticPrefix('PUT:CSP:on=1:<1s:'); return p.valid && p.kind === 'CSP' && p.cspBlocked === true && p.httpStatus === null }, true],
+    ['CSP 与 NETWORK 同 on/msBucket 仍分桶', () => { const a = parseDiagnosticPrefix('PUT:CSP:on=1:1-5s:'); const b = parseDiagnosticPrefix('PUT:NETWORK:on=1:1-5s:'); return a.kind === 'CSP' && b.kind === 'NETWORK' && a.cspBlocked === true && b.cspBlocked === false }, true],
+    ['近乎拼错的 kind → malformed:true（防 producer 私造 token）', () => { const p = parseDiagnosticPrefix('PUT:CSP-BLOCKED:on=1:<1s:'); return p.malformed === true }, true],
   ]
   let bad = 0
   for (const [name, fn, want] of cases) {

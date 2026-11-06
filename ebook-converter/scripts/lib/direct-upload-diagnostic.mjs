@@ -4,8 +4,15 @@
 //
 // ── CANONICAL FORMAT (single source of truth) ───────────────────────────────
 //   src/lib/direct-upload-error.ts :: diagnosticPrefix()
-//   "<PUT|PRESIGN>:<HTTP<status>|NETWORK>:on=<0|1|?>:<ms-bucket>:"
+//   "<PUT|PRESIGN>:<HTTP<status>|CSP|NETWORK>:on=<0|1|?>:<ms-bucket>:"
 //   e.g. "PUT:NETWORK:on=1:1-5s:"  /  "PUT:HTTP403:on=1:>15s:"  /  "PRESIGN:NETWORK:on=0:<1s:"
+//        "PUT:CSP:on=1:<1s:"        (R-2, 2026-11-06 — CSP blocked the request)
+//
+// The `CSP` kind was added 2026-11-06 (R-2). Backward compatible: every prefix
+// emitted before that date still parses identically, so historical windows stay
+// comparable. `CSP` must never be conflated with `NETWORK` — the whole point is
+// that the 10-day P0 hid inside `NETWORK` because a deterministic CSP defect
+// looked like a flaky client network.
 //
 // The diagnostic prefix is ALWAYS at the START of the `error` string (the
 // producer prepends it to the friendly message). Non-direct-upload failures
@@ -21,14 +28,17 @@
 //
 // Run: node scripts/lib/direct-upload-diagnostic.mjs --self-test
 
-const PREFIX_RE = /^((PUT|PRESIGN):(HTTP\d+|NETWORK):on=([01?]):([^:]+):)/
+const PREFIX_RE = /^((PUT|PRESIGN):(HTTP\d+|CSP|NETWORK):on=([01?]):([^:]+):)/
+
+/** Kind tokens. `CSP` (R-2) means the browser refused to send the request. */
+const KIND_TOKENS = ["HTTP", "CSP", "NETWORK"]
 
 /**
  * Parse a GA4 `error` field into its diagnostic dimensions.
  * @param {string} error
  * @returns {{raw:string,prefix:string|null,stage:string|null,kind:string|null,
  *   httpStatus:number|null,online:string|null,msBucket:string|null,
- *   valid:boolean,malformed:boolean,rest:string}}
+ *   cspBlocked:boolean,valid:boolean,malformed:boolean,rest:string}}
  */
 export function parseDiagnosticPrefix(error) {
   const empty = {
@@ -39,6 +49,7 @@ export function parseDiagnosticPrefix(error) {
     httpStatus: null,
     online: null,
     msBucket: null,
+    cspBlocked: false,
     valid: false,
     malformed: false,
     rest: error,
@@ -54,7 +65,7 @@ export function parseDiagnosticPrefix(error) {
   const full = m[1]
   const stage = m[2]
   const kindTok = m[3]
-  const kind = kindTok.startsWith("HTTP") ? "HTTP" : "NETWORK"
+  const kind = kindTok.startsWith("HTTP") ? "HTTP" : kindTok === "CSP" ? "CSP" : "NETWORK"
   const httpStatus = kind === "HTTP" ? Number(kindTok.slice(4)) : null
   const online = m[4]
   const msBucket = m[5]
@@ -66,6 +77,7 @@ export function parseDiagnosticPrefix(error) {
     httpStatus,
     online,
     msBucket,
+    cspBlocked: kind === "CSP",
     valid: true,
     malformed: false,
     rest: error.slice(full.length),
@@ -75,7 +87,8 @@ export function parseDiagnosticPrefix(error) {
 /** Inverse of diagnosticPrefix — used by selfTest to verify round-trip. */
 export function serializeDiagnostic({ stage, kind, httpStatus, online, msBucket }) {
   const tag = stage === "put" ? "PUT" : "PRESIGN"
-  const kindStr = kind === "HTTP" ? `HTTP${httpStatus}` : "NETWORK"
+  const kindStr =
+    kind === "HTTP" ? `HTTP${httpStatus}` : kind === "CSP" ? "CSP" : "NETWORK"
   return `${tag}:${kindStr}:on=${online}:${msBucket}:`
 }
 
@@ -107,6 +120,7 @@ export function aggregateDiagnosticErrors(rows) {
         httpStatus: p.httpStatus,
         online: p.online,
         msBucket: p.msBucket,
+        cspBlocked: p.cspBlocked,
         eventCount: 0,
       }
       agg[key].eventCount += Number(row.eventCount) || 0
@@ -121,10 +135,14 @@ export function aggregateDiagnosticErrors(rows) {
 export function selfTest() {
   const cases = [
     // [rawError, expectValid, expectFields]
-    ["PUT:NETWORK:on=1:1-5s:", true, { stage: "PUT", kind: "NETWORK", httpStatus: null, online: "1", msBucket: "1-5s" }],
-    ["PUT:HTTP403:on=1:>15s:", true, { stage: "PUT", kind: "HTTP", httpStatus: 403, online: "1", msBucket: ">15s" }],
-    ["PRESIGN:NETWORK:on=0:<1s:", true, { stage: "PRESIGN", kind: "NETWORK", httpStatus: null, online: "0", msBucket: "<1s" }],
-    ["PUT:NETWORK:on=?:?:", true, { stage: "PUT", kind: "NETWORK", httpStatus: null, online: "?", msBucket: "?" }],
+    ["PUT:NETWORK:on=1:1-5s:", true, { stage: "PUT", kind: "NETWORK", httpStatus: null, online: "1", msBucket: "1-5s", cspBlocked: false }],
+    ["PUT:HTTP403:on=1:>15s:", true, { stage: "PUT", kind: "HTTP", httpStatus: 403, online: "1", msBucket: ">15s", cspBlocked: false }],
+    ["PRESIGN:NETWORK:on=0:<1s:", true, { stage: "PRESIGN", kind: "NETWORK", httpStatus: null, online: "0", msBucket: "<1s", cspBlocked: false }],
+    ["PUT:NETWORK:on=?:?:", true, { stage: "PUT", kind: "NETWORK", httpStatus: null, online: "?", msBucket: "?", cspBlocked: false }],
+    // R-2 (2026-11-06): CSP is a THIRD kind — must never be read as NETWORK.
+    ["PUT:CSP:on=1:<1s:", true, { stage: "PUT", kind: "CSP", httpStatus: null, online: "1", msBucket: "<1s", cspBlocked: true }],
+    ["PRESIGN:CSP:on=1:<1s:", true, { stage: "PRESIGN", kind: "CSP", httpStatus: null, online: "1", msBucket: "<1s", cspBlocked: true }],
+    ["PUT:CSP:on=0:1-5s:bloqueado", true, { stage: "PUT", kind: "CSP", httpStatus: null, online: "0", msBucket: "1-5s", cspBlocked: true }],
     // non-diagnostic (expected for non-direct errors): valid:false, malformed:false
     ["Conversion failed", false, { malformed: false }],
     ["unknown", false, { malformed: false }],
@@ -133,6 +151,10 @@ export function selfTest() {
     ["PUT:NETWORK:on=1", false, { malformed: true }],
     ["PRESIGN:HTTPxx:on=1:1-5s:", false, { malformed: true }],
     ["PUT:NETWORK:on=2:1-5s:", false, { malformed: true }],
+    // drift guard must catch a NEAR-MISS kind token: a producer that invents
+    // "CSP-BLOCKED"/"CSPBLOCKED" must alarm, not silently parse as nothing.
+    ["PUT:CSP-BLOCKED:on=1:<1s:", false, { malformed: true }],
+    ["PUT:CSPBLOCKED:on=1:<1s:", false, { malformed: true }],
   ]
   let bad = 0
   for (const [raw, valid, fields] of cases) {
@@ -148,7 +170,14 @@ export function selfTest() {
         online: p.online,
         msBucket: p.msBucket,
       })
-      ok = ok && rt === raw
+      // Round-trip invariant: serialize(parse(x)) must reproduce x's PREFIX.
+      // Comparing against `p.prefix` (not `raw`) keeps the invariant exact for
+      // errors that carry a friendly message after the prefix — the producer
+      // always prepends the prefix, so a suffix must not break the assertion.
+      ok = ok && rt === p.prefix
+      // And when raw IS the bare prefix, it must equal it character for
+      // character (guards against a parser that trims or normalises).
+      if (p.rest === "") ok = ok && rt === raw
     } else {
       ok = ok && p.malformed === fields.malformed
     }
@@ -161,7 +190,11 @@ export function selfTest() {
   // 枚举 producer 全部输出空间（re-impl of diagnosticPrefix 仅用于生成规格样例，
   // 真正的 producer↔parser 一致性由 Jest 跨模块测试以真实 .ts 产出覆盖）。
   const producePrefix = (ctx) => {
-    const kind = typeof ctx.status === "number" ? `HTTP${ctx.status}` : "NETWORK"
+    const kind = ctx.cspBlocked
+      ? "CSP"
+      : typeof ctx.status === "number"
+        ? `HTTP${ctx.status}`
+        : "NETWORK"
     const online = ctx.online === undefined ? "?" : ctx.online ? "1" : "0"
     const tag = ctx.stage === "put" ? "PUT" : "PRESIGN"
     const b = ctx.elapsedMs === undefined ? "?" : ctx.elapsedMs < 1000 ? "<1s" : ctx.elapsedMs < 5000 ? "1-5s" : ctx.elapsedMs < 15000 ? "5-15s" : ">15s"
@@ -170,9 +203,14 @@ export function selfTest() {
   const enumCases = []
   for (const stage of ["put", "presign"]) {
     for (const status of [undefined, 403, 500, 503]) {
-      for (const online of [undefined, true, false]) {
-        for (const elapsedMs of [undefined, 500, 2000, 8000, 20000]) {
-          enumCases.push({ stage, status, elapsedMs, online })
+      // R-2: enumerate cspBlocked too — including the impossible-in-practice
+      // combination (cspBlocked + status), where CSP must win, because the two
+      // classifiers must never disagree silently.
+      for (const cspBlocked of [undefined, true]) {
+        for (const online of [undefined, true, false]) {
+          for (const elapsedMs of [undefined, 500, 2000, 8000, 20000]) {
+            enumCases.push({ stage, status, cspBlocked, elapsedMs, online })
+          }
         }
       }
     }
@@ -183,7 +221,11 @@ export function selfTest() {
     const ok =
       p.valid &&
       p.stage === (ctx.stage === "put" ? "PUT" : "PRESIGN") &&
-      (ctx.status === undefined ? p.kind === "NETWORK" && p.httpStatus === null : p.kind === "HTTP" && p.httpStatus === ctx.status) &&
+      (ctx.cspBlocked
+        ? p.kind === "CSP" && p.httpStatus === null && p.cspBlocked === true
+        : ctx.status === undefined
+          ? p.kind === "NETWORK" && p.httpStatus === null && p.cspBlocked === false
+          : p.kind === "HTTP" && p.httpStatus === ctx.status && p.cspBlocked === false) &&
       p.online === (ctx.online === undefined ? "?" : ctx.online ? "1" : "0") &&
       serializeDiagnostic({ stage: p.stage === "PUT" ? "put" : "presign", kind: p.kind, httpStatus: p.httpStatus, online: p.online, msBucket: p.msBucket }) === produced
     if (!ok) {
@@ -200,17 +242,21 @@ export function selfTest() {
     { date: "2026-11-04", error: "PRESIGN:NETWORK:on=0:<1s:offline", eventCount: 4 },
     { date: "2026-11-04", error: "Conversion failed", eventCount: 10 },
     { date: "2026-11-04", error: "PUT:NETWORK:on=2:1-5s:", eventCount: 5 },
+    // R-2: CSP must land in its OWN bucket, never merged into the NETWORK key
+    // above even though both are "no HTTP status" failures.
+    { date: "2026-11-04", error: "PUT:CSP:on=1:<1s:bloqueado", eventCount: 7 },
   ]
   const agg = aggregateDiagnosticErrors(synth)
   const byKey = Object.fromEntries(agg.detail.map((d) => [`${d.stage}|${d.kind}|${d.httpStatus ?? "NA"}|${d.online}|${d.msBucket}`, d.eventCount]))
   const aggOk =
-    agg.parse.total === 6 &&
-    agg.parse.valid === 4 &&
+    agg.parse.total === 7 &&
+    agg.parse.valid === 5 &&
     agg.parse.nonDiagnostic === 1 &&
     agg.parse.malformed === 1 &&
     byKey["PUT|NETWORK|NA|1|1-5s"] === 5 && // 3+2 合并
     byKey["PUT|HTTP|403|1|>15s"] === 1 &&
-    byKey["PRESIGN|NETWORK|NA|0|<1s"] === 4
+    byKey["PRESIGN|NETWORK|NA|0|<1s"] === 4 &&
+    byKey["PUT|CSP|NA|1|<1s"] === 7 // R-2: 独立分桶，未被 NETWORK 吞并
   if (!aggOk) {
     bad++
     console.error("❌ aggregateDiagnosticErrors 合成数据失败: " + JSON.stringify(agg))
