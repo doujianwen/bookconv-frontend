@@ -1,0 +1,17 @@
+{
+  "fetchedAt": "2026-11-06T00:11:36.590Z",
+  "rows": [
+    {
+      "country": "China",
+      "activeUsers": 391,
+      "totalUsers": 391,
+      "sessions": 458
+    },
+    {
+      "country": "United States",
+      "activeUsers": 8,
+      "totalUsers": 8,
+      "sessions": 9
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+(node:26168) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+=== 闭合检查 ===
+  [FAIL] BWT UI 国家表点击合计 vs Bing API 同窗点击: 109 / 108 
+  [PASS] US landing×source 会话合计 vs country 报告 US 会话: 9 / 9 
+  [PASS] US 逐日会话合计 vs country 报告 US 会话: 9 / 9 
+  [PASS] GA4 用户截图 US 活跃用户 vs 采集值: 8 / 8 
+  [PASS] GA4 用户截图 中国活跃用户 vs 采集值: 391 / 391 
+  [PASS] BWT 首行 1.5K 印象缩写反推: 1466 / 1466 反推值 1466 → 1.5K，BWT 显示 1.5K
+  反向验证: DETECTED (注入 110 vs 108)
+=== Bing 全站 Top5（非美国维度）===
+  48 https://www.bookconv.com/
+  18 https://www.bookconv.com/guide/how-to-read-epub-on-kindle
+  11 https://www.bookconv.com/blog/why-ebook-wont-open-kindle
+  6 https://www.bookconv.com/blog/kobo-to-epub
+  3 https://www.bookconv.com/guide/kindle-formats
+=== 逐页差异 ===
+  48 clicks | GA landing 323 | US seen=true | HTTP ERROR | /
+  18 clicks | GA landing 2 | US seen=false | HTTP ERROR | /guide/how-to-read-epub-on-kindle
+  11 clicks | GA landing 0 | US seen=false | HTTP ERROR | /blog/why-ebook-wont-open-kindle
+  6 clicks | GA landing 0 | US seen=false | HTTP 200 | /blog/kobo-to-epub
+  3 clicks | GA landing 0 | US seen=false | HTTP 200 | /guide/kindle-formats
+  负对照: 404 /404
+=== 三态 ===
+  [UNKNOWN] 同窗（Bing 侧）
+  [PARTIAL] 同窗（GA4 侧）
+  [CONFIRMED] 域名/站点范围
+  [UNKNOWN] 美国点击最高的 5 个落地页
+  [NOT_COMPARABLE] 43 点击 vs 8 活跃用户
+  [PARTIAL] Bing 归因到站（美国）
+  [CONFIRMED] 落地页可达性（外部通道）
+  [EXCLUDED] 工具拦 collect 归因生产故障
+  [CONFIRMED] 标签与跳转（Top5 全站页）
+  [UNKNOWN] Bing 点击→GA4 落地页逐页对应
+
+SELF_CHECK: {"failures":["BWT UI 国家表点击合计 vs Bing API 同窗点击: 109 !== 108"],"pass":false}
+WROTE: E:\一人公司\电子书格式转换站\ebook-converter\docs\tasks\bookconv-growth-20261105\evidence\M8-15\verification.json

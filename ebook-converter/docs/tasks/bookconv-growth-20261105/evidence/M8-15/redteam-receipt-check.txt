@@ -1,0 +1,3 @@
+PASS	docs/tasks/bookconv-growth-20261105/M8-15.md:111	L3	## 5. 红队回执 · M8-15 交付 · L3
+---
+RESULT PASS	1/1 blocks valid

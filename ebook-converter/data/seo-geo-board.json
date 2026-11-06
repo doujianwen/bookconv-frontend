@@ -1400,10 +1400,10 @@
           "accept": "跨平台差异表、原始导出与逐页核验；确认/排除/UNKNOWN分列，工具拦collect不归因生产故障。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "todo",
+          "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-15.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-06 已执行核验并交付 M8-15.md（PASS WITH RESIDUALS）。三源对账：BWT UI 国家表108点击=Bing API 同窗108点击；GA4 美国9会话/8活跃用户、中国458/391与用户截图一致；US 明细四维度组合闭合9/8。红队推翻「108相等=同窗」（19个窗口/印象约束后仍5个）降为 UNKNOWN。逐页核验 Bing 全站 Top5 均200+canonical自引用+无跳转，负对照404。43点击≠8用户判 NOT_COMPARABLE（禁相减/丢失率/漏记）。未完成：美国×页面落地页（BWT无国家维度、tabbit表格rows=0）与 BWT 窗口日期文字，均 UNKNOWN 并给最小解阻，交 11/09 联合周评审②由站长普通浏览器导出，故不标 done。未改代码/配置、未提交 git、未 push；线上作战台与 Notion NOT_SYNCED。既有F/R编号为同一工作承接，不新建重复故障。"
         },
         {
           "id": "M8-16",

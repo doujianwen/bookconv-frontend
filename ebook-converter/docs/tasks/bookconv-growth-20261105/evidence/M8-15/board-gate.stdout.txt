@@ -1,0 +1,1 @@
+PASS: seo-geo-board.json 校验通过

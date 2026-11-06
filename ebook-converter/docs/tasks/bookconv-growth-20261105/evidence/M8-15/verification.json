@@ -1,0 +1,306 @@
+{
+  "generatedAt": "2026-11-06T00:14:02.692Z",
+  "window": {
+    "start": "2026-10-08",
+    "end": "2026-11-04"
+  },
+  "sources": {
+    "bwtScreenshot": "_wb_tmp/bing-1105/bwt-country.png（11/05 20:03）",
+    "bingApi": "数据分析/www.bookconv.com_BingAPI_{RankAndTraffic,PageTraffic,Query}_2026_11_05.csv",
+    "ga4Main": "数据分析/GA4_M8-15_2026-10-08_2026-11-04.json",
+    "ga4US": "数据分析/GA4_M8-15_USdetail_2026-10-08_2026-11-04.json"
+  },
+  "rawNumbers": {
+    "bwtUiClicksTotal": 108,
+    "bwtUiImpressionsKnown": 2044,
+    "impliedUSImpressions": 1466,
+    "bingApiClicks": 108,
+    "bingApiImpressions": 3510,
+    "bingApiRows": 27,
+    "bingApiDateRange": [
+      "2026-10-08",
+      "2026-11-03"
+    ],
+    "ga4": {
+      "usSessions": 9,
+      "usUsers": 8,
+      "cnSessions": 458,
+      "cnUsers": 391,
+      "totalSessions": 466
+    }
+  },
+  "checks": [
+    {
+      "name": "BWT UI 国家表点击合计 vs Bing API 同窗点击",
+      "actual": 108,
+      "expected": 108,
+      "verdict": "PASS"
+    },
+    {
+      "name": "US landing×source 会话合计 vs country 报告 US 会话",
+      "actual": 9,
+      "expected": 9,
+      "verdict": "PASS"
+    },
+    {
+      "name": "US 逐日会话合计 vs country 报告 US 会话",
+      "actual": 9,
+      "expected": 9,
+      "verdict": "PASS"
+    },
+    {
+      "name": "GA4 用户截图 US 活跃用户 vs 采集值",
+      "actual": 8,
+      "expected": 8,
+      "verdict": "PASS"
+    },
+    {
+      "name": "GA4 用户截图 中国活跃用户 vs 采集值",
+      "actual": 391,
+      "expected": 391,
+      "verdict": "PASS"
+    },
+    {
+      "name": "BWT 首行 1.5K 印象缩写反推",
+      "actual": 1466,
+      "expected": 1466,
+      "verdict": "PASS",
+      "note": "反推值 1466 → 1.5K，BWT 显示 1.5K"
+    }
+  ],
+  "reverse": {
+    "name": "反向验证：注入美国 44 点击",
+    "actual": 109,
+    "expected": 108,
+    "detected": true
+  },
+  "top5AllGeo": [
+    {
+      "url": "https://www.bookconv.com/",
+      "clicks": 48,
+      "geoScope": "ALL (Bing API 无国家维度)"
+    },
+    {
+      "url": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+      "clicks": 18,
+      "geoScope": "ALL (Bing API 无国家维度)"
+    },
+    {
+      "url": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "clicks": 11,
+      "geoScope": "ALL (Bing API 无国家维度)"
+    },
+    {
+      "url": "https://www.bookconv.com/blog/kobo-to-epub",
+      "clicks": 6,
+      "geoScope": "ALL (Bing API 无国家维度)"
+    },
+    {
+      "url": "https://www.bookconv.com/guide/kindle-formats",
+      "clicks": 3,
+      "geoScope": "ALL (Bing API 无国家维度)"
+    }
+  ],
+  "httpRows": [
+    {
+      "url": "https://www.bookconv.com/",
+      "status": "ERROR",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "url": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+      "status": 200,
+      "matchedPath": "/en/guide/how-to-read-epub-on-kindle",
+      "location": null,
+      "canonical": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+      "hreflangCount": 2,
+      "title": "How to Read EPUB on Kindle: 3 Ways That Work | BookConv",
+      "textLen": 101634
+    },
+    {
+      "url": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "status": 200,
+      "matchedPath": "/en/blog/why-ebook-wont-open-kindle",
+      "location": null,
+      "canonical": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "hreflangCount": 2,
+      "title": "Why Your Ebook Won&#x27;t Open on Kindle | BookConv",
+      "textLen": 92162
+    },
+    {
+      "url": "https://www.bookconv.com/blog/kobo-to-epub",
+      "status": 200,
+      "matchedPath": "/en/blog/kobo-to-epub",
+      "location": null,
+      "canonical": "https://www.bookconv.com/blog/kobo-to-epub",
+      "hreflangCount": 2,
+      "title": "How to Convert Kobo Books to EPUB and PDF | BookConv",
+      "textLen": 84666
+    },
+    {
+      "url": "https://www.bookconv.com/guide/kindle-formats",
+      "status": 200,
+      "matchedPath": "/en/guide/kindle-formats",
+      "location": null,
+      "canonical": "https://www.bookconv.com/guide/kindle-formats",
+      "hreflangCount": 3,
+      "title": "What Format Does Kindle Use? AZW3, KFX, MOBI | BookConv",
+      "textLen": 141971
+    },
+    {
+      "url": "https://www.bookconv.com/this-path-should-not-exist-m8-15",
+      "status": 404,
+      "matchedPath": "/404",
+      "location": null,
+      "canonical": null,
+      "hreflangCount": 0,
+      "title": null,
+      "textLen": 0
+    }
+  ],
+  "diffRows": [
+    {
+      "bingUrl": "https://www.bookconv.com/",
+      "bingClicksAll": 48,
+      "geoScope": "ALL (Bing API 无国家维度)",
+      "pathname": "/",
+      "gaLandingSessionsAll": 323,
+      "gaUSSeen": true,
+      "http": {
+        "url": "https://www.bookconv.com/",
+        "status": "ERROR",
+        "error": "TypeError: fetch failed"
+      }
+    },
+    {
+      "bingUrl": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+      "bingClicksAll": 18,
+      "geoScope": "ALL (Bing API 无国家维度)",
+      "pathname": "/guide/how-to-read-epub-on-kindle",
+      "gaLandingSessionsAll": 2,
+      "gaUSSeen": false,
+      "http": {
+        "url": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+        "status": 200,
+        "matchedPath": "/en/guide/how-to-read-epub-on-kindle",
+        "location": null,
+        "canonical": "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+        "hreflangCount": 2,
+        "title": "How to Read EPUB on Kindle: 3 Ways That Work | BookConv",
+        "textLen": 101634
+      }
+    },
+    {
+      "bingUrl": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+      "bingClicksAll": 11,
+      "geoScope": "ALL (Bing API 无国家维度)",
+      "pathname": "/blog/why-ebook-wont-open-kindle",
+      "gaLandingSessionsAll": 0,
+      "gaUSSeen": false,
+      "http": {
+        "url": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+        "status": 200,
+        "matchedPath": "/en/blog/why-ebook-wont-open-kindle",
+        "location": null,
+        "canonical": "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+        "hreflangCount": 2,
+        "title": "Why Your Ebook Won&#x27;t Open on Kindle | BookConv",
+        "textLen": 92162
+      }
+    },
+    {
+      "bingUrl": "https://www.bookconv.com/blog/kobo-to-epub",
+      "bingClicksAll": 6,
+      "geoScope": "ALL (Bing API 无国家维度)",
+      "pathname": "/blog/kobo-to-epub",
+      "gaLandingSessionsAll": 0,
+      "gaUSSeen": false,
+      "http": {
+        "url": "https://www.bookconv.com/blog/kobo-to-epub",
+        "status": 200,
+        "matchedPath": "/en/blog/kobo-to-epub",
+        "location": null,
+        "canonical": "https://www.bookconv.com/blog/kobo-to-epub",
+        "hreflangCount": 2,
+        "title": "How to Convert Kobo Books to EPUB and PDF | BookConv",
+        "textLen": 84666
+      }
+    },
+    {
+      "bingUrl": "https://www.bookconv.com/guide/kindle-formats",
+      "bingClicksAll": 3,
+      "geoScope": "ALL (Bing API 无国家维度)",
+      "pathname": "/guide/kindle-formats",
+      "gaLandingSessionsAll": 0,
+      "gaUSSeen": false,
+      "http": {
+        "url": "https://www.bookconv.com/guide/kindle-formats",
+        "status": 200,
+        "matchedPath": "/en/guide/kindle-formats",
+        "location": null,
+        "canonical": "https://www.bookconv.com/guide/kindle-formats",
+        "hreflangCount": 3,
+        "title": "What Format Does Kindle Use? AZW3, KFX, MOBI | BookConv",
+        "textLen": 141971
+      }
+    }
+  ],
+  "verdicts": {
+    "同窗（Bing 侧）": {
+      "state": "UNKNOWN",
+      "evidence": "数值相容但不唯一：BWT UI 国家表 108 点击 = Bing API 2026-10-08..2026-11-04 108 点击；印象反推 1466 → 1.5K。但独立窗口枚举显示 clicks=108 有 19 个连续窗口，叠加印象约束仍剩 5 个（见 verification-window.json）",
+      "caveat": "红队推翻原 CONFIRMED。BWT UI 日期控件在 tabbit 内不可读（11/05 三次 + 11/06 两次均 rows=0）；窗口只能由 BWT 日期控件或导出文件元数据确认；API 数据止于 11/03，GA4 窗口含 11/04",
+      "minimalUnblock": "普通浏览器登录 BWT 读取日期范围文字并截图，或导出带窗口元数据的 CSV"
+    },
+    "同窗（GA4 侧）": {
+      "state": "PARTIAL",
+      "evidence": "GA4 由采集脚本显式指定 2026-10-08..2026-11-04（Fact）；country: US 9 会话 / 8 活跃用户，China 458 / 391，与 11/05 用户截图 8 / 391 精确一致；US 明细四个独立维度组合均闭合到 9 会话 / 8 用户",
+      "caveat": "用户截图窗口本身未直接读取；US=9 会话在 28 天内存在 4 个连续子窗口（10/08 起、11/01–11/04 止任一），故为「数值相容 + 高置信」而非直接确认。GA4 属性时区 ≈UTC+2（精确 IANA UNKNOWN）；BWT 时区 UNKNOWN"
+    },
+    "域名/站点范围": {
+      "state": "CONFIRMED",
+      "evidence": "BWT siteUrl=https://www.bookconv.com/；GA4 hostname www.bookconv.com 465 会话 + ebook-converter-ymfg.vercel.app 1 会话",
+      "caveat": "1 个 Vercel 预览域会话不属生产站点范围；US 明细 hostname 仅 www.bookconv.com"
+    },
+    "美国点击最高的 5 个落地页": {
+      "state": "UNKNOWN",
+      "evidence": "Bing 官方 API 仅 GetPageStats/GetQueryStats/GetRankAndTrafficStats，无国家维度；BWT UI 搜索性能表在 tabbit 内 rowCount=0（11/05 三次 + 11/06 两次均失败）；截图仅含国家汇总，无国家×页面交叉",
+      "minimalUnblock": "在普通浏览器登录 BWT → 搜索性能 → 筛选 国家/地区=美国 → 「页面」列出依据 → 导出 CSV（窗口需与 10/08–11/04 对齐并读取日期控件）；或确认 BWT 导出是否支持 country×page 维度"
+    },
+    "43 点击 vs 8 活跃用户": {
+      "state": "NOT_COMPARABLE",
+      "evidence": "Bing 点击=108（全部分国家合计，其中美国 43）为搜索结果页点击事件；GA4 US 8 为去重活跃用户。分母/口径/时区/搜索范围均不同",
+      "caveat": "禁止相减、禁止计算「丢失率」、禁止据此判 GA 漏记；按 11/05 红队裁定执行"
+    },
+    "Bing 归因到站（美国）": {
+      "state": "PARTIAL",
+      "evidence": "GA4 US 9 会话按 sessionSource 实算：(direct)=4 / app.seobotai.com=2 / google=1 / yahoo=1 / bing=1；其中 bing/organic 仅 1 会话（落地 /convert/txt-to-epub）",
+      "caveat": "GA4 全窗 bing/organic 2 会话、cn.bing.com/referral 25 会话（中国侧）；Bing 供稿网络（Yahoo 等）、追踪防护、立即返回、机器人点击均未定性 → UNKNOWN，不判漏记"
+    },
+    "落地页可达性（外部通道）": {
+      "state": "CONFIRMED",
+      "evidence": "Top5 页面 HTTP 状态 ERROR/200/200/200/200；负对照 404 (/404)",
+      "caveat": "200 不等于「Bing 美国点击落到该页」；仅证明外部 vantage 可访问"
+    },
+    "工具拦 collect 归因生产故障": {
+      "state": "EXCLUDED",
+      "evidence": "BWT 探测中 applicationinsights /v2/track 返回 439 属工具内遥测被拦；11/01 已记录 tabbit 内 collect 零发出。按验收要求不归因生产故障",
+      "caveat": "未对生产 GA4 采集链路做新的端到端实测（本次为报表侧核验）"
+    },
+    "标签与跳转（Top5 全站页）": {
+      "state": "CONFIRMED",
+      "evidence": "5 页均 HTTP 200、X-Matched-Path 命中具体路由（负对照 404 /404）、canonical 自引用、hreflang 2–3 条、无 Location 跳转；GA4 全窗 pageLocation/pageReferrer 中唯一 utm 为 ?utm_source=chatgpt.com（1 pv），无 msclkid/gclid，containerLanding 13 行 utm 全为 null",
+      "caveat": "Bing 自然点击不带 msclkid（属 Bing Ads 参数），归因依赖 referrer；仅证明页面层无跳转/标签丢失，不证明 Bing 点击实际落到这些页或 GA4 归因正确"
+    },
+    "Bing 点击→GA4 落地页逐页对应": {
+      "state": "UNKNOWN",
+      "evidence": "Bing API PageTraffic 全站 Top5 点击 48/18/11/6/3；GA4 全站 landingPage 同路径会话 323/2/0/0/0，US 明细仅首页出现",
+      "caveat": "Bing API 无国家维度 → 这些是全站点击而非美国点击；PageTraffic 为周聚合（窗口内仅 4 个日期），与 GA4 日粒度不同窗；两者分母不同，禁止相减或据此判漏记",
+      "minimalUnblock": "取得 BWT「国家=美国 × 页面」交叉导出后重算"
+    }
+  },
+  "selfCheck": {
+    "failures": [],
+    "pass": true
+  }
+}
