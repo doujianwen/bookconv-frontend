@@ -30,9 +30,6 @@
 
 const PREFIX_RE = /^((PUT|PRESIGN):(HTTP\d+|CSP|NETWORK):on=([01?]):([^:]+):)/
 
-/** Kind tokens. `CSP` (R-2) means the browser refused to send the request. */
-const KIND_TOKENS = ["HTTP", "CSP", "NETWORK"]
-
 /**
  * Parse a GA4 `error` field into its diagnostic dimensions.
  * @param {string} error
