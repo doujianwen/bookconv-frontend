@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-11-07T04:27:28.179112+00:00",
+  "localHead": "26b1a55e474125f3b03c5bf8530723a382407d70",
+  "deployedSha": "UNKNOWN",
+  "/convert/epub-to-mobi": {
+    "status": 200,
+    "finalUrl": "https://www.bookconv.com/convert/epub-to-mobi",
+    "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: bookconv.com; font-src 'self' data:; connect-src 'self' https://bookconv.com https://*.r2.cloudflarestorage.com https://28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://*.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://www.google-analytics.com https://stats.g.doubleclick.net https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+    "cacheControl": "public, max-age=300, s-maxage=300, stale-while-revalidate=3600"
+  },
+  "/api/upload/presign": {
+    "status": 200,
+    "finalUrl": "https://www.bookconv.com/api/upload/presign",
+    "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: bookconv.com; font-src 'self' data:; connect-src 'self' https://bookconv.com https://*.r2.cloudflarestorage.com https://28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://*.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://www.google-analytics.com https://stats.g.doubleclick.net https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+    "cacheControl": "no-store",
+    "body": {
+      "enabled": true,
+      "maxBytes": 104857600,
+      "maxMB": 100,
+      "diagnostics": {
+        "r2Endpoint": true,
+        "r2AccessKeyId": true,
+        "r2SecretAccessKey": true,
+        "backendConfigured": true
+      }
+    }
+  }
+}

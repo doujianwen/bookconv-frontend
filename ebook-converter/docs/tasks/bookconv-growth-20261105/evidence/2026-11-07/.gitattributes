@@ -1,0 +1,7 @@
+# 二进制测试夹具：禁止任何 EOL 转换。
+# 2026-11-07 实测（core.autocrlf=true）：未声明 binary 时 git checkout 会把
+# 616B 的 owned-small.pdf 变成 648B（+32 个 CR），SHA256 与 fixture-manifest.json
+# 失配，PDF xref 偏移亦失效。注入/恢复验证见 M8-17.md「12:38 独立通道复核」。
+# 作用域仅限本证据目录的 fixtures/，不影响仓库其它文件。
+fixtures/*.epub binary
+fixtures/*.pdf binary

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "owned-4MiB-above.epub",
+    "bytes": 4194305,
+    "sha256": "b6968a9f210fcb94ac176941a3738ce0ecf6a6fbc5509c3c38ec1a2a988f2f0e",
+    "provenance": "Original synthetic text; public-domain dedication; no DRM or personal data",
+    "uploaded": false
+  },
+  {
+    "name": "owned-4MiB-at.epub",
+    "bytes": 4194304,
+    "sha256": "c198b44398032f7fa46eb1371f077337717c04f2a2c3c5f190e29b65c414e62c",
+    "provenance": "Original synthetic text; public-domain dedication; no DRM or personal data",
+    "uploaded": false
+  },
+  {
+    "name": "owned-4MiB-below.epub",
+    "bytes": 4194303,
+    "sha256": "41da55cd0d6411b0e049dbeecc0b41c2cb0bb91ee039f19519f6c2809d40800c",
+    "provenance": "Original synthetic text; public-domain dedication; no DRM or personal data",
+    "uploaded": false
+  },
+  {
+    "name": "owned-small.epub",
+    "bytes": 1840,
+    "sha256": "65ef0a040c7f196fa3143f9e9ed1609fda705e27e21070a95c0b3297f9d45ad5",
+    "provenance": "Original synthetic text; public-domain dedication; no DRM or personal data",
+    "uploaded": false
+  },
+  {
+    "name": "owned-small.pdf",
+    "bytes": 616,
+    "sha256": "ba83f782e6abf943fbb0b9f3bb0f5d8adf21225f8cb4482928d1a71b3d1c8193",
+    "provenance": "Original synthetic text; public-domain dedication; no DRM or personal data",
+    "uploaded": false
+  }
+]

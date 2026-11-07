@@ -1428,10 +1428,10 @@
           "accept": "合法样本大小边界、阶段错误和可打开输出矩阵；未测明确登记，R-B缺真实回流不假关闭。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "todo",
+          "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-17.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-07 执行当日取证准备，详见M8-17.md及evidence/2026-11-07。正式页CSP含R2、presign enabled/100MB；12:38 独立复核经 /api/health 实测生产 commitSha=26b1a55，与本地 HEAD 一致（原标 UNKNOWN 已补；仅证明构建版本，不证明浏览器PUT/转换成功）。真实GA快照窗口10/30—11/06，11/05诊断3事件，11/06未见PUT_FAILED但成功侧无 file_size 维度、>4MB端到端仍UNKNOWN；连续三日门禁未达，不关闭F19/R2。原创EPUB/PDF及4MiB±1/精确边界共5份样本已备，哈希/字节/结构5/5复核一致，未上传；浏览器PUT和四转换输出未测，按11/05增补并入11/12矩阵，保留11/11修复及11/12验收。独立通道复核见 independent-review.json（L3，PASS WITH RESIDUALS）。仅本地doing，Notion/线上NOT_SYNCED；未改生产代码或push。"
         },
         {
           "id": "M8-18",

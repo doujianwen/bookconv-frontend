@@ -1,0 +1,1536 @@
+{
+  "meta": {
+    "property": "547131052",
+    "start": "2026-10-30",
+    "end": "2026-11-06",
+    "generatedAt": "2026-11-07T04:26:22.551Z",
+    "source": "ga4-data-api",
+    "attributionGuard": {
+      "verdict": "PASS",
+      "window": [
+        "20261031",
+        "20261106"
+      ],
+      "recentFailures": 63,
+      "recentNotSet": 0,
+      "note": "当前归因健康：历史 (not set) 属埋点上线前存量，禁止据此立项「修埋点」"
+    },
+    "diagnosticPrefixParse": {
+      "total": 46,
+      "valid": 3,
+      "nonDiagnostic": 43,
+      "malformed": 0
+    }
+  },
+  "modules": {
+    "daily_overview": [
+      {
+        "date": "20261105",
+        "activeUsers": 41,
+        "eventCount": 195,
+        "sessions": 45
+      },
+      {
+        "date": "20261104",
+        "activeUsers": 28,
+        "eventCount": 165,
+        "sessions": 31
+      },
+      {
+        "date": "20261031",
+        "activeUsers": 23,
+        "eventCount": 208,
+        "sessions": 26
+      },
+      {
+        "date": "20261102",
+        "activeUsers": 21,
+        "eventCount": 174,
+        "sessions": 26
+      },
+      {
+        "date": "20261101",
+        "activeUsers": 19,
+        "eventCount": 133,
+        "sessions": 22
+      },
+      {
+        "date": "20261103",
+        "activeUsers": 16,
+        "eventCount": 129,
+        "sessions": 18
+      },
+      {
+        "date": "20261106",
+        "activeUsers": 15,
+        "eventCount": 104,
+        "sessions": 17
+      },
+      {
+        "date": "20261030",
+        "activeUsers": 10,
+        "eventCount": 56,
+        "sessions": 12
+      }
+    ],
+    "daily_events": [
+      {
+        "date": "20261030",
+        "file_upload": 4,
+        "conversion_complete": 3,
+        "conversion_failed": 3
+      },
+      {
+        "date": "20261031",
+        "file_upload": 27,
+        "conversion_complete": 25,
+        "conversion_failed": 15
+      },
+      {
+        "date": "20261101",
+        "file_upload": 13,
+        "conversion_complete": 10,
+        "conversion_failed": 12
+      },
+      {
+        "date": "20261102",
+        "file_upload": 21,
+        "conversion_complete": 14,
+        "conversion_failed": 8
+      },
+      {
+        "date": "20261103",
+        "file_upload": 16,
+        "conversion_complete": 12,
+        "conversion_failed": 5
+      },
+      {
+        "date": "20261104",
+        "file_upload": 17,
+        "conversion_complete": 15,
+        "conversion_failed": 11
+      },
+      {
+        "date": "20261105",
+        "file_upload": 6,
+        "conversion_complete": 6,
+        "conversion_failed": 6
+      },
+      {
+        "date": "20261106",
+        "file_upload": 13,
+        "conversion_complete": 6,
+        "conversion_failed": 6
+      }
+    ],
+    "device_overview": [
+      {
+        "deviceCategory": "mobile",
+        "activeUsers": 90,
+        "sessions": 97,
+        "engagementRate": 0.36082474226804123,
+        "eventCount": 461
+      },
+      {
+        "deviceCategory": "desktop",
+        "activeUsers": 70,
+        "sessions": 97,
+        "engagementRate": 0.6597938144329897,
+        "eventCount": 687
+      },
+      {
+        "deviceCategory": "smart tv",
+        "activeUsers": 2,
+        "sessions": 2,
+        "engagementRate": 1,
+        "eventCount": 16
+      }
+    ],
+    "device_events": [
+      {
+        "deviceCategory": "desktop",
+        "file_upload": 84,
+        "conversion_complete": 70,
+        "conversion_failed": 53
+      },
+      {
+        "deviceCategory": "mobile",
+        "file_upload": 32,
+        "conversion_complete": 20,
+        "conversion_failed": 13
+      },
+      {
+        "deviceCategory": "smart tv",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      }
+    ],
+    "os_events": [
+      {
+        "operatingSystem": "Windows",
+        "file_upload": 82,
+        "conversion_complete": 67,
+        "conversion_failed": 49,
+        "page_view": 183
+      },
+      {
+        "operatingSystem": "Android",
+        "file_upload": 14,
+        "conversion_complete": 10,
+        "conversion_failed": 7,
+        "page_view": 103
+      },
+      {
+        "operatingSystem": "iOS",
+        "file_upload": 18,
+        "conversion_complete": 10,
+        "conversion_failed": 6,
+        "page_view": 67
+      },
+      {
+        "operatingSystem": "Macintosh",
+        "file_upload": 2,
+        "conversion_complete": 3,
+        "conversion_failed": 4,
+        "page_view": 16
+      },
+      {
+        "operatingSystem": "Linux",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0,
+        "page_view": 11
+      },
+      {
+        "operatingSystem": "(not set)",
+        "file_upload": 0,
+        "conversion_complete": 0,
+        "conversion_failed": 0,
+        "page_view": 3
+      }
+    ],
+    "source_medium": [
+      {
+        "sessionSourceMedium": "(direct) / (none)",
+        "activeUsers": 126,
+        "sessions": 142,
+        "engagementRate": 0.45774647887323944
+      },
+      {
+        "sessionSourceMedium": "doubao.com / referral",
+        "activeUsers": 19,
+        "sessions": 23,
+        "engagementRate": 0.8260869565217391
+      },
+      {
+        "sessionSourceMedium": "(not set)",
+        "activeUsers": 11,
+        "sessions": 11,
+        "engagementRate": 0
+      },
+      {
+        "sessionSourceMedium": "cn.bing.com / referral",
+        "activeUsers": 7,
+        "sessions": 9,
+        "engagementRate": 0.8888888888888888
+      },
+      {
+        "sessionSourceMedium": "app.seobotai.com / referral",
+        "activeUsers": 1,
+        "sessions": 10,
+        "engagementRate": 0.6
+      },
+      {
+        "sessionSourceMedium": "awz.cc / referral",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 0
+      },
+      {
+        "sessionSourceMedium": "baidu / organic",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "chatgpt.com / ai-assistant",
+        "activeUsers": 1,
+        "sessions": 1,
+        "engagementRate": 1
+      },
+      {
+        "sessionSourceMedium": "so.com / referral",
+        "activeUsers": 1,
+        "sessions": 3,
+        "engagementRate": 0.3333333333333333
+      }
+    ],
+    "source_events": [
+      {
+        "sessionSourceMedium": "(direct) / (none)",
+        "file_upload": 67,
+        "conversion_complete": 44,
+        "conversion_failed": 43
+      },
+      {
+        "sessionSourceMedium": "doubao.com / referral",
+        "file_upload": 19,
+        "conversion_complete": 18,
+        "conversion_failed": 14
+      },
+      {
+        "sessionSourceMedium": "(not set)",
+        "file_upload": 18,
+        "conversion_complete": 17,
+        "conversion_failed": 5
+      },
+      {
+        "sessionSourceMedium": "cn.bing.com / referral",
+        "file_upload": 8,
+        "conversion_complete": 7,
+        "conversion_failed": 4
+      },
+      {
+        "sessionSourceMedium": "baidu / organic",
+        "file_upload": 2,
+        "conversion_complete": 2,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "app.seobotai.com / referral",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "chatgpt.com / ai-assistant",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      },
+      {
+        "sessionSourceMedium": "so.com / referral",
+        "file_upload": 1,
+        "conversion_complete": 1,
+        "conversion_failed": 0
+      }
+    ],
+    "failed_by_format": [
+      {
+        "source_format": "epub",
+        "target_format": "azw3",
+        "eventCount": 32
+      },
+      {
+        "source_format": "epub",
+        "target_format": "pdf",
+        "eventCount": 10
+      },
+      {
+        "source_format": "epub",
+        "target_format": "mobi",
+        "eventCount": 9
+      },
+      {
+        "source_format": "txt",
+        "target_format": "epub",
+        "eventCount": 9
+      },
+      {
+        "source_format": "mobi",
+        "target_format": "epub",
+        "eventCount": 2
+      },
+      {
+        "source_format": "pdf",
+        "target_format": "epub",
+        "eventCount": 2
+      },
+      {
+        "source_format": "docx",
+        "target_format": "epub",
+        "eventCount": 1
+      },
+      {
+        "source_format": "epub",
+        "target_format": "txt",
+        "eventCount": 1
+      }
+    ],
+    "failed_by_error": [
+      {
+        "error": "Failed to fetch",
+        "eventCount": 8
+      },
+      {
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 7
+      },
+      {
+        "error": "An unexpected error occurred. Please try again later.",
+        "eventCount": 5
+      },
+      {
+        "error": "This file (5.3MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 5
+      },
+      {
+        "error": "This file (4.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 3
+      },
+      {
+        "error": "This file (5.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 3
+      },
+      {
+        "error": "This file (28.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "This file (38.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "This file (4.0MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "This file (7.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "This file (8.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "This file (8.4MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "error": "Load failed",
+        "eventCount": 1
+      },
+      {
+        "error": "PUT:NETWORK:on=1:<1s:This file (10.1MB) needs direct upload, which failed. Try a smaller file (max 4",
+        "eventCount": 1
+      },
+      {
+        "error": "PUT:NETWORK:on=1:<1s:This file (5.3MB) needs direct upload, which failed. Try a smaller file (max 4M",
+        "eventCount": 1
+      },
+      {
+        "error": "PUT:NETWORK:on=1:<1s:This file (65.5MB) needs direct upload, which failed. Try a smaller file (max 4",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (12.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (12.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (13.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (13.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (15.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (16.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (16.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (4.6MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (5.8MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (5.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (53.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (6.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (6.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (6.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (60.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (7.6MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (7.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "This file (8.0MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "error": "file too large",
+        "eventCount": 1
+      }
+    ],
+    "android_detail": [
+      {
+        "operatingSystem": "Android",
+        "deviceCategory": "mobile",
+        "activeUsers": 58,
+        "sessions": 61,
+        "engagementRate": 0.2459016393442623
+      }
+    ],
+    "failed_by_date_format": [
+      {
+        "date": "20261030",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "17349858",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "130404681",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "840491",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "5560336",
+        "eventCount": 4
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "5726338",
+        "eventCount": 3
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "4227788",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "4914507",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "source_format": "docx",
+        "target_format": "epub",
+        "file_size": "63610468",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "12712716",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "34805",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "5560336",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "1265015",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "4780053",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "4966643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "6034926",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "7987435",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "8840077",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "15805950",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "epub",
+        "target_format": "txt",
+        "file_size": "6215857",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "151200",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "193141",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "517798",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "8312177",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "1848908",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "40016643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "16840237",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "mobi",
+        "target_format": "epub",
+        "file_size": "0",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "mobi",
+        "target_format": "epub",
+        "file_size": "716537",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "pdf",
+        "target_format": "epub",
+        "file_size": "8806400",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "2756222",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "29846441",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "1069446",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "1739393",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "91395",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "8485601",
+        "eventCount": 2
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "13302628",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "13871502",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "56088219",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "mobi",
+        "file_size": "7287523",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "1703936",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "40016643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "6394024",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "6825411",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "8384468",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "source_format": "txt",
+        "target_format": "epub",
+        "file_size": "7539239",
+        "eventCount": 2
+      },
+      {
+        "date": "20261105",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "10595375",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "14562619",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "68719870",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "source_format": "pdf",
+        "target_format": "epub",
+        "file_size": "5602155",
+        "eventCount": 1
+      },
+      {
+        "date": "20261106",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "2576883",
+        "eventCount": 4
+      },
+      {
+        "date": "20261106",
+        "source_format": "epub",
+        "target_format": "azw3",
+        "file_size": "9851255",
+        "eventCount": 1
+      },
+      {
+        "date": "20261106",
+        "source_format": "epub",
+        "target_format": "pdf",
+        "file_size": "79635527",
+        "eventCount": 1
+      }
+    ],
+    "failed_by_date_error": [
+      {
+        "date": "20261030",
+        "error": "Failed to fetch",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "error": "This file (16.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "error": "file too large",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error": "This file (5.3MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 5
+      },
+      {
+        "date": "20261031",
+        "error": "This file (5.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 3
+      },
+      {
+        "date": "20261031",
+        "error": "This file (4.0MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "error": "This file (4.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error": "This file (12.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error": "This file (60.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "An unexpected error occurred. Please try again later.",
+        "eventCount": 3
+      },
+      {
+        "date": "20261101",
+        "error": "Failed to fetch",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (15.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (4.6MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (4.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (5.8MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (5.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (7.6MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (7.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error": "This file (8.4MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error": "An unexpected error occurred. Please try again later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "error": "Failed to fetch",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "error": "Load failed",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error": "This file (16.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error": "This file (38.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error": "This file (8.4MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "error": "Failed to fetch",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "error": "This file (28.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (8.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261104",
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (12.7MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (13.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (38.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (53.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (6.1MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (6.5MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (6.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error": "This file (8.0MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error": "This file (7.2MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 2
+      },
+      {
+        "date": "20261105",
+        "error": "PUT:NETWORK:on=1:<1s:This file (10.1MB) needs direct upload, which failed. Try a smaller file (max 4",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error": "PUT:NETWORK:on=1:<1s:This file (5.3MB) needs direct upload, which failed. Try a smaller file (max 4M",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error": "PUT:NETWORK:on=1:<1s:This file (65.5MB) needs direct upload, which failed. Try a smaller file (max 4",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error": "This file (13.9MB) needs direct upload, which failed. Try a smaller file (max 4MB) or retry later.",
+        "eventCount": 1
+      },
+      {
+        "date": "20261106",
+        "error": "The input file cannot be opened — it may be corrupted or not a valid ebook. Try re-downloading the o",
+        "eventCount": 4
+      },
+      {
+        "date": "20261106",
+        "error": "Failed to fetch",
+        "eventCount": 2
+      }
+    ],
+    "failed_by_date_error_diagnostic": {
+      "detail": [
+        {
+          "date": "20261105",
+          "stage": "PUT",
+          "kind": "NETWORK",
+          "httpStatus": null,
+          "online": "1",
+          "msBucket": "<1s",
+          "cspBlocked": false,
+          "eventCount": 3
+        }
+      ],
+      "parse": {
+        "total": 46,
+        "valid": 3,
+        "nonDiagnostic": 43,
+        "malformed": 0
+      }
+    },
+    "failed_by_date_error_code": [
+      {
+        "date": "20261030",
+        "error_code": "FILE_TOO_LARGE",
+        "eventCount": 2
+      },
+      {
+        "date": "20261030",
+        "error_code": "UNKNOWN",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "eventCount": 14
+      },
+      {
+        "date": "20261031",
+        "error_code": "CORRUPT_INPUT",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "eventCount": 8
+      },
+      {
+        "date": "20261101",
+        "error_code": "INTERNAL_ERROR",
+        "eventCount": 3
+      },
+      {
+        "date": "20261101",
+        "error_code": "UNKNOWN",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "UNKNOWN",
+        "eventCount": 3
+      },
+      {
+        "date": "20261102",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "error_code": "INTERNAL_ERROR",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "error_code": "UNKNOWN",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "error_code": "CORRUPT_INPUT",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "eventCount": 10
+      },
+      {
+        "date": "20261104",
+        "error_code": "CORRUPT_INPUT",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "eventCount": 6
+      },
+      {
+        "date": "20261106",
+        "error_code": "CORRUPT_INPUT",
+        "eventCount": 4
+      },
+      {
+        "date": "20261106",
+        "error_code": "UNKNOWN",
+        "eventCount": 2
+      }
+    ],
+    "failed_by_date_error_code_size": [
+      {
+        "date": "20261030",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "130404681",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "17349858",
+        "eventCount": 1
+      },
+      {
+        "date": "20261030",
+        "error_code": "UNKNOWN",
+        "file_size": "840491",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "5560336",
+        "eventCount": 5
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "5726338",
+        "eventCount": 3
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "4227788",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "4914507",
+        "eventCount": 2
+      },
+      {
+        "date": "20261031",
+        "error_code": "CORRUPT_INPUT",
+        "file_size": "34805",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "12712716",
+        "eventCount": 1
+      },
+      {
+        "date": "20261031",
+        "error_code": "FILE_TOO_LARGE",
+        "file_size": "63610468",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "15805950",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "4780053",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "4966643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "6034926",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "6215857",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "7987435",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "8312177",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "8840077",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "INTERNAL_ERROR",
+        "file_size": "151200",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "INTERNAL_ERROR",
+        "file_size": "193141",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "INTERNAL_ERROR",
+        "file_size": "517798",
+        "eventCount": 1
+      },
+      {
+        "date": "20261101",
+        "error_code": "UNKNOWN",
+        "file_size": "1265015",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "INTERNAL_ERROR",
+        "file_size": "1848908",
+        "eventCount": 2
+      },
+      {
+        "date": "20261102",
+        "error_code": "DIRECT_UPLOAD_FAILED",
+        "file_size": "40016643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "16840237",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "8806400",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "UNKNOWN",
+        "file_size": "0",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "UNKNOWN",
+        "file_size": "2756222",
+        "eventCount": 1
+      },
+      {
+        "date": "20261102",
+        "error_code": "UNKNOWN",
+        "file_size": "716537",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "29846441",
+        "eventCount": 2
+      },
+      {
+        "date": "20261103",
+        "error_code": "CORRUPT_INPUT",
+        "file_size": "91395",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "error_code": "UNKNOWN",
+        "file_size": "1069446",
+        "eventCount": 1
+      },
+      {
+        "date": "20261103",
+        "error_code": "UNKNOWN",
+        "file_size": "1739393",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "8485601",
+        "eventCount": 2
+      },
+      {
+        "date": "20261104",
+        "error_code": "CORRUPT_INPUT",
+        "file_size": "1703936",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "13302628",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "13871502",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "40016643",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "56088219",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "6394024",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "6825411",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "7287523",
+        "eventCount": 1
+      },
+      {
+        "date": "20261104",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "8384468",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "7539239",
+        "eventCount": 2
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "10595375",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "14562619",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "5602155",
+        "eventCount": 1
+      },
+      {
+        "date": "20261105",
+        "error_code": "DIRECT_UPLOAD_PUT_FAILED",
+        "file_size": "68719870",
+        "eventCount": 1
+      },
+      {
+        "date": "20261106",
+        "error_code": "CORRUPT_INPUT",
+        "file_size": "2576883",
+        "eventCount": 4
+      },
+      {
+        "date": "20261106",
+        "error_code": "UNKNOWN",
+        "file_size": "79635527",
+        "eventCount": 1
+      },
+      {
+        "date": "20261106",
+        "error_code": "UNKNOWN",
+        "file_size": "9851255",
+        "eventCount": 1
+      }
+    ]
+  }
+}

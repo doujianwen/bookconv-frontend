@@ -1,0 +1,71 @@
+{
+  "reviewedAt": "2026-11-07T12:38+08:00",
+  "reviewChannel": "独立会话；工具链 curl(公网 vantage) / python 3.13 / sha256sum / node verify-closure-gates.mjs，与 12:27 的 prepare-nov07.py 不同执行路径",
+  "scope": "复核 M8-17 当日取证准备，不重复生成夹具、不改生产代码、不上传任何样本",
+  "fixtureVerification": {
+    "verdict": "PASS 5/5",
+    "method": "wc -c + sha256sum 与 fixture-manifest.json 逐项比对；python zipfile.testzip() + mimetype 首项；PDF 头/xref/%%EOF",
+    "rows": [
+      {"name": "owned-4MiB-above.epub", "bytes": 4194305, "sha256Match": true, "zipOk": true},
+      {"name": "owned-4MiB-at.epub", "bytes": 4194304, "sha256Match": true, "zipOk": true},
+      {"name": "owned-4MiB-below.epub", "bytes": 4194303, "sha256Match": true, "zipOk": true},
+      {"name": "owned-small.epub", "bytes": 1840, "sha256Match": true, "zipOk": true},
+      {"name": "owned-small.pdf", "bytes": 616, "sha256Match": true, "pdfStructure": "%PDF-1.4 + xref + %%EOF"}
+    ],
+    "boundary": "未用 EPUBCheck / 阅读器 / 真实转换验证；只证明样本结构合法，不证明转换路线通过",
+    "eolSafety": {
+      "risk": "core.autocrlf=true 且 Git 把 616B 的 owned-small.pdf 判定为文本",
+      "injection": "git checkout-index 模拟跨机 checkout：616B → 648B(+32 CR)，SHA ba83f7… → 52f2e7…，MISMATCH（风险真实复现）",
+      "fix": "新增 evidence/2026-11-07/.gitattributes，仅对 fixtures/*.epub 与 fixtures/*.pdf 声明 binary，不改仓库全局规则",
+      "recovery": "重新暂存后 check-attr binary:set；worktree / staged blob / simulated checkout 5/5 SHA 全一致，RECOVERY_OK=1；暂存文件 16 个、无未暂存残留",
+      "residual": "prepare-nov07.py 用 zipfile.writestr 且未固定时间戳（源码 L13-19 未传 ZipInfo）⇒ 重跑脚本生成的夹具 SHA 可能与 manifest 不同（Assumption，未实测）；11/12 直接使用已入库夹具，勿重跑后复用旧 manifest"
+    }
+  },
+  "closureGate": {
+    "command": "node scripts/verify-closure-gates.mjs --no-live",
+    "exitCode": 0,
+    "closedItems": 2,
+    "fakeClosures": 0,
+    "unknown": ["F15", "F26"],
+    "f19_r2": "未关闭；11-06:0 / 11-05:6 / 11-04:10，连续 3 日 <=2 未达成",
+    "verdict": "与 M8-17 记录一致，无假关闭"
+  },
+  "productionProbe": {
+    "convertPage": {"url": "/convert/epub-to-mobi", "status": 200, "xMatchedPath": "/en/convert/epub-to-mobi", "cspConnectSrcHasR2": true, "note": "X-Matched-Path 排除兜底 HTML 假 200"},
+    "presign": {"url": "/api/upload/presign", "status": 200, "enabled": true, "maxBytes": 104857600, "cacheControl": "no-store"},
+    "health": {"url": "/api/health", "status": 200, "commitSha": "26b1a55e474125f3b03c5bf8530723a382407d70", "environment": "production", "timestamp": "2026-11-07T04:36:51.684Z"},
+    "localHead": "26b1a55e474125f3b03c5bf8530723a382407d70",
+    "shaMatch": true,
+    "shaVerdict": "M8-17 标注的『当前精确生产 SHA UNKNOWN』转为 VERIFIED：当前生产构建对应 26b1a55（09:20 push 后的构建）。仅证明构建版本，不证明浏览器 PUT 或转换输出成功。"
+  },
+  "ga4Recompute": {
+    "snapshot": "ga4-advanced-2026-11-06.json",
+    "metaWindow": ["2026-10-30", "2026-11-06"],
+    "generatedAt": "2026-11-07T04:26:22.551Z",
+    "dailyEvents1106": {"file_upload": 13, "conversion_complete": 6, "conversion_failed": 6},
+    "errorCodes1106": {"CORRUPT_INPUT": 4, "UNKNOWN": 2, "DIRECT_UPLOAD_PUT_FAILED": 0},
+    "diagnosticPrefix1105": {"stage": "PUT", "kind": "NETWORK", "online": "1", "msBucket": "<1s", "eventCount": 3},
+    "successSideFileSizeDimension": "ABSENT",
+    "verdict": "真实 >4MB 端到端成功仍 UNKNOWN（成功侧无 file_size 维度）；11-06 零 PUT_FAILED 不等于有真实大文件成功流量，也不满足连续 3 日门禁"
+  },
+  "crossDocumentFindings": [
+    {
+      "id": "D-1",
+      "severity": "P2",
+      "finding": "同日两快照口径不同：07:19 巡检详报 T-1(11-06) 上传12/完成5/失败6；12:26 advanced 快照 上传13/完成6/失败6。属 GA4 同日回填、采集时点不同，不是数据错误。",
+      "action": "引用任一数字必须带采集时点与口径；禁止相减称增长或混用"
+    },
+    {
+      "id": "D-2",
+      "severity": "P2",
+      "finding": "编号漂移：巡检详报 §7/§8 把 iOS 观察标 R2、直传排查标 R3；待办表 §十三 中 R2=直传 CSP 根因、R3=iOS 观察（已于 11-07 09:20 复核作废降级 P2）。详报还沿用已作废的「iOS 39%(16/41)」。",
+      "action": "不在本轮改自动化生成的历史详报（每日重生成，改单份无意义）；登记残余，11/09 周评审统一编号与作废标记"
+    }
+  ],
+  "routeDecision": {
+    "authority": "docs/11月逐日执行计划-红队修订版.md 顶部「2026-11-05授权增补」优先于旧表",
+    "todayMainline": "11/07 = M8-17 上传取证准备（1h）；旧表「四路线转换代表测试」已并入 11/12 矩阵，不要求当天全做",
+    "status": "doing（11/11 针对性修复、11/12 浏览器与输出验收未做，不关闭）"
+  },
+  "verdict": "PASS WITH RESIDUALS：M8-17 当日取证准备经独立通道复核成立；生产 SHA 缺口已补；四路线转换与 >4MB 端到端仍 UNKNOWN，维持 11/12 验收"
+}
