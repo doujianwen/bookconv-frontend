@@ -93,8 +93,11 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
   } else {
     const unknown = Number(fec.UNKNOWN) || 0
     const ratio = failed > 0 ? unknown / failed : 0
-    if (ratio > 0.5) push('B2', name, 'P1', 'FAIL', `UNKNOWN 占比 ${(ratio * 100).toFixed(0)}% > 50% → 失败明细大半不可判定，归因存疑`)
-    else push('B2', name, 'P1', 'PASS', `failedByErrorCode 齐备，UNKNOWN 占比 ${(ratio * 100).toFixed(0)}%（失败${failed}次）`)
+    // 2026-11-07 收窄（消除 P2 残余）：原 ratio>0.5 偏宽，近 7 日实测 UNKNOWN 占比 33%~40% 持续出现
+    // （前端 error_code 覆盖缺口，api-error.ts 未识别码塌缩）。纯比例阈值在低样本会误报（如 1/1=100%），
+    // 故加绝对下限 unknown>=2 吸收单点噪声，避免假 FAIL（假门禁比没门禁更坏）。
+    if (ratio > 0.3 && unknown >= 2) push('B2', name, 'P1', 'FAIL', `UNKNOWN 占比 ${(ratio * 100).toFixed(0)}% 且绝对数 ${unknown}≥2 → 失败明细近三成不可判定，归因存疑`)
+    else push('B2', name, 'P1', 'PASS', `failedByErrorCode 齐备，UNKNOWN 占比 ${(ratio * 100).toFixed(0)}%（失败${failed}次，UNKNOWN ${unknown}）`)
   }
 }
 

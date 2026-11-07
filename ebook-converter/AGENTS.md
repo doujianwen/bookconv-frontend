@@ -44,3 +44,16 @@ ode scripts/codex-multica-sync.js add-comment <key> <file>
 ode scripts/codex-multica-sync.js list-pending
 
 See ../docs/codex-multica-sync.md for full documentation.
+
+## Closure Gate（关闭门禁 · 硬规则）
+
+任何把待办项标为 `已关闭` / `✅ done`，或在汇报中声称某事项「已关闭 / 已完成」之前，**必须先跑**：
+
+```
+node scripts/verify-closure-gates.mjs --no-live
+```
+
+- `exit 1`（存在假关闭）→ 禁止关闭，先修 gate 或降级为「待观察」。
+- `UNKNOWN` → 必须人工逐条核验并写明证据，不得当作已验证。
+- `exit 0 且无 UNKNOWN` → 可直接关闭；`exit 0 但含 UNKNOWN` → 人工核验通过后方可关闭。
+- 权威条文见 `.workbuddy/TASK-GOVERNANCE.md` §6（项目专属约束）。
