@@ -614,6 +614,46 @@ describe("conversion backend client", () => {
       expect(reason).toContain("BadZipfile");
       expect(reason).not.toContain("after 1 retry");
     });
+
+    describe("DRM detection short-circuit (2026-11-07)", () => {
+      it("returns a 422 DRM_PROTECTED response and does NOT fall back to CloudConvert", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () =>
+            new Response(
+              JSON.stringify({
+                error: "This file is protected by DRM and cannot be converted.",
+                code: "DRM_PROTECTED",
+              }),
+              { status: 422 },
+            ),
+        ) as unknown as typeof global.fetch;
+
+        let reason: string | undefined;
+        const resp = await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+
+        expect(resp).not.toBeNull();
+        expect(resp!.status).toBe(422);
+        const body = (await resp!.json()) as { code: string; error: string };
+        expect(body.code).toBe("DRM_PROTECTED");
+        expect(body.error).toContain("remove DRM");
+        // DRM 是用户侧输入问题：不应计入熔断、不应回退（onFallback 不应被调用）
+        expect(reason).toBeUndefined();
+      });
+
+      it("does not short-circuit a non-DRM 4xx (still falls back)", async () => {
+        setEnv();
+        global.fetch = jest.fn(
+          async () =>
+            new Response(JSON.stringify({ error: "bad input", code: "OTHER_4XX" }), { status: 422 }),
+        ) as unknown as typeof global.fetch;
+
+        let reason: string | undefined;
+        const resp = await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } });
+        expect(resp).toBeNull(); // 仍回退
+        expect(reason).toContain("backend HTTP 422");
+      });
+    });
   });
 });
 });

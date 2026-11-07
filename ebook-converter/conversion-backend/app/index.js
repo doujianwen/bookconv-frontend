@@ -236,7 +236,11 @@ async function doConvert(req, res) {
     if (result.rawStderr) {
       log("STDERR", String(result.rawStderr).replace(/\s+/g, " ").trim().slice(0, 1500));
     }
-    return json(res, 500, { error: result.error, code: "CONVERSION_FAILED" });
+    // DRM 受保护是确定性用户侧输入问题，非后端健康故障：返回 422 + DRM_PROTECTED，
+    // 让委托方短路返回「去 DRM」提示而不回退 CloudConvert、不计入熔断（2026-11-07）。
+    const code = result.code || "CONVERSION_FAILED";
+    const status = code === "DRM_PROTECTED" ? 422 : 500;
+    return json(res, status, { error: result.error, code });
   }
 
   // 4) stream output back (mirror convert-handler.buildFileResponse contract)

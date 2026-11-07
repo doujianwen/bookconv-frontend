@@ -23,6 +23,7 @@
 
 import { NextResponse } from "next/server";
 import { notifyConversionFailure } from "@/lib/alerts";
+import { getFriendlyMessage } from "@/lib/error-handler";
 import {
   recordBackendBusy,
   recordBackendFailure,
@@ -203,6 +204,17 @@ export async function delegateToBackend(
   if (res.status === 200) {
     recordBackendSuccess();
     return streamBackendHit(res);
+  }
+
+  // 路径 2.5：后端确定性检出 DRM（code === "DRM_PROTECTED"）。
+  // 用户侧输入问题（文件受 DRM 保护），非后端健康故障——不计入熔断、不重试、
+  // 不回退 CloudConvert，直接把「去 DRM」提示返回给客户端（2026-11-07）。
+  // 必须排在路径 4（通用 4xx → 回退）之前，否则 422 会被当成普通失败而回退。
+  if (res.status >= 400 && (await readBackendCode(res)) === "DRM_PROTECTED") {
+    return NextResponse.json(
+      { error: getFriendlyMessage("DRM_PROTECTED"), code: "DRM_PROTECTED" },
+      { status: 422, headers: { ...rateHeaders, "X-Conversion-Backend": "drm-rejected" } },
+    );
   }
 
   // 路径 3：429 容量信号 → 不重试（重试徒增负载），只记观测数。

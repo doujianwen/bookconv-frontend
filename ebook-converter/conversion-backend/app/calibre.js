@@ -104,10 +104,15 @@ export async function convertWithCalibre(inputPath, outputPath, opts = {}) {
     // DRM 判定改为扫**完整** stderr（原实现只看前 200 字符）：CloudConvert 侧的
     // 历史审计（2026-10-12）已证实 DRM 字样可能落在消息靠后位置，同样的漏判在
     // Calibre 的 Traceback 结构下更严重——根因在最后一行，前 200 字符必然看不到。
-    if (/\bDRM\b/i.test(haystack)) {
+    // 2026-11-07 修复：原 /\bDRM\b/i 匹配不到 calibre.ebooks.DRMError —— DRM 紧贴
+    // Error，其后紧跟单词字符 E，无词边界，\bDRM\b 在 DRMError 中不成立，导致 DRM
+    // 分支从未触发、被兜底成 CONVERSION_FAILED（本罪证 job cf2904e2 的 stderr 即
+    // `calibre.ebooks.DRMError: …epub`）。增补 DRMError 分支。
+    if (/\bDRM\b|DRMError/i.test(haystack)) {
       return {
         success: false,
         error: "This file is protected by DRM and cannot be converted.",
+        code: "DRM_PROTECTED",
         rawStderr: rawStderr.slice(0, 6000),
       };
     }
