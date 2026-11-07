@@ -1,0 +1,58 @@
+#!/bin/sh
+# bookconv pre-push 钩子：发布前跑「纯纠错智能体」门禁。
+# 总是运行：结构层 seo-critic 全量审计（死链 / 注册收敛 / i18n / llms.txt 同步），
+# 任何文件改动都可能引入这类问题，故不限定 blog；
+# 内容层 critic-layer.blog 仅对本次 blog 改动 slug 做 scoped BLOCK，
+# GATE_SLUGS 为空时仅报告存量问题，不阻断发布。
+#
+# 关键设计（防"狼来了"）：
+#   - 门禁卡「本次提案的博文」（scoped），存量 WARN 仅报告不阻断；
+#   - 失败即拦截（fail-closed）：node 缺失 / 门禁脚本异常都会阻断 push，
+#     绝不悄悄放行（fail-open 是安全漏洞）；
+#   - 门禁自身故障（exit 2 / 子进程崩溃）与内容 BLOCK（exit 1）明确区分，
+#     避免把"门禁坏了"误报成"代码有问题"。
+# 前置依赖：git 的 shell 环境中 `node` 必须在 PATH（否则本钩子直接拦截并提示）。
+
+# 0) node 可用性自检（fail-closed）
+if ! command -v node >/dev/null 2>&1; then
+  echo "⛔ 纠错门禁：未找到 node（git 的 shell 环境 PATH 中无 node），无法运行发布审查。"
+  echo "   请在 PATH 中加入 Node.js（本项目用 managed node：C:/Users/29537/.workbuddy/binaries/node/versions/22.22.2/node.exe），再重试 push。"
+  exit 1
+fi
+
+zero=0000000000000000000000000000000000000000
+slugs=""
+while read local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_sha" = "$zero" ]; then
+    # 首推（远程无对应分支）：用 空树..本地 列出本次要推的所有博文
+    range="$zero..$local_sha"
+  else
+    range="$remote_sha..$local_sha"
+  fi
+  # 取出本次 push 涉及的博文 slug
+    # 从 git root（父目录）跑，路径需带 ebook-converter/ 前缀
+    added=$(git diff --name-only "$range" -- ebook-converter/src/data/blog 2>/dev/null \
+    | sed 's#.*/##' | sed 's/\.ts$//' | grep -vE '^(index|types|rss)$' | paste -sd, -)
+  if [ -n "$added" ]; then
+    slugs="$added"
+  fi
+done
+
+# 总是运行发布门禁：
+#   - 结构层 seo-critic 全量审计（scoped:false），任何文件改动都可能引入死链/注册问题；
+#   - 内容层 critic-layer.blog 仅对本次 blog 改动 slug 做 scoped BLOCK，
+#     GATE_SLUGS 为空时仅报告存量问题，不阻断发布。
+echo "⛔ 纠错门禁：运行发布审查（结构层全量 + 内容层 scoped=${slugs:-无}）…"
+GATE_SLUGS="$slugs" node ebook-converter/scripts/publish-gate.mjs
+rc=$?
+if [ $rc -eq 2 ]; then
+  echo "⛔ 发布门禁自身故障（exit 2，UNKNOWN）：门禁子进程崩溃（多为 Windows EBUSY）或判据无法执行。"
+  echo "   这是门禁故障，不是内容问题。请确认 Node 环境正常后重试；"
+  echo "   紧急逃生（自担风险，绕过门禁）：git -c core.hooksPath=/dev/null push <remote> <branch>"
+  exit 1
+fi
+if [ $rc -ne 0 ]; then
+  echo "⛔ 发布被纠错门禁拦截（exit $rc）：请先修复上述 BLOCK/critical，再 push。"
+  exit 1
+fi
+exit 0

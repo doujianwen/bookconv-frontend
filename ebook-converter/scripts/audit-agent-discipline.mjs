@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveHooksDir, REQUIRED_HOOKS, FIX_COMMAND } from './lib/hooks-path.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP = path.resolve(__dirname, '..');
@@ -227,12 +228,17 @@ add(
 // 所以判据必须验证「它自己挂在哪、怎么被调用」。
 //
 // 环境判定（实测必需，否则 CI 永久红 —— 这是我写第一版时踩的坑）：
-//   .git/hooks/ 天然不入库。GitHub runner 的 fresh clone 永远没有 pre-commit，
-//   若在 CI 上把「钩子缺失/未调用」计入 FAIL ⇒ 每跑必红 ⇒ 训练人忽略输出
-//   （比没门禁更坏）。因此：CI 环境只核对 CI 侧挂载，hooks 侧判为 UNKNOWN 并明示；
-//   本地环境才强制核对 hooks 内容。判据不可判定时降级，绝不假装通过。
+//   CI 环境只核对 CI 侧挂载，hooks 侧判为 UNKNOWN 并明示；本地环境才强制核对 hooks 内容。
+//   判据不可判定时降级，绝不假装通过。
+//
+// 2026-11-07 工作流迭代 #1：钩子已入库到 ebook-converter/scripts/hooks/，
+//   由 core.hooksPath 指向。旧版硬编码 .git/hooks/pre-commit 有两个致命误判：
+//   ① fresh clone 设了 hooksPath 却读不到 .git/hooks ⇒ 误报「无挂载点」逼人 --no-verify；
+//   ② 旧副本仍在但早已不执行 ⇒ 读到一份死文件却报「已挂载」（假挂载）。
+//   现改为解析 .git/config 的 [core].hooksPath 定位【实际生效】目录，纯 fs 不 fork git。
 const IN_CI = !!(process.env.CI || process.env.GITHUB_ACTIONS);
-const HOOK = path.join(REPO, '.git/hooks/pre-commit');
+const ACTIVE = resolveHooksDir(REPO);
+const HOOK = path.join(ACTIVE.dir, 'pre-commit');
 const i4Problems = [];
 const i4Lines = [];
 let hookSrc = '';
@@ -258,10 +264,21 @@ if (!fs.existsSync(CI)) {
 }
 
 if (IN_CI) {
-  i4Lines.push('CI 环境：.git/hooks 不入库（fresh clone 必然缺失）⇒ 本地钩子状态在此不可判定，降级为 UNKNOWN（不计成败）');
+  i4Lines.push('CI 环境：本地 hooks 状态在此不可判定，降级为 UNKNOWN（不计成败）；CI 侧挂载已在上方核对');
 } else if (!hookExists) {
-  i4Problems.push('.git/hooks/pre-commit 不存在 ⇒ 本门禁无本地挂载点（hooks 不入库，新克隆/换机器需手动重装）');
+  i4Problems.push(`生效 pre-commit 不存在（${HOOK}）⇒ 本门禁无本地挂载点。修复：${FIX_COMMAND}`);
 } else {
+  // 2026-11-07 #1：hooksPath 生效时同目录必须同时有 pre-commit 与 pre-push。
+  // 实测 .git/hooks/ 原本就有这两个生效钩子；只搬一个 ⇒ 另一个静默失效。
+  if (ACTIVE.configured) {
+    for (const h of REQUIRED_HOOKS) {
+      if (!fs.existsSync(path.join(ACTIVE.dir, h))) {
+        i4Problems.push(`core.hooksPath 目录缺 ${h} ⇒ 该钩子不会执行（只搬一个 = 另一个静默失效）`);
+      } else {
+        i4Lines.push(`hooksPath → ${h} ✓`);
+      }
+    }
+  }
   // 真实存在的钩子：核对「谁被调用」+「被调用的是否存在」
   const hookScripts = [...hookSrc.matchAll(/node\s+(?:scripts\/)?([A-Za-z0-9_.-]+\.mjs)/g)].map((m) => m[1]);
   // 假挂载：钩子引用了不存在的脚本（必须按钩子里真实出现的路径查，

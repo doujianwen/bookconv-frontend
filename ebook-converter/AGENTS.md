@@ -57,3 +57,16 @@ node scripts/verify-closure-gates.mjs --no-live
 - `UNKNOWN` → 必须人工逐条核验并写明证据，不得当作已验证。
 - `exit 0 且无 UNKNOWN` → 可直接关闭；`exit 0 但含 UNKNOWN` → 人工核验通过后方可关闭。
 - 权威条文见 `.workbuddy/TASK-GOVERNANCE.md` §6（项目专属约束）。
+
+## Gate Mount Check（门禁挂载自检 · 硬规则 · 2026-11-07）
+
+钩子已入库 `ebook-converter/scripts/hooks/`（`pre-commit` + `pre-push`），由 `core.hooksPath` 指向。**该配置是本机 git 配置、不入库**：新克隆/换机器后门禁不会自动生效。实质任务开始前必须跑：
+
+```
+node scripts/verify-hook-mount.mjs
+```
+
+- `exit 0`（PASS）→ 生效钩子与入库版本一致，可继续。
+- `exit 1`（FAIL）→ 按脚本输出的修复命令执行一次：`git config core.hooksPath ebook-converter/scripts/hooks`，再复跑至 PASS。
+- `exit 2`（UNKNOWN）→ 必须告警并写明不可判定原因，**不得声称「门禁已生效」**。
+- 禁止把 `.git/hooks/` 里的旧副本当作挂载证据（hooksPath 生效时旧副本不执行）。自检脚本自带 `--self-test` 注入/恢复反向验证。

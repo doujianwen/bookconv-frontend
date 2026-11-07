@@ -26,6 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveHooksDir, REQUIRED_HOOKS, FIX_COMMAND } from './lib/hooks-path.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..', '..'); // scripts/ 在仓库根
@@ -261,35 +262,29 @@ add(
   secrets.length === 0 ? '已扫 .js/.mjs/.yml/.sh' : secrets.join('\n')
 );
 
-// I5 pre-commit 钩子存在且可执行 —— 【故意只作信息项，不参与成败】
+// I5 生效钩子状态 —— 【故意只作信息项，不参与成败】（避免 CI 永久红训练人忽略输出）
 //
-// 为什么降级（2026-10-04 实测修正，这是本文件自身的一处「假门禁」）：
-//   `.git/hooks/` 是 git 的机制目录，天然【不入库】。GitHub runner 的 fresh clone
-//   永远没有 .git/hooks/pre-commit ⇒ 若把这项计入 FAIL，CI 就是永久红。
-//   而永久红的门禁比没门禁更坏：会训练人忽略输出（2026-10-04 用户级铁律第 6 条）。
-//   同时 CI 上 hooks 内容本就【不可判定】，按纪律「判据无法执行 ⇒ 降级 UNKNOWN，不报 FAIL」。
-//
-// 真正强制 pre-commit 落地的地方在本地：audit-agent-discipline.mjs 的 I4，
-//   它读钩子真实内容并逐个核对「被调用的脚本是否存在」+「名单里的门禁是否真被调用」，
-//   那是可执行判据；本项只是提醒，避免两个门禁在 CI 上互相制造假红。
-const hook = path.join(REPO_ROOT, '.git', 'hooks', 'pre-commit');
-let hookNote;
-if (!fs.existsSync(hook)) {
-  hookNote =
-    '当前环境无 .git/hooks/pre-commit。\n' +
-    '  · 在 CI 上属正常（hooks 不入库，fresh clone 必然没有）⇒ 本项不计入成败。\n' +
-    '  · 在本地开发机上则意味着【没装钩子】：需从版本库外的备份重装，\n' +
-    '    否则内容类事故只能等 push 门禁（pre-push 只审博文 slug，非博文文件不经它）。\n' +
-    '  · 本地落地情况由 audit-agent-discipline.mjs 的 I4 强制核对。';
-} else {
+// 2026-11-07 工作流迭代 #1：钩子已入库（ebook-converter/scripts/hooks/），由 core.hooksPath
+//   指向；旧版只读 .git/hooks/pre-commit 会把「已挂载」误报成「未安装」，也会漏掉
+//   pre-push 没搬的情况。现按 .git/config 解析实际生效目录，并把两个钩子一起列出。
+//   强制判据在 audit-agent-discipline.mjs 的 I4 与 scripts/verify-hook-mount.mjs，本项仅提醒。
+const ACTIVE_HOOKS = resolveHooksDir(REPO_ROOT);
+const hookLines = [`来源：${ACTIVE_HOOKS.source}`, `生效目录：${ACTIVE_HOOKS.dir}`];
+for (const name of REQUIRED_HOOKS) {
+  const p = path.join(ACTIVE_HOOKS.dir, name);
+  if (!fs.existsSync(p)) {
+    hookLines.push(`  ${name}：缺失 ⇒ 不会执行（只搬一个 = 另一个静默失效）`);
+    continue;
+  }
   try {
-    fs.accessSync(hook, fs.constants.X_OK);
-    hookNote = '存在且可执行 ✓（本地已挂载）';
+    fs.accessSync(p, fs.constants.X_OK);
+    hookLines.push(`  ${name}：存在且可执行 ✓`);
   } catch {
-    hookNote = '存在但不可执行（需 chmod +x）⇒ 本地钩子不会生效';
+    hookLines.push(`  ${name}：存在但不可执行（需 chmod +x）`);
   }
 }
-add(true, 'I5 pre-commit 钩子状态（信息项，CI 上不可判定故不计成败）', hookNote);
+if (!ACTIVE_HOOKS.configured) hookLines.push(`  未设置 hooksPath ⇒ 修复：${FIX_COMMAND}`);
+add(true, 'I5 生效钩子状态（信息项，CI 上不可判定故不计成败）', hookLines.join('\n'));
 
 // ── 输出 ──
 console.log('==========================================');

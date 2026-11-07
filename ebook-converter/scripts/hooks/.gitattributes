@@ -1,0 +1,7 @@
+# Git 钩子是 shell 脚本：CRLF 会让 shebang 变成 `#!/bin/sh^M`（bad interpreter），
+# 在 Linux/macOS 克隆后钩子静默失效 —— 比没有门禁更坏。
+# 2026-11-07 注入实测（core.autocrlf=true）：worktree 11468B/CR0
+# → checkout 11654B/CR186，首行 `#!/bin/sh\r\n`。
+# eol=lf 强制入库与检出都用 LF，不受本机 autocrlf 影响。
+pre-commit text eol=lf
+pre-push text eol=lf
