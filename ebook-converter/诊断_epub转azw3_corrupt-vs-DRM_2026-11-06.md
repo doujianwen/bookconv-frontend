@@ -134,4 +134,17 @@
 - 已提交 `6cc6167`（6 文件：后端 `calibre.js`/`index.js` + 后端测试 + 前端 `conversion-backend-client.ts`/测试 + 本诊断报告），并推送 `origin/main`（`dcab9e2..6cc6167`）。pre-commit 五道门禁 + pre-push 发布门禁（结构层/description 层/内容层）全部放行。
 - 前端（Vercel）自动部署已由 push 触发（冷启 60–90s）；部署后线上首页 `200` 存活。远端 `refs/heads/main` = `6cc6167` 已核实。
 - **仓库与生产现已一致**：后端源码经 git 入库，且与 HK 服务器已部署内容同源（同一份文件 scp + commit）。
-- **仍缺真实 DRM 端到端验证**：无可用 DRM 样本文件，无法实测"真实 DRM EPUB → 用户看到『去 DRM』提示"。该代码路径已由前端单测 `40/40` + 后端 `7/7` 覆盖；建议你手头有一份真实 DRM EPUB 时，从线上转换页复测一次，确认用户侧文案为「请先去除 DRM」而非「重新下载」。
+- **端到端验证（2026-11-07 合成 DRM 样本实测·已闭环）**：见 §10。
+
+## 10. DRM 端到端实测（2026-11-07 · 合成样本）
+
+**样本构造**：用 python3 生成一份结构合法、但带 `META-INF/encryption.xml`（`EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"` 引用 `OEBPS/chapter.xhtml`）的 EPUB（1398B）。该样本被服务器**真实 calibre**（`/usr/lib/calibre`，非 mock）判定为 DRM：stderr 出现 `epub_input.py: process_encryption → raise DRMError` → `calibre.ebooks.DRMError: sample-drm.epub`，与原始告警异常类完全一致。
+
+**三层实测结果（全过，均为实测非推断）**：
+1. **后端直连**（POST `:3001/api/convert-internal`，secret 从服务器 .env 取用、不打印）：`http=422`，body `{"error":"This file is protected by DRM and cannot be converted.","code":"DRM_PROTECTED"}`。服务器日志新增 `2026-11-07 FAIL epub -> azw3 This file is protected by DRM...`（旧 job 为 `Conversion failed: calibre.ebooks.DRMError`）。
+2. **线上前端（Vercel）e2e**（POST `https://www.bookconv.com/api/convert`，同一份样本）：`http=422`，响应头 `X-Conversion-Backend: drm-rejected`，body `{"error":"This file appears to be DRM-protected. Please remove DRM before converting.","code":"DRM_PROTECTED"}`。`drm-rejected` 头仅新路径 2.5 产出 ⇒ 证明确为已上线的新前端短路返回。
+3. **用户侧文案**：`DRM_PROTECTED` 友好文案 = `error-handler.ts:110`「This file appears to be DRM-protected. Please remove DRM before converting.」——不再是旧的「re-download」。
+
+**结论**：先前 §7 的 UNKNOWN（未见真实 DRM 文件）已由本实测**转为 VERIFIED**。修复在后端 + 线上前端均已生效，端到端链路（真实 calibre DRM 判定 → 后端 422 DRM_PROTECTED → 前端路径 2.5 短路 → 用户正确提示）实测通过。
+
+**清理**：测试样本与产物已从服务器 `/tmp/drm-test` 与本地 temp 删除，生产无残留。
