@@ -130,6 +130,8 @@
 - 已部署代码含新逻辑：`index.js:242` `code === "DRM_PROTECTED" ? 422 : 500`；`calibre.js:107-115` 正则 `/\bDRM\b|DRMError/i` + `code:"DRM_PROTECTED"`。
 - 服务器侧重跑 `mock-run.js`（`.mjs` 强制 ESM，加载已部署 `app/index.js`）：**12/12 PASS**（health/403/200/文件名 RFC5987/422/400/413/清理）。
 
-**⚠️ 仍未闭环的两点**：
-- **前端（Vercel）半未上线**：`src/lib/conversion-backend-client.ts` 路径 2.5 仍在本地工作树、未提交推送。仅后端上线时，真实 DRM 文件被后端返 422，但**当前线上前端**仍按"非 200 即回退本地"处理 → 用户仍收到「重新下载」旧提示。需提交并推送前端文件触发 Vercel 部署，修复才对用户完全生效。
-- **仓库与生产不同步**：后端改动经 scp 上线，未提交 git；若后续有人按 git 重新部署会取到旧码。建议提交后端两文件 + 测试 + 前端文件（一并触发 Vercel 完成闭环）。
+**闭环状态（2026-11-07 已提交并推送）**：
+- 已提交 `6cc6167`（6 文件：后端 `calibre.js`/`index.js` + 后端测试 + 前端 `conversion-backend-client.ts`/测试 + 本诊断报告），并推送 `origin/main`（`dcab9e2..6cc6167`）。pre-commit 五道门禁 + pre-push 发布门禁（结构层/description 层/内容层）全部放行。
+- 前端（Vercel）自动部署已由 push 触发（冷启 60–90s）；部署后线上首页 `200` 存活。远端 `refs/heads/main` = `6cc6167` 已核实。
+- **仓库与生产现已一致**：后端源码经 git 入库，且与 HK 服务器已部署内容同源（同一份文件 scp + commit）。
+- **仍缺真实 DRM 端到端验证**：无可用 DRM 样本文件，无法实测"真实 DRM EPUB → 用户看到『去 DRM』提示"。该代码路径已由前端单测 `40/40` + 后端 `7/7` 覆盖；建议你手头有一份真实 DRM EPUB 时，从线上转换页复测一次，确认用户侧文案为「请先去除 DRM」而非「重新下载」。
