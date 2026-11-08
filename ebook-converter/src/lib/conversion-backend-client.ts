@@ -168,12 +168,31 @@ export async function delegateToBackend(
    * 统一处理「最终放弃」：记录一次故障 + 告警卡归因 + 必要时通知熔断开启。
    * retryTag 仅进 console.warn（运维日志），不进 onFallback（告警卡串格式保持
    * 现状，避免破坏既有 5xx 测试与值班人阅读习惯）。
+   *
+   * @param countFailure 是否计入熔断「健康失败」。确定性 CONVERSION_FAILED
+   *   （后端活着、已完整处理请求、只是拒收这个输入）不是健康证据——计入会把
+   *   「用户坏文件」放大成「后端不可用」：3 次连续坏文件即熔断开闸，误报红卡
+   *   并让全站绕过后端 60s（2026-11-08 告警 1 实证：3× epub→txt 因无效 CLI
+   *   选项 500 → 熔断开闸）。与 429 走 recordBackendBusy 不计熔断同理。
+   *   已知取舍：若未来出现「某类输入全部确定性失败」的后端 bug，熔断不再兜底，
+   *   依赖灰卡（按签名节流）+ 后端 FAIL/STDERR 日志发现——后端响应是快失败，
+   *   不会重新引入熔断要避免的 30-90s 超时成本。
    */
-  async function failWith(retryTag: string, statusOrMsg: string, detail: string): Promise<void> {
+  async function failWith(
+    retryTag: string,
+    statusOrMsg: string,
+    detail: string,
+    countFailure = true,
+  ): Promise<void> {
     opts.onFallback?.(`backend HTTP ${statusOrMsg}${detail}`);
-    const outcome = recordBackendFailure();
+    const outcome = countFailure
+      ? recordBackendFailure()
+      : { transitionedToOpen: false as const };
     if (outcome.transitionedToOpen) {
-      await notifyBackendDown(`backend returned HTTP ${statusOrMsg}`);
+      // 2026-11-08：把后端响应体的 code+error 一并带上。此前只写
+      // `backend returned HTTP 500`，值班人无法区分「确定性转换失败」与
+      // 「真基础设施故障」（告警 1 卡片即因此不可归因）。
+      await notifyBackendDown(`backend returned HTTP ${statusOrMsg}${detail}`);
     } else {
       console.warn(
         `[convert] backend delegation failed${retryTag} (${statusOrMsg}); falling back to CloudConvert`,
@@ -248,11 +267,12 @@ export async function delegateToBackend(
   // 后端往返 + 轻微加负。判定只依赖响应体 code，不依赖任何特定告警或输入来源
   // （2026-11-04 红队曾推翻以两条告警作为实证的写法，故此处只述代码契约）。
   //
-  // 刻意保持其余行为完全不变：onFallback 串、计 1 次故障、回退 CloudConvert
-  // 全部沿用 failWith——既有 36 个用例与告警卡解析零破坏。区别仅在省掉一次必败
-  // attemptOnce()。输入有效性仍由回退路径的 runConversion→validateInputFile 负责。
+  // 2026-11-08（告警 1 / 2 复盘）：countFailure=false——确定性转换失败不再计入
+  // 熔断健康失败。onFallback 串、告警卡串、回退 CloudConvert 行为全部不变；
+  // 唯一变化是不再积累熔断计数（输入有效性由回退路径的 runConversion→
+  // validateInputFile 负责，灰卡照发）。
   if (res.status >= 500 && (await readBackendCode(res)) === "CONVERSION_FAILED") {
-    await failWith("", String(res.status), await readBackendDetail(res));
+    await failWith("", String(res.status), await readBackendDetail(res), false);
     return null;
   }
 

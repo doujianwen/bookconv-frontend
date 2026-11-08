@@ -66,9 +66,15 @@ export async function POST(request: NextRequest) {
       const uploadKey =
         typeof uploadKeyRaw === "string" && uploadKeyRaw.length > 0 ? uploadKeyRaw : undefined;
 
+      // 纯 JS 已覆盖的组合不委托后端（2026-11-08）：后端输出并不更好，却多一次
+      // 后端往返、并暴露一次「确定性失败计数」面。epub→html 是既有例外；
+      // epub→txt 2026-11-08 加入——后端 Calibre 7.6.0 的 txt 输出带章节 TOC 噪声，
+      // 且此前 calibre.js 传的 --dont-add-chapters-to-toc 选项不存在，造成所有
+      // X→txt 后端转换 100% 500（告警 1 根因）。前端纯 JS epub→txt 输出更干净。
       const canDelegate =
         sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend()
-        && !(sourceFormat === 'epub' && targetFormat === 'html');
+        && !(sourceFormat === 'epub' && targetFormat === 'html')
+        && !(sourceFormat === 'epub' && targetFormat === 'txt');
 
       // Large-file path (R2 direct upload, 2026-10-28): the bytes never traverse
       // the 4.5MB Vercel inbound edge limit, so for upload_key requests we fetch

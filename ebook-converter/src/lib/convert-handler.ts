@@ -21,7 +21,7 @@ import { createHash } from "node:crypto";
 import { SUPPORTED_FORMATS, normalizeFormat } from "@/lib/conversion-map";
 import { mapErrorCode, getFriendlyMessage, sanitizeError } from "@/lib/error-handler";
 import { runConversion, isPureJsConversion, type ConversionJobResult } from "@/lib/conversion";
-import { notifyConversionFailure } from "@/lib/alerts";
+import { notifyConversionFailure, inferLocalValidation } from "@/lib/alerts";
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_BYTES, MAX_UPLOAD_FILE_SIZE_MB } from "@/lib/file-size-limit";
 import { checkConversionBudget, recordCreditSpend } from "@/lib/conversion-budget";
 import { getCachedConversion, storeConversion } from "@/lib/conversion-cache";
@@ -338,17 +338,17 @@ export async function convertAndStream(
     const errorCode = mapErrorCode(convMsg);
     // 诊断字段（M8-10 Task 3，2026-10-27）：Vercel Hobby 1h 日志留存使 failedTask
     // JSON 事后不可取，故把关键归因信息直接写进告警卡。inputHash/inputSize 来自
-    // 输入字节；localValidationInferred 由错误码反推（CORRUPT_INPUT ⇒ §3.5 本地拦截失败，
-    // 其余 ⇒ 文件过 §3.5 才到 CC）；注意这是「反推值」非实测 §3.5 结果——
-    // 例：「Input task has failed」过 §3.5 仍被 CC import 拒收，反推为 passed，
-    // 不可读作「输入已校验干净」。firstFailingEngine 解析自错误串 trail 首个 engine=XXX。
+    // 输入字节；localValidationInferred 判定 §3.5 是否真拦截了该文件——签名见
+    // alerts.ts inferLocalValidation（2026-11-08 修正：旧逻辑按
+    // errorCode===CORRUPT_INPUT 反推，把 CC import 拒收「Input task has failed」
+    // ——文件其实已过 §3.5——也误标成 failed）。firstFailingEngine 解析自错误串
+    // trail 首个 engine=XXX。
     const inputHash =
       buffer && buffer.length > 0
         ? createHash('sha256').update(buffer).digest('hex').slice(0, 12)
         : undefined;
     const inputSize = buffer ? buffer.length : undefined;
-    const localValidationInferred: 'passed' | 'failed' | 'unknown' =
-      errorCode === 'CORRUPT_INPUT' ? 'failed' : 'passed';
+    const localValidationInferred = inferLocalValidation(convMsg);
     const engineMatch = convMsg.match(/engine=(\w+)/i);
     const firstFailingEngine = engineMatch ? engineMatch[1] : 'n/a';
     // 实时 Feishu 告警（节流 + 3s 超时，内部消化异常）：生产同步路径此前无任何

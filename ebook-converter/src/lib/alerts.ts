@@ -62,12 +62,16 @@ export interface ConversionFailureAlert {
   /** 输入文件字节数 */
   inputSize?: number;
   /**
-   * 本地校验「反推」结果（NOT 真实 §3.5 运行产物）。
-   * 由错误码是否命中 CORRUPT_INPUT 反推：命中→failed（被 §3.5 本地拦截）、
-   * 否则→passed（文件过 §3.5 才到 CC）。与 §3.5 实测结果不是一回事——
-   * 例如「Input task has failed」过 §3.5 仍被 CC import 拒收，反推为 passed，
-   * 易被误读成「输入已校验干净」。2026-11-01 红队复核(F6)将标签由
-   * "§3.5 pre-check" 改名为 localValidationInferred 并显式标注「反推」。
+   * 本地校验 §3.5 是否拦截了该文件的判定结果。
+   * 2026-11-08 修正：不再按 errorCode===CORRUPT_INPUT 反推——那会把 CC import
+   * 级拒收「Input task has failed」（文件其实**已通过** §3.5，是在引擎侧被拒）
+   * 误标成 failed，值班人会误读成「本地校验拦下了它」（2026-11-07 告警
+   * Job 38ac1f26 的卡片即此误标）。改为按 convMsg 是否命中 §3.5 的真实错误
+   * 签名判定，见 inferLocalValidation()。2026-11-01 红队复核(F6)将标签由
+   * "§3.5 pre-check" 改名为 localValidationInferred；本次修的是反推方向本身。
+   * ⚠️ 历史可比性：2026-11-08 之前的卡片该字段语义是「errorCode 是否
+   * CORRUPT_INPUT」，与新语义（§3.5 签名命中）在 CC-import 拒收这一子类上不同，
+   * 跨日期统计时不可直接混用。
    */
   localValidationInferred?: 'passed' | 'failed' | 'unknown';
   /** 首个失败引擎（解析自错误串 trail 的首个 engine=XXX），n/a 表示无 */
@@ -161,6 +165,39 @@ export function classifyAlertSeverity(
   const text = (rawError || '').toLowerCase();
   if (USER_SIDE_PATTERNS.some((p) => text.includes(p))) return 'user';
   return USER_SIDE_ERROR_CODES.has(mapErrorCode(rawError || '')) ? 'user' : 'system';
+}
+
+// ---------------------------------------------------------------------------
+// §3.5 本地校验错误签名（2026-11-08 新增）
+//
+// 来源 = conversion.ts validateInputFile() 实际抛出的错误串（逐字核对）：
+//   'corrupt epub: …'            §3.5 深校验（CRC / 断链 / mimetype 错）
+//   'Invalid zip file …'         EOCD 缺失（前缀契约，见 tests/reverse-verify）
+//   'Invalid or missing opf'     container/OPF 检查
+//   'not a valid eBook format …' 魔数 / 结构前置校验
+//   'Empty input file'           0 字节（convert-handler 已前置拦截，防御性保留）
+//
+// convMsg 只可能来自本地校验或 CloudConvert：后端（自建 Calibre）的错误只进
+// delegationFallback 运维字段，不进 convMsg（见 convert-handler.ts catch 块），
+// 故后端 stderr 不会污染本判定。匹配为子串且大小写不敏感。
+// ---------------------------------------------------------------------------
+const LOCAL_VALIDATION_SIGNATURES = [
+  'corrupt epub:',
+  'invalid zip file',
+  'invalid or missing opf',
+  'not a valid ebook format',
+  'empty input file',
+];
+
+/**
+ * 判定 §3.5 本地校验是否拦截了该输入。
+ * 命中签名 ⇒ 'failed'（§3.5 真的运行过且拦下）；否则 ⇒ 'passed'
+ * （文件已通过 §3.5，失败发生在引擎侧）。
+ * 导出以便单测直接锁定签名契约（tests/reverse-verify-alerts-redteam.test.ts）。
+ */
+export function inferLocalValidation(convMsg: string): 'passed' | 'failed' {
+  const lower = (convMsg || '').toLowerCase();
+  return LOCAL_VALIDATION_SIGNATURES.some((s) => lower.includes(s)) ? 'failed' : 'passed';
 }
 
 /**

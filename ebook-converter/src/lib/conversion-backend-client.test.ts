@@ -558,7 +558,11 @@ describe("conversion backend client", () => {
     it("does NOT retry a deterministic CONVERSION_FAILED 500 (bad user file)", async () => {
       // 后端契约：conversion-backend/app/index.js 对 Calibre 转换失败固定返回
       // 500 + code=CONVERSION_FAILED，与瞬时故障无关；重试同一输入必再败。
-      // 但告警串 / 故障计数 / 回退行为必须与其它 5xx 完全一致（输出不变）。
+      // 2026-11-08 修订：确定性转换失败**不再计入熔断健康失败**——后端已完整
+      // 处理请求并给出确定性答复，这是「输入问题」而非「后端不健康」的证据。
+      // 旧逻辑把它计入，3 次连续坏文件即熔断开闸 → 误报「backend unavailable」
+      // 红卡 + 60s 全站绕过后端（2026-11-08 告警 1 实证：3× epub→txt 因无效
+      // CLI 选项 500）。onFallback 串 / 回退行为 / 告警卡格式保持不变。
       setEnv();
       let calls = 0;
       global.fetch = jest.fn(async () => {
@@ -576,10 +580,65 @@ describe("conversion backend client", () => {
 
       expect(resp).toBeNull(); // 仍回退 CloudConvert
       expect(calls).toBe(1); // 关键：跳过必败重试
-      expect(after.failures).toBe(before.failures + 1); // 仍计 1 次故障（不放大）
+      expect(after.failures).toBe(before.failures); // 关键：不计入熔断（健康语义）
       expect(reason).toContain("backend HTTP 500");
       expect(reason).toContain("CONVERSION_FAILED");
       expect(reason).not.toContain("after 1 retry"); // 告警卡格式不变
+    });
+
+    it("three consecutive CONVERSION_FAILED 500s do NOT open the circuit", async () => {
+      // 反向约束（对照 429 的同类约束）：连续坏文件不得放大成「后端不可用」。
+      // 2026-11-08 告警 1 即此形态：3× epub→txt 确定性 500 → 熔断开闸 → 红卡误报。
+      setEnv();
+      global.fetch = jest.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              error: "Conversion failed: ValueError: byte must be in range(0, 256)",
+              code: "CONVERSION_FAILED",
+            }),
+            { status: 500 },
+          ),
+      ) as unknown as typeof global.fetch;
+
+      for (let i = 0; i < 3; i += 1) {
+        expect(await delegateToBackend(makeForm("azw3"), {})).toBeNull();
+      }
+      expect(breakerState()).toBe("closed");
+      expect(shouldUseBackend()).toBe(true);
+    });
+
+    it("backend-unavailable alert carries the backend code+detail (root cause visible)", async () => {
+      // 2026-11-08（告警 1 诊断缺口）：熔断开闸的告警此前只写
+      // `backend returned HTTP 500`，值班人无法区分「确定性转换失败」与
+      // 「真基础设施故障」。现在把后端响应体的 code+error 一并带上。
+      setEnv();
+      process.env.FEISHU_WEBHOOK_URL = "https://feishu.test/hook";
+      const bodies: Array<Record<string, unknown>> = [];
+      global.fetch = jest.fn(async (url: unknown, init?: RequestInit) => {
+        if (String(url).includes("feishu.test")) {
+          bodies.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+          return new Response(JSON.stringify({ code: 0 }), { status: 200 });
+        }
+        return new Response(
+          JSON.stringify({ error: "Output read failed.", code: "OUTPUT_ERROR" }),
+          { status: 500 },
+        );
+      }) as unknown as typeof global.fetch;
+
+      let reason: string | undefined;
+      for (let i = 0; i < 3; i += 1) {
+        expect(
+          await delegateToBackend(makeForm(), {}, { onFallback: (r) => { reason = r; } }),
+        ).toBeNull();
+      }
+      expect(breakerState()).toBe("open");
+      expect(bodies).toHaveLength(1); // 熔断开闸只发一张卡
+      const card = JSON.stringify(bodies[0]);
+      expect(card).toContain("backend returned HTTP 500");
+      expect(card).toContain("OUTPUT_ERROR");
+      expect(reason).toContain("OUTPUT_ERROR");
+      delete process.env.FEISHU_WEBHOOK_URL;
     });
 
     it("still retries a generic 5xx WITHOUT a CONVERSION_FAILED code (transient infra fault)", async () => {

@@ -3,7 +3,7 @@
 //   核心修复：把 CloudConvert「Input task has failed」（§3.5 漏检的 CC-import 级坏文件）
 //   从 🚨 System 红卡降级为 ℹ️ User 灰卡，避免稀释系统告警通道（原 10-31 告警 2 误分类）。
 // 验证方式：用真实告警卡原文喂 classifyAlertSeverity，断言返回 'user' 而非 'system'。
-import { classifyAlertSeverity } from '@/lib/alerts';
+import { classifyAlertSeverity, inferLocalValidation } from '@/lib/alerts';
 
 // 真实告警 2（2026-10-31T12:26Z，epub→azw3，曾被误判 🚨 System-side fault）：
 // "CloudConvert job failed after 2 attempt(s) | engine=calibre: CloudConvert job failed:
@@ -129,5 +129,56 @@ describe('告警卡 delegation 归因透传（2026-11-02）', () => {
     });
 
     expect(JSON.stringify(bodies[0])).toContain('circuit open (delegation skipped)');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 2026-11-08：localValidationInferred 反推方向修正（告警 2 卡片字段错误）
+//
+// 动机：Job 38ac1f26（2026-11-07，epub→azw3）的卡片写
+//   `Local validation (inferred, NOT measured §3.5): failed`
+// 但 §3.5 实际**通过了**——错误串是 CloudConvert 的 "Input task has failed"，
+// 文件是在 CC import 侧被拒的。旧逻辑按 errorCode===CORRUPT_INPUT 反推，
+// 把这一整类都误标成 failed，值班人会误读成「本地校验拦下了它」。
+// 反向约束：若有人把 inferLocalValidation 改回「按错误码反推」，本组用例变红。
+// ---------------------------------------------------------------------------
+describe('inferLocalValidation：§3.5 签名命中才标 failed（2026-11-08）', () => {
+  const LOCAL_FAILURES = [
+    // conversion.ts validateInputFile 逐字核对的真实签名
+    'corrupt epub: ZIP member OEBPS/Misc/content0001.opf (manifest reference missing) failed deep validation — the file is damaged',
+    'Invalid zip file (no central directory; 17462 bytes)',
+    'Invalid or missing opf',
+    'not a valid eBook format: an EPUB is a ZIP archive whose first bytes are PK\\x03\\x04. The uploaded file starts with 0x25504446.',
+    'Empty input file',
+  ];
+
+  it.each(LOCAL_FAILURES)('§3.5 签名命中 ⇒ failed：%s', (msg) => {
+    expect(inferLocalValidation(msg)).toBe('failed');
+  });
+
+  it('真实告警 2（Job 38ac1f26 的 CC import 拒收）⇒ passed，不再误标 failed', () => {
+    const REAL_ALERT_38AC1F26 =
+      'CloudConvert job failed after 1 attempt(s) | engine=calibre: CloudConvert job failed: Input task has failed';
+    expect(inferLocalValidation(REAL_ALERT_38AC1F26)).toBe('passed');
+  });
+
+  it('配额耗尽 / 引擎故障等非本地校验错误 ⇒ passed', () => {
+    expect(
+      inferLocalValidation('CloudConvert client error 402: account out of conversion credits'),
+    ).toBe('passed');
+    expect(
+      inferLocalValidation(
+        'CloudConvert job failed: Process terminated with non-zero exit code (convert task crashed)',
+      ),
+    ).toBe('passed');
+  });
+
+  it('签名匹配大小写不敏感（防御 CC 侧返回大写变体）', () => {
+    expect(inferLocalValidation('CloudConvert job failed: INVALID ZIP FILE, local header is damaged')).toBe('failed');
+  });
+
+  it('空串 / 未知错误 ⇒ passed（不凭空判死本地校验）', () => {
+    expect(inferLocalValidation('')).toBe('passed');
+    expect(inferLocalValidation('An unexpected error occurred')).toBe('passed');
   });
 });

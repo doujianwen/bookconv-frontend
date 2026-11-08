@@ -76,10 +76,16 @@ export async function convertWithCalibre(inputPath, outputPath, opts = {}) {
       args.push("--pretty-print");
     }
   }
-  // Plain-text output: skip cover image / chapter TOC noise
-  if (targetFormat === "txt" || targetFormat === "text") {
-    args.push("--dont-add-chapters-to-toc");
-  }
+  // 2026-11-08（告警 1 根因修复）：删除 `--dont-add-chapters-to-toc`。
+  // 该选项在部署的 Calibre 7.6.0 中**不存在**（`ebook-convert --help` 无此项、
+  // /usr/lib/calibre 源码 grep 无匹配，服务器实测），导致**所有 X→txt 后端转换
+  // 100% 返回 500 CONVERSION_FAILED**；每 3 次连续失败即熔断开闸，误报
+  // 「🚨 Conversion Backend Unavailable」红卡并让全站绕过后端 60s。
+  // 实测证据：conversion.log 2026-11-07T18:09 / 11-08T00:59 / 01:00 / 02:18 /
+  // 02:21 / 02:23 六次 `no such option` 失败；告警 1 (02:23:22.476Z) 与
+  // 02:23:22.364Z 的 FAIL 相差 112ms。
+  // 取舍：txt 输出会带 Calibre 的章节 TOC 噪声；epub→txt 已改由前端纯 JS 路径
+  // 承接（route.ts canDelegate 排除），后端 txt 仅服务其余来源格式。
   if (extraArgs && Array.isArray(extraArgs)) {
     args.push(...extraArgs);
   }
