@@ -1,0 +1,90 @@
+{
+  "body": {
+    "dateRanges": [
+      {
+        "startDate": "2026-11-07",
+        "endDate": "2026-11-07"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "eventName"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "eventCount"
+      }
+    ],
+    "dimensionFilter": {
+      "filter": {
+        "fieldName": "eventName",
+        "inListFilter": {
+          "values": [
+            "session_start",
+            "file_upload",
+            "conversion_complete",
+            "conversion_failed"
+          ]
+        }
+      }
+    }
+  },
+  "report": {
+    "dimensionHeaders": [
+      {
+        "name": "eventName"
+      }
+    ],
+    "metricHeaders": [
+      {
+        "name": "eventCount",
+        "type": "TYPE_INTEGER"
+      }
+    ],
+    "rows": [
+      {
+        "dimensionValues": [
+          {
+            "value": "session_start"
+          }
+        ],
+        "metricValues": [
+          {
+            "value": "17"
+          }
+        ]
+      },
+      {
+        "dimensionValues": [
+          {
+            "value": "conversion_complete"
+          }
+        ],
+        "metricValues": [
+          {
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "dimensionValues": [
+          {
+            "value": "file_upload"
+          }
+        ],
+        "metricValues": [
+          {
+            "value": "3"
+          }
+        ]
+      }
+    ],
+    "rowCount": 3,
+    "metadata": {
+      "currencyCode": "USD",
+      "timeZone": "Asia/Shanghai"
+    },
+    "kind": "analyticsData#runReport"
+  }
+}

@@ -1,0 +1,1160 @@
+{
+  "collectedAt": "2026-11-08T01:12:03.871055+00:00",
+  "gsc": {
+    "GSC_API_date_2026-11-05_d27.json": {
+      "start": "2026-10-09",
+      "end": "2026-11-05",
+      "rows": 28,
+      "unique": 28,
+      "missing": [],
+      "clicks_impressions": [
+        15,
+        191
+      ],
+      "invalid": 0
+    },
+    "GSC_API_date_2026-11-05_d6.json": {
+      "start": "2026-10-30",
+      "end": "2026-11-05",
+      "rows": 7,
+      "unique": 7,
+      "missing": [],
+      "clicks_impressions": [
+        6,
+        59
+      ],
+      "invalid": 0
+    },
+    "GSC_API_date_2026-11-05_d89.json": {
+      "start": "2026-08-08",
+      "end": "2026-11-05",
+      "rows": 90,
+      "unique": 90,
+      "missing": [],
+      "clicks_impressions": [
+        29,
+        2832
+      ],
+      "invalid": 0
+    },
+    "GSC_API_page_2026-11-05_d27.json": {
+      "start": "2026-10-09",
+      "end": "2026-11-05",
+      "rows": 39,
+      "unique": 39,
+      "missing": null,
+      "clicks_impressions": [
+        15,
+        322
+      ],
+      "invalid": 0
+    },
+    "GSC_API_query_page_2026-11-05_d27.json": {
+      "start": "2026-10-09",
+      "end": "2026-11-05",
+      "rows": 45,
+      "unique": 45,
+      "missing": null,
+      "clicks_impressions": [
+        13,
+        201
+      ],
+      "invalid": 0
+    },
+    "GSC_API_date_2026-11-07_d6.json": {
+      "start": "2026-11-01",
+      "end": "2026-11-07",
+      "rows": 5,
+      "unique": 5,
+      "missing": [
+        "2026-11-06",
+        "2026-11-07"
+      ],
+      "clicks_impressions": [
+        4,
+        42
+      ],
+      "invalid": 0
+    }
+  },
+  "bing": {
+    "www.bookconv.com_BingAPI_PageTraffic_2026_11_08.csv": {
+      "range": [
+        "2026-08-07",
+        "2026-10-30"
+      ],
+      "rows": 323,
+      "unique_date_key": 323,
+      "clicks_impressions": [
+        178,
+        4225
+      ],
+      "aligned_rows": 29,
+      "aligned_dates": [
+        "2026-10-30"
+      ],
+      "aligned_totals": [
+        27,
+        645
+      ]
+    },
+    "www.bookconv.com_BingAPI_Query_2026_11_08.csv": {
+      "range": [
+        "2026-08-07",
+        "2026-10-30"
+      ],
+      "rows": 1017,
+      "unique_date_key": 1017,
+      "clicks_impressions": [
+        182,
+        2047
+      ],
+      "aligned_rows": 100,
+      "aligned_dates": [
+        "2026-10-30"
+      ],
+      "aligned_totals": [
+        26,
+        239
+      ]
+    },
+    "www.bookconv.com_BingAPI_RankAndTraffic_2026_11_08.csv": {
+      "range": [
+        "2026-07-26",
+        "2026-11-04"
+      ],
+      "rows": 102,
+      "unique_date_key": 102,
+      "clicks_impressions": [
+        206,
+        6500
+      ],
+      "aligned_rows": 6,
+      "aligned_dates": [
+        "2026-10-30",
+        "2026-10-31",
+        "2026-11-01",
+        "2026-11-02",
+        "2026-11-03",
+        "2026-11-04"
+      ],
+      "aligned_totals": [
+        23,
+        781
+      ]
+    }
+  },
+  "matrix": [
+    {
+      "exec_order": "1",
+      "keyword": "azw3 vs mobi",
+      "lang": "en",
+      "country": "US/UK",
+      "search_intent": "informational-comparison",
+      "qp91d_impressions": "39",
+      "qp91d_clicks": "0",
+      "qp91d_position": "9.8",
+      "primary_target_url": "/es/blog/azw3-vs-mobi (32 imp pos 9.8)",
+      "secondary_urls": "/blog/azw3-vs-mobi (4 imp pos 10.8); /blog/mobi-or-azw3-for-kindle (3 imp pos 10.0)",
+      "index_status": "indexed",
+      "product_availability": "N/A (comparison page)",
+      "gate_a": "PASS",
+      "gate_b": "PASS",
+      "bing_ai_citations": "Kindle AZW vs MOBI share 67% (n=58)",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "low",
+      "evidence_level": "SUPPORTED",
+      "score_total": "69",
+      "actionability": "near-term",
+      "recommendation": "P1 - only candidate already inside page-1 boundary; fix locale mismatch (D-05) not title",
+      "notes": "pos 9.8 with 0 clicks - language mismatch is first-order cause",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "2",
+      "keyword": "epub to zip",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "42",
+      "qp91d_clicks": "0",
+      "qp91d_position": "12.5",
+      "primary_target_url": "/convert/epub-to-zip",
+      "secondary_urls": "none",
+      "index_status": "indexed",
+      "product_availability": "PASS (passthrough JS - immune to CloudConvert quota)",
+      "gate_a": "PASS",
+      "gate_b": "PASS",
+      "bing_ai_citations": "low",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "low",
+      "evidence_level": "SUPPORTED",
+      "score_total": "67.4",
+      "actionability": "locked",
+      "recommendation": "P2 - Title experiment already in flight since 2026-10-27; observe only, do not touch",
+      "notes": "commit c782192; 28d window ends ~11-24",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "3",
+      "keyword": "lit to epub",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "31",
+      "qp91d_clicks": "0",
+      "qp91d_position": "26.2",
+      "primary_target_url": "/blog/why-convert-lit-to-epub (16 imp pos 24.3)",
+      "secondary_urls": "/convert/lit-to-epub (15 imp pos 28.3)",
+      "index_status": "indexed",
+      "product_availability": "works (calibre chain)",
+      "gate_a": "PASS",
+      "gate_b": "PASS",
+      "bing_ai_citations": "low",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "medium",
+      "evidence_level": "SUPPORTED",
+      "score_total": "56.2",
+      "actionability": "near-term",
+      "recommendation": "P3 - blog outranks converter: intent/URL mismatch, consolidate",
+      "notes": "legacy format demand decays long-term",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "4",
+      "keyword": "epub to azw3",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "48",
+      "qp91d_clicks": "0",
+      "qp91d_position": "48.9",
+      "primary_target_url": "/convert/epub-to-azw3 (35 imp pos 50.1)",
+      "secondary_urls": "/blog/epub-to-azw3 (13 imp pos 45.7)",
+      "index_status": "indexed",
+      "product_availability": "works (CloudConvert-dependent)",
+      "gate_a": "PASS",
+      "gate_b": "PASS",
+      "bing_ai_citations": "1013 citations",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "medium",
+      "evidence_level": "SUPPORTED",
+      "score_total": "60.6",
+      "actionability": "structural",
+      "recommendation": "P4 - two pages cannibalize (D-06); no action in S0",
+      "notes": "guide page /guide/epub-to-azw3-for-kindle has 1413 citations",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "-",
+      "keyword": "mobi to epub",
+      "lang": "en",
+      "country": "US/UK",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "199",
+      "qp91d_clicks": "0",
+      "qp91d_position": "72.9",
+      "primary_target_url": "/convert/mobi-to-epub (147 imp pos 70.4)",
+      "secondary_urls": "/guide/mobi-to-epub-keep-formatting (52 imp pos 81.6)",
+      "index_status": "indexed",
+      "product_availability": "works but CloudConvert-dependent (quota 10/day)",
+      "gate_a": "PASS",
+      "gate_b": "PASS",
+      "bing_ai_citations": "2511 citations (FROZEN page)",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "high + BING AI FROZEN",
+      "evidence_level": "SUPPORTED",
+      "score_total": "71",
+      "actionability": "structural",
+      "recommendation": "Scored highest but NOT actionable: pos 72.9 + cannibalization + frozen asset",
+      "notes": "largest demand in candidate set",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "-",
+      "keyword": "epub to mobi",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "21",
+      "qp91d_clicks": "0",
+      "qp91d_position": "65.9",
+      "primary_target_url": "/blog/epub-to-mobi-guide (16 imp pos 66.1)",
+      "secondary_urls": "/convert/epub-to-mobi (5 imp pos 68.2)",
+      "index_status": "indexed",
+      "product_availability": "works",
+      "gate_a": "FROZEN PAGE",
+      "gate_b": "2511 citations",
+      "bing_ai_citations": "6-9 of 100",
+      "serp_observation_depth": "high",
+      "optimization_cost": "SUPPORTED",
+      "evidence_level": "50.2",
+      "score_total": "locked",
+      "actionability": "Bing AI asset dominates; no body copy change allowed",
+      "recommendation": "epub to mobi is the site top Bing AI query (1915 citations)",
+      "notes": null,
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "0",
+      "keyword": "epub para doc",
+      "lang": "es",
+      "country": "ES",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "118",
+      "qp91d_clicks": "0",
+      "qp91d_position": "45.7",
+      "primary_target_url": "/convert/epub-to-doc (116 imp pos 45.7)",
+      "secondary_urls": "/convert/epub-to-docx (2 imp pos 42.0)",
+      "index_status": "indexed (only convert page still served in 30d)",
+      "product_availability": "FAIL - epub-doc registered in UNSUPPORTED_CONVERSIONS (422)",
+      "gate_a": "FAIL",
+      "gate_b": "PASS",
+      "bing_ai_citations": "low",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "n/a",
+      "evidence_level": "SUPPORTED",
+      "score_total": "44.6",
+      "actionability": "blocked",
+      "recommendation": "BLOCKED by Gate A - keep as honest DOCX-alternative explainer, never promote as working converter",
+      "notes": "only differentiated convert page (1410 words + explicit limits statement)",
+      "current_pairs": [
+        {
+          "url": "https://www.bookconv.com/convert/epub-to-doc",
+          "impressions": 16,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 48.375
+        }
+      ],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "0",
+      "keyword": "epub to pdf converter",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "transactional-tool",
+      "qp91d_impressions": "0",
+      "qp91d_clicks": "0",
+      "qp91d_position": "n/a",
+      "primary_target_url": "/convert/epub-to-pdf (0 imp in both windows)",
+      "secondary_urls": "none",
+      "index_status": "indexed",
+      "product_availability": "works",
+      "gate_a": "PASS",
+      "gate_b": "INSUFFICIENT_EVIDENCE",
+      "bing_ai_citations": "low",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "low",
+      "evidence_level": "INSUFFICIENT_EVIDENCE",
+      "score_total": "",
+      "actionability": "unknown",
+      "recommendation": "NOT SCORED - Gate B; zero GSC rows in 91d (exact and stem match)",
+      "notes": "do not promote on assumption",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "0",
+      "keyword": "how to read epub on kindle",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "informational-tutorial",
+      "qp91d_impressions": "0",
+      "qp91d_clicks": "0",
+      "qp91d_position": "n/a",
+      "primary_target_url": "/guide/epub-to-mobi-keep-formatting (0 imp)",
+      "secondary_urls": "none",
+      "index_status": "indexed",
+      "product_availability": "works",
+      "gate_a": "PASS",
+      "gate_b": "INSUFFICIENT_EVIDENCE",
+      "bing_ai_citations": "1420 citations",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "low",
+      "evidence_level": "INSUFFICIENT_EVIDENCE",
+      "score_total": "",
+      "actionability": "unknown",
+      "recommendation": "NOT SCORED - Gate B; Bing AI has evidence but Google has none",
+      "notes": "zero GSC rows in 91d",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "exec_order": "0",
+      "keyword": "best ebook reader apps",
+      "lang": "en",
+      "country": "US",
+      "search_intent": "commercial-investigation",
+      "qp91d_impressions": "0",
+      "qp91d_clicks": "0",
+      "qp91d_position": "n/a",
+      "primary_target_url": "/blog/best-ebook-reader-apps (0 imp for this query)",
+      "secondary_urls": "none",
+      "index_status": "indexed",
+      "product_availability": "works",
+      "gate_a": "PASS",
+      "gate_b": "INSUFFICIENT_EVIDENCE",
+      "bing_ai_citations": "7303 citations (21.6% of site total)",
+      "serp_observation_depth": "6-9 of 100",
+      "optimization_cost": "high",
+      "evidence_level": "INSUFFICIENT_EVIDENCE",
+      "score_total": "",
+      "actionability": "unknown",
+      "recommendation": "NOT SCORED - Gate B; highest Bing AI value on site - protect, never rewrite",
+      "notes": "channel split: AI strong / Google zero",
+      "current_pairs": [],
+      "current_score": "INSUFFICIENT_EVIDENCE"
+    }
+  ],
+  "production": {
+    "/": {
+      "code": 200,
+      "final": "https://www.bookconv.com/",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, no account needed.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com\"/>",
+        "<meta property=\"og:description\" content=\"Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.\"/>"
+      ],
+      "h1": [
+        "<span>Free Online Ebook<br/>Format Converter</span>"
+      ],
+      "title": [
+        "BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF"
+      ],
+      "jsonld_count": 3,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/api/health": {
+      "code": 200,
+      "final": "https://www.bookconv.com/api/health",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/api/health",
+        "X-Robots-Tag": null
+      },
+      "head": [],
+      "h1": [],
+      "title": [],
+      "jsonld_count": 0,
+      "public_health": {
+        "commitSha": "f80608b8089f9ee969c540d301969b6e708273f2",
+        "environment": "production"
+      },
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/blog/azw3-vs-mobi": {
+      "code": 200,
+      "final": "https://www.bookconv.com/blog/azw3-vs-mobi",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/blog/azw3-vs-mobi",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"AZW3 vs MOBI depends on your destination. Use EPUB for Send to Kindle; check your exact device and firmware for USB transfers.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/blog/azw3-vs-mobi\"/>",
+        "<meta property=\"og:description\" content=\"AZW3 vs MOBI depends on your destination. Use EPUB for Send to Kindle; check your exact device and firmware for USB transfers.\"/>",
+        "<meta name=\"twitter:description\" content=\"AZW3 vs MOBI depends on your destination. Use EPUB for Send to Kindle; check your exact device and firmware for USB transfers.\"/>"
+      ],
+      "h1": [
+        "AZW3 vs MOBI: What&#x27;s the Difference for Kindle?"
+      ],
+      "title": [
+        "AZW3 vs MOBI: Which Format Should You Use on Kindle? | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/blog/best-ebook-reader-apps": {
+      "code": 200,
+      "final": "https://www.bookconv.com/blog/best-ebook-reader-apps",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/blog/best-ebook-reader-apps",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"You do not need to pay to read ebooks well. Every major platform has a free, capable reader app, and the right one depends on your device and your format.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/blog/best-ebook-reader-apps\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/blog/best-ebook-reader-apps\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/blog/best-ebook-reader-apps\"/>",
+        "<meta property=\"og:description\" content=\"You do not need to pay to read ebooks well. Every major platform has a free, capable reader app, and the right one depends on your device and your format.\"/>",
+        "<meta name=\"twitter:description\" content=\"You do not need to pay to read ebooks well. Every major platform has a free, capable reader app, and the right one depends on your device and your format.\"/>"
+      ],
+      "h1": [
+        "Best Free Ebook Reader Apps for Every Device (2026)"
+      ],
+      "title": [
+        "Best Free Ebook Reader Apps for Every Device (2026) | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/blog/can-kindle-read-azw3": {
+      "code": 200,
+      "final": "https://www.bookconv.com/blog/can-kindle-read-azw3",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/blog/can-kindle-read-azw3",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/blog/can-kindle-read-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/blog/can-kindle-read-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/blog/can-kindle-read-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/blog/can-kindle-read-azw3\"/>",
+        "<meta property=\"og:description\" content=\"Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively.\"/>",
+        "<meta name=\"twitter:description\" content=\"Short answer: yes — every Kindle made in the last decade reads AZW3 (KF8) natively.\"/>"
+      ],
+      "h1": [
+        "Can Kindle Read AZW3? Yes — Every Model Since 2015"
+      ],
+      "title": [
+        "Can Kindle Read AZW3? Compatibility by Model (2026) | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/epub-to-azw3": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/epub-to-azw3",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/epub-to-azw3",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/epub-to-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/convert/epub-to-azw3\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-azw3\"/>",
+        "<meta property=\"og:description\" content=\"Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.\"/>"
+      ],
+      "h1": [
+        "EPUB to AZW3 - Adapt Your Ebooks for Native Kindle Format"
+      ],
+      "title": [
+        "EPUB to AZW3 Converter — Kindle Format | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/epub-to-doc": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/epub-to-doc",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/epub-to-doc",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"BookConv does not export legacy DOC. Learn how to create a text-based DOCX for Word instead, and what formatting is lost.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-doc\"/>",
+        "<meta property=\"og:description\" content=\"BookConv does not export legacy DOC. Learn how to create a text-based DOCX for Word instead, and what formatting is lost.\"/>",
+        "<meta name=\"twitter:description\" content=\"BookConv does not export legacy DOC. Learn how to create a text-based DOCX for Word instead, and what formatting is lost.\"/>"
+      ],
+      "h1": [
+        "EPUB to DOC: Legacy Word Limits and the DOCX Alternative"
+      ],
+      "title": [
+        "EPUB to DOC: Limits and DOCX Alternative | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/epub-to-mobi": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/epub-to-mobi",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/epub-to-mobi",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Convert EPUB to MOBI free — no sign-up, no watermarks. Get a classic MOBI for older Kindle devices in seconds. No account needed.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/epub-to-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/convert/epub-to-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-mobi\"/>",
+        "<meta property=\"og:description\" content=\"Convert EPUB to MOBI free — no sign-up, no watermarks. Get a classic MOBI for older Kindle devices in seconds. No account needed.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert EPUB to MOBI free — no sign-up, no watermarks. Get a classic MOBI for older Kindle devices in seconds. No account needed.\"/>"
+      ],
+      "h1": [
+        "EPUB to MOBI — Convert EPUB Files for Kindle"
+      ],
+      "title": [
+        "Convert EPUB to MOBI Online — Free, No Sign-up | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/epub-to-pdf": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/epub-to-pdf",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/epub-to-pdf",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Convert EPUB to PDF free — no sign-up. Turn reflowable ebooks into fixed-layout PDFs for printing, citation, and sharing. Files processed in seconds.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/epub-to-pdf\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-pdf\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-pdf\"/>",
+        "<meta property=\"og:description\" content=\"Convert EPUB to PDF free — no sign-up. Turn reflowable ebooks into fixed-layout PDFs for printing, citation, and sharing. Files processed in seconds.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert EPUB to PDF free — no sign-up. Turn reflowable ebooks into fixed-layout PDFs for printing, citation, and sharing. Files processed in seconds.\"/>"
+      ],
+      "h1": [
+        "EPUB to PDF - From Fluid Reading to Fixed Layout"
+      ],
+      "title": [
+        "Free EPUB to PDF Converter — No Sign-up | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/epub-to-zip": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/epub-to-zip",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/epub-to-zip",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/epub-to-zip\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-zip\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-zip\"/>",
+        "<meta property=\"og:description\" content=\"Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert EPUB to ZIP free — one click pulls out the raw XHTML, CSS and images from any e-book. No sign-up, byte-exact copy, your file stays private.\"/>"
+      ],
+      "h1": [
+        "Convert EPUB to ZIP Free — Unlock the Files Inside Your E-book"
+      ],
+      "title": [
+        "EPUB to ZIP Converter — Free, Instant, No Sign-Up | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/lit-to-epub": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/lit-to-epub",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/lit-to-epub",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Free LIT to EPUB converter — rescue old Microsoft Reader .LIT files in seconds. No sign-up, convert to EPUB for Kindle, Kobo, Apple Books, any e-reader.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/lit-to-epub\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/lit-to-epub\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/convert/lit-to-epub\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/lit-to-epub\"/>",
+        "<meta property=\"og:description\" content=\"Free LIT to EPUB converter — rescue old Microsoft Reader .LIT files in seconds. No sign-up, convert to EPUB for Kindle, Kobo, Apple Books, any e-reader.\"/>",
+        "<meta name=\"twitter:description\" content=\"Free LIT to EPUB converter — rescue old Microsoft Reader .LIT files in seconds. No sign-up, convert to EPUB for Kindle, Kobo, Apple Books, any e-reader.\"/>"
+      ],
+      "h1": [
+        "LIT to EPUB - Rescue Your Old MS Reader Files"
+      ],
+      "title": [
+        "Free LIT to EPUB Converter — Rescue Old .LIT Books | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/convert/mobi-to-epub": {
+      "code": 200,
+      "final": "https://www.bookconv.com/convert/mobi-to-epub",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/convert/mobi-to-epub",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images &amp; metadata intact and read your books on any device. Convert in seconds.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/convert/mobi-to-epub\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/mobi-to-epub\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/mobi-to-epub\"/>",
+        "<meta property=\"og:description\" content=\"Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images &amp; metadata intact and read your books on any device. Convert in seconds.\"/>",
+        "<meta name=\"twitter:description\" content=\"Convert MOBI to EPUB free — no sign-up, no watermarks. Keep chapters, images &amp; metadata intact and read your books on any device. Convert in seconds.\"/>"
+      ],
+      "h1": [
+        "Convert MOBI to EPUB Free — Read Your Books on Any Device"
+      ],
+      "title": [
+        "MOBI to EPUB Converter for Kindle &amp; Kobo — Free | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/es/blog/azw3-vs-mobi": {
+      "code": 200,
+      "final": "https://www.bookconv.com/es/blog/azw3-vs-mobi",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/es/blog/azw3-vs-mobi",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Elige AZW3 o MOBI según el destino. Usa EPUB para Send to Kindle y comprueba el modelo y firmware para transferir por USB.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/es/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/blog/azw3-vs-mobi\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/blog/azw3-vs-mobi\"/>",
+        "<meta property=\"og:description\" content=\"Elige AZW3 o MOBI según el destino. Usa EPUB para Send to Kindle y comprueba el modelo y firmware para transferir por USB.\"/>",
+        "<meta name=\"twitter:description\" content=\"Elige AZW3 o MOBI según el destino. Usa EPUB para Send to Kindle y comprueba el modelo y firmware para transferir por USB.\"/>"
+      ],
+      "h1": [
+        "MOBI vs AZW3: qué formato de Kindle conviene en 2026"
+      ],
+      "title": [
+        "MOBI vs AZW3 para Kindle: ¿cuál conviene? | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/es/convert/epub-to-doc": {
+      "code": 200,
+      "final": "https://www.bookconv.com/es/convert/epub-to-doc",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/es/convert/epub-to-doc",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"BookConv no genera DOC antiguo. Convierte EPUB a Word con la alternativa DOCX de texto y consulta sus límites antes de subir el archivo.\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/es/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/convert/epub-to-doc\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/convert/epub-to-doc\"/>",
+        "<meta property=\"og:description\" content=\"BookConv no genera DOC antiguo. Convierte EPUB a Word con la alternativa DOCX de texto y consulta sus límites antes de subir el archivo.\"/>",
+        "<meta name=\"twitter:description\" content=\"BookConv no genera DOC antiguo. Convierte EPUB a Word con la alternativa DOCX de texto y consulta sus límites antes de subir el archivo.\"/>"
+      ],
+      "h1": [
+        "EPUB a DOC: límites y alternativa DOCX para Word"
+      ],
+      "title": [
+        "EPUB a DOC: límites y alternativa DOCX | BookConv"
+      ],
+      "jsonld_count": 4,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/es/guide/best-ebook-converter": {
+      "code": 200,
+      "final": "https://www.bookconv.com/es/guide/best-ebook-converter",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/es/guide/best-ebook-converter",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"&quot;Mejor conversor de ebooks&quot; depende de tu trabajo — puntual gratis, lote, privacidad o preparación para IA.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/es/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/guide/best-ebook-converter\"/>",
+        "<meta property=\"og:description\" content=\"&quot;Mejor conversor de ebooks&quot; depende de tu trabajo — puntual gratis, lote, privacidad o preparación para IA.\"/>",
+        "<meta name=\"twitter:description\" content=\"&quot;Mejor conversor de ebooks&quot; depende de tu trabajo — puntual gratis, lote, privacidad o preparación para IA.\"/>"
+      ],
+      "h1": [
+        "Mejor conversor de ebooks en 2026: cómo elegir (no solo una lista)"
+      ],
+      "title": [
+        "Mejor conversor de ebooks en 2026: cómo elegir (no solo una lista) | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/es/guide/calibre-alternative": {
+      "code": 200,
+      "final": "https://www.bookconv.com/es/guide/calibre-alternative",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/es/guide/calibre-alternative",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"¿No quieres instalar y aprender Calibre para un solo archivo? Esto es lo que te da una alternativa ligera a Calibre — y dónde Calibre sigue ganando.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/es/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/guide/calibre-alternative\"/>",
+        "<meta property=\"og:description\" content=\"¿No quieres instalar y aprender Calibre para un solo archivo? Esto es lo que te da una alternativa ligera a Calibre — y dónde Calibre sigue ganando.\"/>",
+        "<meta name=\"twitter:description\" content=\"¿No quieres instalar y aprender Calibre para un solo archivo? Esto es lo que te da una alternativa ligera a Calibre — y dónde Calibre sigue ganando.\"/>"
+      ],
+      "h1": [
+        "¿Necesitas una alternativa a Calibre? (qué conservas y qué pierdes)"
+      ],
+      "title": [
+        "¿Necesitas una alternativa a Calibre? (qué conservas y qué pierdes) | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/guide/best-ebook-converter": {
+      "code": 200,
+      "final": "https://www.bookconv.com/guide/best-ebook-converter",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/guide/best-ebook-converter",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"“Best ebook converter” depends on your job — free one-off, bulk, privacy, or AI prep. Here is the honest comparison across the tools people actually use.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/guide/best-ebook-converter\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/guide/best-ebook-converter\"/>",
+        "<meta property=\"og:description\" content=\"“Best ebook converter” depends on your job — free one-off, bulk, privacy, or AI prep. Here is the honest comparison across the tools people actually use.\"/>",
+        "<meta name=\"twitter:description\" content=\"“Best ebook converter” depends on your job — free one-off, bulk, privacy, or AI prep. Here is the honest comparison across the tools people actually use.\"/>"
+      ],
+      "h1": [
+        "Best Ebook Converter in 2026: How to Choose (Not Just a List)"
+      ],
+      "title": [
+        "Best Ebook Converter 2026: How to Choose | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/guide/calibre-alternative": {
+      "code": 200,
+      "final": "https://www.bookconv.com/guide/calibre-alternative",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/guide/calibre-alternative",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Don’t want to install and learn Calibre for a one-off file? Here is what a lightweight Calibre alternative gives you — and where Calibre still wins.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"es\" href=\"https://www.bookconv.com/es/guide/calibre-alternative\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/guide/calibre-alternative\"/>",
+        "<meta property=\"og:description\" content=\"Don’t want to install and learn Calibre for a one-off file? Here is what a lightweight Calibre alternative gives you — and where Calibre still wins.\"/>",
+        "<meta name=\"twitter:description\" content=\"Don’t want to install and learn Calibre for a one-off file? Here is what a lightweight Calibre alternative gives you — and where Calibre still wins.\"/>"
+      ],
+      "h1": [
+        "Do You Need a Calibre Alternative? (What You Keep vs Give Up)"
+      ],
+      "title": [
+        "Do You Need a Calibre Alternative? Pros &amp; Cons | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/guide/calibre-alternatives-online": {
+      "code": 200,
+      "final": "https://www.bookconv.com/guide/calibre-alternatives-online",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/en/guide/calibre-alternatives-online",
+        "X-Robots-Tag": null
+      },
+      "head": [
+        "<meta name=\"description\" content=\"Calibre is the default answer to every conversion question, but installing a full library manager for one file is overkill.\"/>",
+        "<meta name=\"robots\" content=\"index, follow\"/>",
+        "<link rel=\"canonical\" href=\"https://www.bookconv.com/guide/calibre-alternatives-online\"/>",
+        "<link rel=\"alternate\" hrefLang=\"en\" href=\"https://www.bookconv.com/guide/calibre-alternatives-online\"/>",
+        "<link rel=\"alternate\" hrefLang=\"x-default\" href=\"https://www.bookconv.com/guide/calibre-alternatives-online\"/>",
+        "<meta property=\"og:description\" content=\"Calibre is the default answer to every conversion question, but installing a full library manager for one file is overkill.\"/>",
+        "<meta name=\"twitter:description\" content=\"Calibre is the default answer to every conversion question, but installing a full library manager for one file is overkill.\"/>"
+      ],
+      "h1": [
+        "Best Free Calibre Alternatives in 2026 (Online, No Install)"
+      ],
+      "title": [
+        "Best Free Calibre Alternatives Online (2026) | BookConv"
+      ],
+      "jsonld_count": 6,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": null
+    },
+    "/nonexistent-bookconv-nov08-negative-control": {
+      "error": "HTTP Error 404: Not Found",
+      "code": 404
+    },
+    "/robots.txt": {
+      "code": 200,
+      "final": "https://www.bookconv.com/robots.txt",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/robots.txt",
+        "X-Robots-Tag": null
+      },
+      "head": [],
+      "h1": [],
+      "title": [],
+      "jsonld_count": 0,
+      "public_health": null,
+      "sitemap_locations": null,
+      "robots": "# BookConv — SEO-friendly robots.txt\nUser-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /auth/\nDisallow: /_next/\nAllow: /_next/static/\n\n# Explicitly allow AI search crawlers to read and cite content,\n# while still protecting API/auth routes and Next.js app internals.\n# (Grouping multiple User-agent lines applies the same rule block to all of them.)\nUser-agent: GPTBot\nUser-agent: OAI-SearchBot\nUser-agent: ChatGPT-User\nUser-agent: ClaudeBot\nUser-agent: Claude-Web\nUser-agent: PerplexityBot\nUser-agent: Perplexity-User\nUser-agent: Google-Extended\nUser-agent: CCBot\nUser-agent: Applebot-Extended\nUser-agent: cohere-ai\nUser-agent: AI2Bot\nAllow: /\nDisallow: /api/\nDisallow: /auth/\nDisallow: /_next/\nAllow: /_next/static/\n\n# Sitemap location\nSitemap: https://www.bookconv.com/sitemap.xml\n"
+    },
+    "/sitemap.xml": {
+      "code": 200,
+      "final": "https://www.bookconv.com/sitemap.xml",
+      "headers": {
+        "Server": "Vercel",
+        "X-Matched-Path": "/sitemap.xml",
+        "X-Robots-Tag": null
+      },
+      "head": [],
+      "h1": [],
+      "title": [],
+      "jsonld_count": 0,
+      "public_health": null,
+      "sitemap_locations": [
+        "https://www.bookconv.com",
+        "https://www.bookconv.com/pricing",
+        "https://www.bookconv.com/batch",
+        "https://www.bookconv.com/blog",
+        "https://www.bookconv.com/tutorial",
+        "https://www.bookconv.com/help",
+        "https://www.bookconv.com/file-security",
+        "https://www.bookconv.com/privacy",
+        "https://www.bookconv.com/terms",
+        "https://www.bookconv.com/about",
+        "https://www.bookconv.com/founder",
+        "https://www.bookconv.com/compare/bookconv-vs-calibre",
+        "https://www.bookconv.com/data",
+        "https://www.bookconv.com/data/bing-ai-citations",
+        "https://www.bookconv.com/data/google-search-performance",
+        "https://www.bookconv.com/data/site-event-timeline",
+        "https://www.bookconv.com/convert/epub-to-azw3",
+        "https://www.bookconv.com/convert/azw3-to-epub",
+        "https://www.bookconv.com/convert/epub-to-html",
+        "https://www.bookconv.com/convert/epub-to-doc",
+        "https://www.bookconv.com/convert/epub-to-word",
+        "https://www.bookconv.com/convert/fb2-to-epub",
+        "https://www.bookconv.com/convert/epub-to-pdf",
+        "https://www.bookconv.com/convert/azw3-to-mobi",
+        "https://www.bookconv.com/convert/mobi-to-txt",
+        "https://www.bookconv.com/convert/docx-to-epub",
+        "https://www.bookconv.com/convert/txt-to-epub",
+        "https://www.bookconv.com/convert/html-to-epub",
+        "https://www.bookconv.com/convert/azw3-to-pdf",
+        "https://www.bookconv.com/convert/mobi-to-epub",
+        "https://www.bookconv.com/convert/epub-to-txt",
+        "https://www.bookconv.com/convert/doc-to-epub",
+        "https://www.bookconv.com/convert/cbr-to-pdf",
+        "https://www.bookconv.com/convert/mobi-to-pdf",
+        "https://www.bookconv.com/convert/pdf-to-epub",
+        "https://www.bookconv.com/convert/djvu-to-pdf",
+        "https://www.bookconv.com/convert/epub-to-mobi",
+        "https://www.bookconv.com/convert/epub-to-zip",
+        "https://www.bookconv.com/convert/lit-to-mobi",
+        "https://www.bookconv.com/convert/lit-to-epub",
+        "https://www.bookconv.com/convert/azw-to-mobi",
+        "https://www.bookconv.com/convert/mobi-to-azw3",
+        "https://www.bookconv.com/blog/kfx-vs-azw3",
+        "https://www.bookconv.com/blog/which-kindle-books-can-you-convert-drm-free-checklist",
+        "https://www.bookconv.com/blog/can-kobo-read-epub-files",
+        "https://www.bookconv.com/blog/best-free-epub-reader",
+        "https://www.bookconv.com/blog/best-epub-reader-android",
+        "https://www.bookconv.com/blog/best-epub-reader-iphone-ipad",
+        "https://www.bookconv.com/blog/reading-groups-hub",
+        "https://www.bookconv.com/blog/bookconv-vs-calibre",
+        "https://www.bookconv.com/blog/bookconv-faq",
+        "https://www.bookconv.com/blog/why-bookconv",
+        "https://www.bookconv.com/blog/chronicles-of-narnia-ebooks-multiple-devices",
+        "https://www.bookconv.com/blog/harry-potter-digital-books-multiple-devices",
+        "https://www.bookconv.com/blog/azw3-epub-mobi-kindle",
+        "https://www.bookconv.com/blog/layout-typesetting-pdf-epub",
+        "https://www.bookconv.com/blog/lit-format-conversion-and",
+        "https://www.bookconv.com/blog/selection-intercept-converter",
+        "https://www.bookconv.com/blog/ai-feeding-notebooklm-chatgpt",
+        "https://www.bookconv.com/blog/calibre-free-batch",
+        "https://www.bookconv.com/blog/ebook-troubleshooting",
+        "https://www.bookconv.com/blog/epub-to-mobi",
+        "https://www.bookconv.com/blog/kindle-epub-azw3-mobi",
+        "https://www.bookconv.com/blog/legacy-lit-djvu-fb2-converter",
+        "https://www.bookconv.com/blog/azw3-to-mobi",
+        "https://www.bookconv.com/blog/epub-to-text",
+        "https://www.bookconv.com/blog/epub-to-word",
+        "https://www.bookconv.com/blog/ebook-conversion-tools",
+        "https://www.bookconv.com/blog/epub-converter",
+        "https://www.bookconv.com/blog/azw3-epub-mobi-kindle-compatibility",
+        "https://www.bookconv.com/blog/conversion-error-guide",
+        "https://www.bookconv.com/blog/large-file-conversion-guide",
+        "https://www.bookconv.com/blog/check-converted-file-quality",
+        "https://www.bookconv.com/blog/sync-reading-across-devices",
+        "https://www.bookconv.com/blog/mobi-to-kobo",
+        "https://www.bookconv.com/blog/epub-vs-mobi",
+        "https://www.bookconv.com/blog/batch-converter",
+        "https://www.bookconv.com/blog/epub-vs-pdf",
+        "https://www.bookconv.com/blog/why-ebook-wont-open-kindle",
+        "https://www.bookconv.com/blog/common-ebook-format-problems",
+        "https://www.bookconv.com/blog/fb2-vs-epub",
+        "https://www.bookconv.com/blog/ebook-conversion-checklist",
+        "https://www.bookconv.com/blog/read-epub-on-any-device",
+        "https://www.bookconv.com/blog/epub3-vs-epub2",
+        "https://www.bookconv.com/blog/scanned-pdf-to-epub-ocr",
+        "https://www.bookconv.com/blog/best-ebook-reader-apps",
+        "https://www.bookconv.com/blog/kobo-to-epub",
+        "https://www.bookconv.com/blog/can-kindle-read-azw3",
+        "https://www.bookconv.com/blog/epub-to-azw3",
+        "https://www.bookconv.com/blog/djvu-to-pdf",
+        "https://www.bookconv.com/blog/cbr-to-pdf",
+        "https://www.bookconv.com/blog/fb2-to-epub",
+        "https://www.bookconv.com/blog/txt-to-epub",
+        "https://www.bookconv.com/blog/mobi-to-epub",
+        "https://www.bookconv.com/blog/azw3-vs-mobi",
+        "https://www.bookconv.com/blog/epub-to-pdf-linux",
+        "https://www.bookconv.com/blog/lit-ebook-format",
+        "https://www.bookconv.com/blog/epub-to-mobi-guide",
+        "https://www.bookconv.com/blog/pdf-to-epub-guide",
+        "https://www.bookconv.com/blog/download-troubleshooting",
+        "https://www.bookconv.com/blog/webhook-integration",
+        "https://www.bookconv.com/blog/ebook-formats-explained",
+        "https://www.bookconv.com/blog/why-convert-lit-to-epub",
+        "https://www.bookconv.com/guide/fix-epub-to-pdf-formatting",
+        "https://www.bookconv.com/guide/pdf-to-epub-keep-formatting",
+        "https://www.bookconv.com/guide/calibre-vs-online-converter",
+        "https://www.bookconv.com/guide/epub-to-mobi-keep-formatting",
+        "https://www.bookconv.com/guide/azw3-to-epub-keep-formatting",
+        "https://www.bookconv.com/guide/docx-to-epub-self-publish",
+        "https://www.bookconv.com/guide/mobi-to-epub-keep-formatting",
+        "https://www.bookconv.com/guide/epub-to-azw3-for-kindle",
+        "https://www.bookconv.com/guide/djvu-to-pdf",
+        "https://www.bookconv.com/guide/cbr-to-pdf",
+        "https://www.bookconv.com/guide/lit-to-epub-keep-formatting",
+        "https://www.bookconv.com/guide/epub-to-txt-extract",
+        "https://www.bookconv.com/guide/fb2-to-epub-keep-formatting",
+        "https://www.bookconv.com/guide/azw3-to-mobi-keep-formatting",
+        "https://www.bookconv.com/guide/txt-to-epub-build-ebook",
+        "https://www.bookconv.com/guide/calibre-alternative",
+        "https://www.bookconv.com/guide/ai-ebook-converter",
+        "https://www.bookconv.com/guide/batch-converter",
+        "https://www.bookconv.com/guide/kindle-formats",
+        "https://www.bookconv.com/guide/best-ebook-converter",
+        "https://www.bookconv.com/guide/epub-vs-mobi",
+        "https://www.bookconv.com/guide/azw3-vs-mobi",
+        "https://www.bookconv.com/guide/how-to-read-epub-on-kindle",
+        "https://www.bookconv.com/guide/calibre-alternatives-online",
+        "https://www.bookconv.com/guide/how-to-send-epub-to-kindle",
+        "https://www.bookconv.com/guide/kindle-vs-kobo",
+        "https://www.bookconv.com/formats/epub",
+        "https://www.bookconv.com/formats/pdf",
+        "https://www.bookconv.com/formats/mobi",
+        "https://www.bookconv.com/formats/azw3",
+        "https://www.bookconv.com/formats/txt",
+        "https://www.bookconv.com/formats/docx",
+        "https://www.bookconv.com/formats/rtf",
+        "https://www.bookconv.com/formats/jpg",
+        "https://www.bookconv.com/formats/png",
+        "https://www.bookconv.com/formats/html",
+        "https://www.bookconv.com/formats/fb2",
+        "https://www.bookconv.com/formats/lit",
+        "https://www.bookconv.com/formats/cbr",
+        "https://www.bookconv.com/formats/djvu",
+        "https://www.bookconv.com/formats/doc",
+        "https://www.bookconv.com/es",
+        "https://www.bookconv.com/es/convert",
+        "https://www.bookconv.com/es/blog",
+        "https://www.bookconv.com/es/privacy",
+        "https://www.bookconv.com/es/file-security",
+        "https://www.bookconv.com/es/blog/azw3-vs-mobi",
+        "https://www.bookconv.com/es/blog/can-kindle-read-azw3",
+        "https://www.bookconv.com/es/blog/ebook-formats-explained",
+        "https://www.bookconv.com/es/blog/epub-to-mobi-guide",
+        "https://www.bookconv.com/es/blog/mobi-to-epub",
+        "https://www.bookconv.com/es/blog/why-convert-lit-to-epub",
+        "https://www.bookconv.com/es/blog/epub-vs-pdf",
+        "https://www.bookconv.com/es/blog/epub-vs-mobi",
+        "https://www.bookconv.com/es/blog/txt-to-epub",
+        "https://www.bookconv.com/es/guide/calibre-vs-online-converter",
+        "https://www.bookconv.com/es/guide/best-ebook-converter",
+        "https://www.bookconv.com/es/guide/epub-vs-mobi",
+        "https://www.bookconv.com/es/guide/kindle-formats",
+        "https://www.bookconv.com/es/guide/batch-converter",
+        "https://www.bookconv.com/es/guide/ai-ebook-converter",
+        "https://www.bookconv.com/es/guide/calibre-alternative",
+        "https://www.bookconv.com/es/guide/epub-to-azw3-for-kindle",
+        "https://www.bookconv.com/es/guide/epub-to-mobi-keep-formatting",
+        "https://www.bookconv.com/es/guide/azw3-to-mobi-keep-formatting",
+        "https://www.bookconv.com/es/guide/kindle-vs-kobo",
+        "https://www.bookconv.com/es/convert/epub-to-doc",
+        "https://www.bookconv.com/es/convert/epub-to-word",
+        "https://www.bookconv.com/es/convert/html-to-epub",
+        "https://www.bookconv.com/es/convert/epub-to-txt",
+        "https://www.bookconv.com/es/convert/lit-to-epub",
+        "https://www.bookconv.com/es/convert/epub-to-mobi",
+        "https://www.bookconv.com/es/convert/epub-to-azw3"
+      ],
+      "robots": null
+    }
+  }
+}
