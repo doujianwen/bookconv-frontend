@@ -142,16 +142,55 @@ ValueError: byte must be in range(0, 256)
 
 ---
 
-## 5. 残余风险 / 待观察
+## 5. 残余风险 / 待观察（2026-11-08 红队审计后修订）
 
-1. **熔断语义变更的取舍**：若未来出现「某类输入全部确定性失败」的后端 bug（如本次 txt），
-   熔断不再兜底，依赖灰卡（按签名节流）+ 后端 `FAIL`/`STDERR` 日志发现。后端响应是
-   快失败（3-7 s），不会重新引入熔断要避免的 30-90 s 超时成本。4xx 计入熔断的语义瑕疵
-   仍按 2026-11-04 红队裁定保留为观察项（delegation 路径 4xx 极罕见）。
-2. **`worker/src/converters/calibre.ts:41` 同样含该坏选项**：已确认为死代码（全仓无
+1. **熔断语义（红队审计 #3 修正后闭环）**：`CONVERSION_FAILED` 不计熔断的前提
+   「该码 ⇒ 确定性输入问题」曾被 `index.js:241` 的兜底码证伪——spawn ENOENT /
+   120s 超时 / SIGKILL 都会兜底成 CONVERSION_FAILED，导致后端真死时熔断永不开启。
+   **已修**：后端新增 `BACKEND_UNAVAILABLE` 码（`calibre.js` 判 killed / signal /
+   字符串 err.code）并映射 HTTP 503；前端 path 5 对 503 正常计数+重试 ⇒ 熔断对
+   真故障恢复防护。同时 4xx（413 可达：R2 直传 100MB vs 后端 50MB）也改为不计。
+2. **熔断新语义的一致性边界**：现在只有「超时 / 网络错误 / 非
+   CONVERSION_FAILED、非 BACKEND_UNAVAILABLE 的 5xx」计数。若后端出现新的
+   兜底码形态，需同步审计（`calibre-infra-unavailable.test.mjs` 锁定 spawn/超时
+   两类；新增失败形态须补用例）。
+3. **`worker/src/converters/calibre.ts:41` 同样含该坏选项**：已确认为死代码（全仓无
    import），按 2026-11-03 红队「死代码改动即无效 churn」的裁定**未改动**，仅记录。
-3. **告警卡 503 标签硬编码**未改（历史格式）；错误串已带真实 status，信息不丢。
-4. **历史可比性**：`localValidationInferred` 语义在 2026-11-08 前后不同
-   （旧 = errorCode 是否 CORRUPT_INPUT；新 = §3.5 签名是否命中），跨日期统计不可直接混用。
-5. TBS 上游 bug 无解：同类文件会继续灰卡失败。若频次升高，可考虑在后端识别该签名并
-   返回更明确的用户文案（「目录条目过多」），当前单例不值得做。
+4. **告警卡 503 标签硬编码**未改（历史格式）；错误串已带真实 status 与后端
+   code+error，信息不丢。
+5. **历史可比性**：`localValidationInferred` 语义在 2026-11-08 前后不同
+   （旧 = errorCode 是否 CORRUPT_INPUT；新 = cloudconvert 优先 + §3.5 签名命中），
+   跨日期统计不可直接混用。
+6. **TBS 上游 bug 无解**：同类文件会继续灰卡失败。若频次升高，可考虑在后端识别该
+   签名并返回更明确的用户文案（「目录条目过多」），当前单例不值得做。
+7. **`canDelegate` 与 conversion-map 的一致性债务**（红队审计 #2）：mobi/azw3/
+   docx/html/rtf/fb2/lit→txt 共 7 个组合在 UI 标注 `tool:'js'`「Pure JS, no
+   Calibre」，实际仍先委托后端。统一原则会改变这些组合的输出引擎，需单独评审。
+
+---
+
+## 6. 红队回执（2026-11-08 · L2 独立通道）
+
+审计对象：commit `b0e7c69`（4 条修复 + 测试）。审计方式：独立上下文子代理，
+不继承首轮推理，按「断言 → 攻击 → 裁定」执行，并实跑全部测试。
+
+| # | 断言 | 攻击结果 | 裁定 |
+|---|---|---|---|
+| 1 | 删 `--dont-add-chapters-to-toc` 恢复基线、零新故障面 | 核验 maxBuffer/超时/Content-Type 均不受影响；Calibre TXT 插件源码无 chapters-to-toc 机制 | **成立**；但 route.ts 注释「txt 带 TOC 噪声」与 `inline_toc` 默认 False 不符 → 已改写 |
+| 2 | route.ts 排除 epub→txt | isPureJsConversion 语义一致、无测试依赖后端、upload_key 链路正确 | **成立**；登记「2/40+ 特例 vs tool:'js' 标注」一致性债务 |
+| 3a | notifyBackendDown 带 code+error | jest 全链穿透 | **成立** |
+| 3b | countFailure=false（CONVERSION_FAILED 不计熔断） | **前提被证伪**：index.js:241 兜底码使 spawn ENOENT/超时/SIGKILL 也归入该码 → 后端真死时熔断永不开启；且告警 1 本身即属此类（旧红卡是「有效信号+错误标签」，原修复移除了信号而非修正标签）；half-open 悬挂不存在（攻击失败）；413 可达且计入 → 自相矛盾 | **需修正** → 已实施 BACKEND_UNAVAILABLE + 503 + 4xx 不计 |
+| 4 | inferLocalValidation 签名判定 | 'corrupt epub:' 带冒号不漏、后端 stderr 不污染 convMsg（攻击失败）；但 'invalid zip file' 与引擎侧 'Invalid ZIP file, local header is damaged' 字面重叠 → 假阳性，**且被 reverse-verify 测试固化成契约**；'Input validation failed:' 包装串漏收录 → 假阴性 | **需修正** → 已实施 cloudconvert 优先规则 + 收录包装串 + 改写固化测试 |
+| 5 | 新增测试有效性 | argv 契约锁真实有效；但假 Calibre 恒成功 ⇒ 新增**另一个**无效 txt 选项测不出 | **需修正** → txt/text argv 改为精确相等锁 |
+
+**审计结论**：无一条修复需要回滚；删 flag + epub→txt 排除必须保留（二者共同保证
+告警 1 不可复发）。4 处修正全部已在本次提交实施并实测（后端 3 套单测
+9/9 + 9/9 + 7/7、前端 47 套件 / 568 用例、tsc exit 0）。
+
+**审计的证伪条件（保留）**：
+- 若能提供 Calibre 7.6.0 上 `--dont-add-chapters-to-toc` 存在的运行时证据（与服务器
+  `no such option` 铁证冲突）→ 推翻修复 #1。
+- 若 CC import 拒收也会返回详细 zip 错误详情（而非 `Input task has failed`）→
+  inferLocalValidation 的 cloudconvert 优先规则可辩论；但「CC 侧拒收 ≠ 本地 §3.5
+  拦截」的语义仍成立。
+- 若生产 R2 直传上限被压到 ≤50MB → 413 可达性论证失效（改动无害但动机减弱）。

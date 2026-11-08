@@ -184,6 +184,40 @@ describe("conversion backend client", () => {
       expect(fetchMock).toHaveBeenCalledTimes(3);
     });
 
+    // 2026-11-08（红队审计 #3）：4xx 与 CONVERSION_FAILED 同为「后端活着并给出
+    // 确定性答复」，不计熔断。实证可达：R2 直传 100MB 上限 vs 后端 50MB ⇒
+    // 50–100MB 区间的委托请求必吃 413，旧逻辑下 3 个即熔断开闸（用户输入放大成
+    // 「后端不可用」）。反向约束：若有人把 4xx 接回 recordBackendFailure，本组变红。
+    it("4xx is a deterministic rejection, not outage: does not increment failures", async () => {
+      setEnv();
+      global.fetch = jest.fn(
+        async () =>
+          new Response(JSON.stringify({ error: "File too large.", code: "FILE_TOO_LARGE" }), {
+            status: 413,
+          }),
+      ) as unknown as typeof global.fetch;
+      const before = breakerSnapshot();
+      expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      const after = breakerSnapshot();
+      expect(after.failures).toBe(before.failures); // 关键：健康失败数不增
+      expect(after.state).toBe("closed");
+    });
+
+    it("three consecutive 413s do NOT open the circuit", async () => {
+      setEnv();
+      global.fetch = jest.fn(
+        async () =>
+          new Response(JSON.stringify({ error: "File too large.", code: "FILE_TOO_LARGE" }), {
+            status: 413,
+          }),
+      ) as unknown as typeof global.fetch;
+      for (let i = 0; i < 3; i += 1) {
+        expect(await delegateToBackend(makeForm(), {})).toBeNull();
+      }
+      expect(breakerState()).toBe("closed");
+      expect(shouldUseBackend()).toBe(true);
+    });
+
     it("a 429 does not swallow the failure budget of a real outage", async () => {
       setEnv();
       // 两次真实故障 + 两次忙：仍是 2 次健康失败，未达阈值

@@ -168,18 +168,25 @@ export function classifyAlertSeverity(
 }
 
 // ---------------------------------------------------------------------------
-// §3.5 本地校验错误签名（2026-11-08 新增）
+// §3.5 本地校验错误签名（2026-11-08 新增，2026-11-08 红队审计 #4 修订）
 //
 // 来源 = conversion.ts validateInputFile() 实际抛出的错误串（逐字核对）：
-//   'corrupt epub: …'            §3.5 深校验（CRC / 断链 / mimetype 错）
-//   'Invalid zip file …'         EOCD 缺失（前缀契约，见 tests/reverse-verify）
-//   'Invalid or missing opf'     container/OPF 检查
-//   'not a valid eBook format …' 魔数 / 结构前置校验
-//   'Empty input file'           0 字节（convert-handler 已前置拦截，防御性保留）
+//   'corrupt epub: …'             §3.5 深校验（CRC / 断链 / mimetype 错）
+//   'Invalid zip file …'          EOCD 缺失（前缀契约，见 tests/reverse-verify）
+//   'Invalid or missing opf'      container/OPF 检查
+//   'not a valid eBook format …'  魔数 / 结构前置校验
+//   'Empty input file'            0 字节（convert-handler 已前置拦截，防御性保留）
+//   'Input validation failed: …'  conversion.ts:433 的包装串（stat/read IO 异常路径，
+//                                 说明 §3.5 跑了但以非预期方式失败 → 也算拦截）
 //
 // convMsg 只可能来自本地校验或 CloudConvert：后端（自建 Calibre）的错误只进
 // delegationFallback 运维字段，不进 convMsg（见 convert-handler.ts catch 块），
 // 故后端 stderr 不会污染本判定。匹配为子串且大小写不敏感。
+//
+// ⚠️ 红队审计 #4 指出的假阳性（已修）：签名与 Calibre/CC 引擎侧错误串存在字面
+// 重叠——引擎侧 'ValueError: Invalid ZIP file, local header is damaged' 会命中
+// 'invalid zip file'。但**引擎侧报错 ⇒ 文件必然已通过 §3.5 并到达引擎**，语义上
+// 必须判 passed。由下方 cloudconvert 优先规则处理，签名表不再单独裁决这类串。
 // ---------------------------------------------------------------------------
 const LOCAL_VALIDATION_SIGNATURES = [
   'corrupt epub:',
@@ -187,16 +194,26 @@ const LOCAL_VALIDATION_SIGNATURES = [
   'invalid or missing opf',
   'not a valid ebook format',
   'empty input file',
+  'input validation failed',
 ];
 
 /**
  * 判定 §3.5 本地校验是否拦截了该输入。
- * 命中签名 ⇒ 'failed'（§3.5 真的运行过且拦下）；否则 ⇒ 'passed'
- * （文件已通过 §3.5，失败发生在引擎侧）。
- * 导出以便单测直接锁定签名契约（tests/reverse-verify-alerts-redteam.test.ts）。
+ *
+ * 裁决顺序（红队审计 #4 修订）：
+ *   1. 错误串含 'cloudconvert' ⇒ **passed**。文件到过 CloudConvert ⇒ 必然已通过
+ *      §3.5（§3.5 在所有引擎之前运行），无论 CC 报什么错、错误串长什么样。
+ *      此规则优先于签名表，消除「引擎侧 zip 错误被误标 failed」的假阳性。
+ *   2. 命中 §3.5 签名 ⇒ 'failed'（§3.5 真的运行过且拦下）。
+ *   3. 其余 ⇒ 'passed'。
+ *
+ * 已知残余（登记，非缺陷）：executeConversion 里「本地 Calibre 可用」分支
+ * （conversion.ts:1403，Vercel 无 Calibre 故生产不可达）抛出的引擎错误无
+ * cloudconvert 标记，可能被签名表误标 failed。生产路径不受影响。
  */
 export function inferLocalValidation(convMsg: string): 'passed' | 'failed' {
   const lower = (convMsg || '').toLowerCase();
+  if (lower.includes('cloudconvert')) return 'passed';
   return LOCAL_VALIDATION_SIGNATURES.some((s) => lower.includes(s)) ? 'failed' : 'passed';
 }
 

@@ -9,7 +9,10 @@ import { unlink } from "node:fs/promises";
 const execFileAsync = promisify(execFile);
 
 // Calibre binary (override with CALIBRE_BIN if not on PATH, e.g. tests)
-const CALIBRE_BIN = process.env.CALIBRE_BIN || "ebook-convert";
+// 2026-11-08：改为**调用时**读取 env（与 src/lib/conversion-backend-client.ts 的
+// env 约定一致）——使单测可在同一进程内切换 CALIBRE_BIN 覆盖不同失败形态
+// （ENOENT / 超时 / 正常失败），也允许运行时改 env 无需重启。
+const calibreBin = () => process.env.CALIBRE_BIN || "ebook-convert";
 
 // ---------------------------------------------------------------------------
 // 错误摘要提取（2026-11-03，Job f547b469 复盘）
@@ -93,6 +96,7 @@ export async function convertWithCalibre(inputPath, outputPath, opts = {}) {
   try {
     // Windows batch wrappers (.cmd/.bat) need a shell to execute; on Linux the
     // real binary is `ebook-convert` so this branch is a no-op in production.
+    const CALIBRE_BIN = calibreBin();
     const useShell = /\.(cmd|bat)$/i.test(CALIBRE_BIN);
     await execFileAsync(CALIBRE_BIN, args, { timeout, maxBuffer, shell: useShell });
     return { success: true, outputPath };
@@ -106,6 +110,31 @@ export async function convertWithCalibre(inputPath, outputPath, opts = {}) {
       await unlink(outputPath);
     } catch {
       /* ignore */
+    }
+    // 2026-11-08（红队审计 #3）：区分「基础设施失败」与「确定性转换失败」。
+    // index.js 的 `result.code || "CONVERSION_FAILED"` 是兜底码——若不区分，
+    // spawn ENOENT（Calibre 二进制丢失/损坏）、execFile 超时、SIGKILL/OOM 都会被
+    // 归入 CONVERSION_FAILED；而前端对该码跳过熔断计数（确定性转换失败不是健康
+    // 证据）⇒ 后端真死时熔断永不开启、红卡永不发（后端静默死亡）。
+    // 基础设施失败必须独立成码 BACKEND_UNAVAILABLE + HTTP 503（见 index.js），
+    // 让前端按「健康失败」计数并触发熔断。
+    // 判据：execFile 的 err.code 在正常转换失败时是**数字**退出码（如 1），只有
+    // spawn 失败才是字符串（ENOENT/EACCES/ETIMEDOUT）；timeout 选项超时则
+    // killed=true 且 signal=SIGTERM；OOM kill 通常是 signal=SIGKILL。
+    const INFRA_ERR_CODES = new Set(["ENOENT", "EACCES", "ETIMEDOUT", "EMFILE"]);
+    const isInfraFailure =
+      !!err &&
+      (err.killed === true ||
+        err.signal === "SIGKILL" ||
+        err.signal === "SIGTERM" ||
+        INFRA_ERR_CODES.has(err.code));
+    if (isInfraFailure) {
+      return {
+        success: false,
+        error: `Conversion backend unavailable: ${(fallbackMsg || "calibre process failed to run").slice(0, 160)}`,
+        code: "BACKEND_UNAVAILABLE",
+        rawStderr: rawStderr.slice(0, 6000),
+      };
     }
     // DRM 判定改为扫**完整** stderr（原实现只看前 200 字符）：CloudConvert 侧的
     // 历史审计（2026-10-12）已证实 DRM 字样可能落在消息靠后位置，同样的漏判在

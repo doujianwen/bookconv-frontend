@@ -239,7 +239,11 @@ async function doConvert(req, res) {
     // DRM 受保护是确定性用户侧输入问题，非后端健康故障：返回 422 + DRM_PROTECTED，
     // 让委托方短路返回「去 DRM」提示而不回退 CloudConvert、不计入熔断（2026-11-07）。
     const code = result.code || "CONVERSION_FAILED";
-    const status = code === "DRM_PROTECTED" ? 422 : 500;
+    // 2026-11-08（红队审计 #3）：BACKEND_UNAVAILABLE（spawn ENOENT / 超时 / 被 kill）
+    // → HTTP 503，让前端按「健康失败」计数并触发熔断。若把它兜底进 CONVERSION_FAILED
+    //（500），前端会视为确定性输入问题而不计数 —— Calibre 二进制损坏这类真故障
+    // 将熔断永不开启、红卡永不发（后端静默死亡）。
+    const status = code === "DRM_PROTECTED" ? 422 : code === "BACKEND_UNAVAILABLE" ? 503 : 500;
     return json(res, status, { error: result.error, code });
   }
 

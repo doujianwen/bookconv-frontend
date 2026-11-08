@@ -59,10 +59,17 @@ async function argsFor(targetFormat, opts = {}) {
 // 1) txt / text：不得再传坏选项
 const txtArgs = await argsFor("txt");
 check("txt -> no --dont-add-chapters-to-toc", !txtArgs.includes(BROKEN_FLAG));
-check("txt -> positional in/out preserved", txtArgs[0] === inFile && txtArgs[1] === outFile);
+// 红队审计 #5：假 Calibre 恒成功退出 ⇒ 若未来给 txt 新增**另一个**无效选项，
+// 仅断言「不含这枚 flag」测不出来。精确锁死 argv —— txt/text 目标不允许任何
+// 额外参数；将来若确需新增参数，必须先同步本文件的期望值。
+check(
+  "txt -> argv EXACTLY [in,out] (ANY extra option fails this lock)",
+  JSON.stringify(txtArgs) === JSON.stringify([inFile, outFile]),
+);
 
 const textArgs = await argsFor("text");
 check("text -> no --dont-add-chapters-to-toc", !textArgs.includes(BROKEN_FLAG));
+check("text -> argv EXACTLY [in,out]", JSON.stringify(textArgs) === JSON.stringify([inFile, outFile]));
 
 // 2) 其余目标格式不受影响（无多余参数）
 const mobiArgs = await argsFor("mobi");

@@ -252,9 +252,15 @@ export async function delegateToBackend(
   }
 
   // 路径 4：确定性 4xx（后端拒绝该请求，非健康失败）→ 不重试（重试必失败），
-  // 但仍计入熔断（与历史行为一致：delegation 路径上 4xx 极罕见，格式已在 route 校验）。
+  // 也不计入熔断。2026-11-08（红队审计 #3）：4xx 与 500-CONVERSION_FAILED 同为
+  // 「后端活着并给出确定性答复」，计入会把用户输入放大成「后端不可用」——且该
+  // 路径**实证可达**：R2 直传上限 100MB（file-size-limit.ts）vs 后端 50MB
+  // （index.js MAX_FILE_BYTES），50–100MB 区间的委托请求必吃 413，3 个即熔断
+  // 开闸。旧注释「delegation 路径上 4xx 极罕见」已被证伪，撤销 2026-11-04 的
+  // 观察项裁定。与 429 不计熔断同理：熔断只针对「后端没有正常应答」（超时 /
+  // 网络错误 / 真 5xx）。
   if (res.status >= 400 && res.status < 500) {
-    await failWith("", String(res.status), await readBackendDetail(res));
+    await failWith("", String(res.status), await readBackendDetail(res), false);
     return null;
   }
 

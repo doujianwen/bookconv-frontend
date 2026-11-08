@@ -66,11 +66,19 @@ export async function POST(request: NextRequest) {
       const uploadKey =
         typeof uploadKeyRaw === "string" && uploadKeyRaw.length > 0 ? uploadKeyRaw : undefined;
 
-      // 纯 JS 已覆盖的组合不委托后端（2026-11-08）：后端输出并不更好，却多一次
-      // 后端往返、并暴露一次「确定性失败计数」面。epub→html 是既有例外；
-      // epub→txt 2026-11-08 加入——后端 Calibre 7.6.0 的 txt 输出带章节 TOC 噪声，
-      // 且此前 calibre.js 传的 --dont-add-chapters-to-toc 选项不存在，造成所有
-      // X→txt 后端转换 100% 500（告警 1 根因）。前端纯 JS epub→txt 输出更干净。
+      // 纯 JS 已覆盖的组合不委托后端（2026-11-08）：省一次后端往返。epub→html
+      // 是既有例外；epub→txt 2026-11-08 加入——此前 calibre.js 传的
+      // --dont-add-chapters-to-toc 选项在 Calibre 7.6.0 中不存在，所有 X→txt 后端
+      // 转换 100% 500（告警 1 根因），生产实际一直由纯 JS 路径兜底承接；修复后
+      // 保持该路由不变（行为连续）。⚠️ 红队审计 #1 修正：不要把理由写成「后端
+      // txt 输出带章节 TOC 噪声」——Calibre TXT 输出插件的 inline_toc 默认 False，
+      // 默认并不生成目录，该说法是对不存在选项的功能臆测。
+      //
+      // ⚠️ 已知不对称（红队审计 #2，登记为一致性债务，本次不改）：「纯 JS 对不
+      // 委托」这一原则目前只实现 2 个特例；mobi/azw3/docx/html/rtf/fb2/lit→txt
+      // 等 conversion-map 标 tool:'js'（UI 展示「Pure JS, no Calibre」）的组合仍
+      // 先委托后端——展示与路由不一致。统一原则会改变这些组合的输出引擎，
+      // 需单独评审，不捆绑在本修复内。
       const canDelegate =
         sourceFormat && targetFormat && isCalibreTarget(targetFormat) && shouldUseBackend()
         && !(sourceFormat === 'epub' && targetFormat === 'html')

@@ -173,8 +173,29 @@ describe('inferLocalValidation：§3.5 签名命中才标 failed（2026-11-08）
     ).toBe('passed');
   });
 
-  it('签名匹配大小写不敏感（防御 CC 侧返回大写变体）', () => {
-    expect(inferLocalValidation('CloudConvert job failed: INVALID ZIP FILE, local header is damaged')).toBe('failed');
+  it('引擎侧 zip 错误（CC 返回）⇒ passed，不再误标 failed（红队审计 #4 假阳性修正）', () => {
+    // CC/Calibre 引擎侧的真实错误串（conversion-backend/app/calibre.js 注释记录的
+    // stderr 形态）：'ValueError: Invalid ZIP file, local header is damaged' —— 字面量
+    // 与 §3.5 的 'Invalid zip file' 重叠。但引擎侧报错 ⇒ 文件必然已通过 §3.5 并到达
+    // 引擎 ⇒ 语义上必须 passed。旧实现判 failed 且被本文件断言固化（假阳性契约）。
+    expect(
+      inferLocalValidation('CloudConvert job failed: INVALID ZIP FILE, local header is damaged'),
+    ).toBe('passed');
+    expect(
+      inferLocalValidation(
+        'CloudConvert job failed after 1 attempt(s) | engine=calibre: CloudConvert job failed: ValueError: Invalid ZIP file, local header is damaged',
+      ),
+    ).toBe('passed');
+  });
+
+  it('§3.5 签名匹配本身仍大小写不敏感（无 cloudconvert 前缀时）', () => {
+    expect(inferLocalValidation('CORRUPT_INPUT: INVALID ZIP FILE (no central directory)')).toBe('failed');
+  });
+
+  it('包装串 Input validation failed: ⇒ failed（红队审计 #4 假阴性修正）', () => {
+    // conversion.ts:433：validateInputFile 的非预期异常被包装成该前缀 ——
+    // §3.5 跑了但失败，必须标 failed（旧实现漏收录此签名）。
+    expect(inferLocalValidation('Input validation failed: EACCES: permission denied, open')).toBe('failed');
   });
 
   it('空串 / 未知错误 ⇒ passed（不凭空判死本地校验）', () => {
