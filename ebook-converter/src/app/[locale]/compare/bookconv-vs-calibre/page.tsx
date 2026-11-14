@@ -48,7 +48,7 @@ const COMPARISON_FEATURES = [
 const FAQ_ITEMS = [
   {
     q: "Is BookConv free to use?",
-    a: "Yes! BookConv is completely free for personal use. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service.",
+    a: "Yes! BookConv is completely free for personal use. When direct upload is available, a single file can be uploaded up to 100 MB; the multipart fallback and batch uploads are limited to 4 MB per file. Batch conversion is free during public beta; Pro is listed at $5/month on the pricing page.",
   },
   {
     q: "Can I use BookConv on my phone?",

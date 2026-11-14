@@ -52,6 +52,12 @@ export const USER_INPUT_CODES = [
   "UPLOAD_EMPTY", // 空文件：R2 路径既有码；2026-11-02 起 multipart 路径同样返回
 ];
 
+// 归因未明：不能直接计入已确认的引擎失败，也不能从监控中静默剔除。
+// UNKNOWN 必须单独显示并触发归因质量检查。
+export const UNCLASSIFIED_ERROR_CODES = [
+  "UNKNOWN",
+];
+
 // ── 告警分级（用户侧灰卡 / 系统侧红卡）────────────────────────────────
 //
 // 权威源 = src/lib/alerts.ts:105 USER_SIDE_ERROR_CODES（生产飞书告警卡的判据）。

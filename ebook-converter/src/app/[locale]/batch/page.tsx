@@ -34,7 +34,7 @@ const FAQ = [
   },
   {
     q: "Is batch conversion free?",
-    a: "Batch conversion is free during public beta, with no Pro subscription required. It is planned for Pro after beta; check this page for current availability.",
+    a: "Batch conversion is free during public beta, with no Pro subscription required. Pro is listed at $5/month on the pricing page; check this page for current batch availability.",
   },
   {
     q: "Which formats can I convert in a batch?",
@@ -106,7 +106,7 @@ export default async function BatchPage() {
         <div className="flex items-start gap-3">
           <Zap className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
           <p className="text-sm text-blue-900">
-            Batch conversion is <span className="font-semibold">free during public beta</span>, with Pro planned after beta. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch. Files are converted through our API and the results are packaged in your browser as one ZIP. Each batch file is limited to 4 MB.
+            Batch conversion is <span className="font-semibold">free during public beta</span>. Pro is listed at $5/month on the pricing page. Local formats (EPUB → ZIP, EPUB → TXT) accept up to 20 files; other formats use a metered third-party service, so they are limited to a few files per batch. Files are converted through our API and the results are packaged in your browser as one ZIP. Each batch file is limited to 4 MB.
           </p>
         </div>
         <Link

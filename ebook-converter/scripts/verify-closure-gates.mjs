@@ -168,7 +168,7 @@ async function getRecentPutFailed(days) {
       try {
         res = fallbackPutFailed(days)
         res._source = 'fallback:' + path.basename(latestAdvancedFile())
-      } catch (_) {
+      } catch {
         throw e
       }
     }
@@ -246,7 +246,7 @@ async function main() {
     try {
       const res = await evalPutGate(gate)
       out.push(`ℹ️  INFO    ${r.id}（未关闭）：gate 当前状态（${res.evidence}；${res.note}）[${res.source}]`)
-    } catch (_) {
+    } catch {
       /* 离线不可用则跳过情报行 */
     }
   }

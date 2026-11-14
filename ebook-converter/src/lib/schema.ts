@@ -53,7 +53,7 @@ export function generateSchema(
   const howToSteps = [
     { '@type': 'HowToStep', stepNumber: 1, name: 'Upload your file', text: 'Drag and drop your ' + sourceDisplay + ' file or click to browse.' },
     { '@type': 'HowToStep', stepNumber: 2, name: 'Conversion starts automatically', text: 'Processing time depends on the file and conversion route.' },
-    { '@type': 'HowToStep', stepNumber: 3, name: 'Download result', text: 'Once complete, download your converted ' + targetDisplay + ' file instantly.' },
+    { '@type': 'HowToStep', stepNumber: 3, name: 'Download result', text: 'Once complete, download your converted ' + targetDisplay + ' file from the result page.' },
   ];
 
   const graph: unknown[] = [

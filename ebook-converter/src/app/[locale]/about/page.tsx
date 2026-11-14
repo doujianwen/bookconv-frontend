@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const aboutFaqs = [
-  { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. Batch conversion is free during public beta, with Pro planned after beta; each file is limited to 4 MB, with up to 20 EPUB-to-ZIP/TXT files or currently 3 files using the third-party service. Personal conversions require no registration." },
+  { q: 'Is BookConv really free?', a: "Yes! BookConv is completely free for personal use. When direct upload is available, a single file can be uploaded up to 100 MB; the multipart fallback and batch uploads are limited to 4 MB per file. Upload capability does not guarantee every format and route can complete a conversion at that size. Batch conversion is free during public beta; Pro is listed at $5/month on the pricing page. Personal conversions require no registration." },
   { q: 'How long are my files stored?', a: 'Retention depends on the processing route. Some converted outputs may be cached and third-party copies follow their own policies. Immediate deletion of every copy is not guaranteed; see our privacy policy.' },
   { q: 'Who processes my files?', a: 'BookConv processes files on servers. Some routes use CloudConvert and results may be cached. Read our file security information and privacy policy before uploading confidential documents.' },
   { q: 'What formats do you support?', a: 'We support 28+ formats including EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, and PNG. New formats are added regularly based on user demand.' },
@@ -133,7 +133,7 @@ export default async function AboutPage() {
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-600">
                 <Zap className="h-5 w-5 text-white" />
               </div>
-              <h3 className="mb-2 font-semibold text-gray-900">Lightning Fast</h3>
+              <h3 className="mb-2 font-semibold text-gray-900">Format-Specific Processing</h3>
               <p className="text-sm text-gray-600">
                 Upload a supported file without installing desktop software. Processing time depends on file size, format and service availability.
               </p>

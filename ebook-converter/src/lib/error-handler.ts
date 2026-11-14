@@ -107,7 +107,7 @@ const ERROR_MESSAGES: Record<ErrorCode, { message: string; retryable: boolean }>
   'PERMISSION_DENIED': { message: 'Permission denied when accessing the file. Please try a different file.', retryable: false },
   'CONVERSION_TIMEOUT': { message: '转换超时（免费版服务器 60 秒硬限）。请尝试：① 改用纯 JS 格式（EPUB→TXT/DOCX/RTF/FB2）；② 使用更小的文件；③ 稍后重试。', retryable: true },
   'TOO_MANY_OPEN_FILES': { message: 'Server is busy. Please wait a moment and try again.', retryable: true },
-  'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. Please remove DRM before converting.', retryable: false },
+  'DRM_PROTECTED': { message: 'This file appears to be DRM-protected. BookConv does not remove DRM; use a file you are authorized to convert.', retryable: false },
   'CONVERSION_FAILED': { message: 'Conversion failed. The file may be empty, damaged, or have no extractable text content. Try a different file.', retryable: true },
   'CONVERSION_UNAVAILABLE': { message: 'This conversion requires a Calibre-powered backend that is currently unavailable. Please use EPUB to TXT or EPUB to ZIP conversions, which work without Calibre.', retryable: false },
   'CONVERSION_QUOTA_EXCEEDED': { message: 'This format is temporarily at capacity for today. EPUB to TXT and EPUB to ZIP still work right now — for other formats, please try again later.', retryable: false },

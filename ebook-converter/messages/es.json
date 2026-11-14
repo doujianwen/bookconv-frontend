@@ -3,7 +3,7 @@
     "siteName": "BookConv",
     "freeOnlineEbookConverter": "Convertidor de Formatos de Ebooks Online Gratuito",
     "noRegistrationRequired": "Sin registro, sin marcas de agua, sin cuenta.",
-    "poweredByCalibre": "Impulsado por el Motor Calibre",
+    "poweredByCalibre": "Métodos de conversión específicos por formato",
     "skipToMainContent": "Saltar al contenido principal",
     "home": "Inicio",
     "pricing": "Precios",
@@ -27,7 +27,7 @@
   },
   "home": {
     "heroTitle": "Convertidor de Formatos de Ebooks\nOnline Gratuito",
-    "heroSubtitle": "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más al instante.\nSin registro, sin marcas de agua, sin cuenta.",
+    "heroSubtitle": "Convierte EPUB, MOBI, AZW3, PDF, DOCX y más.\nSin registro, sin marcas de agua, sin cuenta.",
     "ctaReadyTitle": "¿Listo para Convertir tus Ebooks?",
     "ctaReadyDesc": "Únete a miles de lectores que confían en nuestro convertidor gratuito.",
     "faqTitle": "Preguntas Frecuentes",
@@ -43,7 +43,7 @@
   },
   "faq": {
     "q1": "¿Es BookConv gratuito?",
-    "a1": "¡Sí! BookConv es completamente gratuito y no requiere registro. Los archivos están limitados a 100 MB por archivo.",
+    "a1": "¡Sí! Las conversiones personales son gratuitas y no requieren registro. Cuando la carga directa está disponible, se aceptan archivos de hasta 100 MB; las cargas por lotes y de respaldo están limitadas a 4 MB por archivo. La conversión por lotes es gratuita durante la beta pública.",
     "q2": "¿Qué formatos soporta BookConv?",
     "a2": "BookConv soporta más de 28 formatos incluyendo EPUB, MOBI, AZW3, PDF, DOCX, TXT, RTF, HTML, FB2, LIT, CBR, DJVU, JPG, PNG y documentos Word.",
     "q3": "¿Mis datos están seguros al subir archivos?",

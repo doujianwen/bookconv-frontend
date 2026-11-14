@@ -16,7 +16,7 @@ export function generateDefaultFAQs(source: string, target: string): FAQ[] {
     },
     {
       question: "Can I batch convert multiple files?",
-      answer: "Batch conversion is free during public beta, with Pro planned after beta. Each file can be up to 4 MB: up to 20 files for EPUB to ZIP or TXT, and currently up to 3 files for conversions using the third-party service.",
+      answer: "Batch conversion is free during public beta. Pro is listed at $5/month on the pricing page. Each file can be up to 4 MB: up to 20 files for EPUB to ZIP or TXT, and currently up to 3 files for conversions using the third-party service.",
     },
   ]
 }

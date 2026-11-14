@@ -44,7 +44,9 @@ const LEGIT_HEADS: Record<string, Array<(b: Uint8Array) => boolean> | null> = {
     (b) => b.length >= 64 && (latin1(b, 60, 4) === "BOOK" || latin1(b, 60, 4) === "TEXt" || latin1(b, 60, 4) === "TPZ3"),
   ],
   azw3: [
-    (b) => b.length >= 64 && latin1(b, 60, 4) === "TPZ3",
+    // MOBI and AZW3 share the PalmDB BOOKMOBI type/creator marker at offset 60.
+    // TPZ3 is the separate Topaz family, not an AZW3 signature.
+    (b) => b.length >= 68 && latin1(b, 60, 8) === "BOOKMOBI",
     (b) => latin1(b, 0, 4) === "BOOK",
   ],
   // TXT / RTF / HTML：纯文本类，前 8 字节多为可打印 ASCII（放行，让后端判）
@@ -95,7 +97,7 @@ const KNOWN_MAGIC_HINTS: Record<string, string> = {
 export async function sniffFileFormat(file: File, sourceFormat: string, isEs = false): Promise<SniffResult | null> {
   let head: Uint8Array;
   try {
-    const buf = await file.slice(0, 64).arrayBuffer();
+    const buf = await file.slice(0, 68).arrayBuffer();
     head = new Uint8Array(buf);
   } catch {
     return null; // 读不到文件头 → 保守放行，交后端判定

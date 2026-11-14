@@ -103,7 +103,7 @@ export default function HomePage() {
             <span dangerouslySetInnerHTML={{ __html: (t('home.heroTitle') || 'Free Online Ebook\nFormat Converter').replace('\n', '<br/>') }} />
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.\nNo registration, no watermarks, free for personal use.').replace('\n', '<br/>') }} />
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl" dangerouslySetInnerHTML={{ __html: (t('home.heroSubtitle') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more.\nNo registration, no watermarks, free for personal use.').replace('\n', '<br/>') }} />
 
           <div className="mx-auto mt-8 max-w-lg">
             <div className="relative">
@@ -197,11 +197,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl px-4">
             <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">{t('common.freeOnlineEbookConverter')}</h2>
             <p className="mx-auto mb-10 max-w-3xl text-center text-lg text-gray-600">
-              Every conversion runs through the open-source Calibre engine and supports 28+ eBook formats — free for personal use, no account required.
+              BookConv uses format-specific processing methods. Depending on the format pair, a conversion may use Calibre, built-in text processing, or a third-party service — free for personal use, no account required.
             </p>
             <div className="grid gap-8 md:grid-cols-3">
             {[
-              { icon: Zap, title: 'Fast Conversion', desc: 'Powered by Calibre engine for lightning-fast conversions.' },
+              { icon: Zap, title: 'Format-Specific Processing', desc: 'Processing time depends on the format pair, file size and service availability.' },
               { icon: Shield, title: 'Secure & Private', desc: 'Files are transferred over HTTPS and processed server-side. See our privacy policy for handling details.' },
               { icon: Globe, title: 'No Account Needed', desc: 'Convert ebooks for free — no registration or software install required.' },
             ].map(({ icon: Icon, title, desc }) => (

@@ -20,7 +20,7 @@ interface ConversionProgressProps {
 /** Map of error codes to icon + hint shown below the main message */
 const ERROR_HINTS: Record<string, { icon: React.ReactNode; hint: string; hintEs?: string }> = {
   CORRUPT_INPUT: { icon: <FileX className="h-4 w-4 text-red-500" />, hint: "This file appears damaged. Re-download and try again.", hintEs: "Este archivo parece dañado. Vuelve a descargarlo e inténtalo de nuevo." },
-  DRM_PROTECTED: { icon: <AlertTriangle className="h-4 w-4 text-amber-500" />, hint: "DRM-protected file — remove DRM before converting.", hintEs: "Archivo con DRM: quita el DRM antes de convertir." },
+  DRM_PROTECTED: { icon: <AlertTriangle className="h-4 w-4 text-amber-500" />, hint: "DRM-protected file — BookConv does not remove DRM. Use a file you are authorized to convert.", hintEs: "Archivo con DRM: BookConv no elimina DRM. Usa un archivo que tengas derecho a convertir." },
   MEMORY_LIMIT: { icon: <FileX className="h-4 w-4 text-orange-500" />, hint: "File too large or complex for conversion.", hintEs: "Archivo demasiado grande o complejo para convertir." },
   CONVERSION_FAILED: { icon: <AlertTriangle className="h-4 w-4 text-red-500" />, hint: isRetryable("CONVERSION_FAILED") ? "Click retry or try a different file." : "", hintEs: isRetryable("CONVERSION_FAILED") ? "Haz clic para reintentar o prueba con otro archivo." : "" },
   UNSUPPORTED_CONVERSION: { icon: <FileX className="h-4 w-4 text-amber-500" />, hint: "Try the suggested alternative format instead.", hintEs: "Prueba con el formato alternativo sugerido." },

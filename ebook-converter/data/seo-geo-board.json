@@ -2023,9 +2023,10 @@
           "due": "2026-11-13",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "不购买/不做大批量",
-          "statusAudit": "plan-redteam-2026-11-01"
+          "status": "done",
+          "statusNote": "PASS WITH RESIDUALS：完成两张公开证据卡。① docs/tasks/bookconv-growth-20261105/竞品证据卡_EPUB阅读与打开任务_2026-11-13.md：区分EPUB Reader与Converter意图，核对Silent Book、EPUBReader官方公开声明；未安装/未上传/未抓包。② docs/tasks/BookConv-竞品④-EPUB-to-MOBI同任务公开证据卡-2026-11-13.md：核对Convertio、FreeConvert与BookConv的EPUB→MOBI公开流程、限制和产品差异。未做同样本转换质量/速度测试，不推断市场份额/转化率，不购买工具、不发布外部内容。L2 review；L3独立执行器复核未完成。",
+          "statusAudit": "plan-redteam-2026-11-01",
+          "statusAudited": "2026-11-13"
         },
         {
           "id": "M13-14",

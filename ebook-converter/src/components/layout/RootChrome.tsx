@@ -30,7 +30,7 @@ export async function buildSiteMetadata(locale: string): Promise<Metadata> {
       default: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF',
       template: `%s | ${t('common.siteName') || 'BookConv'}`,
     },
-    description: clampMetaDescription(t('seo.defaultDescription') || 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, free for personal use. Powered by Calibre.'),
+    description: clampMetaDescription(t('seo.defaultDescription') || 'Free online ebook converter supporting 28+ formats: EPUB, MOBI, AZW3, PDF, DOCX, TXT, FB2, LIT, RTF. No registration, no watermarks, free for personal use. Format-specific processing methods.'),
     keywords: [
       'ebook converter', 'epub converter', 'mobi to epub', 'azw3 to epub',
       'pdf to epub', 'free ebook converter', 'online file converter',
@@ -46,7 +46,7 @@ export async function buildSiteMetadata(locale: string): Promise<Metadata> {
       url: `https://www.bookconv.com${locale === 'es' ? '/es' : ''}`,
       siteName: t('common.siteName') || 'BookConv',
       title: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter',
-      description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly. No registration required.',
+      description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more. No registration required.',
       images: [
         {
           url: "https://www.bookconv.com/og-image.svg",
@@ -59,7 +59,7 @@ export async function buildSiteMetadata(locale: string): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: t('seo.defaultTitle') || 'BookConv — Free Online Ebook Format Converter',
-      description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more instantly.',
+      description: t('home.formatsSectionDesc') || 'Convert EPUB, MOBI, AZW3, PDF, DOCX and more.',
       images: ['https://www.bookconv.com/og-image.svg'],
       creator: '@GinoTou2024',
     },
