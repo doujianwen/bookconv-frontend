@@ -1,0 +1,31 @@
+{
+  "scope": "GA4 B2 client attribution and type regression only",
+  "status": "PREPARED_NOT_DEPLOYED",
+  "files": [
+    {
+      "path": "src/app/[locale]/convert/[slug]/ToolPageClient.tsx",
+      "sha256": "9c632cec65b473bf262385ad17f5ec826533987a545bd629947eff73db7d4df6",
+      "size": 39539
+    },
+    {
+      "path": "src/components/tools/BatchUpload.tsx",
+      "sha256": "4f61005f7fd70ee28ddcafcba44081f8d4916f8bcbe9cf0bb65cfb944b2c3279",
+      "size": 31031
+    },
+    {
+      "path": "src/lib/ga-error-classification.ts",
+      "sha256": "8ad4f4397fa8edf08525dd450bd025d217f3f65251e24b5275702822083e362a",
+      "size": 1080
+    },
+    {
+      "path": "src/lib/ga-error-classification.test.ts",
+      "sha256": "b345184e83659afcc7b773313801a8eebd34017e44f570c197f086171fa19937",
+      "size": 879
+    },
+    {
+      "path": "src/lib/file-format-sniffer.test.ts",
+      "sha256": "67ba9e009b0ef0ea01e1a56105ab34f5882866a3b6781e8c1cc9f5f3ed1624e3",
+      "size": 904
+    }
+  ]
+}

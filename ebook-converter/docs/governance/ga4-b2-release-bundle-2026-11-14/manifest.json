@@ -1,0 +1,20 @@
+{
+  "status": "ISOLATED_NOT_DEPLOYED",
+  "scope": "GA4 error classification + G1/B2 duplicate adjudication",
+  "tracked_patch_sha256": "68a688f4ef16c5217d65fad15df4fb7e3dc569d776237ac943d46d8aa0d83a99",
+  "new_files": {
+    "src/lib/ga-error-classification.ts": {
+      "bundle_file": "ga-error-classification.ts.source.txt",
+      "sha256": "ded1dd7e4a10bd960eda65c75af34f0bfc2182ab655864fcabaae98e47b2601d"
+    },
+    "src/lib/ga-error-classification.test.ts": {
+      "bundle_file": "ga-error-classification.test.ts.source.txt",
+      "sha256": "38f44fbf0de0c7ac30f7f0b16dc2e0cbaf854dda89c5aaedf425de675538ad8d"
+    }
+  },
+  "excludes": [
+    "unrelated scripts/ga-inspection.mjs changes",
+    "daily work log",
+    "other governance files"
+  ]
+}
