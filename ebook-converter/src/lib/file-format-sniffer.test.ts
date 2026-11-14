@@ -1,4 +1,3 @@
-﻿import { File } from "node:buffer";
 import { sniffFileFormat } from "./file-format-sniffer";
 
 function palmDb(signature: string): File {

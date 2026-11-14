@@ -14,22 +14,33 @@ export const TRACKED_HOOKS_REL = 'ebook-converter/scripts/hooks';
 export const FIX_COMMAND = 'git config core.hooksPath ebook-converter/scripts/hooks';
 export const REQUIRED_HOOKS = ['pre-commit', 'pre-push'];
 
-/** 只取 [core] 段内的 hooksPath，避免误读其它段或注释行。 */
-export function readHooksPathFromConfig(repoRoot) {
-  const cfg = path.join(repoRoot, '.git', 'config');
-  let text;
+/** Resolve linked-worktree .git indirection, then read the shared git config. */
+function resolveGitConfigPath(repoRoot) {
+  const dotGit = path.join(repoRoot, '.git');
   try {
-    text = fs.readFileSync(cfg, 'utf8');
-  } catch {
-    return { readable: false, value: null };
-  }
+    const st = fs.statSync(dotGit);
+    if (st.isDirectory()) return path.join(dotGit, 'config');
+    const pointer = fs.readFileSync(dotGit, 'utf8').trim();
+    const match = pointer.match(/^gitdir:\s*(.+)$/i);
+    if (!match) return null;
+    const gitDir = path.resolve(repoRoot, match[1].trim());
+    const commondirFile = path.join(gitDir, 'commondir');
+    let commonDir = gitDir;
+    try { commonDir = path.resolve(gitDir, fs.readFileSync(commondirFile, 'utf8').trim()); } catch {}
+    return path.join(commonDir, 'config');
+  } catch { return null; }
+}
+
+/** Read only [core].hooksPath from the actual shared git config. */
+export function readHooksPathFromConfig(repoRoot) {
+  const cfg = resolveGitConfigPath(repoRoot);
+  if (!cfg) return { readable: false, value: null };
+  let text;
+  try { text = fs.readFileSync(cfg, 'utf8'); } catch { return { readable: false, value: null }; }
   let inCore = false;
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
-    if (line.startsWith('[')) {
-      inCore = /^\[core\](?:\s|$)/i.test(line);
-      continue;
-    }
+    if (line.startsWith('[')) { inCore = /^\[core\](?:\s|$)/i.test(line); continue; }
     if (!inCore || !line || line.startsWith('#') || line.startsWith(';')) continue;
     const m = line.match(/^hooksPath\s*=\s*(.+)$/i);
     if (m) return { readable: true, value: m[1].trim().replace(/^"|"$/g, '') };

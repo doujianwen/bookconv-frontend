@@ -85,6 +85,12 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
 // ── B2 失败归因可信度（P1）──────────────────────────────────────────
 {
   const name = '失败归因可信度'
+  const g1Path = T('ga4-g1-error-adoption-' + (live?.date || 'unknown') + '.json')
+  let g1 = null
+  try { g1 = JSON.parse(fs.readFileSync(g1Path, 'utf8')) } catch {}
+  if (g1?.coverage_complete === true && Array.isArray(g1.rows) && g1.rows.length > 0) {
+    push('B2', name, 'SKIP', 'SKIP', `G1 已逐条承接 ${g1.rows.length} 种原始错误及采用值/理由；本条不对同一错误重复判定。生产验证状态=${g1.production_verified === true ? 'VERIFIED' : 'PENDING'}`)
+  } else {
   const fec = live?.failedByErrorCode
   const failed = Number(live?.events?.conversion_failed) || 0
   if (!fec || typeof fec !== 'object' || Object.keys(fec).length === 0) {
@@ -96,8 +102,9 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     // 2026-11-07 收窄（消除 P2 残余）：原 ratio>0.5 偏宽，近 7 日实测 UNKNOWN 占比 33%~40% 持续出现
     // （前端 error_code 覆盖缺口，api-error.ts 未识别码塌缩）。纯比例阈值在低样本会误报（如 1/1=100%），
     // 故加绝对下限 unknown>=2 吸收单点噪声，避免假 FAIL（假门禁比没门禁更坏）。
-    if (ratio > 0.3 && unknown >= 2) push('B2', name, 'P1', 'FAIL', `UNKNOWN 占比 ${(ratio * 100).toFixed(0)}% 且绝对数 ${unknown}≥2 → 失败明细近三成不可判定，归因存疑`)
+    if (ratio > 0.3 && unknown >= 2) push('B2', name, 'P1', 'FAIL', `UNKNOWN 占比 ${(ratio * 100).toFixed(0)}% 且绝对数 ${unknown}≥2 → 失败事件中错误码无法识别，归因存疑`)
     else push('B2', name, 'P1', 'PASS', `failedByErrorCode 齐备，UNKNOWN 占比 ${(ratio * 100).toFixed(0)}%（失败${failed}次，UNKNOWN ${unknown}）`)
+  }
   }
 }
 
@@ -184,7 +191,7 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
 }
 
 // ── 汇总裁定 ───────────────────────────────────────────────────────
-const counts = { PASS: 0, FAIL: 0, UNKNOWN: 0 }
+const counts = { PASS: 0, FAIL: 0, UNKNOWN: 0, SKIP: 0 }
 for (const c of checks) counts[c.verdict]++
 let overall
 if (checks.some((c) => c.level === 'P0' && c.verdict === 'FAIL')) overall = 'FAIL'

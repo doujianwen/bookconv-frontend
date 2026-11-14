@@ -1,4 +1,5 @@
 'use client'
+import { resolveGAErrorCode } from "@/lib/ga-error-classification";
 import Link from 'next/link'
 import { PageLanguageLinks } from '@/components/PageLanguageLinks'
 import { useState, useCallback } from "react"
@@ -315,7 +316,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         trackGAEvent("conversion_failed", {
           source_format: source,
           target_format: target,
-          error_code: mappedCode || "UNKNOWN",
+          error_code: resolveGAErrorCode(mappedCode, err),
           error: (diagPrefix + (errObj?.message || "unknown")).slice(0, 100),
           file_size: file.size,
         })

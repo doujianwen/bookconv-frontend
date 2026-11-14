@@ -1,4 +1,5 @@
-﻿"use client";
+"use client";
+import { resolveGAErrorCode } from "@/lib/ga-error-classification";
 
 import { useCallback, useState, useRef } from "react";
 import JSZip from "jszip";
@@ -410,7 +411,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: (msg || "unknown").slice(0, 100),
-            error_code: isErrorCode(errObj?.code) ? errObj.code : "UNKNOWN",
+            error_code: resolveGAErrorCode(isErrorCode(errObj?.code) ? errObj.code : undefined, err),
             file_size: item.size,
           });
           markStatus(item.index, "failed", msg);

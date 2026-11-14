@@ -43,7 +43,8 @@ const START = (() => {
   return d.toISOString().slice(0, 10)
 })()
 
-const sa = JSON.parse(fs.readFileSync(SA_PATH, 'utf8'))
+// Self-test exercises pure attribution logic and must not require production credentials.
+const sa = process.argv.includes('--self-test') ? null : JSON.parse(fs.readFileSync(SA_PATH, 'utf8'))
 const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64url')
 
 async function token() {
