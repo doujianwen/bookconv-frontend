@@ -1,0 +1,8 @@
+{
+ "id": "automation-1786630182041",
+ "name": "每日工作日志归档(ebook-converter)",
+ "status": "ACTIVE",
+ "prompt": "每日 23:00 执行：将当日 ebook-converter 项目笔记中的各任务章节确定性地提升(promote)到全局工作日志（~/.workbuddy/memory/worklogs/YYYY-MM-DD.md），自动补全当日所有任务记录（不依赖会话内是否逐条写过）。\n\n在 Bash 中运行（Git Bash 需 MSYS_NO_PATHCONV 与绝对路径）：\nMSYS_NO_PATHCONV=1 C:/Users/29537/.workbuddy/binaries/node/versions/22.22.2/node.exe C:/Users/29537/.workbuddy/skills/auto-worklog/scripts/sync-project-to-worklog.mjs --project ebook-converter\n\n说明：脚本默认使用运行时的本地日期；会读取 E:/一人公司/电子书格式转换站/ebook-converter/.workbuddy/memory/YYYY-MM-DD.md，按 '## ' 章节切分任务（时间戳/P前缀/续做标记判定，去重）逐条写入全局 worklogs；若当日无项目笔记或仅标题无实质内容，则无操作、不写空日志。无需产出额外说明或回执。若脚本非零退出，重试一次。",
+ "rrule": "FREQ=DAILY;BYHOUR=23;BYMINUTE=0",
+ "scheduled_at": null
+}

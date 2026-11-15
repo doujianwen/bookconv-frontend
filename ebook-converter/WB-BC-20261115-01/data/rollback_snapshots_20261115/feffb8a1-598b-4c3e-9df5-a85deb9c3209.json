@@ -1,0 +1,8 @@
+{
+ "id": "feffb8a1-598b-4c3e-9df5-a85deb9c3209",
+ "name": "GSC Query Data Weekly Fetch",
+ "status": "ACTIVE",
+ "prompt": "Fetch GSC query and page data for www.bookconv.com using the service account credentials at scripts/gsc-service-account.json. Run:\n\n```bash\ncd \"E:/一人公司/电子书格式转换站/ebook-converter\"\nnode scripts/fetch-gsc-webmaster.mjs --days 30 --dimension query\nnode scripts/fetch-gsc-webmaster.mjs --days 30 --dimension page\n```\n\nThen summarize:\n1. Total queries and impressions in the 30-day window\n2. Top 10 queries by impressions\n3. Top 10 pages by impressions\n4. Any significant changes vs previous week (compare with 数据分析/GSC_API_query_*.json)\n\nOutput summary to console.",
+ "rrule": "FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0",
+ "scheduled_at": null
+}

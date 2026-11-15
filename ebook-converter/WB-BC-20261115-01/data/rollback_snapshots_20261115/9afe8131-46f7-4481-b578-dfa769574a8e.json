@@ -1,0 +1,8 @@
+{
+ "id": "9afe8131-46f7-4481-b578-dfa769574a8e",
+ "name": "FDE 补短板·每天下午提醒",
+ "status": "ACTIVE",
+ "prompt": "提醒豆豆妈：今天下午的补短板学习 slot（14:00–17:00 实战）到了。请打开 E:/一人公司/FDE/outputs/FDE-能力栈补强课程表-滚动重排_v2.1.md，找到「今天日期」对应的那一行，完成该天的「下午实战」块并核对「验收标准」。周日休整日只做复盘、不学新内容。卡住超 30 分钟就登记翻车点并跳过，后续补。",
+ "rrule": "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=13;BYMINUTE=30",
+ "scheduled_at": null
+}

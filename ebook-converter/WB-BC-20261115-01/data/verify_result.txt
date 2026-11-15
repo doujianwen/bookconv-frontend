@@ -1,0 +1,26 @@
+PASS     live A1=43
+PASS     live orphan=5
+PASS     live third-party=1
+PASS     runs total>=968
+PASS     A1 runs>=583/ok>=435
+PASS     A2 runs>=53/ok>=29
+PASS     orphan runs>=331
+PASS     native count=43
+PASS     native==sqlite id set 43/43
+PASS     ruling: feffb8a1 PAUSED
+PASS     ruling: FDE renamed to 工作日午间
+PASS     ruling: archive prompt 22.22.2-6 + no old path
+PASS     ruling: competitor task consume-main-table
+PASS     ruling: FDE prompt persona neutral (no 豆豆妈)
+PASS     old node path missing
+PASS     new node path exists
+PASS     GA4 fetch status ok & <24h
+PASS     M12-1 scheduled 2026-11-18
+PASS     Bing2125 prompt is GEO draft not Bing submit
+PASS     7d A1>=95
+PASS     7d orphan>=17
+PASS     orphan last success in June 2026
+PASS     workbench API 200 & RECENT & 43
+PASS     deliverable files complete
+
+SUMMARY: 24 checks, PASS=24, FAIL=0, UNKNOWN=0
