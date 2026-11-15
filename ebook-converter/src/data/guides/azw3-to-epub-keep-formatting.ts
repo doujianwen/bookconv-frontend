@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'azw3-to-epub-keep-formatting'
 export const title = 'AZW3 to EPUB: Remove Kindle Lock-in and Read Anywhere'
+export const metaDescription = 'Move Kindle purchases to Kobo, phones, and other readers. Convert AZW3 to EPUB while keeping chapters, images, and fonts where they belong.'
 export const problem = 'Bought a book on Kindle and want it on your phone, Kobo, or computer? AZW3 is Amazon\'s cage. Converting to EPUB frees it — here is how to keep the layout intact.'
 export const date = '2026-08-02'
 export const tags = ['azw3', 'epub', 'kindle', 'formatting', 'ebook conversion']

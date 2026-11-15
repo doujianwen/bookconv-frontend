@@ -1,6 +1,7 @@
 export const slug = `sitemap-seo-guide`;
 export const title = `Inside BookConv's Sitemap: How Every Converter Page Gets Found`;
 export const metaTitle = `Sitemap SEO Guide for Ebook Sites`;
+export const metaDescription = 'How BookConv builds its sitemap from the same data the site renders, how to submit it, and the mistakes that quietly keep pages out of the index.'
 export const date = `2026-07-30`;
 export const author = "BookConv Team";
 export const tags = ["SEO", "sitemap", "search-console", "bookconv", "technical"];

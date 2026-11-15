@@ -1,5 +1,6 @@
 export const slug = "epub-converter";
 export const title = "Epub to Various Other Formats: The Ultimate Guide";
+export const metaDescription = 'Convert EPUB to MOBI, AZW3, PDF, or TXT without losing your layout. Which target each device needs, and where conversions typically break.'
 export const date = `2026-08-24`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "PDF", "Kindle", "eReader", "TXT", "FB2"];

@@ -17,6 +17,8 @@ interface GuideData {
   title: string
   /** SERP <title> 专用短标题（≤55 字符），不填回退到 title。仅用于搜索引擎结果摘要。 */
   metaTitle?: string
+  /** SERP <meta description> 专用文案（25–158 字符，无 markdown）。不填回退到 problem/intro。 */
+  metaDescription?: string
   problem: string
   date: string
   tags: string[]
@@ -27,6 +29,7 @@ interface GuideData {
   /** M5-2：真实西语译文（存在时 /es 渲染此内容，缺省英文兜底） */
   es?: {
     title: string
+    metaDescription?: string
     problem: string
     keyTakeaways: string[]
     content: { intro?: string; sections: { heading: string; body: string }[] }

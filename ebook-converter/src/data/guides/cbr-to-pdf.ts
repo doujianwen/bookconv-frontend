@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'cbr-to-pdf'
 export const title = 'CBR to PDF: Read Your Comics on Any Device'
+export const metaDescription = 'CBR is a RAR full of comic pages. Convert it to PDF for tablets, printing, and archiving, and keep page order and image quality intact.'
 export const problem = 'You have a comic in CBR that your reader app will not open. Converting CBR to PDF makes it viewable everywhere. Here is how to do it without losing pages.'
 export const date = '2026-08-02'
 export const tags = ['cbr', 'pdf', 'comics', 'manga', 'ebook conversion']

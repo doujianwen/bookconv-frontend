@@ -1,5 +1,6 @@
 export const slug = "epub-to-mobi";
 export const title = "How to Convert EPUB to MOBI Free Online";
+export const metaDescription = 'Convert EPUB to MOBI only when a reader needs the legacy format. Here is when that is true, and the faster routes for Kindle, Kobo, and phones.'
 export const date = "2026-08-26";
 export const lastUpdated = '2026-11-01';
 export const author = "BookConv Team";

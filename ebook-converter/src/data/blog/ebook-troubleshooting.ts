@@ -1,5 +1,6 @@
 export const slug = "ebook-troubleshooting";
 export const title = "Ebook Troubleshooting & FAQ | Fix Format Issues Fast";
+export const metaDescription = 'Ebook will not open, formats wrong, download corrupted? Work through the common failures by symptom and get back to reading in a few steps.'
 export const date = "2026-08-26";
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "PDF", "AZW3", "KINDLE", "TROUBLESHOOTING", "FAQ"];

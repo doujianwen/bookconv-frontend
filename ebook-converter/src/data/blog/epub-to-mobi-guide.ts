@@ -1,5 +1,6 @@
 export const slug = `epub-to-mobi-guide`;
 export const title = `EPUB to MOBI: Still Needed? Send-to-Kindle & AZW3`;
+export const metaDescription = 'EPUB to MOBI in seconds, or skip MOBI entirely: Send to Kindle takes EPUB now. Compare both routes and pick by the device you actually own.'
 export const date = `2026-07-30`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
@@ -151,6 +152,7 @@ export const faqs = [
 
 export const es = {
   title: `EPUB a MOBI en 2026: ¿Todavía lo necesitas? (Send-to-Kindle y AZW3)`,
+  metaDescription: 'EPUB a MOBI en segundos, o evita MOBI: Send to Kindle ya acepta EPUB. Compara las dos rutas y elige según el dispositivo que tengas.',
   metaTitle: `EPUB a MOBI en 2026: ¿Todavía lo necesitas?`,
   content: {
     intro: `Sube tu EPUB y conviértelo a MOBI en BookConv en segundos — sin instalar Calibre, sin cuenta, sin ajustes que adivinar. Esta guía te muestra cómo hacer la conversión limpia, si en 2026 sigues necesitando MOBI, y cómo arreglar la portada, los metadatos y la tabla de contenidos que en silencio arruinan la mayoría de los intentos.`,

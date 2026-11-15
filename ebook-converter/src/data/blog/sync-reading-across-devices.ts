@@ -1,6 +1,7 @@
 export const slug = `sync-reading-across-devices`;
 export const title = `How to Transfer Ebooks Between Devices`;
 export const metaTitle = `Sync Ebooks & Reading Progress Across Devices`
+export const metaDescription = 'Move ebooks between Kindle, Kobo, Apple Books, and phones without losing position or highlights. Format conversion included where it helps.'
 export const date = `2026-08-15`;
 export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;

@@ -1,6 +1,7 @@
 export const slug = `bookconv-faq`;
 export const title = `BookConv FAQ: Is It Safe, Free, and How Does It Compare to Calibre?`;
 export const metaTitle = `BookConv FAQ: Safe, Free, vs Calibre?`
+export const metaDescription = 'Straight answers on BookConv: is it safe, what it costs, which formats it converts, and how it differs from Calibre. No marketing filler.'
 export const date = `2026-09-14`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

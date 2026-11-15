@@ -1,5 +1,6 @@
 export const slug = `can-kobo-read-epub-files`;
 export const title = `Can Kobo Read EPUB Files? (And When to Convert)`;
+export const metaDescription = 'Every Kobo opens EPUB natively. Here is when you still need a conversion, how KEPUB differs, and how to move library books onto the device.'
 export const date = `2026-10-02`;
 export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;

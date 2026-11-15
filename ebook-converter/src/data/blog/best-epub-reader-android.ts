@@ -1,6 +1,7 @@
 export const slug = `best-epub-reader-android`;
 export const title = `Best EPUB Reader Apps for Android`;
 export const metaTitle = `Best EPUB Reader Apps for Android (2026)`
+export const metaDescription = 'The best EPUB readers for Android in 2026: local files, library sync, annotation, and PDF handling compared, so you can pick one and stop testing.'
 export const date = `2026-09-24`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

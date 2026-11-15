@@ -1,5 +1,6 @@
 export const slug = `epub-vs-pdf`;
 export const title = `EPUB vs PDF: Which Format Should You Actually Use?`;
+export const metaDescription = 'EPUB reflows on any screen; PDF freezes a layout. Which one to publish, which to read on a phone, and when converting between them is a mistake.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "PDF", "Ebook Formats", "Documents", "BookConv", "Calibre"];
@@ -80,6 +81,7 @@ Neither conversion needs desktop software for a handful of files. Keep your sour
 
 export const es = {
   title: `EPUB vs PDF: ¿qué formato conviene usar en realidad?`,
+  metaDescription: 'EPUB se adapta a cualquier pantalla; PDF congela la maquetación. Cuál publicar, cuál leer en el móvil y cuándo convertir entre ellos es un error.',
   metaTitle: `EPUB vs PDF: qué formato conviene usar`,
   content: {
     intro: `EPUB y PDF están en extremos opuestos del espectro de documentos. EPUB se construye para reajustarse y adaptarse a cualquier pantalla; PDF se construye para congelar una maquetación exactamente como se diseñó. Si exportas un libro, archivas un informe o envías un manuscrito a un lector, la elección correcta sigue directa de lo que necesitas que haga el archivo —no de qué formato suena más moderno—. Esta es la comparación práctica, no la versión de ficha técnica.`,

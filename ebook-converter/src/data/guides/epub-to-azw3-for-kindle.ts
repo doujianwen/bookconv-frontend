@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'epub-to-azw3-for-kindle'
 export const title = 'EPUB to AZW3: Send Your Ebook to Kindle Without Losing Formatting'
 export const metaTitle = 'EPUB to AZW3: Send to Kindle Without Losing Format'
+export const metaDescription = 'Converting EPUB to AZW3 before sending keeps fonts, images, and spacing that Send to Kindle may drop. Steps, limits, and when to skip it.'
 export const problem = 'You have an EPUB and a Kindle, and emailing it gives you a broken layout. AZW3 is the format that keeps your styling intact.'
 export const date = '2026-08-02'
 export const updatedAt = '2026-11-05'
@@ -121,6 +122,7 @@ export const authorship = {
 // M5-2（2026-10-23）：真实西语译文（批次4 / 3 篇之 1）
 export const es = {
   title: 'EPUB a AZW3: envía tu ebook a Kindle sin perder el formato',
+  metaDescription: 'Convertir EPUB a AZW3 antes de enviar conserva fuentes, imágenes y espaciado que Send to Kindle puede perder. Pasos, límites y cuándo omitirlo.',
   problem: 'Tienes un EPUB y un Kindle, y enviarlo por correo te da una maquetación rota. AZW3 es el formato que mantiene tu estilo intacto.',
   keyTakeaways: [
     'AZW3 (Kindle Format 8) conserva mucha más maquetación que el formato MOBI antiguo.',

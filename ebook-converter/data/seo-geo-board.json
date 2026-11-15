@@ -774,8 +774,8 @@
           "due": "2026-11-14",
           "priority": "P2",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令「残余项同步到待办进度表」）。当日基线：ERROR=0 / WARN=112。\n\n【2026-11-15 进度·未关闭】已按 ≤3 文件/批完成 3 批收口：改法为新增专用 metaDescription 字段（不动正文 intro/problem），guides/blog 的 generateMetadata 优先采用，audit 脚本改为文件级 hasCanonical 判定（有合规 metaDescription 则该文件正文回退字段不再计长度违规，与线上 clamp 行为一致）。strict 审计 E2 从 112 → 99（累计清 28 条，覆盖 6 个 blog + 3 个 guide 文件）；E1 markdown 残留=0；audit self-test PASS（5 类注入全抓、干净文件 0 误报）；gate:transpile PASS；seo-critic 0 critical。分批记录见 .workbuddy/memory/2026-11-15.md。仍余 99 条（guides 占多数），且 accept③ 的 next build 尚未跑，故保持 todo 不关闭。",
+          "status": "done",
+          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令「残余项同步到待办进度表」）。当日基线：ERROR=0 / WARN=112。\n\n【2026-11-15 关闭·全量收口完成】strict 审计 E2 112 → 0（合计 275 个 description 来源，ERROR=0 / WARN=0，exit 0），E1 markdown 残留=0、E3 过短=0。改法：新增专用 metaDescription 字段（25–158 字符、无 markdown），guides/blog 的 generateMetadata 优先采用，正文 intro/problem 一字未动；audit 脚本改为文件级 hasCanonical 判定（与线上 clamp 行为一致），并保留 --self-test 反向验证（5 类注入全抓、干净文件 0 误报）。覆盖 83 个数据文件 / 100 条手写 description（其中 ES 独立文案 13 条）。accept③：next build --webpack 绿；静态产物实测输出 <meta name=\"description\">（en/blog、es/blog、guide 三类页均验，ES 用独立西语文案；无 es 块页面按 M5-2 英文兜底属预期，非串台）。过程中 next build 抓到并修复 2 个真实类型缺陷：blog 页本地 BlogPostData 与 guide 页 GuideData 缺 metaDescription 字段，且 BLOG_POSTS 组装漏传该字段（会导致字段静默失效回退 intro）——gate:transpile 不做类型检查，只有 build/tsc 能抓。门禁：audit strict 0/0、audit self-test PASS、gate:transpile PASS、seo-critic 0 critical、test:board PASS、next build PASS、verify-closure-gates --no-live exit 0 无假关闭。分批记录见 .workbuddy/memory/2026-11-15.md。未 push。",
           "note": "与 M2-11（GSC 自动分析 P2 内容项）、M3-10（blocked，Blog 55 页差异化）范围不同：本任务只做 description 长度与首句自包含收口，不改正文结构与页面差异化。与 M2-16 交界：meta description 长度归本任务，正文质量（字数/FAQ/外链/密度）归 M2-16。"
         }
       ]

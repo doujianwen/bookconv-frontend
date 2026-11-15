@@ -1,5 +1,6 @@
 export const slug = `read-epub-on-any-device`;
 export const title = `How to Read EPUB on iPhone, Android, Windows & Mac`;
+export const metaDescription = 'Open and read EPUB on iPhone, Android, Windows, Mac, and e-ink. The app to install per platform, plus how to move files without losing your place.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "iPhone", "Android", "Windows", "Mac", "Ebook Readers", "BookConv"];

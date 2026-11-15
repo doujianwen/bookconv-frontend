@@ -1,5 +1,6 @@
 export const slug = "legacy-lit-djvu-fb2-converter";
 export const title = "Convert Legacy LIT, DJVU, FB2, RTF to EPUB & PDF Free";
+export const metaDescription = 'Convert LIT, DJVU, FB2, and RTF to EPUB or PDF. How each legacy format behaves, what survives conversion, and the fastest route for old archives.'
 export const date = "2026-08-26";
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

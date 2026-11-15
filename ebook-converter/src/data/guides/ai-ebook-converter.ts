@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'ai-ebook-converter'
 export const title = 'AI Ebook Converter: Preparing Ebooks for NotebookLM, ChatGPT & More'
 export const metaTitle = 'AI Ebook Converter: Prep for NotebookLM & ChatGPT'
+export const metaDescription = 'Preparing books for NotebookLM, ChatGPT, or Claude: what an AI-ready file looks like, how to clean structure and noise, and which formats upload well.'
 export const problem = '“AI ebook converter” usually means one of two things — and only one of them is real. Here is how to get your ebook ready for AI tools without the hype.'
 export const date = '2026-08-07'
 export const updatedAt = '2026-10-22'
@@ -58,6 +59,7 @@ export const authorship = {
 // M5-2 批次3（2026-10-22）：真实西语译文（人工审稿批次 3/10）
 export const es = {
   title: 'Conversor de ebooks con IA: preparar ebooks para NotebookLM, ChatGPT y más',
+  metaDescription: 'Preparar libros para NotebookLM, ChatGPT o Claude: cómo debe ser un archivo listo para IA, cómo limpiar estructura y ruido y qué formatos suben bien.',
   problem: '«Conversor de ebooks con IA» suele significar una de dos cosas, y solo una de ellas es real. Así es como dejas tu ebook listo para las herramientas de IA, sin hype.',
   keyTakeaways: [
     '«Conversor de ebooks con IA» casi siempre significa un conversor que alimenta herramientas de IA como NotebookLM y ChatGPT.',

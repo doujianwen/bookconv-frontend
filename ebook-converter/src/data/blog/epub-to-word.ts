@@ -1,5 +1,6 @@
 export const slug = "epub-to-word";
 export const title = "Epub to Word: Convert eBooks to Editable Docx";
+export const metaDescription = 'Convert EPUB to DOCX for editing, translating, or republishing. What survives the trip, what breaks, and how to clean up the result before sharing.'
 export const date = `2026-08-24`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "WORD", "DOCX", "EBOOK CONVERTER", "BOOK FORMAT", "FILE CONVERSION", "TEXT EDITOR", "AUTHORING"];

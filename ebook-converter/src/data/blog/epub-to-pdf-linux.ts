@@ -1,5 +1,6 @@
 export const slug = `epub-to-pdf-linux`;
 export const title = `How to Convert EPUB to PDF on Linux (3 Methods)`;
+export const metaDescription = 'Three ways to convert EPUB to PDF on Linux: Calibre command line, its GUI, or a browser tab. Commands, trade-offs, and when each is worth it.'
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "PDF", "Linux", "Calibre", "CLI", "BookConv"];

@@ -1,5 +1,6 @@
 export const slug = "calibre-free-batch";
 export const title = "Calibre-Free Batch Conversion: Best Free Alternatives";
+export const metaDescription = 'Convert a batch of ebooks without installing Calibre. Where browser batch conversion works, where it stops, and the free fallbacks that still do.'
 export const date = "2026-08-26";
 export const author = "BookConv Team";
 export const tags = ["EPUB", "PDF", "MOBI", "CONVERSION", "FREE", "CALIBRE", "EBOOK", "SOFTWAR"];

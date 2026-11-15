@@ -1,5 +1,6 @@
 export const slug = "epub-to-text";
 export const title = "How to Convert EPUB to Text (TXT) - Easy Guide";
+export const metaDescription = 'Pull clean plain text out of an EPUB for notes, search, or reuse. Which tools keep chapter order and which silently flatten your book.'
 export const date = "2026-08-25";
 export const author = "BookConv Team";
 export const tags = ["EPUB", "TXT", "CONVERSION", "EBOOK", "READING", "DIGITAL"];

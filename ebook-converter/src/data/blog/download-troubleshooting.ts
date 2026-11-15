@@ -1,6 +1,7 @@
 export const slug = `download-troubleshooting`;
 export const title = `BookConv File Won't Download or Open? Fixes That Actually Work`;
 export const metaTitle = `Ebook Download Troubleshooting Guide`;
+export const metaDescription = 'Conversion finished but the file will not download or open? Fix the browser, the reader, and the file itself, in the order that solves it fastest.'
 export const date = `2026-07-30`;
 export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;

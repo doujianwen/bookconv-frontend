@@ -1,5 +1,6 @@
 export const slug = `ebook-conversion-checklist`;
 export const title = `Checklist: Preparing Your Ebook File Before Converting`;
+export const metaDescription = 'Most conversion problems start before you click convert. A short pre-flight check for source files, target formats, and metadata that saves rework.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Ebook Conversion", "Workflow", "EPUB", "PDF", "Kindle", "BookConv"];

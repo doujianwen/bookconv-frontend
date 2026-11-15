@@ -1,5 +1,6 @@
 export const slug = "kindle-epub-azw3-mobi";
 export const title = "Convert AZW3, EPUB & MOBI for Your Kindle: Step-by-Step";
+export const metaDescription = 'Step by step: get EPUB, AZW3, or MOBI onto a Kindle without Amazon rejecting it. Compare Send to Kindle, USB, and converting first.'
 export const date = "2026-08-26";
 export const author = "BookConv Team";
 export const tags = ["KINDLE", "AZW3", "EPUB", "MOBI", "SEND-TO-KINDLE", "EBOOK CONVERSION"];

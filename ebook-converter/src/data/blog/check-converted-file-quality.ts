@@ -1,6 +1,7 @@
 export const slug = `check-converted-file-quality`;
 export const title = `How to Check Your Converted Ebook's Quality: A 5-Minute Checklist`;
 export const metaTitle = `How to Check Converted Ebook Quality`;
+export const metaDescription = 'A converted file can finish without errors and still be broken. Five checks for chapters, images, fonts, and links, done in about five minutes.'
 export const date = `2026-08-15`;
 export const author = `BookConv Team`;
 export const tags = [`Quality`, `Checklist`, `Ebook`, `Troubleshooting`, `BookConv`];

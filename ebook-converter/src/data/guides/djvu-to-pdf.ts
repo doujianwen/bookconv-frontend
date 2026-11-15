@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'djvu-to-pdf'
 export const title = 'DJVU to PDF: Convert Scanned Books to a Readable PDF'
+export const metaDescription = 'DJVU stores scans at tiny sizes but almost nothing opens it. Convert to PDF and keep the pages readable on phones, tablets, and desktops.'
 export const problem = 'You have a scanned book in DJVU that no reader app opens and no one can print. Converting DJVU to PDF makes it readable everywhere. Here’s how to do it free with BookConv in your browser, no software to install, without losing quality.'
 export const date = '2026-08-02'
 export const updatedAt = '2026-11-05';

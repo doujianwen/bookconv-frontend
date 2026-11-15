@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'calibre-alternatives-online'
 export const title = 'Best Free Calibre Alternatives in 2026 (Online, No Install)'
 export const metaTitle = 'Best Free Calibre Alternatives Online (2026)'
+export const metaDescription = 'Free Calibre alternatives that run in a browser: no install, no library to maintain. Compared by format support, limits, and privacy.'
 export const problem = 'Calibre is the default answer to every conversion question, but installing a full library manager for one file is overkill. Here are the free alternatives worth knowing, sorted by what you actually need.'
 export const date = '2026-10-03'
 export const tags = ['calibre alternative', 'calibre alternatives', 'online ebook converter', 'free converter', 'no install']

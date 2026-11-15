@@ -1,5 +1,6 @@
 export const slug = "ebook-conversion-tools";
 export const title = "Best Ebook Conversion Tools for Authors & Librarians";
+export const metaDescription = 'Conversion tools for authors and librarians: what each handles well, where quality drops, and how to choose for manuscripts, scans, or big libraries.'
 export const date = `2026-08-24`;
 export const author = "BookConv Team";
 export const tags = ["Calibre", "EPUB", "Kindle", "MOBI", "Kobo", "OCR", "PDF", "Ebook"];

@@ -1,5 +1,6 @@
 export const slug = "azw3-to-mobi";
 export const title = "How to Convert AZW3 to MOBI Online Fast";
+export const metaDescription = 'Convert AZW3 to MOBI online for older Kindles. Free, no install, no account. See what formatting survives and how to keep your book readable.'
 export const date = "2026-08-26";
 export const author = "BookConv Team";
 export const tags = ["AZW3", "MOBI", "CONVERTER", "KINDLE", "EBOOK", "FORMAT", "FREE"];

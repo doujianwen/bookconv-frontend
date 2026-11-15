@@ -1,5 +1,6 @@
 export const slug = `best-ebook-reader-apps`;
 export const title = `Best Free Ebook Reader Apps for Every Device (2026)`;
+export const metaDescription = 'Free reader apps for iOS, Android, Windows, Mac, and e-ink. What each one does well, what it costs you in privacy, and how to pick by device.'
 export const date = `2026-08-09`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

@@ -1,5 +1,6 @@
 export const slug = `background-workers`;
 export const title = `How BookConv Runs Your Conversions in the Background`;
+export const metaDescription = 'What happens after you hit convert on BookConv: the upload, the background worker, and why the download link arrives seconds later, explained.'
 export const date = `2026-07-30`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

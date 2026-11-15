@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'lit-to-epub-keep-formatting'
 export const title = 'LIT to EPUB: Convert Old Microsoft Reader Books and Keep Your Formatting'
 export const metaTitle = 'LIT to EPUB: Convert Old Books, Keep Formatting'
+export const metaDescription = 'LIT files died with Microsoft Reader. Convert them to EPUB and keep chapters, images, and italics, so two decades of purchases stay readable.'
 export const problem = 'You found books in the LIT format from Microsoft Reader, but no modern app opens them. A careless LIT to EPUB conversion drops your cover and scrambles chapters. Here is how to convert cleanly and keep your layout.'
 export const date = '2026-08-02'
 export const tags = ['lit', 'epub', 'microsoft reader', 'legacy format', 'ebook conversion']

@@ -3,6 +3,7 @@ export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const title = `FB2 to EPUB: Convert FictionBook for Any Reader`;
 export const metaTitle = `FB2 to EPUB: Convert FictionBook for Any Reader`
+export const metaDescription = 'Convert FB2 FictionBook files to EPUB for Kindle, Kobo, and phones. Free online conversion that keeps chapters and images in the right order.'
 export const tags = ["FB2", "FictionBook", "EPUB", "Kindle", "Ebook Formats", "BookConv"];
 
 export const content = {

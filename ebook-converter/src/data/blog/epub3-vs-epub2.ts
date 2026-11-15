@@ -1,5 +1,6 @@
 export const slug = `epub3-vs-epub2`;
 export const title = `EPUB 3 vs EPUB 2: What Changed and Why It Matters`;
+export const metaDescription = 'EPUB 3 adds audio, better typography, and fixed layouts over EPUB 2. What changed, which readers support it, and whether your file needs updating.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["EPUB", "EPUB 3", "EPUB 2", "Ebook Formats", "BookConv"];

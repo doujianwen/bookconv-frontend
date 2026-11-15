@@ -17,6 +17,7 @@ interface BlogPostData {
   slug: string
   title: string
   metaTitle?: string
+  metaDescription?: string
   date: string
   lastUpdated?: string
   author?: string
@@ -33,6 +34,7 @@ for (const p of getAllPosts()) {
     slug: p.slug,
     title: p.title,
     metaTitle: p.metaTitle,
+    metaDescription: p.metaDescription,
     date: p.date,
     lastUpdated: p.lastUpdated,
     author: p.author,

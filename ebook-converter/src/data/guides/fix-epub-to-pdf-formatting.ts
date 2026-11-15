@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'fix-epub-to-pdf-formatting'
 export const title = 'Fix EPUB to PDF: Broken Layout, Missing Images, and How to Solve It'
 export const metaTitle = 'Fix EPUB to PDF: Broken Layout & Missing Images'
+export const metaDescription = 'EPUB to PDF that splits paragraphs, drops images, or scatters page breaks? The causes behind each failure and the settings that fix them.'
 export const problem = 'Your EPUB looks perfect in a reader but turns into a messy PDF — odd page breaks, shifted images, missing fonts. Here is why, and how to fix it.'
 export const date = '2026-08-02'
 export const tags = ['epub', 'pdf', 'formatting', 'calibre', 'ebook conversion']

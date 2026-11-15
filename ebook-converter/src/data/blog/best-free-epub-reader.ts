@@ -1,5 +1,6 @@
 export const slug = `best-free-epub-reader`;
 export const title = `Best Free EPUB Reader Apps (2026): Desktop and Mobile`;
+export const metaDescription = 'The best free EPUB readers for desktop and mobile, compared by format support, sync, annotation, and how well they open awkward files.'
 export const date = `2026-09-24`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

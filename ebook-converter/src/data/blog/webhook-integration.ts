@@ -1,6 +1,7 @@
 export const slug = `webhook-integration`;
 export const title = `BookConv Webhooks: Get a Signed Notification the Second Your Conversion Finishes`;
 export const metaTitle = `BookConv Webhooks: Get a Signed Conversion Alert`
+export const metaDescription = 'BookConv posts a signed webhook the moment a conversion finishes. Set up the endpoint, verify the signature, and stop polling for results.'
 export const date = `2026-07-30`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

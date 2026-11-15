@@ -3,6 +3,7 @@ export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const title = `DjVu to PDF: How to Convert Scanned Archives (Step-by-Step)`;
 export const metaTitle = `DjVu to PDF: Convert Scanned Archives`
+export const metaDescription = 'Convert DjVu scans to PDF and open them anywhere. Step by step for single files and archives, plus how much quality you lose on the way.'
 export const tags = ["DjVu", "PDF", "Ebook Formats", "Scanning", "Archiving", "BookConv"];
 
 export const content = {

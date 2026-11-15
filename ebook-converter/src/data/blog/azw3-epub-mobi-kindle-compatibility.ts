@@ -1,5 +1,6 @@
 export const slug = "azw3-epub-mobi-kindle-compatibility";
 export const title = "AZW3, EPUB & MOBI: Best Kindle & Kobo Formats";
+export const metaDescription = 'AZW3, EPUB, and MOBI explained: which one your Kindle, Kobo, or phone actually opens, and when a quick conversion saves you the guesswork.'
 export const date = `2026-08-24`;
 export const lastUpdated = `2026-09-04`;
 export const author = "BookConv Team";

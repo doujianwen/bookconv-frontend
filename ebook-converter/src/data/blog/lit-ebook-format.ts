@@ -2,6 +2,7 @@ export const slug = `lit-ebook-format`;
 export const date = `2026-08-01`;
 export const author = "BookConv Team";
 export const title = `What Is the LIT Ebook Format? A Complete Guide`;
+export const metaDescription = 'LIT is the Microsoft ebook format retired in 2012. What it is, why files are stranded, and how to get the text out safely without losing chapters.'
 export const tags = ["LIT", "Microsoft Reader", "Ebook Formats", "EPUB", "BookConv", "Archiving"];
 
 export const content = {

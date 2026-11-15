@@ -1,5 +1,6 @@
 export const slug = `kfx-vs-azw3`;
 export const title = `KFX vs AZW3: Which Kindle Format Should You Use?`;
+export const metaDescription = 'KFX and AZW3 look the same on a Kindle but behave differently. What each supports, which one to convert to, and why KFX resists conversion.'
 export const date = `2026-10-13`;
 export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;

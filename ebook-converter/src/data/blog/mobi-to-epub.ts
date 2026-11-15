@@ -1,5 +1,6 @@
 export const slug = `mobi-to-epub`;
 export const title = `How to Convert MOBI to EPUB (And Why You'd Want To)`;
+export const metaDescription = 'Convert MOBI to EPUB so Kobo, Apple Books, and phones can read your old Kindle library. Free, in the browser, with chapters and images intact.'
 export const date = `2026-08-02`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
@@ -106,6 +107,7 @@ export const faqs = [
 
 export const es = {
   title: `MOBI to EPUB: cómo convertir y por qué conviene`,
+  metaDescription: 'Convierte MOBI a EPUB para que Kobo, Apple Books y móviles lean tu biblioteca Kindle antigua. Gratis, en el navegador y con capítulos e imágenes.',
   content: {
     intro: `¿Tienes un montón de archivos .mobi viejos que solo abren en un Kindle? MOBI es el formato heredado de Amazon, y la mayoría de los lectores que no son Kindle — Kobo, Apple Books, Google Play Books — no lo tocan. Convertir MOBI a EPUB libera tus libros para leerlos en cualquier parte, porque EPUB es el estándar abierto que casi todos los dispositivos soportan. Esta guía cubre la conversión rápida y qué es lo que realmente se traslada.`,
     sections: [

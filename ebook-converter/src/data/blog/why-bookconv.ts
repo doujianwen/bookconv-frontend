@@ -1,6 +1,7 @@
 export const slug = `why-bookconv`;
 export const title = `Why BookConv: An Online Ebook Converter for Every Device`;
 export const metaTitle = `Why BookConv: An Online Ebook Converter`
+export const metaDescription = 'Why BookConv exists: browser conversion with no install, no account, and no library to maintain. What it does well and where Calibre still wins.'
 export const date = `2026-09-14`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

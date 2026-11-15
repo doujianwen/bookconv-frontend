@@ -1,6 +1,7 @@
 export const slug = `conversion-error-guide`;
 export const title = `Conversion Failed? Here's How to Fix Common Ebook Conversion Errors`;
 export const metaTitle = `Ebook Conversion Errors: Fix Common Issues`;
+export const metaDescription = 'Conversion failed? Match the error to its cause: file size, DRM, corrupt input, or an unsupported pair, then follow the fix that actually works.'
 export const date = `2026-08-15`;
 export const author = `BookConv Team`;
 export const tags = [`Troubleshooting`, `Error`, `BookConv`, `Ebook`, `FAQ`];

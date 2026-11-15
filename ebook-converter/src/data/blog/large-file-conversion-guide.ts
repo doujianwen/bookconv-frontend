@@ -1,6 +1,7 @@
 export const slug = `large-file-conversion-guide`;
 export const title = `How to Convert Large Ebooks for Free`;
 export const metaTitle = `How to Convert Large Ebooks Over 4 MB (Free)`
+export const metaDescription = 'The free tier takes files up to 100 MB. What to do with bigger ebooks: compress images, split the file, or use a local tool that has no ceiling.'
 export const date = `2026-08-15`;
 export const author = `BookConv Team`;
 export const tags = [`Large File`, `Troubleshooting`, `BookConv`, `Ebook`, `Pro`];

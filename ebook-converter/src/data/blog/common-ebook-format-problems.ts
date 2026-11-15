@@ -1,5 +1,6 @@
 export const slug = `common-ebook-format-problems`;
 export const title = `10 Common Ebook Format Problems and How to Fix Them`;
+export const metaDescription = 'Ten ebook format failures and their fixes: files that will not open, collapsed layouts, garbled text, missing images, and the usual causes behind each.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Ebook Formats", "Troubleshooting", "EPUB", "MOBI", "PDF", "Kindle", "BookConv"];

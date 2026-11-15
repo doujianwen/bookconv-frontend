@@ -1,6 +1,7 @@
 export const slug = `which-kindle-books-can-you-convert-drm-free-checklist`;
 export const title = `Which Kindle Books Can You Convert? (DRM-Free Checklist)`;
 export const metaTitle = `Which Kindle Books Can You Convert? DRM-Free List`
+export const metaDescription = 'Not every Kindle book converts. Use this checklist to tell DRM-free files from locked ones before you waste time, and see the alternatives.'
 export const date = `2026-10-03`;
 export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;

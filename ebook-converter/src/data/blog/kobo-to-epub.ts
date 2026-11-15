@@ -1,5 +1,6 @@
 export const slug = `kobo-to-epub`;
 export const title = `How to Convert Kobo Books to EPUB and PDF`;
+export const metaDescription = 'Kobo books are EPUB underneath. Learn when KEPUB needs converting, how to move purchases to other readers, and where DRM stops you.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["Kobo", "EPUB", "PDF", "KEPUB", "BookConv"];

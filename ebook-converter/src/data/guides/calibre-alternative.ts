@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'calibre-alternative'
 export const title = 'Do You Need a Calibre Alternative? (What You Keep vs Give Up)'
 export const metaTitle = 'Do You Need a Calibre Alternative? Pros & Cons'
+export const metaDescription = 'Calibre is powerful and heavy. What you keep and what you give up with a browser alternative, so you can decide by how often you convert.'
 export const problem = 'Don’t want to install and learn Calibre for a one-off file? Here is what a lightweight Calibre alternative gives you — and where Calibre still wins.'
 export const date = '2026-08-07'
 export const tags = ['calibre alternative', 'online ebook converter', 'no install', 'free converter']
@@ -77,6 +78,7 @@ export const authorship = {
 export const updatedAt = '2026-11-01'
 export const es = {
   title: '¿Necesitas una alternativa a Calibre? (qué conservas y qué pierdes)',
+  metaDescription: 'Calibre es potente y pesado. Qué conservas y qué pierdes con una alternativa en el navegador, para decidir según cuánto conviertes.',
   problem: '¿No quieres instalar y aprender Calibre para un solo archivo? Esto es lo que te da una alternativa ligera a Calibre — y dónde Calibre sigue ganando.',
   keyTakeaways: [
     'Un conversor basado en navegador cubre la mayoría de necesidades de conversión puntual sin instalar Calibre.',

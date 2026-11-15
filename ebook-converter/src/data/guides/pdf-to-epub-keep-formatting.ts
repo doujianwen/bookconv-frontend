@@ -2,6 +2,7 @@ import { BlogFaq } from '../blog/types'
 
 export const slug = 'pdf-to-epub-keep-formatting'
 export const title = 'Convert PDF to EPUB: Images, Layout and Reading Order'
+export const metaDescription = 'Why PDF to EPUB loses images and reading order, and how to keep both. What to fix in the source first, and when the conversion cannot be saved.'
 export const problem = 'PDF to EPUB usually means lost images and a wall of text. Check images, layout and reading order before replacing the original.'
 export const date = '2026-08-02'
 export const tags = ['pdf', 'epub', 'ocr', 'scan', 'calibre']

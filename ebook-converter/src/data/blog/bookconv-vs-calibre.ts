@@ -1,6 +1,7 @@
 export const slug = `bookconv-vs-calibre`;
 export const title = `BookConv vs Calibre: Which Converter Should You Use?`;
 export const metaTitle = `BookConv vs Calibre: Which to Use in 2026?`
+export const metaDescription = 'Calibre is a full library manager; BookConv is a browser tab. Compare speed, privacy, batch limits, and which one fits how often you convert.'
 export const date = `2026-09-14`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";

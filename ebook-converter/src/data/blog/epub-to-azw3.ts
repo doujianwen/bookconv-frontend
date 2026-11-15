@@ -2,6 +2,7 @@ export const slug = `epub-to-azw3`;
 export const date = `2026-08-02`;
 export const author = "BookConv Team";
 export const title = `Free EPUB to AZW3: Get Your Ebooks Onto Kindle Natively`;
+export const metaDescription = 'Convert EPUB to AZW3 free and send it to Kindle natively. No sign-up, no Amazon upload. See what formatting AZW3 keeps that MOBI drops.'
 export const tags = ["EPUB", "AZW3", "Kindle", "Amazon", "Ebook Formats", "BookConv"];
 
 export const content = {

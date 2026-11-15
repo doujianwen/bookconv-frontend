@@ -1,5 +1,6 @@
 export const slug = `fb2-vs-epub`;
 export const title = `FB2 vs EPUB: Which Open Ebook Format Should You Use?`;
+export const metaDescription = 'FB2 is big in Russian-language libraries; EPUB is the global standard. Compare their structure, device support, and when to convert one to the other.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["FB2", "EPUB", "Ebook Formats", "Open Formats", "BookConv"];

@@ -3,6 +3,7 @@
 export const slug = "reading-groups-hub";
 export const title = "How to Sync Ebooks for Virtual Book Clubs";
 export const metaTitle = "Sync Ebooks for Book Clubs & Reading Groups"
+export const metaDescription = 'Run a virtual book club without forcing one device: shared schedules, format conversion, and progress sync across Kindle, Kobo, and phones.'
 export const date = "2026-09-18";
 export const lastUpdated = '2026-11-01';
 export const author = "BookConv Team";

@@ -1,5 +1,6 @@
 export const slug = `scanned-pdf-to-epub-ocr`;
 export const title = `How to Convert Scanned PDF to EPUB with OCR`;
+export const metaDescription = 'A scanned PDF has no text to reflow. Add OCR, then convert to EPUB so the book is searchable, resizable, and readable on any screen.'
 export const date = `2026-08-09`;
 export const author = "BookConv Team";
 export const tags = ["PDF", "EPUB", "OCR", "Scanned PDF", "BookConv"];

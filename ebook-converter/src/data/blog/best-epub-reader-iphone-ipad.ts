@@ -1,6 +1,7 @@
 export const slug = `best-epub-reader-iphone-ipad`;
 export const title = `Best EPUB Reader Apps for iPhone and iPad`;
 export const metaTitle = `Best EPUB Reader Apps for iPhone & iPad (2026)`
+export const metaDescription = 'Apple Books vs Kindle vs third-party readers on iPhone and iPad: how each handles EPUB, DRM-free files, and your existing library.'
 export const date = `2026-09-24`;
 export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
