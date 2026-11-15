@@ -10,7 +10,11 @@ export function classifyGAError(err: unknown): ErrorCode | "UNKNOWN" {
   if (status === 403) return "PERMISSION_DENIED";
   if (status >= 500 && status <= 599) return "CONVERSION_UNAVAILABLE";
   const message = typeof e.message === "string" ? e.message : "";
-  if (/failed to fetch|networkerror|network request failed/i.test(message)) return "CONVERSION_UNAVAILABLE";
+  // Safari/WebKit 的 fetch 网络失败文案是 "Load failed"（Chrome="Failed to fetch"、
+  // Firefox="NetworkError…"）。缺它 → Safari 用户网络失败在 GA4 塌缩为 UNKNOWN
+  // （2026-11-14 实测：11-02/11-14 的 "Load failed" 均落 UNKNOWN）。用 \b 锚定，
+  // 避免误吃 "download failed" 这类无关串。
+  if (/failed to fetch|networkerror|network request failed|\bload failed\b/i.test(message)) return "CONVERSION_UNAVAILABLE";
   if (/HTTP 403/i.test(message)) return "PERMISSION_DENIED";
   if (/conversion service returned an error/i.test(message)) return "CONVERSION_UNAVAILABLE";
   return "UNKNOWN";
