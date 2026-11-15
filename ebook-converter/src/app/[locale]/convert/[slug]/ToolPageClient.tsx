@@ -168,6 +168,18 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
   const videoTutorial = VIDEO_TUTORIALS[slug] || null
   const handleFileSelect = useCallback(
     async (file: File) => {
+      // 口径锚点（2026-11-15）：每次「用户发起的转换尝试」在**任何守卫之前**先记一次
+      // conversion_attempt。原因：file_upload 要等到直传成功、即将 POST /api/convert 才发，
+      // 而 FILE_TOO_LARGE / 直传 presign·PUT 失败 / 配额跳过等前置失败根本不发 file_upload，
+      // 于是 GA4 里 (完成+失败) 会系统性多于 file_upload（2026-11-15 对账：30 天 +54），
+      // 看着像"事件重复计数"。有了 attempt 就有了可机器验证的不变量：
+      //   终态(完成+失败) ≤ attempt + 容差   （违反=同一尝试重复发终态，物理不可能）
+      // 判据实现见 scripts/lib/ga-attempt-closure.mjs（B6 消费）。
+      trackGAEvent("conversion_attempt", {
+        source_format: source,
+        target_format: target,
+        file_size: file.size,
+      })
       // 不可行组合硬拦：在任何上传/嗅探之前直接拒绝并给出替代路径，
       // 与魔数嗅探同层的客户端拦截（GA 可见，不留静默失败盲区）。
       if (unsupported) {

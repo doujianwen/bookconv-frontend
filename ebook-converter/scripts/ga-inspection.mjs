@@ -70,6 +70,8 @@ function basicFromLive(live) {
       complete: String(complete),
       failed: String(failed),
       upload: String(upload),
+      // 尝试锚点（2026-11-15）：'—' = 该日无此事件（上线前窗口），≠0
+      attempt: live.events?.conversion_attempt ?? '—',
       rate: live.conversionRate ?? '—',
     },
     batch: evalBatchAnomaly(failed, upload),
@@ -318,6 +320,15 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
       }
       lines.push(trueParts.join(' | '));
     }
+    // 尝试锚点（2026-11-15）：给 (完成+失败) 一个正确分母，把「前置失败不发 file_upload」
+    // 造成的口径不对称显式量化，避免读的人把缺口误读成"事件重复计数"。
+    // 仅在事件存在时展示（上线前窗口无该字段，不臆造 0）。
+    const att = Number(basic.metrics.attempt);
+    if (Number.isFinite(att) && att > 0) {
+      const terminal = (Number.isFinite(tc) ? tc : 0) + (Number.isFinite(tf) ? tf : 0);
+      const unclosed = Math.max(0, att - terminal);
+      lines.push(`• 尝试锚点: conversion_attempt ${att} 次 → 终态 ${terminal} 次 | 未闭环 ${unclosed} 次（放弃/前置拒绝，非重复计数）`);
+    }
     // error_code 分布（仅实时源有）：让"失败"构成一目了然
     const fec = basic.failedByErrorCode;
     if (fec && typeof fec === 'object' && Object.keys(fec).length > 0) {
@@ -429,7 +440,10 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
   else if (hasFail) lines.push('巡检发现异常 ⚠️');
   else if (notRun) lines.push('部分检查未运行，详见上 ⚠️');
   else if (basicUndecided) lines.push('巡检完毕，但基础分析转化失败率不可判定 ⚠️');
-  else if (rtResidual) lines.push('巡检完毕，全绿 ✅（红队有残余项，见上）');
+  // 2026-11-15：措辞收紧。规则原文是「仅两段红队均 PASS 才标全绿」，而这里此前把
+  // PASS_WITH_RESIDUALS 也印成"全绿 ✅（红队有残余项）"——带着 FAIL/UNKNOWN 的残余
+  // 仍打发绿卡，属自我安慰式结论。现在只有真 PASS 才叫全绿。
+  else if (rtResidual) lines.push('巡检完毕，未见 FAIL 拦截 ⚠️（红队有残余/不可判定项，按规则不算全绿，见上）');
   else lines.push('巡检完毕，全绿 ✅');
   return lines.join('\n');
 }

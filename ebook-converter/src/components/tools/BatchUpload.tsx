@@ -353,6 +353,16 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
       while (cursor < validFiles.length) {
         const item = validFiles[cursor++];
 
+        // 口径锚点（2026-11-15）：批量路径同样是「每个文件一次尝试」，先记 attempt
+        // 再走配额跳过 / 上传 / 转换。配额跳过会发 conversion_failed 但从不发
+        // file_upload，正是 (完成+失败) > file_upload 的主要来源之一。
+        // 不变量与单文件路径一致：终态(完成+失败) ≤ attempt + 容差。
+        trackGAEvent("conversion_attempt", {
+          source_format: item.sourceFormat,
+          target_format: targetFormat,
+          file_size: item.size,
+        });
+
         if (quotaExhausted && !isLocalConversion(item.sourceFormat, targetFormat)) {
           failed += 1;
           trackGAEvent("conversion_failed", {

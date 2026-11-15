@@ -26,10 +26,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { sumDirectUploadInfra } from './lib/ga-error-codes.mjs'
+import { checkAttemptClosure } from './lib/ga-attempt-closure.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
-const T = (f) => path.join(ROOT, '_wb_tmp', f)
+// 测试钩子：WB_TMP_DIR 可把产物目录指到临时目录，用于「注入事故 → 判定翻转 →
+// 恢复 → 判定复原」的反向验证（铁律：只跑当前状态证明不了判据有效）。
+// 不设该变量时行为与历史完全一致：ROOT/_wb_tmp。
+const TMP_DIR = process.env.WB_TMP_DIR ? path.resolve(process.env.WB_TMP_DIR) : path.join(ROOT, '_wb_tmp')
+const T = (f) => path.join(TMP_DIR, f)
 
 function readJson(f) {
   try { return JSON.parse(fs.readFileSync(T(f), 'utf8')) } catch { return null }
@@ -123,8 +128,14 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
 // ⚠️ 不变量纠正：不可写成「完成+失败 ≤ 上传」——conversion_failed 含客户端拦截
 // (FILE_TOO_LARGE)，这类在提交前就被前端拦下、从不计 file_upload，故合法数据里
 // 失败可合法超过上传。若照此写会制造假 FAIL（判据先测再采信，假门禁比没门禁更坏）。
-// 正确不变量：到达引擎的终态 = 完成 + (失败 − FILE_TOO_LARGE) 必须 ≤ 上传数；
+// 正确不变量：到达引擎的终态 = 完成 + (失败 − 前置失败) 必须 ≤ 上传数；
 // 完成数更不可 > 上传数。违反 = 事件重复计数/口径错乱（物理不可能）。
+//
+// 2026-11-15 增补第二条不变量（解决"30 天 353 vs 299 到底是错乱还是口径"）：
+//   终态(完成+失败) ≤ conversion_attempt + 容差
+// attempt 在每次尝试开头必发，于是「前置失败不发 file_upload」造成的历史缺口
+// 不再被误读为重复计数。判据纯函数化在 lib/ga-attempt-closure.mjs（含自检），
+// attempt 缺失（上线前窗口）→ UNKNOWN 并在证据里显式标注，绝不静默当 PASS。
 {
   const name = '指标内部一致性'
   const u = Number(live?.events?.file_upload)
@@ -158,8 +169,19 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     const reached = c + f - preUploadFailures
     // GA4 实时事件计数为近似（非精确事务），小量级 ±2 抖动常见；TOL 吸收抖动避免误判。
     const TOL = 2
-    if (reached > u + TOL) push('B6', name, 'P0', 'FAIL', `到达引擎终态(完成+失败−前置失败${preUploadFailures})=${reached} > 上传 ${u}+容差${TOL}（事件重复计数/口径错乱，物理不可能）`)
-    else push('B6', name, 'P0', 'PASS', `到达引擎终态 ${reached} ≤ 上传 ${u}+容差${TOL}（前置失败 FILE_TOO_LARGE=${ftl}+QUOTA=${quota}+直传族=${direct} 未计上传，口径自洽）`)
+    // 第二条不变量：终态 ≤ 尝试。attempt 缺失（null/undefined）= 上线前窗口 → UNKNOWN，
+    // 证据里必须明写"不作为 PASS 依据"，避免读的人以为已经验过。
+    const att = checkAttemptClosure({ attempt: live?.events?.conversion_attempt, complete: c, failed: f })
+    const attNote = att.verdict === 'UNKNOWN'
+      ? `attempt 判据 UNKNOWN（${att.reason}）— 未纳入 PASS 依据`
+      : `attempt 判据 ${att.verdict}：${att.reason}`
+    if (reached > u + TOL) {
+      push('B6', name, 'P0', 'FAIL', `到达引擎终态(完成+失败−前置失败${preUploadFailures})=${reached} > 上传 ${u}+容差${TOL}（事件重复计数/口径错乱，物理不可能）；${attNote}`)
+    } else if (att.verdict === 'FAIL') {
+      push('B6', name, 'P0', 'FAIL', `conversion_attempt 闭合失败：${att.reason}（前置失败剥离后 ${reached} ≤ 上传 ${u}+${TOL}，故问题在尝试/终态本身而非上传口径）`)
+    } else {
+      push('B6', name, 'P0', 'PASS', `到达引擎终态 ${reached} ≤ 上传 ${u}+容差${TOL}（前置失败 FILE_TOO_LARGE=${ftl}+QUOTA=${quota}+直传族=${direct} 未计上传，口径自洽）；${attNote}`)
+    }
   } else {
     push('B6', name, 'P0', 'UNKNOWN', '缺 failedByErrorCode 无法剥离客户端拦截，仅凭 完成≤上传 验证，全量一致性不可判定')
   }

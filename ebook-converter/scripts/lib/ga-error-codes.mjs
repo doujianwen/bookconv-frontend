@@ -7,7 +7,8 @@
 //   再同步本文件与三道消费门禁：
 //     G1  ga4-redteam.mjs          B6 preUploadFailures 剥离
 //     G2  ga-inspection.mjs        INFRA_CODES（否则掉 else 被算成引擎失败 → 飞书误报红卡）
-//     G3  ga4-redteam-analysis.mjs NON_ENGINE + D2 infra 求和（否则 D2 漏报检查误判）
+//     G3  ga4-redteam-analysis.mjs NON_ENGINE / D2（改用本文件 isEngineFailureCode，禁再本地硬编码）
+//     G4  ga4-advanced-analysis.mjs meta.deviceEngineSplit（R1 分设备引擎侧率，2026-11-15 增）
 //   2026-11-02 红队实证：DIRECT_UPLOAD_FAILED 一码被三处各自硬编码，拆分时漏改
 //   G3 会让每日巡检 Part D 对自己的新码自相矛盾判定
 //   （详见 红队审计_直传失败三码拆分方案_2026-11-02.md）。
@@ -83,3 +84,28 @@ export const USER_SIDE_ALERT_CODES = [
   "VERIFICATION_FAILED",
   "UPLOAD_EMPTY",
 ];
+
+// ── 引擎侧失败口径（2026-11-15 提取为单一事实源）───────────────────────
+//
+// 语义：不属于「客户端拦截 / 额度降级 / 直传基础设施 / 未进引擎的无效输入」的失败
+// 都算引擎侧（含 UNKNOWN —— 归因未明不能从监控中静默剔除，见 UNCLASSIFIED_ERROR_CODES）。
+// 与 ga-inspection.mjs splitFailures 的 engineFailed 口径一致：
+//   engineFailed = failed − client(FILE_TOO_LARGE + USER_INPUT) − quota − infra
+//
+// ⚠️ USER_SIDE_ALERT_CODES **不进**本集合：CORRUPT_INPUT / VERIFICATION_FAILED 可能
+// 已经过 Calibre 尝试，剥离会虚高引擎侧成功率（详见上方语义边界注释）。
+//
+// 提取动机：此前 ga4-redteam-analysis.mjs D2 自己临时算
+//   liveEngine = failed − FILE_TOO_LARGE − quota − infra
+// 漏了 USER_INPUT_CODES，与 Part A 的 engineFailed 口径失配 → 一旦出现 UPLOAD_EMPTY
+// 就会被判「矛盾」（假 FAIL）。两处必须同源，禁再各写一套字面量。
+export const NON_ENGINE_CODES = [
+  "FILE_TOO_LARGE",
+  "CONVERSION_QUOTA_EXCEEDED",
+  ...DIRECT_UPLOAD_INFRA_CODES,
+  ...USER_INPUT_CODES,
+];
+
+export function isEngineFailureCode(code) {
+  return !!code && !NON_ENGINE_CODES.includes(code);
+}

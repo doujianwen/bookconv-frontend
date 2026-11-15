@@ -22,6 +22,7 @@ import path from 'node:path'
 import crypto from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import { parseDiagnosticPrefix, aggregateDiagnosticErrors } from './lib/direct-upload-diagnostic.mjs'
+import { isEngineFailureCode } from './lib/ga-error-codes.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -86,6 +87,11 @@ function rows(reportJson, dimNames) {
 //  ① 新模块与 2f(date × error_code) 的 eventCount 合计必须闭合；
 //  ② 全 null / 全 (not set) 视为维度映射假阴性 —— 2026-11-05 独立探针踩过：
 //     自定义维度按 header 字面量映射错位时全返 null，却不报错，会造成假阴性。
+// ⚠️ 2026-11-15 实测的**假 FAIL 陷阱**：跨查询严格相等会偶发不成立 —— 同一事件集换
+//     维度切法重新查询时，若 GA4 正在重处理数据（同日实测 11-12 整日行消失），两次
+//     查询的合计会漂移（2f 首查 109、复跑 103；2g 83 行合计 103 ⇒ 既非截断也非映射错）。
+//     处置纪律：先复跑确认，连续两轮仍不等才按维度映射/阈值抑制定案；**不要**靠放宽
+//     判据"修"它，否则真丢行也会一起被放过。
 function assertJointClosure(data, base) {
   const sum = (a) => (Array.isArray(a) ? a.reduce((s, x) => s + (Number(x.eventCount) || 0), 0) : null)
   const baseSum = sum(base)
@@ -125,6 +131,98 @@ function checkAttributionFreshness(codeRows, end) {
   }
 }
 
+// ── 分设备引擎侧失败拆解（2026-11-15 增补，解 R1 混淆）────────────────
+// 起因：R1「桌面失败率 34.6% vs 移动 21.5%，z=2.34 显著」被追问「是不是引擎在桌面更差」。
+// 此前只有 device_events（device×事件），拿不到 device×error_code ⇒ 无法区分
+//   ①桌面引擎真失败多  ②桌面多传大文件/直传失败（前置失败，根本没进引擎）。
+// 本函数把 2h（device×error_code）与 device_events 的 complete 对起来，
+// 直接给出分设备**引擎侧成功率** = complete / (complete + engineFailed)，
+// 分类口径复用 lib/ga-error-codes.mjs 的 isEngineFailureCode（与 Part A 同源）。
+// 纪律：任一输入模块降级 → UNKNOWN（不 fallthrough 成 PASS）；样本 < MIN 标 LOW_SAMPLE，
+// 让"显著但样本小"的结论不能被当成定论。
+const DEVICE_MIN_SAMPLE = 20
+
+function buildDeviceEngineSplit(codeRows, eventRows) {
+  if (!Array.isArray(codeRows)) {
+    return { verdict: 'UNKNOWN', reason: 'device_error_code 模块降级 → 分设备引擎侧率不可判定' }
+  }
+  if (!Array.isArray(eventRows)) {
+    return { verdict: 'UNKNOWN', reason: 'device_events 模块降级 → 缺分设备完成数，引擎侧率不可算' }
+  }
+  const completeByDevice = new Map()
+  for (const r of eventRows) {
+    const d = r.deviceCategory || '(not set)'
+    completeByDevice.set(d, (completeByDevice.get(d) || 0) + (Number(r.conversion_complete) || 0))
+  }
+  const map = new Map()
+  for (const r of codeRows) {
+    const d = r.deviceCategory || '(not set)'
+    const code = r.error_code || '(not set)'
+    const n = Number(r.eventCount) || 0
+    const cur = map.get(d) || { deviceCategory: d, failed: 0, engineFailed: 0, nonEngineFailed: 0, codes: {} }
+    cur.failed += n
+    cur.codes[code] = (cur.codes[code] || 0) + n
+    if (isEngineFailureCode(code)) cur.engineFailed += n
+    else cur.nonEngineFailed += n
+    map.set(d, cur)
+  }
+  const devices = [...map.values()].map((d) => {
+    const complete = completeByDevice.get(d.deviceCategory) || 0
+    const denom = complete + d.engineFailed
+    const sample = denom
+    return {
+      ...d,
+      complete,
+      engineRatePct: denom > 0 ? Math.round((complete / denom) * 1000) / 10 : null,
+      // 总失败率用「完成+全部失败」做分母（含前置失败），与 R1 旧口径可对照
+      overallRatePct: complete + d.failed > 0 ? Math.round((d.failed / (complete + d.failed)) * 1000) / 10 : null,
+      sampleVerdict: sample >= DEVICE_MIN_SAMPLE ? 'OK' : 'LOW_SAMPLE',
+    }
+  }).sort((a, b) => b.failed - a.failed)
+  const totalEngine = devices.reduce((s, d) => s + d.engineFailed, 0)
+  const totalFailed = devices.reduce((s, d) => s + d.failed, 0)
+  const totalComplete = devices.reduce((s, d) => s + d.complete, 0)
+  return {
+    verdict: 'OK',
+    minSample: DEVICE_MIN_SAMPLE,
+    devices,
+    totals: {
+      complete: totalComplete,
+      failed: totalFailed,
+      engineFailed: totalEngine,
+      nonEngineFailed: totalFailed - totalEngine,
+      engineRatePct: totalComplete + totalEngine > 0 ? Math.round((totalComplete / (totalComplete + totalEngine)) * 1000) / 10 : null,
+    },
+    note: '引擎侧率 = complete/(complete+engineFailed)；前置失败（大文件/直传/配额/空文件）单列，不混入引擎侧。样本 < minSample 标 LOW_SAMPLE，不得据其下结论。',
+  }
+}
+// ── 窗口日覆盖度（2026-11-15 增补）────────────────────────────────────
+// 起因：2026-11-14 窗口实测 daily_overview / daily_events 都缺 20261112 一整行
+// （上一窗口 10-14~11-13 里它是存在的）。若不当场暴露，30 天累计会静默少算一天，
+// 而报告里"30 天上传 299 / 完成 245"这类数字会变成跨窗口不可比。
+// 可能原因：GA4 数据重处理，或 Google Signals 阈值化（小样本整日被抑制）。
+// 本函数只报事实（缺哪几天），不猜原因；D1 趋势判据据此报 UNKNOWN 而非 PASS。
+function buildDayCoverage(dates, start, end) {
+  const present = new Set((dates || []).map((d) => String(d).replace(/-/g, '')))
+  const expected = []
+  const cur = new Date(start + 'T00:00:00Z')
+  const last = new Date(end + 'T00:00:00Z')
+  if (Number.isNaN(cur.getTime()) || Number.isNaN(last.getTime())) {
+    return { verdict: 'UNKNOWN', reason: '窗口日期不可解析' }
+  }
+  while (cur <= last) {
+    expected.push(cur.toISOString().slice(0, 10).replace(/-/g, ''))
+    cur.setUTCDate(cur.getUTCDate() + 1)
+  }
+  const missing = expected.filter((d) => !present.has(d))
+  return {
+    expected: expected.length,
+    present: expected.length - missing.length,
+    missing,
+    complete: missing.length === 0,
+  }
+}
+
 // 自检门禁（可复跑，含反向验证：注入事故→exit 1，恢复→exit 0）
 //   node scripts/ga4-advanced-analysis.mjs --self-test
 if (process.argv.includes('--self-test')) {
@@ -153,6 +251,33 @@ if (process.argv.includes('--self-test')) {
     ['解析 CSP 拦截前缀 → kind=CSP 且 cspBlocked', () => { const p = parseDiagnosticPrefix('PUT:CSP:on=1:<1s:'); return p.valid && p.kind === 'CSP' && p.cspBlocked === true && p.httpStatus === null }, true],
     ['CSP 与 NETWORK 同 on/msBucket 仍分桶', () => { const a = parseDiagnosticPrefix('PUT:CSP:on=1:1-5s:'); const b = parseDiagnosticPrefix('PUT:NETWORK:on=1:1-5s:'); return a.kind === 'CSP' && b.kind === 'NETWORK' && a.cspBlocked === true && b.cspBlocked === false }, true],
     ['近乎拼错的 kind → malformed:true（防 producer 私造 token）', () => { const p = parseDiagnosticPrefix('PUT:CSP-BLOCKED:on=1:<1s:'); return p.malformed === true }, true],
+    // 2026-11-15：分设备引擎侧拆解（R1 混淆治理）——前置失败必须单列，不得算进引擎侧
+    ['分设备：前置失败不计入引擎侧（30/(30+2)=93.8%）', () => {
+      const s = buildDeviceEngineSplit(
+        [{ deviceCategory: 'desktop', error_code: 'FILE_TOO_LARGE', eventCount: 10 }, { deviceCategory: 'desktop', error_code: 'INTERNAL_ERROR', eventCount: 2 }],
+        [{ deviceCategory: 'desktop', conversion_complete: 30 }])
+      const d = s.devices[0]
+      return d.engineFailed === 2 && d.nonEngineFailed === 10 && d.engineRatePct === 93.8
+    }, true],
+    ['分设备：code 模块降级 → UNKNOWN 非 PASS', () => buildDeviceEngineSplit({ _error: 'x' }, []).verdict === 'UNKNOWN', true],
+    ['分设备：缺 device_events → UNKNOWN（无分母不臆造）', () => buildDeviceEngineSplit([], { _error: 'x' }).verdict === 'UNKNOWN', true],
+    ['分设备：小样本 → LOW_SAMPLE 而非 OK', () => {
+      const s = buildDeviceEngineSplit([{ deviceCategory: 'tablet', error_code: 'INTERNAL_ERROR', eventCount: 1 }], [{ deviceCategory: 'tablet', conversion_complete: 2 }])
+      return s.devices[0].sampleVerdict === 'LOW_SAMPLE'
+    }, true],
+    // 2026-11-15：窗口日覆盖度（防 30 天累计静默少算一天）
+    ['覆盖度：完整窗口 → complete', () => {
+      const c = buildDayCoverage(['20261110', '20261111', '20261112'], '2026-11-10', '2026-11-12')
+      return c.complete === true && c.present === 3 && c.missing.length === 0
+    }, true],
+    ['覆盖度：缺一天必须点名（20261112 实测缺口）', () => {
+      const c = buildDayCoverage(['20261110', '20261111', '20261113'], '2026-11-10', '2026-11-13')
+      return c.complete === false && c.missing.length === 1 && c.missing[0] === '20261112'
+    }, true],
+    ['覆盖度：日期不可解析 → UNKNOWN 而非 complete', () => {
+      const c = buildDayCoverage([], 'bad', 'worse')
+      return c.verdict === 'UNKNOWN' && c.complete === undefined
+    }, true],
   ]
   let bad = 0
   for (const [name, fn, want] of cases) {
@@ -200,6 +325,39 @@ try {
     }
     return Object.values(map).sort((a, b) => a.date.localeCompare(b.date))
   })
+
+  // 窗口日覆盖度（2026-11-15）：必须在任何"30 天累计"之前算出，供后续模块引用。
+  // 实测 2026-11-14 窗口 daily_events 缺 20261112，而 daily_overview 有该日 ——
+  // 事件级与用户级覆盖率不一致，说明该日事件暂不可用（重处理/抑制）。
+  {
+    const de = Array.isArray(out.modules.daily_events) ? out.modules.daily_events : []
+    out.meta.dayCoverage = buildDayCoverage(de.map((r) => r.date), START, END)
+    if (out.meta.dayCoverage.complete === false) {
+      console.error(`⚠️ 窗口缺日: 应有 ${out.meta.dayCoverage.expected} 天，实到 ${out.meta.dayCoverage.present} 天，缺 ${out.meta.dayCoverage.missing.join(',')} → 30 天累计须按 ${out.meta.dayCoverage.present} 天口径引用`)
+    } else if (out.meta.dayCoverage.complete === true) {
+      console.error(`📅 窗口日覆盖: ${out.meta.dayCoverage.present}/${out.meta.dayCoverage.expected} 天完整`)
+    }
+  }
+
+  // 闭合校验统一入口（两档判决，2026-11-15）：
+  //   · 窗口完整 + 不闭合  → 真异常，拒绝出数（保住门禁强度，防维度映射漏行）
+  //   · 窗口缺日 + 不闭合  → 已知不可比（同一日在不同查询中是否在册不一致），
+  //                          记入 meta.closureWarnings 照常出数，**不静默**也不整块丢弃
+  //   实测依据：2f=109 vs 2g=103，差额 6 = 缺日 20261112 的失败数（前一窗口实测值）。
+  const closureWarnings = []
+  const assertClosed = (label, data) => {
+    try {
+      return assertJointClosure(data, out.modules.failed_by_date_error_code)
+    } catch (e) {
+      const cov = out.meta.dayCoverage
+      if (cov && cov.complete === false) {
+        closureWarnings.push({ module: label, detail: (e.message || e).slice(0, 240), missingDays: cov.missing })
+        console.error(`⚠️ ${label} 闭合差（窗口缺日 ${cov.missing.join(',')}，降级为警告）: ${e.message}`)
+        return false
+      }
+      throw new Error(e.message + '（窗口无缺日 → 优先怀疑维度映射/行截断，需排查而非复跑）')
+    }
+  }
 
   // 模块 0 + 模块 5：设备类别 × 整体指标
   await safe('device_overview', async () => {
@@ -384,7 +542,26 @@ try {
       limit: 10000,
     })
     const data = rows(r, ['date', 'error_code', 'file_size'])
-    assertJointClosure(data, out.modules.failed_by_date_error_code)
+    assertClosed('failed_by_date_error_code_size', data)
+    return data
+  })
+
+  // 模块 5b：conversion_failed 按 deviceCategory × error_code（2026-11-15 增补）
+  // 目的：解 R1「桌面失败率 34.6% vs 移动 21.5%（z=2.34, p=0.019）」的归因混淆。
+  // 之前只有 device×事件，无法回答「是引擎在桌面更差，还是桌面多传大文件/直传失败」。
+  // 闭合校验：与 2f（date×error_code）是同一 conversion_failed 全集（仅换维度切法），
+  // 合计必须相等；不等说明维度映射漏行，拒绝出数（防 2026-11-05 那类静默假阴性）。
+  await safe('device_error_code', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'deviceCategory' }, { name: 'customEvent:error_code' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'conversion_failed' } } },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 5000,
+    })
+    const data = rows(r, ['deviceCategory', 'error_code'])
+    assertClosed('device_error_code', data)
     return data
   })
 
@@ -392,6 +569,19 @@ try {
   out.meta.attributionGuard = checkAttributionFreshness(out.modules.failed_by_date_error_code, END)
   const guard = out.meta.attributionGuard
   console.error(`🛡️ 归因完整性: ${guard.verdict} — ${guard.note || guard.reason}`)
+
+  // R1 混淆治理（2026-11-15）：分设备引擎侧率随产物落盘，报告/红队不必再手算。
+  out.meta.deviceEngineSplit = buildDeviceEngineSplit(out.modules.device_error_code, out.modules.device_events)
+  const des = out.meta.deviceEngineSplit
+  if (des.verdict === 'OK') {
+    console.error(`🔧 分设备引擎侧率: ${des.devices.map((d) => `${d.deviceCategory} ${d.engineRatePct ?? '—'}%（前置失败${d.nonEngineFailed}）`).join(' | ')}`)
+  } else {
+    console.error(`⚠️ 分设备引擎侧率: UNKNOWN — ${des.reason}`)
+  }
+
+  // 闭合警告随产物落盘：读报告的人必须能看到"这次闭合差是已知缺日造成的"，
+  // 而不是以为数据完全自洽。
+  out.meta.closureWarnings = closureWarnings
 
   // F20 P2：诊断前缀解析覆盖摘要（malformed>0 = producer/parser 契约漂移告警）
   const diagMod = out.modules.failed_by_date_error_diagnostic

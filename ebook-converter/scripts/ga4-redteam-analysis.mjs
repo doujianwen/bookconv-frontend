@@ -25,11 +25,14 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { normalizeGaDate, dailyWindow } from './lib/ga-date.mjs'
-import { sumDirectUploadInfra, DIRECT_UPLOAD_INFRA_CODES, USER_INPUT_CODES } from './lib/ga-error-codes.mjs'
+import { isEngineFailureCode } from './lib/ga-error-codes.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
-const T = (f) => path.join(ROOT, '_wb_tmp', f)
+// 测试钩子：WB_TMP_DIR 指向临时目录即可做「注入事故 → 判定翻转 → 恢复 → 判定复原」，
+// 证明判据真的有效（只跑当前状态不算验证）。不设时默认 ROOT/_wb_tmp，行为不变。
+const TMP_DIR = process.env.WB_TMP_DIR ? path.resolve(process.env.WB_TMP_DIR) : path.join(ROOT, '_wb_tmp')
+const T = (f) => path.join(TMP_DIR, f)
 
 function readJson(f) {
   try { return JSON.parse(fs.readFileSync(T(f), 'utf8')) } catch { return null }
@@ -49,11 +52,12 @@ try {
 const adv = advPath ? readJson(path.basename(advPath)) : null
 const live = readJson('ga4-live.json')
 
-// 非引擎类 error_code（与 ga-inspection splitFailures 同口径）。
-// ⚠️ 直传族四码走共享常量（scripts/lib/ga-error-codes.mjs）：这是 Part D 红队本身，
-// 漏改会让 D2 引擎失败漏报检查对新码误判（红队审计 2026-11-02 G3，最易被漏改的一处）。
-const NON_ENGINE = new Set(['FILE_TOO_LARGE', 'CONVERSION_QUOTA_EXCEEDED', ...DIRECT_UPLOAD_INFRA_CODES, ...USER_INPUT_CODES])
-const isEngine = (code) => !!code && !NON_ENGINE.has(code)
+// 非引擎类 error_code 的判定统一走共享常量（scripts/lib/ga-error-codes.mjs）。
+// 2026-11-15 收口：此前本文件自建 NON_ENGINE + D2 里手算
+// `liveEngine = failed − FILE_TOO_LARGE − quota − 直传族`，**漏了 USER_INPUT_CODES**，
+// 与 Part A 的 splitFailures 口径失配 —— 一旦出现 UPLOAD_EMPTY 就会判「矛盾」（假 FAIL）。
+// 红队审计 2026-11-02 G3 已实证过「一码多处硬编码、漏改一处即误判」，故统一 import。
+const isEngine = isEngineFailureCode
 
 const checks = []
 const push = (id, name, level, verdict, evidence) => checks.push({ id, name, level, verdict, evidence })
@@ -84,50 +88,110 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     const window = dailyWindow(series, T_MINUS_1)
     const sorted = window.rows
     if (!window.ok) {
-      push('D1', name, 'P1', 'UNKNOWN', `${window.reason} → 趋势窗口不闭合`)
+      // 点名缺哪几天，而不是只报"有缺口"——2026-11-15 实测缺 20261112，
+      // 只说"缺口"会让人无法判断是阈值化抑制还是真丢数。
+      const present = new Set(window.rows.map((r) => r.date))
+      const missing = []
+      if (window.rows.length) {
+        const cur = new Date(window.rows[0].date + 'T00:00:00Z')
+        const last = new Date(T_MINUS_1 + 'T00:00:00Z')
+        while (cur <= last) {
+          const k = cur.toISOString().slice(0, 10)
+          if (!present.has(k)) missing.push(k)
+          cur.setUTCDate(cur.getUTCDate() + 1)
+        }
+      }
+      const missNote = missing.length ? `（缺 ${missing.slice(0, 5).join(',')}${missing.length > 5 ? ' 等' : ''}）` : ''
+      push('D1', name, 'P1', 'UNKNOWN', `${window.reason}${missNote} → 趋势窗口不闭合，趋势结论不可判定（累计数须按实到天数口径引用）`)
     } else {
       const users = sorted.map((r) => Number(r.activeUsers) || 0)
       const avg = users.reduce((a, b) => a + b, 0) / users.length
       const max = Math.max(...users)
       const min = Math.min(...users)
       const swings = max > 0 ? (max - min) / max : 0
-      push('D1', name, 'P1', 'PASS',
-        `${series.length} 天序列闭合至 T-1；均活跃 ${avg.toFixed(1)}、峰${max}/谷${min}、振幅 ${(swings * 100).toFixed(0)}%。日期完整性通过；描述性振幅不能单独证明趋势正常或异常。`)
+      // 2026-11-15：用户级序列闭合 ≠ 事件级闭合。实测 11-14 窗口 daily_overview 有 31 天，
+      // 而 daily_events 缺 20261112 ⇒ 所有"30 天累计/失败分流"少算一天。
+      // 因此不能只看 daily_overview 就给 PASS：件级缺口会让基于事件的趋势/累计失真，
+      // 故降为 UNKNOWN，并在证据里写清"坏的是事件层，用户层是闭合的"。
+      const cov = adv?.meta?.dayCoverage
+      if (cov && cov.complete === false) {
+        // 措辞精确到"哪一层不可判定"：用户级序列是闭合的，坏的是事件级。
+        push('D1', name, 'P1', 'UNKNOWN',
+          `用户级 ${series.length} 天序列闭合至 T-1（均活跃 ${avg.toFixed(1)}、峰${max}/谷${min}），但事件级缺 ${cov.missing.join(',')}（${cov.present}/${cov.expected} 天）→ 基于事件的累计/趋势结论不可判定，须按实到天数口径引用`)
+      } else {
+        push('D1', name, 'P1', 'PASS',
+          `${series.length} 天序列闭合至 T-1；均活跃 ${avg.toFixed(1)}、峰${max}/谷${min}、振幅 ${(swings * 100).toFixed(0)}%。日期完整性通过；描述性振幅不能单独证明趋势正常或异常。`)
+      }
     }
   }
 }
 
 // ── D2 失败分流暴露 / Part A 矛盾（P0）──────────────────────────────
+// 2026-11-15 重写（治理「零失败 fallback 假阳性」）：
+// 旧实现有三个静默漏洞，都会落进 PASS：
+//   ① Part A 缺基线（ga4-live.json 缺失 / events.conversion_failed 非数值）时
+//      Number(undefined)=NaN→||0→0，与 advanced 的 0 比对得出"结论一致"——把
+//      **没有数据**说成"没有漏报"。
+//   ② T-1 无明细行时回退到 `最近一天`（fde.sort(...)[0]），却仍拿 T-1 的 live 去比 →
+//      跨日错配，旧日期的 0 撞上新日期，随机给出 PASS/FAIL。
+//   ③ 手算 liveEngine 漏 USER_INPUT_CODES，与 Part A splitFailures 不同源 → 假 FAIL。
+// 现在：无基线 → UNKNOWN；无 T-1 明细且 Part A 有失败 → FAIL（当日明细缺失）；
+// 无 T-1 明细且 Part A 零失败 → PASS 但必须显式声明"两侧均零且数据在位"；
+// 有明细 → 只比同一天（禁止跨日 fallback）。
 {
   const name = '失败分流×Part A 矛盾'
   const fde = adv?.modules?.failed_by_date_error_code?.filter((r) => !r._error).map(r => ({ ...r, date: normalizeGaDate(r.date) })) || []
+  const failedRaw = live?.events?.conversion_failed
+  const hasLiveBaseline = !!live && failedRaw !== null && failedRaw !== undefined && Number.isFinite(Number(failedRaw))
+  const fec = live?.failedByErrorCode
+
   if (!fde.length) {
     push('D2', name, 'P0', 'UNKNOWN', 'failed_by_date_error_code 无数据（维度未注册或查询失败）→ 无法验证 Part A 引擎结论')
   } else if (fde.some(r => !r.date)) {
     push('D2', name, 'P0', 'UNKNOWN', '失败明细包含缺失或无效日期，不能与Part A按日对照')
+  } else if (!hasLiveBaseline) {
+    // 关键：没有 Part A 基线时，"两侧都 0" 不是一致，而是不可判定。
+    push('D2', name, 'P0', 'UNKNOWN',
+      'ga4-live.json 缺失或 events.conversion_failed 非数值 → 无 Part A 基线；此时零失败不可视为「一致」（旧实现即在此假 PASS）')
   } else {
-    // 取 T-1 当天（或最近一天）的引擎失败数
-    const todayRows = fde.filter((r) => r.date === T_MINUS_1)
-    const useDate = todayRows.length ? T_MINUS_1 : fde.sort((a, b) => b.date.localeCompare(a.date))[0]?.date
-    const rows = fde.filter((r) => r.date === useDate)
-    let advEngine = 0
-    for (const r of rows) if (isEngine(r.error_code)) advEngine += Number(r.eventCount) || 0
-    // Part A 当日 engineFailed（failed - client - quota - 直传族）
-    const fec = live?.failedByErrorCode || {}
-    const failed = Number(live?.events?.conversion_failed) || 0
-    const client = Number(fec.FILE_TOO_LARGE) || 0
-    const quota = Number(fec.CONVERSION_QUOTA_EXCEEDED) || 0
-    const infra = sumDirectUploadInfra(fec)
-    const liveEngine = Math.max(0, failed - client - quota - infra)
-    if (advEngine > 0 && liveEngine === 0) {
-      push('D2', name, 'P0', 'FAIL',
-        `深度分析显示 ${useDate} 引擎类失败 ${advEngine} 次，但 Part A 报 engineFailed=0 → 假阴性漏报，须人工核查引擎/额度`)
-    } else if (advEngine === 0 && liveEngine > 0) {
-      push('D2', name, 'P0', 'FAIL',
-        `深度分析 ${useDate} 引擎失败为 0，但 Part A 算得 engineFailed=${liveEngine} → 矛盾，归因口径不一致`)
+    const failed = Number(failedRaw) || 0
+    let liveEngine = 0
+    let liveFecTotal = 0
+    for (const [code, v] of Object.entries(fec || {})) {
+      const n = Number(v) || 0
+      liveFecTotal += n
+      if (isEngine(code)) liveEngine += n
+    }
+    const t1Rows = fde.filter((r) => r.date === T_MINUS_1)
+    const evidenceBase = `Part A: failed=${failed}、error_code 合计=${liveFecTotal}、engineFailed=${liveEngine}`
+
+    if (!t1Rows.length) {
+      if (failed === 0) {
+        push('D2', name, 'P0', 'PASS',
+          `${T_MINUS_1} 两侧均零失败：Part A failed=0 且 advanced 无当日失败明细（数据在位，非缺失造成）→ 一致`)
+      } else {
+        push('D2', name, 'P0', 'FAIL',
+          `Part A 报 ${T_MINUS_1} 失败 ${failed} 次，但 advanced 当日无任何失败明细行 → 深度分析当日数据缺失（窗口/维度可疑），不可视为无漏报`)
+      }
+    } else if (failed > 0 && (!fec || typeof fec !== 'object' || liveFecTotal === 0)) {
+      push('D2', name, 'P0', 'UNKNOWN',
+        `Part A 报失败 ${failed} 次但缺 error_code 明细（failedByErrorCode 空/降级）→ 引擎失败不可拆，无法与深度分析同日比对`)
+    } else if (failed > 0 && Math.abs(liveFecTotal - failed) > 2) {
+      push('D2', name, 'P0', 'UNKNOWN',
+        `${evidenceBase}：明细合计与失败总数相差 ${Math.abs(liveFecTotal - failed)}（>2）→ Part A 基线自身不闭合，比对结论不可靠`)
     } else {
-      push('D2', name, 'P0', 'PASS',
-        `深度分析 ${useDate} 引擎失败 ${advEngine} 次 ⇄ Part A engineFailed=${liveEngine}，结论一致（无漏报）`)
+      let advEngine = 0
+      for (const r of t1Rows) if (isEngine(r.error_code)) advEngine += Number(r.eventCount) || 0
+      if (advEngine > 0 && liveEngine === 0) {
+        push('D2', name, 'P0', 'FAIL',
+          `深度分析显示 ${T_MINUS_1} 引擎类失败 ${advEngine} 次，但 Part A 报 engineFailed=0 → 假阴性漏报，须人工核查引擎/额度`)
+      } else if (advEngine === 0 && liveEngine > 0) {
+        push('D2', name, 'P0', 'FAIL',
+          `${T_MINUS_1} 深度分析引擎失败为 0，但 ${evidenceBase} → 矛盾，归因口径不一致`)
+      } else {
+        push('D2', name, 'P0', 'PASS',
+          `${T_MINUS_1} 同日同口径：深度分析引擎失败 ${advEngine} 次 ⇄ ${evidenceBase}，结论一致（无漏报）`)
+      }
     }
   }
 }

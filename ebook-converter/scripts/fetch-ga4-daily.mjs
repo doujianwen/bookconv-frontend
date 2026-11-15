@@ -114,6 +114,9 @@ try {
   const eventCount = Number(overview.rows?.[0]?.metricValues?.[1]?.value) || 0
 
   // ② 转化相关事件明细
+  // conversion_attempt（2026-11-15 增）：用户发起一次转换尝试时立即发，用于给
+  // (完成+失败) 找到正确分母。此前的 file_upload 只在上传成功后发，前置失败
+  // （FILE_TOO_LARGE / 直传族 / 配额跳过）不计入 ⇒ (完成+失败) 系统性多于上传。
   const eventsReport = await runReport(token, {
     dateRanges: [{ startDate: DATE, endDate: DATE }],
     dimensions: [{ name: 'eventName' }],
@@ -121,7 +124,7 @@ try {
     dimensionFilter: {
       filter: {
         fieldName: 'eventName',
-        inListFilter: { values: ['file_upload', 'conversion_complete', 'conversion_failed'] },
+        inListFilter: { values: ['conversion_attempt', 'file_upload', 'conversion_complete', 'conversion_failed'] },
       },
     },
   })
@@ -129,6 +132,10 @@ try {
   const upload = events.file_upload || 0
   const complete = events.conversion_complete || 0
   const failed = events.conversion_failed || 0
+  // attempt 用「键是否存在」区分两种语义，不能只用 0：
+  //   缺失（undefined）= 事件上线前的历史窗口 / 埋点未生效 → B6 报 UNKNOWN
+  //   0            = 当天确实没有尝试 → 与终态 0 一致
+  const attempt = events.conversion_attempt
   const conversionRate = upload > 0 ? Math.round((complete / upload) * 100) + '%' : '—'
 
   // ②-b 失败明细：按 error_code 分组（customEvent:error_code 已注册为 custom dimension）。
@@ -206,7 +213,13 @@ try {
     date: DATE,
     activeUsers,
     eventCount,
-    events: { file_upload: upload, conversion_complete: complete, conversion_failed: failed },
+    events: {
+      file_upload: upload,
+      conversion_complete: complete,
+      conversion_failed: failed,
+      // null = 当日无该事件且它属于「上线前窗口」不可判定；数字 = 当日尝试数
+      conversion_attempt: attempt ?? null,
+    },
     failedByErrorCode, // null=查询失败（不可判定）；{}=当日无失败事件
     conversionRate,
     toolPage: {
