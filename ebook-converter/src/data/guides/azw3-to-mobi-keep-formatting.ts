@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'azw3-to-mobi-keep-formatting'
 export const title = 'AZW3 to MOBI: Convert for Older Kindles Without Losing Your Book'
 export const metaTitle = 'AZW3 to MOBI: Convert for Older Kindles'
+export const metaDescription = 'AZW3 to MOBI keeps older Kindles reading. See what survives the conversion, what gets stripped, and the safest route to a clean, readable book.'
 export const problem = 'You have an AZW3 book and an old Kindle that only reads MOBI. A direct AZW3 to MOBI conversion can strip advanced formatting, but a careful one keeps your book readable. Here is how to convert and what to expect.'
 export const date = '2026-08-03'
 export const updatedAt = '2026-10-23'
@@ -108,6 +109,7 @@ export const authorship = {
 // M5-2（2026-10-23）：真实西语译文（批次4 / 3 篇之 3）
 export const es = {
   title: 'AZW3 a MOBI: convierte para Kindles antiguos sin perder tu libro',
+  metaDescription: 'Convertir AZW3 a MOBI mantiene tus Kindles antiguos leyendo. Mira qué se conserva, qué se pierde y la ruta más segura para un libro limpio.',
   problem: 'Tienes un libro AZW3 y un Kindle antiguo que solo lee MOBI. Una conversión directa de AZW3 a MOBI puede eliminar el formato avanzado, pero una cuidadosa lo mantiene legible. Así es como convertir y qué esperar.',
   keyTakeaways: [
     'AZW3 (Kindle Format 8) es el formato más nuevo de Amazon; MOBI es el formato legacy que los Kindle antiguos exigen.',

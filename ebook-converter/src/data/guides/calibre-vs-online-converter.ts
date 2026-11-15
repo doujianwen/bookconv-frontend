@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'calibre-vs-online-converter'
 export const title = 'Calibre vs Online Converters: Which Should You Actually Use?'
 export const metaTitle = 'Calibre vs Online Converters: Which to Use?'
+export const metaDescription = 'Calibre is powerful but heavy; online converters are instant but raise privacy questions. Compare the honest trade-offs and pick the right tool for the job.'
 export const problem = 'Calibre is powerful but heavy. Online converters are instant but raise privacy questions. Here is the honest trade-off — and when each one wins.'
 export const date = '2026-08-02'
 export const updatedAt = '2026-11-05'
@@ -63,6 +64,7 @@ export const authorship = {
 // M5-2 批次3（2026-10-22）：真实西语译文（人工审稿批次 3/10）
 export const es = {
   title: 'Calibre contra conversores online: ¿cuál deberías usar?',
+  metaDescription: 'Calibre es potente pero pesado; los conversores online son instantáneos pero plantean dudas de privacidad. Compara y elige la herramienta adecuada.',
   problem: 'Calibre es potente pero pesado. Los conversores online son instantáneos, pero plantean dudas de privacidad. Esta es la comparación honesta, y cuándo gana cada uno.',
   keyTakeaways: [
     'Calibre gana en trabajos por lotes, ajustes específicos por dispositivo y flujos de trabajo sin conexión y privados.',

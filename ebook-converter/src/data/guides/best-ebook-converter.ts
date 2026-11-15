@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'best-ebook-converter'
 export const title = 'Best Ebook Converter in 2026: How to Choose (Not Just a List)'
 export const metaTitle = 'Best Ebook Converter 2026: How to Choose'
+export const metaDescription = 'The best ebook converter depends on your job: free one-off, bulk, privacy, or AI prep. Compare the tools people use, chosen by workflow not by list.'
 export const problem = '“Best ebook converter” depends on your job — free one-off, bulk, privacy, or AI prep. Here is the honest comparison across the tools people actually use.'
 export const date = '2026-08-07'
 export const updatedAt = '2026-11-01'
@@ -224,6 +225,7 @@ export const authorship = {
 // M5-2（2026-10-21）：真实西语译文（人工审稿批次 2b/11）
 export const es = {
   title: 'Mejor conversor de ebooks en 2026: cómo elegir (no solo una lista)',
+  metaDescription: 'El mejor conversor de ebooks depende de tu caso: puntual gratis, lote, privacidad o preparación para IA. Compara por flujo de trabajo, no por listas.',
   problem: '"Mejor conversor de ebooks" depende de tu trabajo — puntual gratis, lote, privacidad o preparación para IA. Aquí la comparación honesta entre las herramientas que la gente usa de verdad.',
   keyTakeaways: [
     'No existe un único mejor conversor: empareja la herramienta con tu volumen, privacidad y formatos.',
