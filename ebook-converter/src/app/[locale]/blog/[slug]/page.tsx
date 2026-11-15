@@ -63,7 +63,11 @@ export async function generateMetadata({ params }: BlogSlugProps): Promise<Metad
   // SERP <title> 专用短标题：西语页回退到西语 title，英文页回退到英文 title。
   const displayMetaTitle = isEs ? (post.es!.metaTitle ?? post.es!.title) : (post.metaTitle ?? post.title)
   const displayContent = isEs ? post.es!.content : post.content
-  const description = clampMetaDescription(displayContent.intro || displayTitle)
+  // 专用 metaDescription 优先；回退到 content.intro（渲染层 clampMetaDescription 兜底）
+  const displayMetaDescription = isEs
+    ? (post.es?.metaDescription ?? null)
+    : (post.metaDescription ?? null)
+  const description = clampMetaDescription(displayMetaDescription || displayContent.intro || displayTitle)
   const canonical = `${baseUrl}${isEs ? "/es" : ""}/blog/${slug}`
 
   // 5 blog posts have real Spanish translations. Only those emit en↔es pair;

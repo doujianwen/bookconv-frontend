@@ -14,6 +14,8 @@ export interface GuideSection {
 export interface GuideEs {
   title: string
   problem: string
+  /** 专用 SERP meta description（≤158）。存在时 generateMetadata 优先采用，不再直接拿痛点当 meta */
+  metaDescription?: string
   keyTakeaways: string[]
   content: {
     intro?: string
@@ -28,6 +30,8 @@ export interface GuideMeta {
   /** 可选的 SERP <title> 专用短标题（≤55 字符）。不填则回退到 title（同时也是可见 H1）。
    *  仅用于搜索引擎结果摘要，不影响页面 H1 / OG / 结构化数据。 */
   metaTitle?: string
+  /** 专用 SERP meta description（≤158 字符）。存在时 generateMetadata 优先采用 */
+  metaDescription?: string
   /** 一句话痛点，作为 hero 副标题 */
   problem: string
   date: string

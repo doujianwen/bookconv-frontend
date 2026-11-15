@@ -17,6 +17,8 @@ export interface BlogPostLocalized {
   title: string;
   /** 可选的 SERP <title> 专用短标题（≤55 字符），西语页同理。不填回退到 title。 */
   metaTitle?: string;
+  /** 可选的 SERP <meta description> 专用文案（25–158 字符，无 markdown）。不填回退到 content.intro（渲染层 clampMetaDescription 兜底）。 */
+  metaDescription?: string;
   content: BlogPostContent;
   faqs?: BlogFaq[];
 }
@@ -27,6 +29,8 @@ export interface BlogPostMeta {
   /** 可选的 SERP <title> 专用短标题（≤55 字符）。不填则回退到 title（同时也是可见 H1）。
    *  仅用于搜索引擎结果摘要，不影响页面 H1 / OG / 结构化数据。 */
   metaTitle?: string;
+  /** 可选的 SERP <meta description> 专用文案（25–158 字符，无 markdown）。不填回退到 content.intro（渲染层 clampMetaDescription 兜底）。 */
+  metaDescription?: string;
   date: string;
   /** ISO date string of last substantive content update (distinct from initial publish date). Used for freshness signal and human-visible "Last updated" display. */
   lastUpdated?: string;

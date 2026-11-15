@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'kindle-vs-kobo'
 export const title = 'Kindle vs Kobo: Which E-Reader Fits Your Book Library?'
 export const metaTitle = 'Kindle vs Kobo: Which E-Reader Fits Your Books'
+export const metaDescription = 'Kindle vs Kobo comes down to file format: Kobo reads EPUB natively; Kindle needs Send to Kindle or AZW3. Compare DRM, library loans, and switching bridges.'
 export const problem = 'Kindle and Kobo disagree on the one thing that decides everything: which files they open. Here is the format difference, the library and DRM mechanics, and the exact conversion bridges if you ever switch sides.'
 export const date = '2026-10-22'
 export const updatedAt = '2026-11-05'
@@ -99,6 +100,7 @@ If the choice ends with devices from both camps, nothing is broken: EPUB is the 
 export const es = {
   title: 'Kindle vs Kobo: qué lector encaja con tu biblioteca',
   problem: 'Kindle y Kobo no se ponen de acuerdo en lo que decide todo: qué archivos abren. Aquí tienes la diferencia de formatos, la mecánica de bibliotecas y DRM, y los puentes de conversión exactos si cambias de bando.',
+  metaDescription: 'Kindle o Kobo se deciden por el formato: Kobo abre EPUB nativa; Kindle necesita Send to Kindle o AZW3. Compara DRM, préstamos y puentes.',
   keyTakeaways: [
     'La gran diferencia es el formato: Kobo abre EPUB de forma nativa; un Kindle solo acepta EPUB por Amazon Send to Kindle, que convierte el archivo en los servidores de Amazon antes de entregarlo.',
     'Cargar archivos es más simple en Kobo: copias un EPUB sin DRM por USB y se abre tal cual. En Kindle, el destino fiable por USB es AZW3, que produces convirtiendo tú mismo el EPUB.',

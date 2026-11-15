@@ -1,0 +1,51 @@
+{
+  "label": "mobi-to-pdf",
+  "slug": "mobi-to-pdf",
+  "fixture": "m8-17-out-epub-to-mobi-small.mobi",
+  "fixtureBytes": 9840,
+  "pageLoad": 200,
+  "fileInput": 1,
+  "status": "DONE",
+  "presign": {
+    "enabled": true,
+    "maxBytes": 104857600,
+    "uploadHost": null
+  },
+  "apiConvert": {
+    "status": 200
+  },
+  "downloadAnchor": 1,
+  "download": {
+    "file": "m8-17-out-mobi-to-pdf.pdf",
+    "bytes": 20449,
+    "kind": "PDF",
+    "headAscii": "%PDF-1.4.%.....1 0 obj<</Author(...U.n.k.n.o.w.n)/CreationDate(D:20261115020258+00'00')/Creator("
+  },
+  "visibleError": null,
+  "events": [
+    {
+      "t": "REQ",
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "REQ",
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert",
+      "bodySize": 0
+    }
+  ],
+  "consoleMsgs": []
+}

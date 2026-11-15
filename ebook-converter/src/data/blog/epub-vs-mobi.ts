@@ -6,6 +6,8 @@ export const lastUpdated = '2026-11-05';
 export const author = "BookConv Team";
 export const tags = ["EPUB", "MOBI", "Ebook Formats", "Kindle", "BookConv", "Calibre"];
 
+export const metaDescription = 'EPUB vs MOBI: EPUB is the open standard for every non-Kindle reader; MOBI only matters for pre-2015 Kindles. Keep EPUB as your master and convert per device.';
+
 export const content = {
   intro: `EPUB and MOBI are the two format names most readers recognize, and they could not have come from more different worlds. EPUB is the open standard almost every non-Kindle reader uses; MOBI is Amazon's older format that now mostly lives on legacy Kindles. If you are deciding which to save your books in, or which to convert to, the answer follows straight from where you read. This is the practical comparison, not the spec-sheet version.
 
@@ -120,6 +122,7 @@ Ready to convert? [Convert EPUB to MOBI →](/convert/epub-to-mobi) for an old K
 export const es = {
   title: `EPUB vs MOBI: ¿qué formato conviene usar?`,
   metaTitle: `EPUB vs MOBI: qué formato conviene usar`,
+  metaDescription: `EPUB vs MOBI: EPUB es el estándar abierto para casi cualquier lector no Kindle; MOBI solo importa para Kindles previos a 2015. Mantén EPUB como maestro.`,
   content: {
     intro: `EPUB y MOBI son los dos nombres de formato que la mayoría de los lectores reconoce, y no podrían venir de mundos más distintos. EPUB es el estándar abierto que usa casi cualquier lector que no es Kindle; MOBI es el formato más antiguo de Amazon que hoy vive sobre todo en Kindles legacy. Si decides en qué guardar tus libros o a qué convertirlos, la respuesta sigue directa de dónde lees. Esta es la comparación práctica, no la versión de ficha técnica.
 

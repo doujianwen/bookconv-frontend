@@ -99,25 +99,48 @@ const MD_PATTERNS = [
   [/^\s*[-*+]\s+\S/, 'list bullet'],
 ];
 
+/** 字段是否为合规的 canonical metaDescription（长度 + 无 markdown 残留） */
+function isCompliantMeta(r) {
+  const t = r.value.replace(/\s+/g, ' ').trim();
+  if (t.length < MIN_LEN || t.length > MAX_LEN) return false;
+  if (MD_PATTERNS.some(([re]) => re.test(r.value))) return false;
+  return true;
+}
+
 function checkRecords(records, strict) {
   let errors = 0, warns = 0;
+  // 按文件分组：若文件存在合规的 metaDescription，则正文回退字段(intro/problem)
+  // 不再因长度被计为违规——线上 generateMetadata 已优先采用 metaDescription，
+  // 且 clampMetaDescription 兜底，长 intro/problem 不影响真实 meta。
+  const byFile = new Map();
   for (const r of records) {
-    const text = r.value.replace(/\s+/g, ' ').trim();
-    const where = `${rel(r.file)}:${r.line} [${r.path}]`;
-    for (const [re, name] of MD_PATTERNS) {
-      if (re.test(r.value)) {
-        console.log(`  ❌ E1 markdown 残留 (${name}) | ${where} | ${text.slice(0, 70)}`);
+    if (!byFile.has(r.file)) byFile.set(r.file, []);
+    byFile.get(r.file).push(r);
+  }
+  for (const recs of byFile.values()) {
+    const hasCanonical = recs.some(r => r.path.endsWith('metaDescription') && isCompliantMeta(r));
+    for (const r of recs) {
+      const text = r.value.replace(/\s+/g, ' ').trim();
+      const where = `${rel(r.file)}:${r.line} [${r.path}]`;
+      // E1 markdown 残留：任何字段都报（含 metaDescription 本身）
+      for (const [re, name] of MD_PATTERNS) {
+        if (re.test(r.value)) {
+          console.log(`  ❌ E1 markdown 残留 (${name}) | ${where} | ${text.slice(0, 70)}`);
+          errors++;
+        }
+      }
+      // 已有合规 metaDescription 时，正文回退字段的长度问题不再计违规
+      const isFallback = r.path.endsWith('intro') || r.path.endsWith('problem');
+      if (hasCanonical && isFallback) continue;
+      if (text.length > MAX_LEN) {
+        const msg = `E2 超长 ${text.length}>${MAX_LEN}（渲染层自动截断，建议手写收口）`;
+        if (strict) { console.log(`  ❌ ${msg} | ${where}`); errors++; }
+        else { console.log(`  ⚠️  ${msg} | ${where}`); warns++; }
+      }
+      if (text.length > 0 && text.length < MIN_LEN) {
+        console.log(`  ❌ E3 过短 ${text.length}<${MIN_LEN} | ${where} | ${text}`);
         errors++;
       }
-    }
-    if (text.length > MAX_LEN) {
-      const msg = `E2 超长 ${text.length}>${MAX_LEN}（渲染层自动截断，建议手写收口）`;
-      if (strict) { console.log(`  ❌ ${msg} | ${where}`); errors++; }
-      else { console.log(`  ⚠️  ${msg} | ${where}`); warns++; }
-    }
-    if (text.length > 0 && text.length < MIN_LEN) {
-      console.log(`  ❌ E3 过短 ${text.length}<${MIN_LEN} | ${where} | ${text}`);
-      errors++;
     }
   }
   return { errors, warns };

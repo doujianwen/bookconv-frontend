@@ -4,6 +4,7 @@ export const slug = 'batch-converter'
 export const title = 'BookConv Batch Converter: Convert Many Files at Once in Your Browser'
 export const metaTitle = 'BookConv Batch Converter: Convert Files in Browser'
 export const problem = 'Need to convert a stack of ebooks at once? Here is the honest split — BookConv now handles batches in the browser, and Calibre CLI is still the stronger fit for hundreds of files.'
+export const metaDescription = 'Convert many ebooks at once: BookConv batch runs in the browser for up to 20 files, while Calibre CLI is the stronger fit for hundreds of files offline.'
 export const date = '2026-08-07'
 export const updatedAt = '2026-10-22'
 export const tags = ['batch ebook converter', 'bulk convert', 'calibre cli', 'automate']
@@ -69,6 +70,7 @@ export const authorship = {
 export const es = {
   title: 'Conversor por lotes de BookConv: convierte muchos archivos a la vez en tu navegador',
   problem: '¿Necesitas convertir una pila de ebooks de una vez? Este es el reparto honesto: BookConv ya gestiona lotes en el navegador, y la línea de comandos de Calibre sigue siendo la mejor opción para cientos de archivos.',
+  metaDescription: 'Convierte muchos ebooks a la vez: el lote de BookConv funciona en el navegador para hasta 20 archivos; la CLI de Calibre es mejor para cientos sin conexión.',
   keyTakeaways: [
     'La conversión por lotes de BookConv es gratuita durante la beta pública (4 MB por archivo): sube varios archivos (hasta 20 para formatos locales) y descarga un ZIP con los resultados.',
     'La conversión por lotes es gratuita durante la beta pública; está prevista para Pro después de la beta. Cada archivo del lote admite hasta 4 MB: hasta 20 archivos EPUB a ZIP/TXT o actualmente 3 con el servicio externo.',

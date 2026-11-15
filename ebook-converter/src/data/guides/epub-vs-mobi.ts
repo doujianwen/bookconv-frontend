@@ -3,6 +3,7 @@ import { BlogFaq } from '../blog/types'
 export const slug = 'epub-vs-mobi'
 export const title = 'EPUB vs MOBI: Device Compatibility Guide'
 export const problem = 'EPUB and MOBI both hold ebooks, but they serve different purposes. One is the modern open standard; the other is the legacy Kindle format. Here is how they compare and which one your device actually needs.'
+export const metaDescription = 'EPUB is the open standard for Kobo, Apple Books, and most readers. MOBI is Amazon legacy Kindle format. See which to use and how Send to Kindle handles EPUB.'
 export const date = '2026-09-10'
 export const updatedAt = '2026-11-01'
 export const tags = ['epub', 'mobi', 'ebook format', 'kindle', 'comparison']
@@ -63,6 +64,7 @@ export const authorship = {
 export const es = {
   title: 'EPUB vs MOBI: guía de compatibilidad por dispositivo',
   problem: 'EPUB y MOBI contienen ambos libros electrónicos, pero sirven para cosas distintas: uno es el estándar abierto moderno; el otro, el formato legacy de Kindle. Aquí tienes la comparación y el formato que tu dispositivo necesita de verdad.',
+  metaDescription: 'EPUB es el estándar abierto para Kobo, Apple Books y casi todos los lectores. MOBI es el formato legacy de Kindle. Aprende cuál usar y cuándo preferir AZW3.',
   keyTakeaways: [
     'EPUB es el estándar abierto: lo usan Kobo, Apple Books, Google Play y casi todos los lectores, excepto Kindle.',
     'MOBI es el formato legacy de Amazon: los Kindle antiguos aún lo exigen, pero está siendo sustituido por AZW3.',

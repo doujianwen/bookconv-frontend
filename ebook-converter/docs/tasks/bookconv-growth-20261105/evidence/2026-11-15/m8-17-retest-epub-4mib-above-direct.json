@@ -1,0 +1,78 @@
+{
+  "label": "epub-4mib-above-direct",
+  "slug": "epub-to-mobi",
+  "fixture": "owned-4MiB-above.epub",
+  "fixtureBytes": 4194305,
+  "pageLoad": 200,
+  "fileInput": 1,
+  "status": "DONE",
+  "presign": {
+    "maxBytes": 104857600,
+    "method": "PUT",
+    "uploadHost": "ebook-temp.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com"
+  },
+  "apiConvert": {
+    "status": 200
+  },
+  "downloadAnchor": 1,
+  "download": {
+    "file": "m8-17-out-epub-4mib-above-direct.mobi",
+    "bytes": 9840,
+    "kind": "MOBI/PalmDB",
+    "headAscii": "BookConv_Upload_Test................j...j...................BOOKMOBI....................#......."
+  },
+  "visibleError": null,
+  "events": [
+    {
+      "t": "REQ",
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "REQ",
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "REQ",
+      "m": "PUT",
+      "u": "https://ebook-temp.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com/uploads/2026-11-15/589e2dcb-5e5e-4a65-a7bb-0eb7490312fc.epub?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=4561975ba855672f192830eb87194406%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T020136Z&X-Amz-Expires=900&X-Amz-Signature=615de9227c5a6109874cff2c7e6956b1880976ed1d496d5788db9b7591273fca&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "PUT",
+      "u": "https://ebook-temp.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com/uploads/2026-11-15/589e2dcb-5e5e-4a65-a7bb-0eb7490312fc.epub?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=4561975ba855672f192830eb87194406%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T020136Z&X-Amz-Expires=900&X-Amz-Signature=615de9227c5a6109874cff2c7e6956b1880976ed1d496d5788db9b7591273fca&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject"
+    },
+    {
+      "t": "REQ",
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert"
+    },
+    {
+      "t": "FAIL",
+      "u": "https://ebook-temp.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com/uploads/2026-11-15/589e2dcb-5e5e-4a65-a7bb-0eb7490312fc.epub?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=4561975ba855672f192830eb87194406%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T020136Z&X-Amz-Expires=900&X-Amz-Signature=615de9227c5a6109874cff2c7e6956b1880976ed1d496d5788db9b7591273fca&X-Amz-SignedHeaders=host&x-amz-checksum-crc32=AAAAAA%3D%3D&x-amz-sdk-checksum-algorithm=CRC32&x-id=PutObject",
+      "err": "net::ERR_ABORTED"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert",
+      "bodySize": 0
+    }
+  ],
+  "consoleMsgs": []
+}

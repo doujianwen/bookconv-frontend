@@ -4,6 +4,7 @@ export const slug = 'epub-to-mobi-keep-formatting'
 export const title = 'EPUB to MOBI: Keep Formatting and Read on Any Kindle (Free)'
 export const metaTitle = 'EPUB to MOBI: Keep Format, Read on Any Kindle'
 export const problem = 'Kindle won\'t open EPUB natively, and a careless EPUB to MOBI conversion scrambles your chapter breaks and drops your images. Here\'s how to convert cleanly with BookConv — free, in your browser, no software to install — and keep your layout.'
+export const metaDescription = 'Kindle reads MOBI and AZW3, not EPUB. Convert EPUB to MOBI free with BookConv in your browser and keep your chapters, images, and cover intact.'
 export const date = '2026-08-02'
 export const updatedAt = '2026-10-23'
 export const tags = ['epub', 'mobi', 'kindle', 'formatting', 'ebook conversion']
@@ -74,6 +75,7 @@ export const authorship = {
 export const es = {
   title: 'EPUB a MOBI: conserva el formato y lee en cualquier Kindle (gratis)',
   problem: 'Kindle no abre EPUB de forma nativa, y una conversión EPUB a MOBI descuidada desordena tus saltos de capítulo y pierde tus imágenes. Así es como convertir sin problemas con BookConv — gratis, en tu navegador, sin instalar software — y conservar tu maquetación.',
+  metaDescription: 'Kindle lee MOBI y AZW3, no EPUB. Convierte EPUB a MOBI gratis con BookConv en tu navegador y conserva capítulos, imágenes y portada intactos.',
   keyTakeaways: [
     'Los Kindle antiguos leen MOBI o AZW3, no EPUB — convertir es obligatorio, no opcional.',
     'MOBI es un formato legacy; si tu Kindle lo admite, AZW3 (vía EPUB a AZW3) conserva más de tu maquetación.',

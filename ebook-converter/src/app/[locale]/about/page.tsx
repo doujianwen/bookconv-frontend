@@ -254,7 +254,7 @@ export default async function AboutPage() {
 
         <section className="mb-12">
           <h2 className="text-2xl font-bold">Explore BookConv</h2>
-          <p className="mt-4"><Link href="/compare/bookconv-vs-calibre" className="underline">Compare BookConv and Calibre</Link> for different conversion workflows, or explore our <Link href="/data" className="underline">public measurement datasets</Link> and their limitations.</p>
+          <p className="mt-4"><Link href="/compare/bookconv-vs-calibre" className="underline">Compare BookConv and Calibre</Link> for different conversion workflows, or explore our <Link href="/data" className="underline">public measurement datasets</Link> — including our <Link href="/data/google-search-performance" className="underline">Google Search performance dataset</Link> — and their limitations.</p>
         </section>
         {/* FAQ Section */}
         <section className="mb-12 mt-12">

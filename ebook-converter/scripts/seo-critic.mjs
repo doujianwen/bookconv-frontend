@@ -191,6 +191,14 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
   const files = dirs.flatMap((d) => listTs(d).map((f) => join(d, f)));
   const KNOWN = new Set(['/batch', '/help', '/about', '/guide', '/founder', '/data', '/compare/bookconv-vs-calibre', '/', '/blog', '/convert', '/formats', '/pricing', '/privacy', '/file-security', '/terms', '/api-docs', '/auth', '/sitemap.xml', '/llms.txt', '/robots.txt', '/rss.xml']);
 
+  // /data/{slug} 是真实子页面（数据页），但旧版 KNOWN 只含 /data 索引，导致指向
+  // /data/* 的真实内链被误判 dead-internal-link。从 DATA_PAGES 派生合法 slug 集合，
+  // 与 blog/guide 同模式：仍逐个校验 slug 真实存在，不放行任意 /data/*。
+  const dataPageSource = read(join(ROOT, 'src/data/data-pages.ts')) || '';
+  const dataSlugs = new Set(
+    [...dataPageSource.matchAll(/slug:\s*['"]([a-z0-9-]+)['"]/g)].map((x) => x[1])
+  );
+
   const esRouteSource = read(join(ROOT, 'src/lib/es-routes.ts')) || '';
   const esRoutes = new Set();
   for (const [group, name] of [['convert', 'ESP_CONVERT_SLUGS'], ['blog', 'ESP_BLOG_SLUGS'], ['guide', 'ESP_GUIDE_SLUGS']]) {
@@ -233,6 +241,10 @@ function checkInternalLinks(registeredSlugs, validConvertSlugs, supportedFormats
         const gslug = url.slice('/guide/'.length).replace(/\/.*$/, '');
         if (guideSlugs.has(gslug)) ok = true;
         else reason = `guide slug 未注册：${gslug}`;
+      } else if (url.startsWith('/data/')) {
+        const dslug = url.slice('/data/'.length).replace(/\/.*$/, '');
+        if (dataSlugs.has(dslug)) ok = true;
+        else reason = `data slug 不在 DATA_PAGES：${dslug}`;
       } else {
         reason = `未知内部路径：${url}`;
       }

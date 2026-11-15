@@ -6,6 +6,8 @@ export const lastUpdated = '2026-11-05';
 export const author = `BookConv Team`;
 export const tags = [`Ebook Formats`, `EPUB`, `AZW3`, `MOBI`, `Kindle`, `Convert Ebook`];
 
+export const metaDescription = 'EPUB, AZW3, and MOBI hold the same book. Use EPUB for non-Kindle readers, AZW3 for modern Kindles, MOBI only for pre-2012 hardware. Convert in your browser.';
+
 export const content = {
   intro: `EPUB, AZW3, and MOBI all hold the same book — they just answer to different devices. A modern Kindle wants AZW3, everything else wants EPUB, and MOBI only earns its place on pre-2012 hardware. Here's the reasoning, plus how to switch formats in a browser without installing anything.`,
   sections: [
@@ -170,6 +172,7 @@ export const faqs = [
 
 export const es = {
   title: `EPUB vs AZW3 vs MOBI: ¿qué formato de ebook elegir?`,
+  metaDescription: `EPUB, AZW3 y MOBI son el mismo libro. Usa EPUB fuera de Kindle, AZW3 en Kindles modernos y MOBI en hardware viejo. Convierte en el navegador.`,
   content: {
     intro: `EPUB, AZW3 y MOBI contienen el mismo libro — solo que responden a distintos dispositivos. Un Kindle moderno quiere AZW3, todo lo demás quiere EPUB, y MOBI solo merece su sitio en hardware previo a 2012. Aquí está el razonamiento, más cómo cambiar de formato en un navegador sin instalar nada.`,
     sections: [

@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: GuideSlugProps): Promise<Meta
   const esActive = locale === 'es' && !!g.es
   const c = esActive ? g.es! : g
 
-  const description = clampMetaDescription(c.problem || c.content.intro || c.title)
+  const description = clampMetaDescription(c.metaDescription || c.problem || c.content.intro || c.title)
 
   const { canonical, languages } = buildAlternates({
     locale: locale,

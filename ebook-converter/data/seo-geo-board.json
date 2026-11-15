@@ -775,7 +775,7 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "todo",
-          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令「残余项同步到待办进度表」）。当日基线：ERROR=0 / WARN=112。",
+          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令「残余项同步到待办进度表」）。当日基线：ERROR=0 / WARN=112。\n\n【2026-11-15 进度·未关闭】已按 ≤3 文件/批完成 3 批收口：改法为新增专用 metaDescription 字段（不动正文 intro/problem），guides/blog 的 generateMetadata 优先采用，audit 脚本改为文件级 hasCanonical 判定（有合规 metaDescription 则该文件正文回退字段不再计长度违规，与线上 clamp 行为一致）。strict 审计 E2 从 112 → 99（累计清 28 条，覆盖 6 个 blog + 3 个 guide 文件）；E1 markdown 残留=0；audit self-test PASS（5 类注入全抓、干净文件 0 误报）；gate:transpile PASS；seo-critic 0 critical。分批记录见 .workbuddy/memory/2026-11-15.md。仍余 99 条（guides 占多数），且 accept③ 的 next build 尚未跑，故保持 todo 不关闭。",
           "note": "与 M2-11（GSC 自动分析 P2 内容项）、M3-10（blocked，Blog 55 页差异化）范围不同：本任务只做 description 长度与首句自包含收口，不改正文结构与页面差异化。与 M2-16 交界：meta description 长度归本任务，正文质量（字数/FAQ/外链/密度）归 M2-16。"
         }
       ]
@@ -811,7 +811,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。\n[2026-10-15 已发布，转外部引用观察期] push ffd4ba7 + f9b6b6a（旧账号远端，pre-push 纠察放行）。线上验证全过：4 页 X-Matched-Path 真实命中 + 内容断言；sitemap 含 4 URL；3 份 CSV 200 且行数=830/6877/998（含表头，与台账一致）、零路径泄露。发布实测发现并修复 middleware matcher 漏 csv 扩展名（/data/*.csv 被改写 /en/data/*.csv → 404 兜底，f9b6b6a）。⏳ 验收后半段：30 天内 ≥1 次外部引用，复查节点 2026-11-14；到期核 GSC/外链跟踪表，有引用即 done，无引用如实记录并评估推广动作。"
+          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。\n[2026-10-15 已发布，转外部引用观察期] push ffd4ba7 + f9b6b6a（旧账号远端，pre-push 纠察放行）。线上验证全过：4 页 X-Matched-Path 真实命中 + 内容断言；sitemap 含 4 URL；3 份 CSV 200 且行数=830/6877/998（含表头，与台账一致）、零路径泄露。发布实测发现并修复 middleware matcher 漏 csv 扩展名（/data/*.csv 被改写 /en/data/*.csv → 404 兜底，f9b6b6a）。⏳ 验收后半段：30 天内 ≥1 次外部引用，复查节点 2026-11-14；到期核 GSC/外链跟踪表，有引用即 done，无引用如实记录并评估推广动作。\n\n【2026-11-15 到期核查·仍不满足，保持 doing】GSC 实测 3 个子页（/data/bing-ai-citations、/data/google-search-performance、/data/site-event-timeline）coverageState 全部为 Discovered - currently not indexed（已发现未编入索引），referringUrls=0、lastCrawlTime 空；Search Analytics 90 天对 /data/* 零曝光零点击。诊断：/data 索引页本身已用 Link 链到三个子页，孤儿根因更可能是整簇权重低且无站外权重供给。已执行站内修复（未 push）：ai-feeding-notebooklm-chatgpt → /data/bing-ai-citations、bookconv-faq → /data/site-event-timeline（均落在会走 renderMarkdownToHtml 的 section.body，实测渲染为 a href 真链），about 页 JSX 直达 /data/google-search-performance；同时修 seo-critic 白名单缺 /data/{slug} 子路由导致的误判死链（改为从 DATA_PAGES 派生，反向验证：注入 /data/does-not-exist 仍被判死）。publish-gate 实测 0 BLOCK / 141 WARN / exit 0 已放行。仍未满足的验收：30 天内 ≥1 次外部引用——索引重抓需数日，真实外链计数需 Ahrefs/SEMrush 或人工 outreach（GSC API 不提供）→ 外部引用 UNKNOWN。故不关闭，recheck 顺延。"
         },
         {
           "id": "M4-3",
@@ -1428,10 +1428,10 @@
           "accept": "合法样本大小边界、阶段错误和可打开输出矩阵；未测明确登记，R-B缺真实回流不假关闭。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "doing",
+          "status": "done",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-17.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-07 执行当日取证准备，详见M8-17.md及evidence/2026-11-07。正式页CSP含R2、presign enabled/100MB；12:38 独立复核经 /api/health 实测生产 commitSha=26b1a55，与本地 HEAD 一致（原标 UNKNOWN 已补；仅证明构建版本，不证明浏览器PUT/转换成功）。真实GA快照窗口10/30—11/06，11/05诊断3事件，11/06未见PUT_FAILED但成功侧无 file_size 维度、>4MB端到端仍UNKNOWN；连续三日门禁未达，不关闭F19/R2。原创EPUB/PDF及4MiB±1/精确边界共5份样本已备，哈希/字节/结构5/5复核一致，未上传；浏览器PUT和四转换输出未测，按11/05增补并入11/12矩阵，保留11/11修复及11/12验收。独立通道复核见 independent-review.json（L3，PASS WITH RESIDUALS）。仅本地doing，Notion/线上NOT_SYNCED；未改生产代码或push。"
+          "statusNote": "2026-11-07 执行当日取证准备，详见M8-17.md及evidence/2026-11-07。正式页CSP含R2、presign enabled/100MB；12:38 独立复核经 /api/health 实测生产 commitSha=26b1a55，与本地 HEAD 一致（原标 UNKNOWN 已补；仅证明构建版本，不证明浏览器PUT/转换成功）。真实GA快照窗口10/30—11/06，11/05诊断3事件，11/06未见PUT_FAILED但成功侧无 file_size 维度、>4MB端到端仍UNKNOWN；连续三日门禁未达，不关闭F19/R2。原创EPUB/PDF及4MiB±1/精确边界共5份样本已备，哈希/字节/结构5/5复核一致，未上传；浏览器PUT和四转换输出未测，按11/05增补并入11/12矩阵，保留11/11修复及11/12验收。独立通道复核见 independent-review.json（L3，PASS WITH RESIDUALS）。仅本地doing，Notion/线上NOT_SYNCED；未改生产代码或push。\n\n【2026-11-15 关闭·实测闭环】Playwright 真实浏览器对生产复测 5 例，全部 DONE 且输出魔数校验有效：① EPUB→MOBI（1840B，multipart）=9840B BOOKMOBI；② EPUB→MOBI（4MiB+1，走 R2 直传，PUT=200）=9840B BOOKMOBI；③ EPUB→MOBI（恰好 4MiB，multipart 边界）=9840B；④ PDF→EPUB（616B）=73310B（ZIP 结构完整，unzip -t 无错）；⑤ MOBI→PDF（9840B 真实 MOBI 输入）=20449B（%%EOF 完整）。P0 直传路径 4MiB+1 两次独立重跑均 PUT=200 且输出有效=可复现（2/2）；ERR_ABORTED 与 PUT 200 并存且输出有效，判为 Playwright 记录假象而非故障。关闭门禁 verify-closure-gates --no-live exit 0、无假关闭，F19/R2 连续达标（11-14:0 / 11-13:0 / 11-12:0）。R-B 已于 11-06 收口（11-05 真实回流 3 例 PUT:NETWORK:on=1:<1s，定性 CSP）。未测明确登记：AZW3→PDF（无合法夹具，不把 EPUB 改后缀伪造）、100MiB 边界（按原定不生成）、GA4 成功侧 file_size → 均 UNKNOWN，非 P0 阻断。证据：docs/tasks/bookconv-growth-20261105/evidence/2026-11-15/browser-retest.md。owner 确认与门禁重跑均已完成（TASK-GOVERNANCE §6）。"
         },
         {
           "id": "M8-18",
@@ -2292,8 +2292,8 @@
           "recheck": "2026-11-06",
           "priority": "P2",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "每日看 GA4 DIRECT_UPLOAD_FAILED;11/3=3,需续3日观测",
+          "status": "done",
+          "statusNote": "每日看 GA4 DIRECT_UPLOAD_FAILED;11/3=3,需续3日观测。\n\n【2026-11-15 关闭·验收达标】验收＝连续 3 日 DIRECT_UPLOAD_FAILED ≤2 次/日。GA4 failed_by_date_error_code 实测（窗口 11-02→11-14，快照 ga4-advanced-2026-11-14.json）：11-12=0、11-13=0、11-14=0，连续 3 日达标；同期上传失败族（DIRECT_UPLOAD_FAILED / DIRECT_UPLOAD_PUT_FAILED / UPLOAD_NOT_FOUND / CORRUPT_INPUT）均为 0，11-14 另 2 例 UNKNOWN 属非上传类。关闭门禁 verify-closure-gates --no-live：F19/R2 连续达标、exit 0、无假关闭。保留观测：11-14 数据受 GA4 延迟影响可能不完整，后续按 recheck 看趋势即可，不构成验收阻断。",
           "statusAudit": "f14-r2-2026-11-03"
         }
       ]

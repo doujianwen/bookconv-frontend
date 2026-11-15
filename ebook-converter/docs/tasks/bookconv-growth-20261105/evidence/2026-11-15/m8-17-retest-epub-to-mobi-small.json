@@ -1,0 +1,51 @@
+{
+  "label": "epub-to-mobi-small",
+  "slug": "epub-to-mobi",
+  "fixture": "owned-small.epub",
+  "fixtureBytes": 1840,
+  "pageLoad": 200,
+  "fileInput": 1,
+  "status": "DONE",
+  "presign": {
+    "enabled": true,
+    "maxBytes": 104857600,
+    "uploadHost": null
+  },
+  "apiConvert": {
+    "status": 200
+  },
+  "downloadAnchor": 1,
+  "download": {
+    "file": "m8-17-out-epub-to-mobi-small.mobi",
+    "bytes": 9840,
+    "kind": "MOBI/PalmDB",
+    "headAscii": "BookConv_Upload_Test................j..mj..m................BOOKMOBI....................#......."
+  },
+  "visibleError": null,
+  "events": [
+    {
+      "t": "REQ",
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "GET",
+      "u": "https://www.bookconv.com/api/upload/presign"
+    },
+    {
+      "t": "REQ",
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert"
+    },
+    {
+      "t": "RES",
+      "s": 200,
+      "m": "POST",
+      "u": "https://www.bookconv.com/api/convert",
+      "bodySize": 0
+    }
+  ],
+  "consoleMsgs": []
+}

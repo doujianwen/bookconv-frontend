@@ -4,6 +4,8 @@ export const date = '2026-07-12';
 export const author = 'BookConv Team';
 export const tags = ['LIT', 'EPUB', 'Microsoft Reader', 'BookConv', 'Ebook Conversion', 'Archiving'];
 
+export const metaDescription = 'LIT is a dead Microsoft format. Convert LIT to EPUB free with BookConv in under a minute, or batch files with Calibre. Keep your books readable.';
+
 export const content = {
   intro: `LIT is Microsoft Reader's ebook format, and Microsoft shut that app down more than a decade ago. Converting LIT to EPUB is the only practical way to keep those books readable. You can do it online with BookConv in under a minute, or use Calibre if you need to batch hundreds of files at once.`,
   sections: [
@@ -146,6 +148,7 @@ export const faqs = [
 export const es = {
   title: `Por qué convertir LIT a EPUB (y cómo hacerlo en BookConv)`,
   metaTitle: `Por qué convertir LIT a EPUB en BookConv`,
+  metaDescription: `LIT es un formato muerto de Microsoft. Conviértelo a EPUB con BookConv en un minuto, o usa Calibre para lotes grandes. Mantén tus libros legibles.`,
   content: {
     intro: `LIT es el formato de ebook de Microsoft Reader, y Microsoft cerró esa app hace más de una década. Convertir LIT a EPUB es la única forma práctica de seguir leyendo esos libros. Puedes hacerlo en línea con BookConv en menos de un minuto, o usar Calibre si necesitas procesar cientos de archivos a la vez.`,
     sections: [
