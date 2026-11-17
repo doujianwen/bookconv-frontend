@@ -1,26 +1,30 @@
-name: Vercel Deploy (push to main)
+name: Verify Production Deployment (push to main)
+
+# 生产部署唯一通道 = Vercel GitHub Integration（vercel[bot]）。
+# 本 workflow 只读验证：按本次 push 的 SHA 轮询 GitHub Deployments API，
+# 断言 Production 部署存在、creator/环境/SHA 匹配、终态 success，并回读生产 HTTP。
+# 不调用任何 Vercel API，不创建部署，不使用任何外部 Secret。
+# 历史背景：本文件曾直调 Vercel REST API 部署，因 token 失效 + continue-on-error 造成长期假绿（BC-OPS-20261118）。
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  deployments: read
+
 jobs:
-  deploy:
+  verify-production-deployment:
+    name: Verify Production deployment for pushed SHA
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Trigger Vercel production deployment from bookconv-frontend
-        continue-on-error: true
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify Production deployment for this SHA (read-only)
         env:
-          TOKEN: ${{ secrets.VERCEL_DEPLOY_TOKEN }}
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "VERCEL_DEPLOY_TOKEN not set; skipping auto-deploy."
-            echo "Add it in repo Settings > Secrets and variables > Actions to enable push-to-deploy."
-            exit 0
-          fi
-          curl -s -X POST "https://api.vercel.com/v13/deployments?teamId=team_a0qDGfHPDekyykDsQVRS5x15" \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"name\":\"ebook-converter-ymfg\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repoId\":1312872088,\"sha\":\"${{ github.sha }}\",\"ref\":\"main\"}}"
-          echo "Vercel production deploy triggered for ${{ github.sha }}"
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node ebook-converter/scripts/verify-production-deploy.mjs
