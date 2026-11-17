@@ -1,8 +1,8 @@
 import { BlogFaq } from '../blog/types'
 
 export const slug = 'how-to-read-epub-on-kindle'
-export const title = 'How to Read EPUB on Kindle: 3 Ways That Work'
-export const metaDescription = 'Kindle won\'t open EPUB directly. Use Send to Kindle for a fast server-side convert, or convert to AZW3 yourself for full control. Three routes compared.'
+export const title = 'Can Kindle Read EPUB? Yes - 3 Working Ways (2026)'
+export const metaDescription = 'Kindle will not open an EPUB over USB, but Send to Kindle converts it, and Calibre builds an AZW3. Three routes compared, and which one keeps formatting.'
 export const problem = 'You downloaded or purchased an EPUB, but your Kindle refuses to open it. Amazon devices prefer their own formats, so EPUB needs one extra step. Here are the three reliable routes, including when each one is worth it.'
 export const date = '2026-10-02'
 export const updatedAt = '2026-10-23'
