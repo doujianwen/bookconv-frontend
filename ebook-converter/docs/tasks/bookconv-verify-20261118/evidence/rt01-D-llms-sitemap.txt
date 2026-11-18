@@ -1,0 +1,17 @@
+=== llms.txt ===
+# BookConv
+HTTP_STATUS=200
+line160: - [Can Kindle Read EPUB? Yes - 3 Working Ways (2026)](https://www.bookconv.com/guide/how-to-read-epub-on-kindle)
+new title count: 1
+old title count: 0
+=== sitemap ===
+how-to-read-epub-on-kindle
+sitemap_guide_entries: 1
+transfer-ebooks-in-sitemap(expect 0): 0
+=== lastmod of target url ===
+</url>
+<url>
+<loc>https://www.bookconv.com/guide/how-to-read-epub-on-kindle</loc>
+<lastmod>2026-10-23T00:00:00.000Z</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.6</priority>

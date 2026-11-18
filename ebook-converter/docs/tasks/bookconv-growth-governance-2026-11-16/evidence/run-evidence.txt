@@ -1,0 +1,23 @@
+=== 运行证据快照 2026-11-17 00:05:13 +0800 ===
+
+[G01] competitor self-test
+✓ selfTest 通过：goto 包装解包 + topDomains 提取（未发起任何网络请求）
+exit=0
+[G02] opportunity self-test + 正式
+SELFTEST PASS: 7 个判据用例 + 1 反向注入，全部符合预期
+selftest_exit=0
+GATE: 读入 50 条 query；资格通过 11；UNKNOWN 字段 11；声明冲突 0
+[G03] idempotency self-test + board
+SELFTEST PASS: 5 用例（含重复 id / 同日重复 / 跨日 / 空集）全部符合预期
+selftest_exit=0
+GATE: board 任务 146 条，唯一 id 146 个，重复 0 个
+PASS: 任务 id 唯一（未提供事件日志，幂等维度=NOT_CHECKED）
+board_exit=0
+[G08] geo guard self-test
+SELFTEST PASS: 4 用例（同名同义/不同义/未采/空定义）全部符合预期
+exit=0
+[G09] content integrity
+content+blog data files scanned | 0 error(s) | 0 warning(s)
+[G05] independent verify (real exit)
+real_exit=1
+SUMMARY: 24 checks, PASS=19, FAIL=5, UNKNOWN=0

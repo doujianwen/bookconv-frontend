@@ -1,0 +1,574 @@
+{
+ "startDate": "2026-08-15",
+ "endDate": "2026-11-13",
+ "windowDays": 90,
+ "rows": [
+  {
+   "keys": [
+    "https://www.bookconv.com/"
+   ],
+   "clicks": 27,
+   "impressions": 668,
+   "ctr": 0.040419161676646706,
+   "position": 78.30538922155688
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/pdf-to-epub"
+   ],
+   "clicks": 1,
+   "impressions": 30,
+   "ctr": 0.03333333333333333,
+   "position": 16.333333333333336
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/epub-to-txt-extract"
+   ],
+   "clicks": 1,
+   "impressions": 17,
+   "ctr": 0.058823529411764705,
+   "position": 56.05882352941177
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/about"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 1.5
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog"
+   ],
+   "clicks": 0,
+   "impressions": 34,
+   "ctr": 0,
+   "position": 10.852941176470589
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/azw3-vs-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 15,
+   "ctr": 0,
+   "position": 32.266666666666666
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/best-ebook-reader-apps"
+   ],
+   "clicks": 0,
+   "impressions": 24,
+   "ctr": 0,
+   "position": 44.583333333333336
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/can-kindle-read-azw3"
+   ],
+   "clicks": 0,
+   "impressions": 85,
+   "ctr": 0,
+   "position": 22.058823529411764
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/ebook-formats-explained"
+   ],
+   "clicks": 0,
+   "impressions": 34,
+   "ctr": 0,
+   "position": 60.588235294117645
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/epub-to-azw3"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 31.5
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/epub-to-mobi-guide"
+   ],
+   "clicks": 0,
+   "impressions": 15,
+   "ctr": 0,
+   "position": 74.86666666666666
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/epub-to-word"
+   ],
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 52.333333333333336
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/how-to-convert-epub-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 43,
+   "ctr": 0,
+   "position": 55.81395348837209
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/mobi-or-azw3-for-kindle"
+   ],
+   "clicks": 0,
+   "impressions": 41,
+   "ctr": 0,
+   "position": 31.024390243902438
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/mobi-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 65
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/mobi-to-kobo"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 11
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/read-epub-on-any-device"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 8
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/tag/kindle"
+   ],
+   "clicks": 0,
+   "impressions": 10,
+   "ctr": 0,
+   "position": 47.1
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/webhook-integration"
+   ],
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 8.25
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/why-convert-lit-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 9,
+   "ctr": 0,
+   "position": 21.22222222222222
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/blog/why-ebook-wont-open-kindle"
+   ],
+   "clicks": 0,
+   "impressions": 7,
+   "ctr": 0,
+   "position": 27
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/azw-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 10
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/azw3-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 26,
+   "ctr": 0,
+   "position": 59.11538461538461
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/azw3-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 16,
+   "ctr": 0,
+   "position": 49.375
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/chm-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 10
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/docx-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 13,
+   "ctr": 0,
+   "position": 62.76923076923077
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-azw3"
+   ],
+   "clicks": 0,
+   "impressions": 135,
+   "ctr": 0,
+   "position": 58.666666666666664
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-doc"
+   ],
+   "clicks": 0,
+   "impressions": 210,
+   "ctr": 0,
+   "position": 53.56666666666667
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 27,
+   "ctr": 0,
+   "position": 50.888888888888886
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-rtf"
+   ],
+   "clicks": 0,
+   "impressions": 8,
+   "ctr": 0,
+   "position": 28.25
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-txt"
+   ],
+   "clicks": 0,
+   "impressions": 128,
+   "ctr": 0,
+   "position": 63.2890625
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-word"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 9
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/epub-to-zip"
+   ],
+   "clicks": 0,
+   "impressions": 39,
+   "ctr": 0,
+   "position": 42.48717948717949
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/lit-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 36,
+   "ctr": 0,
+   "position": 37.638888888888886
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/mobi-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 153,
+   "ctr": 0,
+   "position": 62.35947712418301
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/convert/rtf-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 19,
+   "ctr": 0,
+   "position": 30.842105263157894
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es"
+   ],
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0,
+   "position": 1.8
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog"
+   ],
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 2
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog/epub-to-pdf-linux"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 10
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog/tag/epub"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 4
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog/tag/fb2"
+   ],
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 24.75
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog/tag/workflow"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 6
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/blog/txt-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 9
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/convert"
+   ],
+   "clicks": 0,
+   "impressions": 12,
+   "ctr": 0,
+   "position": 5.166666666666667
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/convert/epub-to-mobi"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 8
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/convert/html-to-epub"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 6.5
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/guide/azw3-to-mobi-keep-formatting"
+   ],
+   "clicks": 0,
+   "impressions": 7,
+   "ctr": 0,
+   "position": 5.571428571428571
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/guide/batch-converter"
+   ],
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 4.666666666666666
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/guide/calibre-alternative"
+   ],
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 2
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/guide/kindle-formats"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 6
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/guide/mobi-vs-azw3"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 8.5
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/es/privacy"
+   ],
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0,
+   "position": 5.6
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/file-security"
+   ],
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 1.5
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/azw3-to-epub-keep-formatting"
+   ],
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 10
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/calibre-alternative"
+   ],
+   "clicks": 0,
+   "impressions": 19,
+   "ctr": 0,
+   "position": 4.526315789473684
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/calibre-vs-online-converter"
+   ],
+   "clicks": 0,
+   "impressions": 48,
+   "ctr": 0,
+   "position": 42.3125
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/docx-to-epub-self-publish"
+   ],
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 54.666666666666664
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/epub-to-azw3-for-kindle"
+   ],
+   "clicks": 0,
+   "impressions": 26,
+   "ctr": 0,
+   "position": 47
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/epub-to-mobi-keep-formatting"
+   ],
+   "clicks": 0,
+   "impressions": 12,
+   "ctr": 0,
+   "position": 67.75
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/mobi-to-epub-keep-formatting"
+   ],
+   "clicks": 0,
+   "impressions": 131,
+   "ctr": 0,
+   "position": 74.59541984732824
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/guide/txt-to-epub-build-ebook"
+   ],
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 56.333333333333336
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/privacy"
+   ],
+   "clicks": 0,
+   "impressions": 16,
+   "ctr": 0,
+   "position": 3.4375
+  },
+  {
+   "keys": [
+    "https://www.bookconv.com/tutorial"
+   ],
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 4.333333333333334
+  }
+ ]
+}

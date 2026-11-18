@@ -1,0 +1,66 @@
+=== BCGOV-20261117 证据快照 2026-11-17 00:18:44 +0800 ===
+
+[G05] baseline report
+BASELINE v2-20261117 (2026-11-17T00:25:00+08:00)  status=CURRENT  supersedes=v1-20261115
+--- 断言类型分布 ---
+dynamic_monotonic  6
+static_frozen      9
+rolling_window     4
+--- rebaseline 规则 ---
+ - 只允许在“差异已被逐条归因”时升版本；未归因的差异一律保持 FAIL。
+ - 升版本必须在 changelog 写明：旧断言、新断言、归因证据、为何不是放宽。
+ - 任何 kind=static_frozen 的断言若需变更，视为事实变更，需 Owner 裁决。
+ - rolling_window 的 ratio_floor 不得低于 0.6；调整下限需附连续 14 天实测分布。
+exit=0
+
+[G05] verify v2
+real_exit=0
+baseline: v2-20261117
+PASS     dynamic_monotonic   live A1 in [min, min+allowlist]  [live=44 min=43 allow=1]
+PASS     static_frozen       live orphan=5
+PASS     static_frozen       live third-party=1
+PASS     dynamic_monotonic   runs total>=968  [live=995]
+PASS     dynamic_monotonic   A1 runs>=583/ok>=435  [live=601/444]
+PASS     dynamic_monotonic   A2 runs>=53/ok>=29  [live=57/30]
+PASS     dynamic_monotonic   orphan runs>=331  [live=336]
+PASS     static_frozen       native count=43  [live=43]
+PASS     dynamic_monotonic   native subset_of sqlite & delta in allowlist  [native=43 sqlite=44 delta=1(已登记)]
+PASS     static_frozen       ruling: feffb8a1 PAUSED  [PAUSED]
+PASS     static_frozen       ruling: FDE renamed to 工作日午间
+PASS     static_frozen       ruling: archive prompt 22.22.2-6 + no old path
+PASS     static_frozen       ruling: competitor task consume-main-table
+PASS     static_frozen       ruling: FDE prompt persona neutral (no 豆豆妈)
+PASS     static_frozen       old node path missing
+PASS     static_frozen       new node path exists
+PASS     rolling_window      GA4 fetch status ok & <24h  [age=14.1h]
+PASS     static_frozen       M12-1 scheduled 2026-11-18  [2026-11-18T09:00:00+08:00]
+PASS     static_frozen       Bing2125 prompt is GEO draft not Bing submit
+PASS     rolling_window      A1 active_days>=6 & ratio>=0.7 & >=50  [cur=84 prev=85 ratio=0.99 days=7]
+PASS     rolling_window      orphan active_days>=4 & ratio>=0.6 & >=5  [cur=15 prev=21 ratio=0.71 days=5]
+PASS     static_frozen       orphan last success in June 2026  [2026-06-17]
+PASS     rolling_window      workbench API 200 & count==sqlite(44) & age<=26h  [api_count=44 sqlite=44 age=17.4h state=STALE]
+PASS     static_frozen       deliverable files complete
+
+SUMMARY: 24 checks, PASS=24, FAIL=0, UNKNOWN=0
+
+[G07] lock self-test
+SELFTEST PASS: 11 用例（台账唯一 / 同日重复 / 跨日 / 空集 / 锁 6 态）全部符合预期
+exit=0
+[G07] daily entry (2nd run should be SKIP=3)
+exit=3
+SKIP: daily-ops@2026-11-17 已在运行或今日已完成 —— 重复触发被吸收，不执行任何步骤
+SKIP(SKIP_DONE): daily-ops@2026-11-17 — 该 run-key 已成功完成（幂等吸收）；不重复执行，退出码 3
+
+[G06] registry
+SELFTEST PASS: 9 用例（合法/未知taskId/未授权生产/伪因果/窗口造假/缺delta/跨口径/执行≠效果/窗口过短）全部符合预期
+selftest_exit=0
+PASS: 2 个实验全部合格 | execution={"RUNNING":1,"BLOCKED":1} | effect={"PENDING":1,"NOT_STARTED":1}
+提醒：execution 与 effect 独立，EXECUTED 不构成经营效果。
+validate_exit=0
+
+[G01/G09] content integrity
+---
+content+blog data files scanned | 0 error(s) | 0 warning(s)
+
+[G05] 独立验收第二通道 = python + sqlite mode=ro 只读连接
+DB=file:C:/Users/29537/.workbuddy/workbuddy.db?mode=ro

@@ -2297,6 +2297,98 @@
           "statusAudit": "f14-r2-2026-11-03"
         }
       ]
+    },
+    {
+      "id": "M14",
+      "name": "2026-11-17 增长执行（BC-GROWTH-20261117）",
+      "why": "把 11-17 多源机会研究落成可验收任务；只登记本轮真实证据支撑的动作，生产类一律 blocked 等待授权。",
+      "tier": "CORE",
+      "tasks": [
+        {
+          "id": "M14-1",
+          "action": "/guide/how-to-read-epub-on-kindle 标题+描述改为提问式意图",
+          "detail": "Bing 4 周 can kindle read epub 19 展示/0 点击、平均排名 6→5→4→3；Bing SERP 实测该 URL #4。内容不缺，缺搜索结果与提问对齐。仅改 2 行（title/metaDescription），H1 与内链不动。",
+          "owner": "A→O",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/05_C1_页面优化包.md + C1-title-meta.diff",
+          "accept": "patch 已校验（title 49≤60、desc 153∈25-158、无 markdown 残留）；授权应用后 content-integrity 0 error + build exit 0 + 线上 title 回读等于新标题",
+          "due": "2026-11-20",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "BC-EXEC-20261117-M14-DEPLOY：commit 0e8f3c1 已 push origin/main（Owner 授权生产部署），Vercel 部署生效；线上回读 title/metaDescription/canonical/og:title 全等于新值，旧标题残留 0，llms.txt 第160行线上同步。本地：integrity/dup/meta-desc/seo-critic 0，隔离worktree jest 50套件584项 exit 0，build exit 0。GE-003 CTR 效果观察另计（T+14）。",
+          "statusAudited": "2026-11-17"
+        },
+        {
+          "id": "M14-2",
+          "action": "新建 guide：How to Transfer Ebooks Between Different E-Readers",
+          "detail": "Bing 该词 6 周 71 展示/0 点击、平均排名 5→9（下滑），站内无对应页。草稿含格式矩阵+三路线+「什么转不走」清单+4 条 FAQ，4 条内链。",
+          "owner": "A",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/06_C2_内容草稿.md",
+          "accept": "经 Owner 授权后落 src/data/guides 并注册 index；死链审计 0、重复标题 0、build exit 0；上线 14 天后 Bing 该词点击>0",
+          "due": "2026-11-25",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "blocked",
+          "statusNote": "BLOCKED：草稿已写入 src/data/guides/transfer-ebooks-between-ereaders.ts（本地未提交、未注册发布，origin/main 无此文件，线上 404/sitemap 0/llms.txt 0，2026-11-17 复核）。",
+          "statusAudited": "2026-11-17"
+        },
+        {
+          "id": "M14-3",
+          "action": "外链：三条历史提交的真实状态核验",
+          "detail": "awz.cc 已上线（/sites/bookconv 含 BookConv 字样，HTTP 200）；thefreetoolsdirectory.com 2026-11-06 API 返回 success 但分类页 0 次提及、站内搜索端点 404 ⇒ 未证实上线；sousuotu.com 需人工填腾讯问卷，页面 0 次提及。本轮 0 新提交（避免重复）。",
+          "owner": "A",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/08_C3C4_外链与GEO.md",
+          "accept": "每条结论附 URL + HTTP 状态 + 命中数；不把「提交成功」写成「已上线」",
+          "due": "2026-11-17",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "2026-11-17 实测完成：① The Tool Directory 真实提交成功（POST 302 → ?submitted=1，回执页确认「submitted for review」），状态 SUBMITTED 非 LIVE；② awz.cc Live=1（正文命中）；③ thefreetoolsdirectory UNKNOWN（分类页 0 命中）；④ sousuotu BLOCKED（需人工填问卷）。本轮共 1 次真实提交，未勾选付费 featured。",
+          "statusAudited": "2026-11-17"
+        },
+        {
+          "id": "M14-4",
+          "action": "GEO 三平台统一采样（固定 prompt/平台/时点）",
+          "detail": "doubao.com 引荐 49 会话/28 天（上传率 88%，全渠道最高）→ 值得验证但不可当结论。需人工登录三平台后按固定 prompt 采样，记录品牌提及/引用 URL/引用位置/竞品对比。",
+          "owner": "O",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/08_C3C4_外链与GEO.md §GEO 采样包",
+          "accept": "采样包字段齐全可复跑；18 条基线（3 平台×6 prompt）全部有平台/时间/prompt 记录；无登录态时标 BLOCKED 不得伪造",
+          "due": "2026-11-24",
+          "priority": "P2",
+          "tier": "CORE",
+          "status": "blocked",
+          "statusNote": "BLOCKED：需人工登录 ChatGPT/Gemini/豆包，Agent 无法完成登录态。",
+          "statusAudited": "2026-11-17"
+        },
+        {
+          "id": "M14-5",
+          "action": "大文件上传链路修复（P0 转化）",
+          "detail": "30 天 114 次失败中 79 次（69.3%）文件 >4MB；epub→azw3 48 次失败里 33 次 >4MB（中位 5.30MB）；DIRECT_UPLOAD_PUT_FAILED 22 次 + FILE_TOO_LARGE 30 次 + 客户端预拒 39 次。引擎侧完成率 85.6%，故瓶颈在上传链路不在引擎。",
+          "owner": "A→O",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/07_D_产品转化诊断.md §6 P-1",
+          "accept": "直传失败率与 FILE_TOO_LARGE 各降 50%（30 天窗口对比）；改动需授权且可回滚",
+          "due": "2026-12-01",
+          "priority": "P0",
+          "tier": "CORE",
+          "status": "done",
+          "statusNote": "BC-EXEC-20261117 红队日期拆分修正归因：直传失败 47 次中 45 次集中在 10-29→11-05（CSP 未放行时代），327f640(11-06)+R-2(8c597c9) 上线后 11-06→11-16 仅 2 次、11-11 起为 0（降幅 96%≥50%）；FILE_TOO_LARGE 客户端拦截 14 次全部 ≤10-30，11-01 起为 0（降幅 100%≥50%）。验收达标；本轮零生产变更。残余：convert 阶段 Failed to fetch 14 次（post-11-06）非上传链路，另列。",
+          "statusAudited": "2026-11-17"
+        },
+        {
+          "id": "M14-6",
+          "action": "Direct 79% 未归因来源调查",
+          "detail": "28 天 483/610 会话为 Direct，Bing 仅约 31 点击/周、doubao 49 会话，无法解释。深链 Direct 仅约 11%，不足以解释。需要服务端访问日志或落地页 UTM 跳转层（后者改生产）。",
+          "owner": "A",
+          "deliverable": "docs/tasks/bookconv-growth-20261117/04_B_搜索增长机会研究.md §6 UNKNOWN-1",
+          "accept": "产出可判定的判别结论（Bing 剥 referrer / 站内二次会话 / 机器人），或明确 BLOCKED 原因",
+          "due": "2026-11-24",
+          "priority": "P1",
+          "tier": "CORE",
+          "status": "todo",
+          "statusNote": "未开始：缺 Vercel 访问日志权限；本轮只完成深链占比这一步（11%）。",
+          "statusAudited": "2026-11-17"
+        }
+      ]
     }
   ],
   "openDecisions": [

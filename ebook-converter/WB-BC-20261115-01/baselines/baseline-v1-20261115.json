@@ -1,0 +1,15 @@
+{
+  "version": "v1-20261115",
+  "status": "SUPERSEDED",
+  "generated_at": "2026-11-15T12:15:00+08:00",
+  "superseded_at": "2026-11-17T00:25:00+08:00",
+  "superseded_by": "v2-20261117",
+  "note": "历史冻结快照，仅供审计追溯。此版本把一次性观测值写成绝对等值断言，窗口滚动或实体新增即产生假红。不得回退使用。",
+  "problematic_assertions": [
+    {"name": "live A1=43", "expr": "live_a1 == 43", "kind_violation": "static_frozen 用于动态计数", "observed_20261117": 44},
+    {"name": "native==sqlite id set 43/43", "expr": "nids == sids", "kind_violation": "快照集合用等值比较，新增实体即失败", "observed_20261117": "43 ⊂ 44"},
+    {"name": "7d A1>=95", "expr": "w1 >= 95", "kind_violation": "7 天滚动窗口用固定绝对值，窗口滑动即衰减", "observed_20261117": 84},
+    {"name": "7d orphan>=17", "expr": "wo >= 17", "kind_violation": "同上", "observed_20261117": 15},
+    {"name": "workbench API 200 & RECENT & 43", "expr": "api.get('automation_count') == 43", "kind_violation": "把 API/DB 一致性检查写成历史常数比对", "observed_20261117": 44}
+  ]
+}

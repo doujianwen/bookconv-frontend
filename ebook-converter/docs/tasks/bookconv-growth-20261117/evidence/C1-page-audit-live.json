@@ -1,0 +1,80 @@
+[
+  {
+    "url": "/convert/epub-to-azw3",
+    "http": 200,
+    "title": "EPUB to AZW3 Converter — Kindle Format | BookConv",
+    "desc": "Convert EPUB to AZW3 free — no sign-up. Get native Kindle Format 8 rendering with better fonts and styling. Send straight to your Kindle library.",
+    "h1": "EPUB to AZW3 - Adapt Your Ebooks for Native Kindle Format",
+    "canonical": "https://www.bookconv.com/convert/epub-to-azw3",
+    "html_lang": "en",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 124153,
+    "words": 2698
+  },
+  {
+    "url": "/convert/lit-to-mobi",
+    "http": 200,
+    "title": "Free LIT to MOBI Converter — No Sign-up | BookConv",
+    "desc": "Turn discontinued Microsoft Reader (LIT) books into Kindle-readable MOBI — free LIT to MOBI converter, no sign-up. Fast, private, DRM-free files only.",
+    "h1": "LIT to MOBI - Read Old Microsoft Reader Books on Kindle",
+    "canonical": "https://www.bookconv.com/convert/lit-to-mobi",
+    "html_lang": "en",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 113066,
+    "words": 2277
+  },
+  {
+    "url": "/es/convert/epub-to-mobi",
+    "http": 200,
+    "title": "Conversor de EPUB a MOBI — Gratis, Sin Registro | BookConv",
+    "desc": "Convierte EPUB a MOBI gratis — sin registro, sin marcas de agua. Obtén un MOBI clásico para Kindle antiguo en segundos. No se necesita cuenta.",
+    "h1": "EPUB a MOBI — Convierte Ebooks para Kindle",
+    "canonical": "https://www.bookconv.com/es/convert/epub-to-mobi",
+    "html_lang": "es",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 146899,
+    "words": 3753
+  },
+  {
+    "url": "/convert/pdf-to-epub",
+    "http": 200,
+    "title": "Free PDF to EPUB Converter — No Sign-up | BookConv",
+    "desc": "Convert text-based PDF to EPUB online for free. No sign-up. Scans need external OCR. Check images, text and reading order after conversion.",
+    "h1": "PDF to EPUB - Turn Fixed Layout into Fluid Reading Experience",
+    "canonical": "https://www.bookconv.com/convert/pdf-to-epub",
+    "html_lang": "en",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 132950,
+    "words": 2960
+  },
+  {
+    "url": "/convert/epub-to-mobi",
+    "http": 200,
+    "title": "Convert EPUB to MOBI Online — Free, No Sign-up | BookConv",
+    "desc": "Convert EPUB to MOBI free — no sign-up, no watermarks. Get a classic MOBI for older Kindle devices in seconds. No account needed.",
+    "h1": "EPUB to MOBI — Convert EPUB Files for Kindle",
+    "canonical": "https://www.bookconv.com/convert/epub-to-mobi",
+    "html_lang": "en",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 154612,
+    "words": 3575
+  },
+  {
+    "url": "/convert/txt-to-epub",
+    "http": 200,
+    "title": "Free TXT to EPUB Converter — No Sign-up | BookConv",
+    "desc": "Convert UTF-8 plain text into a simple EPUB for reading. Check paragraphs, navigation and language support before replacing your source file.",
+    "h1": "TXT to EPUB — Make a Simple Reading Copy",
+    "canonical": "https://www.bookconv.com/convert/txt-to-epub",
+    "html_lang": "en",
+    "hreflang": [],
+    "ldjson": 4,
+    "bytes": 106609,
+    "words": 1883
+  }
+]

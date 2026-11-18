@@ -1,0 +1,13 @@
+07b534bc48fcb84e53b51509cad5a66435277f992628e902fe63ad6a452658a0 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/BookConv-link-qualification-2026-11-16.json
+68f8e6b7b4d0eaea4f08c55e9cf2b3edee2574726e4dd4178b02528a8e4591c7 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/GSC_API_date_2026-11-14_d30.json
+f7acca494ba9e482bffc792e02953a494ae13a486e81bb86a61760a61d1c1e46 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/GSC_API_page_2026-11-13_d90.json
+c93908719754f468c6ea6b32408d761561eae689c5213cd7a732ba40355b0ac0 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/GSC_API_page_2026-11-14_d10.json
+e71f5deefd770d51e9d7b96edd339ba80b853453e939e1234ce71e6b7af2e4bf *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/GSC_API_query_2026-11-13_d90.json
+20f06999a29835441279fd9a505671cbf465d7c28f092995721ad90a5188423c *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/GSC_API_query_2026-11-14_d10.json
+38b13679da50340ac8e6ee9d3290aa8616311c64a8612e2454de5e89562d188e *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/competitor-series.json
+7b21e18fb58defec94313d469bf895e28477b0d2ac06ae89619d0df30cf2e3cd *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/competitor-serp-2026-11-16.json
+34286637e7a712cbd57947db61c2f4b3b1c3d8386ab677b95c199cf1e5fb2de5 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/keyword-series.json
+e1a2cd1c0ca7a71dad913a3983755648623d749d5ca28b983289530a8951bb0b *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/keyword-rank-latest.csv
+43ecac0d4b7c620761606a27eff7b641356037198b038e66a6cdd00750c0cedc *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/www.bookconv.com_BingAPI_PageTraffic_2026_11_16.csv
+93ab04c0e1e64bfd6c5ae4a9f2cc2e5b346c72c64075adba1df9944b9824c429 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/www.bookconv.com_BingAPI_Query_2026_11_16.csv
+5a3f43d9b24fa66d2cd37b50bd6f6a494223ad2ce7e8c1f9f6521cc8f0831e97 *docs/tasks/bookconv-90d-A1A5B4-20261116/raw/www.bookconv.com_BingAPI_RankAndTraffic_2026_11_16.csv

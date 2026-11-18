@@ -1,0 +1,12 @@
+=== /convert/epub-to-azw3 ===
+final_status=200 url=https://www.bookconv.com/convert/epub-to-azw3
+X-Matched-Path: /en/convert/epub-to-azw3
+=== /convert/mobi-to-epub ===
+final_status=200 url=https://www.bookconv.com/convert/mobi-to-epub
+X-Matched-Path: /en/convert/mobi-to-epub
+=== /convert/epub-to-txt ===
+final_status=200 url=https://www.bookconv.com/convert/epub-to-txt
+X-Matched-Path: /en/convert/epub-to-txt
+=== /guide/how-to-read-epub-on-kindle ===
+final_status=200 url=https://www.bookconv.com/guide/how-to-read-epub-on-kindle
+X-Matched-Path: /en/guide/how-to-read-epub-on-kindle

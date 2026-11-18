@@ -1,0 +1,15 @@
+PASS T1 (正常：SHA+Production+success+HTTP200) expect=0 actual=0 logOk=true
+PASS T2 (假 SHA（不存在部署）) expect=3 actual=3 logOk=true
+PASS T3 (错误环境（Preview）) expect=1 actual=1 logOk=true
+PASS T4 (failure 终态) expect=1 actual=1 logOk=true
+PASS T5 (API 403 权限) expect=1 actual=1 logOk=true
+PASS T6a (API 429×2 后恢复) expect=0 actual=0 logOk=true
+PASS T6b (API 429 持续→按截止时间失败) expect=3 actual=3 logOk=true
+PASS T7 (网络故障持续→不误报成功) expect=1 actual=1 logOk=true
+PASS T8 (Deployment queued 超时) expect=3 actual=3 logOk=true
+PASS T9 (SHA 不匹配) expect=1 actual=1 logOk=true
+PASS T10 (生产 HTTP 非 200) expect=1 actual=1 logOk=true
+PASS T11 (superseded/inactive→neutral 不伪报 PASS) expect=2 actual=2 logOk=true
+
+汇总: 12/12 通过
+ALL_REVERSE_INJECTION_TESTS_PASS

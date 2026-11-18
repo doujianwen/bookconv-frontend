@@ -1,0 +1,48 @@
+﻿2026-11-17T00:05:23.4018785Z Current runner version: '2.338.2'
+2026-11-17T00:05:23.4045422Z ##[group]Runner Image Provisioner
+2026-11-17T00:05:23.4046476Z Hosted Compute Agent
+2026-11-17T00:05:23.4047084Z Version: 20261103.629
+2026-11-17T00:05:23.4047722Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-17T00:05:23.4048549Z Build Date: 2026-11-03T17:26:59Z
+2026-11-17T00:05:23.4049327Z Worker ID: {8ad25e16-ea74-403e-8807-8f7b94a9d83f}
+2026-11-17T00:05:23.4050075Z Region: westus
+2026-11-17T00:05:23.4050651Z Cloud: Azure
+2026-11-17T00:05:23.4051208Z ##[endgroup]
+2026-11-17T00:05:23.4052956Z ##[group]Operating System
+2026-11-17T00:05:23.4053666Z Ubuntu
+2026-11-17T00:05:23.4054272Z 26.04.1
+2026-11-17T00:05:23.4054817Z LTS
+2026-11-17T00:05:23.4055335Z ##[endgroup]
+2026-11-17T00:05:23.4055985Z ##[group]Runner Image
+2026-11-17T00:05:23.4056630Z Image: ubuntu-26.04
+2026-11-17T00:05:23.4057303Z Version: 20261111.196.1
+2026-11-17T00:05:23.4058619Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-17T00:05:23.4060232Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-17T00:05:23.4061252Z ##[endgroup]
+2026-11-17T00:05:23.4063133Z ##[group]GITHUB_TOKEN Permissions
+2026-11-17T00:05:23.4065080Z Contents: read
+2026-11-17T00:05:23.4065860Z Metadata: read
+2026-11-17T00:05:23.4066495Z Packages: read
+2026-11-17T00:05:23.4067052Z ##[endgroup]
+2026-11-17T00:05:23.4069718Z Secret source: Actions
+2026-11-17T00:05:23.4070657Z Cache mode: write
+2026-11-17T00:05:23.4072104Z Prepare workflow directory
+2026-11-17T00:05:23.4469051Z Prepare all required actions
+2026-11-17T00:05:23.4584457Z Complete job name: deploy
+2026-11-17T00:05:23.5859084Z ##[group]Run if [ -z "$TOKEN" ]; then
+2026-11-17T00:05:23.5860082Z [36;1mif [ -z "$TOKEN" ]; then[0m
+2026-11-17T00:05:23.5861060Z [36;1m  echo "VERCEL_DEPLOY_TOKEN not set; skipping auto-deploy."[0m
+2026-11-17T00:05:23.5862633Z [36;1m  echo "Add it in repo Settings > Secrets and variables > Actions to enable push-to-deploy."[0m
+2026-11-17T00:05:23.5863672Z [36;1m  exit 0[0m
+2026-11-17T00:05:23.5864327Z [36;1mfi[0m
+2026-11-17T00:05:23.5865251Z [36;1mcurl -s -X POST "https://api.vercel.com/v13/deployments?teamId=team_a0qDGfHPDekyykDsQVRS5x15" \[0m
+2026-11-17T00:05:23.5866466Z [36;1m  -H "Authorization: ***" \[0m
+2026-11-17T00:05:23.5867309Z [36;1m  -H "Content-Type: application/json" \[0m
+2026-11-17T00:05:23.5868860Z [36;1m  -d "{\"name\":\"ebook-converter-ymfg\",\"target\":\"production\",\"gitSource\":{\"type\":\"github\",\"repoId\":1312872088,\"sha\":\"0e8f3c1a2412ae8900a4983062342223884549f1\",\"ref\":\"main\"}}"[0m
+2026-11-17T00:05:23.5870684Z [36;1mecho "Vercel production deploy triggered for 0e8f3c1a2412ae8900a4983062342223884549f1"[0m
+2026-11-17T00:05:23.6410111Z shell: /usr/bin/bash -e {0}
+2026-11-17T00:05:23.6411606Z env:
+2026-11-17T00:05:23.6412322Z   TOKEN: ***
+2026-11-17T00:05:23.6412868Z ##[endgroup]
+2026-11-17T00:05:23.6944688Z {"error":{"code":"forbidden","message":"Not authorized","invalidToken":true}}Vercel production deploy triggered for 0e8f3c1a2412ae8900a4983062342223884549f1
+2026-11-17T00:05:23.7196365Z Cleaning up orphan processes

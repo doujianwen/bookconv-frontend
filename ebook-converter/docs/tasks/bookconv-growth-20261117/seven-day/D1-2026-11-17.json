@@ -1,0 +1,146 @@
+{
+  "day": "D1",
+  "date": "2026-11-17",
+  "run_id": "BC-GROWTH-20261117",
+  "capturedAt": "2026-11-17T07:58:00+08:00",
+  "data_layers": {
+    "execution": {
+      "note": "本轮实际完成（有产物/有回执），不含「已规划」",
+      "items": [
+        {
+          "task": "G07 执行链核查",
+          "type": "AUDIT",
+          "evidence": "evidence/A1-entry-dryrun.txt（6 门禁 PASS，重复触发 exit 3）",
+          "status": "PASS"
+        },
+        {
+          "task": "生产接线包（diff+回滚+隔离验证）",
+          "type": "PREP",
+          "evidence": "02_A2_生产接线包.md / A2-wiring/*.diff",
+          "status": "PREPARED_NOT_APPLIED"
+        },
+        {
+          "task": "自动化依赖审计",
+          "type": "AUDIT",
+          "evidence": "03_A3_自动化依赖审计.md（25 个 BookConv 自动化 / 14 天运行真值）",
+          "status": "PASS"
+        },
+        {
+          "task": "多源机会研究",
+          "type": "RESEARCH",
+          "evidence": "04_B_搜索增长机会研究.md + 04_opportunities.json（11 条机会）",
+          "status": "PASS"
+        },
+        {
+          "task": "页面优化包（1 处 title/desc）",
+          "type": "PREP",
+          "evidence": "05_C1_页面优化包.md + C1-title-meta.diff",
+          "status": "PREPARED_NOT_APPLIED"
+        },
+        {
+          "task": "内容草稿 1 篇",
+          "type": "DRAFT",
+          "evidence": "06_C2_内容草稿.md（transfer ebooks，未发布）",
+          "status": "DRAFT"
+        },
+        {
+          "task": "外链：The Tool Directory 真实提交",
+          "type": "SUBMIT",
+          "evidence": "evidence/C3-tftd-real-post-headers.txt（302 → ?submitted=1）+ 回执页正文",
+          "status": "SUBMITTED"
+        },
+        {
+          "task": "产物优化方案",
+          "type": "DIAG",
+          "evidence": "07_D_产品转化诊断.md（失败归因 + 4 项方案）",
+          "status": "PASS"
+        }
+      ],
+      "counts": {
+        "completed": 8,
+        "applied_to_production": 0,
+        "new_backlinks": 1,
+        "published_content": 0,
+        "new_submissions": 1
+      }
+    },
+    "leading": {
+      "note": "领先指标：索引/展示/排名/AI 引用/外链状态。窗口不同不可相减。",
+      "gsc_impressions_28d_2026_10_17_11_14": 156,
+      "gsc_clicks_28d": 11,
+      "gsc_zero_click_queries": 39,
+      "gsc_queries_total": 41,
+      "google_indexed_urls_site_query": 41,
+      "google_indexed_convert_pages": 26,
+      "sitemap_urls": 176,
+      "bing_clicks_week_2026_11_13": 31,
+      "bing_impressions_week_2026_11_13": 238,
+      "bing_clicks_4w": 118,
+      "bing_impressions_4w": 1044,
+      "live_backlinks_verified": 1,
+      "live_backlink_domains": [
+        "awz.cc"
+      ],
+      "ai_citation_sampled": 0,
+      "serp_top10_hits_bookconv": 0,
+      "backlink_submitted_pending_review": 1,
+      "backlink_targets": {
+        "thetooldirectory.com": "SUBMITTED(2026-11-17)",
+        "awz.cc": "LIVE",
+        "thefreetoolsdirectory.com": "UNKNOWN",
+        "sousuotu.com": "BLOCKED"
+      }
+    },
+    "result": {
+      "note": "结果指标：点击/用户/工具使用/转化。GA4 T-1 = 2026-11-16。",
+      "ga4_date": "2026-11-16",
+      "ga4_active_users_t1": 40,
+      "ga4_events_t1": 268,
+      "ga4_28d_sessions": 610,
+      "ga4_28d_active_users": 519,
+      "ga4_28d_uploaders": 135,
+      "ga4_28d_completers": 110,
+      "ga4_28d_failed_users": 63,
+      "upload_rate_user_level_pct": 26.0,
+      "completion_rate_among_uploaders_pct": 81.5,
+      "revenue": 0
+    }
+  },
+  "data_quality": [
+    {
+      "id": "DQ-1",
+      "item": "Direct 79% 来源未明",
+      "status": "UNKNOWN",
+      "impact": "渠道归因只能用占比方向，禁当增长结论"
+    },
+    {
+      "id": "DQ-2",
+      "item": "conversion_attempt(55) ≪ file_upload(340)",
+      "status": "INSTRUMENTATION_GAP",
+      "impact": "禁用 attempt 做分母"
+    },
+    {
+      "id": "DQ-3",
+      "item": "渠道组会话相加 619 ≠ 总会话 610",
+      "status": "KNOWN_MISMATCH",
+      "impact": "只用占比口径"
+    },
+    {
+      "id": "DQ-4",
+      "item": "/convert/pdf-to-epub：GSC 报表 15 展示 vs URL Inspection 未收录",
+      "status": "CONFLICT",
+      "impact": "不做「修收录」动作，进 7 天观察"
+    },
+    {
+      "id": "DQ-5",
+      "item": "Bing GetQueryStats 为周聚合",
+      "status": "RESOLVED",
+      "impact": "本报告已按周解读；若按天会虚增 7 倍"
+    }
+  ],
+  "tomorrow": [
+    "D2：跑 growth-daily-entry（若接线后）或手工同序；重点看 GA4 T-1 = 11-17 的失败码变化",
+    "D2：若 Owner 授权 M14-1，则应用 title/desc patch 并跑 4 项门禁",
+    "D2：核查 11-17 有无自动化补偿重放（8290a67f / 92ac81b1 同日多次）"
+  ]
+}

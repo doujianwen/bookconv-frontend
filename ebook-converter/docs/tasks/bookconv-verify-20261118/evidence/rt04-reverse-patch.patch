@@ -1,0 +1,28 @@
+diff --git a/ebook-converter/public/llms.txt b/ebook-converter/public/llms.txt
+index edd61ea..4744190 100644
+--- a/ebook-converter/public/llms.txt
++++ b/ebook-converter/public/llms.txt
+@@ -157,7 +157,7 @@ EPUB, AZW3, AZW, MOBI, PDF, DOC, DOCX, RTF, TXT, HTML, FB2, LIT, CBR, CHM, DJVU,
+ - [Best Ebook Converter in 2026: How to Choose (Not Just a List)](https://www.bookconv.com/guide/best-ebook-converter)
+ - [AZW3 vs MOBI: Which Kindle Format Should You Use?](https://www.bookconv.com/guide/azw3-vs-mobi)
+ - [EPUB vs MOBI: Device Compatibility Guide](https://www.bookconv.com/guide/epub-vs-mobi)
+-- [Can Kindle Read EPUB? Yes - 3 Working Ways (2026)](https://www.bookconv.com/guide/how-to-read-epub-on-kindle)
++- [How to Read EPUB on Kindle: 3 Ways That Work](https://www.bookconv.com/guide/how-to-read-epub-on-kindle)
+ - [How to Send an EPUB to Your Kindle: Every Delivery Route Compared](https://www.bookconv.com/guide/how-to-send-epub-to-kindle)
+ - [Kindle vs Kobo: Which E-Reader Fits Your Book Library?](https://www.bookconv.com/guide/kindle-vs-kobo)
+ 
+diff --git a/ebook-converter/src/data/guides/how-to-read-epub-on-kindle.ts b/ebook-converter/src/data/guides/how-to-read-epub-on-kindle.ts
+index 55c7a7d..61de602 100644
+--- a/ebook-converter/src/data/guides/how-to-read-epub-on-kindle.ts
++++ b/ebook-converter/src/data/guides/how-to-read-epub-on-kindle.ts
+@@ -1,8 +1,8 @@
+ import { BlogFaq } from '../blog/types'
+ 
+ export const slug = 'how-to-read-epub-on-kindle'
+-export const title = 'Can Kindle Read EPUB? Yes - 3 Working Ways (2026)'
+-export const metaDescription = 'Kindle will not open an EPUB over USB, but Send to Kindle converts it, and Calibre builds an AZW3. Three routes compared, and which one keeps formatting.'
++export const title = 'How to Read EPUB on Kindle: 3 Ways That Work'
++export const metaDescription = 'Kindle won\'t open EPUB directly. Use Send to Kindle for a fast server-side convert, or convert to AZW3 yourself for full control. Three routes compared.'
+ export const problem = 'You downloaded or purchased an EPUB, but your Kindle refuses to open it. Amazon devices prefer their own formats, so EPUB needs one extra step. Here are the three reliable routes, including when each one is worth it.'
+ export const date = '2026-10-02'
+ export const updatedAt = '2026-10-23'

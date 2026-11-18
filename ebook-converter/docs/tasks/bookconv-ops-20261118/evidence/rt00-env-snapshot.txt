@@ -1,0 +1,12 @@
+run_id: BC-OPS-20261118
+snapshot_time: 2026-11-17T08:48:21+08:00
+HEAD=0e8f3c1a2412ae8900a4983062342223884549f1
+origin/main=0e8f3c1a2412ae8900a4983062342223884549f1
+dirty_count=26 (全部保留，不 commit)
+stash=0
+SHA256:
+.github/workflows/vercel-deploy.yml=1c96245c6f37cf58fcb5a9aab5f1de1b3d046ddf582b839aa37de4de14b77038
+src/data/guides/transfer-ebooks-between-ereaders.ts=8eb56e8fa39f58aa9c4410a92527f5d38e44e5c51b872748a0fdb7cd553385bb
+src/data/guides/how-to-read-epub-on-kindle.ts=de211c7b58ad33fcc4b519c7be39f0d66f55893228afda65a6e4ded2257d2700
+data/keyword-series.json=34286637e7a712cbd57947db61c2f4b3b1c3d8386ab677b95c199cf1e5fb2de5
+src/data/guides/index.ts=e6fc0f0a73d18b9232988be09badb994c5ca3cb7139ddabd0e97c5b8b3426dd1

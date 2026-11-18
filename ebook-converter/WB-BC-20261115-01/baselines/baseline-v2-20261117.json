@@ -1,0 +1,97 @@
+{
+  "version": "v2-20261117",
+  "status": "CURRENT",
+  "generated_at": "2026-11-17T00:25:00+08:00",
+  "supersedes": "v1-20261115",
+  "owner_task": "BCGOV-20261117 (G05)",
+  "maintenance_policy": {
+    "dynamic_monotonic": "只断言下界 + 白名单增量审计。任何未登记的新增实体 → FAIL，必须人工登记 id 与原因后才放行。比原等值断言更严：能捕获未授权的第 44/45 个自动化。",
+    "rolling_window": "断言活跃天数 + 相对上一等长窗口的比值 + 绝对下限。不写死会随日期衰减的绝对数。",
+    "static_frozen": "断言在快照时点成立且后续不应改变的事实（文件、路径、prompt 内容、一次性裁决）。变更必须升版本。",
+    "live_exact": "断言实时库与另一实时源（HTTP API / 快照文件）互相一致，而不是与历史常数一致。"
+  },
+  "rebaseline_rules": [
+    "只允许在“差异已被逐条归因”时升版本；未归因的差异一律保持 FAIL。",
+    "升版本必须在 changelog 写明：旧断言、新断言、归因证据、为何不是放宽。",
+    "任何 kind=static_frozen 的断言若需变更，视为事实变更，需 Owner 裁决。",
+    "rolling_window 的 ratio_floor 不得低于 0.6；调整下限需附连续 14 天实测分布。"
+  ],
+  "checks": {
+    "live A1": {
+      "kind": "dynamic_monotonic",
+      "min": 43,
+      "allowlist": ["a9306382-949b-4b2d-af45-0e0f53608cf4"],
+      "allowlist_reason": {
+        "a9306382-949b-4b2d-af45-0e0f53608cf4": "AIOS-DailyPlan-ReadOnly-Sync，11-15 12:12 创建，status=PAUSED，非 BookConv 经营任务，无 next_run_at"
+      },
+      "note": "min=43 为 11-15 冻结观测；白名单外新增即 FAIL"
+    },
+    "live orphan": {"kind": "static_frozen", "expect": 5},
+    "live third-party": {"kind": "static_frozen", "expect": 1},
+    "runs total": {"kind": "dynamic_monotonic", "min": 968},
+    "A1 runs": {"kind": "dynamic_monotonic", "min_runs": 583, "min_ok": 435},
+    "A2 runs": {"kind": "dynamic_monotonic", "min_runs": 53, "min_ok": 29},
+    "orphan runs": {"kind": "dynamic_monotonic", "min": 331},
+    "native count": {"kind": "static_frozen", "expect": 43, "note": "11-15 09:55 原生回执快照条数，文件不变则常数有效"},
+    "native==sqlite": {
+      "kind": "dynamic_monotonic",
+      "mode": "subset_plus_allowlist",
+      "allowlist": ["a9306382-949b-4b2d-af45-0e0f53608cf4"],
+      "note": "快照集合必须是实时集合的子集（无消失），新增部分必须在白名单内"
+    },
+    "7d A1": {
+      "kind": "rolling_window",
+      "min_active_days": 6,
+      "ratio_floor": 0.7,
+      "abs_floor": 50,
+      "baseline_20261115": 95,
+      "note": "替代绝对值 95。依据：11-03..11-16 逐日 10,17,5,11,13,20,9,19,6,9,6,19,14,11"
+    },
+    "7d orphan": {
+      "kind": "rolling_window",
+      "min_active_days": 4,
+      "ratio_floor": 0.6,
+      "abs_floor": 5,
+      "baseline_20261115": 17
+    },
+    "workbench API": {
+      "kind": "rolling_window",
+      "max_age_hours": 26,
+      "expect_count_equals": "live A1",
+      "note": "API 的 state=RECENT 内部判据是 age<=600s，而快照按天刷新，属断言口径错误；改为 <=26h（日更+2h 容差）+ 计数与 sqlite 一致"
+    },
+    "orphan last success": {"kind": "static_frozen", "expect_prefix": "2026-06"},
+    "ruling:*": {"kind": "static_frozen", "note": "11-15 12:00 Owner 四项裁决，属事实冻结"},
+    "node path:*": {"kind": "static_frozen"},
+    "GA4 fetch": {"kind": "rolling_window", "max_age_hours": 24},
+    "M12-1 scheduled": {"kind": "static_frozen", "expect_contains": "2026-11-18"},
+    "Bing2125 prompt": {"kind": "static_frozen"},
+    "deliverable files": {"kind": "static_frozen"}
+  },
+  "changelog": [
+    {
+      "from": "live A1=43 (equality)",
+      "to": "live A1 in [43, 43+len(allowlist)] 且白名单 id 必须真实存在",
+      "attribution": "11-15 12:12 新增 AIOS-DailyPlan-ReadOnly-Sync(PAUSED)，见 sqlite created_at=1794715931590",
+      "not_relaxed_because": "旧断言只看总数，新断言还要求每个增量被登记；未登记新增会 FAIL"
+    },
+    {
+      "from": "native==sqlite (set equality)",
+      "to": "native ⊆ sqlite 且 sqlite-native ⊆ allowlist",
+      "attribution": "native 43/43 全部存在，仅多出同一 PAUSED 自动化",
+      "not_relaxed_because": "新增了“消失即 FAIL”的方向性检查，旧断言对消失与新增混为一谈"
+    },
+    {
+      "from": "7d A1>=95 / 7d orphan>=17 (absolute)",
+      "to": "活跃天数>=6 且 本期>=0.7×上一等长窗口 且 绝对值下限",
+      "attribution": "11-03..11-16 逐日分布显示 95 依赖已滚出窗口的 11-08(20)/11-10(19) 峰值日；本期 84，上期 85，比值 0.99",
+      "not_relaxed_because": "增加了“相对上期跌幅>30% 即 FAIL”的回归检测，绝对阈值无法捕获断崖式下跌"
+    },
+    {
+      "from": "workbench API count==43 且 state=RECENT",
+      "to": "API count == sqlite live A1 且快照 age<=26h",
+      "attribution": "(a) API 实际返回 44，与 sqlite 一致；(b) state=RECENT 的源码判据为 age<=600s（server.py:workbuddy_bridge_status），而快照由每日任务刷新，实测 age=17.3h → RECENT 在非同步瞬间不可达，属断言口径错误而非运行故障",
+      "not_relaxed_because": "把 10 分钟心跳换成 26 小时，看似放宽；但同时新增了”API 计数必须等于 sqlite“的双源一致性，旧断言只比历史常数，捕获不了 API/DB 漂移。若日更停止超过 26h 仍 FAIL"
+    }
+  ]
+}

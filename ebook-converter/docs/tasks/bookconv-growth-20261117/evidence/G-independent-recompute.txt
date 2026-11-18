@@ -1,0 +1,15 @@
+=== 独立复核（python，独立于 JS 工具链）2026-11-17 07:55 ===
+[GSC query 28d] rows=41 clicks=11 impressions=156 zero_click=39 nonbrand_pos_min=48.8 max=100.0
+  期望值：clicks=11 impressions=156 zero=39 nonbrand_pos 50~100 -> PASS
+[Bing 4 周] clicks=118 impressions=1044 (weeks=['2026-10-23', '2026-10-30', '2026-11-06', '2026-11-13']) -> PASS
+[Bing 最新周 11-13] clicks=31 impressions=238 distinct_dates=15 (周聚合证明)
+[GA4 28d] sessions=610 users=519 keyEvents=281
+   渠道: {'Direct': 483, 'Referral': 64, 'Organic Search': 43, 'Unassigned': 28, 'AI Assistant': 1} sum= 619
+   Direct 占比=79.2% -> PASS(≈79%)
+   事件: {'file_upload': (340, 135), 'conversion_complete': (281, 110), 'conversion_failed': (110, 63), 'file_rejected_client': (39, 24)}
+   用户级 上传率=26.0%  上传者完成率=81.5%
+[失败] 总数=114 >4MB=79 (69.3%) | epub→azw3=48 其中>4MB=33 (68.8%)
+   期望 114/79/48/33 -> PASS
+[错误码] {'CONVERSION_QUOTA_EXCEEDED': 5, 'UNKNOWN': 30, 'FILE_TOO_LARGE': 30, 'CORRUPT_INPUT': 9, 'DIRECT_UPLOAD_FAILED': 9, 'INTERNAL_ERROR': 5, 'DIRECT_UPLOAD_PUT_FAILED': 22, 'UPLOAD_NOT_FOUND': 1, 'CONVERSION_UNAVAILABLE': 3} sum= 114
+[台账] 任务=152 唯一=152 M14=['M14-1', 'M14-2', 'M14-3', 'M14-4', 'M14-5', 'M14-6']
+[实验] ['GE-001:RUNNING', 'GE-002:BLOCKED', 'GE-003:BLOCKED', 'GE-004:BLOCKED']

@@ -1,0 +1,1389 @@
+{
+  "property": "547131052",
+  "fetchedAt": "2026-11-16T15:08:15.111Z",
+  "source": "ga4-data-api",
+  "windows": {
+    "main": {
+      "start": "2026-11-15",
+      "end": "2026-11-15"
+    }
+  },
+  "reports": {
+    "periodTotals": {
+      "ok": true,
+      "data": {
+        "activeUsers": 34,
+        "totalUsers": 36,
+        "newUsers": 30,
+        "sessions": 38,
+        "engagedSessions": 18,
+        "keyEvents": 26,
+        "screenPageViews": 107
+      }
+    },
+    "daily": {
+      "ok": true,
+      "data": [
+        {
+          "date": "20261115",
+          "activeUsers": 34,
+          "totalUsers": 36,
+          "newUsers": 30,
+          "sessions": 38,
+          "engagedSessions": 18,
+          "keyEvents": 26
+        }
+      ]
+    },
+    "sessionSourceMedium": {
+      "ok": true,
+      "data": [
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "sessions": 32,
+          "engagedSessions": 14,
+          "keyEvents": 8,
+          "engagementRate": 0.4375,
+          "averageSessionDuration": 64.73964459375
+        },
+        {
+          "sessionSource": "(not set)",
+          "sessionMedium": "(not set)",
+          "sessions": 11,
+          "engagedSessions": 0,
+          "keyEvents": 13,
+          "engagementRate": 0,
+          "averageSessionDuration": 120.54857918181818
+        },
+        {
+          "sessionSource": "cn.bing.com",
+          "sessionMedium": "referral",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5,
+          "engagementRate": 1,
+          "averageSessionDuration": 151.423688
+        },
+        {
+          "sessionSource": "doubao.com",
+          "sessionMedium": "referral",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0,
+          "engagementRate": 1,
+          "averageSessionDuration": 45.589127
+        }
+      ]
+    },
+    "channelGroup": {
+      "ok": true,
+      "data": [
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 32,
+          "engagedSessions": 14,
+          "keyEvents": 8,
+          "engagementRate": 0.4375,
+          "averageSessionDuration": 64.73964459375
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "sessions": 11,
+          "engagedSessions": 0,
+          "keyEvents": 13,
+          "engagementRate": 0,
+          "averageSessionDuration": 120.54857918181818
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5,
+          "engagementRate": 1,
+          "averageSessionDuration": 151.423688
+        },
+        {
+          "sessionDefaultChannelGroup": "Referral",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0,
+          "engagementRate": 1,
+          "averageSessionDuration": 45.589127
+        }
+      ]
+    },
+    "firstUserSourceMedium": {
+      "ok": true,
+      "data": [
+        {
+          "firstUserSource": "(direct)",
+          "firstUserMedium": "(none)",
+          "totalUsers": 26,
+          "newUsers": 26
+        },
+        {
+          "firstUserSource": "(not set)",
+          "firstUserMedium": "(not set)",
+          "totalUsers": 16,
+          "newUsers": 0
+        },
+        {
+          "firstUserSource": "cn.bing.com",
+          "firstUserMedium": "referral",
+          "totalUsers": 3,
+          "newUsers": 3
+        },
+        {
+          "firstUserSource": "doubao.com",
+          "firstUserMedium": "referral",
+          "totalUsers": 1,
+          "newUsers": 1
+        }
+      ]
+    },
+    "landingPage": {
+      "ok": true,
+      "data": [
+        {
+          "landingPage": "/",
+          "sessions": 26,
+          "engagedSessions": 15,
+          "keyEvents": 20,
+          "screenPageViews": 83
+        },
+        {
+          "landingPage": "/convert/epub-to-txt",
+          "sessions": 5,
+          "engagedSessions": 1,
+          "keyEvents": 5,
+          "screenPageViews": 15
+        },
+        {
+          "landingPage": "",
+          "sessions": 4,
+          "engagedSessions": 0,
+          "keyEvents": 0,
+          "screenPageViews": 0
+        },
+        {
+          "landingPage": "/batch",
+          "sessions": 3,
+          "engagedSessions": 1,
+          "keyEvents": 0,
+          "screenPageViews": 3
+        },
+        {
+          "landingPage": "/convert/epub-to-azw3",
+          "sessions": 2,
+          "engagedSessions": 0,
+          "keyEvents": 0,
+          "screenPageViews": 2
+        },
+        {
+          "landingPage": "/convert/epub-to-mobi",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 1,
+          "screenPageViews": 1
+        },
+        {
+          "landingPage": "/convert/txt-to-epub",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0,
+          "screenPageViews": 1
+        },
+        {
+          "landingPage": "/es",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0,
+          "screenPageViews": 1
+        },
+        {
+          "landingPage": "/es/guide/kindle-formats",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0,
+          "screenPageViews": 1
+        }
+      ]
+    },
+    "country": {
+      "ok": true,
+      "data": [
+        {
+          "country": "China",
+          "sessions": 38,
+          "engagedSessions": 18,
+          "activeUsers": 34
+        }
+      ]
+    },
+    "events": {
+      "ok": true,
+      "data": [
+        {
+          "eventName": "page_view",
+          "eventCount": 107,
+          "totalUsers": 36
+        },
+        {
+          "eventName": "session_start",
+          "eventCount": 36,
+          "totalUsers": 34
+        },
+        {
+          "eventName": "conversion_attempt",
+          "eventCount": 30,
+          "totalUsers": 8
+        },
+        {
+          "eventName": "file_upload",
+          "eventCount": 30,
+          "totalUsers": 9
+        },
+        {
+          "eventName": "first_visit",
+          "eventCount": 30,
+          "totalUsers": 30
+        },
+        {
+          "eventName": "conversion_complete",
+          "eventCount": 26,
+          "totalUsers": 6
+        },
+        {
+          "eventName": "user_engagement",
+          "eventCount": 23,
+          "totalUsers": 18
+        },
+        {
+          "eventName": "scroll",
+          "eventCount": 4,
+          "totalUsers": 4
+        },
+        {
+          "eventName": "conversion_failed",
+          "eventCount": 2,
+          "totalUsers": 2
+        },
+        {
+          "eventName": "file_rejected_client",
+          "eventCount": 2,
+          "totalUsers": 2
+        },
+        {
+          "eventName": "form_start",
+          "eventCount": 1,
+          "totalUsers": 1
+        }
+      ]
+    },
+    "errorCodes": {
+      "ok": true,
+      "data": [
+        {
+          "customEvent:error_code": "CONVERSION_UNAVAILABLE",
+          "eventCount": 1
+        },
+        {
+          "customEvent:error_code": "UNKNOWN",
+          "eventCount": 1
+        }
+      ]
+    },
+    "sourceLanding": {
+      "ok": true,
+      "data": [
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/",
+          "sessions": 20,
+          "engagedSessions": 11,
+          "keyEvents": 2
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "landingPage": "/",
+          "sessions": 5,
+          "engagedSessions": 0,
+          "keyEvents": 13
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/convert/epub-to-txt",
+          "sessions": 4,
+          "engagedSessions": 1,
+          "keyEvents": 5
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "landingPage": "",
+          "sessions": 4,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/batch",
+          "sessions": 3,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "landingPage": "/",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/convert/epub-to-azw3",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/convert/epub-to-mobi",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/convert/txt-to-epub",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/es",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "landingPage": "/es/guide/kindle-formats",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Referral",
+          "landingPage": "/",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "landingPage": "/convert/epub-to-azw3",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "landingPage": "/convert/epub-to-txt",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        }
+      ]
+    },
+    "channelCity": {
+      "ok": true,
+      "data": [
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "",
+          "sessions": 7,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Shenzhen",
+          "sessions": 4,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Guangzhou",
+          "sessions": 2,
+          "engagedSessions": 2
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Qingdao",
+          "sessions": 2,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Suzhou",
+          "sessions": 2,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Zhangjiajie",
+          "sessions": 2,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Suzhou",
+          "sessions": 2,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Beijing",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Bengbu",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Chengdu",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Hangzhou",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Harbin",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Ili",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Jinhua",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Nanchong",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Nanjing",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Shanghai",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Shantou",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Shaoxing",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "city": "Xiamen",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "city": "Dehong Dai and Jingpo Autonomous Prefecture",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "city": "Qingdao",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "city": "Xiamen",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Referral",
+          "city": "Zhuhai",
+          "sessions": 1,
+          "engagedSessions": 1
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Baoshan",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Bengbu",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Guangzhou",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Jinhua",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Nanjing",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Qingdao",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Xinxiang",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Zhangjiajie",
+          "sessions": 1,
+          "engagedSessions": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "city": "Zhuhai",
+          "sessions": 1,
+          "engagedSessions": 0
+        }
+      ]
+    },
+    "channelDevice": {
+      "ok": true,
+      "data": [
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "deviceCategory": "mobile",
+          "sessions": 19,
+          "engagedSessions": 5,
+          "keyEvents": 5
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "deviceCategory": "desktop",
+          "sessions": 12,
+          "engagedSessions": 9,
+          "keyEvents": 3
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "deviceCategory": "desktop",
+          "sessions": 5,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "deviceCategory": "mobile",
+          "sessions": 5,
+          "engagedSessions": 0,
+          "keyEvents": 13
+        },
+        {
+          "sessionDefaultChannelGroup": "Organic Search",
+          "deviceCategory": "desktop",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5
+        },
+        {
+          "sessionDefaultChannelGroup": "Direct",
+          "deviceCategory": "tablet",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Referral",
+          "deviceCategory": "desktop",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        },
+        {
+          "sessionDefaultChannelGroup": "Unassigned",
+          "deviceCategory": "tablet",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        }
+      ]
+    },
+    "sourceLandingDetail": {
+      "ok": true,
+      "data": [
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/",
+          "sessions": 20,
+          "engagedSessions": 11,
+          "keyEvents": 2
+        },
+        {
+          "sessionSource": "(not set)",
+          "sessionMedium": "(not set)",
+          "landingPage": "/",
+          "sessions": 5,
+          "engagedSessions": 0,
+          "keyEvents": 13
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/convert/epub-to-txt",
+          "sessions": 4,
+          "engagedSessions": 1,
+          "keyEvents": 5
+        },
+        {
+          "sessionSource": "(not set)",
+          "sessionMedium": "(not set)",
+          "landingPage": "",
+          "sessions": 4,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/batch",
+          "sessions": 3,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "cn.bing.com",
+          "sessionMedium": "referral",
+          "landingPage": "/",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/convert/epub-to-azw3",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/convert/epub-to-mobi",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 1
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/convert/txt-to-epub",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/es",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "landingPage": "/es/guide/kindle-formats",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(not set)",
+          "sessionMedium": "(not set)",
+          "landingPage": "/convert/epub-to-azw3",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "(not set)",
+          "sessionMedium": "(not set)",
+          "landingPage": "/convert/epub-to-txt",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "sessionSource": "doubao.com",
+          "sessionMedium": "referral",
+          "landingPage": "/",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        }
+      ]
+    },
+    "hostname": {
+      "ok": true,
+      "data": [
+        {
+          "hostname": "www.bookconv.com",
+          "sessions": 38,
+          "engagedSessions": 18,
+          "keyEvents": 26
+        }
+      ]
+    },
+    "sourcePlatform": {
+      "ok": true,
+      "data": [
+        {
+          "sessionSourcePlatform": "Unlabeled",
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 32,
+          "engagedSessions": 14,
+          "keyEvents": 8
+        },
+        {
+          "sessionSourcePlatform": "Unlabeled",
+          "sessionDefaultChannelGroup": "Unassigned",
+          "sessions": 11,
+          "engagedSessions": 0,
+          "keyEvents": 13
+        },
+        {
+          "sessionSourcePlatform": "Unlabeled",
+          "sessionDefaultChannelGroup": "Organic Search",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5
+        },
+        {
+          "sessionSourcePlatform": "Unlabeled",
+          "sessionDefaultChannelGroup": "Referral",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        }
+      ]
+    },
+    "newVsReturning": {
+      "ok": true,
+      "data": [
+        {
+          "newVsReturning": "new",
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 26,
+          "engagedSessions": 12,
+          "keyEvents": 8
+        },
+        {
+          "newVsReturning": "new",
+          "sessionDefaultChannelGroup": "Unassigned",
+          "sessions": 10,
+          "engagedSessions": 0,
+          "keyEvents": 13
+        },
+        {
+          "newVsReturning": "",
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 4,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "newVsReturning": "new",
+          "sessionDefaultChannelGroup": "Organic Search",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "keyEvents": 5
+        },
+        {
+          "newVsReturning": "returning",
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 2,
+          "engagedSessions": 2,
+          "keyEvents": 0
+        },
+        {
+          "newVsReturning": "",
+          "sessionDefaultChannelGroup": "Unassigned",
+          "sessions": 1,
+          "engagedSessions": 0,
+          "keyEvents": 0
+        },
+        {
+          "newVsReturning": "new",
+          "sessionDefaultChannelGroup": "Referral",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "keyEvents": 0
+        }
+      ]
+    },
+    "dailyByChannel": {
+      "ok": true,
+      "data": [
+        {
+          "date": "20261115",
+          "sessionDefaultChannelGroup": "Direct",
+          "sessions": 32,
+          "engagedSessions": 14,
+          "activeUsers": 28
+        },
+        {
+          "date": "20261115",
+          "sessionDefaultChannelGroup": "Unassigned",
+          "sessions": 11,
+          "engagedSessions": 0,
+          "activeUsers": 10
+        },
+        {
+          "date": "20261115",
+          "sessionDefaultChannelGroup": "Organic Search",
+          "sessions": 3,
+          "engagedSessions": 3,
+          "activeUsers": 3
+        },
+        {
+          "date": "20261115",
+          "sessionDefaultChannelGroup": "Referral",
+          "sessions": 1,
+          "engagedSessions": 1,
+          "activeUsers": 1
+        }
+      ]
+    },
+    "referrerTiers": {
+      "ok": true,
+      "data": [
+        {
+          "pageReferrer": "",
+          "eventCount": 38
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/",
+          "eventCount": 20
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/convert/epub-to-txt",
+          "eventCount": 18
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "eventCount": 17
+        },
+        {
+          "pageReferrer": "https://cn.bing.com/",
+          "eventCount": 3
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&show_loading=0&f_link_type=f_linkinlinenote&theme=dark",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&theme=light",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/auth",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/batch",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/convert/docx-to-epub",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/convert/epub-to-mobi",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/convert/epub-to-pdf",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/convert/mobi-to-azw3",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/es",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.doubao.com/",
+          "eventCount": 1
+        }
+      ]
+    },
+    "pageLocation": {
+      "ok": true,
+      "data": [
+        {
+          "pageLocation": "https://www.bookconv.com/",
+          "eventCount": 30
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-txt",
+          "eventCount": 26
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "eventCount": 19
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-azw3",
+          "eventCount": 5
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/batch",
+          "eventCount": 4
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-pdf",
+          "eventCount": 4
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&show_loading=0&f_link_type=f_linkinlinenote&theme=dark",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/auth",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-mobi",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/txt-to-epub",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/es",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&push_animated=1&webview_progress_bar=1&show_loading=0&theme=dark",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?push_animated=1&show_loading=0&webview_progress_bar=1&theme=light",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&f_link_type=f_linkinlinenote&theme=dark",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&theme=light",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/docx-to-epub",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/mobi-to-azw3",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/mobi-to-epub",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/es/guide/kindle-formats",
+          "eventCount": 1
+        }
+      ]
+    },
+    "tierSummary": {
+      "ok": true,
+      "data": {
+        "level": "pageview",
+        "metricKey": "eventCount",
+        "urlKey": "pageReferrer",
+        "total": 107,
+        "caveat": "这是 page_view 分布，不是会话入口。禁止用它说\"X% 的用户从某处来\"。",
+        "tiers": {
+          "container": {
+            "value": 20,
+            "pct": 18.7
+          },
+          "internal": {
+            "value": 45,
+            "pct": 42.1
+          },
+          "external": {
+            "value": 4,
+            "pct": 3.7
+          },
+          "none": {
+            "value": 38,
+            "pct": 35.5
+          }
+        },
+        "externalHosts": [
+          [
+            "cn.bing.com",
+            3
+          ],
+          [
+            "www.doubao.com",
+            1
+          ]
+        ],
+        "closedCheck": "PASS（= screenPageViews 107）"
+      }
+    },
+    "containerLanding": {
+      "ok": true,
+      "data": {
+        "rows": [
+          {
+            "pageLocation": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+            "eventCount": 19,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&show_loading=0&f_link_type=f_linkinlinenote&theme=dark",
+            "eventCount": 2,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&push_animated=1&webview_progress_bar=1&show_loading=0&theme=dark",
+            "eventCount": 1,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+            "eventCount": 1,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?push_animated=1&show_loading=0&webview_progress_bar=1&theme=light",
+            "eventCount": 1,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&f_link_type=f_linkinlinenote&theme=dark",
+            "eventCount": 1,
+            "utm": null
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&theme=light",
+            "eventCount": 1,
+            "utm": null
+          }
+        ],
+        "totalEvents": 26,
+        "rowCount": 7
+      }
+    },
+    "entryReferrer": {
+      "ok": true,
+      "data": [
+        {
+          "pageReferrer": "",
+          "sessionDefaultChannelGroup": "Direct",
+          "eventCount": 28
+        },
+        {
+          "pageReferrer": "https://cn.bing.com/",
+          "sessionDefaultChannelGroup": "Organic Search",
+          "eventCount": 3
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/",
+          "sessionDefaultChannelGroup": "Direct",
+          "eventCount": 3
+        },
+        {
+          "pageReferrer": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "sessionDefaultChannelGroup": "Direct",
+          "eventCount": 1
+        },
+        {
+          "pageReferrer": "https://www.doubao.com/",
+          "sessionDefaultChannelGroup": "Referral",
+          "eventCount": 1
+        }
+      ]
+    },
+    "entryLocation": {
+      "ok": true,
+      "data": [
+        {
+          "pageLocation": "https://www.bookconv.com/",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 13
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-txt",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 4
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/",
+          "sessionSource": "cn.bing.com",
+          "sessionMedium": "referral",
+          "eventCount": 3
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/batch",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 3
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 2
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/",
+          "sessionSource": "doubao.com",
+          "sessionMedium": "referral",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?push_animated=1&show_loading=0&webview_progress_bar=1&theme=light",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&show_loading=0&f_link_type=f_linkinlinenote&theme=dark",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&f_link_type=f_linkinlinenote&theme=dark",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&theme=light",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-azw3",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/epub-to-mobi",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/convert/txt-to-epub",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/es",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        },
+        {
+          "pageLocation": "https://www.bookconv.com/es/guide/kindle-formats",
+          "sessionSource": "(direct)",
+          "sessionMedium": "(none)",
+          "eventCount": 1
+        }
+      ]
+    },
+    "entrySummary": {
+      "ok": true,
+      "data": {
+        "level": "session",
+        "metricKey": "eventCount",
+        "urlKey": "pageReferrer",
+        "total": 36,
+        "caveat": "session_start 事件数 ≠ sessions 指标（实测 426 vs 449，逐日双向波动）。分母要写清是哪一个。",
+        "tiers": {
+          "container": {
+            "value": 1,
+            "pct": 2.8
+          },
+          "internal": {
+            "value": 3,
+            "pct": 8.3
+          },
+          "external": {
+            "value": 4,
+            "pct": 11.1
+          },
+          "none": {
+            "value": 28,
+            "pct": 77.8
+          }
+        },
+        "externalHosts": [
+          [
+            "cn.bing.com",
+            3
+          ],
+          [
+            "www.doubao.com",
+            1
+          ]
+        ]
+      }
+    },
+    "entryContainer": {
+      "ok": true,
+      "data": {
+        "rows": [
+          {
+            "pageLocation": "https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 2
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&theme=light",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 1
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?push_animated=1&show_loading=0&webview_progress_bar=1&theme=light",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 1
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&show_loading=0&f_link_type=f_linkinlinenote&theme=dark",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 1
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI3OGIzNTFjMmNlMzlhZmMzLTZhOTUwMmZmZTcwY2I2NDIifQ%3D%3D&f_link_type=f_linkinlinenote&theme=dark",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 1
+          },
+          {
+            "pageLocation": "https://www.bookconv.com/?webview_progress_bar=1&show_loading=0&push_animated=1&theme=light",
+            "sessionSource": "(direct)",
+            "sessionMedium": "(none)",
+            "eventCount": 1
+          }
+        ],
+        "sessionCount": 7,
+        "attribution": {
+          "(direct)/(none)": 7
+        },
+        "rowCount": 6
+      }
+    },
+    "sessionStartGap": {
+      "ok": true,
+      "data": {
+        "merged": [
+          {
+            "date": "20261115",
+            "sessionStart": 36,
+            "sessions": 38,
+            "gap": -2
+          }
+        ],
+        "sessionStartTotal": 36,
+        "sessionsTotal": 38,
+        "gapTotal": -2
+      }
+    }
+  }
+}

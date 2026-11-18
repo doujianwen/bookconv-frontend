@@ -1,0 +1,17 @@
+run_id: BC-OPS-D1-20261119
+snapshot_time: 2026-11-17T09:16 (+08:00)
+user: admin @ DESKTOP-IKRV41G
+branch: main
+HEAD=0e8f3c1a2412ae8900a4983062342223884549f1
+origin/main=0e8f3c1a2412ae8900a4983062342223884549f1
+staged=0
+dirty_entries=29 (全部保留，禁 stash/reset/clean)
+hook_mount=PASS (verify-hook-mount exit 0)
+closure_gates_exit=0 (既有 UNKNOWN F15/F26 非本轮范围)
+SHA256:
+.github/workflows/vercel-deploy.yml=1c96245c6f37cf58fcb5a9aab5f1de1b3d046ddf582b839aa37de4de14b77038
+M14-2 三文件（本轮禁改）:
+src/data/guides/transfer-ebooks-between-ereaders.ts=8eb56e8fa39f58aa9c4410a92527f5d38e44e5c51b872748a0fdb7cd553385bb
+src/data/guides/index.ts=e6fc0f0a73d18b9232988be09badb994c5ca3cb7139ddabd0e97c5b8b3426dd1
+public/llms.txt=be8725876084996ad26144bd4383e95ea8c211c5165f4317dbf1b1e2628d7d12
+授权边界: D1=方案B实施(含 commit+push)；D2=M14-2 暂缓冻结；D3=Secret 只审计不删除

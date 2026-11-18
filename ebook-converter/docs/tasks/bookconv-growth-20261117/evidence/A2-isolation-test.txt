@@ -1,0 +1,15 @@
+=== A2 隔离验证 v2（修正 v1 的退出码采集错误：v1 用管道取到的是 tail 的退出码）2026-11-17 07:03:04 ===
+-- 1) 隔离 state-file 首次 acquire（日期用无记录的 2026-11-18，避免覆盖当天记录）
+EXIT=0
+DAILY-ENTRY SUCCESS @ 2026-11-18 → E:\一人公司\电子书格式转换站\ebook-converter\_wb_tmp\growth-daily-run-2026-11-18.json
+RELEASED: daily-ops@2026-11-18 → SUCCESS
+-- 2) 立即二次（预期 exit 3）
+EXIT=3
+SKIP: daily-ops@2026-11-18 已在运行或今日已完成 —— 重复触发被吸收，不执行任何步骤
+SKIP(SKIP_DONE): daily-ops@2026-11-18 — 该 run-key 已成功完成（幂等吸收）；不重复执行，退出码 3
+-- 3) 明日 dry-run（预期 exit 0，证明 date 可控且不写状态）
+EXIT=0
+
+DAILY-ENTRY SUCCESS @ 2026-11-19 (dry-run, 未写状态)
+-- 4) 生产 state 未被触碰（daily-ops@2026-11-17 仍 SUCCESS/attempts=1）
+state= SUCCESS attempts= 1 endedAt= 1794845851345

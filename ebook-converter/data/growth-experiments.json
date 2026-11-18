@@ -1,0 +1,224 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-17T00:20:00+08:00",
+ "ownerTask": "BCGOV-20261117 (G06)",
+ "readme": [
+  "最小增长实验注册表：只登记「有基线、有假设、有观察窗口、有对照定义」的实验，不生产任务。",
+  "复用现有任务台账 data/seo-geo-board.json 的 taskId，不新建任务体系。",
+  "执行成功(execution) 与 经营效果(effect) 是两个独立字段，禁止用 execution=EXECUTED 代表有效果。",
+  "effect.status=MEASURED 必须同时给出 metric/value/delta/measuredAt，且与 baseline 同口径、等长窗口。",
+  "attribution=CAUSAL 仅在存在真对照(A_B_CONTROL/HOLD_OUT)时允许；否则最高 CORRELATIONAL。",
+  "未经授权不得改生产；生产类实验必须 change.authorized=false 且 execution.status=BLOCKED/NOT_STARTED。"
+ ],
+ "experiments": [
+  {
+   "id": "GE-001",
+   "taskId": "M8-6",
+   "title": "Bing 每日定向 URL 提交 → 索引与曝光",
+   "type": "CHANNEL",
+   "goal": "验证每日定向提交能否让 Bing 侧曝光维持/高于 Google 侧（同内容、仅提交动作不同）",
+   "baseline": {
+    "metric": "GSC impressions (7d)",
+    "value": 45,
+    "unit": "impressions",
+    "window": {
+     "start": "2026-11-08",
+     "end": "2026-11-14",
+     "days": 7
+    },
+    "source": "数据分析/GSC_API_date_2026-11-14_d30.json",
+    "capturedAt": "2026-11-16T10:10:00+08:00",
+    "caveat": "同窗口 clicks=0；展示量极小，任何比值波动都不具统计意义"
+   },
+   "hypothesis": "同内容下，Bing 侧（每日提交 sitemap URL）的曝光不低于 Google 侧；若显著低于，说明提交链路未生效或 Bing 索引受限",
+   "change": {
+    "type": "EXISTING_AUTOMATION",
+    "authorized": true,
+    "description": "7ecd345e [bookconv] Bing Webmaster 每日定向 URL 提交（08:00 DAILY），本轮不新增改动，仅纳管观测",
+    "productionTouched": false
+   },
+   "control": {
+    "type": "CHANNEL_HOLD_OUT",
+    "description": "Google 侧不做任何 URL 提交，作为同内容的对照渠道",
+    "randomized": false,
+    "limitation": "渠道差异非随机分配，结论最高只能到 CORRELATIONAL"
+   },
+   "observationWindow": {
+    "start": "2026-11-17",
+    "end": "2026-12-01",
+    "minDays": 15
+   },
+   "execution": {
+    "status": "RUNNING",
+    "evidence": "automation_runs: 7ecd345e 近 14 天 14 次运行（sqlite automation_runs，只读查询 2026-11-17）",
+    "note": "执行属既有自动化，本注册表不触发、不改配置"
+   },
+   "effect": {
+    "status": "PENDING",
+    "attribution": "UNKNOWN",
+    "metric": null,
+    "value": null,
+    "delta": null,
+    "measuredAt": null
+   },
+   "killCriteria": "若 14 天后 Bing 侧曝光为 0 且提交回执正常 → 判定提交链路对曝光无效，停止把提交当增长动作"
+  },
+  {
+   "id": "GE-002",
+   "taskId": "M4-2",
+   "title": "可引用数据页 → 外部引用增长",
+   "type": "ASSET",
+   "goal": "验证带方法与可下载 CSV 的数据页能否带来外部引用（GEO/AI 引用前置条件）",
+   "baseline": {
+    "metric": "外部引用次数（引用 bookconv 数据页的非本站域名数）",
+    "value": 0,
+    "unit": "domains",
+    "window": {
+     "start": "2026-10-15",
+     "end": "2026-11-14",
+     "days": 31
+    },
+    "source": "M4-2 statusNote（2026-10-15 发布后进入外部引用观察期，未记录到引用）",
+    "capturedAt": "2026-11-17T00:20:00+08:00",
+    "caveat": "基线 0 为「未观测到」而非「确证为 0」；引用监测通道当前不完整（见 G08 BLOCKED）"
+   },
+   "hypothesis": "结构化数据页（来源/样本量/方法/CSV 下载齐全）比普通博客页更容易被外部与 AI 引用",
+   "change": {
+    "type": "PRODUCTION",
+    "authorized": false,
+    "description": "拟对 3 个数据页补充「可引用摘要块 + 更新日期 + 引用格式」，属生产内容改动",
+    "productionTouched": false
+   },
+   "control": {
+    "type": "PAGE_COHORT",
+    "description": "对照组=同期未改动的 blog 页；实验组=3 个数据页",
+    "randomized": false,
+    "limitation": "页面类型本身不同，存在选择偏差"
+   },
+   "observationWindow": {
+    "start": "2026-12-01",
+    "end": "2026-12-31",
+    "minDays": 31
+   },
+   "execution": {
+    "status": "BLOCKED",
+    "evidence": "",
+    "note": "未获生产发布授权（BCGOV-20261117 权限边界：允许草稿，不允许改生产/部署）。解阻条件：CEO 授权发布 + 外链/引用监测通道可用"
+   },
+   "effect": {
+    "status": "NOT_STARTED",
+    "attribution": "UNKNOWN",
+    "metric": null,
+    "value": null,
+    "delta": null,
+    "measuredAt": null
+   },
+   "killCriteria": "若 30 天内引用仍为 0 且抓取正常 → 判定该资产形态对引用无效，转为纯 SEO 落地页"
+  },
+  {
+   "id": "GE-003",
+   "taskId": "M14-1",
+   "title": "问答式标题改写 → Bing CTR",
+   "type": "ONPAGE",
+   "goal": "验证把已排在第 3-4 位的页面标题改成提问式回答，能否把 0 点击变成有效点击",
+   "baseline": {
+    "metric": "Bing clicks (4w) for 'can kindle read epub' + 'does kindle read epub'",
+    "value": 0,
+    "unit": "clicks",
+    "window": {
+     "start": "2026-10-23",
+     "end": "2026-11-13",
+     "days": 22
+    },
+    "source": "数据分析/www.bookconv.com_BingAPI_Query_2026_11_16.csv（周聚合，含该 4 周）",
+    "capturedAt": "2026-11-17T07:20:00+08:00",
+    "caveat": "4 周 27 展示、平均排名 6→3；n 极小，0 点击属统计噪声，任何 CTR 结论需 ≥4 周且展示量翻倍"
+   },
+   "hypothesis": "该页已在前 5 位但标题是「How to read」，与提问式查询「Can kindle read epub」不匹配；改成提问式后 CTR 上升",
+   "change": {
+    "type": "PRODUCTION",
+    "authorized": false,
+    "description": "src/data/guides/how-to-read-epub-on-kindle.ts 仅改 title+metaDescription 两行（patch 见 C1-title-meta.diff）",
+    "productionTouched": false
+   },
+   "control": {
+    "type": "PAGE_COHORT",
+    "description": "对照组=同期未改标题的其他 guide 页（calibre-alternative 等）在同一查询集上的 CTR",
+    "randomized": false,
+    "limitation": "页面主题不同，非随机；只能到 CORRELATIONAL"
+   },
+   "observationWindow": {
+    "start": "2026-11-21",
+    "end": "2026-12-19",
+    "minDays": 29
+   },
+   "execution": {
+    "status": "BLOCKED",
+    "evidence": "patch 已生成并做字符串级校验；未应用（待授权）",
+    "note": "生产内容改动，change.authorized=false"
+   },
+   "effect": {
+    "status": "NOT_STARTED",
+    "attribution": "UNKNOWN",
+    "metric": null,
+    "value": null,
+    "delta": null,
+    "measuredAt": null
+   },
+   "killCriteria": "若 28 天后展示量未翻倍且点击仍为 0 → 判定标题不是瓶颈，停止此类改写"
+  },
+  {
+   "id": "GE-004",
+   "taskId": "M14-5",
+   "title": "大文件上传链路修复 → 失败率",
+   "type": "PRODUCT",
+   "goal": "验证修复直传失败（PUT 重试 + 不静默回退 + 客户端提示）能否降低整体转换失败率",
+   "baseline": {
+    "metric": "conversion_failed 中 >4MB 占比",
+    "value": 79,
+    "unit": "events",
+    "window": {
+     "start": "2026-10-17",
+     "end": "2026-11-16",
+     "days": 31
+    },
+    "source": "_wb_tmp/ga4-advanced-2026-11-16.json modules.failed_by_date_format",
+    "capturedAt": "2026-11-17T07:30:00+08:00",
+    "caveat": "总失败 114 次；分母随流量变化，需用「失败率」而非「失败数」对比"
+   },
+   "hypothesis": "失败主因是 >4MB 文件走直传 PUT 失败后被 4MB multipart 上限拦截，而非转换引擎",
+   "change": {
+    "type": "PRODUCTION",
+    "authorized": true,
+    "description": "CSP 放行 R2 host（327f640，2026-11-06 部署）+ PUT 退避重试（8c597c9）——上线时点 2026-11-06；BC-EXEC-20261117（11-17）为效果验证轮，未做任何新生产变更",
+    "productionTouched": true,
+    "approvalRef": "git commits 327f640 + 8c597c9（2026-11-06 提交并部署上线，属当日已授权执行轮次；GA4 中出现 PUT:CSP/PUT:NETWORK 判别标签为上线行为证据）"
+   },
+   "control": {
+    "type": "HOLD_OUT",
+    "description": "改动前 30 天 vs 改动后 30 天，按周对齐；同季节无对照",
+    "randomized": false,
+    "limitation": "时间序列受流量结构影响，非因果"
+   },
+   "observationWindow": {
+    "start": "2026-12-01",
+    "end": "2026-12-31",
+    "minDays": 31
+   },
+   "execution": {
+    "status": "EXECUTED",
+    "evidence": "修复已上线且有行为证据：GA4 出现 PUT:CSP/PUT:NETWORK 判别标签（仅 R-2 代码可产生）。日期拆分（_wb_tmp/ga4-advanced-2026-11-16.json modules.failed_by_date_error）：直传失败 10-29→11-05 共45次(5.6/天) → 11-06→11-16 仅2次(0.18/天)、11-11 起 0；FILE_TOO_LARGE 客户端拦截14次全部 ≤10-30、11-01 起 0。",
+    "note": "早期信号已远优于 kill 阈值（>4MB 占比>50% 才算归因错误）；正式效果测量按 observationWindow 2026-12-01→12-31 执行"
+   },
+   "effect": {
+    "status": "PENDING",
+    "attribution": "UNKNOWN",
+    "metric": null,
+    "value": null,
+    "delta": null,
+    "measuredAt": null
+   },
+   "killCriteria": "若修复后 >4MB 失败占比仍 >50% → 归因错误，重新排查"
+  }
+ ]
+}

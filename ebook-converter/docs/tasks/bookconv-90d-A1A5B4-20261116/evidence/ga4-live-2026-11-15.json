@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-15",
+  "activeUsers": 34,
+  "eventCount": 291,
+  "events": {
+    "file_upload": 30,
+    "conversion_complete": 26,
+    "conversion_failed": 2,
+    "conversion_attempt": 30
+  },
+  "failedByErrorCode": {
+    "CONVERSION_UNAVAILABLE": 1,
+    "UNKNOWN": 1
+  },
+  "conversionRate": "87%",
+  "toolPage": {
+    "users": 19,
+    "sessions": 21,
+    "uploadRateProxy": "143%",
+    "urlCount": 8
+  },
+  "source": "ga4-data-api"
+}

@@ -1,0 +1,2034 @@
+{
+  "date": "2026-11-16",
+  "fetchedAt": "2026-11-16T13:53:43.792Z",
+  "source": "serpapi",
+  "ownDomain": "bookconv.com",
+  "methodVersion": "goto-aware-v2",
+  "collection": {
+    "engine": "google",
+    "num": 100,
+    "gl": null,
+    "hl": null,
+    "location": null,
+    "keys": 2,
+    "keyIndexByQuery": [
+      {
+        "query": "best ebook converter",
+        "keyIndex": 0
+      },
+      {
+        "query": "ebook converter",
+        "keyIndex": 1
+      },
+      {
+        "query": "online ebook converter",
+        "keyIndex": 0
+      },
+      {
+        "query": "convert epub to mobi",
+        "keyIndex": 1
+      },
+      {
+        "query": "epub to pdf",
+        "keyIndex": 0
+      },
+      {
+        "query": "mobi to epub",
+        "keyIndex": 1
+      },
+      {
+        "query": "convert pdf to epub",
+        "keyIndex": 0
+      },
+      {
+        "query": "txt to epub",
+        "keyIndex": 1
+      },
+      {
+        "query": "epub to azw3",
+        "keyIndex": 0
+      },
+      {
+        "query": "pdf to mobi",
+        "keyIndex": 1
+      },
+      {
+        "query": "kindle converter",
+        "keyIndex": 0
+      },
+      {
+        "query": "free ebook converter",
+        "keyIndex": 1
+      },
+      {
+        "query": "calibre online",
+        "keyIndex": 0
+      },
+      {
+        "query": "calibre alternative",
+        "keyIndex": 1
+      },
+      {
+        "query": "is azw3 compatible with kindle",
+        "keyIndex": 0
+      },
+      {
+        "query": "ebook converter online",
+        "keyIndex": 1
+      },
+      {
+        "query": "mobi vs azw3",
+        "keyIndex": 0
+      },
+      {
+        "query": "epub to zip",
+        "keyIndex": 1
+      },
+      {
+        "query": "can i use calibre online without installing",
+        "keyIndex": 0
+      },
+      {
+        "query": "ebook reader app",
+        "keyIndex": 1
+      },
+      {
+        "query": "open epub file",
+        "keyIndex": 0
+      },
+      {
+        "query": "send to kindle",
+        "keyIndex": 1
+      },
+      {
+        "query": "kindle vs kobo",
+        "keyIndex": 0
+      }
+    ],
+    "topDomainsPerQuery": 10,
+    "note": "gl/hl/location 为 null = 未固定（脚本默认行为，SerpApi 用其默认地区）；未固定时跨日 Δ 不可归因到真实排名变化。keyIndexByQuery 用于排查「不同 key 返回不同 SERP」。"
+  },
+  "quality": {
+    "hits": 29,
+    "minObservedDepth": 6,
+    "maxObservedDepth": 9,
+    "requestedDepth": 100,
+    "priorHitMedian": 20,
+    "note": "观测深度来自 SerpApi 实际返回的 organic_results 条数，通常远小于 requestedDepth；rank=0 表示「未进入观测窗口」，不等于「未进 Top-100」。"
+  },
+  "results": [
+    {
+      "query": "best ebook converter",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 3,
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 8,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "howtoconvert.co",
+          "url": "https://howtoconvert.co/blog/best-ebook-converter-apps"
+        },
+        {
+          "rank": 2,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/writing/comments/c2t7vv/what_ebook_conversion_software_do_you_recommend/"
+        },
+        {
+          "rank": 3,
+          "domain": "calibre-ebook.com",
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "rank": 4,
+          "domain": "apps.apple.com",
+          "url": "https://apps.apple.com/us/app/the-ebook-converter/id1081457679"
+        },
+        {
+          "rank": 5,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.daemon.ebookconverter&hl=en_US"
+        },
+        {
+          "rank": 6,
+          "domain": "kitaboo.com",
+          "url": "https://kitaboo.com/8-ebook-conversion-software-tools-compatible-with-multiple-formats"
+        },
+        {
+          "rank": 7,
+          "domain": "epubor.com",
+          "url": "https://www.epubor.com/ultimate.html"
+        },
+        {
+          "rank": 8,
+          "domain": "ebook-tool.com",
+          "url": "https://www.ebook-tool.com/"
+        }
+      ]
+    },
+    {
+      "query": "ebook converter",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 4,
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 8,
+          "url": "https://www.freeconvert.com/ebook-converter"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 9,
+          "url": "https://cloudconvert.com/ebook-converter"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/"
+        },
+        {
+          "rank": 2,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.daemon.ebookconverter&hl=en_US"
+        },
+        {
+          "rank": 3,
+          "domain": "apps.apple.com",
+          "url": "https://apps.apple.com/us/app/the-ebook-converter/id890503038"
+        },
+        {
+          "rank": 4,
+          "domain": "calibre-ebook.com",
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "rank": 5,
+          "domain": "onlineconverter.com",
+          "url": "https://www.onlineconverter.com/ebook"
+        },
+        {
+          "rank": 6,
+          "domain": "converter.publishdrive.com",
+          "url": "https://converter.publishdrive.com/"
+        },
+        {
+          "rank": 7,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/opensource/comments/16dhwh1/good_ebook_converter/"
+        },
+        {
+          "rank": 8,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/ebook-converter"
+        },
+        {
+          "rank": 9,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/ebook-converter"
+        }
+      ]
+    },
+    {
+      "query": "online ebook converter",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 8,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "ebooks.com",
+          "url": "https://www.ebooks.com/en-us/?srsltid=AYCX9vKM1g82PqAYepUJRSVxn-EUQAwtU5PeOkurQEo2rJ8acKXf9jvi"
+        },
+        {
+          "rank": 2,
+          "domain": "en.wikipedia.org",
+          "url": "https://en.wikipedia.org/wiki/Ebook"
+        },
+        {
+          "rank": 3,
+          "domain": "apps.apple.com",
+          "url": "https://apps.apple.com/us/app/ebooks-com/id6474779702"
+        },
+        {
+          "rank": 4,
+          "domain": "adobe.com",
+          "url": "https://www.adobe.com/express/create/book/ebook"
+        },
+        {
+          "rank": 5,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/selfpublish/comments/1l6r2ge/do_you_need_a_table_of_contents_in_an_ebook/"
+        },
+        {
+          "rank": 6,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=Ypy4rOYWiZU"
+        },
+        {
+          "rank": 7,
+          "domain": "goinswriter.com",
+          "url": "https://goinswriter.com/writing-ebook/"
+        },
+        {
+          "rank": 8,
+          "domain": "medium.com",
+          "url": "https://medium.com/swlh/write-and-publish-your-ebook-in-7-days-76f41824423b"
+        }
+      ]
+    },
+    {
+      "query": "convert epub to mobi",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 3,
+          "url": "https://convertio.co/epub-mobi/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 5,
+          "url": "https://www.zamzar.com/convert/epub-to-mobi/"
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 2,
+          "url": "https://www.freeconvert.com/epub-to-mobi"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 1,
+          "url": "https://cloudconvert.com/epub-to-mobi"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/epub-to-mobi"
+        },
+        {
+          "rank": 2,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/epub-to-mobi"
+        },
+        {
+          "rank": 3,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/epub-mobi/"
+        },
+        {
+          "rank": 4,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/convert/epub-to-mobi"
+        },
+        {
+          "rank": 5,
+          "domain": "zamzar.com",
+          "url": "https://www.zamzar.com/convert/epub-to-mobi/"
+        },
+        {
+          "rank": 6,
+          "domain": "wilderness-voice.org",
+          "url": "https://wilderness-voice.org/guides/how-to-convert-an-epub-to-mobi-using-calibre/"
+        },
+        {
+          "rank": 7,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/qdcul7/which_tools_to_use_to_convert_epub_to_mobi/"
+        },
+        {
+          "rank": 8,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=RghUryQorKw"
+        },
+        {
+          "rank": 9,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.enzodev.epubamobi&hl=en_US"
+        }
+      ]
+    },
+    {
+      "query": "epub to pdf",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "pdfagile.com",
+          "url": "https://www.pdfagile.com/blog/how-to-convert-epub-to-pdf"
+        },
+        {
+          "rank": 2,
+          "domain": "convert-epub-to-pdf.en.download.it",
+          "url": "https://convert-epub-to-pdf.en.download.it/download"
+        },
+        {
+          "rank": 3,
+          "domain": "data-recovery-solutions.com",
+          "url": "https://www.data-recovery-solutions.com/epub-to-pdf.php"
+        },
+        {
+          "rank": 4,
+          "domain": "en.softonic.com",
+          "url": "https://en.softonic.com/downloads/convert-epub-to-pdf/2"
+        },
+        {
+          "rank": 5,
+          "domain": "epub-to-pdf-converter-for-epub-pdf.en.softonic.com",
+          "url": "https://epub-to-pdf-converter-for-epub-pdf.en.softonic.com/"
+        },
+        {
+          "rank": 6,
+          "domain": "onlineconvert.com",
+          "url": "https://onlineconvert.com/epub-to-pdf"
+        },
+        {
+          "rank": 7,
+          "domain": "coolmuster.com",
+          "url": "https://www.coolmuster.com/pdf/epub-to-pdf-converter.html"
+        },
+        {
+          "rank": 8,
+          "domain": "pdfreaderpro.com",
+          "url": "https://www.pdfreaderpro.com/blog/how-to-convert-epub-to-pdf"
+        },
+        {
+          "rank": 9,
+          "domain": "download.cnet.com",
+          "url": "https://download.cnet.com/free-epub-to-pdf-converter/3000-2125_4-76168748.html"
+        }
+      ]
+    },
+    {
+      "query": "mobi to epub",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 2,
+          "url": "https://convertio.co/mobi-epub/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 7,
+          "url": "https://www.zamzar.com/convert/mobi-to-epub/"
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 5,
+          "url": "https://www.freeconvert.com/mobi-to-epub"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 1,
+          "url": "https://cloudconvert.com/mobi-to-epub"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/mobi-to-epub"
+        },
+        {
+          "rank": 2,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/mobi-epub/"
+        },
+        {
+          "rank": 3,
+          "domain": "techcommunity.microsoft.com",
+          "url": "https://techcommunity.microsoft.com/discussions/windowsinsiderprogram/how-do-i-convert-mobi-files-to-epub-on-a-windows-pc/4281833"
+        },
+        {
+          "rank": 4,
+          "domain": "apps.apple.com",
+          "url": "https://apps.apple.com/us/app/mobi-converter-mobi-to-epub/id1567037277"
+        },
+        {
+          "rank": 5,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/mobi-to-epub"
+        },
+        {
+          "rank": 6,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/convert/mobi-to-epub"
+        },
+        {
+          "rank": 7,
+          "domain": "zamzar.com",
+          "url": "https://www.zamzar.com/convert/mobi-to-epub/"
+        },
+        {
+          "rank": 8,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Calibre/comments/1cl621a/batch_convert_mobi_to_epub/"
+        },
+        {
+          "rank": 9,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.mobitoepubconverter.tool&hl=en_US"
+        }
+      ]
+    },
+    {
+      "query": "convert pdf to epub",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "managedoutsource.com",
+          "url": "https://www.managedoutsource.com/blog/get-to-know-these-5-best-pdf-to-epub-converters/"
+        },
+        {
+          "rank": 2,
+          "domain": "pdfeditor.ca",
+          "url": "https://pdfeditor.ca/pdf-to-epub"
+        },
+        {
+          "rank": 3,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Ebook/comments/7f409q/how_to_convert_pdf_to_epub/"
+        },
+        {
+          "rank": 4,
+          "domain": "epub.to",
+          "url": "https://epub.to/pdf-epub/"
+        },
+        {
+          "rank": 5,
+          "domain": "cigatisolutions.com",
+          "url": "https://www.cigatisolutions.com/blog/convert-pdf-to-epub/"
+        },
+        {
+          "rank": 6,
+          "domain": "read-copilot.com",
+          "url": "https://www.read-copilot.com/en/tools/pdf-to-epub"
+        },
+        {
+          "rank": 7,
+          "domain": "topsevenreviews.com",
+          "url": "https://www.topsevenreviews.com/reviews-pdf-to-epub-converter/"
+        },
+        {
+          "rank": 8,
+          "domain": "multiconverter.prolbox.com",
+          "url": "https://multiconverter.prolbox.com/pdf-to-epub"
+        },
+        {
+          "rank": 9,
+          "domain": "superuser.com",
+          "url": "https://superuser.com/questions/280053/how-can-i-convert-pdf-files-to-epub-format"
+        }
+      ]
+    },
+    {
+      "query": "txt to epub",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 2,
+          "url": "https://convertio.co/txt-epub/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 9,
+          "url": "https://www.zamzar.com/convert/txt-to-epub/"
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 6,
+          "url": "https://www.freeconvert.com/txt-to-epub"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 1,
+          "url": "https://cloudconvert.com/txt-to-epub"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/txt-to-epub"
+        },
+        {
+          "rank": 2,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/txt-epub/"
+        },
+        {
+          "rank": 3,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Calibre/comments/181skgu/converting_txt_file_into_epub_file/"
+        },
+        {
+          "rank": 4,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/convert/txt-to-epub"
+        },
+        {
+          "rank": 5,
+          "domain": "github.com",
+          "url": "https://github.com/oomol-lab/txt-to-epub-converter"
+        },
+        {
+          "rank": 6,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/txt-to-epub"
+        },
+        {
+          "rank": 7,
+          "domain": "superuser.com",
+          "url": "https://superuser.com/questions/34619/how-do-i-convert-a-text-file-to-the-epub-format"
+        },
+        {
+          "rank": 8,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=p3p9DmGoIGA"
+        },
+        {
+          "rank": 9,
+          "domain": "zamzar.com",
+          "url": "https://www.zamzar.com/convert/txt-to-epub/"
+        }
+      ]
+    },
+    {
+      "query": "epub to azw3",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 3,
+          "url": "https://convertio.co/epub-azw3/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 5,
+          "url": "https://www.zamzar.com/convert/epub-to-azw3/"
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 2,
+          "url": "https://www.freeconvert.com/epub-to-azw3"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 1,
+          "url": "https://cloudconvert.com/epub-to-azw3"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/epub-to-azw3"
+        },
+        {
+          "rank": 2,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/epub-to-azw3"
+        },
+        {
+          "rank": 3,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/epub-azw3/"
+        },
+        {
+          "rank": 4,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/convert/epub-to-azw3"
+        },
+        {
+          "rank": 5,
+          "domain": "zamzar.com",
+          "url": "https://www.zamzar.com/convert/epub-to-azw3/"
+        },
+        {
+          "rank": 6,
+          "domain": "techcommunity.microsoft.com",
+          "url": "https://techcommunity.microsoft.com/discussions/windows11/please-recommend-the-best-epub-to-azw3-converter-for-windows-11/4343211"
+        },
+        {
+          "rank": 7,
+          "domain": "freefileconvert.com",
+          "url": "https://freefileconvert.com/epub-azw3"
+        },
+        {
+          "rank": 8,
+          "domain": "cdkm.com",
+          "url": "https://cdkm.com/epub-to-azw3"
+        },
+        {
+          "rank": 9,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Calibre/comments/1ud2j6v/epub_to_azw3/"
+        }
+      ]
+    },
+    {
+      "query": "pdf to mobi",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 2,
+          "url": "https://convertio.co/pdf-mobi/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 6,
+          "url": "https://www.freeconvert.com/pdf-to-mobi"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 1,
+          "url": "https://cloudconvert.com/pdf-to-mobi"
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "cloudconvert.com",
+          "url": "https://cloudconvert.com/pdf-to-mobi"
+        },
+        {
+          "rank": 2,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/pdf-mobi/"
+        },
+        {
+          "rank": 3,
+          "domain": "techcommunity.microsoft.com",
+          "url": "https://techcommunity.microsoft.com/discussions/windows11/how-to-convert-pdf-to-mobi-on-my-windows-11-computer-without-loss/4284464"
+        },
+        {
+          "rank": 4,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/hhbe9n/pdf_to_mobi_conversion/"
+        },
+        {
+          "rank": 5,
+          "domain": "ebook.online-convert.com",
+          "url": "https://ebook.online-convert.com/convert/pdf-to-mobi"
+        },
+        {
+          "rank": 6,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/pdf-to-mobi"
+        },
+        {
+          "rank": 7,
+          "domain": "pdfcandy.com",
+          "url": "https://pdfcandy.com/pdf-to-mobi.html"
+        },
+        {
+          "rank": 8,
+          "domain": "products.groupdocs.app",
+          "url": "https://products.groupdocs.app/conversion/pdf-to-mobi"
+        },
+        {
+          "rank": 9,
+          "domain": "pdfhouse.com",
+          "url": "https://pdfhouse.com/pdf-to-mobi"
+        }
+      ]
+    },
+    {
+      "query": "kindle converter",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 7,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/ereader/comments/1itbt85/converting_kindle_books_to_epub_or_pdf/"
+        },
+        {
+          "rank": 2,
+          "domain": "products.aspose.app",
+          "url": "https://products.aspose.app/ebook/conversion/pdf-to-kindle"
+        },
+        {
+          "rank": 3,
+          "domain": "amazon.in",
+          "url": "https://www.amazon.in/sendtokindle"
+        },
+        {
+          "rank": 4,
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/groups/amazonkdpbooks/posts/1158251425214713/"
+        },
+        {
+          "rank": 5,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CTjvu0c1ksI"
+        },
+        {
+          "rank": 6,
+          "domain": "pcmag.com",
+          "url": "https://www.pcmag.com/news/turn-books-into-ebooks-with-amazon-kindle-convert"
+        },
+        {
+          "rank": 7,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/1eyfdge/best_way_to_convert/"
+        }
+      ]
+    },
+    {
+      "query": "free ebook converter",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 4,
+          "url": "https://www.freeconvert.com/de/ebook-converter"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "ebook-converter.softonic.se",
+          "url": "https://ebook-converter.softonic.se/android"
+        },
+        {
+          "rank": 2,
+          "domain": "swifdoo.com",
+          "url": "https://www.swifdoo.com/convert-pdfs/best-ebook-converter"
+        },
+        {
+          "rank": 3,
+          "domain": "4easysoft.com",
+          "url": "https://www.4easysoft.com/ebook-converter/"
+        },
+        {
+          "rank": 4,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/de/ebook-converter"
+        },
+        {
+          "rank": 5,
+          "domain": "download.cnet.com",
+          "url": "https://download.cnet.com/free-ebook-converter/3000-18495_4-76268619.html"
+        },
+        {
+          "rank": 6,
+          "domain": "converterzone.com",
+          "url": "https://converterzone.com/tools/ebook-converter"
+        },
+        {
+          "rank": 7,
+          "domain": "apps.microsoft.com",
+          "url": "https://apps.microsoft.com/detail/9nxmp2kbf43z"
+        },
+        {
+          "rank": 8,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/ebooks/comments/1pmx5m/whats_the_best_ebook_converter/"
+        },
+        {
+          "rank": 9,
+          "domain": "softpedia.com",
+          "url": "https://www.softpedia.com/get/Others/E-Book/Ebook-Converter.shtml"
+        }
+      ]
+    },
+    {
+      "query": "calibre online",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 1,
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 6,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "calibre-ebook.com",
+          "url": "https://calibre-ebook.com/"
+        },
+        {
+          "rank": 2,
+          "domain": "calibre.online",
+          "url": "https://calibre.online/"
+        },
+        {
+          "rank": 3,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Calibre/comments/1l3i2wv/calibre_web_alternative/"
+        },
+        {
+          "rank": 4,
+          "domain": "github.com",
+          "url": "https://github.com/janeczku/calibre-web"
+        },
+        {
+          "rank": 5,
+          "domain": "coolify.io",
+          "url": "https://coolify.io/docs/services/calibre-web"
+        },
+        {
+          "rank": 6,
+          "domain": "apps.umbrel.com",
+          "url": "https://apps.umbrel.com/app/calibre-web"
+        }
+      ]
+    },
+    {
+      "query": "calibre alternative",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 8,
+          "url": "https://calibre-ebook.com/about"
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "forum.endeavouros.com",
+          "url": "https://forum.endeavouros.com/t/can-anyone-rec-a-calibre-alternative/73292"
+        },
+        {
+          "rank": 2,
+          "domain": "calibre.updatestar.com",
+          "url": "https://calibre.updatestar.com/alternatives"
+        },
+        {
+          "rank": 3,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/15h2dk3/are_there_alternatives_to_calibre/"
+        },
+        {
+          "rank": 4,
+          "domain": "arstechnica.com",
+          "url": "https://arstechnica.com/civis/threads/calibre-ebook-manager-alternatives-without-llm-and-with-modern-ui-ux.1512988/"
+        },
+        {
+          "rank": 5,
+          "domain": "selfhosted.libhunt.com",
+          "url": "https://selfhosted.libhunt.com/calibre-web-alternatives"
+        },
+        {
+          "rank": 6,
+          "domain": "mobileread.com",
+          "url": "https://www.mobileread.com/forums/showthread.php?t=371886"
+        },
+        {
+          "rank": 7,
+          "domain": "calibre-companion.en.softonic.com",
+          "url": "https://calibre-companion.en.softonic.com/android/alternatives"
+        },
+        {
+          "rank": 8,
+          "domain": "calibre-ebook.com",
+          "url": "https://calibre-ebook.com/about"
+        },
+        {
+          "rank": 9,
+          "domain": "citadel.page",
+          "url": "https://citadel.page/calibre-alternative/"
+        }
+      ]
+    },
+    {
+      "query": "is azw3 compatible with kindle",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "zhidao.baidu.com",
+          "url": "https://zhidao.baidu.com/question/756425261808236804.html"
+        },
+        {
+          "rank": 2,
+          "domain": "zhidao.baidu.com",
+          "url": "https://zhidao.baidu.com/question/372955487574862284.html"
+        },
+        {
+          "rank": 3,
+          "domain": "epub-to-azw3.file-converter-online.com",
+          "url": "https://epub-to-azw3.file-converter-online.com/"
+        },
+        {
+          "rank": 4,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/1rvurzd/if_i_convert_an_epub_to_a_azw_will_i_have_all_the/"
+        },
+        {
+          "rank": 5,
+          "domain": "leawo.org",
+          "url": "https://www.leawo.org/entips/tips-to-upload-an-azw-file-to-your-kindle-1372.html"
+        },
+        {
+          "rank": 6,
+          "domain": "amazonforum.com",
+          "url": "https://www.amazonforum.com/s/question/0D56Q0000BSyLKTSQ3/read-epub-and-awz3-ebooks"
+        },
+        {
+          "rank": 7,
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/fb-answers/what-ereaders-support-kindle-books/"
+        },
+        {
+          "rank": 8,
+          "domain": "bookquill.com",
+          "url": "https://bookquill.com/blog/epub-vs-azw3/"
+        },
+        {
+          "rank": 9,
+          "domain": "converthub.com",
+          "url": "https://converthub.com/ebook/convert-azw3"
+        }
+      ]
+    },
+    {
+      "query": "ebook converter online",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 2,
+          "url": "https://convertio.co/id/ebook-converter/"
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 8,
+          "url": "https://www.freeconvert.com/de/ebook-converter"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "download.cnet.com",
+          "url": "https://download.cnet.com/ebook-conversion-tool/3000-2125_4-78216462.html"
+        },
+        {
+          "rank": 2,
+          "domain": "convertio.co",
+          "url": "https://convertio.co/id/ebook-converter/"
+        },
+        {
+          "rank": 3,
+          "domain": "softpedia.com",
+          "url": "https://www.softpedia.com/get/Others/E-Book/Ebook-Converter.shtml"
+        },
+        {
+          "rank": 4,
+          "domain": "goconvert.net",
+          "url": "https://goconvert.net/converter/ebook/epub"
+        },
+        {
+          "rank": 5,
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/OnlineConverting/"
+        },
+        {
+          "rank": 6,
+          "domain": "pdfmate.com",
+          "url": "https://www.pdfmate.com/epub-converter.html"
+        },
+        {
+          "rank": 7,
+          "domain": "swifdoo.com",
+          "url": "https://www.swifdoo.com/convert-pdfs/best-ebook-converter"
+        },
+        {
+          "rank": 8,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/de/ebook-converter"
+        },
+        {
+          "rank": 9,
+          "domain": "ebookconversion.com",
+          "url": "https://ebookconversion.com/"
+        }
+      ]
+    },
+    {
+      "query": "mobi vs azw3",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "zhidao.baidu.com",
+          "url": "https://zhidao.baidu.com/question/1691692094728613668"
+        },
+        {
+          "rank": 2,
+          "domain": "zhidao.baidu.com",
+          "url": "https://zhidao.baidu.com/question/942288112590221532.html"
+        },
+        {
+          "rank": 3,
+          "domain": "lectoreselectronicos.com",
+          "url": "https://www.lectoreselectronicos.com/foro/showthread.php?13311-AZW3-o-MOBI"
+        },
+        {
+          "rank": 4,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/oz0s17/mobi_or_azw3/?tl=fa"
+        },
+        {
+          "rank": 5,
+          "domain": "wudilad.com",
+          "url": "https://www.wudilad.com/?p=2056"
+        },
+        {
+          "rank": 6,
+          "domain": "zhidao.baidu.com",
+          "url": "https://zhidao.baidu.com/question/434010159153609124"
+        },
+        {
+          "rank": 7,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/oz0s17/mobi_or_azw3/?tl=zh-hant"
+        },
+        {
+          "rank": 8,
+          "domain": "bookquill.com",
+          "url": "https://bookquill.com/blog/epub-vs-azw3/"
+        },
+        {
+          "rank": 9,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/8qi32b/converting_epub_files_mobi_or_azw3/?tl=fa"
+        }
+      ]
+    },
+    {
+      "query": "epub to zip",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 7,
+          "url": "https://www.freeconvert.com/epub-converter"
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "mangaconverter.com",
+          "url": "https://www.mangaconverter.com/tools/zip-to-epub"
+        },
+        {
+          "rank": 2,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=ks6DJ8f1ORo"
+        },
+        {
+          "rank": 3,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Calibre/comments/k2f3qg/convert_zip_to_epub_offline/"
+        },
+        {
+          "rank": 4,
+          "domain": "products.aspose.app",
+          "url": "https://products.aspose.app/cells/conversion/epub-to-zip"
+        },
+        {
+          "rank": 5,
+          "domain": "atlantiswordprocessor.blogspot.com",
+          "url": "http://atlantiswordprocessor.blogspot.com/2009/11/tweaking-epubs-its-just-zip-file.html"
+        },
+        {
+          "rank": 6,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=MU48kxruoCE"
+        },
+        {
+          "rank": 7,
+          "domain": "freeconvert.com",
+          "url": "https://www.freeconvert.com/epub-converter"
+        },
+        {
+          "rank": 8,
+          "domain": "mobileread.com",
+          "url": "https://www.mobileread.com/forums/showthread.php?t=67766"
+        },
+        {
+          "rank": 9,
+          "domain": "electricbookworks.com",
+          "url": "https://electricbookworks.com/kb/creating-epub-from-indesign/after-indesign-export-to-epub/zip-the-epub-again/"
+        }
+      ]
+    },
+    {
+      "query": "can i use calibre online without installing",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 8,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/opencalibre/comments/18ymqea/web_based_library/"
+        },
+        {
+          "rank": 2,
+          "domain": "topbestalternatives.com",
+          "url": "https://www.topbestalternatives.com/calibre-web/"
+        },
+        {
+          "rank": 3,
+          "domain": "mobileread.com",
+          "url": "https://www.mobileread.com/forums/showthread.php?t=213554"
+        },
+        {
+          "rank": 4,
+          "domain": "kleinpriviterahowto.fyi",
+          "url": "https://kleinpriviterahowto.fyi/guides/calibre-web/"
+        },
+        {
+          "rank": 5,
+          "domain": "discourse.linuxserver.io",
+          "url": "https://discourse.linuxserver.io/t/to-use-caliber-web-do-i-need-to-have-caliber-installed/3676/2"
+        },
+        {
+          "rank": 6,
+          "domain": "discourse.linuxserver.io",
+          "url": "https://discourse.linuxserver.io/t/calibre-web-read-in-browser-is-missing/1043"
+        },
+        {
+          "rank": 7,
+          "domain": "netguide.io",
+          "url": "https://netguide.io/linux/en/calibre-web-a-practical-front-end-for-ebook-management/"
+        },
+        {
+          "rank": 8,
+          "domain": "petapod.com",
+          "url": "https://petapod.com/en/blog/calibre-web-automated-your-books-zero-effort"
+        }
+      ]
+    },
+    {
+      "query": "ebook reader app",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 9,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=org.readera&hl=en_US"
+        },
+        {
+          "rank": 2,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/ebooks/comments/1hd081e/what_is_the_best_ebook_reading_app/"
+        },
+        {
+          "rank": 3,
+          "domain": "readera.org",
+          "url": "https://readera.org/"
+        },
+        {
+          "rank": 4,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.ebooks.ebookreader&hl=en_US"
+        },
+        {
+          "rank": 5,
+          "domain": "about.ebooks.com",
+          "url": "https://about.ebooks.com/ebook-reader-app-for-android-and-ios/"
+        },
+        {
+          "rank": 6,
+          "domain": "apps.apple.com",
+          "url": "https://apps.apple.com/us/app/pocketbook-reader/id805488884"
+        },
+        {
+          "rank": 7,
+          "domain": "androidauthority.com",
+          "url": "https://www.androidauthority.com/best-ebook-reader-apps-3581520/"
+        },
+        {
+          "rank": 8,
+          "domain": "pcmag.com",
+          "url": "https://www.pcmag.com/how-to/free-ebook-reader-apps-for-smartphone-or-tablet"
+        },
+        {
+          "rank": 9,
+          "domain": "fbreader.org",
+          "url": "https://fbreader.org/en"
+        }
+      ]
+    },
+    {
+      "query": "open epub file",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 8,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "apps.microsoft.com",
+          "url": "https://apps.microsoft.com/detail/9nnckf446qfp?hl=en-US&gl=US"
+        },
+        {
+          "rank": 2,
+          "domain": "edrlab.org",
+          "url": "https://www.edrlab.org/software/thorium-reader/"
+        },
+        {
+          "rank": 3,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=epub.reader&hl=en_AU"
+        },
+        {
+          "rank": 4,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/software/comments/zw7ffp/is_there_a_decent_epub_reader_for_windows/"
+        },
+        {
+          "rank": 5,
+          "domain": "workspace.google.com",
+          "url": "https://workspace.google.com/marketplace/app/cloud_epub_reader_with_drive/155955896601"
+        },
+        {
+          "rank": 6,
+          "domain": "clearmindpress.com",
+          "url": "https://www.clearmindpress.com/how-to-open-an-epub-file?srsltid=AYCX9vL6CC9asVozZ4NgeV87oGLVKlXucpH4fnKdBMVeI59Thmmy5Ide"
+        },
+        {
+          "rank": 7,
+          "domain": "icecreamapps.com",
+          "url": "https://icecreamapps.com/Ebook-Reader/"
+        },
+        {
+          "rank": 8,
+          "domain": "quora.com",
+          "url": "https://www.quora.com/How-do-I-open-EPUB-files"
+        }
+      ]
+    },
+    {
+      "query": "send to kindle",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 6,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "amazon.com",
+          "url": "https://www.amazon.com/sendtokindle"
+        },
+        {
+          "rank": 2,
+          "domain": "chromewebstore.google.com",
+          "url": "https://chromewebstore.google.com/detail/send-to-kindle-for-google/cgdjpilhipecahhcilnafpblkieebhea?hl=en-US"
+        },
+        {
+          "rank": 3,
+          "domain": "play.google.com",
+          "url": "https://play.google.com/store/apps/details?id=com.luciosoft.sendtokindle&hl=en_US"
+        },
+        {
+          "rank": 4,
+          "domain": "amazon.com",
+          "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=G5WYD9SAF7PGXRNA"
+        },
+        {
+          "rank": 5,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/kindle/comments/1pacrs6/can_you_please_explain_what_is_and_how_to_use/"
+        },
+        {
+          "rank": 6,
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/shorts/mPke5qOPXRU"
+        }
+      ]
+    },
+    {
+      "query": "kindle vs kobo",
+      "rankings": [
+        {
+          "domain": "calibre-ebook.com",
+          "name": "Calibre",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "convertio.co",
+          "name": "Convertio",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "zamzar.com",
+          "name": "Zamzar",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "freeconvert.com",
+          "name": "FreeConvert",
+          "rank": 0,
+          "url": null
+        },
+        {
+          "domain": "cloudconvert.com",
+          "name": "CloudConvert",
+          "rank": 0,
+          "url": null
+        }
+      ],
+      "observedDepth": 8,
+      "requestedDepth": 100,
+      "ownRank": 0,
+      "ownUrl": null,
+      "topDomains": [
+        {
+          "rank": 1,
+          "domain": "thedailyfeature.com",
+          "url": "https://thedailyfeature.com/articles/2024/Lifestyle/Technology/Kobo_vs._Kindle__Which_e-Reader_Wins_in_2024_.php"
+        },
+        {
+          "rank": 2,
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/ereader/comments/1h8vrey/ebooks_kobo_vs_kindle/"
+        },
+        {
+          "rank": 3,
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/fb-answers/kobo-clara-bw-vs-kindle/"
+        },
+        {
+          "rank": 4,
+          "domain": "batterymap.co.nz",
+          "url": "https://www.batterymap.co.nz/blog/2024/12/21/kindle-vs-kobo-how-to-choose-the-best-ebook-reader-for-you/"
+        },
+        {
+          "rank": 5,
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/groups/CaughtinGuelph/posts/904183153683904/"
+        },
+        {
+          "rank": 6,
+          "domain": "en.todoereaders.com",
+          "url": "https://en.todoereaders.com/Kindle-vs-Kobo-2024%3A-A-Comprehensive-Comparison-of-the-Best-E-Readers.html"
+        },
+        {
+          "rank": 7,
+          "domain": "lemon8-app.com",
+          "url": "https://www.lemon8-app.com/experience/e-reader-kindle-vs-kobo?region=sg"
+        },
+        {
+          "rank": 8,
+          "domain": "quora.com",
+          "url": "https://www.quora.com/Are-Kobo-readers-any-better-than-Kindles-or-do-they-stop-working-in-a-year-or-two-just-like-Kindles-do"
+        }
+      ]
+    }
+  ]
+}

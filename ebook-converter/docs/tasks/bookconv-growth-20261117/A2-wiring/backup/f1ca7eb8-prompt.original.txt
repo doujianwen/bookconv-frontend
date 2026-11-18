@@ -1,0 +1,24 @@
+你负责按《BookConv SEO/GEO 执行规划文档》（docs/seo-geo-execution-plan-2026-09-17.md）第八节「Batch 4 — 审计整改逐日推进」的排期，每日推进 1 个批次的 SEO 近重收敛 / 死链修复。完整整改细节见 docs/bookconv-google-ai-guide-audit-final-v2.md 第三部分整改清单（A/B/C/D）。本任务只做文档里第八节排期表内的项，不擅自扩展范围。
+
+每日执行流程（每次只做 1 个批次，绝不一口气做完所有批次）：
+
+1. 用 Read 读取 docs/seo-geo-execution-plan-2026-09-17.md 第八节的逐日排期表，找到**第一个状态为 ⏳ 的行**（按 Day 顺序从上到下找，不按日历日期）。
+2. 根据该行的「项（v2 编号）」与 v2 审计文档对应条目，执行整改：
+   - 死链 / llms.txt 类（如 C1）：用 Edit 修改 public/llms.txt，删除指向已删页面的链接；删除后确认该 URL 在 llms.txt 中已无残留。
+   - 近重 301 类（B1 / B2 / B11a 等）：用 Edit 在 src/middleware.ts 的 BLOG_REDIRECTS（约第 22 行）新增 301 映射（旧 slug → 规范 slug）；如需取消某 blog 注册，同步改 src/data/blog/index.ts。
+   - 差异化 / 分工类（B3–B11b、A 组）：Edit 对应 src/data/blog/*.ts 或 src/data/content/*.ts，做内容差异化 / 标题错开。严格遵守项目纪律：正文禁尖括号标签、禁裸反引号、批量只做定点替换、TS 模板串内注入；改动后用 scripts/syntax-sweep.mjs 思路自检（或直接 npm run audit:syntax）。
+3. 跑门禁（必须 0 error 才继续；任一失败立即停止并报告，绝不提交）：
+   - node scripts/audit-content-integrity.mjs
+   - node scripts/find-duplicate-headings.mjs
+   - npm run build
+   - 若改动涉及 llms.txt，额外校验：llms.txt 中每条链接都有对应注册 slug（grep src/data/blog/index.ts、src/data/guides/index.ts、src/data/content/index.ts 确认存在）。
+4. 门禁通过且文件确有改动时提交（**绝不** git add -A / git add .）：
+   - 先 git fetch（防并行写入者冲突）。
+   - 用 git -C "E:/一人公司/电子书格式转换站" add 具体文件，路径用 ebook-converter/ 前缀（例如 ebook-converter/public/llms.txt、ebook-converter/src/middleware.ts、ebook-converter/src/data/blog/index.ts）。
+   - commit，message 注明 Batch 4 Day N + v2 编号 + 改动摘要。
+5. **绝不 push**（push = 公开发布，由人工复核后执行）。
+6. 把该批次行的状态从 ⏳ 改为 ✅，并在文档「七、变更记录」追加一行（日期 / 本批次改动 / commit 哈希或"未 push"）。同时更新「执行状态」行与文末「下次更新」日期。
+7. 用中文向用户汇报：本批次做了什么、门禁结果、已 commit 未 push、请人工复核后 push。
+8. 若门禁失败或无 ⏳ 行（全部完成），立即停止并报告，绝不强行提交。
+
+约束：每批次 ≤3 个页面改动；若某批次需要 >3 页，拆成多个 ⏳ 子行（不要一次改完）。任何不确定处停下询问，不要猜测文件路径或字段。cwd 基准：本仓库 git 根在父目录，提交一律用 ebook-converter/ 前缀路径。

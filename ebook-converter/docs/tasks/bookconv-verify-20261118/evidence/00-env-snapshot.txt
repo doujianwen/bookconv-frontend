@@ -1,0 +1,36 @@
+run_id=BC-VERIFY-20261118
+2026-11-17T08:21:00+08:00
+admin
+0e8f3c1a2412ae8900a4983062342223884549f1
+0e8f3c1a2412ae8900a4983062342223884549f1
+main
+---dirty---
+ M ebook-converter/.gitignore
+ M ebook-converter/data/competitor-series.json
+ M ebook-converter/data/keyword-series.json
+ M ebook-converter/data/seo-geo-board.json
+ M ebook-converter/public/llms.txt
+ M ebook-converter/src/data/guides/index.ts
+?? ebook-converter/WB-BC-20261115-01/backups/
+?? ebook-converter/WB-BC-20261115-01/baselines/
+?? ebook-converter/data/growth-experiments.json
+?? ebook-converter/docs/tasks/BookConv-link-qualification-2026-11-16.json
+?? ebook-converter/docs/tasks/bookconv-90d-A1A5B4-20261116/
+?? ebook-converter/docs/tasks/bookconv-ceo-acceptance-20261117/
+?? ebook-converter/docs/tasks/bookconv-exec-20261117/
+?? ebook-converter/docs/tasks/bookconv-growth-20261117/
+?? ebook-converter/docs/tasks/bookconv-growth-governance-2026-11-16/
+?? ebook-converter/docs/tasks/bookconv-verify-20261118/
+?? "ebook-converter/docs/\345\267\245\344\275\234\346\227\245\345\277\227/2026-11-16.md"
+?? ebook-converter/scripts/geo-comparability-guard.mjs
+?? ebook-converter/scripts/growth-daily-entry.mjs
+?? ebook-converter/scripts/growth-experiment-registry.mjs
+?? ebook-converter/scripts/growth-opportunity-gate.mjs
+?? ebook-converter/scripts/growth-task-idempotency.mjs
+?? ebook-converter/src/data/guides/transfer-ebooks-between-ereaders.ts
+?? ebook-converter/tests/growth-gates.test.ts
+8eb56e8fa39f58aa9c4410a92527f5d38e44e5c51b872748a0fdb7cd553385bb *src/data/guides/transfer-ebooks-between-ereaders.ts
+e6fc0f0a73d18b9232988be09badb994c5ca3cb7139ddabd0e97c5b8b3426dd1 *src/data/guides/index.ts
+be8725876084996ad26144bd4383e95ea8c211c5165f4317dbf1b1e2628d7d12 *public/llms.txt
+6c7c5529ae6499d0642858c751f7851b5add72edffce3a4162e8d03a530a81a6 *data/seo-geo-board.json
+249adebced6aebb580cf8fd97907fa032728a323b758163ed9f9fbc13b33cc60 *_wb_tmp/m14-deploy-baseline/baseline-A-predeploy.txt

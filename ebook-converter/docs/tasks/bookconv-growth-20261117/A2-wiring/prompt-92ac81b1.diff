@@ -1,0 +1,15 @@
+--- backup/92ac81b1-prompt.original.txt	2026-11-17 07:03:16.774800400 +0800
++++ proposed-prompt-92ac81b1.txt	2026-11-17 07:03:22.780782100 +0800
+@@ -5,6 +5,12 @@
+ Part A 巡检执行
+ 1. node scripts/fetch-ga4-daily.mjs --write || true
+    说明：|| true 仅为防整条流水线中断；fetch 失败不会伪造数据（脚本 exit 1 且不写文件）。是否真成功由 Part B 红队 B1 用 ga4-fetch-status.json 新鲜度令牌判定，不靠退出码。
++1b. node scripts/growth-daily-entry.mjs
++   说明（G07 唯一经营执行入口 · 幂等闸门）：本步在 GA4 新鲜度令牌写入之后执行，抢锁 daily-ops@<今天> 并串跑 6 个既有门禁。
++   - exit 0（SUCCESS）→ 继续下一步；
++   - exit 3（SKIP：今日已成功/正在运行）→ 跳过本步继续，不视为失败（补偿重放被吸收）；
++   - exit 1/2（FAILED/UNKNOWN）→ 立即停止本自动化，向用户报告运行记录 _wb_tmp/growth-daily-run-<date>.json 的失败步骤与退出码，不继续后续分析，避免用坏数据出结论。
++   代价：约 +2s；不产生定时、不改生产、不发外链。
+ 2. node scripts/ga-parse-results.mjs
+    说明：运行 syntax-sweep 与 geo-audit-guide --no-online，解析末行/关键指标并写 _wb_tmp/ga-syntax.json {ok,detail} 与 _wb_tmp/ga-geo.json {ok,full,detail}（替代原手工解析，避免 shell 正则转义问题）。
+ 

@@ -1,0 +1,254 @@
+{
+ "json_valid_head": true,
+ "json_valid_worktree": true,
+ "diff_counts": {
+  "LIST_LEN": 1
+ },
+ "diff_removed": [],
+ "diff_changed": [],
+ "diff_listlen": [
+  [
+   "$.modules",
+   14,
+   15
+  ]
+ ],
+ "task_collections": [
+  {
+   "path": "$.modules[0].tasks",
+   "count_new": 5
+  },
+  {
+   "path": "$.modules[1].tasks",
+   "count_new": 7
+  },
+  {
+   "path": "$.modules[2].tasks",
+   "count_new": 16
+  },
+  {
+   "path": "$.modules[3].tasks",
+   "count_new": 14
+  },
+  {
+   "path": "$.modules[4].tasks",
+   "count_new": 6
+  },
+  {
+   "path": "$.modules[5].tasks",
+   "count_new": 7
+  },
+  {
+   "path": "$.modules[6].tasks",
+   "count_new": 10
+  },
+  {
+   "path": "$.modules[7].tasks",
+   "count_new": 5
+  },
+  {
+   "path": "$.modules[8].tasks",
+   "count_new": 20
+  },
+  {
+   "path": "$.modules[9].tasks",
+   "count_new": 8
+  },
+  {
+   "path": "$.modules[10].tasks",
+   "count_new": 3
+  },
+  {
+   "path": "$.modules[11].tasks",
+   "count_new": 9
+  },
+  {
+   "path": "$.modules[12].tasks",
+   "count_new": 4
+  },
+  {
+   "path": "$.modules[13].tasks",
+   "count_new": 32
+  },
+  {
+   "path": "$.modules[14].tasks",
+   "count_new": 6
+  }
+ ],
+ "task_collections_old": [
+  {
+   "path": "$.modules[0].tasks",
+   "count_old": 5
+  },
+  {
+   "path": "$.modules[1].tasks",
+   "count_old": 7
+  },
+  {
+   "path": "$.modules[2].tasks",
+   "count_old": 16
+  },
+  {
+   "path": "$.modules[3].tasks",
+   "count_old": 14
+  },
+  {
+   "path": "$.modules[4].tasks",
+   "count_old": 6
+  },
+  {
+   "path": "$.modules[5].tasks",
+   "count_old": 7
+  },
+  {
+   "path": "$.modules[6].tasks",
+   "count_old": 10
+  },
+  {
+   "path": "$.modules[7].tasks",
+   "count_old": 5
+  },
+  {
+   "path": "$.modules[8].tasks",
+   "count_old": 20
+  },
+  {
+   "path": "$.modules[9].tasks",
+   "count_old": 8
+  },
+  {
+   "path": "$.modules[10].tasks",
+   "count_old": 3
+  },
+  {
+   "path": "$.modules[11].tasks",
+   "count_old": 9
+  },
+  {
+   "path": "$.modules[12].tasks",
+   "count_old": 4
+  },
+  {
+   "path": "$.modules[13].tasks",
+   "count_old": 32
+  }
+ ],
+ "removed_task_paths": [],
+ "task_id_report": {
+  "$.modules[0].tasks": {
+   "total": 5,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[1].tasks": {
+   "total": 7,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[2].tasks": {
+   "total": 16,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[3].tasks": {
+   "total": 14,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[4].tasks": {
+   "total": 6,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[5].tasks": {
+   "total": 7,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[6].tasks": {
+   "total": 10,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[7].tasks": {
+   "total": 5,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[8].tasks": {
+   "total": 20,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[9].tasks": {
+   "total": 8,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[10].tasks": {
+   "total": 3,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[11].tasks": {
+   "total": 9,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[12].tasks": {
+   "total": 4,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[13].tasks": {
+   "total": 32,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": []
+  },
+  "$.modules[14].tasks": {
+   "total": 6,
+   "duplicates": [],
+   "removed_vs_head": [],
+   "added_vs_head": [
+    "M14-1",
+    "M14-2",
+    "M14-3",
+    "M14-4",
+    "M14-5",
+    "M14-6"
+   ]
+  }
+ },
+ "invalid_status": [],
+ "m14_1_records": [
+  [
+   "$.modules[14].tasks[0]",
+   {
+    "id": "M14-1",
+    "status": "done"
+   }
+  ]
+ ],
+ "m14_1_records_head": [],
+ "indent_check": {
+  "worktree_starts_with_two_space_key_lines": 7,
+  "head_starts_with_two_space_key_lines": 7,
+  "worktree_5space_lines": 0,
+  "worktree_lines": 2413,
+  "head_lines": 2321
+ }
+}

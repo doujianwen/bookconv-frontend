@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:/doujianwen/bookconv-frontend/commits/main</id>
+  <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commits/main"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/doujianwen/bookconv-frontend/commits/main.atom"/>
+  <title>Recent Commits to bookconv-frontend:main</title>
+  <updated>2026-11-17T01:32:51Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/5e02b30c84e1a46b82630fe515c927e9433a59e0</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/5e02b30c84e1a46b82630fe515c927e9433a59e0"/>
+    <title>
+        ci(deploy): replace fake-green vercel-deploy.yml with read-only Produ…
+    </title>
+    <updated>2026-11-17T01:32:51Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;ci(deploy): replace fake-green vercel-deploy.yml with read-only Production deployment verification job
+
+- Vercel GitHub Integration remains the only Production deployment path (40/40 vercel[bot])
+- workflow no longer calls Vercel REST API; polls GitHub Deployments API for the pushed SHA
+- checks: environment=production, SHA exact match, creator=vercel[bot], terminal status, live HTTP 200
+- exit codes: 0 PASS / 1 FAIL / 2 SUPERSEDED_NEUTRAL / 3 TIMEOUT / 4 CONFIG
+- permissions: contents:read + deployments:read only; no secrets referenced
+- reverse-injection tests T1-T11 (12 cases incl. rate-limit/network/timeout) 12/12 PASS
+- task: BC-OPS-D1-20261119 (Owner approved D1); refs: docs/tasks/bookconv-ops-20261118&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/0e8f3c1a2412ae8900a4983062342223884549f1</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/0e8f3c1a2412ae8900a4983062342223884549f1"/>
+    <title>
+        seo(guide): can kindle read epub question-style title + meta desc, ll…
+    </title>
+    <updated>2026-11-17T00:05:00Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;seo(guide): can kindle read epub question-style title + meta desc, llms.txt sync (M14-1)
+
+- title: How to Read EPUB on Kindle: 3 Ways That Work -&amp;gt; Can Kindle Read EPUB? Yes - 3 Working Ways (2026) (49 chars)
+- metaDescription rewritten, 153 chars (25-158 band)
+- public/llms.txt line 160 synced to new title (AI-engine freshness signal)
+- run_id: BC-EXEC-20261117-M14-DEPLOY; owner-authorized production deploy
+- gates: integrity 0/0, dup 0, seo-critic 0c/0w, meta-desc 0E, isolated worktree jest 50/50 suites 584/584, build exit 0&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/cd0a9eb15ecc8936c837a5a0d5156d82c1ad2407</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/cd0a9eb15ecc8936c837a5a0d5156d82c1ad2407"/>
+    <title>
+        docs(audit): add WB-BC-20261115-01 dual-account audit delivery bundle…
+    </title>
+    <updated>2026-11-15T05:06:55Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;docs(audit): add WB-BC-20261115-01 dual-account audit delivery bundle (22 files)&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/904b9d101e14e2718e9f67c3f0e941d6ec9070a3</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/904b9d101e14e2718e9f67c3f0e941d6ec9070a3"/>
+    <title>
+        docs: record 2026-11-15 CEO takeover, dual-account handover and daily…
+    </title>
+    <updated>2026-11-15T05:06:12Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;docs: record 2026-11-15 CEO takeover, dual-account handover and daily ops log&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/5590addec7de1b45993a3fb184a3cf38f6c77887</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/5590addec7de1b45993a3fb184a3cf38f6c77887"/>
+    <title>
+        feat(ga4): add UNKNOWN error-string diagnostic library for B2 attribu…
+    </title>
+    <updated>2026-11-15T05:05:46Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;feat(ga4): add UNKNOWN error-string diagnostic library for B2 attribution&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/494a38f5903fa8d7255b96d31dd8aeba66216461</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/494a38f5903fa8d7255b96d31dd8aeba66216461"/>
+    <title>
+        fix(seo): M3-14 全量收口完成并关闭（E2 112→0）
+    </title>
+    <updated>2026-11-15T02:34:48Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;fix(seo): M3-14 全量收口完成并关闭（E2 112→0）
+
+补齐剩余 71 个数据文件 metaDescription（EN 全量 + 7 个 ES 超长件西语版），
+连同前四批共覆盖 83 个数据文件 / 100 条手写 description。
+
+strict 审计：E2 112 → 0（275 个 description 来源，ERROR=0 / WARN=0 / exit 0），
+E1 markdown 残留=0、E3 过短=0。audit --self-test PASS。
+
+修复 next build 抓到的 2 个真实缺陷（transpile gate 不查类型的盲区）：
+- blog 页本地 BlogPostData 与 guide 页 GuideData 缺 metaDescription 字段；
+- BLOG_POSTS 组装漏传 metaDescription，导致第二批 6 条 blog 描述此前静默失效
+  （一直回退 content.intro，类型检查通过但运行时无效果）。
+
+端到端验证：.next/server/app 静态产物实测输出 &amp;lt;meta name=&amp;quot;description&amp;quot;&amp;gt;，
+含 /en/blog、/es/blog（西语独立文案）、/en/guide 三类页；无 es 块页面 ES 侧
+按 M5-2 英文兜底属预期。
+
+board：M3-14 todo → done（写入全量口径 + build 证据 + 类型缺陷修复）。
+门禁：audit strict 0/0、audit self-test PASS、gate:transpile PASS、
+seo-critic 0 critical、test:board PASS、next build PASS、
+verify-closure-gates --no-live exit 0 无假关闭。未 push（治理 §1）。&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/c5a301f241a33d6b448fc9b0579c06f00f7ee059</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/c5a301f241a33d6b448fc9b0579c06f00f7ee059"/>
+    <title>
+        fix(seo): M3-14 第四批 metaDescription 收口（guides ×3）
+    </title>
+    <updated>2026-11-15T02:21:27Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;fix(seo): M3-14 第四批 metaDescription 收口（guides ×3）
+
+新增专用 metaDescription 字段（EN+ES），generateMetadata 优先采用，不动正文：
+- azw3-to-mobi-keep-formatting.ts (143/139)
+- calibre-vs-online-converter.ts (156/147)
+- best-ebook-converter.ts (148/149)
+
+strict 审计 ERROR 99→89（清 10 条）；audit --self-test PASS；
+gate:transpile PASS；seo-critic 0 critical 0 warn。
+未 push（治理 §1）。&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/4aa66ba2339db2e19450eb4299f2aadf1f1cf903</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/4aa66ba2339db2e19450eb4299f2aadf1f1cf903"/>
+    <title>
+        fix(seo): M8-17 关闭 + M4-2 站内内链 + M3-14 meta 收口三批
+    </title>
+    <updated>2026-11-15T02:18:24Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;fix(seo): M8-17 关闭 + M4-2 站内内链 + M3-14 meta 收口三批
+
+M8-17(P0) 上传可靠性：Playwright 真实浏览器对生产复测 5 例全部通过
+（含 4MiB+1 走 R2 直传 PUT=200，两次独立重跑可复现），下载输出魔数
+校验有效（MOBI BOOKMOBI / EPUB ZIP 完整 / PDF %%EOF）。关闭门禁
+verify-closure-gates --no-live：F19/R2 PASS、exit 0、无假关闭；
+台账与 board 同步关闭。未测项（AZW3→PDF 无合法夹具、100MiB、GA4
+成功侧 file_size）如实登记为 UNKNOWN。
+
+M13-32(F14 验收)：连续 3 日 DIRECT_UPLOAD_FAILED ≤2 次/日达标
+（11-12/11-13/11-14 均为 0）→ 关闭。
+
+M4-2 可引用资产：/data 子页内链改落到会被 renderMarkdownToHtml 渲染的
+section.body（原 intro 为纯文本，链接不生成 a href），锚点换为已索引页
+（about 直达 google-search-performance）；修 seo-critic 白名单缺
+/data/{slug} 子路由导致的误判死链（从 DATA_PAGES 派生，反向验证
+注入 /data/does-not-exist 仍判死）。仍保持 doing：外部引用 UNKNOWN。
+
+M3-14 meta 超长收口：新增专用 metaDescription 字段 + generateMetadata
+优先采用（不动正文），strict E2 112→99（3 批 9 文件）；audit self-test
+PASS、gate:transpile PASS、seo-critic 0 critical。
+
+门禁：publish-gate 0 BLOCK / 141 WARN / exit 0；test:board PASS。
+未 push（治理 §1：push=公开发布，由人工复核后执行）。&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/bca80d9f3334176a3473aedf36b71fa89d179815</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/bca80d9f3334176a3473aedf36b71fa89d179815"/>
+    <title>
+        docs: record deploy verification for GA4 口径治理三项 (70c8266)
+    </title>
+    <updated>2026-11-15T01:40:28Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;docs: record deploy verification for GA4 口径治理三项 (70c8266)&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/70c826623999fcdc3825eb8fddf4be7bd270fcb2</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/70c826623999fcdc3825eb8fddf4be7bd270fcb2"/>
+    <title>
+        feat(ga4): attempt-anchored B6 closure, device x error_code split, D2…
+    </title>
+    <updated>2026-11-15T01:34:55Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;feat(ga4): attempt-anchored B6 closure, device x error_code split, D2 false-positive fix
+
+1) B6 口径: add conversion_attempt event at the start of every user-initiated
+   conversion (single + batch), so the invariant becomes terminal &amp;lt;= attempt +
+   tolerance instead of comparing against file_upload (which is only sent after
+   a successful upload, making pre-upload failures look like double counting).
+   Pure predicate in scripts/lib/ga-attempt-closure.mjs with self-test; B6 now
+   reports UNKNOWN explicitly when attempt is absent (pre-deploy window) instead
+   of silently passing. Guarded by tests/ga-attempt-instrumentation.test.ts.
+
+2) R1: new device_error_code module + meta.deviceEngineSplit resolves whether
+   the desktop/mobile failure gap is engine-side or pre-upload. Result: overall
+   failure rates differ significantly (z=2.95, p=0.003) but engine-side rates do
+   not (z=1.07, p=0.285) - desktop fails more on FILE_TOO_LARGE and direct
+   upload, not on engine errors. NON_ENGINE_CODES/isEngineFailureCode extracted
+   to lib/ga-error-codes.mjs as the single source for G1-G4 consumers.
+
+3) D2: rewrite to remove the zero-failure false positive - missing Part A
+   baseline is now UNKNOWN (was PASS), no cross-date fallback, same-caliber
+   engine count (previously missed USER_INPUT_CODES), plus a self-consistency
+   guard on the Part A detail total.
+
+Also: GA4 event-level gap detection (meta.dayCoverage, closure warnings when a
+day is missing) and the Feishu all-green wording now requires BOTH red teams to
+be PASS. Report: docs/GA4口径治理三项-2026-11-15.md&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/06a5017880e32c69b16a55daf6f4f55a37eab0a6</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/06a5017880e32c69b16a55daf6f4f55a37eab0a6"/>
+    <title>
+        docs: record Load failed fix deploy verification (commit b0427cb)
+    </title>
+    <updated>2026-11-15T01:10:33Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;docs: record Load failed fix deploy verification (commit b0427cb)&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/b0427cb0d501e5a0255c81e50a84157ee20da880</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/b0427cb0d501e5a0255c81e50a84157ee20da880"/>
+    <title>
+        fix: classify Safari &#39;Load failed&#39; network error as CONVERSION_UNAVAI…
+    </title>
+    <updated>2026-11-15T01:03:50Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;fix: classify Safari &amp;#39;Load failed&amp;#39; network error as CONVERSION_UNAVAILABLE
+
+Safari/WebKit throws TypeError(&amp;#39;Load failed&amp;#39;) on fetch network failure
+(Chrome: &amp;#39;Failed to fetch&amp;#39;, Firefox: &amp;#39;NetworkError...&amp;#39;). It was not
+covered by the classifier regex, so Safari network failures collapsed
+to UNKNOWN in GA4 (observed 2026-11-02 and 2026-11-14). Add \bload
+failed\b (word-anchored to avoid matching &amp;#39;download failed&amp;#39;). +2 tests.
+
+Also add GA4 residual handling report 2026-11-15.&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/db266a0646144c61554eea27e3d140fcbd7e5db1</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/db266a0646144c61554eea27e3d140fcbd7e5db1"/>
+    <title>
+        [nightly-sync] 2026-11-14 自动同步当日变更
+    </title>
+    <updated>2026-11-14T15:19:50Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-14 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/8990285b660e8a64e8e4c32e126c19f6ba37a417</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/8990285b660e8a64e8e4c32e126c19f6ba37a417"/>
+    <title>
+        fix: improve GA4 conversion failure attribution
+    </title>
+    <updated>2026-11-14T09:33:01Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;fix: improve GA4 conversion failure attribution&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/6e516054a2d0fa9b16ed1606149554b6c8699f47</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/6e516054a2d0fa9b16ed1606149554b6c8699f47"/>
+    <title>
+        [nightly-sync] 2026-11-14 自动同步当日变更
+    </title>
+    <updated>2026-11-14T00:23:04Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-14 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/28f341d02990b89e0fd78ac41161545563227bad</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/28f341d02990b89e0fd78ac41161545563227bad"/>
+    <title>
+        [nightly-sync] 2026-11-13 自动同步当日变更
+    </title>
+    <updated>2026-11-13T01:27:56Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-13 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/28a25a7b15a97823e7066db87f31db84fc3ba983</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/28a25a7b15a97823e7066db87f31db84fc3ba983"/>
+    <title>
+        [nightly-sync] 2026-11-10 自动同步当日变更
+    </title>
+    <updated>2026-11-10T12:02:16Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-10 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/2a4c26ffafbfc85e7f18733e243912c3ac35fbf8</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/2a4c26ffafbfc85e7f18733e243912c3ac35fbf8"/>
+    <title>
+        [nightly-sync] 2026-11-08 自动同步当日变更
+    </title>
+    <updated>2026-11-08T14:52:14Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-08 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/7846d10e7d56490067738d195b5c0bb9e2b67faa</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/7846d10e7d56490067738d195b5c0bb9e2b67faa"/>
+    <title>
+        [nightly-sync] 2026-11-08 自动同步当日变更
+    </title>
+    <updated>2026-11-08T11:37:17Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;[nightly-sync] 2026-11-08 自动同步当日变更&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/65e19d5bf5ee5ec7caca20b9dc52b107b637c989</id>
+    <link type="text/html" rel="alternate" href="https://github.com/doujianwen/bookconv-frontend/commit/65e19d5bf5ee5ec7caca20b9dc52b107b637c989"/>
+    <title>
+        chore(skills): 收录 bookconv-rca-hermes skill 入库（版本化源）
+    </title>
+    <updated>2026-11-08T06:58:02Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/6111853?s=30&amp;v=4"/>
+    <author>
+      <name>doujianwen</name>
+      <uri>https://github.com/doujianwen</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;chore(skills): 收录 bookconv-rca-hermes skill 入库（版本化源）
+
+- 六条证据纪律（原四条 + 健康信号守恒 + 锁测试期望值实测）
+- 已知代码盲区更新：兜底码陷阱 / pollUntilDone 已修复降级为回归观察项 /
+  告警卡字段版本语义 / delegationFallback 必读
+- 服务器侧实测打法（SSH FAIL+STDERR 取证 / 零侵入探针 / 边界扫描）
+- Hermes 不可用时的本地分析 SOP + Windows/SSH gotcha
+- 教训来源补 2026-11-08 双告警案例（元教训：RCA 修复须过独立红队）
+- 双写契约：本文件为版本化源，生效副本在 ~/.dsh/skills/（两处须一致）&lt;/pre&gt;
+    </content>
+  </entry>
+</feed>

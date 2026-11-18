@@ -1,0 +1,32 @@
+=== live llms.txt: transfer title (expect 0) ===
+0
+=== live sitemap: transfer url (expect 0) ===
+0
+=== target URL /en/guide/transfer-ebooks-between-ereaders ===
+HTTP/1.1 200 Connection Established
+
+HTTP/1.1 301 Moved Permanently
+Cache-Control: public, max-age=0, must-revalidate
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: bookconv.com; font-src 'self' data:; connect-src 'self' https://bookconv.com https://*.r2.cloudflarestorage.com https://28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://*.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://www.google-analytics.com https://stats.g.doubleclick.net https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+Content-Type: text/plain
+Cross-Origin-Opener-Policy: same-origin
+Date: Tue, 17 Nov 2026 00:25:28 GMT
+Location: /guide/transfer-ebooks-between-ereaders
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+Referrer-Policy: strict-origin-when-cross-origin
+Server: Vercel
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Vercel-Id: hnd1::tzkhj-1794875128559-907b0fdd07d9
+X-Xss-Protection: 1; mode=block
+Transfer-Encoding: chunked
+
+
+X-Matched-Path above (absent/different=fallback)
+html size: 15
+0
+=== negative control: nonexistent path ===
+HTTP/1.1 200 Connection Established
+HTTP/1.1 301 Moved Permanently
+neg html size: 15

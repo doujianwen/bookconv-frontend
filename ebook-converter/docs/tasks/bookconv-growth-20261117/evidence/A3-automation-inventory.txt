@@ -1,0 +1,67 @@
+=== A3 自动化盘点（只读 mode=ro，C:/Users/29537/.workbuddy/workbuddy.db）===
+未删除自动化: 56
+
+--- 关键词命中（bookconv 经营相关）---
+f112c8ff-e583-4799-9   ACTIVE   recurring next=1796090400000    last=None             owner=2953f515  plen= 1078 Bing Topic Portfolio 月度快照（bookconv GEO M
+104f784c-ee6c-47e8-8   ACTIVE   once      next=None             last=None             owner=2953f515  plen= 1506 Bing 收录复核 - 16页重提交验证 + 剩余EN页续跑
+6d753168-ff62-42c4-9   ACTIVE   once      next=None             last=None             owner=2953f515  plen= 3006 BookConv GEO P0/P1 上线 30 天复测 + B3 决策
+b1e5c6a9-c2a1-4898-a   ACTIVE   once      next=None             last=None             owner=2953f515  plen=  694 BookConv GEO Validation Day 14
+4b501a10-0332-41d2-8   ACTIVE   once      next=None             last=None             owner=2953f515  plen=  676 BookConv GEO Validation Day 30
+4730b8f9-922d-45a9-a   ACTIVE   once      next=None             last=None             owner=2953f515  plen=  758 BookConv GEO Validation Day 7
+f1ca7eb8-20c3-4647-9   ACTIVE   recurring next=1794870600000    last=None             owner=2953f515  plen= 1790 BookConv 审计整改逐日推进
+fb86f72d-1282-4aba-9   ACTIVE   recurring next=1795654800000    last=None             owner=2953f515  plen=  659 BookConv 月度 Kelriva AI 可见性重测
+92ac81b1-94f1-4af1-b   ACTIVE   recurring next=1794790800000    last=None             owner=2953f515  plen= 2574 GA4 每日巡检（WorkBuddy 主导）
+d5aba73b-a5be-47f7-8   ACTIVE   recurring next=1794921420000    last=None             owner=2953f515  plen= 1455 GEO 每日精选摘要
+0795b7de-7b9f-4b23-b   ACTIVE   recurring next=1795050000000    last=None             owner=9c77a53d  plen=  988 GEO卡片发布前门禁巡检
+automation-177764253   ACTIVE   recurring next=1795352400000    last=1781526468292    owner=NULL      plen=  325 OKR周度闭环审计
+7ecd345e-468c-4de3-a   ACTIVE   recurring next=1794787200000    last=None             owner=2953f515  plen= 1316 [bookconv] Bing Webmaster 每日定向 URL 提交
+8290a67f-2c52-43aa-b   ACTIVE   recurring next=1794921900000    last=None             owner=2953f515  plen= 1879 [bookconv] Bing Webmaster 每日定向 URL 提交
+ae63bfcb-e1ab-4ad8-a   ACTIVE   once      next=None             last=None             owner=2953f515  plen= 3350 bookconv M5-6 西语 chrome 本地化 + M5-2 批次3 译
+ad880e02-2d51-4139-9   ACTIVE   once      next=None             last=None             owner=2953f515  plen= 1373 bookconv M5-6 西语 chrome 本地化 + M5-2 批次3 译
+13300356-69b8-43b1-a   ACTIVE   recurring next=1795390200000    last=None             owner=9c77a53d  plen= 1266 bookconv 周一三合一分析（M9-7）
+67494c98-6eb1-44f0-a   ACTIVE   recurring next=1794790800000    last=None             owner=2953f515  plen= 3344 bookconv 每周关键词排名+竞品SERP追踪（周一09:00）
+f4d73b34-4438-468d-9   ACTIVE   recurring next=1795390200000    last=None             owner=2953f515  plen= 2415 bookconv 每周双渠道分析（周一7:30）
+2e8c6c27-7bc9-4229-8   ACTIVE   recurring next=1794837600000    last=None             owner=2953f515  plen= 1635 ebook-converter 夜间同步（每日 22:00 自动 commit+
+87033c10-3277-4663-8   ACTIVE   recurring next=1794787200000    last=None             owner=2953f515  plen= 1697 周度关键词主表刷新 (GSC+Bing)
+automation-178663018   ACTIVE   recurring next=1794841200000    last=1788188470110    owner=2953f515  plen=  687 每日工作日志归档(ebook-converter)
+automation-4           ACTIVE   recurring next=1794789000000    last=1781528939697    owner=NULL      plen=  438 每日数据日报
+1d5da91c-afe5-4b31-9   PAUSED   recurring next=None             last=None             owner=2953f515  plen= 4005 BookConv GA4 每日分析（ehermes 07:00）
+5fc7733d-8446-45e6-9   PAUSED   recurring next=None             last=None             owner=2953f515  plen= 1245 GA4 进阶分析 · 每日检查
+命中数: 25
+
+--- 指定 id 核查 ---
+automation-4: status=ACTIVE type=recurring rrule=FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=8;BYMINUTE=30 next=1794789000000 last=1781528939697 owner=None owner_status=conflict deleted=None
+   name=每日数据日报
+   prompt[:120]=请帮我新建今天的每日数据记录文件。  文件路径：e:\一人公司\公众号文章\04-数据分析与报告\reports\YYYY-MM-DD每日数据.md（用今天的日期）  ⛔ 幂等检查（必须首先执行）： 1. 先检查今天的文件是否已存在（sea
+8290a67f-2c52-43aa-b72f-17d2cdde3b7c: status=ACTIVE type=recurring rrule=FREQ=DAILY;BYHOUR=21;BYMINUTE=25 next=1794921900000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=[bookconv] Bing Webmaster 每日定向 URL 提交
+   prompt[:120]=读取当日上游简报（`E:/GEO项目/GEO简报/{日期}.md`），产出「GEO日报」当期两份草稿。**只产出草稿，严禁代发**；两份状态一律标「⏸️ 草稿待人工审稿，审后手动发布」。  【前置检查】先比对目标文件与简报 mtime：简报
+f1ca7eb8-20c3-4647-98c9-8e0985f9dc47: status=ACTIVE type=recurring rrule=FREQ=DAILY;BYHOUR=7;BYMINUTE=10 next=1794870600000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=BookConv 审计整改逐日推进
+   prompt[:120]=你负责按《BookConv SEO/GEO 执行规划文档》（docs/seo-geo-execution-plan-2026-09-17.md）第八节「Batch 4 — 审计整改逐日推进」的排期，每日推进 1 个批次的 SEO 近重收敛 
+7ecd345e-468c-4de3-a654-d87251c70208: status=ACTIVE type=recurring rrule=FREQ=DAILY;BYHOUR=8;BYMINUTE=0;INTERVAL=1 next=1794787200000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=[bookconv] Bing Webmaster 每日定向 URL 提交
+   prompt[:120]=每日 Bing Webmaster 定向 URL 提交（站点 www.bookconv.com）。执行步骤：  1. cd 到 E:/一人公司/电子书格式转换站/ebook-converter，执行 curl -s https://www.
+92ac81b1-94f1-4af1-b2c2-b8d577c3949c: status=ACTIVE type=recurring rrule=FREQ=DAILY;BYHOUR=9;BYMINUTE=0 next=1794790800000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=GA4 每日巡检（WorkBuddy 主导）
+   prompt[:120]=GA4 每日巡检（四段式闭环：巡检执行 → 红队审计执行结果 → 深度分析 → 红队审计分析结果 → 结果送达）。  严格按顺序执行，每步产物落盘到 _wb_tmp/ 供下游消费：  Part A 巡检执行 1. node scripts/
+d5aba73b-a5be-47f7-894c-93e2447c5e4b: status=ACTIVE type=recurring rrule=FREQ=DAILY;BYHOUR=21;BYMINUTE=17 next=1794921420000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=GEO 每日精选摘要
+   prompt[:120]=你是 GEO 每日精选摘要机器人 Hermes。  请完成以下任务：  **任务：生成 GEO 每日精选摘要**  1. 使用 ProSearch 搜索以下 14 个 SEO/AI 行业信息源的最新内容：    - Search Engin
+f4d73b34-4438-468d-90a5-c4de66248b9b: status=ACTIVE type=recurring rrule=FREQ=WEEKLY;BYDAY=MO;BYHOUR=7;BYMINUTE=30 next=1795390200000 last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=bookconv 每周双渠道分析（周一7:30）
+   prompt[:120]=你是 bookconv.com 的每周双渠道分析流水线。请先调用 `bookconv-daily-analysis` skill 获取完整方法论与口径铁律，然后执行以下流程：  0. 将工作目录设为 `E:/一人公司/电子书格式转换站/eb
+13300356-69b8-43b1-ac40-85138be317ab: status=ACTIVE type=recurring rrule=FREQ=WEEKLY;BYDAY=MO;BYHOUR=7;BYMINUTE=30 next=1795390200000 last=None owner=9c77a53d-d762-4f87-a3fc-a0ebd1a4c481 owner_status=confirmed deleted=None
+   name=bookconv 周一三合一分析（M9-7）
+   prompt[:120]=在项目根 `E:/一人公司/电子书格式转换站/ebook-converter` 跑 bookconv「周一三合一分析」（作战台任务 M9-7，执行计划 M14）。先读 `C:/Users/29537/.workbuddy/skills/bo
+ad880e02-2d51-4139-9a40-1bccd0d56b56: status=ACTIVE type=once rrule= next=None last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=bookconv M5-6 西语 chrome 本地化 + M5-2 批次3 译文（10-22）
+   prompt[:120]=【GA4 T+1 因果验证 · 9912f0d mobi/azw3 源 402 归零】 背景：2026-10-22 20:24 已 push commit 9912f0d（真 MOBI/AZW3 文本抽取器，纯 JS 路径覆盖 mobi/a
+ae63bfcb-e1ab-4ad8-a930-ef8a41e80bd0: status=ACTIVE type=once rrule= next=None last=None owner=2953f515-9ea7-4e16-96dd-77bb90b60360 owner_status=confirmed deleted=None
+   name=bookconv M5-6 西语 chrome 本地化 + M5-2 批次3 译文（10-22）
+   prompt[:120]=在 E:\一人公司\电子书格式转换站\ebook-converter 执行 2026-10-22 的两项作战板任务：M5-6（西语页 chrome 层本地化）与 M5-2 批次3（3 篇西语 guide 译文）。严格按下列纪律执行，全过程无
+
+--- 近14天运行统计（按 id）---
+run cols: ['thread_id', 'automation_id', 'status', 'read_at', 'thread_title', 'source_cwd', 'runs_json', 'result_success', 'created_at', 'updated_at', 'metadata_json', 'failure_code', 'reason_code']
+
+run cols: ['thread_id', 'automation_id', 'status', 'read_at', 'thread_title', 'source_cwd', 'runs_json', 'result_success', 'created_at', 'updated_at', 'metadata_json', 'failure_code', 'reason_code']

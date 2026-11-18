@@ -1,0 +1,12 @@
+{
+  "id": "f1ca7eb8-20c3-4647-98c9-8e0985f9dc47",
+  "name": "BookConv 审计整改逐日推进",
+  "status": "ACTIVE",
+  "rrule": "FREQ=DAILY;BYHOUR=7;BYMINUTE=10",
+  "next_run_at": 1794870600000,
+  "owner_user_id": "2953f515-9ea7-4e16-96dd-77bb90b60360",
+  "model_id": "hy3",
+  "workspace_scope": "workspace",
+  "cwds": "[\"E:/一人公司/电子书格式转换站/ebook-converter\"]",
+  "updated_at": 1794784339531
+}

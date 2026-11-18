@@ -1,0 +1,24 @@
+(node:25148) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✅ raw → E:\一人公司\电子书格式转换站\ebook-converter\docs\tasks\bookconv-90d-A1A5B4-20261116\evidence\ga4-acq-T1-2026-11-15.json
+— page_view 上游分层（page_view 事件口径，total=107）⚠️ 这不是会话入口
+   container: 20 (18.7%)
+   internal: 45 (42.1%)
+   external: 4 (3.7%)
+   none: 38 (35.5%)
+   闭合校验: PASS（= screenPageViews 107）
+   外部域名: cn.bing.com(3), www.doubao.com(1)
+— 会话入口分层（session_start 口径，total=36；⚠️ 分母≠sessions 449）
+   container: 1 (2.8%)
+   internal: 3 (8.3%)
+   external: 4 (11.1%)
+   none: 28 (77.8%)
+   外部域名: cn.bing.com(3), www.doubao.com(1)
+— 从容器打开的会话: 7 个（pageLocation 带容器参数）| 归因 {"(direct)/(none)":7}
+— session_start vs sessions: 36 vs 逐日相加 38（gap -2）
+— 带容器参数的落地 URL: 7 行 / 26 个 page_view
+   19 | utm=none | https://www.bookconv.com/?use_xbridge3=true&loader_name=forest&need_sec_link=1&sec_link_scene=im&the
+   2 | utm=none | https://www.bookconv.com/?push_animated=1&webview_progress_bar=1&flow_extra=eyJpbmxpbmVfZGlzcGxheV9w
+   1 | utm=none | https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbi
+   1 | utm=none | https://www.bookconv.com/?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbi
+   1 | utm=none | https://www.bookconv.com/?push_animated=1&show_loading=0&webview_progress_bar=1&theme=light

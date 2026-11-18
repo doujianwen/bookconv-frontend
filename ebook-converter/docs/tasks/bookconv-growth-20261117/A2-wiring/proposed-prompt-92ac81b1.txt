@@ -1,0 +1,51 @@
+GA4 每日巡检（四段式闭环：巡检执行 → 红队审计执行结果 → 深度分析 → 红队审计分析结果 → 结果送达）。
+
+严格按顺序执行，每步产物落盘到 _wb_tmp/ 供下游消费：
+
+Part A 巡检执行
+1. node scripts/fetch-ga4-daily.mjs --write || true
+   说明：|| true 仅为防整条流水线中断；fetch 失败不会伪造数据（脚本 exit 1 且不写文件）。是否真成功由 Part B 红队 B1 用 ga4-fetch-status.json 新鲜度令牌判定，不靠退出码。
+1b. node scripts/growth-daily-entry.mjs
+   说明（G07 唯一经营执行入口 · 幂等闸门）：本步在 GA4 新鲜度令牌写入之后执行，抢锁 daily-ops@<今天> 并串跑 6 个既有门禁。
+   - exit 0（SUCCESS）→ 继续下一步；
+   - exit 3（SKIP：今日已成功/正在运行）→ 跳过本步继续，不视为失败（补偿重放被吸收）；
+   - exit 1/2（FAILED/UNKNOWN）→ 立即停止本自动化，向用户报告运行记录 _wb_tmp/growth-daily-run-<date>.json 的失败步骤与退出码，不继续后续分析，避免用坏数据出结论。
+   代价：约 +2s；不产生定时、不改生产、不发外链。
+2. node scripts/ga-parse-results.mjs
+   说明：运行 syntax-sweep 与 geo-audit-guide --no-online，解析末行/关键指标并写 _wb_tmp/ga-syntax.json {ok,detail} 与 _wb_tmp/ga-geo.json {ok,full,detail}（替代原手工解析，避免 shell 正则转义问题）。
+
+Part B 红队审计·执行结果
+3. node scripts/ga4-redteam.mjs
+   对 Part A 产出独立质疑，固化「假成功」硬检查：
+   - B1 数据新鲜度(P0)：ga4-fetch-status.json 须 ok 且 date==T-1 且 at 在 30min 内且 ga4-live.json mtime 一致；fetch 失败被 || true 容忍时令牌缺失/陈旧 → FAIL，抓出"旧数据照常全绿"。
+   - B2 失败归因可信度 / B3 指标口径 / B4 门禁完整性 / B5 飞书结论可信(依赖B1)。
+   产出 _wb_tmp/ga-redteam-latest.json。
+
+Part C 深度分析
+4. node scripts/ga4-advanced-analysis.mjs
+   拉 30 天多维数据：日序列、设备/来源媒介、conversion_failed 按 date×error_code / format 分流（含 failed_by_date_error_code 模块，与 Part A 同源维度，供 Part D 比对）。产出 _wb_tmp/ga4-advanced-<END>.json（END=T-1）。fetch 失败则整体 exit 1 不写文件，由 Part D D0 拦截。
+
+Part D 红队审计·深度分析结果
+5. node scripts/ga4-redteam-analysis.mjs
+   对 Part C 结论独立质疑：
+   - D0 深度分析数据新鲜度(P0)：advanced.meta.end 须 == T-1，否则 FAIL（防陈旧文件假 PASS）。
+   - D1 趋势稳健性 / D2 失败分流×Part A 矛盾(P0，抓引擎失败漏报/假阴性) / D3 来源媒介归因 / D4 结论支撑度。
+   产出 _wb_tmp/ga-redteam-analysis-latest.json。
+
+Part A 收尾·飞书
+6. node scripts/ga-inspection.mjs
+   消费全部 _wb_tmp 产物（基础分析 + 进阶卫生 + 两段红队结论），组装含 [bookconv] 的飞书简报。关键：任一段红队 overall==FAIL 时，结论改为"🛡️ 红队审计拦截：检出假成功/漏报，巡检结论不可全信"，绝不发"全绿"；仅两段均 PASS 才标全绿。
+
+Part E 结果送达（强制 · 不可跳过 · P0）
+背景：2026-11-04 22:29 那轮六个脚本全部跑完、飞书也已发，但 send_automation_result 与 present_files 实际调用均为 0，最终回复又被 429 限流 + RPC 超时打断 ⇒ 任务显示「已结束」而用户侧完全空白。自动化输出不走普通对话流，必须走下面的专用通道。
+7. 写完整详报到固定路径 `_wb_tmp/GA4每日巡检详报_<本轮日期 YYYY-MM-DD>.md`，内容至少含：六步执行结果表、T-1 核心数据（活跃用户/事件/会话、上传/完成/失败、三种率）、失败归因明细、Part B 与 Part D 逐项 verdict+evidence、Part C 深度分析摘要（趋势/失败格式 TOP/设备/来源，含口径提醒）、人工复核发现的疑点与残余风险、下一步可行动项。数据一律从 _wb_tmp 落盘产物读取，不得凭 stdout 记忆手写。
+8. 必须调用 present_files 交付第 7 步的详报文件（这是跨客户端唯一可靠通道，自动化结果可能在另一客户端查看）。**不要调用或依赖 send_automation_result**——该工具名在当前会话不可解析（检索只返回误命中的 agent-mail SendMessage）；完整结论直接写在正常 assistant 回复里，不要只写「已执行完毕」。
+9. 收尾必检（防止「跑完≠送达」复发）：
+   - 用 node 检查详报文件存在、非空、且 mtime 不早于本轮 fetch 令牌的 at；
+   - 确认 present_files 调用返回成功；
+   - 两项任一不满足 → 在回复首行明确标注 `NOT_SYNCED：结果未送达`，并说明缺哪一项，绝不写「已送达/已完成闭环」。
+   - 只有两项都通过，才可在回复中标注送达成功。
+
+收尾：把本次关键结论（流量、完成率、失败归因、两段红队 overall 与任何 FAIL/UNKNOWN 证据、以及 Part E 送达状态 SYNCED/NOT_SYNCED）写入 .workbuddy/memory/automations/92ac81b1-94f1-4af1-b2c2-b8d577c3949c/memory.md（仅高层结论，不贴全文）。
+
+注：hermes 对拍已终止（cutover 2026-10-14），无需对拍比对。

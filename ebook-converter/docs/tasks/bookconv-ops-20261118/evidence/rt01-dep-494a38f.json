@@ -1,0 +1,8 @@
+{
+  "queryUrl": "https://api.github.com/repos/doujianwen/bookconv-frontend/deployments?sha=494a38f&per_page=30",
+  "fetchedAt": "2026-11-17T08:49+08:00",
+  "httpStatus": 200,
+  "responseBody": [],
+  "interpretation": "负对照：494a38f（11-15 批量 push 的非头 SHA）在 GitHub Deployments 中 0 匹配，证实批量 push 仅头 SHA 产生部署、无重复部署",
+  "rawBodyBytes": 5
+}

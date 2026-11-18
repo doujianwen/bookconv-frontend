@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-11-16T15:09:39.727Z",
+  "dataDate": "2026-11-15 (T-1)",
+  "fetchedAt": {
+    "t1": "2026-11-16T15:08:15.111Z",
+    "t7": "2026-11-16T15:08:35.423Z"
+  },
+  "level_discipline": "周期用户数来自整段 dateRange runReport（服务端去重）；事件/会话/人分开；不跨维相加",
+  "T1": {
+    "periodTotals": {
+      "activeUsers": 34,
+      "totalUsers": 36,
+      "newUsers": 30,
+      "sessions": 38,
+      "engagedSessions": 18,
+      "keyEvents": 26,
+      "screenPageViews": 107
+    },
+    "core_events": {
+      "file_upload": 30,
+      "conversion_attempt": 30,
+      "conversion_complete": 26,
+      "conversion_failed": 2,
+      "page_view": 107,
+      "session_start": 36
+    },
+    "terminal_success_rate_event_level": {
+      "numerator": 26,
+      "denominator": 28,
+      "ci95": {
+        "rate": 92.9,
+        "lo": 77.4,
+        "hi": 98
+      },
+      "caveat": "事件级终态占比，非任务级成功率（无 job_id 关联）。conversion_complete 26 与 file_upload 30 不同用户数，不能当同批任务的转化。"
+    },
+    "uploadRateProxy_warning": {
+      "value": "86.7%",
+      "forbidden": "不得解释为真实转化率：分母 file_upload 与分子 conversion_complete 的事件口径/用户口径不同（9 vs 6 users）。"
+    },
+    "error_codes": [
+      {
+        "code": "CONVERSION_UNAVAILABLE",
+        "events": 1
+      },
+      {
+        "code": "UNKNOWN",
+        "events": 1
+      }
+    ],
+    "channel_group": [
+      {
+        "channel": "Direct",
+        "sessions": 32,
+        "keyEvents": 8
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 11,
+        "keyEvents": 13
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 3,
+        "keyEvents": 5
+      },
+      {
+        "channel": "Referral",
+        "sessions": 1,
+        "keyEvents": 0
+      }
+    ],
+    "source_medium": [
+      {
+        "source": "(direct)",
+        "medium": "(none)",
+        "sessions": 32,
+        "keyEvents": 8
+      },
+      {
+        "source": "(not set)",
+        "medium": "(not set)",
+        "sessions": 11,
+        "keyEvents": 13
+      },
+      {
+        "source": "cn.bing.com",
+        "medium": "referral",
+        "sessions": 3,
+        "keyEvents": 5
+      },
+      {
+        "source": "doubao.com",
+        "medium": "referral",
+        "sessions": 1,
+        "keyEvents": 0
+      }
+    ],
+    "country": [
+      {
+        "country": "China",
+        "sessions": 38,
+        "activeUsers": 34
+      }
+    ],
+    "referrer_tiers_pageview": {
+      "level": "pageview",
+      "metricKey": "eventCount",
+      "urlKey": "pageReferrer",
+      "total": 107,
+      "caveat": "这是 page_view 分布，不是会话入口。禁止用它说\"X% 的用户从某处来\"。",
+      "tiers": {
+        "container": {
+          "value": 20,
+          "pct": 18.7
+        },
+        "internal": {
+          "value": 45,
+          "pct": 42.1
+        },
+        "external": {
+          "value": 4,
+          "pct": 3.7
+        },
+        "none": {
+          "value": 38,
+          "pct": 35.5
+        }
+      },
+      "externalHosts": [
+        [
+          "cn.bing.com",
+          3
+        ],
+        [
+          "www.doubao.com",
+          1
+        ]
+      ],
+      "closedCheck": "PASS（= screenPageViews 107）"
+    },
+    "entry_tiers_session": {
+      "level": "session",
+      "metricKey": "eventCount",
+      "urlKey": "pageReferrer",
+      "total": 36,
+      "caveat": "session_start 事件数 ≠ sessions 指标（实测 426 vs 449，逐日双向波动）。分母要写清是哪一个。",
+      "tiers": {
+        "container": {
+          "value": 1,
+          "pct": 2.8
+        },
+        "internal": {
+          "value": 3,
+          "pct": 8.3
+        },
+        "external": {
+          "value": 4,
+          "pct": 11.1
+        },
+        "none": {
+          "value": 28,
+          "pct": 77.8
+        }
+      },
+      "externalHosts": [
+        [
+          "cn.bing.com",
+          3
+        ],
+        [
+          "www.doubao.com",
+          1
+        ]
+      ]
+    }
+  },
+  "baseline_7d": {
+    "window": {
+      "main": {
+        "start": "2026-11-09",
+        "end": "2026-11-15"
+      }
+    },
+    "periodTotals": {
+      "activeUsers": 161,
+      "totalUsers": 164,
+      "newUsers": 149,
+      "sessions": 181,
+      "engagedSessions": 94,
+      "keyEvents": 90,
+      "screenPageViews": 392
+    },
+    "channel_group": [
+      {
+        "channel": "Direct",
+        "sessions": 148
+      },
+      {
+        "channel": "Organic Search",
+        "sessions": 15
+      },
+      {
+        "channel": "Unassigned",
+        "sessions": 15
+      },
+      {
+        "channel": "Referral",
+        "sessions": 12
+      }
+    ],
+    "error_codes": [
+      {
+        "code": "UNKNOWN",
+        "events": 17
+      },
+      {
+        "code": "DIRECT_UPLOAD_PUT_FAILED",
+        "events": 2
+      },
+      {
+        "code": "CONVERSION_UNAVAILABLE",
+        "events": 1
+      },
+      {
+        "code": "CORRUPT_INPUT",
+        "events": 1
+      },
+      {
+        "code": "UPLOAD_NOT_FOUND",
+        "events": 1
+      }
+    ]
+  },
+  "anomalies": [
+    {
+      "id": "A4-ANOM-1",
+      "level": "P1",
+      "title": ":country=China 100%",
+      "evidence": "China:38",
+      "interpretation": "T-1 全部 38 sessions 均来自 China，与\"海外非品牌流量\"目标不符；高度疑似本地测试/代理出口流量污染。不可当海外增长证据。"
+    },
+    {
+      "id": "A4-ANOM-2",
+      "level": "P1",
+      "title": "(not set)/Unassigned 会话高企",
+      "evidence": "T-1 (not set) 11 sessions / keyEvents 13；7d Unassigned 15 sessions / keyEvents 18 / 平均时长 412s",
+      "interpretation": "Unassigned 会话 engagementRate=0 但 keyEvents 高、时长异常长，符合自动化/爬虫/埋点缺失特征。引擎侧归因标 UNKNOWN，不据此判\"用户行为\"。"
+    },
+    {
+      "id": "A4-ANOM-3",
+      "level": "P2",
+      "title": "外部引荐极少且非搜索主渠道",
+      "evidence": "T-1 external pageReferrer: cn.bing.com 3, doubao.com 1；Organic Search 仅 3 sessions；Referral 1 session",
+      "interpretation": "无任何 AI 平台（ChatGPT/Perplexity/Gemini）可识别引荐；doubao.com 为 1 次会话样本，不能称 AI 引荐趋势。externalHosts 来自 pageview 分层，不是会话入口。"
+    },
+    {
+      "id": "A4-ANOM-4",
+      "level": "P1",
+      "title": "7d 新增错误码 DIRECT_UPLOAD_PUT_FAILED / CORRUPT_INPUT / UPLOAD_NOT_FOUND",
+      "evidence": "UNKNOWN:17, DIRECT_UPLOAD_PUT_FAILED:2, CONVERSION_UNAVAILABLE:1, CORRUPT_INPUT:1, UPLOAD_NOT_FOUND:1",
+      "interpretation": "T-1 仅 CONVERSION_UNAVAILABLE/UNKNOWN 各 1，但 7d 窗口出现直传 PUT 失败等错误码 → 链路健康结论必须带时点，单看 T-1 会漏报。"
+    }
+  ],
+  "verification_split": {
+    "pull": "PASS — 本轮 ga4-data-api 实拉，exit 0，fetchedAt 见上",
+    "land": "PASS — 原始 JSON 落盘 evidence/ga4-acq-{T1,7d}-2026-11-15.json",
+    "report": "PASS — 本分析脚本生成",
+    "send": "NOT_SENT — 未向飞书/Notion/外部发送（用户约束：未经授权不改生产；发送属对外动作需单独授权）",
+    "readback": "NOT_APPLICABLE — 无外部写入，无需读回"
+  }
+}

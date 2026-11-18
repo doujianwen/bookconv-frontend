@@ -1,0 +1,38 @@
+=== guide page ===
+HTTP/1.1 200 Connection Established
+
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Access-Control-Allow-Origin: *
+Age: 909
+Cache-Control: public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400
+Content-Disposition: inline
+Content-Length: 102002
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.sentry.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: bookconv.com; font-src 'self' data:; connect-src 'self' https://bookconv.com https://*.r2.cloudflarestorage.com https://28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://*.28f140233aafb5ea6b1198584e2a1658.r2.cloudflarestorage.com https://www.google-analytics.com https://stats.g.doubleclick.net https://*.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+Content-Type: text/html; charset=utf-8
+Cross-Origin-Opener-Policy: same-origin
+Date: Tue, 17 Nov 2026 00:21:38 GMT
+Etag: "30a7ccca2275b5239c6f6b904662d987"
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+Referrer-Policy: strict-origin-when-cross-origin
+Server: Vercel
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Matched-Path: /en/guide/how-to-read-epub-on-kindle
+X-Nextjs-Prerender: 1
+X-Nextjs-Stale-Time: 300
+X-Vercel-Cache: HIT
+X-Vercel-Id: hnd1::6b9n4-1794874897430-d9a58db929ed
+X-Xss-Protection: 1; mode=block
+
+HTTP_EXIT=0
+=== page head extracts ===
+<title>Can Kindle Read EPUB? Yes - 3 Working Ways (2026) | BookConv</title>
+<meta name="description" content="Kindle will not open an EPUB over USB, but Send to Kindle converts it, and Calibre builds an AZW3. Three routes compared, and which one keeps formatting."
+<link rel="canonical" href="https://www.bookconv.com/guide/how-to-read-epub-on-kindle"
+<meta property="og:title" content="Can Kindle Read EPUB? Yes - 3 Working Ways (2026)"
+<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">Can Kindle Read EPUB? Yes - 3 Working Ways (2026)</h1>
+=== old title residue (expect 0) ===
+0

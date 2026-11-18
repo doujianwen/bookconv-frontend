@@ -1,0 +1,15 @@
+=== /guide/transfer-ebooks-between-ereaders (follow redirects) ===
+HTTP/1.1 200 Connection Established
+HTTP/1.1 404 Not Found
+X-Matched-Path: /[locale]/guide/[slug]
+X-Vercel-Cache: MISS
+final html size: 34384
+transfer title count: 0
+<title>BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF</title>
+=== negative control: /guide/this-path-does-not-exist-xyz123 ===
+HTTP/1.1 200 Connection Established
+HTTP/1.1 404 Not Found
+X-Matched-Path: /[locale]/guide/[slug]
+neg html size: 34382
+<title>BookConv -- Free Online Ebook Format Converter | Convert EPUB, MOBI, AZW3, PDF</title>
+neg contains transfer: 0

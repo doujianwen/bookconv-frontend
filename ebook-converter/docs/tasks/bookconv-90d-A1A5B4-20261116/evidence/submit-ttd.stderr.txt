@@ -1,0 +1,24 @@
+(node:17852) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/deps/undici/undici:14976
+      Error.captureStackTrace(err);
+            ^
+
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:14976:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async file:///E:/%E4%B8%80%E4%BA%BA%E5%85%AC%E5%8F%B8/%E7%94%B5%E5%AD%90%E4%B9%A6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%AB%99/ebook-converter/docs/tasks/bookconv-90d-A1A5B4-20261116/evidence/submit-ttd.mjs:16:17 {
+  [cause]: Error: Client network socket disconnected before secure TLS connection was established
+      at TLSSocket.onConnectEnd (node:internal/tls/wrap:1754:19)
+      at TLSSocket.emit (node:events:531:35)
+      at endReadableNT (node:internal/streams/readable:1698:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+    code: 'ECONNRESET',
+    path: undefined,
+    host: 'thetooldirectory.com',
+    port: 443,
+    localAddress: null
+  }
+}
+
+Node.js v22.22.2

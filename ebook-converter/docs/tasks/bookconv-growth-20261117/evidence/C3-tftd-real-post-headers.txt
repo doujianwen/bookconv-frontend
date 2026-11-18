@@ -1,0 +1,22 @@
+HTTP/1.1 200 Connection Established
+
+HTTP/1.1 302 Found
+Date: Mon, 16 Nov 2026 23:17:15 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+Connection: keep-alive
+location: https://thetooldirectory.com/submit-a-tool/?submitted=1
+permissions-policy: private-state-token-redemption=(self "https://www.google.com" "https://www.gstatic.com" "https://recaptcha.net" "https://challenges.cloudflare.com" "https://hcaptcha.com"), private-state-token-issuance=(self "https://www.google.com" "https://www.gstatic.com" "https://recaptcha.net" "https://challenges.cloudflare.com" "https://hcaptcha.com")
+x-redirect-by: WordPress
+x-litespeed-cache-control: no-cache
+Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+x-litespeed-purge: public,dfe_
+platform: hostinger
+panel: hpanel
+content-security-policy: upgrade-insecure-requests
+Server: hcdn
+alt-svc: h3=":443"; ma=86400
+x-hcdn-request-id: c6a436b18c13acc1c85e0ed70ce2dd00-tok-edge4
+x-hcdn-cache-status: DYNAMIC
+x-hcdn-upstream-rt: 1.316
+

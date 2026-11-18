@@ -1,0 +1,16 @@
+=== A1 唯一入口 dry-run 实测 2026-11-17 07:02:09 ===
+PASS  新鲜度 ga4-fetch-status age=0.1h limit=24h
+PASS  新鲜度 keyword-series age=9.2h limit=72h
+PASS  scripts/growth-opportunity-gate.mjs (exit=0, 252ms)   "note": "机会不足时 eligible 可为空，不强制生成增长任务" | }
+PASS  scripts/growth-task-idempotency.mjs (exit=0, 180ms) GATE: board 任务 146 条，唯一 id 146 个，重复 0 个 | PASS: 任务 id 唯一（未提供事件日志，幂等维度=NOT_CHECKED）
+PASS  scripts/growth-experiment-registry.mjs (exit=0, 191ms) PASS: 2 个实验全部合格 | execution={"RUNNING":1,"BLOCKED":1} | effect={"PENDING":1,"NOT_STARTED":1} | 提醒：execution 与 effect 独立，EXECUTED 不构成经营效果。
+PASS  scripts/geo-comparability-guard.mjs (exit=0, 196ms) SELFTEST PASS: 4 用例（同名同义/不同义/未采/空定义）全部符合预期
+PASS  scripts/audit-content-integrity.mjs (exit=0, 890ms) --- | content+blog data files scanned | 0 error(s) | 0 warning(s)
+
+DAILY-ENTRY SUCCESS @ 2026-11-17 (dry-run, 未写状态)
+EXIT=0
+
+=== 幂等：当天已 SUCCESS 时真实触发（应 exit 3）===
+SKIP: daily-ops@2026-11-17 已在运行或今日已完成 —— 重复触发被吸收，不执行任何步骤
+SKIP(SKIP_DONE): daily-ops@2026-11-17 — 该 run-key 已成功完成（幂等吸收）；不重复执行，退出码 3
+EXIT=3

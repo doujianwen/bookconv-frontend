@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-11-16T02:11:27.452894+00:00",
+  "results": [
+    {
+      "url": "https://alternativeto.net/faq/",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "url": "https://www.saashub.com/",
+      "status": 200,
+      "final_url": "https://www.saashub.com/",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://help.producthunt.com/en/articles/479557-how-to-post-a-product",
+      "status": 200,
+      "final_url": "https://help.producthunt.com/en/articles/479557-how-to-post-a-product",
+      "content_type": "text/html; charset=utf-8"
+    }
+  ],
+  "interpretation": "HTTP reachability only; does not establish listing existence or submission"
+}

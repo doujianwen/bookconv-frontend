@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""WB-BC-20261115-01 独立验证脚本（第二通道，独立于审计主流程复算关键断言）
+退出码：0=全部 PASS，1=存在 FAIL，2=存在 UNKNOWN/跳过
+"""
+import sqlite3, json, os, sys, datetime, urllib.request
+
+DB = 'file:C:/Users/29537/.workbuddy/workbuddy.db?mode=ro'
+A1 = '2953f515-9ea7-4e16-96dd-77bb90b60360'
+A2 = '9c77a53d-d762-4f87-a3fc-a0ebd1a4c481'
+NATIVE = r'E:/一人公司/CEO-Agent/realtime-workbench/delivery/AIOS-CLOSURE-20261115-V3/evidence/scheduled_recurring/native_probe2.json'
+BASE = r'E:/一人公司/电子书格式转换站/ebook-converter/WB-BC-20261115-01'
+results = []
+
+def check(name, cond, unknown=False):
+    results.append((name, 'UNKNOWN' if unknown else ('PASS' if cond else 'FAIL'), cond if not unknown else ''))
+
+con = sqlite3.connect(DB, uri=True); cur = con.cursor()
+
+def cnt(sql):
+    return cur.execute(sql).fetchone()[0]
+
+# 1 总量（运行数随自动化持续执行单调增长 → 用 >= 基线，避免时间漂移假红；11-15 12:15 裁决后基线）
+live_a1 = cnt(f"SELECT COUNT(*) FROM automations WHERE owner_user_id='{A1}' AND deleted_at IS NULL")
+live_a2 = cnt(f"SELECT COUNT(*) FROM automations WHERE owner_user_id='{A2}' AND deleted_at IS NULL")
+live_null = cnt("SELECT COUNT(*) FROM automations WHERE owner_user_id IS NULL AND deleted_at IS NULL")
+live_tp = cnt("SELECT COUNT(*) FROM automations WHERE owner_user_id IS NOT NULL AND owner_user_id NOT IN (?,?) AND deleted_at IS NULL", (A1,) ) if False else cnt(f"SELECT COUNT(*) FROM automations WHERE owner_user_id IS NOT NULL AND owner_user_id NOT IN ('{A1}','{A2}') AND deleted_at IS NULL")
+check('live A1=43', live_a1 == 43, live_a1 != 43 and print(live_a1) or False)
+check('live orphan=5', live_null == 5)
+check('live third-party=1', live_tp == 1)
+tr = cnt("SELECT COUNT(*) FROM automation_runs")
+check('runs total>=968', tr >= 968)
+r1 = cur.execute(f"SELECT COUNT(*), SUM(CASE WHEN result_success=1 THEN 1 ELSE 0 END) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE a.owner_user_id='{A1}'").fetchone()
+check('A1 runs>=583/ok>=435', r1[0] >= 583 and r1[1] >= 435)
+r2 = cur.execute(f"SELECT COUNT(*), SUM(CASE WHEN result_success=1 THEN 1 ELSE 0 END) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE a.owner_user_id='{A2}'").fetchone()
+check('A2 runs>=53/ok>=29', r2[0] >= 53 and r2[1] >= 29)
+ro = cnt("SELECT COUNT(*) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE a.owner_user_id IS NULL")
+check('orphan runs>=331', ro >= 331)
+
+# 2 原生回执交叉（回执为 11-15 09:55 静态快照；裁决后 status/name 已演进 → 按 id 集合比对身份覆盖，status/name 单独按裁决后基线断言）
+native = json.load(open(NATIVE, encoding='utf-8'))['automations']
+nids = {a['id'] for a in native}
+sids = {r[0] for r in cur.execute(f"SELECT id FROM automations WHERE owner_user_id='{A1}' AND deleted_at IS NULL").fetchall()}
+check('native count=43', len(native) == 43)
+check('native==sqlite id set 43/43', nids == sids)
+
+# 2.5 裁决后状态基线（11-15 12:00 Owner 四项裁决）
+st_fe = cur.execute("SELECT status FROM automations WHERE id='feffb8a1-598b-4c3e-9df5-a85deb9c3209'").fetchone()[0]
+check('ruling: feffb8a1 PAUSED', st_fe == 'PAUSED')
+nm = cur.execute("SELECT name FROM automations WHERE id='9afe8131-46f7-4481-b578-dfa769574a8e'").fetchone()[0]
+check('ruling: FDE renamed to 工作日午间', '工作日午间' in nm)
+arc = cur.execute("SELECT prompt FROM automations WHERE id='automation-1786630182041'").fetchone()[0] or ''
+check('ruling: archive prompt 22.22.2-6 + no old path', '22.22.2-6/node.exe' in arc and 'versions/22.22.2/node.exe' not in arc)
+cp = cur.execute("SELECT prompt FROM automations WHERE id='67494c98-6eb1-44f0-a449-75db89c0b73b'").fetchone()[0] or ''
+check('ruling: competitor task consume-main-table', '主表优先' in cp and '仅回退路径执行' in cp)
+fde = cur.execute("SELECT prompt FROM automations WHERE id='9afe8131-46f7-4481-b578-dfa769574a8e'").fetchone()[0] or ''
+check('ruling: FDE prompt persona neutral (no 豆豆妈)', '豆豆妈' not in fde)
+
+# 3 node 路径
+check('old node path missing', not os.path.exists(r'C:/Users/29537/.workbuddy/binaries/node/versions/22.22.2/node.exe'))
+check('new node path exists', os.path.exists(r'C:/Users/29537/.workbuddy/binaries/node/versions/22.22.2-6/node.exe'))
+
+# 4 GA4 新鲜度
+st = json.load(open(r'E:/一人公司/电子书格式转换站/ebook-converter/_wb_tmp/ga4-fetch-status.json', encoding='utf-8'))
+age_h = (datetime.datetime.now().timestamp()*1000 - st['at'])/3600000
+check('GA4 fetch status ok & <24h', st.get('ok') is True and age_h < 24)
+
+# 5 M12-1 scheduledAt
+m12 = cur.execute("SELECT scheduled_at FROM automations WHERE id='2b3bead6-4a2a-4ac4-bfef-52f546f2814c'").fetchone()[0]
+check('M12-1 scheduled 2026-11-18', m12 and '2026-11-18' in m12)
+
+# 6 Bing21:25 名实不符
+p = cur.execute("SELECT prompt FROM automations WHERE id='8290a67f-2c52-43aa-b72f-17d2cdde3b7c'").fetchone()[0] or ''
+check('Bing2125 prompt is GEO draft not Bing submit', ('GEO日报' in p or 'X 中文版' in p) and 'sitemap.xml' not in p)
+
+# 7 近7天
+now = int(datetime.datetime.now().timestamp()*1000); wk = now - 7*86400*1000
+w1 = cnt(f"SELECT COUNT(*) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE r.created_at>={wk} AND a.owner_user_id='{A1}'")
+wo = cnt(f"SELECT COUNT(*) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE r.created_at>={wk} AND a.owner_user_id IS NULL")
+check('7d A1>=95', w1 >= 95)
+check('7d orphan>=17', wo >= 17)
+
+# 8 未归属最后成功
+lastok = cur.execute("SELECT MAX(r.created_at) FROM automation_runs r JOIN automations a ON r.automation_id=a.id WHERE a.owner_user_id IS NULL AND r.result_success=1").fetchone()[0]
+d = datetime.datetime.fromtimestamp(lastok/1000).strftime('%Y-%m-%d')
+check('orphan last success in June 2026', d.startswith('2026-06'))
+
+# 9 指挥台
+try:
+    resp = urllib.request.urlopen('http://127.0.0.1:8765/api/workbuddy-automations', timeout=5)
+    api = json.loads(resp.read().decode())
+    check('workbench API 200 & RECENT & 43', resp.status == 200 and api.get('state') == 'RECENT' and api.get('automation_count') == 43)
+except Exception as e:
+    check('workbench API', False)
+
+# 10 交付文件
+docs = ['00_README.md','01_双账号自动化全量清单.md','02_历史工作成果台账.md','03_自动化治理报告.md','04_TaskID映射表.md','05_每日经营管理规范.md','06_指挥台接入说明.md','07_异常及整改台账.md','08_交接与验收报告.md','data/automation_inventory.csv','data/run_history.json']
+missing = [f for f in docs if not os.path.exists(os.path.join(BASE, f))]
+check('deliverable files complete', not missing)
+
+fails = [r for r in results if r[1] == 'FAIL']
+unks = [r for r in results if r[1] == 'UNKNOWN']
+for n, s, _ in results: print(f'{s:8} {n}')
+print(f'\nSUMMARY: {len(results)} checks, PASS={len(results)-len(fails)-len(unks)}, FAIL={len(fails)}, UNKNOWN={len(unks)}')
+sys.exit(1 if fails else (2 if unks else 0))
