@@ -288,7 +288,12 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
           target_format: target,
           file_size: file.size,
         })
-        const response = await fetch("/api/convert", { method: "POST", body: formData })
+        const requestId = crypto.randomUUID()
+        const response = await fetch("/api/convert", {
+          method: "POST",
+          headers: { "x-request-id": requestId },
+          body: formData,
+        })
         setProgress(40)
         if (!response.ok) {
           const apiErr = await extractApiError(response)
@@ -311,6 +316,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         trackGAEvent("conversion_complete", {
           source_format: source,
           target_format: target,
+          request_id: requestId,
+          backend_job_id: response.headers.get("x-conversion-job-id") || undefined,
+          conversion_backend: response.headers.get("x-conversion-backend") || "unknown",
         })
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err) {

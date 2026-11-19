@@ -117,6 +117,8 @@ describe("conversion backend client", () => {
           "content-type": "application/x-mobipocket-ebook",
           "content-disposition": 'attachment; filename="book.mobi"',
           "cache-control": "no-store",
+          "x-conversion-request-id": "request-test-12345678",
+          "x-conversion-job-id": "job-test-12345678",
           "x-internal-noise": "should-not-forward",
         },
       });
@@ -131,6 +133,8 @@ describe("conversion backend client", () => {
       expect(resp!.headers.get("cache-control")).toBe("no-store");
       expect(resp!.headers.get("x-internal-noise")).toBeNull(); // not forwarded
       expect(resp!.headers.get("X-Conversion-Backend")).toBe("hit");
+      expect(resp!.headers.get("x-conversion-request-id")).toBe("request-test-12345678");
+      expect(resp!.headers.get("x-conversion-job-id")).toBe("job-test-12345678");
       expect(resp!.headers.get("X-RateLimit-Remaining")).toBe("19");
       expect(await resp!.text()).toBe("MOBI-BYTES");
 

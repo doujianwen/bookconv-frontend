@@ -158,7 +158,7 @@ export async function delegateToBackend(
     const outHeaders = new Headers();
     res.headers.forEach((v, k) => {
       const lk = k.toLowerCase();
-      if (lk === "content-type" || lk === "content-disposition" || lk === "cache-control") {
+      if (lk === "content-type" || lk === "content-disposition" || lk === "cache-control" || lk === "x-conversion-job-id" || lk === "x-conversion-request-id") {
         outHeaders.set(k, v);
       }
     });

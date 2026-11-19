@@ -267,6 +267,8 @@ async function doConvert(req, res) {
       "Content-Disposition": disp,
       "Cache-Control": "no-store",
       "Content-Length": outBuf.length,
+      "X-Conversion-Request-Id": requestId,
+      "X-Conversion-Job-Id": jobId,
     });
     res.end(outBuf);
     log("OK", sourceFormat, "->", targetFormat, `${outBuf.length}B`, `${Date.now() - started}ms`);

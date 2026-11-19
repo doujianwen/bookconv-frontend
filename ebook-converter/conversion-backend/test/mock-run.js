@@ -76,6 +76,11 @@ async function main() {
   check("Content-Disposition has UTF-8'' (RFC5987)", /filename\*=UTF-8''/.test(disp));
   check("Unicode filename decodes exactly", decodeURIComponent(disp.split("filename*=UTF-8''")[1]) === '我的书.mobi');
   check("Cache-Control no-store", (r.headers.get("cache-control") || "").includes("no-store"));
+  const responseRequestId = r.headers.get("x-conversion-request-id");
+  const jobId = r.headers.get("x-conversion-job-id");
+  check("response returns the original request ID", responseRequestId === requestId);
+  check("response returns an opaque job ID", /^[0-9a-f-]{36}$/.test(jobId || ""));
+  check("backend log matches the returned job ID", fs.readFileSync(path.join(TMP, "conversion.log"), "utf8").includes("CORRELATION_OK job=" + jobId + " request=" + requestId));
   const logText = fs.readFileSync(path.join(TMP, "conversion.log"), "utf8");
   check("backend log correlates request ID", logText.includes(`request=${requestId}`));
   check("backend log emits an opaque job ID", /CORRELATION_OK job=[0-9a-f-]{36}/.test(logText));
