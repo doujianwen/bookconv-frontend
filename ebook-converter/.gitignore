@@ -103,6 +103,9 @@ batch-verify.zip
 !/data/seo-geo-board.json
 # …关键词变化原因（data/keyword-reasons.json）是人工沉淀，丢了难重建，也入库
 !/data/keyword-reasons.json
+# …增长实验注册表（data/growth-experiments.json）是人工维护的实验元数据（基线/假设/窗口/对照），
+#    属事实源而非生成物；不入库则实验基线随机器丢失，G06 归零 → 入库
+!/data/growth-experiments.json
 # …竞品采集配置（data/competitor-config.json）是人工维护的监控清单，入库
 !/data/competitor-config.json
 # …竞品排名序列（data/competitor-series.json）是 fetch+build 的产物，但它是
