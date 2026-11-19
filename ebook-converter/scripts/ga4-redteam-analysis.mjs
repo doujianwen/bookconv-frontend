@@ -206,10 +206,18 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     const total = sm.reduce((a, r) => a + (Number(r.activeUsers) || 0), 0) || 1
     const direct = sm.find((r) => /^(direct|\(\direct\))$/i.test(r.sessionSourceMedium)) || { activeUsers: 0 }
     const directRatio = (Number(direct.activeUsers) || 0) / total
-    const geoHit = sm.find((r) => /chatgpt|bing|perplexity|duckduckgo|brave|gemini|claude/i.test(r.sessionSourceMedium))
+    // 2026-11-19 用户授权「D3 提示补入 doubao.com」：原实现用 find 只报**首个** GEO 命中，
+    // 当 doubao(42) 活跃高于 bing(31) 时，bing 信号被静默吞掉——提示层「看着只有一个来源」。
+    // 改为 filter 列出**全部** GEO 命中；并把国内 AI 助手来源（doubao / 豆包 / ai-assistant）
+    // 纳入识别。仅改 notes 文本，不动 direct 判定、不改任何 verdict，属提示完整性完善。
+    const GEO_SOURCE_RE = /chatgpt|bing|perplexity|duckduckgo|brave|gemini|claude|doubao|豆包|ai-assistant/i
+    const geoHits = sm.filter((r) => GEO_SOURCE_RE.test(r.sessionSourceMedium))
     const notes = []
     if (directRatio > 0.8) notes.push(`direct 占比 ${(directRatio * 100).toFixed(0)}% > 80% → 归因可能缺失或为 bot 流量`)
-    if (geoHit) notes.push(`检出 GEO 信号来源: ${geoHit.sessionSourceMedium}（活跃 ${geoHit.activeUsers}）`)
+    if (geoHits.length) {
+      const hitStr = geoHits.map((r) => `${r.sessionSourceMedium}（活跃 ${r.activeUsers}）`).join(' / ')
+      notes.push(`检出 GEO 信号来源 ${geoHits.length} 个: ${hitStr}`)
+    }
     if (notes.length) push('D3', name, 'P1', 'PASS', notes.join('；') + '（已记录，非阻断）')
     else push('D3', name, 'P1', 'PASS', `direct 占比 ${(directRatio * 100).toFixed(0)}%，来源归因分布合理`)
   }

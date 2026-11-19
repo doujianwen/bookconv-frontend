@@ -565,6 +565,25 @@ try {
     return data
   })
 
+  // 模块 6b：file_rejected_client 按 error_code（2026-11-19 #6「attempt 未闭环细分」消费端）
+  // 背景：conversion_attempt 之后的前端前置守卫（unsupported / magic_mismatch）直接 return，
+  // 只发 file_rejected_client、不发 conversion_failed → 表现为「attempt 无终态」。
+  // 2026-11-19 起这些事件补了 error_code（复用 UNSUPPORTED_CONVERSION / CORRUPT_INPUT），
+  // 本模块把此前散落的 reason 收敛到统一 error_code 维度，使「未闭环 attempt」可按码细分。
+  // ⚠️ 不与 conversion_failed 做闭合断言：这是**独立事件集**（前置拒绝 ≠ 引擎终态），
+  //    强行 assertClosed 会假 FAIL。维度 customEvent:error_code 已在 GA4 注册（2f 在用）。
+  await safe('rejected_by_code', async () => {
+    const r = await report(tok, {
+      dateRanges: [{ startDate: START, endDate: END }],
+      dimensions: [{ name: 'customEvent:error_code' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'file_rejected_client' } } },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 1000,
+    })
+    return rows(r, ['error_code'])
+  })
+
   // 写盘前固化归因完整性判据（机器可读，随每日 Part C 产物落盘）
   out.meta.attributionGuard = checkAttributionFreshness(out.modules.failed_by_date_error_code, END)
   const guard = out.meta.attributionGuard

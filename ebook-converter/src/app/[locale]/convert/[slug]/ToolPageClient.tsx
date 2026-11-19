@@ -186,10 +186,15 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setErrorMessage(isEs ? unsupported.noticeEs : unsupported.noticeEn)
         setErrorCode("UNSUPPORTED_CONVERSION")
         setStatus("error")
+        // 2026-11-19 #6「attempt 未闭环细分埋点补全」：该分支在 conversion_attempt 之后
+        // 直接 return，不发任何终态事件 → GA4 里表现为「attempt 无闭环」。补 error_code
+        // （复用 error-handler.ts 的 UNSUPPORTED_CONVERSION，与上方 setErrorCode 同源）
+        // 使这类前置拒绝可按统一 error_code 维度细分，不再只见 reason 散落在另一字段。
         trackGAEvent("file_rejected_client", {
           source_format: source,
           target_format: target,
           reason: "unsupported_conversion",
+          error_code: "UNSUPPORTED_CONVERSION",
         })
         return
       }
@@ -200,11 +205,14 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setErrorMessage(sniff.userMessage)
         setErrorCode("CORRUPT_INPUT")
         setStatus("error")
+        // 2026-11-19 #6：同上，补 error_code（复用 CORRUPT_INPUT，与 setErrorCode 同源），
+        // 让魔数嗅探拒绝也能进入统一 error_code 归因，细分「未闭环 attempt」的构成。
         trackGAEvent("file_rejected_client", {
           source_format: source,
           target_format: target,
           magic_hex: sniff.magicHex,
           reason: "magic_mismatch",
+          error_code: "CORRUPT_INPUT",
         })
         return
       }

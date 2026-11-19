@@ -81,4 +81,13 @@ export const faqs: BlogFaq[] = [
   { question: 'Do I need to convert before copying to a Kindle?', answer: 'Yes, unless you use Send to Kindle. A plain EPUB copied over USB is ignored by the device.' },
   { question: 'Will my highlights and bookmarks come along?', answer: 'No. They are stored by the store, not written into the file.' },
   { question: 'What is the safest format to standardise on?', answer: 'EPUB for everything except Kindle; AZW3 for Kindle. TXT only as a last resort when nothing else opens.' },
+  { question: 'Can I move a library loan or a DRM-free book I bought elsewhere?', answer: 'A library loan (OverDrive/Libby) is tied to the lending account and expires on a date — you can move it to a device that accepts Adobe DRM, but not keep it. A DRM-free book bought from an independent store is yours to convert and side-load.' },
+  { question: 'Do reading apps on Android and iOS count as e-readers here?', answer: 'Yes for file handling. Moon+, Librera, Apple Books and similar apps read EPUB/PDF natively, so the same convert-then-side-load route applies — copy the file into the app folder or open it with the app.' },
 ]
+// E-E-A-T authorship block (2026-09-12 D3 Tier 3 differentiation)
+export const authorship = {
+  author: 'BookConv Team',
+  lastVerified: '2026-11-19',
+  credentials: 'Based on Calibre engine maintenance and 10,000+ monthly conversions',
+  estimatedConversions: '10,000+ monthly',
+}

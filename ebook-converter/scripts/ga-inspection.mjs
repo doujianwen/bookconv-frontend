@@ -287,6 +287,7 @@ function readRedteam(name) {
 function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
   const lines = [];
   let engineHardAlarm = false; // 2026-11-03 F15 收紧：系统侧(引擎类)失败 ≥3 次硬告警
+  let systemSideFailure = 0;   // 2026-11-19「全绿+检测盲区」措辞统一：系统侧失败计数（含 <3 的软档），供最终裁定消费
   lines.push('📊 [bookconv] GA4 每日巡检');
   lines.push('');
 
@@ -368,6 +369,7 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
     // （实时卡本身发往飞书、无本地落盘，GA4 失败签名是唯一可程序化关联的同源数据）。
     const sides = classifyFailureSides(basic.failedByErrorCode);
     if (sides.decided) {
+      systemSideFailure = sides.systemSide.total; // 供最终裁定：只要系统侧有失败，就不发裸「全绿」
       const userStr = Object.entries(sides.userSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       const sysStr = Object.entries(sides.systemSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       lines.push(`• 统一健康裁定: 用户侧(灰) ${sides.userSide.total} 次 [${userStr}] / 系统侧(红) ${sides.systemSide.total} 次 [${sysStr}]`);
@@ -444,6 +446,11 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
   // PASS_WITH_RESIDUALS 也印成"全绿 ✅（红队有残余项）"——带着 FAIL/UNKNOWN 的残余
   // 仍打发绿卡，属自我安慰式结论。现在只有真 PASS 才叫全绿。
   else if (rtResidual) lines.push('巡检完毕，未见 FAIL 拦截 ⚠️（红队有残余/不可判定项，按规则不算全绿，见上）');
+  // 2026-11-19 用户授权「全绿 + 检测盲区」措辞统一：旧实现里系统侧失败 2 次只落「🔍 检测盲区」
+  // 软警告（<3 不置 engineHardAlarm），最终行却仍发裸「巡检完毕，全绿 ✅」——同一份简报
+  // 既说有盲区又说全绿，自相矛盾。现在只要系统侧有失败签名（含 <3 软档），两段红队即便 PASS
+  // 也不发裸全绿，改为显式带出系统侧失败数，让结论与上方健康裁定一致。
+  else if (systemSideFailure > 0) lines.push(`巡检完毕，主体检查通过，但系统侧失败 ${systemSideFailure} 次需人工核对 ⚠️（非全绿，见健康裁定/检测盲区）`);
   else lines.push('巡检完毕，全绿 ✅');
   return lines.join('\n');
 }
