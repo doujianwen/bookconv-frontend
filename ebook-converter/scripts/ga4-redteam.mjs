@@ -118,9 +118,19 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
   const name = '指标口径完整'
   const hasRate = typeof live?.conversionRate === 'string'
   const hasFec = !!live?.failedByErrorCode
-  if (hasRate && hasFec) push('B3', name, 'P1', 'PASS', '同时提供完成率与 error_code 明细，可算真实成功率(完成/(完成+失败))与引擎侧成功率')
-  else if (hasRate) push('B3', name, 'P1', 'UNKNOWN', '仅完成率、缺 error_code 明细 → 真实成功率不可算')
-  else push('B3', name, 'P1', 'FAIL', '缺完成率与失败明细字段，指标口径不完整')
+  const correlation = live?.jobCorrelation
+  const hasVerifiedJobCorrelation = correlation?.status === 'VERIFIED' &&
+    Number.isInteger(correlation?.matchedRequestCount) && correlation.matchedRequestCount > 0 &&
+    Number.isInteger(correlation?.unmatchedRequestCount) && correlation.unmatchedRequestCount === 0 &&
+    typeof correlation?.evidenceRef === 'string' && correlation.evidenceRef.trim().length > 0
+  if (!hasRate || !hasFec) {
+    if (hasRate) push('B3', name, 'P1', 'UNKNOWN', '仅有事件级完成率、缺 error_code 明细 → 任务级成功率不可判定')
+    else push('B3', name, 'P1', 'FAIL', '缺完成率与失败明细字段，指标口径不完整')
+  } else if (!hasVerifiedJobCorrelation) {
+    push('B3', name, 'P1', 'UNKNOWN', '事件级完成/失败比例可计算，但缺少 request_id→backend job_id 的逐请求对账证据；任务级成功率 UNKNOWN')
+  } else {
+    push('B3', name, 'P1', 'PASS', `逐请求关联已核验：匹配请求 ${correlation.matchedRequestCount}，未匹配 ${correlation.unmatchedRequestCount}；证据 ${correlation.evidenceRef}`)
+  }
 }
 
 // ── B6 指标内部一致性（P0，2026-10-31 红队复核新增）──────────────────
@@ -173,8 +183,8 @@ const push = (id, name, level, verdict, evidence) => checks.push({ id, name, lev
     // 证据里必须明写"不作为 PASS 依据"，避免读的人以为已经验过。
     const att = checkAttemptClosure({ attempt: live?.events?.conversion_attempt, complete: c, failed: f })
     const attNote = att.verdict === 'UNKNOWN'
-      ? `attempt 判据 UNKNOWN（${att.reason}）— 未纳入 PASS 依据`
-      : `attempt 判据 ${att.verdict}：${att.reason}`
+      ? `attempt 聚合计数校验 UNKNOWN（${att.reason}）— 未纳入 PASS 依据`
+      : `attempt 聚合计数校验 ${att.verdict}：${att.reason}；仅验证计数关系，不代表逐请求闭环`
     if (reached > u + TOL) {
       push('B6', name, 'P0', 'FAIL', `到达引擎终态(完成+失败−前置失败${preUploadFailures})=${reached} > 上传 ${u}+容差${TOL}（事件重复计数/口径错乱，物理不可能）；${attNote}`)
     } else if (att.verdict === 'FAIL') {

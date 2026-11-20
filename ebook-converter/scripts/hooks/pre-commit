@@ -79,6 +79,15 @@ if [ -z "$STAGED" ]; then
   exit 0
 fi
 
+# 0.4) Owner HOLD guard（2026-11-20）：冻结内容在 commit 边界 fail-closed。
+#      仅允许已授权的删除式恢复；任何重新添加/修改 M14-2 页面或公开索引均阻断。
+#      guard 缺失、git 异常或无法判定时返回非 0，不能静默放行。
+if ! node "$APP/scripts/owner-hold-guard.mjs" --staged; then
+  echo "⛔ 提交被拦截：Owner HOLD guard 未通过；Held content 只能在 Owner 明确解冻前保持移除状态。"
+  exit 1
+fi
+
+
 # 0.5) Closure Gate（2026-11-07 增补 · 防假关闭）：待办文件不在 src/docs 受管范围，
 #      故必须在下方「范围短路 exit 0」之前独立触发。仅当待办被暂存时，跑 --no-live 确定性校验。
 #      退出码映射：1=假关闭→拦截；2=无法核验→放行但告警（避免环境问题误拦、训练 --no-verify）；0=过。

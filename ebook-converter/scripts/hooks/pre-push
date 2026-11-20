@@ -29,6 +29,19 @@ while read local_ref local_sha remote_ref remote_sha; do
   else
     range="$remote_sha..$local_sha"
   fi
+  # Production main must remain fast-forward-only; --force must never erase newer remote commits.
+  if [ "$remote_ref" = "refs/heads/main" ] && [ "$remote_sha" != "$zero" ]; then
+    if ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+      echo "⛔ Push 被拦截：main 存在非 fast-forward 分歧；禁止 --force 覆盖远端提交。先 fetch 并在隔离分支完成审查/对齐。"
+      exit 1
+    fi
+  fi
+  # Owner HOLD guard（2026-11-20）：push 边界再次检查完整提交范围，防止 nightly-sync 绕过 commit 阶段。
+  if ! node ebook-converter/scripts/owner-hold-guard.mjs --range "$range"; then
+    echo "⛔ Push 被拦截：提交范围重新引入或修改 Owner-HOLD 内容，或 guard 无法判定。"
+    exit 1
+  fi
+
   # 取出本次 push 涉及的博文 slug
     # 从 git root（父目录）跑，路径需带 ebook-converter/ 前缀
     added=$(git diff --name-only "$range" -- ebook-converter/src/data/blog 2>/dev/null \

@@ -95,7 +95,7 @@ export function checkAttemptClosure({
     terminal,
     tolerance,
     gap,
-    reason: `终态 ${terminal} ≤ 尝试 ${a}+容差 ${tolerance}（未闭环 ${Math.max(0, a - terminal)} 次属放弃/前置拒绝，方向正确）`,
+    reason: `终态 ${terminal} ≤ 尝试 ${a}+容差 ${tolerance}（未闭环 ${Math.max(0, a - terminal)} 次；原因未验证，可能为放弃、前置拒绝或埋点缺失，不作推断）`,
   }
 }
 
@@ -116,6 +116,7 @@ export function selfTest() {
     }],
     ['完成字段非数值 → UNKNOWN', () => checkAttemptClosure({ attempt: 10, complete: '—', failed: 2 }).verdict === 'UNKNOWN'],
     ['字符串数字可解析 → PASS', () => checkAttemptClosure({ attempt: '21', complete: '15', failed: '5' }).verdict === 'PASS'],
+    ['未闭环原因不作无证据推断', () => { const r = checkAttemptClosure({ attempt: 21, complete: 14, failed: 6 }); return r.verdict === 'PASS' && r.reason.includes('原因未验证') && !r.reason.includes('方向正确') }],
   ]
   let bad = 0
   for (const [name, fn] of cases) {

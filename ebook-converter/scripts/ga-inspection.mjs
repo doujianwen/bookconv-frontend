@@ -14,7 +14,8 @@
  */
 
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import https from 'node:https';
@@ -64,6 +65,7 @@ function basicFromLive(live) {
     clientFailed: conv.clientFailed,
     infraFailed: conv.infraFailed ?? 0,
     failedByErrorCode: live.failedByErrorCode ?? null,
+    jobCorrelation: live.jobCorrelation ?? null,
     metrics: {
       users: String(live.activeUsers),
       events: String(live.eventCount),
@@ -109,6 +111,7 @@ function basicFromReport(report) {
     quotaFailed: conv.quotaFailed,
     clientFailed: conv.clientFailed,
     failedByErrorCode: null,
+    jobCorrelation: null,
     metrics: { users, events, complete, failed, upload, rate },
     batch: evalBatchAnomaly(failed, upload),
   };
@@ -296,39 +299,45 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
     const srcTag = basic.source === 'ga4-data-api' ? '🔴 实时(GA4 API)' : '📄 回退(GA4日报md)';
     lines.push(`【基础分析 · ${basic.date} · ${srcTag}】`);
     lines.push(`• 活跃用户: ${basic.metrics.users} | 事件: ${basic.metrics.events}`);
-    // 口径说明：完成率 = conversion_complete / file_upload；失败率 = conversion_failed / file_upload（分母均为上传数）
+    // 口径说明：完成/上传事件比率 = conversion_complete / file_upload；失败/上传事件比率 = conversion_failed / file_upload（均为事件计数，不是任务级比率）
     // ⚠️ WP4 failover 后（2026-10-27）新增客户端 FILE_TOO_LARGE 事件追踪：
     //    file_upload 只统计成功提交到 /api/convert 的请求，conversion_failed 还包含客户端拦截事件。
     //    当 file_upload < 实际请求数时，失败率会虚高（假阳性）。真实根因需结合 error_code 维度分析。
     const u = Number(basic.metrics.upload), c = Number(basic.metrics.complete), f = Number(basic.metrics.failed);
     const ratesLine = (Number.isFinite(u) && u > 0 && Number.isFinite(c) && Number.isFinite(f))
-      ? `• 转换事件: 上传 ${u} 次 → 完成 ${c} 次 | 失败 ${f} 次 | 完成率(完成/上传) ${Math.round(c / u * 100)}% | 失败率(失败/上传) ${Math.round(f / u * 100)}%`
+      ? `• 转换事件: 上传 ${u} 次 → 完成 ${c} 次 | 失败 ${f} 次 | 完成/上传事件比率 ${Math.round(c / u * 100)}% | 失败/上传事件比率 ${Math.round(f / u * 100)}%`
       : `• 转换事件: 上传 ${basic.metrics.upload ?? '—'} | 完成 ${basic.metrics.complete} | 失败 ${basic.metrics.failed} | 比率不可计算（缺上传数）`;
     lines.push(ratesLine);
-    // 真实成功率（2026-10-31 红队复核后新增，仅展示不动门禁）：
-    // 客户端拦截（FILE_TOO_LARGE）不触发 file_upload 但触发 conversion_failed，
-    // 上传数低估尝试数 ⇒ 完成/上传 高估成功率。补 完成/(完成+失败) 与 引擎侧 完成/(完成+引擎失败)。
+    // 事件级终态比率仅作趋势观察，不等于任务级真实成功率；后者必须有逐请求 request_id↔job_id 对账证据。
     const tc = Number(basic.metrics.complete), tf = Number(basic.metrics.failed);
     const engFailN = Number(basic.engineFailed);
-    const trueRate = (Number.isFinite(tc) && Number.isFinite(tf) && tc + tf > 0)
+    const terminalEventRatio = (Number.isFinite(tc) && Number.isFinite(tf) && tc + tf > 0)
       ? Math.round(tc / (tc + tf) * 100) : null;
-    const engRate = (Number.isFinite(tc) && Number.isFinite(engFailN) && tc + engFailN > 0)
+    const engineTerminalEventRatio = (Number.isFinite(tc) && Number.isFinite(engFailN) && tc + engFailN > 0)
       ? Math.round(tc / (tc + engFailN) * 100) : null;
-    if (trueRate !== null) {
-      const trueParts = [`• 真实成功率(完成/(完成+失败)): ${trueRate}%`];
-      if (engRate !== null && basic.failedByErrorCode && engRate !== trueRate) {
-        trueParts.push(`引擎侧成功率: ${engRate}%`);
+    if (terminalEventRatio !== null) {
+      const eventParts = [`• 终态事件比率(完成/(完成+失败)): ${terminalEventRatio}%（事件计数，不代表任务级成功率）`];
+      if (engineTerminalEventRatio !== null && basic.failedByErrorCode && engineTerminalEventRatio !== terminalEventRatio) {
+        eventParts.push(`引擎终态事件比率: ${engineTerminalEventRatio}%`);
       }
-      lines.push(trueParts.join(' | '));
+      lines.push(eventParts.join(' | '));
     }
-    // 尝试锚点（2026-11-15）：给 (完成+失败) 一个正确分母，把「前置失败不发 file_upload」
-    // 造成的口径不对称显式量化，避免读的人把缺口误读成"事件重复计数"。
-    // 仅在事件存在时展示（上线前窗口无该字段，不臆造 0）。
+    const correlation = basic.jobCorrelation;
+    const correlationVerified = correlation?.status === 'VERIFIED' &&
+      Number.isInteger(correlation?.matchedRequestCount) && correlation.matchedRequestCount > 0 &&
+      Number.isInteger(correlation?.unmatchedRequestCount) && correlation.unmatchedRequestCount === 0 &&
+      typeof correlation?.evidenceRef === 'string' && correlation.evidenceRef.trim().length > 0;
+    if (correlationVerified) {
+      lines.push(`• 任务级成功率：按逐请求关联证据计算（匹配 ${correlation.matchedRequestCount}，未匹配 ${correlation.unmatchedRequestCount}；证据 ${correlation.evidenceRef}）`);
+    } else {
+      lines.push('• 任务级成功率：UNKNOWN（GA4事件尚无可复核的 request_id↔后端 job_id 逐请求对账）');
+    }
+    // attempt 与终态仅做聚合计数一致性检查，不代表每个请求已一一闭环。
     const att = Number(basic.metrics.attempt);
     if (Number.isFinite(att) && att > 0) {
       const terminal = (Number.isFinite(tc) ? tc : 0) + (Number.isFinite(tf) ? tf : 0);
-      const unclosed = Math.max(0, att - terminal);
-      lines.push(`• 尝试锚点: conversion_attempt ${att} 次 → 终态 ${terminal} 次 | 未闭环 ${unclosed} 次（放弃/前置拒绝，非重复计数）`);
+      const aggregateCountGap = att - terminal;
+      lines.push(`• 尝试/终态聚合计数: conversion_attempt ${att} 次 / 终态事件 ${terminal} 次 | 计数差 ${aggregateCountGap}（非逐请求匹配；单次尝试闭环状态 UNKNOWN）`);
     }
     // error_code 分布（仅实时源有）：让"失败"构成一目了然
     const fec = basic.failedByErrorCode;
@@ -360,7 +369,7 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
         // 2026-11-04：去掉「正常 / 引擎侧无异常失败」的绝对表述。它只代表
         // 日报主阈值未触发（engineFailed ≤ 完成 且 完成率 ≥ 50%），并不代表没有
         // 系统侧失败签名；下方健康裁定/硬告警可能同时给出红项，旧文案与之自相矛盾。
-        lines.push('• 转化失败率：日报主阈值未触发（引擎失败数未超完成数、完成率≥50%）；分项归因见下方健康裁定');
+        lines.push('• 转化失败率：日报主阈值未触发（引擎失败数未超完成数、完成/上传事件比率≥50%）；分项归因见下方健康裁定');
       }
     }
     // F5（2026-11-01 红队复核）：统一健康裁定 + 检测盲区告警（复用上方 D2 已校验过的
@@ -373,8 +382,8 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
       const userStr = Object.entries(sides.userSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       const sysStr = Object.entries(sides.systemSide.codes).map(([k, v]) => `${k}:${v}`).join(' | ') || '—';
       lines.push(`• 统一健康裁定: 用户侧(灰) ${sides.userSide.total} 次 [${userStr}] / 系统侧(红) ${sides.systemSide.total} 次 [${sysStr}]`);
-      // 硬告警（2026-11-03 F15 收紧；2026-11-04 分级修正）：系统侧 = 引擎/归因缺失类
-      // （INTERNAL_ERROR / UNKNOWN / 超时等），已排除直传 INFRA、客户端拦截、额度，
+      // 硬告警（2026-11-03 F15 收紧；2026-11-04 分级修正）：系统侧 = 后端/存储/归因缺失类
+      // （INTERNAL_ERROR / CONVERSION_UNAVAILABLE / UPLOAD_NOT_FOUND / UNKNOWN / 超时等），已排除直传 INFRA、客户端拦截、额度，
       // 以及 2026-11-04 起按生产告警卡归用户侧的 DRM/CORRUPT_INPUT/VERIFICATION_FAILED。
       // 主阈值「引擎失败>完成 或 成功率<50%」对低流量站过松——11-01 引擎失败4、完成153
       // 不触发；11-02 系统侧5 亦只落软警告。当系统侧失败 ≥3 次即升级硬告警，避免引擎故障
@@ -383,7 +392,7 @@ function buildReport(basic, syntax, geo, adv, redteam, redteamAnalysis) {
       // 不改 splitFailures 的 engineFailed 口径，故 B6 / D2 数字不受影响。
       if (sides.systemSide.total >= 3) {
         engineHardAlarm = true;
-        lines.push(`• 🚨 引擎硬告警: 系统侧(引擎/归因缺失类)失败 ${sides.systemSide.total} 次（≥3），日报主阈值（引擎失败>完成 或 成功率<50%）未触发但已达硬告警线，立即核查引擎日志与实时飞书卡`);
+        lines.push(`• 🚨 系统侧硬告警: 后端/存储/归因缺失类失败 ${sides.systemSide.total} 次（≥3），日报主阈值（引擎失败>完成 或 成功率<50%）未触发但已达硬告警线，立即核查后端/R2日志与实时飞书卡`);
       } else if (sides.systemSide.total > 0 && !basic.abnormal && sides.systemSide.total >= 2) {
         lines.push(`• 🔍 检测盲区: 系统侧失败 ${sides.systemSide.total} 次但日报引擎阈值未触发（成功率/引擎失败数未达告警线），建议人工核对当日飞书实时告警卡`);
       }
@@ -546,6 +555,24 @@ console.log('\n---');
 
 if (NO_SEND) {
   console.log('[--no-send] 未发送飞书');
+} else if (!/任务级成功率\s*[：:]\s*(UNKNOWN|VERIFIED|已核验)/.test(report) || report.includes('真实成功率')) {
+  console.log('❌ REPORT_SEMANTIC_GATE: 必须明确任务级成功率状态，且不得将事件比率标为任务成功率；本次未发送');
+  process.exitCode = 2;
 } else {
-  await sendFeishu(report);
+  const delivery = await sendFeishu(report);
+  if (delivery?.ok) {
+    const receiptDate = basic.date || new Date().toISOString().slice(0, 10);
+    const digest = createHash('sha256').update(report, 'utf8').digest('hex');
+    const receipt = {
+      workflow_id: 'BOOKCONV-GA4-DAILY', date: receiptDate,
+      report_type: 'ga4-inspection-summary', verified: true,
+      provider: 'feishu-webhook', response_code: delivery.code,
+      artifact_sha256: digest, delivery_id: `feishu-summary-ack-${digest.slice(0, 16)}`,
+      delivered_at: new Date().toISOString(),
+      note: 'Webhook ACK only, not human read receipt; delivery_id is local correlation, not provider ID'
+    };
+    const receiptPath = join(ROOT, '_wb_tmp', `ga4-delivery-receipt-${receiptDate}.json`);
+    writeFileSync(receiptPath, JSON.stringify(receipt, null, 2), 'utf8');
+    console.log(`📎 独立送达回执已写入：${receiptPath}`);
+  }
 }
