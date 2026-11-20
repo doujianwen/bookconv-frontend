@@ -71,6 +71,8 @@ export interface DelegateOptions {
    * （只能记到 Vercel 自己的 IP），必须在出站请求里显式携带。
    */
   clientIp?: string;
+  /** Opaque request correlation ID from the browser; contains no user/file data. */
+  requestId?: string;
   /**
    * 诊断回调：delegation 未能返回成功响应时，把**原因**回传给调用方
    * （2026-11-02）。此前本函数只返回 null，原因被丢弃到一行 console.warn——
@@ -127,6 +129,7 @@ export async function delegateToBackend(
   const headers: Record<string, string> = { "x-internal-convert": INTERNAL_SECRET };
   // 显式透传客户端 IP（默认的 XFF 在这里已被 Vercel 出站丢弃，见 opts.clientIp）
   if (opts.clientIp) headers["x-client-ip"] = opts.clientIp;
+  if (opts.requestId) headers["x-request-id"] = opts.requestId;
 
   /**
    * 单次后端调用。自带 AbortController + 超时；返回 {res} 或 {err}（超时/网络错误）。

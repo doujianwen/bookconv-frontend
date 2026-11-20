@@ -65,7 +65,9 @@ async function main() {
   fd2.append("file", new Blob([Buffer.from("hello epub content")]), "我的书.epub");
   fd2.append("source_format", "epub");
   fd2.append("target_format", "mobi");
-  r = await fetch(`${BASE}/api/convert-internal`, { method: "POST", headers: { "x-internal-convert": SECRET }, body: fd2 });
+  const requestId = "request-test-12345678";
+  r = await fetch(`${BASE}/api/convert-internal`, { method: "POST", headers: { "x-internal-convert": SECRET, "x-request-id": requestId }, body: fd2 });
+
   const buf = Buffer.from(await r.arrayBuffer());
   const disp = r.headers.get("content-disposition") || "";
   check("correct secret -> 200", r.status === 200);
@@ -74,6 +76,9 @@ async function main() {
   check("Content-Disposition has UTF-8'' (RFC5987)", /filename\*=UTF-8''/.test(disp));
   check("Unicode filename decodes exactly", decodeURIComponent(disp.split("filename*=UTF-8''")[1]) === '我的书.mobi');
   check("Cache-Control no-store", (r.headers.get("cache-control") || "").includes("no-store"));
+  const logText = fs.readFileSync(path.join(TMP, "conversion.log"), "utf8");
+  check("backend log correlates request ID", logText.includes(`request=${requestId}`));
+  check("backend log emits an opaque job ID", /CORRELATION_OK job=[0-9a-f-]{36}/.test(logText));
 
   // 4) unsupported target -> 422
   const fd3 = new FormData();

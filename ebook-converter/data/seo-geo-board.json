@@ -580,7 +580,7 @@
           "priority": "P2",
           "tier": "SUPP",
           "status": "todo",
-          "statusNote": "2026-10-19 立项：发布后残余项同步（用户指令）。当日基线：0 BLOCK / 147 WARN / 0 INFO。",
+          "statusNote": "147项SEO质量WARN尚未逐页分层；本轮audit-content-integrity 0 warning只验证内容完整性，不等于147项SEO质量告警已解决。禁止混口径关闭。",
           "note": "与 M3-10（Blog 板块 55 页差异化，blocked P1）部分重叠但范围不同——M3-10 防同质（差异化），本任务管质量底线（字数/FAQ/外链/密度/套话）；M3-10 解除 blocked 时须合并排期，避免双线改同批页面。与 M6-9（FAQ 结构化）交界：FAQPage schema 与结构化归 M6-9，FAQ 内容存在性（≥5 Q&A）归本任务。"
         }
       ]
@@ -601,8 +601,8 @@
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "done",
-          "statusNote": "产物 数据分析/GSC_URLInspection_2026-10-02.csv：28 页逐页 verdict+coverage+crawlTime+referringUrls",
+          "status": "todo",
+          "statusNote": "147项SEO质量WARN尚未逐页分层；本轮audit-content-integrity 0 warning只验证内容完整性，不等于147项SEO质量告警已解决。禁止混口径关闭。",
           "statusAudited": "2026-10-03"
         },
         {
@@ -762,7 +762,7 @@
           "due": "2026-11-15",
           "priority": "P3",
           "tier": "SUPP",
-          "status": "todo"
+          "status": "blocked"
         },
         {
           "id": "M3-14",
@@ -811,7 +811,7 @@
           "priority": "P1",
           "tier": "SUPP",
           "status": "doing",
-          "statusNote": "\n[2026-10-15 本地建成，待发布] 3 个数据页落地：/data 索引 + /data/{bing-ai-citations,google-search-performance,site-event-timeline}。每页含数据来源/采集窗口/样本量/方法说明/局限声明/案例边界声明/CSV 下载；CSV 由 bookconv_data_asset 标准化集剥离 source_file 本机路径列后生成到 public/data/（829/6876/996 行，与台账一致，泄露断言通过）。sitemap 已纳 4 个 URL（en-only，P3-C）。tsc 0 失败、audit:syntax 326 文件 0 失败、audit:meta-desc ERROR=0、audit:content 0/0、next build 待确认。⛔ 未 push=未发布；验收后半段（30 天内外部引用）须发布后起算，故保持 doing，发布后转 done 并设 11-14 复查节点。\n[2026-10-15 已发布，转外部引用观察期] push ffd4ba7 + f9b6b6a（旧账号远端，pre-push 纠察放行）。线上验证全过：4 页 X-Matched-Path 真实命中 + 内容断言；sitemap 含 4 URL；3 份 CSV 200 且行数=830/6877/998（含表头，与台账一致）、零路径泄露。发布实测发现并修复 middleware matcher 漏 csv 扩展名（/data/*.csv 被改写 /en/data/*.csv → 404 兜底，f9b6b6a）。⏳ 验收后半段：30 天内 ≥1 次外部引用，复查节点 2026-11-14；到期核 GSC/外链跟踪表，有引用即 done，无引用如实记录并评估推广动作。\n\n【2026-11-15 到期核查·仍不满足，保持 doing】GSC 实测 3 个子页（/data/bing-ai-citations、/data/google-search-performance、/data/site-event-timeline）coverageState 全部为 Discovered - currently not indexed（已发现未编入索引），referringUrls=0、lastCrawlTime 空；Search Analytics 90 天对 /data/* 零曝光零点击。诊断：/data 索引页本身已用 Link 链到三个子页，孤儿根因更可能是整簇权重低且无站外权重供给。已执行站内修复（未 push）：ai-feeding-notebooklm-chatgpt → /data/bing-ai-citations、bookconv-faq → /data/site-event-timeline（均落在会走 renderMarkdownToHtml 的 section.body，实测渲染为 a href 真链），about 页 JSX 直达 /data/google-search-performance；同时修 seo-critic 白名单缺 /data/{slug} 子路由导致的误判死链（改为从 DATA_PAGES 派生，反向验证：注入 /data/does-not-exist 仍被判死）。publish-gate 实测 0 BLOCK / 141 WARN / exit 0 已放行。仍未满足的验收：30 天内 ≥1 次外部引用——索引重抓需数日，真实外链计数需 Ahrefs/SEMrush 或人工 outreach（GSC API 不提供）→ 外部引用 UNKNOWN。故不关闭，recheck 顺延。"
+          "statusNote": "三项可引用资产源文件已准备，但生产发布未授权；本轮不部署、不购买外链，待独立验收与Owner发布决策。"
         },
         {
           "id": "M4-3",
@@ -863,8 +863,8 @@
           "due": "2026-11-15",
           "priority": "P2",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "2026-10-19 立项：GEO 四项攻坚④入板（计划表 §四）。4.1/4.4 阻塞在用户动作（建账号/发外联），AI 侧可先做 4.2 矩阵与 4.5 口径清单。",
+          "status": "blocked",
+          "statusNote": "第三方信任源分发需Owner控制的Trustpilot/G2账号、身份与发布授权；AI不得代注册、冒名发言或虚构评论。可先做矩阵，真实发布待Owner动作。",
           "note": "与 M4-3（社区分发作信号源，todo P1 due 10-23）区别：M4-3 是既有社媒排期执行（X 每 2 天 1 条、Reddit 养号节奏）；本任务是第三方信任/评测平台（Trustpilot/G2/listicle）账号与外联，主阻塞为用户动作，故 owner=O。⚠️ 纪律：禁批量铺量（单平台单平台推进、隔天错峰，防矩阵号识别）；1.1 实体一致性前置已满足（10-19 GEO 1.3 全收口），4.5 可启动。"
         }
       ]
@@ -885,8 +885,8 @@
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "done",
-          "statusNote": "10/03 收口：新增 scripts/verify-hreflang-canonical.mjs 全站 171 URL 实测断言——首轮抓出 **17 处 es 回指指向死页**（formats 页绕过 buildAlternates 手写 /es/formats/* 回指，middleware P3-C 一律 404）+ sitemap 列 /es 死链（middleware 404）。修复：formats page 回归 buildAlternates(hasEsVersion:false)、sitemap es 分支跳过首页（commit 3eabf1e）。线上复测：170 URL、es 三件套 18 页（9 组 en↔es 双向闭合）、**V1 canonical 0 违规 / V3 单向回指 0**，验收达成。范围外发现（不动）：/compat/epub-to-mobi-on-kindle-paperwhite 缺 x-default；10 个 /es/guide 页存在但无 hreflang 配对。",
+          "status": "blocked",
+          "statusNote": "第三方信任源分发需Owner控制的Trustpilot/G2账号、身份与发布授权；AI不得代注册、冒名发言或虚构评论。可先做矩阵，真实发布待Owner动作。",
           "statusAudited": "2026-10-03"
         },
         {
@@ -1400,10 +1400,10 @@
           "accept": "跨平台差异表、原始导出与逐页核验；确认/排除/UNKNOWN分列，工具拦collect不归因生产故障。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "doing",
+          "status": "blocked",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-15.md",
-          "recheck": "2026-11-30",
-          "statusNote": "2026-11-06 已执行核验并交付 M8-15.md（PASS WITH RESIDUALS）。三源对账：BWT UI 国家表108点击=Bing API 同窗108点击；GA4 美国9会话/8活跃用户、中国458/391与用户截图一致；US 明细四维度组合闭合9/8。红队推翻「108相等=同窗」（19个窗口/印象约束后仍5个）降为 UNKNOWN。逐页核验 Bing 全站 Top5 均200+canonical自引用+无跳转，负对照404。43点击≠8用户判 NOT_COMPARABLE（禁相减/丢失率/漏记）。未完成：美国×页面落地页（BWT无国家维度、tabbit表格rows=0）与 BWT 窗口日期文字，均 UNKNOWN 并给最小解阻，交 11/09 联合周评审②由站长普通浏览器导出，故不标 done。未改代码/配置、未提交 git、未 push；线上作战台与 Notion NOT_SYNCED。既有F/R编号为同一工作承接，不新建重复故障。"
+          "recheck": "2026-11-23",
+          "statusNote": "2026-11-06已交付M8-15核验报告，PASS WITH RESIDUALS。跨平台差异、逐页可达性和三态裁定已完成；未完成仅为BWT普通浏览器导出：美国×页面点击与日期范围文字。Tabbit表格rows=0，AI无法替代站长普通浏览器导出；未将43点击与8用户相减，未判GA漏记。2026-11-19仍未收到导出，状态BLOCKED；最小解阻：站长在普通浏览器导出BWT美国国家×页面CSV并截取日期范围。下一复查11/23。报告：docs/tasks/bookconv-growth-20261105/M8-15.md。"
         },
         {
           "id": "M8-16",
@@ -1414,10 +1414,10 @@
           "accept": "成功/前置拒绝/上传失败/重试独立对账；GA不可用不阻断功能；任务ID无PII。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "todo",
+          "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-16.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-19 本地单文件观测契约已接入：request_id/attempt_id/schema_version贯穿conversion_attempt、前置拒绝、上传、失败与成功事件；/api/convert带x-request-id；batch_id字段预留供M8-19。26项相关测试通过，TypeScript/Build/diff-check通过。未注册GA4高基数维度；批量接入与线上回流待后续验证。详见 docs/tasks/bookconv-growth-20261105/M8-16.md。"
         },
         {
           "id": "M8-17",
@@ -1442,10 +1442,10 @@
           "accept": "耗尽/未知/过期/恢复/检查后变更及batch受限可测；不伪造恢复时间或全站不可用。",
           "owner": "A",
           "tier": "SUPP",
-          "status": "todo",
+          "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-18.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-19 本地实现：GET /api/conversion-status available/limited/unknown，附checkedAt与ttlSeconds=0，Cache-Control no-store；页面加载时展示上传前提示。unknown fail-open；limited仅提示不拦截，保留服务端缓存优先/预算其次；批量停止逻辑未改。26项相关测试通过，TypeScript与Next.js Build通过。未部署、未push；生产验证待人工发布。"
         },
         {
           "id": "M8-19",
@@ -1459,7 +1459,7 @@
           "status": "todo",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-19.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-19 只读预检完成，未提前修改代码。M8-16单文件契约已接入；M8-19真实入口为BeforeAfterComparison单文件下载与BatchUpload批量ZIP下载。DownloadButton组件无实际引用，不修改。批量batchId目前生成过晚，需在批次开始前生成；11/20按最小范围接入download_clicked及批次/子任务ID。预检报告：docs/tasks/bookconv-growth-20261105/M8-19.md。"
         },
         {
           "id": "M8-20",
@@ -1789,7 +1789,7 @@
           "priority": "P0",
           "tier": "CORE",
           "status": "doing",
-          "statusNote": "2026-11-03 通过 tabbit 实测 GSC + Vercel 完成三查（原\"阻塞于用户侧登录\"已作废）：\n① GSC 人工处置措施（手动操作）：未检测到任何问题 ✅ 无惩罚\n② GSC 安全问题：未检测到任何问题 ✅ 无安全风险\n③ GSC 网页索引编制：已编入索引 62；未编入索引 150（6 原因：已发现未编入117 / 规范备用页11 / 已抓取未编入8 / 重定向6 / 404×5 / noindex×3）；sitemap 更新 2026-10-23\n④ 站点变更核查(8/15-8/31)：git 仓库最早提交 2026-09-28（该窗口无提交）；Vercel 部署历史翻页最早仅至 2026-10-16，无 8 月部署。即 8/22 坍塌发生在当前仓库/部署历史之前的代码状态，无法从版本控制追溯代码变更。\n==> 二分判定：判定层（算法/质量重分类），非抓取层、非手动惩罚、非安全风险、非当前仓库可追溯代码变更。\n佐证：时间线与 Google 2026-08 垃圾内容更新（8/18 起、8/21 完成，全球）精确吻合；同期 Bing AI 引用未受影响（9/24 峰值 1450/日）。\n剩余：连续14天 GSC 展示>20/日 确认窗为被动监测，不阻塞 S1 路线（S1 应定为\"整改+观察\"而非\"增长\"）。\n2026-11-04 落 deliverable：诊断_Google站级坍塌根因_2026-11.md（三查结论+二分判定=判定层质量重分类）。保持 doing：14 天 GSC 展示>20/日 被动监测窗 + S1「整改+观察」未启动。\n[2026-11-04 监测窗启动] 14 天被动监测窗 START=2026-11-04 / END=2026-11-18（连续 14 天 GSC 展示>20/日 为观察信号，不阻塞 S1）。S1=内容质量/规范入口整改（非页面实验），待定义具体页面+执行；已建自动化 2026-11-18 核查窗口。",
+          "statusNote": "2026-11-03 已完成GSC三查与二分判定：判定层质量重分类，非抓取/手动惩罚/安全问题；根因报告已交付。2026-11-18被动观察复核：可用数据仅到11/14，11/15缺失；14日窗不可比较、不补零、不宣称通过。2026-11-19继续保留doing，待数据窗口完整后再判定；S1整改单独推进，不能以S1源码修改替代监测结论。",
           "note": "依据：docs/project-governance/BookConv-SEO-GEO首次执行报告-CP0-CP11-2026-11-02.md §CP1 D-01/D-02；2026-11-03 经 tabbit 实测解析，见 statusNote",
           "statusAudited": "2026-11-04 残余三项分流"
         },
@@ -1826,12 +1826,13 @@
           "tier": "CORE",
           "owner": "A→O",
           "detail": "由 M12-1 拆解：M12-1 已判定为「判定层质量重分类」（非抓取层/非手动惩罚/非安全风险），故 S1 定性为「整改+观察」而非增长实验。范围=内容质量与规范入口的整改清单，不含页面实验、不动实验页。拆分理由：与 11/10、11/12 首批页面实验隔离，避免互相干扰。",
-          "status": "todo",
+          "status": "blocked",
           "priority": "P0",
           "due": "2026-11-18",
           "action": "S1 整改：基于 M12-1 判定层质量重分类，定义并执行内容质量/规范入口整改清单（非页面实验）",
           "accept": "列出具体整改页+动作，或写 UNKNOWN",
-          "statusNote": "2026-11-04 由 M12-1 拆解，待启动",
+          "deliverable": "docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md",
+          "statusNote": "2026-11-19 前置核查完成，但S1尚未启动。M12-2历史审计与5fa0d4f的15页差异化充实仅作可复用基线，不计作S1完成。2026-11-17 CEO独立验收确认M12-1三查未全部落纸；11/18观察窗可用数据仅到11/14且11/15缺失。依赖未满足前不启动S1页面整改/实验；解阻后复用15页历史结果，不重复改写。报告：docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md。",
           "statusAudited": "2026-11-04 残余三项分流"
         }
       ]
@@ -1852,8 +1853,9 @@
           "due": "2026-11-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "done",
-          "statusNote": "计划标注已完成；执行层残余见待办 §七",
+          "status": "blocked",
+          "deliverable": "docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md",
+          "statusNote": "2026-11-19 前置核查完成，但S1尚未启动。M12-2历史审计与5fa0d4f的15页差异化充实仅作可复用基线，不计作S1完成。2026-11-17 CEO独立验收确认M12-1三查未全部落纸；11/18观察窗可用数据仅到11/14且11/15缺失。依赖未满足前不启动S1页面整改/实验；解阻后复用15页历史结果，不重复改写。报告：docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1911,8 +1913,8 @@
           "due": "2026-11-05",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "仅先核查Topic Portfolio月份标签",
+          "status": "done",
+          "statusNote": "2026-11-19核查型任务完成：TopicPortfolio文件月份标签仍为9/10窗口，11/5任务仅要求核查标签；当前窗口未开放，不重拉数据。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1925,8 +1927,8 @@
           "due": "2026-11-06",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "不把BookConv写成在线阅读器",
+          "status": "done",
+          "statusNote": "竞品②交付完成：两张EPUB阅读/打开证据卡已于11/13落盘，明确Reader与Converter意图不同；不开发阅读器。详见 docs/tasks/bookconv-growth-20261105/竞品证据卡_EPUB阅读与打开任务_2026-11-13.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1939,8 +1941,8 @@
           "due": "2026-11-07",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "不要求四路当天强行通过",
+          "status": "dropped",
+          "statusNote": "原4路当天强制测试已作废并由M8-17真实浏览器复测接续；M8-17已完成，不重复执行旧任务。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1953,8 +1955,8 @@
           "due": "2026-11-08",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "无明确缺口则产出不改此页理由",
+          "status": "done",
+          "statusNote": "竞品证据缓冲合并至M13-18月度深度结论；已形成不新增页面/不改参考页的证据理由，避免重复产出。详见 docs/tasks/bookconv-ops-20261119/03_M13-18-competitor-monthly.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1967,8 +1969,8 @@
           "due": "2026-11-09",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "不默认必须选Send to Kindle\n2026-11-04 追加：本次周评审须含 fetch-competitor-serp.mjs 首跑，验证 topDomains 与 collection 元数据真实落盘；跑前先备份当日快照（脚本按当天日期覆盖写，重跑会覆盖已有快照）。",
+          "status": "blocked",
+          "statusNote": "11/16首批SERP已有topDomains，但gl/hl未设置、实际每词仅返回6–9条；无法建立地区/语言一致口径或跨日趋势。待Owner确认固定采样市场/语言后再跑，不猜US或SG。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1981,8 +1983,8 @@
           "due": "2026-11-10",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "失败保留改动待修,不记已发布",
+          "status": "blocked",
+          "statusNote": "SEO/GEO实验①仍是失败保留改动待修，未有生产发布回执；本地补丁不计已发布。待修复、独立验收及Owner发布授权。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -1995,8 +1997,8 @@
           "due": "2026-11-11",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "旧页已优化,不重新堆字数",
+          "status": "done",
+          "statusNote": "竞品③完成两张Kindle转入/设备选择证据卡；Amazon官方Send to Kindle支持EPUB，现有how-to-read-epub-on-kindle指南已有Bing曝光；不新增页面、不把MOBI说成必需。详见 docs/tasks/bookconv-ops-20261119/05_M13-11-kindle-competitor-cards.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2009,8 +2011,8 @@
           "due": "2026-11-12",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "不为凑2页发布",
+          "status": "blocked",
+          "statusNote": "无第二个达到证据门槛的SEO/GEO候选页；按“不为凑2页发布”纪律顺延至11/25候选门禁，不强行实验。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2038,8 +2040,8 @@
           "due": "2026-11-14",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "只修回归",
+          "status": "done",
+          "statusNote": "上线验收缓冲核查完成：本窗口无获准生产发布、无可归因上线回归；无回归不制造修复。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2052,8 +2054,8 @@
           "due": "2026-11-15",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "月度自动化已存在的历史记录须核实",
+          "status": "done",
+          "statusNote": "既有任务/自动化依赖审计已完成：核对跨账号执行、同目的重复、名称与prompt不符、账号授权≠可执行等问题；仅记录证据，不擅改Owner账号或自动化。详见 docs/tasks/bookconv-growth-20261117/03_A3_自动化依赖审计.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2066,8 +2068,8 @@
           "due": "2026-11-16",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "数据不足不评价成败",
+          "status": "done",
+          "statusNote": "联合周评审③交付完成：GSC/GA4/Bing按窗口与事件口径复核，结论为数据不足、不评价实验成败；禁止将事件占比或单日尖峰包装为增长。详见 docs/tasks/bookconv-ops-20261119/06_M13-16-weekly-review.md。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2080,8 +2082,8 @@
           "due": "2026-11-17",
           "priority": "P1",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "页面有FAQ不自动说明因果",
+          "status": "blocked",
+          "statusNote": "尚无可复核的真实AI引用来源样本；外链目录提交/已上线记录不等于AI引用来源。待GEO有效采样后最多核查两张来源卡，不伪造作者/更新/外部提及。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2094,8 +2096,8 @@
           "due": "2026-11-18",
           "priority": "P0",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "至少3项决策,分别链接本站URL与验证指标",
+          "status": "done",
+          "statusNote": "2026-11-19 补交月度深度结论：基于11/16 SERP原始快照（23词、实际深度6–9、ownRank 0/23，非Top100结论）及11/4/11/13既有证据，形成领先/落后/值得测试/明确不做矩阵；5项决策均绑定本站URL与验证指标。报告：docs/tasks/bookconv-ops-20261119/03_M13-18-competitor-monthly.md。跨日趋势、Top100与质量优劣维持UNKNOWN。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2109,7 +2111,7 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo",
-          "statusNote": "不向参考页追加实验链接",
+          "statusNote": "按11/19逐日计划修订：SEO入口补缺并入11/25候选门禁；当前未确认可执行故障，不向参考页追加实验链接，今日不做页面修改。",
           "statusAudit": "plan-redteam-2026-11-01"
         },
         {
@@ -2277,8 +2279,8 @@
           "recheck": "2026-11-06",
           "priority": "P2",
           "tier": "CORE",
-          "status": "todo",
-          "statusNote": "11/5–11/6 回 GSC 复查;若仍未编入索引记录下次时间点",
+          "status": "blocked",
+          "statusNote": "当前未找到F11的最新GSC URL Inspection回执；仅有11/01历史状态。Search Performance曝光不能替代索引状态；待URL Inspection回读后再判断。",
           "statusAudit": "f11-gsc-2026-11-03"
         },
         {

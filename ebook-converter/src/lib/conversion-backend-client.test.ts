@@ -123,7 +123,7 @@ describe("conversion backend client", () => {
       const fetchMock = jest.fn(async () => fakeRes);
       global.fetch = fetchMock as unknown as typeof global.fetch;
 
-      const resp = await delegateToBackend(makeForm(), { "X-RateLimit-Remaining": "19" });
+      const resp = await delegateToBackend(makeForm(), { "X-RateLimit-Remaining": "19" }, { requestId: "request-test-12345678" });
       expect(resp).not.toBeNull();
       expect(resp!.status).toBe(200);
       expect(resp!.headers.get("content-type")).toBe("application/x-mobipocket-ebook");
@@ -138,6 +138,7 @@ describe("conversion backend client", () => {
       const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
       expect(url).toBe("https://bk.test/api/convert-internal");
       expect((init.headers as Record<string, string>)["x-internal-convert"]).toBe("sec");
+      expect((init.headers as Record<string, string>)["x-request-id"]).toBe("request-test-12345678");
     });
 
     it("returns null on 5xx (failover to CloudConvert) and records a failure", async () => {

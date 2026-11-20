@@ -124,6 +124,10 @@ async function acquireConvertLock(waitMs, isAborted) {
   return false;
 }
 
+function safeCorrelationId(value) {
+  return typeof value === "string" && /^[A-Za-z0-9-]{8,80}$/.test(value) ? value : null;
+}
+
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
     const fields = {};
@@ -198,7 +202,10 @@ async function doConvert(req, res) {
   const sourceFormat = (fields.source_format || "").toLowerCase().replace(/^\./, "");
   const targetFormat = (fields.target_format || "").toLowerCase().replace(/^\./, "");
   const quality = fields.quality === "high" ? "high" : "default";
-
+  const requestId = safeCorrelationId(req.headers["x-request-id"]) || randomUUID();
+  const jobId = randomUUID();
+  const correlationStarted = Date.now();
+  log("START", `job=${jobId}`, `request=${requestId}`, sourceFormat, "->", targetFormat);
   if (!fileMeta || !sourceFormat || !targetFormat) {
     if (fileMeta) try { await fsp.unlink(fileMeta.tmp); } catch {}
     return json(res, 400, { error: "Missing required fields: file, source_format, target_format" });
@@ -230,6 +237,7 @@ async function doConvert(req, res) {
   if (!result.success) {
     try { await fsp.unlink(outPath); } catch {}
     log("FAIL", sourceFormat, "->", targetFormat, result.error);
+    log("CORRELATION_FAIL", `job=${jobId}`, `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, `code=${result.code || "CONVERSION_FAILED"}`);
     // 完整 stderr 单行落盘（2026-11-03，Job f547b469）：上一行只有 200 字符摘要，
     // 看得到异常类型却看不到上下文（哪一步、哪个成员、哪个路径）。压平换行是为了
     // 守住「一条日志一行」的格式——既有分析脚本都按行 grep。截 1500 字符控体积。
@@ -262,6 +270,7 @@ async function doConvert(req, res) {
     });
     res.end(outBuf);
     log("OK", sourceFormat, "->", targetFormat, `${outBuf.length}B`, `${Date.now() - started}ms`);
+    log("CORRELATION_OK", `job=${jobId}`, `request=${requestId}`, `bytes=${outBuf.length}`, `duration=${Date.now() - correlationStarted}ms`);
   } catch {
     return json(res, 500, { error: "Output read failed.", code: "OUTPUT_ERROR" });
   } finally {

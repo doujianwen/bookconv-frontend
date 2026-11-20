@@ -120,6 +120,7 @@ export async function POST(request: NextRequest) {
         const backendResp = await delegateToBackend(formData, rateHeaders, {
           prebuiltFile,
           clientIp: readClientIp(request.headers),
+          requestId: request.headers.get("x-request-id") || undefined,
           onFallback: (reason) => {
             delegationFallback = reason;
           },

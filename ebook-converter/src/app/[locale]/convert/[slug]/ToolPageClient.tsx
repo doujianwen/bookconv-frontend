@@ -2,7 +2,7 @@
 import { resolveGAErrorCode } from "@/lib/ga-error-classification";
 import Link from 'next/link'
 import { PageLanguageLinks } from '@/components/PageLanguageLinks'
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import type { KeywordData } from "@/lib/constants"
 import { FORMAT_DISPLAY_NAMES } from "@/lib/conversion-map"
 import type { RelatedPostRef, RelatedGuideRef } from "@/lib/internal-links"
@@ -20,6 +20,7 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
+import { createConversionObservationContext } from "@/lib/conversion-observation"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect } from "@/lib/client/direct-upload"
 import {
@@ -134,14 +135,78 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
   // 「两头堵」组合（自建后端白名单外 + CloudConvert 无此转换路径）：前端硬拦，
   // 不让用户白传一次文件才见到 500。替代推荐直接给出可用的站内转换页。
   const unsupported = unsupportedConversionInfo(source, target)
+  const isUnsupported = Boolean(unsupported)
   const [downloadUrl, setDownloadUrl] = useState("")
   const [fileName, setFileName] = useState("")
   const [outputFileSize, setOutputFileSize] = useState(0)
   const [errorMessage, setErrorMessage] = useState("")
   const [errorCode, setErrorCode] = useState<ErrorCode | undefined>()
+  const [availabilityNotice, setAvailabilityNotice] = useState<{ kind: "available" | "limited" | "unknown"; message: string; checkedAt?: string } | null>(null)
   const [progress, setProgress] = useState(0)
   const [originalFileName, setOriginalFileName] = useState("")
   const [originalFileSize, setOriginalFileSize] = useState(0)
+  // M8-18: show the latest tracked quota state before the user chooses a file.
+  // This is advisory only: the conversion API rechecks cache first, then budget.
+  useEffect(() => {
+    if (isUnsupported) return
+    let cancelled = false
+    const statusUrl = `/api/conversion-status?source=${encodeURIComponent(source)}&target=${encodeURIComponent(target)}`
+    fetch(statusUrl, { cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Status check failed (${response.status})`)
+        return await response.json() as {
+          status?: "available" | "limited" | "unknown"
+          scope?: "local" | "cloudconvert"
+          checkedAt?: string
+        }
+      })
+      .then((availability) => {
+        if (cancelled) return
+        if (availability.status === "limited") {
+          setAvailabilityNotice({
+            kind: "limited",
+            checkedAt: availability.checkedAt,
+            message: isEs
+              ? "El presupuesto diario registrado para esta ruta se agotó. Los resultados ya almacenados en caché aún pueden estar disponibles; las solicitudes sin caché pueden rechazarse. El servidor comprobará primero la caché y después el presupuesto."
+              : "The tracked daily budget for this route is exhausted. A cached result may still be available; uncached requests may be declined. The server checks the cache first, then the budget.",
+          })
+        } else if (availability.status === "unknown") {
+          setAvailabilityNotice({
+            kind: "unknown",
+            checkedAt: availability.checkedAt,
+            message: isEs
+              ? "No se pudo verificar el presupuesto. Puedes continuar; el servidor volverá a comprobarlo al procesar el archivo."
+              : "The budget could not be checked. You can continue; the server will check again when processing the file.",
+          })
+        } else if (availability.scope === "local") {
+          setAvailabilityNotice({
+            kind: "available",
+            checkedAt: availability.checkedAt,
+            message: isEs
+              ? "Esta ruta usa procesamiento local y no consume créditos diarios de CloudConvert."
+              : "This route uses local processing and does not consume CloudConvert daily credits.",
+          })
+        } else {
+          setAvailabilityNotice({
+            kind: "available",
+            checkedAt: availability.checkedAt,
+            message: isEs
+              ? "El presupuesto diario registrado tiene margen. Esto no garantiza la disponibilidad del proveedor externo."
+              : "The tracked daily budget has headroom. This does not guarantee upstream provider availability.",
+          })
+        }
+      })
+      .catch(() => {
+        if (cancelled) return
+        setAvailabilityNotice({
+          kind: "unknown",
+          message: isEs
+            ? "No se pudo verificar el presupuesto; el servidor comprobará la disponibilidad al procesar el archivo."
+            : "The budget could not be checked; the server will verify availability when processing the file.",
+        })
+      })
+    return () => { cancelled = true }
+  }, [source, target, isEs, isUnsupported])
   const handleReset = useCallback(() => {
     setStatus("idle")
     setDownloadUrl("")
@@ -175,7 +240,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
       // 看着像"事件重复计数"。有了 attempt 就有了可机器验证的不变量：
       //   终态(完成+失败) ≤ attempt + 容差   （违反=同一尝试重复发终态，物理不可能）
       // 判据实现见 scripts/lib/ga-attempt-closure.mjs（B6 消费）。
+      const observationContext = createConversionObservationContext()
       trackGAEvent("conversion_attempt", {
+          ...observationContext,
         source_format: source,
         target_format: target,
         file_size: file.size,
@@ -191,6 +258,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         // （复用 error-handler.ts 的 UNSUPPORTED_CONVERSION，与上方 setErrorCode 同源）
         // 使这类前置拒绝可按统一 error_code 维度细分，不再只见 reason 散落在另一字段。
         trackGAEvent("file_rejected_client", {
+          ...observationContext,
           source_format: source,
           target_format: target,
           reason: "unsupported_conversion",
@@ -208,6 +276,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         // 2026-11-19 #6：同上，补 error_code（复用 CORRUPT_INPUT，与 setErrorCode 同源），
         // 让魔数嗅探拒绝也能进入统一 error_code 归因，细分「未闭环 attempt」的构成。
         trackGAEvent("file_rejected_client", {
+          ...observationContext,
           source_format: source,
           target_format: target,
           magic_hex: sniff.magicHex,
@@ -231,6 +300,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         // 关闭盲区：超大文件被客户端拦截也属于"用户发起的转换失败"，此前静默无事件，
         // GA4 里完全不可见。补发 conversion_failed 带上 error_code，使失败根因分流覆盖 100% 路径。
         trackGAEvent("conversion_failed", {
+          ...observationContext,
           source_format: source,
           target_format: target,
           error_code: "FILE_TOO_LARGE",
@@ -284,11 +354,12 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setProgress(30)
         setStatus("converting")
         trackGAEvent("file_upload", {
+          ...observationContext,
           source_format: source,
           target_format: target,
           file_size: file.size,
         })
-        const response = await fetch("/api/convert", { method: "POST", body: formData })
+        const response = await fetch("/api/convert", { method: "POST", body: formData, headers: { "x-request-id": observationContext.request_id } })
         setProgress(40)
         if (!response.ok) {
           const apiErr = await extractApiError(response)
@@ -309,6 +380,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setProgress(100)
         setStatus("done")
         trackGAEvent("conversion_complete", {
+          ...observationContext,
           source_format: source,
           target_format: target,
         })
@@ -334,6 +406,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setErrorMessage(errObj?.message || (isEs ? "La conversión falló" : "Conversion failed"))
         setStatus("error")
         trackGAEvent("conversion_failed", {
+          ...observationContext,
           source_format: source,
           target_format: target,
           error_code: resolveGAErrorCode(mappedCode, err),
@@ -416,6 +489,12 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
               </p>
             </div>
           )}
+          {availabilityNotice && (
+            <div className={`rounded-lg border px-4 py-3 text-sm ${availabilityNotice.kind === "limited" ? "border-amber-300 bg-amber-50 text-amber-900" : availabilityNotice.kind === "unknown" ? "border-gray-200 bg-gray-50 text-gray-700" : "border-green-200 bg-green-50 text-green-800"}`} role="status" aria-live="polite">
+              {availabilityNotice.message}
+              {availabilityNotice.checkedAt && <span className="mt-1 block text-xs opacity-75">Checked {availabilityNotice.checkedAt} · no-cache; server rechecks on submission.</span>}
+            </div>
+          )}
           {!unsupported && <FileDropZone
             onFileSelect={handleFileSelect}
             disabled={status === "uploading" || status === "converting"}
@@ -423,6 +502,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
             maxFileSizeBytes={uploadCap.maxBytes}
             maxFileSizeMB={uploadCap.maxMB}
           />}
+
           <ConversionProgress
             status={status}
             progress={status === "converting" ? progress : 0}
