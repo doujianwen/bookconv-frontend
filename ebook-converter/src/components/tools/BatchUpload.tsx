@@ -28,6 +28,7 @@ import { isErrorCode } from "@/lib/error-handler";
 import { trackGAEvent } from "@/lib/ga";
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit";
 import { sniffFileFormat } from "@/lib/file-format-sniffer";
+import { createConversionObservationContext, CONVERSION_OBSERVATION_SCHEMA_VERSION } from "@/lib/conversion-observation";
 
 // ── Limits ────────────────────────────────────────────────────
 // Defaults are deliberately aligned with what the backend actually enforces:
@@ -322,6 +323,10 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
     setBatchResult(null);
     setConvertedFiles([]);
 
+    // M8-19：batch_id 必须在任何子任务事件之前生成，才能作为父 ID 关联每个文件的
+    // request_id/attempt_id。原实现在循环结束后才生成（旧第448行），太晚无法关联。
+    const batchId = "batch-" + Date.now().toString(36);
+
     // Flip every valid item to "processing" before the loop starts.
     const markStatus = (idx: number, status: BatchFileItem["status"], errMsg?: string) =>
       setFiles((prev) =>
@@ -357,7 +362,10 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
         // 再走配额跳过 / 上传 / 转换。配额跳过会发 conversion_failed 但从不发
         // file_upload，正是 (完成+失败) > file_upload 的主要来源之一。
         // 不变量与单文件路径一致：终态(完成+失败) ≤ attempt + 容差。
+        // M8-19：每个文件独立 request_id/attempt_id，统一 schema_version，共享父 batch_id。
+        const obs = createConversionObservationContext(batchId);
         trackGAEvent("conversion_attempt", {
+          ...obs,
           source_format: item.sourceFormat,
           target_format: targetFormat,
           file_size: item.size,
@@ -365,7 +373,9 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
 
         if (quotaExhausted && !isLocalConversion(item.sourceFormat, targetFormat)) {
           failed += 1;
+          // 配额跳过：有 attempt + failed 终态，但从不发 file_upload（口径不变）。
           trackGAEvent("conversion_failed", {
+            ...obs,
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: "quota_exceeded",
@@ -386,6 +396,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
 
         try {
           trackGAEvent("file_upload", {
+            ...obs,
             source_format: item.sourceFormat,
             target_format: targetFormat,
             file_size: item.size,
@@ -398,6 +409,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
           collected.push({ blob, filename: outName });
           completed += 1;
           trackGAEvent("conversion_complete", {
+            ...obs,
             source_format: item.sourceFormat,
             target_format: targetFormat,
           });
@@ -418,6 +430,7 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
             quotaExhausted = true;
           }
           trackGAEvent("conversion_failed", {
+            ...obs,
             source_format: item.sourceFormat,
             target_format: targetFormat,
             error: (msg || "unknown").slice(0, 100),
@@ -445,7 +458,6 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
 
     setConvertedFiles(collected);
 
-    const batchId = "batch-" + Date.now().toString(36);
     const message =
       failed === 0
         ? `All ${completed} file(s) converted successfully.`
@@ -467,6 +479,16 @@ export function BatchUpload({ onConversionComplete }: { onConversionComplete?: (
   // ── Download ZIP (built locally, no server round-trip) ────
   const handleDownloadZip = useCallback(async () => {
     if (convertedFiles.length === 0) return;
+    // M8-19：真实批量下载入口点击事件。仅表示「用户发起 ZIP 下载」，不代表文件已落盘；
+    // 携带父 batch_id 与批次统计，均为低基数聚合值，无文件名/内容/用户身份。
+    trackGAEvent("download_clicked", {
+      ...(batchResult ? { batch_id: batchResult.batchId } : {}),
+      schema_version: CONVERSION_OBSERVATION_SCHEMA_VERSION,
+      surface: "batch_zip",
+      batch_total: batchResult?.total ?? convertedFiles.length,
+      batch_completed: batchResult?.completed ?? convertedFiles.length,
+      batch_failed: batchResult?.failed ?? 0,
+    });
     const zip = new JSZip();
     for (const cf of convertedFiles) {
       zip.file(cf.filename, cf.blob);

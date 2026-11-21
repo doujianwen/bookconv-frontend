@@ -3,6 +3,8 @@
 import { Download, ArrowRight, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { chrome } from "@/lib/ui-chrome"
+import { trackGAEvent } from "@/lib/ga"
+import type { ConversionObservationContext } from "@/lib/conversion-observation"
 
 interface FileMeta {
   name: string
@@ -18,9 +20,25 @@ interface BeforeAfterComparisonProps {
   onReset: () => void
   /** M5-7：西语页 chrome 本地化开关 */
   isEs?: boolean
+  /** M8-19：单文件转换观测上下文，用于 download_clicked 归因；只含 opaque ID，无用户数据 */
+  observationContext?: ConversionObservationContext
+  sourceFormat?: string
+  targetFormat?: string
 }
 
-export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onReset, isEs = false }: BeforeAfterComparisonProps) {
+export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onReset, isEs = false, observationContext, sourceFormat, targetFormat }: BeforeAfterComparisonProps) {
+  // M8-19：真实下载入口点击事件。仅表示「用户发起下载」，不代表浏览器已保存文件
+  // （不新增 download_saved 伪事件）；发送内容只有 opaque ID 与格式标签，无文件名/内容/身份。
+  const handleDownloadClick = () => {
+    if (!observationContext) return
+    trackGAEvent("download_clicked", {
+      ...observationContext,
+      ...(sourceFormat ? { source_format: sourceFormat } : {}),
+      ...(targetFormat ? { target_format: targetFormat } : {}),
+      surface: "single",
+    })
+  }
+
   const formatBytes = (bytes: number): string => {
     if (bytes === 0) return "0 B"
     const k = 1024
@@ -96,6 +114,7 @@ export function BeforeAfterComparison({ beforeFile, afterFile, downloadUrl, onRe
         <a
           href={downloadUrl}
           download={afterFile.name}
+          onClick={handleDownloadClick}
           className="inline-flex h-11 items-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
         >
           <Download className="h-4 w-4" />

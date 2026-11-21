@@ -20,7 +20,7 @@ import { TESTIMONIALS } from "@/data/testimonials"
 import { BatchConversionGuide } from "@/components/tools/BatchConversionGuide"
 import { VideoTutorial } from "@/components/tools/VideoTutorial"
 import { trackGAEvent } from "@/lib/ga"
-import { createConversionObservationContext } from "@/lib/conversion-observation"
+import { createConversionObservationContext, type ConversionObservationContext } from "@/lib/conversion-observation"
 import { MAX_FILE_SIZE_MB, MAX_FILE_SIZE_BYTES } from "@/lib/file-size-limit"
 import { uploadFileDirect } from "@/lib/client/direct-upload"
 import {
@@ -145,6 +145,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
   const [progress, setProgress] = useState(0)
   const [originalFileName, setOriginalFileName] = useState("")
   const [originalFileSize, setOriginalFileSize] = useState(0)
+  // M8-19：把本次转换的 observation context 提升到组件状态，供成功后的真实下载入口
+  // （BeforeAfterComparison）发 download_clicked 归因；它与该文件转换的 attempt 同源。
+  const [completedObservationContext, setCompletedObservationContext] = useState<ConversionObservationContext | null>(null)
   // M8-18: show the latest tracked quota state before the user chooses a file.
   // This is advisory only: the conversion API rechecks cache first, then budget.
   useEffect(() => {
@@ -217,6 +220,7 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
     setOriginalFileName("")
     setOriginalFileSize(0)
     setOutputFileSize(0)
+    setCompletedObservationContext(null)
   }, [])
   const sourceDisplay = FORMAT_DISPLAY_NAMES[source] || source.toUpperCase()
   const targetDisplay = FORMAT_DISPLAY_NAMES[target] || (target.toLowerCase() === "htmlz" ? "HTMLZ" : target.toUpperCase())
@@ -377,6 +381,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         setFileName(outputName)
         setOutputFileSize(blob.size)
         setDownloadUrl(url)
+        // M8-19：成功后保存本次 context，供真实下载入口发 download_clicked 归因。
+        // 仅在转换成功（有可用下载链接）时写入，失败路径保持 null，不产生伪下载事件。
+        setCompletedObservationContext(observationContext)
         setProgress(100)
         setStatus("done")
         trackGAEvent("conversion_complete", {
@@ -533,6 +540,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
               downloadUrl={downloadUrl}
               onReset={handleReset}
               isEs={isEs}
+              observationContext={completedObservationContext ?? undefined}
+              sourceFormat={source}
+              targetFormat={target}
             />
           )}
           {/* Next steps CTA — lift retention at the conversion-complete moment */}

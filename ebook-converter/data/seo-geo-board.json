@@ -465,13 +465,13 @@
           "detail": "M1-D 覆盖率核查（10-02）实测 28 个 convert 页中 13 页 crawl=never：9 页已发现未抓取 + 4 页完全未知（txt-to-epub / doc-to-epub / mobi-to-txt / djvu-to-pdf）。定为 Tier-2 差异化前置子集，复用既有差异化节奏（≤3 页/天）。技术前置已全过（HTTP 200 / canonical 自指 / sitemap 含 / 无 noindex，均实测断言）；Google 无「请求编入索引」API，发现杠杆 = 内链 + sitemap + 等抓取配额。",
           "owner": "A",
           "deliverable": "13 页逐页差异化改写（基线 = 数据分析/GSC_URLInspection_2026-10-02.csv）",
-          "accept": "每页改后门禁全绿；10-20 用 URL Inspection 复评 crawl 时间与 referringUrls 有增量",
+          "accept": "每页改后门禁全绿。【2026-11-21 判据拆分·Owner授权】①可验证进展判据：URL Inspection 的 referringUrls 净增量（站方可控，10-20实测净+2）；②观测项（不作解阻门槛）：crawl 时间增量（受Google抓取配额、站方不可控）。原AND判据（crawl与referringUrls同时有增量）已废止；原accept原文保留可追溯=每页改后门禁全绿；10-20 用 URL Inspection 复评 crawl 时间与 referringUrls 有增量",
           "due": "2026-11-20",
           "priority": "P0",
           "tier": "CORE",
           "status": "blocked",
           "note": "🟢 2026-10-05 补充证据：Bing Web 全量口径下 6 个 convert 页位置 3.0-8.2（全 Top10）但合计仅 21 次曝光 / 0 点击（覆盖 74.1%）⇒ 瓶颈是曝光量与索引覆盖，不是排名。与 13 个零抓取页差异化同源，可一并排期。",
-          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。\n[2026-10-19 10:46 更正] 上述「未 push」已过期：Batch 14 相关提交（758e994/78d54bd/7dc3dce 等）经 git merge-base --is-ancestor 实测均已在 origin/main；本批次余下提交亦于 10-19 10:46 批量发布（e2371ab..c95ef0b）并部署上线（线上 chronicles 页 em dash 新旧串双断言通过）。作战板以本条为准。\n[2026-10-20 复评·转 blocked] M1-E 10-20 复评完成（数据分析/M1-E复评报告-2026-10-20.md + GSC_URLInspection_2026-10-20.csv，15/15 Inspection 成功）：13 零抓取页 crawl 增量=0（无一被抓取，GSC 页面报告交叉验证 0 曝光），referringUrls 净+2；10-02 的 4 个「URL is unknown」页（txt-to-epub/doc-to-epub/mobi-to-txt/djvu-to-pdf）全部进入 Discovered——差异化+内链在发现层有真实但有限进展；azw3-to-pdf/epub-to-jpg/epub-to-png 退化为 unknown（与 referringUrls 归零同步）。验收「crawl 有增量」未达成 ⇒ 用户拍板转 blocked（受制于 Google 抓取配额，非站方可控），复评延至 2026-11-20（due 已同步改 2026-11-20）。诚实口径：转 blocked 不构成「内容质量差」的证据——页面从未进入被评估环节；board.test.ts 基线本已 13F/43P（board 扩到 98 任务/M11 后未同步，既有欠债另立任务修），本变更零新增失败。"
+          "statusNote": "\n[2026-10-07 前置进展] Phase 2 Title-First 已 FROZEN + LIVE：\n  4 页 convert title 优化（mobi-to-epub / epub-to-doc / epub-to-txt / epub-to-azw3）\n  commit 011e0f6+dccdbd6+c1da1d6，Vercel 已部署\n  Gate 20/20 PASS，反向测试 CAUGHT+RESTORED ✓\n  4 个 Title 声明均经事实验证（content grep 支持）\n  监控节点：Day 7=10-14 / Day 14=10-21 / Day 28=10-35\n  本轮产出 9 份文档 + 3 份部署文档，备份目录 SEO_BACKUP_PHASE2_TITLE_2026-10-07/\n[2026-10-11 Batch 14 首批·b7] A 类 3 页补 keyTakeaways（Bing AI 友好可引用要点）：epub-to-pdf / epub-to-html / fb2-to-epub 各 +5 条，位置 hero 后 sections 前。txt-to-epub / doc-to-epub 已有 keyTakeaways 无需补。门禁：audit:content 0/0 + syntax 316/0 + tsc 0 + heading-uniqueness 2/0 + next build exit 0。EOL 字节层验证：epub-to-html 纯 LF（目录既有合法态，9/32 文件为 LF）、fb2/epub-to-pdf 纯 CRLF。未 push。\n[2026-10-19 10:46 更正] 上述「未 push」已过期：Batch 14 相关提交（758e994/78d54bd/7dc3dce 等）经 git merge-base --is-ancestor 实测均已在 origin/main；本批次余下提交亦于 10-19 10:46 批量发布（e2371ab..c95ef0b）并部署上线（线上 chronicles 页 em dash 新旧串双断言通过）。作战板以本条为准。\n[2026-10-20 复评·转 blocked] M1-E 10-20 复评完成（数据分析/M1-E复评报告-2026-10-20.md + GSC_URLInspection_2026-10-20.csv，15/15 Inspection 成功）：13 零抓取页 crawl 增量=0（无一被抓取，GSC 页面报告交叉验证 0 曝光），referringUrls 净+2；10-02 的 4 个「URL is unknown」页（txt-to-epub/doc-to-epub/mobi-to-txt/djvu-to-pdf）全部进入 Discovered——差异化+内链在发现层有真实但有限进展；azw3-to-pdf/epub-to-jpg/epub-to-png 退化为 unknown（与 referringUrls 归零同步）。验收「crawl 有增量」未达成 ⇒ 用户拍板转 blocked（受制于 Google 抓取配额，非站方可控），复评延至 2026-11-20（due 已同步改 2026-11-20）。诚实口径：转 blocked 不构成「内容质量差」的证据——页面从未进入被评估环节；board.test.ts 基线本已 13F/43P（board 扩到 98 任务/M11 后未同步，既有欠债另立任务修），本变更零新增失败。\n【2026-11-21 判据拆分·Owner授权】原AND判据（crawl时间与referringUrls同时有增量）导致永久blocked：10-20复评（15/15 Inspection）crawl增量=0、referringUrls净+2；11-18 GSC快照复核相关页无lastCrawl。拆分后referringUrls净增量=可验证进展（站方可控），crawl时间增量=观测项（受Google配额、站方不可控，不作解阻门槛）。本轮仅改判据定义，status仍blocked；是否据新判据解阻由Owner裁定。\n【2026-11-21 最终裁定·Owner授权代决】裁定=保持 blocked，但更新阻塞原因：原阻塞「crawl 时间增量受 Google 配额不可控」是死结；判据拆分后阻塞原因更新为「13 页差异化改写无在途批次」（可解）。数据口径澄清：10-20 CSV 的 referringUrls 为数字计数入链标记（15 行分布 0:5 / 1:9 / 2:1；13 零抓取页中 3 页≥1），【事实更正】11-18 快照 inspectionResult 实际有 referringUrls 字段（117 行中 37 行命中，URL 数组口径；此前称『无该字段』系只看首条样本的误判，已红队证伪更正），但口径与 10-20 CSV 的 0/1 计数不同，仍不可直接跨快照相减，发现层 4 页 unknown→Discovered 有真实进展但无 crawl。不标 doing=无在途改写工作，标 doing 会造假。解除条件=排入差异化改写批次即复办。"
         },
         {
           "id": "M2-9",
@@ -596,14 +596,14 @@
           "action": "索引覆盖率基线",
           "detail": "GSC「页面」报告导出：已索引 / 已抓取未索引 / 排除数；与 sitemap 150 URL（en 129 + es 21）对账。",
           "owner": "A",
-          "deliverable": "索引对账表",
           "accept": "三类数量与 sitemap URL 数可对齐；差异逐条注明原因",
           "due": "2026-09-29",
           "priority": "P0",
           "tier": "SUPP",
-          "status": "todo",
-          "statusNote": "147项SEO质量WARN尚未逐页分层；本轮audit-content-integrity 0 warning只验证内容完整性，不等于147项SEO质量告警已解决。禁止混口径关闭。",
-          "statusAudited": "2026-10-03"
+          "status": "done",
+          "statusNote": "产物 数据分析/GSC_URLInspection_2026-10-02.csv：28 页逐页 verdict+coverage+crawlTime+referringUrls",
+          "statusAudited": "2026-10-03",
+          "deliverable": "索引对账表"
         },
         {
           "id": "M3-2",
@@ -717,13 +717,13 @@
           "detail": "55个未收录blog页，按M2-8 Batch 14工作流做差异化：①补充Bing AI友好内容 ②增加FAQ schema ③优化内链结构",
           "owner": "A",
           "deliverable": "55页差异化内容 + publish-gate放行",
-          "accept": "每页新增≥2个差异化section，Bing AI引用率提升",
+          "accept": "每页新增≥2个差异化section（逐页可验收）。【2026-11-21 删伪指标】原「Bing AI引用率提升」无可复现实测口径与数据源，不可验收，已删除；原accept原文保留可追溯=每页新增≥2个差异化section，Bing AI引用率提升",
           "due": "2026-11-20",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "doing",
+          "status": "blocked",
           "note": "⚠️ 67/67 blog页已全部有FAQ schema，无批量加字段空间。差异化只能走M2-8 Batch 14逐篇内容改写路线，无法单会话安全完成55页。需按「批量改前必先审计」纪律分批推进。 关联 M3-12：keyTakeaways 术语已同步 Notion 手册（10-11），Blog 页差异化仍走 M2-8 Batch 14 逐篇路线。",
-          "statusNote": "[2026-10-22 逾期处理] 复核确认 blocked 判定成立（67/67 已有 FAQ schema；55 页无法单会话安全完成，既有审计结论未被推翻）。解阻提案（2026-10-22 18:34 用户拍板 A，已落地，状态转 doing）：A) 挂靠 M11-3 机会词批次——M11-3 P1 清单已含 open epub file 等 blog 词，blog 页差异化随批次顺带覆盖，零新增排期面（已选）；B) 独立周更批次（未选）。【落地机制】M3-10 转 doing，blog 差异化不再作为独立卡点，改为挂靠 M11-3 机会词批次逐批推进（≤3页/批 + Gate B + 人工审稿），每批交付后从 55 页中消项；不触碰 M2-8 既有 13 零抓取 convert 页。首批 blog 差异化页随 M11-3 后续机会词批次启动（须先确认目标页未被并行对话占用）。｜[2026-10-23 滚动口径] 本任务为分批长周期任务（55 页差异化，挂靠 M11-3 批次逐批消项，当前 0/55 消项），原 due 2026-10-20 已不可达；现改 due=2026-11-20（与 M11-3 全批次完成日对齐的滚动完成日），避免晨报按早定死 due 每日误报逾期。"
+          "statusNote": "[2026-10-22 逾期处理] 复核确认 blocked 判定成立（67/67 已有 FAQ schema；55 页无法单会话安全完成，既有审计结论未被推翻）。解阻提案（2026-10-22 18:34 用户拍板 A，已落地，状态转 doing）：A) 挂靠 M11-3 机会词批次——M11-3 P1 清单已含 open epub file 等 blog 词，blog 页差异化随批次顺带覆盖，零新增排期面（已选）；B) 独立周更批次（未选）。【落地机制】M3-10 转 doing，blog 差异化不再作为独立卡点，改为挂靠 M11-3 机会词批次逐批推进（≤3页/批 + Gate B + 人工审稿），每批交付后从 55 页中消项；不触碰 M2-8 既有 13 零抓取 convert 页。首批 blog 差异化页随 M11-3 后续机会词批次启动（须先确认目标页未被并行对话占用）。｜[2026-10-23 滚动口径] 本任务为分批长周期任务（55 页差异化，挂靠 M11-3 批次逐批消项，当前 0/55 消项），原 due 2026-10-20 已不可达；现改 due=2026-11-20（与 M11-3 全批次完成日对齐的滚动完成日），避免晨报按早定死 due 每日误报逾期。\n【2026-11-21 删伪指标·Owner授权】删除accept中「Bing AI引用率提升」伪验收指标（全仓无实测口径与数据源，不可验收）。保留「每页新增≥2个差异化section」为可逐页验证交付。核心问题未解决：M11-3机会词批次实际全为guide页、blog词被跳过，M3-10从未承载blog差异化（0/55消项）。任务目标四选一（作废/缩范围/改挂靠/保持）与新挂靠批次属业务决策，待Owner指定；本轮不虚构、不擅自变更status/due/action/deliverable。\n【2026-11-21 最终裁定·Owner授权代决】裁定=改挂靠/阻塞化：status 由 doing 改为 blocked（仍在 OPEN 集合 doing/blocked，晨报计数不变）。理由=载体 M11-3 已 done 且批次全为 guide 页、blog 词被跳过，55 页差异化 0/55 从未承载，doing 是假状态。不擅自作废（会丢失目标）、不虚构新挂靠批次（缺 Owner 业务信息）。解除条件=Owner 指定新挂靠批次后转 doing 并排期。"
         },
         {
           "id": "M3-11",
@@ -880,14 +880,14 @@
           "action": "hreflang / canonical 复核",
           "detail": "全站 hreflang 双向回指校验（en ↔ es），canonical 自指校验。",
           "owner": "S",
-          "deliverable": "校验报告",
           "accept": "0 处单向回指、0 处 canonical 指向他页",
           "due": "2026-09-30",
           "priority": "P1",
           "tier": "SUPP",
-          "status": "blocked",
-          "statusNote": "第三方信任源分发需Owner控制的Trustpilot/G2账号、身份与发布授权；AI不得代注册、冒名发言或虚构评论。可先做矩阵，真实发布待Owner动作。",
-          "statusAudited": "2026-10-03"
+          "status": "done",
+          "statusNote": "10/03 收口：新增 scripts/verify-hreflang-canonical.mjs 全站 171 URL 实测断言——首轮抓出 **17 处 es 回指指向死页**（formats 页绕过 buildAlternates 手写 /es/formats/* 回指，middleware P3-C 一律 404）+ sitemap 列 /es 死链（middleware 404）。修复：formats page 回归 buildAlternates(hasEsVersion:false)、sitemap es 分支跳过首页（commit 3eabf1e）。线上复测：170 URL、es 三件套 18 页（9 组 en↔es 双向闭合）、**V1 canonical 0 违规 / V3 单向回指 0**，验收达成。范围外发现（不动）：/compat/epub-to-mobi-on-kindle-paperwhite 缺 x-default；10 个 /es/guide 页存在但无 hreflang 配对。",
+          "statusAudited": "2026-10-03",
+          "deliverable": "校验报告"
         },
         {
           "id": "M5-2",
@@ -1417,7 +1417,7 @@
           "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-16.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-19 本地单文件观测契约已接入：request_id/attempt_id/schema_version贯穿conversion_attempt、前置拒绝、上传、失败与成功事件；/api/convert带x-request-id；batch_id字段预留供M8-19。26项相关测试通过，TypeScript/Build/diff-check通过。未注册GA4高基数维度；批量接入与线上回流待后续验证。详见 docs/tasks/bookconv-growth-20261105/M8-16.md。"
+          "statusNote": "2026-11-19 本地单文件观测契约已接入：request_id/attempt_id/schema_version贯穿conversion_attempt、前置拒绝、上传、失败与成功事件；/api/convert带x-request-id；batch_id字段预留供M8-19。26项相关测试通过，TypeScript/Build/diff-check通过。未注册GA4高基数维度；批量接入与线上回流待后续验证。详见 docs/tasks/bookconv-growth-20261105/M8-16.md。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。"
         },
         {
           "id": "M8-17",
@@ -1445,7 +1445,7 @@
           "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-18.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-19 本地实现：GET /api/conversion-status available/limited/unknown，附checkedAt与ttlSeconds=0，Cache-Control no-store；页面加载时展示上传前提示。unknown fail-open；limited仅提示不拦截，保留服务端缓存优先/预算其次；批量停止逻辑未改。26项相关测试通过，TypeScript与Next.js Build通过。未部署、未push；生产验证待人工发布。"
+          "statusNote": "2026-11-19 本地实现：GET /api/conversion-status available/limited/unknown，附checkedAt与ttlSeconds=0，Cache-Control no-store；页面加载时展示上传前提示。unknown fail-open；limited仅提示不拦截，保留服务端缓存优先/预算其次；批量停止逻辑未改。26项相关测试通过，TypeScript与Next.js Build通过。未部署、未push；生产验证待人工发布。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。"
         },
         {
           "id": "M8-19",
@@ -1848,15 +1848,14 @@
           "action": "[11-01] 周日 · 已做＋本轮规划",
           "detail": "月度复核、红队审计和逐日拆解；详见 docs/11月逐日执行计划-红队修订版.md §三",
           "owner": "A→O",
-          "deliverable": "docs/11月逐日执行计划-红队修订版.md",
           "accept": "月度复核、红队审计和逐日拆解",
           "due": "2026-11-01",
           "priority": "P0",
           "tier": "CORE",
-          "status": "blocked",
-          "deliverable": "docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md",
-          "statusNote": "2026-11-19 前置核查完成，但S1尚未启动。M12-2历史审计与5fa0d4f的15页差异化充实仅作可复用基线，不计作S1完成。2026-11-17 CEO独立验收确认M12-1三查未全部落纸；11/18观察窗可用数据仅到11/14且11/15缺失。依赖未满足前不启动S1页面整改/实验；解阻后复用15页历史结果，不重复改写。报告：docs/tasks/bookconv-ops-20261119/02_M12-1-S1-acceptance.md。",
-          "statusAudit": "plan-redteam-2026-11-01"
+          "status": "done",
+          "statusNote": "计划标注已完成；执行层残余见待办 §七",
+          "statusAudit": "plan-redteam-2026-11-01",
+          "deliverable": "docs/11月逐日执行计划-红队修订版.md"
         },
         {
           "id": "M13-2",
@@ -2111,8 +2110,9 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo",
-          "statusNote": "按11/19逐日计划修订：SEO入口补缺并入11/25候选门禁；当前未确认可执行故障，不向参考页追加实验链接，今日不做页面修改。",
-          "statusAudit": "plan-redteam-2026-11-01"
+          "statusNote": "按11/19逐日计划修订：SEO入口补缺并入11/25候选门禁；当前未确认可执行故障，不向参考页追加实验链接，今日不做页面修改。【stateTag回写 2026-11-21】权威排程 docs/11月逐日执行计划-红队修订版.md:26 明文「原SEO入口补缺并入11/25候选门禁」。按脚本 board-daily-scan.mjs:69-72 设计意图回写 stateTag=superseded 抑制催办；原 due 2026-11-19 保留作排程历史、不改。解除条件：11/25 候选门禁评审后若确认为待办，将 stateTag 改为 active 即恢复催办。",
+          "statusAudit": "plan-redteam-2026-11-01",
+          "stateTag": "superseded"
         },
         {
           "id": "M13-20",
@@ -2125,8 +2125,9 @@
           "priority": "P1",
           "tier": "CORE",
           "status": "todo",
-          "statusNote": "不假定两平台共用索引",
-          "statusAudit": "plan-redteam-2026-11-01"
+          "statusNote": "不假定两平台共用索引。【stateTag回写 2026-11-21】权威排程 docs/11月逐日执行计划-红队修订版.md:27 明文「原Bing/豆包差异应用转入11/23周评审」。按脚本 board-daily-scan.mjs:69-72 设计意图回写 stateTag=superseded 抑制催办；原 due 2026-11-20 保留作排程历史、不改。解除条件：11/23 周评审后若确认为待办，将 stateTag 改为 active 即恢复催办。",
+          "statusAudit": "plan-redteam-2026-11-01",
+          "stateTag": "superseded"
         },
         {
           "id": "M13-21",
@@ -2398,7 +2399,7 @@
       "id": "D1",
       "title": "formats/*(17) 未收录的处置：差异化 vs 有意排除（原「是否补入 sitemap」已于 9/27 收口：已补入）",
       "context": "原问题已解决：9/27 决策补入 sitemap（M3-2），10-04 线上 curl 复核 sitemap.xml 仍含 17 条 /formats/* <loc>。10-04 增量实测（_wb_tmp/check-formats-links.mjs，只统计 src/data 非归档内容文件，对齐 GSC referringUrls 口径）：入链覆盖 1/17 = 6% —— /formats/epub 已由 2 篇博文供血（can-kobo-read-epub-files、which-kindle-books-can-you-convert-drm-free-checklist；线上 status=200 且 formats/epub 链接渲染 2 处，已生效）。⚠️ 修正旧记录：9/27 记的「epub、mobi 均零内链」中 epub 一项已不成立，/formats/mobi 仍为 0。其余 16 页（pdf/mobi/azw3/txt/docx/rtf/jpg/png/html/fb2/lit/cbr/djvu/doc/word/text）仍全为零内链孤页。compat/calibre = 「Google 完全未知」状态本次未复核（不在本轮范围）。",
-      "suggestion": "维持现状至 10/20 Google 重评估（A3 锚点，kind=read，只读数不改站）。依据已从「先观察内链效果」推进为「已有初步读数」：1/17 页（epub）证明内链供血路径有效，故 D1 的真问题已收敛为「剩余 16 页是补内链还是有意排除」，而非「sitemap 是否补入」。10/20 后二选一 —— A = 差异化 formats 页争取索引（注意 §7.2 规模化风险：17 页同模板，疑似 Scaled Content）；B = 有意排除（noindex/瘦身）。⚠️ 决策前置提醒：D1 标注 blocks=M2-8，但 M2-8（13 个零抓取页差异化，P0，due 10-20）当前仍为 todo。若 10/20 前 M2-8 未启动，formats 页的差异化投入应与之合并排期，避免两条线同时改 48 个程序化页。",
+      "suggestion": "维持现状至 10/20 Google 重评估（A3 锚点，kind=read，只读数不改站）。依据已从「先观察内链效果」推进为「已有初步读数」：1/17 页（epub）证明内链供血路径有效，故 D1 的真问题已收敛为「剩余 16 页是补内链还是有意排除」，而非「sitemap 是否补入」。10/20 后二选一 —— A = 差异化 formats 页争取索引（注意 §7.2 规模化风险：17 页同模板，疑似 Scaled Content）；B = 有意排除（noindex/瘦身）。⚠️ 决策前置提醒：D1 标注 blocks=M2-8，但 M2-8（13 个零抓取页差异化，P0，due 10-20）当前仍为 todo。若 10/20 前 M2-8 未启动，formats 页的差异化投入应与之合并排期，避免两条线同时改 48 个程序化页。\n\n【2026-11-21 重锚·Owner授权】原A3（2026-10-20 Google重评估）读数已实际采集（M2-8 10-20复评15/15 + 11-18 GSC快照复核），但二选一裁决（A差异化争取索引 / B有意排除noindex）尚未做出。提审节点重锚到11/23联合周评审④（权威排程 docs/11月逐日执行计划-红队修订版.md:30「合并Bing/豆包差异应用与海外承接核对」）。本条仅更新提审节点，不代为裁决；blocks=M2-8保留可追溯。\n\n【2026-11-21 最终裁定·Owner授权代决】裁定=不做 A/B 实质裁决，保持 UNKNOWN。A3（10/20）依赖的 Google 重评估读数已过时：11-18 快照显示 formats 页无更新读数，D1 现有入链数据停留在 10-04（1/17=6%）。前置数据不存在，强作「差异化 vs 有意排除」裁决=虚构。解除条件=采集新 URL Inspection 读数后在 11/23 周评审裁决；blocks=M2-8、owner=O 保留可追溯。\n\n【2026-11-21 裁定修订·红队证伪后重裁】撤销上段「保持 UNKNOWN / 交 Owner 裁决」裁定——用户已授权本轮做最终决定，且 11-18 快照本身即 3 天内新读数（checkedAt 11-18），『前置数据不存在』前提不成立。**实质裁决：选 B = 有意排除（noindex / 瘦身合并）**。依据：① 15 个 formats 页 11-18 读数 12 Discovered + 3 unknown、0 带 referringUrls、无 crawl，与 10-04 基线（1/17=6% 入链）相比约 6 周零进展；② D1 context 自载 §7.2 规模化风险（17 页同模板，疑似 Scaled Content）；③ 继续差异化投入缺正反馈证据。置信度=中（覆盖/入链读数充分，但 noindex 属不可逆页面改动）。执行护栏：本裁决仅为 board 决策层记录，实际 noindex/瘦身须另走改源码+人工审稿+上线流程，本轮不执行；blocks=M2-8、owner=O 保留。解除条件：若 Owner 反对排除，改回 A 需补内链供血与差异化实测数据。",
       "blocks": "M2-8",
       "owner": "O"
     },
@@ -2406,7 +2407,7 @@
       "id": "D2",
       "title": "10/20 锚点统一裁决：4 个 convert 残留页的最终去向（差异化保留 / 降级 noindex / 301 合并）",
       "context": "A 类差异化 b1–b7 已收口（覆盖 22/28 非 noindex convert 页）。B 类降级已完成 P0（10 页 301，commit 758e994）+ P1（4 页 noindex，commit 78d54bd），均上线。余 4 个非 noindex convert 页性质不同但都依赖 10/20 Google 重评估（A3）读数后再定夺，故统一挂 10/20 锚点一次性裁决：① azw3-to-pdf / mobi-to-pdf —— 原 B 类 P2 观察项（低需求、暂观察，未纳入 b1–b7 差异化）；② lit-to-mobi / azw-to-mobi —— 遗留淘汰格式（LIT/AZW），b7 已补 CLI 段差异化（commit 7dc3dce），但「是否改判 B 类降级」悬而未决。两批合计 4 页。",
-      "suggestion": "10/20 锚点（A3 Google 重评估读数）后按实测二选一：保留并差异化（继续供血）或降级（noindex / 301 合并代表页）。🔴 10/20 前禁止改动这 4 页的索引状态（noindex/robots）或大规模改写，避免污染 A3 基线读数。若 10/20 决定保留差异化，则 azw3-to-pdf/mobi-to-pdf 补入 b 系列收口（复用 ≤3 页/日纪律）；若决定降级，则并入 B 类 P0/P1 流程。",
+      "suggestion": "10/20 锚点（A3 Google 重评估读数）后按实测二选一：保留并差异化（继续供血）或降级（noindex / 301 合并代表页）。🔴 10/20 前禁止改动这 4 页的索引状态（noindex/robots）或大规模改写，避免污染 A3 基线读数。若 10/20 决定保留差异化，则 azw3-to-pdf/mobi-to-pdf 补入 b 系列收口（复用 ≤3 页/日纪律）；若决定降级，则并入 B 类 P0/P1 流程。\n\n【2026-11-21 重锚·Owner授权】原A3（2026-10-20 Google重评估）读数已实际采集（M2-8 10-20复评15/15 + 11-18 GSC快照复核），但4个convert残留页最终去向（保留差异化/降级noindex/301合并）尚未裁决。提审节点重锚到11/23联合周评审④（权威排程 docs/11月逐日执行计划-红队修订版.md:30）。本条仅更新提审节点，不代为裁决；anchor=A3保留可追溯。原「10/20前禁止改动索引状态」约束在重锚后继续适用：10/20读数已采集，故其现行意图为「避免抢跑11/23裁决、污染待裁决状态」，在11/23裁决前不提前改动这4页索引状态。\n\n【2026-11-21 最终裁定·Owner授权代决】裁定=不做 A/B 实质裁决，保持 UNKNOWN。A3（10/20）依赖的 Google 重评估读数已过时：11-18 快照显示 4 个残留页（azw3-to-pdf/mobi-to-pdf/lit-to-mobi 为 Discovered、azw-to-mobi 不在 cohort）仍无 crawl、无新 transition。前置数据不存在，强作「保留差异化/降级 noindex/301 合并」裁决=虚构。解除条件=采集新 URL Inspection 读数后在 11/23 周评审裁决；anchor=A3、owner=O 保留可追溯。\n\n【2026-11-21 裁定修订·红队证伪后重裁】撤销上段「保持 UNKNOWN / 交 Owner 裁决」裁定——用户已授权本轮做最终决定，且 11-18 快照为 3 天内新读数。**实质裁决：选 A = 保留差异化（不降级、不 noindex、不 301）**。依据：① 11-18 三页（azw3-to-pdf / mobi-to-pdf / lit-to-mobi）为 Discovered 且有 referringUrls（首页/convert/sitemap 内链），说明内链供血路径仍在、未恶化；② azw-to-mobi 不在 11-18 cohort 但 10-20 CSV 为 Submitted and indexed，无降级理由；③ 11-18 transitions 无这 4 页、无 crawl，但『未被抓取』不等于『应降级』——降级属不可逆动作，缺正向证据时默认保留。置信度=中。执行护栏：本裁决仅为 board 决策层记录，实际索引状态改动须另走流程，本轮不执行；anchor=A3、owner=O 保留。解除条件：若 11/23 后新读数显示持续无进展且 Owner 要求降本，再评估降级。",
       "anchor": "A3",
       "owner": "O"
     }
