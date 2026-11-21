@@ -24,11 +24,9 @@ import * as readEpubOnKindle from './how-to-read-epub-on-kindle'
 import * as calibreAlternativesOnline from './calibre-alternatives-online'
 import * as sendEpubToKindle from './how-to-send-epub-to-kindle'
 import * as kindleVsKobo from './kindle-vs-kobo'
-import * as transferBetweenEreaders from './transfer-ebooks-between-ereaders'
 import type { GuideMeta } from './types'
 
-const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter, epubVsMobi, azw3VsMobi, readEpubOnKindle, calibreAlternativesOnline, sendEpubToKindle, kindleVsKobo, transferBetweenEreaders] as unknown as GuideMeta[]
-
+const all = [fixEpubToPdf, pdfToEpub, calibreVsOnline, epubToMobi, azw3ToEpub, docxToEpub, mobiToEpub, epubToAzw3, djvuToPdf, cbrToPdf, litToEpub, epubToTxt, fb2ToEpub, azw3ToMobi, txtToEpub, calibreAlternative, aiEbookConverter, batchConverter, kindleFormats, bestEbookConverter, epubVsMobi, azw3VsMobi, readEpubOnKindle, calibreAlternativesOnline, sendEpubToKindle, kindleVsKobo] as unknown as GuideMeta[]
 const GUIDE_MAP: Record<string, GuideMeta> = {}
 for (const g of all) GUIDE_MAP[g.slug] = g
 

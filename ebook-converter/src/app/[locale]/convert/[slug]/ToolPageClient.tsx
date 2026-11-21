@@ -363,7 +363,16 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
           target_format: target,
           file_size: file.size,
         })
-        const response = await fetch("/api/convert", { method: "POST", body: formData, headers: { "x-request-id": observationContext.request_id } })
+        // 合并决议：request_id 以 observationContext 为单一事实源（file_upload /
+        // conversion_complete 均通过 ...observationContext 携带同一 ID），避免远端
+        // crypto.randomUUID() 另起一个 ID 造成同一转换出现两个 request_id 的归因断裂。
+        // 同时保留远端的 header 透传与 backend_job_id / conversion_backend 归因字段。
+        const requestId = observationContext.request_id
+        const response = await fetch("/api/convert", {
+          method: "POST",
+          headers: { "x-request-id": requestId },
+          body: formData,
+        })
         setProgress(40)
         if (!response.ok) {
           const apiErr = await extractApiError(response)
@@ -390,6 +399,9 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
           ...observationContext,
           source_format: source,
           target_format: target,
+          request_id: requestId,
+          backend_job_id: response.headers.get("x-conversion-job-id") || undefined,
+          conversion_backend: response.headers.get("x-conversion-backend") || "unknown",
         })
         setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000)
       } catch (err) {
