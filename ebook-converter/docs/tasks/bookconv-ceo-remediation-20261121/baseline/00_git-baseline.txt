@@ -1,0 +1,20 @@
+===BASELINE_CAPTURED_AT===
+2026-11-21 11:22:17 +0800
+===BRANCH===
+main
+===HEAD===
+73c06a8d32230937248c876f903e9df62e5fac3d
+===UPSTREAM===
+origin/main
+===AHEAD_BEHIND===
+0	0
+===STATUS_PORCELAIN===
+?? bookconv-correlation-release/
+?? ebook-converter/docs/tasks/bookconv-ceo-remediation-20261121/
+===UNTRACKED_TOP===
+bookconv-correlation-release/
+ebook-converter/docs/tasks/bookconv-ceo-remediation-20261121/baseline/00_git-baseline.txt
+===STASH===
+===REMOTE===
+origin	git@github-old:doujianwen/bookconv-frontend.git (fetch)
+origin	git@github-old:doujianwen/bookconv-frontend.git (push)

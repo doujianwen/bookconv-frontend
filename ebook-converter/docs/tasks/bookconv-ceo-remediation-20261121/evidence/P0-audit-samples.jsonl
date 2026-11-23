@@ -1,0 +1,6 @@
+{"request_id":"req-fail-422-abcdefgh","job_id":"784d82b7-7e65-4bec-ba3f-3b7fdf26459f","outcome":"failure"}
+{"request_id":"req-dup-concurrent-0001","job_id":"a0f6f7b6-234c-47a4-a264-9d32ec5ccaaa","outcome":"success"}
+{"request_id":"req-distinct-A-000001","job_id":"0d9a8870-34a0-43ff-9362-6773af7d3451","outcome":"success"}
+{"request_id":"req-distinct-B-000001","job_id":"cf853950-8ee0-4574-9084-523ab10c51f5","outcome":"success"}
+{"request_id":"req-dup-concurrent-0001","job_id":"a0f6f7b6-234c-47a4-a264-9d32ec5ccaaa","outcome":"idempotent_hit"}
+{"request_id":"req-dup-concurrent-0001","job_id":"a0f6f7b6-234c-47a4-a264-9d32ec5ccaaa","outcome":"idempotent_hit"}

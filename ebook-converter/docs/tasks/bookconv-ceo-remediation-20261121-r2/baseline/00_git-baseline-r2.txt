@@ -1,0 +1,25 @@
+===R2_BASELINE_CAPTURED_AT===
+2026-11-21 11:53:25 +0800
+===REPO_ROOT===
+E:/一人公司/电子书格式转换站
+===BRANCH===
+main
+===HEAD===
+73c06a8d32230937248c876f903e9df62e5fac3d
+===STATUS_PORCELAIN===
+ M ebook-converter/conversion-backend/app/index.js
+ M ebook-converter/src/app/[locale]/convert/[slug]/ToolPageClient.tsx
+ M ebook-converter/src/lib/api-error.ts
+?? bookconv-correlation-release/
+?? ebook-converter/conversion-backend/app/idempotency.js
+?? ebook-converter/conversion-backend/test/correlation-idempotency.test.mjs
+?? ebook-converter/docs/tasks/bookconv-ceo-remediation-20261121-r2/
+?? ebook-converter/docs/tasks/bookconv-ceo-remediation-20261121/
+?? ebook-converter/scripts/force-push-guard.mjs
+?? ebook-converter/src/lib/conversion-timeouts.ts
+?? ebook-converter/tests/unit/conversion-timeouts.test.ts
+?? ebook-converter/tests/unit/fetch-with-timeout.test.ts
+?? ebook-converter/tests/unit/force-push-guard.test.ts
+?? ebook-converter/tests/unit/ga-error-classification-g1.test.ts
+===PROTECTED_DIR_COUNT===
+1799

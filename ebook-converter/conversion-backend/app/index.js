@@ -28,9 +28,19 @@ import http from "node:http";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import Busboy from "busboy";
 import { convertWithCalibre } from "./calibre.js";
+import {
+  createIdempotencyStore,
+  createCompletedLedger,
+  contentFingerprint,
+  bufferSha256,
+  captureResult,
+  writeReplay,
+  writeCompletedReplay,
+  writeFingerprintConflict,
+} from "./idempotency.js";
 
 const SECRET = process.env.CONVERSION_INTERNAL_SECRET;
 const PORT = parseInt(process.env.PORT || "3001", 10);
@@ -38,7 +48,10 @@ const BIND_HOST = process.env.BIND_HOST || "127.0.0.1"; // internal only; nginx 
 const TMP = process.env.CONVERSION_TMP || "/opt/bookconv-conversion/data/tmp";
 const LOG_DIR = process.env.CONVERSION_LOG_DIR || "/opt/bookconv-conversion/logs";
 const MAX_FILE_BYTES = parseInt(process.env.MAX_FILE_BYTES || String(50 * 1024 * 1024), 10);
-const CALIBRE_TIMEOUT = parseInt(process.env.CALIBRE_TIMEOUT || "120000", 10);
+// Round2 P0-B: 120000→60000 to remove the budget inversion (calibre was longer
+// than the edge delegate's 90s → orphan child after edge abort). Override with
+// CALIBRE_TIMEOUT=120000 to restore round1 (reintroduces the inversion).
+const CALIBRE_TIMEOUT = parseInt(process.env.CALIBRE_TIMEOUT || "60000", 10);
 /** 锁被占时最多排队等待多久（毫秒）；0 = 旧行为（立即 429） */
 const BUSY_WAIT_MS = parseInt(process.env.BUSY_WAIT_MS ?? "5000", 10);
 /** 排队时的轮询间隔；越小越灵敏、越大越省 CPU */
@@ -73,9 +86,15 @@ const MIME = {
 // fall back to CloudConvert.
 const BACKEND_TARGETS = new Set(Object.keys(MIME));
 
-function json(res, status, obj) {
+// P0 G-A: correlation headers on EVERY response that passed the secret check.
+// `corr` = { requestId, jobId }; omitted only for the 403 secret failure (where
+// leaking internal IDs to an unauthenticated caller would be unsafe) and health/404.
+function json(res, status, obj, corr) {
   const body = JSON.stringify(obj);
-  res.writeHead(status, { "Content-Type": "application/json", "Content-Length": Buffer.byteLength(body) });
+  const headers = { "Content-Type": "application/json", "Content-Length": Buffer.byteLength(body) };
+  if (corr && corr.requestId) headers["X-Conversion-Request-Id"] = corr.requestId;
+  if (corr && corr.jobId) headers["X-Conversion-Job-Id"] = corr.jobId;
+  res.writeHead(status, headers);
   res.end(body);
 }
 
@@ -134,6 +153,8 @@ function parseMultipart(req) {
     let fileMeta = null;
     let fileWriter = null;
     let aborted = false;
+    // P0-A round2: hash uploaded bytes while streaming (no second disk read).
+    const fileHash = createHash("sha256");
 
     const bb = Busboy({
       headers: req.headers,
@@ -152,6 +173,8 @@ function parseMultipart(req) {
       const ws = fs.createWriteStream(tmp);
       fileWriter = ws;
       fileMeta = { tmp, originalName: info.filename };
+      // hash each chunk as it streams past (data listener coexists with pipe)
+      stream.on("data", (chunk) => fileHash.update(chunk));
       stream.pipe(ws);
       stream.on("limit", () => {
         aborted = true;
@@ -171,9 +194,10 @@ function parseMultipart(req) {
     bb.on("close", () => {
       if (aborted) return; // reject already fired
       // Multipart parsing can finish before the disk write has flushed.
+      const fileSha256 = fileHash.digest("hex");
       if (fileWriter && !fileWriter.writableFinished) {
-        fileWriter.once('finish', () => resolve({ fields, fileMeta }));
-      } else resolve({ fields, fileMeta });
+        fileWriter.once('finish', () => resolve({ fields, fileMeta, fileSha256 }));
+      } else resolve({ fields, fileMeta, fileSha256 });
     });
     bb.on("error", (e) => reject(e));
 
@@ -185,8 +209,18 @@ async function doConvert(req, res) {
   // 1) secret
   const provided = req.headers["x-internal-convert"];
   if (!SECRET || provided !== SECRET) {
+    // 403 不携带关联 ID：向未授权调用方泄露内部标识没有收益，且有信息泄露风险。
     return json(res, 403, { error: "Forbidden" });
   }
+
+  // P0 G-A：request_id 与计时点提前到 secret 校验之后、multipart 解析之前。
+  // 这样 400/413（解析阶段失败）也能携带 request_id 并输出 CORRELATION_FAIL，
+  // 实现"每个请求都能追踪到最终结果或失败原因"。
+  // jobId 仍在解析成功后生成——400/413 没有创建后台任务，不应伪装有 job，
+  // 也避免改变 R4 的"后台任务数"基线口径。
+  const requestId = safeCorrelationId(req.headers["x-request-id"]) || randomUUID();
+  const correlationStarted = Date.now();
+  let jobId;
 
   // 2) parse upload
   let parsed;
@@ -194,28 +228,54 @@ async function doConvert(req, res) {
     parsed = await parseMultipart(req);
   } catch (e) {
     if (e && e.message === "FILE_TOO_LARGE") {
-      return json(res, 413, { error: "File too large.", code: "FILE_TOO_LARGE" });
+      log("CORRELATION_FAIL", "job=none", `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, "code=FILE_TOO_LARGE");
+      return json(res, 413, { error: "File too large.", code: "FILE_TOO_LARGE" }, { requestId });
     }
-    return json(res, 400, { error: "Bad request body.", code: "BAD_REQUEST" });
+    log("CORRELATION_FAIL", "job=none", `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, "code=BAD_REQUEST");
+    return json(res, 400, { error: "Bad request body.", code: "BAD_REQUEST" }, { requestId });
   }
-  const { fields, fileMeta } = parsed;
+  const { fields, fileMeta, fileSha256 } = parsed;
   const sourceFormat = (fields.source_format || "").toLowerCase().replace(/^\./, "");
   const targetFormat = (fields.target_format || "").toLowerCase().replace(/^\./, "");
   const quality = fields.quality === "high" ? "high" : "default";
-  const requestId = safeCorrelationId(req.headers["x-request-id"]) || randomUUID();
-  const jobId = randomUUID();
-  const correlationStarted = Date.now();
+
+  // P0-A round2: server-computed content fingerprint. A completed request_id
+  // replayed with the SAME content returns its recorded terminal result (no new
+  // job); the SAME id with DIFFERENT content is rejected (409), never replayed.
+  const fingerprint = contentFingerprint({ fileSha256, sourceFormat, targetFormat, quality });
+  req.__fingerprint = fingerprint;
+  const idemKey = safeCorrelationId(req.headers["x-request-id"]);
+  if (idemKey) {
+    const decision = completedLedger.decide(idemKey, fingerprint);
+    if (decision) {
+      // Uploaded temp file is never converted — unlink it to avoid a leak.
+      if (fileMeta) try { await fsp.unlink(fileMeta.tmp); } catch {}
+      if (decision.kind === "conflict") {
+        log("IDEMPOTENCY_CONFLICT", `request=${idemKey}`, `fingerprint=${fingerprint.slice(0, 16)}`, `original=${String(decision.rec.fingerprint).slice(0, 16)}`);
+        req.__completedReplay = true; // never overwrite the original terminal record
+        return writeFingerprintConflict(res, idemKey, fingerprint, decision.rec);
+      }
+      log("IDEMPOTENT_COMPLETED_REPLAY", `request=${idemKey}`, `job=${decision.rec.jobId || "none"}`, `fingerprint=${fingerprint.slice(0, 16)}`);
+      req.__completedReplay = true; // handler finally must NOT overwrite original record
+      return writeCompletedReplay(res, decision.rec, fingerprint);
+    }
+  }
+
+  jobId = randomUUID();
+  const corr = { requestId, jobId };
   log("START", `job=${jobId}`, `request=${requestId}`, sourceFormat, "->", targetFormat);
   if (!fileMeta || !sourceFormat || !targetFormat) {
     if (fileMeta) try { await fsp.unlink(fileMeta.tmp); } catch {}
-    return json(res, 400, { error: "Missing required fields: file, source_format, target_format" });
+    log("CORRELATION_FAIL", `job=${jobId}`, `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, "code=MISSING_FIELDS");
+    return json(res, 400, { error: "Missing required fields: file, source_format, target_format" }, corr);
   }
   if (!BACKEND_TARGETS.has(targetFormat)) {
     try { await fsp.unlink(fileMeta.tmp); } catch {}
+    log("CORRELATION_FAIL", `job=${jobId}`, `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, "code=UNSUPPORTED_BACKEND_FORMAT");
     return json(res, 422, {
       error: `Target format "${targetFormat}" is not handled by the self-hosted backend.`,
       code: "UNSUPPORTED_BACKEND_FORMAT",
-    });
+    }, corr);
   }
 
   // 3) convert
@@ -252,7 +312,7 @@ async function doConvert(req, res) {
     //（500），前端会视为确定性输入问题而不计数 —— Calibre 二进制损坏这类真故障
     // 将熔断永不开启、红卡永不发（后端静默死亡）。
     const status = code === "DRM_PROTECTED" ? 422 : code === "BACKEND_UNAVAILABLE" ? 503 : 500;
-    return json(res, status, { error: result.error, code });
+    return json(res, status, { error: result.error, code }, corr);
   }
 
   // 4) stream output back (mirror convert-handler.buildFileResponse contract)
@@ -274,11 +334,21 @@ async function doConvert(req, res) {
     log("OK", sourceFormat, "->", targetFormat, `${outBuf.length}B`, `${Date.now() - started}ms`);
     log("CORRELATION_OK", `job=${jobId}`, `request=${requestId}`, `bytes=${outBuf.length}`, `duration=${Date.now() - correlationStarted}ms`);
   } catch {
-    return json(res, 500, { error: "Output read failed.", code: "OUTPUT_ERROR" });
+    log("CORRELATION_FAIL", `job=${jobId}`, `request=${requestId}`, `duration=${Date.now() - correlationStarted}ms`, "code=OUTPUT_ERROR");
+    return json(res, 500, { error: "Output read failed.", code: "OUTPUT_ERROR" }, corr);
   } finally {
     try { await fsp.unlink(outPath); } catch {}
   }
 }
+
+// P0 G-B: one in-flight de-dup store per backend process.
+const idempotency = createIdempotencyStore();
+// P0-A round2: persisted completed-request ledger (survives process restart).
+const completedLedger = createCompletedLedger({
+  filePath: path.join(LOG_DIR, "idempotency-ledger.jsonl"),
+});
+const loadedCompleted = completedLedger.load();
+log("IDEMPOTENCY_LEDGER_LOADED", `entries=${loadedCompleted}`, `ttl=24h`, `max=1000`);
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -286,24 +356,74 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, { status: "ok", ts: Date.now() });
     }
     if (req.method === "POST" && req.url === "/api/convert-internal") {
-      const queuedAt = Date.now();
-      const acquired = await acquireConvertLock(
-        BUSY_WAIT_MS,
-        () => req.destroyed === true || res.writableEnded === true,
-      );
-      if (!acquired) {
-        const waited = Date.now() - queuedAt;
-        // 客户端已断开（Vercel abort）：不要再往已关闭的 socket 写响应
+      // request_id 只用于关联；幂等键额外要求格式合法（与 doConvert 的
+      // safeCorrelationId 同一判据），无效/缺失则不去重、只生成随机 ID。
+      const idemKey = safeCorrelationId(req.headers["x-request-id"]);
+
+      // 幂等命中：在获取并发锁之前拦截。等待首请求的终态，回放相同字节/头，
+      // 不占用并发槽位、不创建第二个 Calibre 任务、不生成第二个 jobId。
+      if (idemKey && idempotency.has(idemKey)) {
+        const entry = idempotency.get(idemKey);
+        const result = await entry.promise;
+        // 客户端已断开：不往关闭的 socket 写。
         if (res.writableEnded || req.destroyed) return;
-        log("BUSY_REJECT", `waited=${waited}ms`);
-        return json(res, 429, { error: "Backend busy, retry later.", code: "BACKEND_BUSY" });
+        log("IDEMPOTENT_HIT", `request=${idemKey}`, `job=${result.jobId || "none"}`);
+        return writeReplay(res, result);
       }
-      const waited = Date.now() - queuedAt;
-      if (waited > 0) log("BUSY_WAITED", `${waited}ms`);
+
+      // 首请求：注册幂等 entry（has→start 之间无 await，原子），并捕获写出结果
+      // 供可能的重复请求回放。无有效 key 时不进 store，但仍需捕获？——不需要，
+      // 只在该请求持有 entry 时捕获，避免无谓开销。
+      const captured = idemKey ? captureResult(res) : null;
+      const entry = idemKey ? idempotency.start(idemKey) : null;
       try {
-        return await doConvert(req, res);
+        const queuedAt = Date.now();
+        const acquired = await acquireConvertLock(
+          BUSY_WAIT_MS,
+          () => req.destroyed === true || res.writableEnded === true,
+        );
+        if (!acquired) {
+          const waited = Date.now() - queuedAt;
+          // 客户端已断开（Vercel abort）：不要再往已关闭的 socket 写响应
+          if (res.writableEnded || req.destroyed) return;
+          log("BUSY_REJECT", `waited=${waited}ms`);
+          return json(res, 429, { error: "Backend busy, retry later.", code: "BACKEND_BUSY" });
+        }
+        const waited = Date.now() - queuedAt;
+        if (waited > 0) log("BUSY_WAITED", `${waited}ms`);
+        try {
+          return await doConvert(req, res);
+        } finally {
+          busy = false;
+        }
       } finally {
-        busy = false;
+        // 终态收口：无论成功/失败/异常/客户端断开，都必须 resolve 等待者，
+        // 否则相同 request_id 的并发请求会永久挂起。
+        if (entry && captured) {
+          if (!captured.finished) {
+            // 客户端断开等场景：没有正常响应写出，合成一个明确的空终态，
+            // 让等待者拿到 499 而不是永远等待（客户端关闭连接本就无响应）。
+            captured.status = 499;
+            captured.headers = {};
+            captured.body = Buffer.alloc(0);
+            captured.finished = true;
+          }
+          idempotency.finish(idemKey, captured);
+          // P0-A round2: record terminal state for post-completion replay.
+          // Skip if this was itself a completed-ledger replay/conflict (must not
+          // overwrite the original record) or if the client aborted (499 is not
+          // a real terminal outcome worth replaying).
+          if (!req.__completedReplay && captured.status !== 499 && req.__fingerprint) {
+            completedLedger.record({
+              requestId: idemKey,
+              fingerprint: req.__fingerprint,
+              jobId: captured.headers["x-conversion-job-id"] || null,
+              status: captured.status,
+              headers: captured.headers,
+              body: captured.body,
+            });
+          }
+        }
       }
     }
     return json(res, 404, { error: "Not found" });

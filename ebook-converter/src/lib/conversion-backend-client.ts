@@ -30,6 +30,8 @@ import {
   recordBackendSuccess,
   shouldUseBackend,
 } from "@/lib/conversion-circuit-breaker";
+// Round2: single source of truth for the delegate budget (was a local literal).
+import { CONVERSION_BACKEND_TIMEOUT_MS } from "@/lib/conversion-timeouts";
 
 // Re-exported so the convert route can gate delegation on one facade module.
 export { shouldUseBackend } from "@/lib/conversion-circuit-breaker";
@@ -50,7 +52,7 @@ export function backendConfigured(): boolean {
   return Boolean(url && secret);
 }
 
-const DEFAULT_BACKEND_TIMEOUT_MS = 90_000;
+const DEFAULT_BACKEND_TIMEOUT_MS = CONVERSION_BACKEND_TIMEOUT_MS;
 
 export interface DelegateOptions {
   /**

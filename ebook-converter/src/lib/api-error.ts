@@ -20,6 +20,41 @@ export interface ApiError {
  *   3. falls back to an HTTP-status-aware message only when there is nothing
  *      else to show.
  */
+/**
+ * POST helper with a client-side abort budget (P0 G-C, 2026-11-21).
+ *
+ * Without this the browser had no abort: a stalled /api/convert request hung
+ * until the Vercel 300s hard kill, and GA4 saw a generic network error instead
+ * of CONVERSION_TIMEOUT. The thrown error carries `cause.code=CONVERSION_TIMEOUT`
+ * so ToolPageClient's existing catch maps it via `isErrorCode` — no new codes.
+ * Non-timeout errors propagate unchanged; the timer is always cleared.
+ */
+export async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number,
+): Promise<Response> {
+  const controller = new AbortController();
+  const external = init.signal;
+  if (external) {
+    if (external.aborted) controller.abort();
+    else external.addEventListener("abort", () => controller.abort(), { once: true });
+  }
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } catch (err) {
+    if (controller.signal.aborted && !(external && external.aborted)) {
+      throw new Error(`conversion request timed out after ${timeoutMs}ms`, {
+        cause: { code: "CONVERSION_TIMEOUT" as ErrorCode },
+      });
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function extractApiError(res: Response): Promise<ApiError> {
   const status = res.status
   let message = ""

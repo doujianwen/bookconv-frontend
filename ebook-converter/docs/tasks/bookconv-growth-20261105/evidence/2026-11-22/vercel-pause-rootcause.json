@@ -1,0 +1,24 @@
+{
+  "capturedAt": "2026-11-22T10:30:00+08:00",
+  "task": "第1项 查明Vercel生产部署暂停根因",
+  "authorization": "用户 2026-11-22『以上三项逐一执行，给你授权』",
+  "rootCause": {
+    "project": "ebookconvert (www.bookconv.com)",
+    "state": "Deployments Paused",
+    "pausedSince": "2026-11-22",
+    "reason": "Fluid Active CPU — team exceeded the Hobby fair use limits",
+    "usage": "Fluid Active CPU 3h53m / 4h (over limit)",
+    "pauseEnds": "2026-12-22",
+    "unpausesIn": "29d 21h (as of capture)",
+    "onlyRecoveryAction": "Upgrade to Pro (paid)",
+    "source": "Vercel dashboard via tabbit browser (logged-in session douhongjian-2258), body text + screenshot"
+  },
+  "crossCheck": {
+    "productionHttp": "HTTP 402 Payment Required",
+    "xVercelError": "DEPLOYMENT_DISABLED",
+    "externalVantage": "Deployment Paused / This deployment is temporarily paused",
+    "localAndExternalAgree": true
+  },
+  "decision": "恢复需升级 Pro 套餐（付费/资金决策），超出 AI 技术授权范围；项目纪律『暂不充值』。不代付、不升级。第2/3项因此 BLOCKED。",
+  "redteam": "L3：攻击『授权=可绕过支付墙恢复部署』→ 被 Vercel 官方 dashboard 的 paid-only 恢复路径证伪；诚实保留 BLOCKED，不伪造恢复。"
+}

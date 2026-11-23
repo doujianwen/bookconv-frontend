@@ -1417,7 +1417,7 @@
           "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-16.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-19 本地单文件观测契约已接入：request_id/attempt_id/schema_version贯穿conversion_attempt、前置拒绝、上传、失败与成功事件；/api/convert带x-request-id；batch_id字段预留供M8-19。26项相关测试通过，TypeScript/Build/diff-check通过。未注册GA4高基数维度；批量接入与线上回流待后续验证。详见 docs/tasks/bookconv-growth-20261105/M8-16.md。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。"
+          "statusNote": "2026-11-19 本地单文件观测契约已接入：request_id/attempt_id/schema_version贯穿conversion_attempt、前置拒绝、上传、失败与成功事件；/api/convert带x-request-id；batch_id字段预留供M8-19。26项相关测试通过，TypeScript/Build/diff-check通过。未注册GA4高基数维度；批量接入与线上回流待后续验证。详见 docs/tasks/bookconv-growth-20261105/M8-16.md。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。\n【2026-11-22 M8-20 联合验收】M8-20.md 已产出、联合验收本地 PASS（7/7专项+58/653全量+tsc0+build exit0）；人工发布未完成，解除条件第3项未满足，维持 doing。"
         },
         {
           "id": "M8-17",
@@ -1445,7 +1445,7 @@
           "status": "doing",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-18.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-19 本地实现：GET /api/conversion-status available/limited/unknown，附checkedAt与ttlSeconds=0，Cache-Control no-store；页面加载时展示上传前提示。unknown fail-open；limited仅提示不拦截，保留服务端缓存优先/预算其次；批量停止逻辑未改。26项相关测试通过，TypeScript与Next.js Build通过。未部署、未push；生产验证待人工发布。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。"
+          "statusNote": "2026-11-19 本地实现：GET /api/conversion-status available/limited/unknown，附checkedAt与ttlSeconds=0，Cache-Control no-store；页面加载时展示上传前提示。unknown fail-open；limited仅提示不拦截，保留服务端缓存优先/预算其次；批量停止逻辑未改。26项相关测试通过，TypeScript与Next.js Build通过。未部署、未push；生产验证待人工发布。\n【2026-11-21 最终裁定·Owner授权代决】裁定=不回写 done，保持 doing。前置 M8-20.md 不存在、交付文档明写「未部署/不 push/生产验证待人工发布」，回写即假关闭。解除条件=M8-20.md 产出且联合验收通过、人工发布后再回写。\n【2026-11-22 M8-20 联合验收】M8-20.md 已产出、联合验收本地 PASS（7/7专项+58/653全量+tsc0+build exit0）；人工发布未完成，解除条件第3项未满足，维持 doing。"
         },
         {
           "id": "M8-19",
@@ -1459,7 +1459,7 @@
           "status": "todo",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-19.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-19 只读预检完成，未提前修改代码。M8-16单文件契约已接入；M8-19真实入口为BeforeAfterComparison单文件下载与BatchUpload批量ZIP下载。DownloadButton组件无实际引用，不修改。批量batchId目前生成过晚，需在批次开始前生成；11/20按最小范围接入download_clicked及批次/子任务ID。预检报告：docs/tasks/bookconv-growth-20261105/M8-19.md。"
+          "statusNote": "2026-11-19 只读预检完成，未提前修改代码。M8-16单文件契约已接入；M8-19真实入口为BeforeAfterComparison单文件下载与BatchUpload批量ZIP下载。DownloadButton组件无实际引用，不修改。批量batchId目前生成过晚，需在批次开始前生成；11/20按最小范围接入download_clicked及批次/子任务ID。预检报告：docs/tasks/bookconv-growth-20261105/M8-19.md。\n【2026-11-22 M8-20 联合验收】代码已于 11-21 commit e05bfa7 落地，联合验收本地 PASS；status 保持 todo（不上报 done），待人工发布后再回写。"
         },
         {
           "id": "M8-20",
@@ -1473,7 +1473,7 @@
           "status": "todo",
           "deliverable": "docs/tasks/bookconv-growth-20261105/M8-20.md",
           "recheck": "2026-11-30",
-          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。"
+          "statusNote": "2026-11-05 用户授权纳入增长计划；仅完成排程登记，开发未执行。既有F/R编号为同一工作承接，不新建重复故障；执行预算见11月逐日计划增补。\n【2026-11-22 M8-20 联合验收】联合验收本轮执行完成，本地 PASS；发布包就绪（三项代码已 commit），部署/GA 回流待 Owner 人工发布后核对。"
         }
       ]
     },

@@ -1,0 +1,7 @@
+===KEY_FILE_SHA256 @ 2026-11-21 11:22:18 ===
+c509b9c117f1eafff155cc7e64656099f35f4e9efff8ccea5812dbed4c51e918 *src/lib/conversion-backend-client.ts
+7087078c810d8897df6a8f892b338318bc94b32a8118178e8612abd8ecc18ab8 *src/app/api/convert/route.ts
+c8be861c81a279333392ecc47f0fca7e4ca27670b84c34b30d14c9b6f8edde15 *src/app/api/conversion-status/route.ts
+7ecbfbcf45c2701fb0250af81e3478d3d45a87b2bd78678360af5e83f58334a7 *scripts/run-ga4-daily-integrated.py
+36d2efd9efc0e85bdc7848cd5e555695dac435fe0f5f229047035f8b0b9f8024 *scripts/growth-daily-entry.mjs
+0d41b91e9a14401348474f3f13a2adcab0da06f2e07a86b8cf9b8ec057801b5f *package.json

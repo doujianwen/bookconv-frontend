@@ -68,7 +68,9 @@ export function pickErrorDetail(raw, budget = 200) {
  * @returns {{success:boolean, outputPath?:string, error?:string, rawStderr?:string}}
  */
 export async function convertWithCalibre(inputPath, outputPath, opts = {}) {
-  const { targetFormat, quality, extraArgs, timeout = 120_000, maxBuffer = 10 * 1024 * 1024 } = opts;
+  // Default matches CALIBRE_TIMEOUT_MS (60s, round2 budget invariant). The
+  // backend always passes an explicit timeout; this default is a defensive floor.
+  const { targetFormat, quality, extraArgs, timeout = 60_000, maxBuffer = 10 * 1024 * 1024 } = opts;
   const args = [inputPath, outputPath];
 
   if (quality === "high") {

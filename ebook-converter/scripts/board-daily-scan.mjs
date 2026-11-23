@@ -102,6 +102,13 @@ rows.sort(byPriority);
 suppressed.sort(byPriority);
 
 const overdue = rows.filter(r => r.diffDays < 0);
+// 逾期分诊（2026-11-22）：blocked 状态=外部权限/数据硬阻塞，非催办执行信号。
+// 从⚠️逾期主区移入独立受阻区，避免把「做不了」误报成「该做没做」。
+// 纪律：① 信息零丢失——受阻项仍逐条列出、带原状态与逾期天数；
+//   ② 只按 status==='blocked' 机械分诊，不硬编码任务 ID、不读 statusNote 语义；
+//   ③ doing/todo 逾期项留在主区（含本地完成未回写项，回写与否由关闭门禁裁决，脚本不替业务判断）。
+const overdueActionable = overdue.filter(r => r.status !== 'blocked');
+const overdueBlocked = overdue.filter(r => r.status === 'blocked');
 const dueToday = rows.filter(r => r.diffDays === 0);
 const soon = rows.filter(r => r.diffDays > 0);
 
@@ -114,7 +121,8 @@ if (rows.length === 0 && suppressed.length === 0) {
   L.push('今日无到期/逾期任务，未来7天也无将到期项 ✅');
 } else {
   if (dueToday.length) { L.push(`\n【今日到期 ${dueToday.length}】`); dueToday.forEach(r => L.push('• ' + fmt(r))); }
-  if (overdue.length) { L.push(`\n【⚠️ 逾期 ${overdue.length}】`); overdue.forEach(r => L.push('• ' + fmt(r))); }
+  if (overdueActionable.length) { L.push(`\n【⚠️ 逾期·需执行 ${overdueActionable.length}】`); overdueActionable.forEach(r => L.push('• ' + fmt(r))); }
+  if (overdueBlocked.length) { L.push(`\n【🔒 逾期·受阻 ${overdueBlocked.length}】不催办，仅备案（状态=blocked）`); overdueBlocked.forEach(r => L.push('• ' + fmt(r))); }
   if (soon.length) { L.push(`\n【7天内将到期 ${soon.length}】`); soon.forEach(r => L.push('• ' + fmt(r))); }
   if (rows.length === 0) L.push('\n本次无有效执行信号（下列项已按状态语义抑制）');
   if (suppressed.length) {

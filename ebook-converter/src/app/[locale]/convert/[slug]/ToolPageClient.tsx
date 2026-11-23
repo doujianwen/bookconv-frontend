@@ -10,7 +10,8 @@ import { FileDropZone } from "@/components/tools/FileDropZone"
 import { BeforeAfterComparison } from "@/components/tools/BeforeAfterComparison"
 import { ConversionProgress, type ConversionStatus } from "@/components/tools/ConversionProgress"
 import { isErrorCode, type ErrorCode } from "@/lib/error-handler"
-import { extractApiError } from "@/lib/api-error"
+import { extractApiError, fetchWithTimeout } from "@/lib/api-error"
+import { CONVERSION_CLIENT_TIMEOUT_MS } from "@/lib/conversion-timeouts"
 import { FAQSection, generateDefaultFAQs } from "@/components/tools/FAQSection"
 import { SECURITY_FAQ } from "@/lib/seo/securityFaq"
 import { RelatedConversions } from "@/components/tools/RelatedConversions"
@@ -368,11 +369,13 @@ export function ToolPageClient({ source, target, contentData, allowedConversionS
         // crypto.randomUUID() 另起一个 ID 造成同一转换出现两个 request_id 的归因断裂。
         // 同时保留远端的 header 透传与 backend_job_id / conversion_backend 归因字段。
         const requestId = observationContext.request_id
-        const response = await fetch("/api/convert", {
+        // P0 G-C：客户端 abort 预算对齐 Vercel 300s 硬限；超时抛错带
+        // cause.code=CONVERSION_TIMEOUT，沿用既有 catch→GA4 映射，不改变成功路径。
+        const response = await fetchWithTimeout("/api/convert", {
           method: "POST",
           headers: { "x-request-id": requestId },
           body: formData,
-        })
+        }, CONVERSION_CLIENT_TIMEOUT_MS)
         setProgress(40)
         if (!response.ok) {
           const apiErr = await extractApiError(response)
